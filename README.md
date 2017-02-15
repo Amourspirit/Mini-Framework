@@ -22,10 +22,12 @@ All objects derived from MfObject use a Zero-Based index.
 
 ###Getting Help
 There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2].  
-Help is available online and as a separate help file.
+Help is available online and as a separate help file and can also be accesed online [here][3]
 
 ####AutoHotkey Snippit
 AutoHotkey Snippit is an automation program that also has a template available to quickly accesss help for kewords in both AutoHotkey and Mini-Framework. Onece AutoHotkey Snippit is installed and the templet is set you can simply get help for any AutoHotkey keyworkd or any Mini-Framework class / keyword by pressing a shortcut key. AutoHotkey Snippit can be set to work with any editor that you choose to write [AutoHotkey][1] code in.
 
+
 [1]:https://autohotkey.com
 [2]:http://www.sublimetext.com
+[3]:https://amourspirit.github.io/Mini-Framework/
