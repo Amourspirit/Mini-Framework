@@ -1,0 +1,120 @@
+﻿<html>
+	
+<head>
+	<title>Methods</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfDictionaryMethods");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Methods</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfDictionary.html">MfDictionary</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfDictionary.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfDictionaryValues.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfDictionary_NewEnum.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		<h1 class="rvps11"><span class="rvts0"><span class="rvts25">MfInteger Class</span></span></h1>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="PME_List"><ul class="Child_Topic">
+<li Class="Child_Topic"><a href="MfDictionary_NewEnum.html">_NewEnum()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryAddAttribute.html">AddAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryAdd.html">Add()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryClear.html">Clear()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryCompareTo.html">CompareTo()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryConstructor.html">Constructor()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryContains.html">Contains()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryEquals.html">Equals()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryGetAttribute.html">GetAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryGetAttributes.html">GetAttributes()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryGetEnumerator.html">GetEnumerator()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryGetHashCode.html">GetHashCode()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryGetIndexOfAttribute.html">GetIndexOfAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryGetType.html">GetType()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryHasAttribute.html">HasAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryIs.html">Is()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryIsInstance.html">IsInstance()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryMemberwiseClone.html">MemberwiseClone()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnClear.html">OnClear()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnClearComplete.html">OnClearComplete()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnInsert.html">OnInsert()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnInsertComplete.html">OnInsertComplete()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnRemove.html">OnRemove()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnRemoveComplete.html">OnRemoveComplete()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnSet.html">OnSet()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnSetComplete.html">OnSetComplete()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryOnValidate.html">OnValidate()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryRemove.html">Remove()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryToString.html">ToString()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryVerifyIsInstance.html">VerifyIsInstance()</a></li>
+<li Class="Child_Topic"><a href="MfDictionaryVerifyIsNotInstance.html">VerifyIsNotInstance()</a></li>
+</ul>
+</div>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

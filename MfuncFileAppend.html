@@ -1,0 +1,106 @@
+﻿<html>
+	
+<head>
+	<title>FileAppend()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="FileAppend, File">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileAppend");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileAppend()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncEnvGet.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileCopy.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileAppend()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.FileAppend([Text, Filename, Encoding])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileAppend([Text, Filename, Encoding])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Writes text to the end of a file (first creating the file, if necessary).</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Text</span></p>
+<p class="rvps22"><span class="rvts53">The text to append to the file. This text may include linefeed characters (`n) to start new lines. In addition, a single long line can be broken up into several shorter ones by means of a </span><a class="rvts59" href="https://autohotkey.com/docs/Scripts.htm#continuation" target="_blank">continuation section</a><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">If Text is blank, Filename will be created as an empty file (but if the file already exists, its modification time will be updated).</span><br/><span class="rvts53"></span><br/><span class="rvts53">If Text is </span><a class="rvts59" href="https://autohotkey.com/docs/misc/Clipboard.htm#ClipboardAll" target="_blank">%ClipboardAll%</a><span class="rvts53"> or a variable that was previously assigned the value of ClipboardAll, Filename will be unconditionally overwritten with the entire contents of the clipboard (i.e. </span><a class="rvts52" href="MfuncFileDelete.html">FileDelete</a><span class="rvts53"> is not necessary).</span></p>
+<p class="rvps21"><span class="rvts51">Filename</span></p>
+<p class="rvps31"><span class="rvts53">The name of the file to be appended, which is assumed to be in </span><a class="rvts59" href="https://autohotkey.com/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified.</span><br/><span class="rvts53"></span><br/><span class="rvts75">End of line (EOL) translation:</span><span class="rvts53"> To disable EOL translation, prepend an asterisk to the filename. This causes each linefeed character (`n) to be written as a single linefeed (LF) rather than the Windows standard of CR+LF. For example: </span><span class="rvts101">*C:\My Unix File.txt.</span><br/><span class="rvts53"></span><br/><span class="rvts53">If the file is not already open (due to being inside a </span><a class="rvts59" href="https://autohotkey.com/docs/commands/LoopReadFile.htm" target="_blank">file-reading loop</a><span class="rvts53">), EOL translation is automatically disabled if Text contains any carriage return and linefeed pairs (`r`n). In other words, the asterisk option described in the previous paragraph is put into effect automatically. However, specifying the asterisk when Text contains `r`n improves performance because the program does not need to scan Text for `r`n.</span><br/><span class="rvts53"></span><br/><span class="rvts75">Standard Output (stdout):</span><span class="rvts53"> Specifying an asterisk (*) for Filename causes Text to be sent to standard output (stdout). Such text can be redirected to a file, piped to another EXE, or captured by fancy text editors. For example, the following would be valid if typed at a command prompt:</span><br/><span class="rvts53"></span><br/><span class="rvts101">%ProgramFiles%\AutoHotkey\AutoHotkey.exe" "My Script.ahk" &gt;"Error Log.txtb</span><br/><span class="rvts53"></span><br/><span class="rvts53">However, text sent to stdout will not appear at the command prompt it was launched from. This can be worked around by piping a script's output to another command or program. For example:</span><br/><span class="rvts53"></span><br/><span class="rvts101">"%ProgramFiles%\AutoHotkey\AutoHotkey.exe" "My Script.ahk" |more</span><br/><span class="rvts53"></span><br/><span class="rvts101">For /F "tokens=*" %L in ('""%ProgramFiles%\AutoHotkey\AutoHotkey.exe" "My Script .ahk""') do @Echo %L</span><br/><span class="rvts53"></span><br/><span class="rvts95">AutoHotkey [v1.1.20+]:</span><span class="rvts53"> Specifying two asterisks (**) for Filename causes Text to be sent to the stderr stream.</span></p>
+<p class="rvps21"><span class="rvts51">Encoding</span></p>
+<p class="rvps22"><span class="rvts95">AutoHotkey [v1.0.90+]</span><span class="rvts53">: Overrides the default encoding set by </span><a class="rvts59" href="https://autohotkey.com/docs/commands/FileEncoding.htm" target="_blank">FileEncoding</a><span class="rvts53">, where Encoding follows the same format.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileAppend.htm" target="_blank">AutoHotkey Docs - FileAppend</a><span class="rvts6">.</span><br/><span class="rvts6">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">To overwrite an existing file, delete it with </span><a class="rvts12" href="MfuncFileDelete.html">Mfunc.FileDelete</a><span class="rvts6"> prior to using </span><a class="rvts12" href="MfuncFileAppend.html">Mfunc.FileAppend</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileAppend.htm" target="_blank">AutoHotkey Docs - FileAppend</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileAppend</span><span class="rvts30">(</span><span class="rvts42">"Another line.`n"</span><span class="rvts30">, </span><span class="rvts42">"C:\My Documents\Test.txt"</span><span class="rvts30">)</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

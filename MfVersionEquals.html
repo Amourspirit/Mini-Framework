@@ -1,0 +1,104 @@
+﻿<html>
+	
+<head>
+	<title>Equals()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfVersionEquals");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Equals()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfVersion.html">MfVersion</a> &rsaquo;&rsaquo; <a href="MfVersionMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfVersionMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfVersionConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfVersionGetAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Equals()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a></p>
+<p class="rvps20"><span class="rvts48">OutputVar := instance.Equals(objA)</span><br/><span class="rvts48">OutputVar := MfVersion.Equals(objA, objB)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Equals(objA)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets if current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> instance is equal to </span><span class="rvts54">objA</span><span class="rvts6"> instance.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfVersion.Equals(objA, ObjB)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets if </span><span class="rvts54">objA</span><span class="rvts6"> instance of </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> is equal to </span><span class="rvts54">objB</span><span class="rvts6"> instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">objA</span></p>
+<p class="rvps22"><span class="rvts53">The instance of </span><a class="rvts52" href="MfVersion.html">MfVersion</a><span class="rvts53"> to compare.</span></p>
+<p class="rvps21"><span class="rvts51">objB</span></p>
+<p class="rvps22"><span class="rvts53">The instance of </span><a class="rvts52" href="MfVersion.html">MfVersion</a><span class="rvts53"> to compare to obj</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns var Boolean value of true if the objects are the same; otherwise false.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if objB is omitted and current object is not an instance of </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if a parameter is not an intance of </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if there is an error get a value from a parameter.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> on any general exceptions are caught.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Objects must be instance of </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> for true to be returned.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

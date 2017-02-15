@@ -1,0 +1,117 @@
+﻿<html>
+	
+<head>
+	<title>StringLower()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="StringLower, String, Lower case">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncStringLower");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">StringLower()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncStringLen.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncStringMid.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">StringLower()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.StringLower(Input [, T])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.StringLower(Input [, T])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts a string to lowercase.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Input</span></p>
+<p class="rvps22"><span class="rvts53">The name of the variable whose contents will be read from.</span><br/><span class="rvts53">Can be var or any object that inherits from </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">T</span></p>
+<p class="rvps22"><span class="rvts53">If this parameter is the letter </span><span class="rvts75">T</span><span class="rvts53">, the string will be converted to title case. For example, "GONE with the WIND" would become "Gone With The Wind".</span><br/><span class="rvts53">Can be var containing the value of </span><span class="rvts75">T</span><span class="rvts53"> or </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> containing the value of </span><span class="rvts75">T</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the newly converted string of lowercase characters as var containing </span><span class="rvts15">string</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/StringLower.htm" target="_blank">AutoHotkey Docs - StringLower</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">To detect whether a character or string is entirely uppercase or lowercase, use "</span><a class="rvts13" href="http://ahkscript.org/docs/commands/IfIs.htm" target="_blank">if var is [not] upper/lower</a><span class="rvts6">".</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">Input</span><span class="rvts6"> is an object derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">. then the the return value will be from the objects </span><span class="rvts15">ToString() </span><span class="rvts6">method result.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">InputVar <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
+result <span style="color: #666666;">:=</span> <span style="color: #000080;">Mfunc.StringLower</span>(InputVar)
+<span style="color: #008000;">MsgBox</span>, <span style="color: #19177c;">%result%</span><span style="color: #666666;">.</span><span style="color: #408080; font-style: italic;"> ; Displays: the quick brown fox jumps over the lazy dog</span>
+
+MfsInputvar <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>(InputVar)
+result <span style="color: #666666;">:=</span> <span style="color: #000080;">Mfunc.StringLower</span>(MfsInputvar)
+<span style="color: #008000;">MsgBox</span>, <span style="color: #19177c;">%result%</span><span style="color: #666666;">.</span><span style="color: #408080; font-style: italic;"> ; Displays: the quick brown fox jumps over the lazy dog</span>
+
+result <span style="color: #666666;">:=</span> <span style="color: #000080;">Mfunc.StringLower</span>(MfsInputvar, <span style="color: #ba2121;">"T"</span>)
+<span style="color: #008000;">MsgBox</span>, <span style="color: #19177c;">%result%</span><span style="color: #666666;">.</span><span style="color: #408080; font-style: italic;"> ; Displays: The Quick Brown Fox Jumps Over The Lazy Dog</span>
+</pre>
+</div></span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">, </span><a class="rvts12" href="MfStringToLower.html">MfString.ToLower()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringToUpper.html">MfString.ToUpper()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringToTitle.html">MfString.ToTitle()</a><span class="rvts6">, </span><a class="rvts12" href="MfuncStringUpper.html">Mfunc.StringUpper()</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

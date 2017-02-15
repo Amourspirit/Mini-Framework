@@ -1,0 +1,149 @@
+﻿<html>
+	
+<head>
+	<title>FileMove()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="File, FileMove">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileMove");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileMove()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileGetTime.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileMoveDir.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileMove()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.FileMove(DestPattern [, Flag])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileMove(DestPattern [, Flag])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Moves or renames one or more files.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">SourcePattern</span></p>
+<p class="rvps22"><span class="rvts53">The name of a single file or folder, or a wildcard pattern such as C:\Temp*.tmp. SourcePattern is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified.</span></p>
+<p class="rvps21"><span class="rvts51">DestPattern</span></p>
+<p class="rvps22"><span class="rvts53">The name or pattern of the destination, which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. To perform a simple copy -- retaining the existing file name(s) -- specify only the folder name as shown in these functionally identical examples:</span></p>
+<p class="rvps26"><span class="rvts102">Mfunc</span><span class="rvts84">.</span><span class="rvts103">FileMove</span><span class="rvts84">(</span><span class="rvts104">"C:\*.txt"</span><span class="rvts84">, </span><span class="rvts104">"C:\My Folder"</span><span class="rvts84">)</span><br/><span class="rvts102">Mfunc</span><span class="rvts84">.</span><span class="rvts103">FileMove</span><span class="rvts84">(</span><span class="rvts104">"C:\*.txt"</span><span class="rvts84">, </span><span class="rvts104">"C:\My Folder\*.*"</span><span class="rvts84">)</span></p>
+<p class="rvps21"><span class="rvts51">Flag</span></p>
+<p class="rvps22"><span class="rvts53">(optional) this flag determines whether to overwrite files if they already exist:</span><br/><span class="rvts75">0</span><span class="rvts53"> = (default) do not overwrite existing files</span><br/><span class="rvts75">1</span><span class="rvts53"> = overwrite existing files</span><br/><span class="rvts53">This parameter can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">, even one that evaluates to true or false (since true and false are stored internally as 1 and 0).</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> on error if </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a><span class="rvts6"> is non-zero then </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> message is set to the value of </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileMove.htm" target="_blank">AutoHotkey Docs - FileMove</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">Unlike </span><a class="rvts12" href="MfuncFileCopy.html">Mfunc.FileCopy</a><span class="rvts6">, moving a file onto itself is always considered successful, even if the overwrite mode is not in effect.</span></p>
+<p class="rvps2"><span class="rvts6">FileMove moves files only. To instead move the contents of a folder (all its files and subfolders), see the examples section below. To move or rename a single folder, use </span><a class="rvts12" href="MfuncFileMoveDir.html">Mfunc.FileMoveDir</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">The operation will continue even if error(s) are encountered.</span></p>
+<p class="rvps2"><span class="rvts6">Although this command is capable of moving files to a different volume, the operation will take longer than a same-volume move. This is because a same-volume move is similar to a rename, and therefore much faster.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">Also See:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileMove.htm" target="_blank">AutoHotkey Docs - FileMove</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Mfunc<span style="color: #666666">.</span>FileMove(<span style="color: #BA2121">&quot;C:\My Documents\List1.txt&quot;</span>, <span style="color: #BA2121">&quot;D:\Main Backup\&quot;</span>)<span style="color: #408080; font-style: italic">  ; Move the file without renaming it.</span>
+Mfunc<span style="color: #666666">.</span>FileMove(<span style="color: #BA2121">&quot;C:\File Before.txt&quot;</span>, <span style="color: #BA2121">&quot;C:\File After.txt&quot;</span>)<span style="color: #408080; font-style: italic">  ; Rename a single file.</span>
+Mfunc<span style="color: #666666">.</span>FileMove(<span style="color: #BA2121">&quot;C:\Folder1\*.txt&quot;</span>, <span style="color: #BA2121">&quot;D:\New Folder\*.bkp&quot;</span>)<span style="color: #408080; font-style: italic">  ; Move and rename files to a new extension.</span>
+
+<span style="color: #408080; font-style: italic">; The following example moves all files and folders inside a folder to a different folder:</span>
+ErrorCount <span style="color: #666666">:=</span> MoveFilesAndFolders(<span style="color: #BA2121">&quot;C:\My Folder\*.*&quot;</span>, <span style="color: #BA2121">&quot;D:\Folder to receive all files &amp; folders&quot;</span>)
+<span style="color: #008000">if </span>ErrorCount <span style="color: #666666">&lt;&gt;</span> <span style="color: #666666">0</span>
+    <span style="color: #008000">MsgBox</span> <span style="color: #19177C">%ErrorCount%</span> files<span style="color: #666666">/</span>folders could <span style="color: #AA22FF; font-weight: bold">not</span> be moved<span style="color: #666666">.</span>
+
+MoveFilesAndFolders(SourcePattern, DestinationFolder, DoOverwrite <span style="color: #666666">=</span> <span style="color: #19177C">false</span>)<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">; Moves all files and folders matching SourcePattern into the folder named DestinationFolder and</span>
+<span style="color: #408080; font-style: italic">; returns the number of files/folders that could not be moved. This function requires v1.0.38+</span>
+<span style="color: #408080; font-style: italic">; because it uses FileMoveDir's mode 2.</span>
+{
+	ErrorCount <span style="color: #666666">:=</span> <span style="color: #666666">0</span>
+    <span style="color: #008000">if </span>DoOverwrite <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+        DoOverwrite <span style="color: #666666">=</span> <span style="color: #666666">2</span><span style="color: #408080; font-style: italic">  ; See FileMoveDir for description of mode 2 vs. 1.</span>
+<span style="color: #408080; font-style: italic">    ; First move all the files (but not the folders):</span>
+	try {
+		Mfunc<span style="color: #666666">.</span>FileMove(SourcePattern, DestinationFolder, DoOverwrite)
+	} catch e {
+		ErrorCount <span style="color: #666666">:=</span> <span style="color: #19177C">ErrorLevel</span>
+	}<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">    </span>
+<span style="color: #408080; font-style: italic">    </span>
+<span style="color: #408080; font-style: italic">    ; Now move all the folders:</span>
+    <span style="color: #008000">Loop</span>, <span style="color: #19177C">%SourcePattern%</span>, <span style="color: #666666">2</span><span style="color: #408080; font-style: italic">  ; 2 means &quot;retrieve folders only&quot;.</span>
+    {
+		try {
+			Mfunc<span style="color: #666666">.</span>FileMoveDir(<span style="color: #19177C">A_LoopFileFullPath</span>, DestinationFolder <span style="color: #666666">.</span> <span style="color: #BA2121">&quot;\&quot;</span> <span style="color: #666666">.</span> <span style="color: #19177C">A_LoopFileName</span>, DoOverwrite)
+		} catch e {
+			ErrorCount <span style="color: #666666">+=</span> <span style="color: #19177C">ErrorLevel</span>
+		}
+        <span style="color: #008000">if </span><span style="color: #19177C">ErrorLevel</span><span style="color: #408080; font-style: italic">  ; Report each problem folder by name.</span>
+            <span style="color: #008000">MsgBox</span> Could <span style="color: #AA22FF; font-weight: bold">not</span> move <span style="color: #19177C">%A_LoopFileFullPath%</span> into <span style="color: #19177C">%DestinationFolder%</span><span style="color: #666666">.</span>
+    }
+    <span style="color: #008000">return</span> ErrorCount
+}
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

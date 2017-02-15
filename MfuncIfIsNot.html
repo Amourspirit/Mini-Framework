@@ -1,0 +1,116 @@
+﻿<html>
+	
+<head>
+	<title>IfIsNot()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="IfIsNot">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncIfIsNot");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IfIsNot()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncIfIs.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncIfNotBetween.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IfIsNot()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.IfIsNot(ByRef var, type)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.IfIsNot(ByRef var, type)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks whether a variable's contents are not numeric, uppercase, etc.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">var</span></p>
+<p class="rvps22"><span class="rvts53">The </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm" target="_blank">variable</a><span class="rvts53"> name.</span></p>
+<p class="rvps21"><span class="rvts51">type</span></p>
+<p class="rvps22"><span class="rvts53">supported types are integer,float,number,digit,xdigit,alpha,upper,lower,alnum,space, and time</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">var</span><span class="rvts6"> is not type; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts18">Also See</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/IfIs.htm" target="_blank">AutoHotkey if var is type method</a><br/><span class="rvts15">Static Method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">if (<span style="color: #666666">!</span>Mfunc<span style="color: #666666">.</span>IfIsNot(var,<span style="color: #BA2121">&quot;float&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span>, <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> a <span style="color: #AA22FF; font-weight: bold">not</span> floating point number<span style="color: #666666">.</span>
+}
+
+if (Mfunc<span style="color: #666666">.</span>IfIsNot(var,<span style="color: #BA2121">&quot;integer&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span>, <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> an integer<span style="color: #666666">.</span>
+}
+
+if (Mfunc<span style="color: #666666">.</span>IfIsNot(var,<span style="color: #BA2121">&quot;time&quot;</span>))
+{
+	 <span style="color: #008000">MsgBox</span>, <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> a valid date<span style="color: #666666">-</span>time<span style="color: #666666">.</span>
+}
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

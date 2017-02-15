@@ -1,0 +1,111 @@
+﻿<html>
+	
+<head>
+	<title>PixelGetColor()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="PixelGetColor, Image">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncPixelGetColor");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">PixelGetColor()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncMouseGetPos.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncPixelSearch.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">PixelGetColor()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.PixelGetColor(X, Y [, Alt|Slow|RGB])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.PixelGetColor(X, Y [, Alt|Slow|RGB])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves the color of the pixel at the specified x,y coordinates.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">X, Y</span></p>
+<p class="rvps22"><span class="rvts53">The X and Y coordinates of the pixel, which can be </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expressions</a><span class="rvts53">. Coordinates are relative to the active window unless </span><a class="rvts59" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts53"> was used to change that.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">Alt|Slow|RGB</span></p>
+<p class="rvps22"><span class="rvts53">This parameter may contain zero or more of the following words. If more than one word is present, separate each from the next with a space (e.g. Alt RGB).</span><br/><span class="rvts53"></span><br/><span class="rvts75">Alt</span><span class="rvts53"> </span><span class="rvts95">AutoHotkey [v1.0.43.10+]</span><span class="rvts53">: Uses an alternate method to retrieve the color, which should be used when the normal method produces invalid or inaccurate colors for a particular type of window. This method is about 10% slower than the normal method.</span><br/><span class="rvts53"></span><br/><span class="rvts75">Slow</span><span class="rvts53"> </span><span class="rvts95">AutoHotkey [v1.0.43.10+]</span><span class="rvts53">: Uses a more elaborate method to retrieve the color, which may work in certain full-screen applications when the other methods fail. This method is about three times slower than the normal method. Note: Slow takes precedence over Alt, so there is no need to specify Alt in this case.</span><br/><span class="rvts53"></span><br/><span class="rvts75">RGB</span><span class="rvts53">: Retrieves the color in RGB vs. BGR format. In other words, the red and the blue components are swapped. This is useful for retrieving colors compatible with </span><a class="rvts59" href="http://ahkscript.org/docs/commands/WinSet.htm" target="_blank">WinSet</a><span class="rvts53">, </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Gui.htm" target="_blank">Gui</a><span class="rvts53">, </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Progress.htm" target="_blank">Progress</a><span class="rvts53">, and </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Progress.htm" target="_blank">SplashImage</a><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the color ID in hexadecimal blue-green-red (BGR) format. For example, the color purple is defined 0x800080 because it has an intensity of 80 for its blue and red components but an intensity of 00 for its green component.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/PixelGetColor.htm" target="_blank">Autohotkey - PixelGetColor</a><span class="rvts6"> error message.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> any other general error occurs.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/PixelGetColor.htm" target="_blank">AutoHotkey Docs - PixelGetColor</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">The pixel must be visible; in other words, it is not possible to retrieve the pixel color of a window hidden behind another window. By contrast, pixels beneath the mouse cursor can usually be detected. The exception to this is game cursors, which in most cases will hide any pixels beneath them.</span></p>
+<p class="rvps2"><span class="rvts6">Use Window Spy (available in tray icon menu) or the example at the bottom of this page to determine the colors currently on the screen.</span></p>
+<p class="rvps2"><span class="rvts6">Known limitations:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">A window that is </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinSet.htm#trans" target="_blank">partially transparent</a><span class="rvts6"> or that has one of its colors marked invisible (</span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinSet.htm#TransColor" target="_blank">TransColor</a><span class="rvts6">) typically yields colors for the window behind itself rather than its own.</span></li>
+<li class="rvps2"><span class="rvts6">PixelGetColor might not produce accurate results for certain applications. If this occurs, try specifying the word Alt or Slow in the last parameter.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/PixelGetColor.htm" target="_blank">AutoHotkey Docs - PixelGetColor</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">^!z:: </span><span class="rvts31">; Control+Alt+Z hotkey.</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">MouseGetPos</span><span class="rvts30">(MouseX, MouseY)</span><br/><span class="rvts30">color := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">PixelGetColor</span><span class="rvts30">(MouseX, MouseY)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> The color at the current cursor position is %color%.</span><br/><span class="rvts32">return</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

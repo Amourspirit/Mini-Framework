@@ -1,0 +1,88 @@
+﻿<html>
+	
+<head>
+	<title>Namespace</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Namespace">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("NameSapce");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Namespace</h1>
+				
+				</div>
+			<div id="topic_header_nav">
+				<a href="Globals.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="NS_System.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Namespace</span></span></h1>
+<p class="rvps2"><span class="rvts6">Contains Classes that can be include in a given project</span></p>
+<p class="rvps2"><a class="rvts12" href="NS_System.html">System</a><span class="rvts6"> Namespace contains core classes and is required in all projects using </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> Framework</span></p>
+<p class="rvps16"><span class="rvts6">To include </span><span class="rvts18">System</span><span class="rvts6"> Namespace in a project included the following:</span><br/><span class="rvts43">#Include </span><span class="rvts43">&lt;inc_mf_0_3&gt;</span></p>
+<p class="rvps2"><a class="rvts12" href="NS_System_IO.html">System.IO</a><span class="rvts6"> contains classes related to System Input and Output.</span></p>
+<p class="rvps16"><span class="rvts6">To include </span><span class="rvts18">System.IO</span><span class="rvts6"> Namespace in a project include the following:</span><br/><span class="rvts43">#Include </span><span class="rvts43">&lt;inc_mf_System_IO_0_3&gt;</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

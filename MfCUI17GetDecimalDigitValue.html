@@ -1,0 +1,154 @@
+﻿<html>
+	
+<head>
+	<title>GetDecimalDigitValue()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCUI17GetDecimalDigitValue");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetDecimalDigitValue()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCUI17.html">MfCharUnicodeInfo</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCUI17.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCUI17.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCUI17GetDigitValue.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetDecimalDigitValue()</span></span></h1>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := MfCharUnicodeInfo.GetDecimalDigitValue(ch)</span><br/><span class="rvts48">OutputVar := MfCharUnicodeInfo.GetDecimalDigitValue(s, index)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetDecimalDigitValue(ch)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets the digit value of the specified numeric character.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetDecimalDigitValue(s, index)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets the digit value of the specified numeric character for the character in string </span><span class="rvts54">s</span><span class="rvts6"> &nbsp;at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts54">index</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">ch</span></p>
+<p class="rvps22"><span class="rvts53">The Unicode character for which to get the digit value. Can be instance of </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53">, A single char in a var or a </span><span class="rvts69">string</span><span class="rvts53"> var containing hex value such as "0x00B2" (SUPERSCRIPT TWO) or </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance.</span></p>
+<p class="rvps21"><span class="rvts51">s</span></p>
+<p class="rvps22"><span class="rvts53">The String containing the Unicode character for which to get the decimal digit value. Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or </span><span class="rvts69">string</span><span class="rvts53"> var.</span></p>
+<p class="rvps21"><span class="rvts51">index</span></p>
+<p class="rvps22"><span class="rvts53">The </span><span class="rvts75">zero-based</span><span class="rvts53"> index of the Unicode character for which to get the decimal digit value. Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> Instance or </span><span class="rvts69">integer</span><span class="rvts53"> var.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the decimal digit value of the specified numeric character or -1, if the specified character is not a decimal digit.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static Method</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts54">index</span><span class="rvts6"> is outside the range of valid indexes in s.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">ch</span><span class="rvts6">, </span><span class="rvts54">s</span><span class="rvts6"> or </span><span class="rvts54">index</span><span class="rvts6"> are object but not of the expected type.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(<span style="color: #666666;">1</span>)
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 1 as it is taken as literal same as MfCharUnicodeInfo.GetDecimalDigitValue("0x0031")</span>
+
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(<span style="color: #ba2121;">"0x0033"</span>)<span style="color: #408080; font-style: italic;"> ; valid range is 0x0000 to 0xFFFF</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 3 as it is taken as literal same as MfCharUnicodeInfo.GetDecimalDigitValue("0x0033")</span>
+
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(<span style="color: #ba2121;">"a"</span>)<span style="color: #408080; font-style: italic;"> ; 'a' has no Unicode Number value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays -1 as it is taken as literal same as MfCharUnicodeInfo.GetDecimalDigitValue("0x0061")</span>
+
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(<span style="color: #ba2121;">"0x0F33"</span>)<span style="color: #408080; font-style: italic;"> ; '0x0F33' TIBETAN DIGIT HALF ZERO</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays -1 does not have a Digit Value</span>
+
+myInt <span style="color: #666666;">:=</span> new MfInteger(<span style="color: #666666;">0x2788</span>)<span style="color: #408080; font-style: italic;"> ; same as new MfInteger(10120)</span>
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(myInt)<span style="color: #408080; font-style: italic;"> ; '0x2788' CIRCLED SANS-SERIF DIGIT NINE</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays -1</span>
+
+HexChar <span style="color: #666666;">:=</span> <span style="color: #666666;">0x0BEF</span><span style="color: #408080; font-style: italic;"> ; Decimal value is 3055 - (TAMIL DIGIT NINE)</span>
+strHexChar <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"0x0BEF"</span><span style="color: #408080; font-style: italic;"> ; string of hex value, valid range is 0x0000 to 0xFFFF</span>
+
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(strHexChar)<span style="color: #408080; font-style: italic;"> ; '0x0BEF' TAMIL DIGIT NINE</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 9</span>
+
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(HexChar)<span style="color: #408080; font-style: italic;"> ; hex char is not a string contain hex value and will not work</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays -1</span>
+
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(<span style="color: #ba2121;">"Hello World 2015"</span>, <span style="color: #666666;">12</span>)
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 2 - zero based index put 12 at the position of 2 in 2015</span>
+
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(<span style="color: #ba2121;">"Hello World 2015"</span>, <span style="color: #666666;">15</span>)
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 5 - zero based index put 15 at the position of 5 in 2015</span>
+
+myStr <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>(<span style="color: #ba2121;">"Hello world 2015"</span>)
+myInt <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfInteger</span>(<span style="color: #666666;">15</span>)
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(myStr, myInt)
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 5 - zero based index put 15 at the position of 5 in 2015</span>
+
+myChar <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfCharUnicodeInfo</span>(<span style="color: #ba2121;">"8"</span>)
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(myChar)
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 8</span>
+
+myChar <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfCharUnicodeInfo</span>(<span style="color: #000080;">new MfInteger</span>(<span style="color: #666666;">0x0BEF</span>))<span style="color: #408080; font-style: italic;"> ; '0x0BEF' TAMIL DIGIT NINE</span>
+var <span style="color: #666666;">:=</span> <span style="color: #000080;">MfCharUnicodeInfo.GetDecimalDigitValue</span>(myChar)
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 9</span>
+</pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

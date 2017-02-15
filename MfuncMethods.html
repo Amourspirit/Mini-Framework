@@ -1,0 +1,168 @@
+﻿<html>
+	
+<head>
+	<title>Methods</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncMethods");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Methods</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="Mfunc.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="Mfunc.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncControlGet.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		<h1 class="rvps11"><span class="rvts0"><span class="rvts25">MfInteger Class</span></span></h1>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="PME_List"><ul class="Child_Topic">
+<li Class="Child_Topic"><a href="MfuncControlGet.html">ControlGet()</a></li>
+<li Class="Child_Topic"><a href="MfuncControlGetFocus.html">ControlGetFocus()</a></li>
+<li Class="Child_Topic"><a href="MfuncControlGetText.html">ControlGetText()</a></li>
+<li Class="Child_Topic"><a href="MfuncDriveGet.html">DriveGet()</a></li>
+<li Class="Child_Topic"><a href="MfuncDriveSpaceFree.html">DriveSpaceFree()</a></li>
+<li Class="Child_Topic"><a href="MfuncEnvGet.html">EnvGet()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileAppend.html">FileAppend()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileCopy.html">FileCopy()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileCopyDir.html">FileCopyDir()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileCreateDir.html">FileCreateDir()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileDelete.html">FileDelete()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileGetAttrib.html">FileGetAttrib()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileGetShortcut.html">FileGetShortcut()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileGetSize.html">FileGetSize()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileGetVersion.html">FileGetVersion()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileGetTime.html">FileGetTime()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileMove.html">FileMove()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileMoveDir.html">FileMoveDir()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileRead.html">FileRead()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileReadLine.html">FileReadLine()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileRemoveDir.html">FileRemoveDir()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileSelectFile.html">FileSelectFile()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileSelectFolder.html">FileSelectFolder()</a></li>
+<li Class="Child_Topic"><a href="MfuncFileSetAttrib.html">FileSetAttrib()</a></li>
+<li Class="Child_Topic"><a href="MfuncFormatTime.html">FormatTime()</a></li>
+<li Class="Child_Topic"><a href="MfuncFunctions.html">Functions()</a></li>
+<li Class="Child_Topic"><a href="MfuncGuiControlGet.html">GuiControlGet()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfBetween.html">IfBetween()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfContains.html">IfContains()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfIn.html">IfIn()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfIs.html">IfIs()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfIsNot.html">IfIsNot()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfNotBetween.html">IfNotBetween()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfNotContains.html">IfNotContains()</a></li>
+<li Class="Child_Topic"><a href="MfuncIfNotIn.html">IfNotIn()</a></li>
+<li Class="Child_Topic"><a href="MfuncImageSearch.html">ImageSearch()</a></li>
+<li Class="Child_Topic"><a href="MfuncIniDelete.html">IniDelete()</a></li>
+<li Class="Child_Topic"><a href="MfuncIniRead.html">IniRead()</a></li>
+<li Class="Child_Topic"><a href="MfuncIniWrite.html">IniWrite()</a></li>
+<li Class="Child_Topic"><a href="MfuncInput.html">Input()</a></li>
+<li Class="Child_Topic"><a href="MfuncInputBox.html">InputBox()</a></li>
+<li Class="Child_Topic"><a href="MfuncIsFloat.html">IsFloat()</a></li>
+<li Class="Child_Topic"><a href="MfuncIsInstance.html">IsInstance()</a></li>
+<li Class="Child_Topic"><a href="MfuncIsInteger.html">IsInteger()</a></li>
+<li Class="Child_Topic"><a href="MfuncIsNumeric.html">IsNumeric()</a></li>
+<li Class="Child_Topic"><a href="MfuncMouseGetPos.html">MouseGetPos()</a></li>
+<li Class="Child_Topic"><a href="MfuncPixelGetColor.html">PixelGetColor()</a></li>
+<li Class="Child_Topic"><a href="MfuncPixelSearch.html">PixelSearch()</a></li>
+<li Class="Child_Topic"><a href="MfuncProcess.html">Process()</a></li>
+<li Class="Child_Topic"><a href="MfuncRandom.html">Random()</a></li>
+<li Class="Child_Topic"><a href="MfuncRegRead.html">RegRead()</a></li>
+<li Class="Child_Topic"><a href="MfuncRegWrite.html">RegWrite()</a></li>
+<li Class="Child_Topic"><a href="MfuncRun.html">Run()</a></li>
+<li Class="Child_Topic"><a href="MfuncRunWait.html">RunWait()</a></li>
+<li Class="Child_Topic"><a href="MfuncSecondsPassed.html">SecondsPassed()</a></li>
+<li Class="Child_Topic"><a href="MfuncSetFormat.html">SetFormat()</a></li>
+<li Class="Child_Topic"><a href="MfuncSoundGet.html">SoundGet()</a></li>
+<li Class="Child_Topic"><a href="MfuncSoundGetWaveVolume.html">SoundGetWaveVolume()</a></li>
+<li Class="Child_Topic"><a href="MfuncSplitPath.html">SplitPath()</a></li>
+<li Class="Child_Topic"><a href="MfuncStatusBarGetText.html">StatusBarGetText()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringGetPos.html">StringGetPos()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringLeft.html">StringLeft()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringLen.html">StringLen()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringLower.html">StringLower()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringMid.html">StringMid()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringReplace.html">StringReplace()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringRight.html">StringRight()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringSplit.html">StringSplit()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringTrimLeft.html">StringTrimLeft()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringTrimRight.html">StringTrimRight()</a></li>
+<li Class="Child_Topic"><a href="MfuncStringUpper.html">StringUpper()</a></li>
+<li Class="Child_Topic"><a href="MfuncSysGet.html">SysGet()</a></li>
+<li Class="Child_Topic"><a href="MfuncTransform.html">Transform()</a></li>
+<li Class="Child_Topic"><a href="MfuncWinActivate.html">WinActivate()</a></li>
+<li Class="Child_Topic"><a href="MfuncWinGet.html">WinGet()</a></li>
+<li Class="Child_Topic"><a href="MfuncWinGetActiveTitle.html">WinGetActiveTitle()</a></li>
+<li Class="Child_Topic"><a href="MfuncWinGetClass.html">WinGetClass()</a></li>
+<li Class="Child_Topic"><a href="MfuncWinGetText.html">WinGetText()</a></li>
+<li Class="Child_Topic"><a href="MfuncWinGetTitle.html">WinGetTitle()</a></li>
+</ul>
+</div>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

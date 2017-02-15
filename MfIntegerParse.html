@@ -1,0 +1,132 @@
+﻿<html>
+	
+<head>
+	<title>Parse()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfIntegerParse");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Parse()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfInteger.html">MfInteger</a> &rsaquo;&rsaquo; <a href="MfIntegerMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfIntegerMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfIntegerMemberwiseClone.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfIntegerSubtract.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Parse()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfInteger</span><span class="rvts48">.Parse()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Parse(obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> equivalent</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">obj</span></p>
+<p class="rvps22"><span class="rvts53">An object to convert.</span><br/><span class="rvts53">Can be instance of </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53">, </span><a class="rvts52" href="MfString.html">MfString</a><br/><span class="rvts53">Can be var containing </span><span class="rvts69">string</span><span class="rvts53">, </span><span class="rvts69">integer</span><br/><span class="rvts53">Can also be instance of </span><a class="rvts52" href="MfParams.html">MfParams</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> equivalent.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of </span><span class="rvts15">ReturnAsObject</span><span class="rvts6"> and value set to true then parsed result will be returned as an instance of </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6">; Otherwise a var </span><span class="rvts15">integer</span><span class="rvts6"> will be returned. See example below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static Method</span><br/><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> equivalent.</span><br/><span class="rvts6">If obj parameter is an Object then it must be instance from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> or be an instance of </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of </span><span class="rvts15">ReturnAsObject</span><span class="rvts6"> and value set to true then parsed result will be returned as an instance of </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6">; otherwise a var integer will be returned. See example below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> unable to parse </span><span class="rvts54">obj</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #408080; font-style: italic;">; Input of 10 parses to 10</span>
+<span style="color: #408080; font-style: italic;">; input of 0xA parses to 10 as 0XA is a hex value</span>
+<span style="color: #408080; font-style: italic;">; input of -15 parses to -15</span>
+<span style="color: #408080; font-style: italic;">; input of -0x10 parses to -16 as -0x10 is hex for -16</span>
+<span style="color: #408080; font-style: italic;">; input of abc resuts in an error</span>
+<span style="color: #408080; font-style: italic;">; leading and trailing spaces are allowed</span>
+try {
+	<span style="color: #008000;">InputBox</span>, myInput, Enter value, Enter a number to parse<span style="color: #666666;">!</span>
+	if (<span style="color: #000080;">MfNull</span><span style="color: #666666;">.</span><span style="color: #000080;">IsNull</span>(myInput)) {
+		<span style="color: #008000;">MsgBox</span> Sorry no input<span style="color: #666666;">!</span>
+	} else {
+		int <span style="color: #666666;">:=</span> <span style="color: #000080;">MfInteger</span><span style="color: #666666;">.</span><span style="color: #000080;">Parse</span>(myInput)
+		<span style="color: #008000;">MsgBox</span> My Integer Number <span style="color: #aa22ff; font-weight: bold;">is</span><span style="color: #666666;">:</span><span style="color: #19177c;">%int%</span>
+	}
+} catch e {
+	<span style="color: #008000;">MsgBox</span>, <span style="color: #666666;">8240</span>, Error, <span style="color: #666666;">%</span> <span style="color: #ba2121;">"An error has occured!`r`n"</span> <span style="color: #666666;">.</span> e<span style="color: #666666;">.</span><span style="color: #000080;">Message</span>
+}
+<span style="color: #008000;">ExitApp</span>
+
+<span style="color: #408080; font-style: italic;">; Example using MfParams and adding ReturnAsObject to MfParams.Data</span>
+<span style="color: #408080; font-style: italic;">; this example passes MfParams into MfInteger.Parse method with</span>
+<span style="color: #408080; font-style: italic;">; Data Key of ReturnAsObject. This cause MfInteger.Parse to return is value</span>
+<span style="color: #408080; font-style: italic;">; as an instance of MfInteger rather then the default of a var containing integer.</span>
+pStr <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"33"</span>
+Parms <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfParams</span>()
+Parms<span style="color: #666666;">.</span><span style="color: #000080;">AddString</span>(pStr)
+<span style="color: #000080;">Parms.Data.Add</span>(<span style="color: #ba2121;">"ReturnAsObject"</span>,<span style="color: #19177c;">true</span>)
+int <span style="color: #666666;">:=</span> <span style="color: #000080;">MfInteger</span><span style="color: #666666;">.</span><span style="color: #000080;">Parse</span>(Parms)
+<span style="color: #008000;">MsgBox</span> <span style="color: #666666;">%</span> int<span style="color: #666666;">.</span><span style="color: #000080;">Value
+</span></pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

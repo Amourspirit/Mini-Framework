@@ -1,0 +1,105 @@
+﻿<html>
+	
+<head>
+	<title>CutIfLong()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="CutIfLong">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfStringCutIfLong");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">CutIfLong()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfString.html">MfString</a> &rsaquo;&rsaquo; <a href="MfStringMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfStringMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfStringConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStringDifference.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">CutIfLong()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Instance.CutIfLong(maxLen)</span><br/><span class="rvts48">OutputVar := Instance.CutIfLong(maxLen, trailChars)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">CutIfLong(maxLen)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Cuts a copy of this instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> if it is longer than a given length and returns the result of the copy.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">CutIfLong(maxLen, trailChars)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Cuts a copy of this instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> if it is longer than a given length, replaces cut with the value of </span><span class="rvts54">trailChars</span><span class="rvts6"> and returns the result of the copy.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">maxLen</span></p>
+<p class="rvps22"><span class="rvts53">The maximum length that the value of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> is allowed to be before it is cut. Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> or var containing Integer.</span></p>
+<p class="rvps21"><span class="rvts51">TrailChars</span></p>
+<p class="rvps22"><span class="rvts53">The string to append to the value of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53">. To omit any TrailChars pass "" &nbsp;or </span><a class="rvts52" href="Globals.htm#Null">Null</a><span class="rvts53"> in as the value. Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Return </span><span class="rvts15">string</span><span class="rvts6"> copy representing the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> Instance cut with </span><span class="rvts54">trailChars</span><span class="rvts6"> appended to the end if needed.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns var containing </span><span class="rvts15">string</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> is not set to an instance.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if missing </span><span class="rvts54">maxLen</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfICE22.html">MfInvalidCastException</a><span class="rvts6"> if </span><span class="rvts54">maxLen</span><span class="rvts6"> cannot be cast to </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if maxLen is less than one.</span><br/><span class="rvts6"><br/></span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If the </span><span class="rvts54">maxLen</span><span class="rvts6"> is less than the length of the </span><span class="rvts54">trailChars</span><span class="rvts6"> then </span><span class="rvts54">trailChars</span><span class="rvts6"> will not be included in the return value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">myStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts32">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">) </span><span class="rvts31">; Create new instanc of MfString class</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % myStr.</span><span class="rvts45">CutIfLong</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">) &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="rvts31">; Displays Hello W...</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % myStr.</span><span class="rvts45">CutIfLong</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">,</span><span class="rvts42">"***"</span><span class="rvts30">) &nbsp; </span><span class="rvts31">; Displays Hello W***</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % myStr.</span><span class="rvts45">CutIfLong</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">, </span><span class="rvts42">""</span><span class="rvts30">) &nbsp; &nbsp; </span><span class="rvts31">; Displays Hello Worl</span><br/><span class="rvts30"></span><br/><span class="rvts30">myStr.ReturnAsObject := true </span><span class="rvts31">; return object rather than vars from this instance</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % myStr.</span><span class="rvts45">PadLeft</span><span class="rvts30">(</span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(</span><span class="rvts33">MfParams</span><span class="rvts30">.</span><span class="rvts45">I</span><span class="rvts30">(</span><span class="rvts45">14</span><span class="rvts30">),</span><span class="rvts34">MfParams</span><span class="rvts30">.</span><span class="rvts45">C</span><span class="rvts30">(</span><span class="rvts42">"."</span><span class="rvts30">))).</span><span class="rvts45">CutIfLong</span><span class="rvts30">(</span><span class="rvts45">11</span><span class="rvts30">).</span><span class="rvts45">ToUpper</span><span class="rvts30">().</span><span class="rvts34">value</span><span class="rvts30"> </span><span class="rvts31">; displays ...HELLO...</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

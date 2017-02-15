@@ -1,0 +1,90 @@
+﻿<html>
+	
+<head>
+	<title>System.IO Include File</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("System_IO_INC");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">System.IO Include File</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="Internal.html">Internal</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="Internal.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MainIncludeFile.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">System IO Include file</span></span></h1>
+<p class="rvps2"><span class="rvts6">Include File Structure for Manual installation.</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="Distribution.html">Distribution</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">See also: </span><a class="rvts12" href="FoldeFileStructure.html">Folder File Structure</a><span class="rvts6">, </span><a class="rvts12" href="MainIncludeFile.html">Main Include File</a></p>
+<p class="rvps2"><span class="rvts18">File name:</span><span class="rvts6"> inc_mf _System_IO_</span><span class="rvts6">0</span><span class="rvts6">_</span><span class="rvts6">3</span><span class="rvts6">.ahk</span></p>
+<p class="rvps14"><span class="rvts31">;{ License</span><br/><span class="rvts31">/* This file is part of Mini-Framework For AutoHotkey.</span><br/><span class="rvts31"> * </span><br/><span class="rvts31"> * Mini-Framework is free software: you can redistribute it and/or modify</span><br/><span class="rvts31"> * it under the terms of the GNU General Public License as published by</span><br/><span class="rvts31"> * the Free Software Foundation, version 2 of the License.</span><br/><span class="rvts31"> * </span><br/><span class="rvts31"> * Mini-Framework is distributed in the hope that it will be useful,</span><br/><span class="rvts31"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</span><br/><span class="rvts31"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. &nbsp;See the</span><br/><span class="rvts31"> * GNU General Public License for more details.</span><br/><span class="rvts31"> * </span><br/><span class="rvts31"> * You should have received a copy of the GNU General Public License</span><br/><span class="rvts31"> * along with Mini-Framework. &nbsp;If not, see &lt;</span><a class="rvts114" href="http://www.gnu.org/licenses/" target="_blank">http://www.gnu.org/licenses/</a><span class="rvts31">&gt;.</span><br/><span class="rvts31"> */</span><br/><span class="rvts31">; End:License ;}</span><br/><span class="rvts31">;{ IO Exceptions</span><br/><span class="rvts32">#Include</span><span class="rvts30"> &lt;Mini_Framwork\</span><span class="rvts30">0.3</span><span class="rvts30">\System\IO\</span><a class="rvts113" href="MfIOE13.html">MfIOException</a><span class="rvts30">&gt;</span><br/><span class="rvts32">#Include</span><span class="rvts30"> &lt;Mini_Framwork\</span><span class="rvts30">0.3</span><span class="rvts30">\System\IO\</span><a class="rvts113" href="MfDNFE28.html">MfDirectoryNotFoundException</a><span class="rvts30">&gt;</span><br/><span class="rvts32">#Include</span><span class="rvts30"> &lt;Mini_Framwork\</span><span class="rvts30">0.3</span><span class="rvts30">\System\IO\</span><a class="rvts113" href="MfDNFE24.html">MfDriveNotFoundException</a><span class="rvts30">&gt;</span><br/><span class="rvts32">#Include</span><span class="rvts30"> &lt;Mini_Framwork\</span><span class="rvts30">0.3</span><span class="rvts30">\System\IO\</span><a class="rvts113" href="MfFNFE23.html">MfFileNotFoundException</a><span class="rvts30">&gt;</span><br/><span class="rvts31">; End:IO Exceptions ;}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

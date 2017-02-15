@@ -1,0 +1,105 @@
+﻿<html>
+	
+<head>
+	<title>Equals()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfECB22Equals");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Equals()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfECB22.html">MfEqualityComparerBase</a> &rsaquo;&rsaquo; <a href="MfECB22Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfECB22Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfECB22Constructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfECB22GetAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Equals()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals</a></p>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts89">MfEqualityComparerBase</span><span class="rvts48">.Equals()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Equals(x, y)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Determines whether the specified objects are equal.</span></p>
+<p class="rvps2"><span class="rvts87">Abstract</span><span class="rvts6"> Method</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">x</span></p>
+<p class="rvps22"><span class="rvts53">The first </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> to Compare.</span></p>
+<p class="rvps21"><span class="rvts51">y</span></p>
+<p class="rvps22"><span class="rvts53">The second </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> to compare.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns true if the specified objects are equal; otherwise, false.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNIE25.html">MfNotImplementedException</a><span class="rvts6"> if not overridden in derived class.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Implement this method to provide a customized equality comparison for objects.</span></p>
+<p class="rvps2"><span class="rvts18">Notes to Implementers</span><br/><span class="rvts6">The Equals method is reflexive, symmetric, and transitive. That is, it returns </span><span class="rvts18">true</span><span class="rvts6"> if used to compare an </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> with itself; </span><span class="rvts18">true</span><span class="rvts6"> for two </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> </span><span class="rvts54">x</span><span class="rvts6"> and </span><span class="rvts54">y</span><span class="rvts6"> if it is </span><span class="rvts18">true</span><span class="rvts6"> for </span><span class="rvts54">y</span><span class="rvts6"> and </span><span class="rvts54">x</span><span class="rvts6"> ; and </span><span class="rvts18">true</span><span class="rvts6"> for two </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> </span><span class="rvts54">x</span><span class="rvts6"> and </span><span class="rvts18">z</span><span class="rvts6"> if it is </span><span class="rvts18">true</span><span class="rvts6"> for </span><span class="rvts54">x</span><span class="rvts6"> and </span><span class="rvts54">y</span><span class="rvts6"> and also </span><span class="rvts18">true</span><span class="rvts6"> for </span><span class="rvts54">y</span><span class="rvts6"> and </span><span class="rvts18">z</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Implementations are required to ensure that if the Equals method returns </span><span class="rvts18">true</span><span class="rvts6"> for two objects </span><span class="rvts54">x</span><span class="rvts6"> and </span><span class="rvts54">y</span><span class="rvts6">, then the value returned by the </span><a class="rvts12" href="MfECB22GetHashCode.html">GetHashCode</a><span class="rvts6"> method for </span><span class="rvts54">x</span><span class="rvts6"> must equal the value returned for </span><span class="rvts54">y</span><span class="rvts6">.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

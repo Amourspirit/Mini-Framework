@@ -1,0 +1,103 @@
+﻿<html>
+	
+<head>
+	<title>Divide()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfInt16Divide");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Divide()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfInt16.html">MfInt16</a> &rsaquo;&rsaquo; <a href="MfInt16Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfInt16Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfInt16Constructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfInt16Equals.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Divide()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar</span><span class="rvts48"> := </span><span class="rvts50">instance</span><span class="rvts48">.Divide(value)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Divide(value)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Divides the current instance of </span><a class="rvts12" href="MfInt16.html">MfInt16</a><span class="rvts6"> by the divisor </span><span class="rvts54">value</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">value</span></p>
+<p class="rvps22"><span class="rvts53">The Divisor value to divide the current instance </span><a class="rvts52" href="MfInt16Value.html">Value</a><span class="rvts53"> by.</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">. or var number.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts12" href="MfInt16ReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> is true then returns current instance of </span><a class="rvts12" href="MfInt16.html">MfInt16</a><span class="rvts6"> with an updated </span><a class="rvts12" href="MfInt16Value.html">Value</a><span class="rvts6">; Otherwise returns </span><a class="rvts12" href="MfInt16Value.html">Value</a><span class="rvts6"> as var.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><a class="rvts12" href="MfInt16Readonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called as a static method</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts54">value</span><span class="rvts6"> is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfDByZ.html">MfDivideByZeroException</a><span class="rvts6"> if </span><span class="rvts54">value</span><span class="rvts6"> is zero.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE21.html">MfArithmeticException</a><span class="rvts6"> if the operation fails or </span><span class="rvts54">value</span><span class="rvts6"> is not an instance of </span><a class="rvts12" href="MfInt16.html">MfInt16</a><span class="rvts6"> and can not be converted into integer value.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if dividing result is less then </span><a class="rvts12" href="MfInt16MinValue.html">MinValue</a><span class="rvts6"> and greater than </span><a class="rvts12" href="MfInt16MaxValue.html">MaxValue</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If the result of the operation is not a whole number such as </span><span class="rvts18">4/2</span><span class="rvts6"> but rather a float number such as </span><span class="rvts18">8/3</span><span class="rvts6"> </span><span class="rvts41">(8/3 = 2.6666...)</span><span class="rvts6"> then the result will always be the whole number portion of the operation. For example:</span></p>
+<p class="rvps14"><span class="rvts30">mfInt := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInt16</span><span class="rvts30">(</span><span class="rvts72">8</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % mfInt.</span><span class="rvts45">Divide</span><span class="rvts30">(</span><span class="rvts72">3</span><span class="rvts30">) </span><span class="rvts31">; displays 2</span><br/><span class="rvts30"></span><br/><span class="rvts30">mfInt.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts72">8</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % mfInt.</span><span class="rvts45">Divide</span><span class="rvts30">(-</span><span class="rvts72">3</span><span class="rvts30">) </span><span class="rvts72">; displays -2</span></p>
+<p class="rvps2"><span class="rvts6">If you need to work with decimal/float numbers see </span><a class="rvts12" href="MfFloat.html">MfFloat</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">i := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInt16</span><span class="rvts30">(</span><span class="rvts32">80</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">) </span><span class="rvts31">; create new MfInt16 and set it RetrunAsObject to value to true</span><br/><span class="rvts30"></span><br/><span class="rvts30">iNew := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInt64</span><span class="rvts30">(</span><span class="rvts32">8</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % i.</span><span class="rvts45">Divide</span><span class="rvts30">(iNew).</span><span class="rvts32">Value</span><span class="rvts30"> </span><span class="rvts31">; displays 10</span><br/><span class="rvts32">Msgbox</span><span class="rvts30"> % i.</span><span class="rvts45">Add</span><span class="rvts30">(-</span><span class="rvts32">5</span><span class="rvts30">).</span><span class="rvts32">Value</span><span class="rvts30"> </span><span class="rvts31">; displays 5</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % i.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts32">10</span><span class="rvts30">).</span><span class="rvts45">Divide</span><span class="rvts30">(</span><span class="rvts72">2</span><span class="rvts30">).</span><span class="rvts32">Value</span><span class="rvts30"> </span><span class="rvts31">; displays 14</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

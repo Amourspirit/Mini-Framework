@@ -1,0 +1,47 @@
+.PME_List, .Exceptions_List, .Internal_List
+{
+	width: 20em;
+	border-right: 1px solid #000;
+	padding: 0 0 1em 0;
+	margin-bottom: 1em;
+	font-family: 'Trebuchet MS', 'Lucida Grande',
+	Verdana, Lucida, Geneva, Helvetica, 
+	Arial, sans-serif;
+	background-color: #90bade;
+	color: #333;
+ }
+.PME_List ul, .Exceptions_List ul, .Internal_List ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+ }
+  
+.PME_List li, .Exceptions_List li, .Internal_List li
+{
+	border-bottom: 1px solid #90bade;
+	margin: 0;
+ }
+.PME_List li a, .Exceptions_List li a, .Internal_List li a
+{
+	display: block;
+	padding: 5px 5px 5px 0.5em;
+	border-left: 10px solid #1958b7;
+	border-right: 10px solid #508fc4;
+	background-color: #2175bc;
+	color: #fff;
+	text-decoration: none;
+	width: 100%;
+  }
+  html>body .PME_List li a , html>body .Exceptions_List li a , html>body .Internal_List li a
+  {
+	width: auto;
+  }
+  .PME_List li a:hover, .Exceptions_List li a:hover, .Internal_List li a:hover
+  {
+	border-left: 10px solid #1c64d1;
+	border-right: 10px solid #5ba3e0;
+	background-color: #2586d7;
+	color: #fff;
+  }

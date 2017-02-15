@@ -1,0 +1,116 @@
+﻿<html>
+	
+<head>
+	<title>PixelSearch()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Image, PixelSearch">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncPixelSearch");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">PixelSearch()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncPixelGetColor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncProcess.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">PixelSearch()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.PixelSearch(OutputVarX, OutputVarY, X1, Y1, X2, Y2, ColorID [, Variation, Fast|RGB])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.PixelSearch(OutputVarX, OutputVarY, X1, Y1, X2, Y2, ColorID [, Variation, Fast|RGB])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Searches a region of the screen for a pixel of the specified color.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">OutputVarX/Y</span></p>
+<p class="rvps22"><span class="rvts53">The names of the variables in which to store the X and Y coordinates of the first pixel that matches ColorID (if no match is found, the variables are made blank). Coordinates are relative to the active window unless </span><a class="rvts59" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts53"> was used to change that.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Either or both of these parameters may be left blank, in which case ErrorLevel (see below) can be used to determine whether a match was found.</span></p>
+<p class="rvps21"><span class="rvts51">X1, Y1</span></p>
+<p class="rvps22"><span class="rvts53">The X and Y coordinates of the upper left corner of the rectangle to search, which can be </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expressions</a><span class="rvts53">.</span><span class="rvts75"> Coordinates are relative to the active window unless </span><a class="rvts107" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts75"> was used to change that.</span></p>
+<p class="rvps21"><span class="rvts51">X2, Y2</span></p>
+<p class="rvps22"><span class="rvts53">The X and Y coordinates of the lower right corner of the rectangle to search, which can be </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expressions</a><span class="rvts53">. Coordinates are relative to the active window unless </span><a class="rvts59" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts53"> was used to change that.</span></p>
+<p class="rvps21"><span class="rvts51">ColorID</span></p>
+<p class="rvps22"><span class="rvts53">The decimal or hexadecimal color ID to search for, in Blue-Green-Red (BGR) format, which can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. Color IDs can be determined using Window Spy (accessible from the tray menu) or via </span><a class="rvts52" href="MfuncPixelGetColor.html">Mfunc.PixelGetColor</a><span class="rvts53">. For example: </span><span class="rvts101">0x9d6346</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">Variation</span></p>
+<p class="rvps22"><span class="rvts53">A number between 0 and 255 (inclusive) to indicate the allowed number of shades of variation in either direction for the intensity of the red, green, and blue components of the color (can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">). This parameter is helpful if the color sought is not always exactly the same shade. If you specify 255 shades of variation, all colors will match. The default is 0 shades.</span></p>
+<p class="rvps21"><span class="rvts51">Fast|RGB</span></p>
+<p class="rvps22"><span class="rvts53">This parameter may contain the word Fast, RGB, or both (if both are present, separate them with a space; that is, Fast RGB).</span><br/><span class="rvts53"></span><br/><span class="rvts75">Fast</span><span class="rvts53">: Uses a faster searching method that in most cases dramatically reduces the amount of CPU time used by the search. Although color depths as low as 8-bit (256-color) are supported, the fast mode performs much better in 24-bit or 32-bit color. If the screen's color depth is 16-bit or lower, the Variation parameter might behave slightly differently in fast mode than it does in slow mode. Finally, the fast mode searches the screen row by row (top down) instead of column by column. Therefore, it might find a different pixel than that of the slow mode if there is more than one matching pixel.</span><br/><span class="rvts53"></span><br/><span class="rvts75">RGB</span><span class="rvts53">: Causes ColorID to be interpreted as an RGB value instead of BGR. In other words, the red and blue components are swapped.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/PixelSearch.htm" target="_blank">Autohotkey - PixelSearch</a><span class="rvts6"> error message.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="https://autohotkey.com/docs/commands/PixelSearch.htm" target="_blank">AutoHotkey Docs - PixelSearch</a><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">The region to be searched must be visible; in other words, it is not possible to search a region of a window hidden behind another window. By contrast, pixels beneath the mouse cursor can usually be detected. The exception to this is cursors in games, which in most cases will hide any pixels beneath them.</span></p>
+<p class="rvps2"><span class="rvts6">Slow mode only: By default, the search starts at the upper-left pixel of the region and checks all pixels vertically beneath it for a match. If no match is found there, the search continues to the right, column by column, until it finds a matching pixel. The default left-to-right search order can be inverted by swapping X1 and X2 in the parameter list. In other words, if X1 is greater than X2, the search will be conducted from right to left, starting at column X1. Similarly, if Y1 is greater than Y2, each column of pixels to be searched starting at the bottom rather than the top. Finally, if the region to be searched is large and the search is repeated with high frequency, it may consume a lot of CPU time. To alleviate this, keep the size of the area to a minimum.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="https://autohotkey.com/docs/commands/PixelSearch.htm" target="_blank">AutoHotkey Docs - PixelSearch</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">ErrorLevel</span></span></h3>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set to </span><span class="rvts6">0</span><span class="rvts6"> if the color was found in the specified region, </span><span class="rvts6">1</span><span class="rvts6"> if it was not found, or </span><span class="rvts6">2</span><span class="rvts6"> if there was a problem that prevented the command from conducting the search.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">PixelSearch</span><span class="rvts30">(Px, Py, </span><span class="rvts72">200</span><span class="rvts30">, </span><span class="rvts72">200</span><span class="rvts30">, </span><span class="rvts72">300</span><span class="rvts30">, </span><span class="rvts72">300</span><span class="rvts30">, </span><span class="rvts72">0x9d6346</span><span class="rvts30">, </span><span class="rvts72">3</span><span class="rvts30">, </span><span class="rvts42">"Fast"</span><span class="rvts30">)</span><br/><span class="rvts32">if ErrorLevel</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, That color was not found in the specified region.</span><br/><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, A color within 3 shades of variation was found at X%Px% Y%Py%.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfuncPixelGetColor.html">PixelGetColor</a><span class="rvts6">, </span><a class="rvts12" href="MfuncMouseGetPos.html">MouseGetPos</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

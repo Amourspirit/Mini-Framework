@@ -1,0 +1,148 @@
+﻿<html>
+	
+<head>
+	<title>FileSelectFile()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="File, FileSelectFile">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileSelectFile");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileSelectFile()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileRemoveDir.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileSelectFolder.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileSelectFile()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.FileSelectFile([Options, RootDir\Filename, Prompt, Filter])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileSelectFile([Options, RootDir\Filename, Prompt, Filter])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Displays a standard dialog that allows the user to open or save file(s).</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Options</span></p>
+<p class="rvps22"><span class="rvts53">If omitted, it will default to zero, which is the same as having none of the options below.</span><br/><span class="rvts53"></span><br/><span class="rvts75">M</span><span class="rvts53">: Multi-select. Specify the letter M to allow the user to select more than one file via shift-click, control-click, or other means. M may optionally be followed by a number as described below (for example, both M and M1 are valid). To extract the individual files, see the example at the bottom of this page.</span><br/><span class="rvts53"></span><br/><span class="rvts75">S</span><span class="rvts53">: Save button. Specify the letter S to cause the dialog to always contain a Save button instead of an Open button. S may optionally be followed by a number (or sum of numbers) as described below (for example, both S and S24 are valid).</span><br/><span class="rvts53"></span><br/><span class="rvts53">Even if M and S are absent, the following numbers can be used. To put more than one of them into effect, add them up. For example, to use 8 and 16, specify the number 24.</span><br/><span class="rvts53"></span><br/><span class="rvts75">1</span><span class="rvts53">: File Must Exist</span><br/><span class="rvts75">2</span><span class="rvts53">: Path Must Exist</span><br/><span class="rvts75">8</span><span class="rvts53">: Prompt to Create New File</span><br/><span class="rvts75">16</span><span class="rvts53">: Prompt to OverWrite File</span><br/><span class="rvts75">32</span><span class="rvts53"> [v1.0.43.09+]: Shortcuts (.lnk files) are selected as-is rather than being resolved to their targets. This option also prevents navigation into a folder via a folder shortcut.</span><br/><span class="rvts53"></span><br/><span class="rvts53">If the "Prompt to Overwrite" option is present without the "Prompt to Create" option, the dialog will contain a Save button rather than an Open button. This behavior is due to a quirk in Windows.</span></p>
+<p class="rvps21"><span class="rvts51">RootDir\Filename</span></p>
+<p class="rvps22"><span class="rvts53">If present, this parameter contains one or both of the following:</span><br/><span class="rvts53"></span><br/><span class="rvts75">RootDir</span><span class="rvts53">: The root (starting) directory, which is assumed to be a subfolder in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path is not specified. If omitted or blank, the starting directory will be a default that might depend on the OS version (it will likely be the directory most recently selected by the user during a prior use of FileSelectFile). In v1.0.43.10+ on Windows XP/2003 and earlier, a CLSID such as </span><span class="rvts101">::{20d04fe0-3aea-1069-a2d8-08002b30309d}</span><span class="rvts53"> (i.e. My Computer) may also be specified, in which case any subdirectory present after the CLSID should end in a backslash (otherwise, the string after the last backslash will be interpreted as the default filename, below).</span><br/><span class="rvts53"></span><br/><span class="rvts75">Filename</span><span class="rvts53">: The default filename to initially show in the dialog's edit field. Only the naked filename (with no path) will be shown. To ensure that the dialog is properly shown, ensure that no illegal characters are present (such as /&lt;|:").</span><br/><span class="rvts53">Examples:</span></p>
+<p class="rvps26"><span class="rvts84">C:\My Pictures\Default Image Name.gif </span><span class="rvts106">; Both RootDir and Filename are present.</span><br/><span class="rvts84">C:\My Pictures </span><span class="rvts106">; Only RootDir is present.</span><br/><span class="rvts84">My Pictures </span><span class="rvts106">; Only RootDir is present, and it's relative to the current working directory.</span></p>
+<p class="rvps21"><span class="rvts51">Prompt</span></p>
+<p class="rvps22"><span class="rvts53">Text displayed in the window to instruct the user what to do. If omitted or blank, it will default to "Select File - %A_SCRIPTNAME%" (i.e. the name of the current script).</span></p>
+<p class="rvps21"><span class="rvts51">Filter</span></p>
+<p class="rvps22"><span class="rvts53">Indicates which types of files are shown by the dialog.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Example: Documents (*.txt)</span><br/><span class="rvts53">Example: Audio (.wav; .mp2; *.mp3)</span><br/><span class="rvts53"></span><br/><span class="rvts53">If omitted, the filter defaults to All Files (.). An option for Text Documents (*.txt) will also be available in the dialog's "files of type" menu.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Otherwise, the filter uses the indicated string but also provides an option for All Files (.) in the dialog's "files of type" drop-down list. To include more than one file extension in the filter, separate them with semicolons as illustrated in the example above.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the filename(s) selected by the user. If the user didn't select anything (e.g. pressed CANCEL), returns null.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileRemoveDir.htm" target="_blank">Autohotkey - FileRemoveDir</a><span class="rvts6"> error message.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileSelectFile.htm" target="_blank">AutoHotkey Docs - FileSelectFile</a><span class="rvts6">.</span><br/><span class="rvts6">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">If the user didn't select anything (e.g. pressed CANCEL), return is null. </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set to 1. No Exception is thrown on Cancel.</span></p>
+<p class="rvps2"><span class="rvts6">If multi-select is not in effect, OutputVar is set to the full path and name of the single file chosen by the user.</span></p>
+<p class="rvps2"><span class="rvts6">If the M option (multi-select) is in effect, OutputVar is set to a list of items, each of which except the last is followed by a linefeed (`n) character. The first item in the list is the path that contains all the selected files (this path will end in a backslash only if it is a root folder such as C:). The other items are the selected filenames (without path). For example:</span></p>
+<p class="rvps14"><span class="rvts30">C:\My Documents\New Folder [this is the path in which all the files below reside]</span><br/><span class="rvts30">test1.txt [these are the naked filenames: no path info]</span><br/><span class="rvts30">test2.txt</span><br/><span class="rvts30">... etc.</span></p>
+<p class="rvps2"><span class="rvts6">(The example at the bottom of this page demonstrates how to extract the files one by one.)</span></p>
+<p class="rvps2"><span class="rvts6">When multi-select is in effect, the sum of the lengths of the selected filenames is limited to 64 KB. Although this is typically enough to hold several thousand files, OutputVar will be made blank if the limit is exceeded.</span></p>
+<p class="rvps2"><span class="rvts6">A GUI window may display a modal file-selection dialog by means of </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#OwnDialogs" target="_blank">Gui +OwnDialogs</a><span class="rvts6">. A modal dialog prevents the user from interacting with the GUI window until the dialog is dismissed.</span></p>
+<p class="rvps2"><span class="rvts6">Known limitation: A </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetTimer.htm" target="_blank">timer</a><span class="rvts6"> that launches during the display of a FileSelectFile dialog will postpone the effect of the user's clicks inside the dialog until after the timer finishes. To work around this, avoid using timers whose subroutines take a long time to finish, or disable all timers during the dialog:</span></p>
+<p class="rvps14"><span class="rvts30">Thread, NoTimers</span><br/><span class="rvts30">FileSelectFile, OutputVar</span><br/><span class="rvts30">Thread, NoTimers, false</span></p>
+<p class="rvps2"><span class="rvts6">Obsolete option: In [v1.0.25.06+], the multi-select option "4" is obsolete. However, for compatibility with older scripts, it still functions as it did before. Specifically, if the user selects only one file, OutputVar will contain its full path and name followed by a linefeed (`n) character. If the user selects more than one file, the format is the same as that of the M option described above, except that the last item also ends in a linefeed (`n).</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing </span><span class="rvts15">string</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileSelectFile.htm" target="_blank">AutoHotkey Docs - FileSelectFile</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">SelectedFile <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>FileSelectFile(<span style="color: #666666">3</span>, , <span style="color: #BA2121">&quot;Open a file&quot;</span>, <span style="color: #BA2121">&quot;Text Documents (*.txt; *.doc)&quot;</span>)
+<span style="color: #008000">if </span>SelectedFile <span style="color: #666666">=</span>
+    <span style="color: #008000">MsgBox</span>, The user didn't select anything<span style="color: #666666">.</span>
+<span style="color: #008000">else</span>
+    <span style="color: #008000">MsgBox</span>, The user selected the following<span style="color: #666666">:</span><span style="color: #BB6622; font-weight: bold">`n</span><span style="color: #19177C">%SelectedFile%</span><span style="color: #408080; font-style: italic"></span>
+
+
+<span style="color: #408080; font-style: italic">; CLSID Example (requires XP/2003 or earlier):</span>
+OutputVar <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>FileSelectFile(, <span style="color: #BA2121">&quot;::{645ff040-5081-101b-9f08-00aa002f954e}&quot;</span>)<span style="color: #408080; font-style: italic">  ; Recycle Bin.</span>
+
+<span style="color: #408080; font-style: italic">; Multi-Select Example:</span>
+files <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>FileSelectFile(<span style="color: #BA2121">&quot;M3&quot;</span>)<span style="color: #408080; font-style: italic">  ; M3 = Multiselect existing files.</span>
+<span style="color: #008000">if </span>files <span style="color: #666666">=</span>
+{
+    <span style="color: #008000">MsgBox</span>, The user pressed cancel<span style="color: #666666">.</span>
+    <span style="color: #008000">return</span>
+}
+<span style="color: #008000">Loop</span>, parse, files, <span style="color: #BB6622; font-weight: bold">`n</span>
+{
+    <span style="color: #008000">if </span><span style="color: #19177C">a_index</span> <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+        <span style="color: #008000">MsgBox</span>, The selected files are all contained <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #19177C">%A_LoopField%</span><span style="color: #666666">.</span>
+    <span style="color: #008000">else</span>
+    {
+        <span style="color: #008000">MsgBox</span>, <span style="color: #666666">4</span>, , The <span style="color: #0000FF">next</span> file <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #19177C">%A_LoopField%</span><span style="color: #666666">.</span>  Continue<span style="color: #666666">?</span>
+        <span style="color: #008000">IfMsgBox</span>, No, break
+    }
+}
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

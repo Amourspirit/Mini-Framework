@@ -1,0 +1,134 @@
+﻿<html>
+	
+<head>
+	<title>SoundGet()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="SoundGet">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncSoundGet");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">SoundGet()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncSetFormat.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncSoundGetWaveVolume.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">SoundGet()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.SoundGet([ComponentType, ControlType, DeviceNumber])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.SoundGet([ComponentType, ControlType, DeviceNumber])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves various settings from a sound device (master mute, master volume, etc.)</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">ComponentType</span></p>
+<p class="rvps22"><span class="rvts53">If omitted or blank, it defaults to the word MASTER. Otherwise, it can be one of the following words: MASTER (synonymous with SPEAKERS), DIGITAL, LINE, MICROPHONE, SYNTH, CD, TELEPHONE, PCSPEAKER, WAVE, AUX, ANALOG, HEADPHONES, or N/A. If the sound device lacks the specified ComponentType, ErrorLevel will indicate the problem.</span><br/><span class="rvts53"></span><br/><span class="rvts53">The component labeled Auxiliary in some mixers might be accessible as ANALOG rather than AUX.</span><br/><span class="rvts53"></span><br/><span class="rvts53">If a device has more than one instance of ComponentType (two of type LINE, for example), usually the first contains the playback settings and the second contains the recording settings. To access an instance other than the first, append a colon and a number to this parameter. For example: Analog:2 is the second instance of the analog component.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">ControlType</span></p>
+<p class="rvps22"><span class="rvts53">If omitted or blank, it defaults to VOLUME. Otherwise, it can be one of the following words: VOLUME (or VOL), ONOFF, MUTE, MONO, LOUDNESS, STEREOENH, BASSBOOST, PAN, QSOUNDPAN, BASS, TREBLE, EQUALIZER, or the number of a valid control type (see </span><a class="rvts59" href="http://ahkscript.org/docs/commands/SoundSet.htm#Ex" target="_blank">soundcard analysis script</a><span class="rvts53">). If the specified ComponentType lacks the specified ControlType, ErrorLevel will indicate the problem.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Note: sound devices usually support only VOLUME (or VOL) and MUTE, although others may be available depending on Windows and the sound device.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">DeviceNumber</span></p>
+<p class="rvps22"><span class="rvts53">A number between 1 and the total number of supported devices. If this parameter is omitted, it defaults to 1 (the first sound device), or on Windows Vista or above, the system's default device for playback. This parameter can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. The </span><a class="rvts59" href="http://ahkscript.org/docs/commands/SoundSet.htm#Ex" target="_blank">soundcard analysis script</a><span class="rvts53"> may help determine which number to use.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the name of the variable in which to store the retrieved setting, which is either a floating point number between 0 and 100 (inclusive) or the word ON or OFF (used only for ControlTypes ONOFF, MUTE, MONO, LOUDNESS, STEREOENH, and BASSBOOST). The variable will be made blank if there was a problem retrieving the setting. The format of the floating point number, such as its decimal places, is determined by </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetFormat.htm" target="_blank">SetFormat</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">ErrorLevel</span></span></h3>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set to 0 if the command succeeded. Otherwise, it is set to one of the following phrases:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">Invalid Control Type or Component Type</span></li>
+<li class="rvps2"><span class="rvts6">Can't Open Specified Mixer</span></li>
+<li class="rvps2"><span class="rvts6">Mixer Doesn't Support This Component Type</span></li>
+<li class="rvps2"><span class="rvts6">Mixer Doesn't Have That Many of That Component Type</span></li>
+<li class="rvps2"><span class="rvts6">Component Doesn't Support This Control Type</span></li>
+<li class="rvps2"><span class="rvts6">Can't Get Current Setting</span></li>
+</ul>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundGet.htm" target="_blank">Autohotkey - SoundGet</a><span class="rvts6"> error message.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Support for Windows Vista and later was added in </span><span class="rvts41">AutoHotKey</span><span class="rvts6"> </span><span class="rvts41">[v1.1.10+]</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">To discover the capabilities of the sound devices (mixers) installed on the system -- such as the available component types and control types -- run the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundSet.htm#Ex" target="_blank">soundcard analysis script</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">For more functionality and finer grained control over audio, consider using the </span><a class="rvts13" href="http://www.autohotkey.com/board/topic/21984-vista-audio-control-functions/" target="_blank">VA library</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundSet.htm" target="_blank">SoundSet</a><span class="rvts6"> to change a setting.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">master_volume <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>SoundGet()
+<span style="color: #008000">MsgBox</span>, Master volume <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #19177C">%master_volume%</span> percent<span style="color: #666666">.</span>
+
+master_mute <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>SoundGet( , <span style="color: #BA2121">&quot;mute&quot;</span>)
+<span style="color: #008000">MsgBox</span>, Master Mute <span style="color: #AA22FF; font-weight: bold">is</span> currently <span style="color: #19177C">%master_mute%</span><span style="color: #666666">.</span>
+
+bass_level <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>SoundGet(<span style="color: #BA2121">&quot;Master&quot;</span>, <span style="color: #BA2121">&quot;bass&quot;</span>)
+<span style="color: #008000">if </span><span style="color: #19177C">ErrorLevel</span>
+    <span style="color: #008000">MsgBox</span>, Error Description<span style="color: #666666">:</span> <span style="color: #19177C">%ErrorLevel%</span>
+<span style="color: #008000">else</span>
+    <span style="color: #008000">MsgBox</span>, The BASS level for MASTER <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #19177C">%bass_level%</span> percent<span style="color: #666666">.</span>
+
+microphone_mute <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>SoundGet(<span style="color: #BA2121">&quot;Microphone&quot;</span>, <span style="color: #BA2121">&quot;mute&quot;</span>)
+<span style="color: #008000">if </span>microphone_mute <span style="color: #666666">=</span> Off
+    <span style="color: #008000">MsgBox</span>, The microphone <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> muted<span style="color: #666666">.</span>
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

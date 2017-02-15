@@ -1,0 +1,119 @@
+﻿<html>
+	
+<head>
+	<title>CharCode</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharCharCode");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">CharCode</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfChar.html">MfChar</a> &rsaquo;&rsaquo; <a href="MfCharProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCharProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCharProperties.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCharIgnoreCase.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">CharCode</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the CharCode associated with the this instance of </span><a class="rvts12" href="MfChar.html">MfChar</a></p>
+<p class="rvps20"><span class="rvts48">OutputVar := instance.CharCode</span><br/><span class="rvts48">MfChar.instance := Value</span></p>
+<p class="rvps21"><span class="rvts51">value</span></p>
+<p class="rvps22"><span class="rvts53">Value is a integer and can be var or</span><span class="rvts52"> </span><span class="rvts53">any type that matches </span><a class="rvts52" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets the </span><a class="rvts12" href="MfCharValue.html">Value</a><span class="rvts6"> to a char that represents the </span><span class="rvts54">value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets integer as var representing the current </span><a class="rvts12" href="MfCharValue.html">Value</a><span class="rvts6"> char that is no less then </span><a class="rvts12" href="MfCharMinValue.html">MinValue</a><span class="rvts6"> and no greater than </span><a class="rvts12" href="MfCharMaxValue.html">MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> on set if </span><a class="rvts12" href="MfCharReadonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfICE22.html">MfInvalidCastException</a><span class="rvts6"> if value can not be cast to integer</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if value is less then </span><a class="rvts12" href="MfCharMinValue.html">MinValue</a><span class="rvts6"> or greater then </span><a class="rvts12" href="MfCharMaxValue.html">MaxValue</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">c <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfChar</span>()<span style="color: #408080; font-style: italic;"> ; create a new instance of MfChar class.</span>
+c<span style="color: #666666;">.</span><span style="color: #000080;">CharCode</span> <span style="color: #666666;">:=</span> <span style="color: #666666;">0x0061</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays a</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">CharCode</span> <span style="color: #666666;">:=</span> <span style="color: #666666;">70</span>
+c<span style="color: #666666;">.</span><span style="color: #000080;">ReturnAsObject</span> <span style="color: #666666;">:=</span> <span style="color: #19177c;">true</span><span style="color: #408080; font-style: italic;"> ; return MfChar object instances on methods it applys to.</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays F</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">CharCode</span> <span style="color: #666666;">:=</span> <span style="color: #666666;">0x45</span><span style="color: #408080; font-style: italic;"> ; hex values inf formart of 0x#### are converted into the Unicode a character same as c.CharCode := "0x45"</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays E</span>
+
+i <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfInteger</span>(<span style="color: #666666;">89</span>)<span style="color: #408080; font-style: italic;"> ; create new MfInteger instance</span>
+c<span style="color: #666666;">.</span><span style="color: #000080;">CharCode</span> <span style="color: #666666;">:=</span> i<span style="color: #408080; font-style: italic;"> ; Set MfInteger as Value and it is converted to char value</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays Y</span>
+</pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,101 @@
+﻿<html>
+	
+<head>
+	<title>ReferenceEquals()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfObjectReferenceEquals");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ReferenceEquals()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfObject.html">MfObject</a> &rsaquo;&rsaquo; <a href="MfObjectMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfObjectMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfObjectMemberwiseClone.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfObjectToString.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ReferenceEquals()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfObject.ReferenceEquals(objA, objB)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">ReferenceEquals(objA, objB)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Determines whether the specified Object instances are the same instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">objA</span></p>
+<p class="rvps22"><span class="rvts53">The first object to compare.</span></p>
+<p class="rvps21"><span class="rvts51">objB</span></p>
+<p class="rvps22"><span class="rvts53">The second object to compare.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">objA</span><span class="rvts6"> is the same instance as </span><span class="rvts54">objB</span><span class="rvts6"> or if both are null; Otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If you want to test two object references for equality and are unsure about the implementation of the Equals method, you can call the </span><span class="rvts15">ReferenceEquals</span><span class="rvts6"> method. When calling this method call using </span><span class="rvts18">MfObject.ReferenceEquals</span><span class="rvts6"> to ensure that </span><span class="rvts15">ReferenceEquals</span><span class="rvts6"> has not been overridden on Derived classes.</span><br/><span class="rvts15">Static Function</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">o := </span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts32">Null</span><br/><span class="rvts30">p := </span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts32">Null</span><br/><span class="rvts30">q := </span><span class="rvts32">Object</span><span class="rvts30">()</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfObject</span><span class="rvts30">.</span><span class="rvts45">ReferenceEquals</span><span class="rvts30">(o, p) </span><span class="rvts31">; displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfObject</span><span class="rvts30">.</span><span class="rvts45">ReferenceEquals</span><span class="rvts30">(p, q) </span><span class="rvts31">; displays 0 for false</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

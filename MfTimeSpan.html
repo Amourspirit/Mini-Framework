@@ -1,0 +1,95 @@
+﻿<html>
+	
+<head>
+	<title>MfTimeSpan</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="TimeSpan, Time">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfTimeSpan");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MfTimeSpan</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfSSO20VerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfTimeSpanFields.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfTimeSpan Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">A MfTimeSpan object represents a time interval (duration of time or elapsed time) that is measured as a positive or negative number of days, hours, minutes, seconds, and fractions of a second. The </span><span class="rvts41">MfTimeSpan</span><span class="rvts6"> object can also be used to represent the time of day, but only if the time is unrelated to a particular date.</span></p>
+<p class="rvps2"><span class="rvts6">The largest unit of time that the </span><span class="rvts41">MfTimeSpan</span><span class="rvts6"> object uses to measure duration is a day. Time intervals are measured in days for consistency, because the number of days in larger units of time, such as months and years, varies.</span></p>
+<p class="rvps2"><span class="rvts6">The value of a MfTimeSpan object is the number of ticks that equal the represented time interval. A tick is equal to 100 nanoseconds, or one ten-millionth of a second. The value of a </span><span class="rvts41">MfTimeSpan</span><span class="rvts6"> object can range from </span><a class="rvts12" href="MfTimeSpanMinValue.html">MfTimeSpan.MinValue</a><span class="rvts6"> to </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MfTimeSpan.MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfTimeSpanFields.html">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpanProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpanMethods.html">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpanConstructor.html">Constructor()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts34">Zero</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 00</span><br/><span class="rvts31"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">5624853448000</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 06.12:14:45.3448000</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07:14:00</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07:14:17</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">, </span><span class="rvts72">41</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">, </span><span class="rvts72">41</span><span class="rvts30">, </span><span class="rvts33">243</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41.2430000</span><br/><span class="rvts30"></span><br/><span class="rvts30">iHour := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">14</span><span class="rvts30">)</span><br/><span class="rvts30">iMin &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">57</span><span class="rvts30">)</span><br/><span class="rvts30">iSec &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">29</span><span class="rvts30">)</span><br/><span class="rvts30">span &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(iHour, iMin, iSec)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 14:57:29</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

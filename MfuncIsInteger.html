@@ -1,0 +1,101 @@
+﻿<html>
+	
+<head>
+	<title>IsInteger()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Number, Integer, IsInteger">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncIsInteger");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsInteger()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncIsInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncIsNumeric.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsInteger()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.IsInteger(num)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.IsInteger(num)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if a param num is Integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">num</span></p>
+<p class="rvps22"><span class="rvts53">A var to check to see if it contains an integer</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">num</span><span class="rvts6"> is non-empty and contains a purely numeric string (decimal or hexadecimal) without a decimal point. Leading and trailing spaces and tabs are allowed. The string may start with a plus or minus sign; Otherwise </span><span class="rvts18">false</span><span class="rvts6"> is returned</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static method.</span><br/><span class="rvts6">String Values containing numbers such as "100" and "0" will return true However "100.2" will return false.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfuncIsNumeric.html">IsNumeric()</a><span class="rvts6">, </span><a class="rvts12" href="MfuncIsFloat.html">IsFloat()</a><span class="rvts6">, </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">, </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6">, </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6">, </span><a class="rvts12" href="MfByte.html">MfByte</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts72">100</span><span class="rvts30">) &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts72">100.0</span><span class="rvts30">) &nbsp; &nbsp;</span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(-</span><span class="rvts72">100</span><span class="rvts30">) &nbsp; &nbsp; </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(+</span><span class="rvts72">100</span><span class="rvts30">) &nbsp; &nbsp; </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts42">"100"</span><span class="rvts30">) &nbsp; &nbsp;</span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts42">"0x100A"</span><span class="rvts30">) </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts72">0x100A</span><span class="rvts30">) &nbsp; </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts42">"100a"</span><span class="rvts30">) &nbsp; </span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts42">"100.1"</span><span class="rvts30">) &nbsp;</span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts42">"a100"</span><span class="rvts30">) &nbsp; </span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsInteger</span><span class="rvts30">(</span><span class="rvts42">"a"</span><span class="rvts30">) &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; Displays 0 for false</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

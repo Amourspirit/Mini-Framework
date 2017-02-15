@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>IsFalse</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfBoolIsFalse");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsFalse</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfBool.html">MfBool</a> &rsaquo;&rsaquo; <a href="MfBoolProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfBoolProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfBoolProperties.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfBoolIsTrue.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsFalse</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets if the </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> associated with the this instance of </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.IsFalse</span></p>
+<p class="rvps21"><span class="rvts51">value</span></p>
+<p class="rvps22"><span class="rvts53">Value is a boolean var.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets boolean as var.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">True</span><span class="rvts6"> if the </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> is </span><span class="rvts18">False</span><span class="rvts6">; Otherwise </span><span class="rvts18">False</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if attempt to set Value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">b := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfBool</span><span class="rvts30">()</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays False</span><br/><span class="rvts31"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts32">true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays True</span><br/><span class="rvts31"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts72">0</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays False</span><br/><span class="rvts31"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts72">7</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays True</span><br/><span class="rvts30"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := -</span><span class="rvts72">7</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays False</span><br/><span class="rvts31"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts72">7.89</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays True</span><br/><span class="rvts30"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := -</span><span class="rvts72">7.89</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays False</span><br/><span class="rvts30"></span><br/><span class="rvts30">objI := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">4572</span><span class="rvts30">)</span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := objI</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays True</span><br/><span class="rvts30"></span><br/><span class="rvts30">objI := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(-</span><span class="rvts72">4572</span><span class="rvts30">)</span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := objI</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays False</span><br/><span class="rvts30"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts42">"false"</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays False</span><br/><span class="rvts30"></span><br/><span class="rvts30">b.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts42">"true"</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsTrue</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp;</span><span class="rvts31">; displays True</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">IsFalse</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" </span><span class="rvts31">; displays False</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % b.</span><span class="rvts34">Value</span><span class="rvts30">?</span><span class="rvts42">"True"</span><span class="rvts30">:</span><span class="rvts42">"False" &nbsp; </span><span class="rvts31">; displays True</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,132 @@
+﻿<html>
+	
+<head>
+	<title>IfNotBetween()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="IfNotBetween">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncIfNotBetween");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IfNotBetween()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncIfIsNot.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncIfNotContains.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IfNotBetween()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.IfNotBetween(byref var, LowerBound, UpperBound)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.IfNotBetween(byref var, LowerBound, UpperBound)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks whether a variable's contents are not numerically or alphabetically between two values (inclusive).</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">var</span></p>
+<p class="rvps22"><span class="rvts53">The </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm" target="_blank">variable</a><span class="rvts53"> name whose contents will be checked.</span></p>
+<p class="rvps21"><span class="rvts51">LowerBound</span></p>
+<p class="rvps22"><span class="rvts53">To be within the specified range, </span><span class="rvts76">var</span><span class="rvts53"> must be greater than or equal to this string, number, or variable reference.</span></p>
+<p class="rvps21"><span class="rvts51">UpperBound</span></p>
+<p class="rvps22"><span class="rvts53">To be within the specified range, </span><span class="rvts76">var</span><span class="rvts53"> must be less than or equal to this string, number, or variable reference.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">var</span><span class="rvts6"> is not between </span><span class="rvts54">LowerBound</span><span class="rvts6"> and </span><span class="rvts54">UpperBound</span><span class="rvts6">; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If all three of the parameters are purely numeric, they will be compared as numbers rather than as strings. Otherwise, they will be compared alphabetically as strings (that is, alphabetical order will determine whether Var is within the specified range). In that case, </span><a class="rvts13" href="http://ahkscript.org/docs/commands/StringCaseSense.htm" target="_blank">StringCaseSense</a><span class="rvts6"> On can be used to make the comparison case sensitive.</span><br/><span class="rvts6">Static Method.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">: </span><a class="rvts13" href="http://ahkscript.org/docs/commands/IfBetween.htm" target="_blank">AutoHotKey Between</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">if (Mfunc<span style="color: #666666">.</span>IfNotBetween(var, <span style="color: #666666">1</span>, <span style="color: #666666">5</span>))
+{
+	<span style="color: #008000">MsgBox</span>, <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #AA22FF; font-weight: bold">in</span> the range <span style="color: #666666">1</span> to <span style="color: #666666">5</span>, inclusive<span style="color: #666666">.</span>
+}
+
+if (<span style="color: #666666">!</span>Mfunc<span style="color: #666666">.</span>IfNotBetween(var, <span style="color: #666666">0.0</span>, <span style="color: #666666">1.0</span>))
+{
+	<span style="color: #008000">MsgBox</span> <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">in</span> the range <span style="color: #666666">0.0</span> to <span style="color: #666666">1.0</span>, inclusive<span style="color: #666666">.</span>
+}
+
+if (Mfunc<span style="color: #666666">.</span>IfNotBetween(var, VarLow, VarHigh))
+{
+	<span style="color: #008000">MsgBox</span> <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> between <span style="color: #19177C">%VarLow%</span> <span style="color: #AA22FF; font-weight: bold">and</span> <span style="color: #19177C">%VarHigh%</span><span style="color: #666666">.</span>
+}
+
+if (Mfunc<span style="color: #666666">.</span>IfNotBetween(var, <span style="color: #BA2121">&quot;blue&quot;</span>, <span style="color: #BA2121">&quot;red&quot;</span>))
+{
+	 <span style="color: #008000">MsgBox</span> <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> alphabetically <span style="color: #AA22FF; font-weight: bold">not</span> between the words blue <span style="color: #AA22FF; font-weight: bold">and</span> red<span style="color: #666666">.</span>
+}
+
+LowerLimit <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+UpperLimit <span style="color: #666666">=</span> <span style="color: #666666">10</span>
+<span style="color: #008000">InputBox</span>, UserInput, Enter a number between <span style="color: #19177C">%LowerLimit%</span> <span style="color: #AA22FF; font-weight: bold">and</span> <span style="color: #19177C">%UpperLimit%</span>
+if (Mfunc<span style="color: #666666">.</span>IfNotBetween(UserInput, LowerLimit, UpperLimit))
+{
+	<span style="color: #008000">MsgBox</span> Your input <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> within the valid range<span style="color: #666666">.</span>
+}
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

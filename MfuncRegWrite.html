@@ -1,0 +1,120 @@
+﻿<html>
+	
+<head>
+	<title>RegWrite()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Registry, RegWrite">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncRegWrite");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">RegWrite()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncRegRead.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncRun.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">RegWrite()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.RegWrite(ValueType, RootKey, SubKey [, ValueName, Value])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.RegWrite(ValueType, RootKey, SubKey [, ValueName, Value])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Writes a value to the registry.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">ValueType</span></p>
+<p class="rvps22"><span class="rvts53">Must be either REG_SZ, REG_EXPAND_SZ, REG_MULTI_SZ, REG_DWORD, or REG_BINARY.</span></p>
+<p class="rvps21"><span class="rvts51">RootKey</span></p>
+<p class="rvps22"><span class="rvts53">Must be either HKEY_LOCAL_MACHINE, HKEY_USERS, HKEY_CURRENT_USER, HKEY_CLASSES_ROOT, or HKEY_CURRENT_CONFIG (or the abbreviations for each of these, such as HKLM). To access a remote registry, prepend the computer name and a colon, as in this example: \workstation01:HKEY_LOCAL_MACHINE</span></p>
+<p class="rvps21"><span class="rvts51">SubKey</span></p>
+<p class="rvps22"><span class="rvts53">The name of the subkey (e.g. Software\SomeApplication). If SubKey does not exist, it is created (along with its ancestors, if necessary). If SubKey is left blank, the value is written directly into RootKey (though some operating systems might refuse to write in HKEY_CURRENT_USER's top level).</span></p>
+<p class="rvps21"><span class="rvts51">ValueName</span></p>
+<p class="rvps22"><span class="rvts53">The name of the value that will be written to. If blank or omitted, Subkey's default value will be used, which is the value displayed as "(Default)" by RegEdit.</span></p>
+<p class="rvps21"><span class="rvts51">Value</span></p>
+<p class="rvps22"><span class="rvts53">The value to be written. If omitted, it will default to an empty (blank) string, or 0, depending on ValueType. If the text is long, it can be broken up into several shorter lines by means of a </span><a class="rvts59" href="http://ahkscript.org/docs/Scripts.htm#continuation" target="_blank">continuation section</a><span class="rvts53">, which might improve readability and maintainability.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> is non-zero then </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> message is set to the value of </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/RegWrite.htm" target="_blank">AutoHotkey Docs - RegWrite</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">If ValueType is REG_DWORD, Value should be between -2147483648 and 4294967295 (0xFFFFFFFF).</span></p>
+<p class="rvps2"><span class="rvts6">When writing a REG_BINARY key, use a string of hex characters, e.g. the REG_BINARY value of 01,a9,ff,77 can be written by using the string 01A9FF77.</span></p>
+<p class="rvps2"><span class="rvts6">When writing a REG_MULTI_SZ key, you must separate each component from the next with a linefeed character (`n). The last component may optionally end with a linefeed as well. No blank components are allowed. In other words, do not specify two linefeeds in a row (`n`n) because that will result in a shorter-than-expected value being written to the registry.</span></p>
+<p class="rvps2"><span class="rvts6">REG_BINARY and REG_MULTI_SZ values larger than 64K are supported in </span><span class="rvts41">AutoHotkey [v1.1.10.01]</span><span class="rvts6"> and later. In older versions, they are truncated to 64K</span></p>
+<p class="rvps2"><span class="rvts6">To retrieve and operate upon multiple registry keys or values, consider using a </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopReg.htm" target="_blank">registry-loop</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">For details about how to access the registry of a remote computer, see the remarks in </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopReg.htm" target="_blank">registry-loop</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">To read and write entries from the 64-bit sections of the registry in a 32-bit script or vice versa, use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetRegView.htm" target="_blank">SetRegView</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/RegWrite.htm" target="_blank">AutoHotkey Docs - RegWrite</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Mfunc<span style="color: #666666">.</span>RegWrite(<span style="color: #BA2121">&quot;REG_SZ&quot;</span>, <span style="color: #BA2121">&quot;HKEY_LOCAL_MACHINE&quot;</span>, <span style="color: #BA2121">&quot;SOFTWARE\TestKey&quot;</span>, <span style="color: #BA2121">&quot;MyValueName&quot;</span>, <span style="color: #BA2121">&quot;Test Value&quot;</span>)
+Mfunc<span style="color: #666666">.</span>RegWrite(<span style="color: #BA2121">&quot;REG_BINARY&quot;</span>, <span style="color: #BA2121">&quot;HKEY_CURRENT_USER&quot;</span>, <span style="color: #BA2121">&quot;Software\TEST_APP&quot;</span>, <span style="color: #BA2121">&quot;TEST_NAME&quot;</span>, <span style="color: #BA2121">&quot;01A9FF77&quot;</span>)
+Mfunc<span style="color: #666666">.</span>RegWrite(<span style="color: #BA2121">&quot;REG_MULTI_SZ&quot;</span>, <span style="color: #BA2121">&quot;HKEY_CURRENT_USER&quot;</span>, <span style="color: #BA2121">&quot;Software\TEST_APP&quot;</span>, <span style="color: #BA2121">&quot;TEST_NAME&quot;</span>, <span style="color: #BA2121">&quot;Line1`nLine2&quot;</span>)
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

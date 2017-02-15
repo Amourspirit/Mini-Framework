@@ -1,0 +1,115 @@
+﻿<html>
+	
+<head>
+	<title>ResourceFolder</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="ResourceFolder">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfEnvironmentResourceFolder");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ResourceFolder</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfEnvironment.html">MfEnvironment</a> &rsaquo;&rsaquo; <a href="MfEnvironmentProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfEnvironmentProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfEnvironmentNewLine.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfEnvironmentTickCount.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ResourceFolder</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfEnvironment.Instance.ResourceFolder</span></p>
+<p class="rvps21"><span class="rvts51">Value</span></p>
+<p class="rvps22"><span class="rvts53">Var String</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets the current resource folder for </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> as var string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if attempt is made to set value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A var of </span><span class="rvts15">string</span><span class="rvts6"> containing the path to the current resource folder</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Read-only</span><span class="rvts6"> Property</span><br/><span class="rvts6">ResourceFolder is checked for in several locations and returns the first valid found location.</span><br/><span class="rvts6">The search locations are as follows</span></p>
+<p class="rvps2"><span class="rvts6">There is an option to set a</span><span class="rvts18"> Super Global</span><span class="rvts6"> in your project that takes the highest priority for the location of </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> resources.</span></p>
+<p class="rvps2"><span class="rvts6">To use the </span><span class="rvts18">Super Global</span><span class="rvts6"> option set a </span><span class="rvts18">Global</span><span class="rvts6"> var named </span><span class="rvts18">MfResourceFolder</span><span class="rvts6"> and set it to the location of the resources.</span></p>
+<p class="rvps14"><span class="rvts32">#NoEnv</span><br/><span class="rvts32">#SingleInstance Force</span><br/><span class="rvts32">#NoTrayIcon</span><br/><span class="rvts32">#KeyHistory</span><span class="rvts30"> </span><span class="rvts72">0</span><br/><span class="rvts32">SetBatchLines</span><span class="rvts30"> -</span><span class="rvts72">1</span><br/><span class="rvts32">ListLines</span><span class="rvts30">, </span><span class="rvts32">Off</span><br/><span class="rvts32">SendMode Input</span><span class="rvts30"> </span><span class="rvts31">; Forces Send and SendRaw to use SendInput buffering for speed.</span><br/><span class="rvts32">SetTitleMatchMode</span><span class="rvts30">, </span><span class="rvts72">3</span><span class="rvts30"> </span><span class="rvts31">; A window's title must exactly match WinTitle to be a match.</span><br/><span class="rvts32">SetWorkingDir</span><span class="rvts30">, %</span><span class="rvts32">A_ScriptDir</span><span class="rvts30">%</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Include </span><span class="rvts31">Mini-Framework</span><span class="rvts31"> </span><span class="rvts31">0.3.8.1</span><br/><span class="rvts32">#Include</span><span class="rvts30"> </span><span class="rvts30">&lt;inc_mf_0_3&gt;</span><br/><span class="rvts31">; set super global to local resources manually</span><br/><span class="rvts32">Global</span><span class="rvts30"> MfResourceFolder := </span><span class="rvts42">"C:\Program Files\AutoHotkey\Lib\Mini_Framwork\</span><span class="rvts42">0.3</span><span class="rvts42">\System\Resource"</span></p>
+<p class="rvps2"><span class="rvts6">If</span><span class="rvts18"> Super Global MfResourceFolder</span><span class="rvts6"> is not set </span><span class="rvts22">( default )</span><span class="rvts6"> or not found then resources search for the first found location in the following order</span></p>
+<p class="rvps2"><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\System\Resource</span><br/><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\System\Resource</span><br/><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\Resource</span><br/><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\Resources</span><br/><span class="rvts18">{Script Folder}</span><br/><span class="rvts18">{Program Files}</span><span class="rvts6">\AutoHotkey\Lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\System\Resource</span><br/><span class="rvts22">Resource Path set by </span><span class="rvts22">Mini-Framework</span><span class="rvts22"> installer usually the same as the previous line</span><br/><span class="rvts18">{Path set by AutoHotkey installer}</span><span class="rvts6">\lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\System\Resource</span><br/><span class="rvts18">{My Documents}</span><span class="rvts6">\AutoHotkey\Lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\System\Resource</span></p>
+<h4 class="rvps7"><span class="rvts0"><span class="rvts19">Note:</span></span></h4>
+<p class="rvps2"><span class="rvts6">You may get a error similar to the following when you run your script. This error will occur if the resource folder can not be located.</span></p>
+<p class="rvps14"><span class="rvts30">Unable to locate core Resource File.</span><br/><span class="rvts30">Try placing the core resource file (Resource_Core_en-US.dll) in a sub-folder named Resource for the current running script.</span><br/><span class="rvts30">Expected Resource\Resource_Core_en-US.dll</span></p>
+<p class="rvps2"><span class="rvts6">This can be solved by placing the resources in a search location as shown above or by setting the </span><span class="rvts18">Super Global MfResourceFolder</span><span class="rvts6"> to the location of the resources folder as show above.</span></p>
+<p class="rvps2"><span class="rvts6">Users of </span><a class="rvts14" href="https://autohotkey.com/boards/viewtopic.php?f=6&t=300&hilit=ahk%20studio" target="_blank">AutoHotkey Studio</a><span class="rvts6"> </span><span class="rvts22">(AHK Studio)</span><span class="rvts6"> may run in to an issue when running scripts inside of AHK Studio. You may get a resource error message even though </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> has been installed.</span></p>
+<p class="rvps16"><span class="rvts6">This error occurs when The resource file can not be located in the folder search locations listed above and an attempt is made to read the registry to search for the location of the resource folder. AHK Studio may not allow access to the registry with default settings.</span></p>
+<p class="rvps16"><span class="rvts6">In most case you will not get this error but if you do you can fix one of two ways.</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps16"><span class="rvts6">Set AhK Studio to Run as Administrator</span><span class="rvts22"> (Alt+m Then Type: run as admin)</span></li>
+<li style="margin-left: 0px" class="rvps16"><span class="rvts6">Set the </span><span class="rvts18">Super Global MfResourceFolder</span><span class="rvts6"> to the location of the resources as demonstrated above.</span></li>
+</ul></ul>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts18">Super Global MfResourceFolder</span><span class="rvts6"> option is set and the resources can not be located in that location then search continues to look for resources in other valid locations. The search stops at the first location resources are found.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

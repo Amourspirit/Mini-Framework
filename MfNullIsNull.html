@@ -1,0 +1,220 @@
+﻿<html>
+	
+<head>
+	<title>IsNull()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNullIsNull");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsNull()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfNull.html">MfNull</a> &rsaquo;&rsaquo; <a href="MfNullMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNullMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNullIsInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNullMemberwiseClone.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsNull()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfNull.IsNull(obj)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">IsNull(obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Get if the obj parameter is null or </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">obj</span></p>
+<p class="rvps22"><span class="rvts53">The object to check or var to check</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns true if </span><span class="rvts54">obj</span><span class="rvts6"> is null or is </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method:</span><br/><span class="rvts6">If </span><span class="rvts54">obj</span><span class="rvts6"> is "" (null value) then true is returned.</span><br/><span class="rvts6">If parameter </span><span class="rvts54">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> and has a </span><a class="rvts12" href="MfCharCharCode.html">MfChar.CharCode</a><span class="rvts6"> that equal zero then it will be considered as null.</span><br/><span class="rvts6">If parameter </span><span class="rvts54">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and </span><a class="rvts12" href="MfStringLength.html">MfString.Length</a><span class="rvts6"> is equal to zero then it will be consider as null.</span><br/><span class="rvts6">It is import to call base New when creating new classes or </span><a class="rvts12" href="MfNullIsNull.html">MfNull.IsNull</a><span class="rvts6"> will return true even if your class creates an instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #888888;">; MfChar Instances and MfNull.IsNull()</span>
+ch1 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfChar</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">0x0000</span>"</span>)
+ch2 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfChar</span>(<span style="background-color: #fff0f0;">""</span>)
+ch3 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfChar</span>()
+ch4 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfChar</span>(<span style="background-color: #fff0f0;">" "</span>)<span style="color: #888888;"> ; char is a space</span>
+ch5 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfChar</span>(<span style="color: #0000dd; font-weight: bold;">0</span>)<span style="color: #888888;"> ; char is latin1 zero - CharCode of 0x0030</span>
+
+strResult <span style="color: #333333;">:=</span> new <span style="color: #0000ff;">MfString</span>()
+
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(ch1)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(ch2)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(ch3)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(ch4)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(ch5)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)
+
+<span style="color: #007020;">MsgBox</span> <span style="color: #333333;">%</span> strResult<span style="color: #333333;">.</span><span style="color: #0000ff;">Value</span>
+<span style="color: #888888;">; strResult.Value contains</span>
+<span style="color: #888888;">/* True</span>
+<span style="color: #888888;"> * True</span>
+<span style="color: #888888;"> * True</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> */</span>
+
+<span style="color: #888888;">; MfString Instances and MfNull.IsNull()</span>
+str1 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfString</span>()<span style="color: #888888;"> ; empty string</span>
+str2 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfString</span>(<span style="background-color: #fff0f0;">""</span>)
+str3 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> MfString(MfString<span style="color: #333333;">.</span>Empty)
+str4 <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfString</span>(<span style="background-color: #fff0f0;">" "</span>)<span style="color: #888888;"> ; str4.Value is a space</span>
+
+<span style="color: #888888;">; reset strResult</span>
+strResult<span style="color: #333333;">.</span>Value <span style="color: #333333;">:=</span> MfString<span style="color: #333333;">.</span>Empty
+
+OutputVar :=<span style="color: #0000ff;"> MfNull.IsNull</span>(str1)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(str2)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(str3)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(str4)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(MfString<span style="color: #333333;">.</span>Empty)<span style="color: #888888;"> ; return true</span>
+AppendResult(OutputVar, strResult)
+
+<span style="color: #007020;">MsgBox</span> <span style="color: #333333;">%</span> strResult<span style="color: #333333;">.</span>Value
+<span style="color: #888888;">; strResult.Value contains</span>
+<span style="color: #888888;">/* True</span>
+<span style="color: #888888;"> * True</span>
+<span style="color: #888888;"> * True</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * True</span>
+<span style="color: #888888;"> */</span>
+
+<span style="color: #888888;">; other objects and vars</span>
+o <span style="color: #333333;">:=</span> <span style="background-color: #fff0f0;">""</span>
+p <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Null</span>
+q <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Null</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Value</span>
+r <span style="color: #333333;">:=</span> <span style="color: #0066bb; font-weight: bold;">Object</span>()
+s <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfInteger</span><span style="color: #888888;"> ; non instance of MfInteger</span>
+t <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfInteger</span>(<span style="color: #0000dd; font-weight: bold;">10</span>)
+u <span style="color: #333333;">:=</span> <span style="color: #0000dd; font-weight: bold;">10</span>
+v <span style="color: #333333;">:=</span> <span style="background-color: #fff0f0;">"<span style="color: #800000;">abc</span>"</span>
+w <span style="color: #333333;">:=</span> <span style="color: #0000dd; font-weight: bold;">0</span>
+x <span style="color: #333333;">:=</span> <span style="background-color: #fff0f0;">"0"</span>
+
+<span style="color: #888888;">; reset strResult</span>
+strResult<span style="color: #333333;">.</span><span style="color: #0000ff;">Value</span> <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfString</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Empty</span>
+
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(o)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(p)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(q)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(r)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar<span style="color: #0000ff;">, strResult)<br/>
+</span>OutputVar :=<span style="color: #0000ff;"> MfNull.IsNull</span>(s)<span style="color: #888888;"> ; returns true</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(t)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(u)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(v)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(w)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)<br/>
+OutputVar <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(x)<span style="color: #888888;"> ; returns false</span>
+AppendResult(OutputVar, strResult)
+
+<span style="color: #007020;">MsgBox</span> <span style="color: #333333;">%</span> strResult<span style="color: #333333;">.</span><span style="color: #0000ff;">Value</span>
+<span style="color: #888888;">; strResult.Value contains</span>
+<span style="color: #888888;">/* True</span>
+<span style="color: #888888;"> * True</span>
+<span style="color: #888888;"> * True</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> * False</span>
+<span style="color: #888888;"> */</span>
+
+<span style="color: #007020;">ExitApp</span>
+
+AppendResult(result, <span style="color: #0000ff;">byref</span> strObj) {
+	if (result) {
+		strObj<span style="color: #333333;">.</span><span style="color: #0000ff;">AppendLine</span>(<span style="background-color: #fff0f0;">"True"</span>)
+	} else {
+		strObj<span style="color: #333333;">.</span><span style="color: #0000ff;">AppendLine</span>(<span style="background-color: #fff0f0;">"False"</span>)
+	}
+}
+</pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

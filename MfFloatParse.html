@@ -1,0 +1,105 @@
+﻿<html>
+	
+<head>
+	<title>Parse()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfFloatParse");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Parse()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfFloat.html">MfFloat</a> &rsaquo;&rsaquo; <a href="MfFloatMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfFloatMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfFloatMemberwiseClone.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfFloatSubtract.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Parse()</span></span></h1>
+<p class="rvps20"><span class="rvts48">MfFloat.Parse()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfFloat.Parse(obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">obj</span></p>
+<p class="rvps22"><span class="rvts53">An object convert.</span><br/><span class="rvts53">Can be instance of </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53">, </span><a class="rvts52" href="MfString.html">MfString</a><br/><span class="rvts53">Can be var containing </span><span class="rvts69">string</span><span class="rvts53">, </span><span class="rvts69">integer</span><br/><span class="rvts53">Can also be instance of </span><a class="rvts52" href="MfParams.html">MfParams</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of </span><span class="rvts15">ReturnAsObject</span><span class="rvts6"> and value set to true then parsed result will be returned as an instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">; Otherwise a var </span><span class="rvts15">float</span><span class="rvts6"> will be returned. See example below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static Method</span><br/><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent.</span><br/><span class="rvts6">If obj parameter is an Objects then it must be instance from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> or be an instance of </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of </span><span class="rvts15">ReturnAsObject</span><span class="rvts6"> and value set to true then parsed result will be returned as an instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">; otherwise a var float will be returned. See example below.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of ReturnAsObject and value set to true then and </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of Format added with a valid </span><a class="rvts12" href="MfFloatFormat.html">Format</a><span class="rvts6"> value then result will be returned as an instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> with the Format set; otherwise a var float will be returned. See example below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> unable to parse </span><span class="rvts54">obj</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfFloatTryParse.html">TryParse()</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatGetValue.html">GetValue()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">; Input of 10.1 parses to 10.100000</span><br/><span class="rvts31">; input of -15 parses to -15.000000</span><br/><span class="rvts31">; input of 0060089.00099 parses to 60089.000990</span><br/><span class="rvts31">; input of abc resuts in an error</span><br/><span class="rvts31">; leading and trailing spaces are allowed</span><br/><span class="rvts32">try</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">InputBox</span><span class="rvts30">, myInput, Enter value, Enter a number to parse!</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts45">IsNull</span><span class="rvts30">(myInput)) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> Sorry no input!</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;oflt := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(myInput)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> My Float Number is:%oflt%</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">} </span><span class="rvts32">catch</span><span class="rvts30"> e {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">8240</span><span class="rvts30">, Error, % </span><span class="rvts42">"An error has occured!`r`n"</span><span class="rvts30"> . e.</span><span class="rvts34">Message</span><br/><span class="rvts30">}</span><br/><span class="rvts32">ExitApp</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Example using MfParams and adding ReturnAsObject and a Format value to MfParams.Data</span><br/><span class="rvts31">; this example passes MfParams into MfFloat.Parse method with</span><br/><span class="rvts31">; Data Key of ReturnAsObject. This cause MfFloat.Parse to return is value</span><br/><span class="rvts31">; as an instance of MfFloat rather then the default of a var containing float.</span><br/><span class="rvts31">; Data Key of Format with a valid format will cause the float to be formated</span><br/><span class="rvts31"></span><br/><span class="rvts30">pStr := </span><span class="rvts42">"33.5"</span><br/><span class="rvts30">Parms := new </span><span class="rvts34">MfParams</span><span class="rvts30">()</span><br/><span class="rvts30">Parms.</span><span class="rvts45">AddString</span><span class="rvts30">(pStr)</span><br/><span class="rvts30">Parms.</span><span class="rvts34">Data</span><span class="rvts30">.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts30">Parms.</span><span class="rvts34">Data</span><span class="rvts30">.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts42">"Format"</span><span class="rvts30">, </span><span class="rvts42">"0.2"</span><span class="rvts30">)</span><br/><span class="rvts30">oflt := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(Parms)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % oflt.</span><span class="rvts34">Value</span><span class="rvts30"> </span><span class="rvts31">; displays 33.50</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfFloatTryParse.html">TryParse</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

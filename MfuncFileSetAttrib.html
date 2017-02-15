@@ -1,0 +1,109 @@
+﻿<html>
+	
+<head>
+	<title>FileSetAttrib()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="FileSetAttrib, Attribute, File">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileSetAttrib");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileSetAttrib()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileSelectFolder.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFormatTime.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileSetAttrib()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.FileSetAttrib(Attributes [, FilePattern, OperateOnFolders?, Recurse?])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileSetAttrib(Attributes [, FilePattern, OperateOnFolders?, Recurse?])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Changes the attributes of one or more files or folders. Wildcards are supported.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Attributes</span></p>
+<p class="rvps22"><span class="rvts53">The attributes to change (see Remarks).</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">FilePattern</span></p>
+<p class="rvps22"><span class="rvts53">The name of a single file or folder, or a wildcard pattern such as C:\Temp*.tmp. FilePattern is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> </span><span class="rvts53">if an absolute path isn't specified.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">OperateOnFolders?</span></p>
+<p class="rvps22"><span class="rvts75">0</span><span class="rvts53"> (default) Folders are not operated upon (only files).</span><br/><span class="rvts75">1</span><span class="rvts53"> All files and folders that match the wildcard pattern are operated upon.</span><br/><span class="rvts75">2</span><span class="rvts53"> Only folders are operated upon (no files).</span><br/><span class="rvts53">Note: If FilePattern is a single folder rather than a wildcard pattern, it will always be operated upon regardless of this setting.</span><br/><span class="rvts53">This parameter can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">, </span><a class="rvts52" href="MfBool.html">MfBool</a><span class="rvts53"> instance or var containing true or false.</span></p>
+<p class="rvps21"><span class="rvts51">Recurse?</span></p>
+<p class="rvps22"><span class="rvts75">0</span><span class="rvts53"> (default) Subfolders are not recursed into.</span><br/><span class="rvts75">1</span><span class="rvts53"> Subfolders are recursed into so that files and folders contained therein are operated upon if they match FilePattern. All subfolders will be recursed into, not just those whose names match FilePattern. However, files and folders with a complete path name longer than 259 characters are skipped over as though they do not exist. Such files are rare because normally, the operating system does not allow their creation. This parameter can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">, </span><a class="rvts52" href="MfBool.html">MfBool</a><span class="rvts53"> instance or var containing true or false.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> is non-zero then </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> message is set to the value of </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileSetAttrib.htm" target="_blank">AutoHotkey Docs - FileSetAttrib</a><span class="rvts6">.</span><br/><span class="rvts6">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">The Attributes parameter consists of a collection of operators and attribute letters.</span><br/><span class="rvts6">Operators:</span><br/><span class="rvts18">+</span><span class="rvts6"> Turn on the attribute.</span><br/><span class="rvts18">-</span><span class="rvts6"> Turn off the attribute.</span><br/><span class="rvts18">^</span><span class="rvts6"> Toggle the attribute (set it to the opposite value of what it is now)</span></p>
+<p class="rvps2"><span class="rvts6">Attribute letters:</span><br/><span class="rvts18">R</span><span class="rvts6"> = read-only</span><br/><span class="rvts18">A</span><span class="rvts6"> = ARCHIVE</span><br/><span class="rvts18">S</span><span class="rvts6"> = SYSTEM</span><br/><span class="rvts18">H</span><span class="rvts6"> = HIDDEN</span><br/><span class="rvts18">N</span><span class="rvts6"> = NORMAL (this is valid only when used without any other attributes)</span><br/><span class="rvts18">O</span><span class="rvts6"> = OFFLINE</span><br/><span class="rvts18">T</span><span class="rvts6"> = TEMPORARY</span></p>
+<p class="rvps2"><span class="rvts6">Note: Currently, the compression state of files cannot be changed with this command.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileSetAttrib.htm" target="_blank">AutoHotkey Docs - FileSetAttrib</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileSetAttrib</span><span class="rvts30">(</span><span class="rvts42">"+RH"</span><span class="rvts30">, </span><span class="rvts42">"C:\MyFiles\*.*"</span><span class="rvts30">, </span><span class="rvts72">1</span><span class="rvts30">) </span><span class="rvts31">; +RH is identical to +R+H</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileSetAttrib</span><span class="rvts30">(</span><span class="rvts42">"^H"</span><span class="rvts30">, </span><span class="rvts42">"C:\MyFiles"</span><span class="rvts30">) </span><span class="rvts31">; Toggle the folder's "hidden" attribute.</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileSetAttrib</span><span class="rvts30">(</span><span class="rvts42">"-R+A"</span><span class="rvts30">, </span><span class="rvts42">"C:\New Text File.txt"</span><span class="rvts30">)</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileSetAttrib</span><span class="rvts30">(</span><span class="rvts42">"+A"</span><span class="rvts30">, </span><span class="rvts42">"C:\*.ini"</span><span class="rvts30">, , </span><span class="rvts72">1</span><span class="rvts30">) </span><span class="rvts31">; Recurse through all .ini files on the C drive.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

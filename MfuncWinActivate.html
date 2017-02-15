@@ -1,0 +1,109 @@
+﻿<html>
+	
+<head>
+	<title>WinActivate()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="WinActivate, Win">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncWinActivate");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">WinActivate()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncTransform.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncWinGet.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">WinActivate()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.WinActivate([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.WinActivate([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Activates the specified window (makes it foremost).</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">WinTitle</span></p>
+<p class="rvps22"><span class="rvts53">A window title or other criteria identifying the target window. See </span><a class="rvts59" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">WinText</span></p>
+<p class="rvps22"><span class="rvts53">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts53"> is ON.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">ExcludeTitle</span></p>
+<p class="rvps22"><span class="rvts53">Windows whose titles include this value will not be considered.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">ExcludeText</span></p>
+<p class="rvps22"><span class="rvts53">Windows whose text include this value will not be considered.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinActivate.htm" target="_blank">AutoHotkey Docs - WinActivate</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">If the window is minimized, it is automatically restored prior to being activated.</span></p>
+<p class="rvps2"><span class="rvts6">Six attempts will be made to activate the target window over the course of 60ms. Thus, it is usually unnecessary to follow WinActivate with </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinWaitActive.htm" target="_blank">WinWaitActive</a><span class="rvts6"> or </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinActive.htm" target="_blank">IfWinNotActive</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">If a matching window is already active, that window will be kept active rather than activating any other matching window beneath it. In general, if more than one window matches, the topmost (most recently used) will be activated. You can activate the bottommost (least recently used) via </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinActivateBottom.htm" target="_blank">WinActivateBottom</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">When a window is activated immediately after the activation of some other window, task bar buttons might start flashing on some systems (depending on OS and settings). To prevent this, use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/_WinActivateForce.htm" target="_blank">#WinActivateForce</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Window titles and text are case sensitive. Hidden windows are not detected unless </span><a class="rvts13" href="http://ahkscript.org/docs/commands/DetectHiddenWindows.htm" target="_blank">DetectHiddenWindows</a><span class="rvts6"> has been turned on.</span></p>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinActivate.htm" target="_blank">AutoHotkey Docs - WinActivate</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">IfWinExist</span><span class="rvts30">, Untitled - Notepad</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">WinActivate</span><span class="rvts30">() </span><span class="rvts31">; use the window found above</span><br/><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">WinActivate</span><span class="rvts30">(</span><span class="rvts42">"Calculator"</span><span class="rvts30">)</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,96 @@
+﻿<html>
+	
+<head>
+	<title>DestroyInstance()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfSB15DestroyInstance");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">DestroyInstance()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfSB15.html">MfSingletonBase</a> &rsaquo;&rsaquo; <a href="MfSB15Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfSB15Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfSB15Constructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfSB15Equals.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">DestroyInstance()</span></span></h1>
+<p class="rvps20"><span class="rvts48">MfSingletonBase.DestroyInstance()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">DestroyInstance()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Set current instance of singleton derived class to null.</span><br/><span class="rvts6">Abstract Method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNIE25.html">MfNotImplementedException</a><span class="rvts6"> if not implemented in derived class.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts41">DestroyInstance()</span><span class="rvts6"> is an abstract method and must be implemented in derived class.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">SingletonHello</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">Message</span><br/><span class="rvts33">SingletonHello</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts42">"Way too cool!"</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">SingletonHello</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">Message</span><br/><span class="rvts30"></span><br/><span class="rvts32">ExitApp</span><br/><span class="rvts30"></span><br/><span class="rvts32">class</span><span class="rvts30"> </span><span class="rvts33">SingletonHello</span><span class="rvts30"> </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfSingletonBase</span><br/><span class="rvts30">{</span><br/><span class="rvts32"> &nbsp; &nbsp;static</span><span class="rvts30"> _instance := </span><span class="rvts32">Null</span><span class="rvts30"> </span><span class="rvts31">; Static var to contain the singleton instance</span><br/><span class="rvts30"> &nbsp; &nbsp;m_Value &nbsp;:= </span><span class="rvts32">Null</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">__New</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_Value &nbsp;:= </span><span class="rvts42">"Hello World"</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; GetInstance() is required to be overridden from the SingletonBase base class</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">GetInstance</span><span class="rvts30">() { </span><span class="rvts31">; Overrides base</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts45">IsNull</span><span class="rvts30">(</span><span class="rvts33">SingletonHello</span><span class="rvts30">._instance)) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">SingletonHello</span><span class="rvts30">._instance := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">SingletonHello</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts33">SingletonHello</span><span class="rvts30">._instance</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; DestroyInstance() is required to be overridden from the SingletonBase base class</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">DestroyInstance</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">SingletonHello</span><span class="rvts30">._instance := </span><span class="rvts32">Null</span><span class="rvts30"> </span><span class="rvts31">; Clears current instance and releases memory</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; Properties Start</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts34">Value</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;get {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Value</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;set {</span><br/><span class="rvts30"> &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_Value := </span><span class="rvts32">value</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Value</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts34">Message</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">get</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"The Value is currently:'{0}'"</span><span class="rvts30">, </span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts34">Value</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts34">set</span><span class="rvts30"> { </span><span class="rvts31">; Read-only Property</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfNotSupportedException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"NotSupportedException_readonly_Property"</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">throw</span><span class="rvts30"> ex</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; Properties End</span><br/><span class="rvts30">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

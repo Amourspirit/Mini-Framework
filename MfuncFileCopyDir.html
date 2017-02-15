@@ -1,0 +1,129 @@
+﻿<html>
+	
+<head>
+	<title>FileCopyDir()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="FileCopyDir, File, Folder">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileCopyDir");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileCopyDir()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileCopy.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileCreateDir.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileCopyDir()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.FileCopyDir(Source, Dest [, Flag])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileCopyDir(Source, Dest [, Flag])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Copies a folder along with all its sub-folders and files (similar to xcopy).</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Source</span></p>
+<p class="rvps22"><span class="rvts53">Name of the source directory (with no trailing backslash), which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. For example: C:\My Folder</span></p>
+<p class="rvps21"><span class="rvts51">Dest</span></p>
+<p class="rvps22"><span class="rvts53">Name of the destination directory (with no trailing baskslash), which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53">if an absolute path isn't specified. For example: C:\Copy of My Folder</span></p>
+<p class="rvps21"><span class="rvts51">Flag</span></p>
+<p class="rvps22"><span class="rvts53">(optional) this flag determines whether to overwrite files if they already exist:</span><br/><span class="rvts75">0</span><span class="rvts53"> = (default): Do not overwrite existing files. The operation will fail and have no effect if Dest already exists as a file or directory.</span><br/><span class="rvts75">1</span><span class="rvts53"> = Overwrite existing files. However, any files or subfolders inside Dest that do not have a counterpart in Source will not be deleted.</span><br/><span class="rvts53">This parameter can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">, even one that evalutes to </span><span class="rvts75">true</span><span class="rvts53"> or </span><span class="rvts75">false</span><span class="rvts53"> (since true and false are stored internally as 1 and 0).</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileCopyDir.htm" target="_blank">Autohotkey - FileCopyDir</a><span class="rvts6"> error message.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> any other general error occurs.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileCopyDir.htm" target="_blank">AutoHotkey Docs - FileCopyDir</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">If the destination directory structure doesn't exist it will be created if possible.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set to 1 if there was a problem or 0 otherwise. However, if the source directory contains any saved webpages consisting of a PageName.htm file and a corresponding directory named PageName_files, an error may be indicated even when the copy is successful.</span></p>
+<p class="rvps2"><a class="rvts12" href="MfuncFileCopyDir.html">Mfunc.FileCopyDir</a><span class="rvts6"> copies a single folder. To instead copy the contents of a folder (all its files and subfolders), see the examples section of </span><a class="rvts12" href="MfuncFileCopy.html">Mfunc.FileCopy</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">If the source directory contains any saved webpages consisting of a PageName.htm file and a corresponding directory named PageName_files, an error may be thrown even when the copy is successful.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileCopyDir.htm" target="_blank">AutoHotkey Docs - FileCopyDir</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Mfunc<span style="color: #666666">.</span>FileCopyDir(<span style="color: #BA2121">&quot;C:\My Folder&quot;</span>, <span style="color: #BA2121">&quot;C:\Copy of My Folder&quot;</span>)<span style="color: #408080; font-style: italic"></span>
+
+<span style="color: #408080; font-style: italic">; Example #2: A working script that prompts you to copy a folder.</span>
+SourceFolder <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>FileSelectFolder( , <span style="color: #666666">3</span>, <span style="color: #BA2121">&quot;Select the folder to copy&quot;</span>)
+<span style="color: #008000">if </span>SourceFolder <span style="color: #666666">=</span>
+    <span style="color: #008000">return</span><span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">; Otherwise, continue.</span>
+TargetFolder <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>FileSelectFolder( , <span style="color: #666666">3</span>, <span style="color: #BA2121">&quot;Select the folder IN WHICH to create the duplicate folder.&quot;</span>)
+<span style="color: #008000">if </span>TargetFolder <span style="color: #666666">=</span>
+    <span style="color: #008000">return</span><span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">; Otherwise, continue.</span>
+<span style="color: #008000">MsgBox</span>, <span style="color: #666666">4</span>, , A copy of the folder <span style="color: #BA2121">&quot;%SourceFolder%&quot;</span> will be put into <span style="color: #BA2121">&quot;%TargetFolder%&quot;</span><span style="color: #666666">.</span>  Continue<span style="color: #666666">?</span>
+<span style="color: #008000">IfMsgBox</span>, No
+    <span style="color: #008000">return</span>
+Mfunc<span style="color: #666666">.</span>SplitPath(SourceFolder, SourceFolderName)<span style="color: #408080; font-style: italic">  ; Extract only the folder name from its full path.</span>
+Mfunc<span style="color: #666666">.</span>FileCopyDir(SourceFolder, TargetFolder <span style="color: #666666">.</span> <span style="color: #BA2121">&quot;\&quot;</span> <span style="color: #666666">.</span> SourceFolderName)
+<span style="color: #008000">if </span><span style="color: #19177C">ErrorLevel</span>
+    <span style="color: #008000">MsgBox</span> The folder could <span style="color: #AA22FF; font-weight: bold">not</span> be copied, perhaps because a folder of that name already exists <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #BA2121">&quot;%TargetFolder%&quot;</span><span style="color: #666666">.</span>
+<span style="color: #008000">return</span>
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

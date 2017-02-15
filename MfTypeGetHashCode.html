@@ -1,0 +1,105 @@
+﻿<html>
+	
+<head>
+	<title>GetHashCode()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfTypeGetHashCode");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetHashCode()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfType.html">MfType</a> &rsaquo;&rsaquo; <a href="MfTypeMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfTypeMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfTypeGetAttribute.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfTypeGetIndexOfAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetHashCode()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Inherited from </span><a class="rvts12" href="MfObjectGetHashCode.html">MfObject.GetHashCode()</a><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := instance.GetHashCode()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetHashCode()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets A hash code for the current </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns A hash code for the current </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">A hash code is a numeric value that is used to insert and identify an </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> in a hash-based collection such as a Hash table. The </span><span class="rvts41">GetHashCode()</span><span class="rvts6"> method provides this hash code for hashing algorithms and data structures such as a hash table.</span></p>
+<p class="rvps2"><span class="rvts6">Two objects that are equal return hash codes that are equal. However, the reverse is not true: equal hash codes do not imply object equality, because different (unequal) objects can have identical hash codes. Furthermore, the this Framework does not guarantee the default implementation of the </span><span class="rvts41">GetHashCode()</span><span class="rvts6"> method, and the value this method returns may differ between Framework versions such as 32-bit and 64-bit platforms. For these reasons, do not use the default implementation of this method as a unique object identifier for hashing purposes.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Caution</span></span></h3>
+<p class="rvps2"><span class="rvts6">A hash code is intended for efficient insertion and lookup in collections that are based on a hash table. A hash code is not a permanent value. For this reason:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">Do not serialize hash code values or store them in databases.</span></li>
+<li class="rvps2"><span class="rvts6">Do not use the hash code as the key to retrieve an object from a keyed collection.</span></li>
+<li class="rvps2"><span class="rvts6">Do not test for equality of hash codes to determine whether two objects are equal. (Unequal objects can have identical hash codes.) To test for equality, call the </span><a class="rvts12" href="MfObjectReferenceEquals.html">MfObject.ReferenceEquals()</a><span class="rvts6"> or </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a><span class="rvts6"> method.</span></li>
+</ul>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called on a non instance of class. See: </span><a class="rvts12" href="MfTypeIsInstance.html">IsInstance()</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

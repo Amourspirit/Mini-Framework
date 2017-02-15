@@ -1,0 +1,106 @@
+﻿<html>
+	
+<head>
+	<title>FileGetTime()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="FileGetTime, File">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileGetTime");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileGetTime()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileGetVersion.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileMove.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileGetTime()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.FileGetTime([Filename, WhichTime])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileGetTime([Filename, WhichTime])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves the datetime stamp of a file or folder.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Filename</span></p>
+<p class="rvps22"><span class="rvts53">The name of the target file or folder, which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. If omitted, the current file of the innermost enclosing</span><a class="rvts59" href="http://ahkscript.org/docs/commands/LoopFile.htm" target="_blank">File-Loop</a><span class="rvts53"> will be used instead.</span></p>
+<p class="rvps21"><span class="rvts51">WhichTime</span></p>
+<p class="rvps22"><span class="rvts53">Which timestamp to retrieve:</span><br/><span class="rvts53">M = Modification time (this is the default if the parameter is omitted)</span><br/><span class="rvts53">C = Creation time</span><br/><span class="rvts53">A = Last access time</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the retrieved date-time in format YYYYMMDDHH24MISS. The time is your own local time, not UTC/GMT.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> is non-zero then </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> has a message of </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileGetTime.htm" target="_blank">AutoHotkey Docs - FileGetTime</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileSetTime.htm#YYYYMMDD" target="_blank">YYYYMMDDHH24MISS</a><span class="rvts6"> for an explanation of dates and times.</span></p>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileGetTime.htm" target="_blank">AutoHotkey Docs - FileGetTime</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetTime</span><span class="rvts30">(</span><span class="rvts42">"C:\My Documents\test.doc</span><span class="rvts30">") </span><span class="rvts31">; Retrieves the modification time by default.</span><br/><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetTime</span><span class="rvts30">(</span><span class="rvts42">"C:\My Documents\test.doc"</span><span class="rvts30">, </span><span class="rvts42">"C"</span><span class="rvts30">) </span><span class="rvts31">; Retrieves the creation time.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,179 @@
+﻿<html>
+	
+<head>
+	<title>IsObjInstance()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfObjectIsObjInstance");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsObjInstance()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfObject.html">MfObject</a> &rsaquo;&rsaquo; <a href="MfObjectMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfObjectMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfObjectIsMfObject.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfObjectMemberwiseClone.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsObjInstance()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfObject.IsObjInstance(obj)</span><br/><span class="rvts48">OutputVar := MfObject.IsObjInstance(obj, objType)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">IsObjInstance(obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if obj is an instance of </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> or class instance derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">IsObjInstance(obj, objType)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if </span><span class="rvts54">obj</span><span class="rvts6"> is instance specified by </span><span class="rvts54">objType</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">obj</span><span class="rvts6"> is instance of </span><span class="rvts54">objType</span><span class="rvts6">; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">obj</span></p>
+<p class="rvps22"><span class="rvts53">an object derived from </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> to check.</span></p>
+<p class="rvps21"><span class="rvts51">objType</span></p>
+<p class="rvps22"><span class="rvts53">String name of type; or </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> or dervived classs; or instance of </span><a class="rvts52" href="MfType.html">MfType</a><span class="rvts53"> class.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> functions.</span><br/><span class="rvts6">Only objects that inherit from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> are valid object to check. If objType param is ignored then object is checked as </span><a class="rvts12" href="MfObject.html">MfObject</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<table>
+<tbody>
+<tr>
+<td>
+<pre style="margin: 0; line-height: 125%;"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32</pre>
+</td>
+<td>
+<pre style="margin: 0; line-height: 125%;">try {
+	sc <span style="color: #666666;">:=</span> new <span style="color: #000080;">MfStringComparison</span>(<span style="color: #000080;">MfStringComparison</span><span style="color: #666666;">.</span><span style="color: #000080;">Instance</span><span style="color: #666666;">.</span><span style="color: #000080;">Ordinal</span>)
+	result <span style="color: #666666;">:=</span> MyFunc(sc)
+	<span style="color: #008000;">MsgBox</span> Result<span style="color: #666666;">:</span><span style="color: #19177c;">%result%</span><span style="color: #408080; font-style: italic;"> ; Displays Result:Something Ordinal</span>
+} catch e {
+	msg <span style="color: #666666;">:=</span> e<span style="color: #666666;">.</span>Message
+	<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%msg%</span>
+}
+
+try {
+	sc <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"something"</span>
+	result <span style="color: #666666;">:=</span> MyFunc(sc)<span style="color: #408080; font-style: italic;"> ; this will cause an error because sc in not instance of MfStringComparison</span>
+	<span style="color: #008000;">MsgBox</span> Result<span style="color: #666666;">:</span><span style="color: #19177c;">%result%</span>
+} catch e {
+	msg <span style="color: #666666;">:=</span> e<span style="color: #666666;">.</span><span style="color: #000080;">Message</span>
+	<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%msg%</span>
+}
+
+MyFunc(myObj) {
+<span style="color: #408080; font-style: italic;">	; if myObj is not an instance of MfStringComparison we will throw an error</span>
+	if (<span style="color: #666666;">!</span><span style="color: #000080;">MfObject</span><span style="color: #666666;">.</span><span style="color: #000080;">IsObjInstance</span>(myObj, <span style="color: #ba2121;">"MfStringComparison"</span>)) {
+		ex <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfArgumentException</span>(<span style="color: #ba2121;">"Error was expecting instance of MfStringComparison"</span>, <span style="color: #ba2121;">"myObj"</span>)
+		ex.<span style="color: #000080;">SetProp</span>(<span style="color: #000080;">A_LineFile</span>, <span style="color: #000080;">A_LineFile</span>, <span style="color: #000080;">A_ThisFunc</span>)
+		throw ex
+	}
+	if (myObj<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">=</span> <span style="color: #000080;">MfStringComparison</span><span style="color: #666666;">.</span><span style="color: #000080;">Instance</span><span style="color: #666666;">.</span><span style="color: #000080;">Ordinal</span><span style="color: #666666;">.</span><span style="color: #000080;">Value</span>) {
+		<span style="color: #008000;">return</span> <span style="color: #ba2121;">"Something Ordinal"</span>
+	}
+	<span style="color: #008000;">return</span> <span style="color: #ba2121;">"Nothing Ordinal"</span>
+}
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

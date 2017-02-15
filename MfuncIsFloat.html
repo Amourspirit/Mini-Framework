@@ -1,0 +1,101 @@
+﻿<html>
+	
+<head>
+	<title>IsFloat()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="IsFloat, Float, Number">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncIsFloat");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsFloat()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncInputBox.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncIsInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsFloat()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.IsFloat(num)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.IsFloat(num)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if a param num is Float.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">num</span></p>
+<p class="rvps22"><span class="rvts53">A var to check to see if it contains a float</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">num</span><span class="rvts6"> is non-empty and contains a floating point number; that is, a purely numeric string containing a decimal point. Leading and trailing spaces and tabs are allowed. The string may start with a plus sign, minus sign, or decimal point; Otherwise </span><span class="rvts18">false</span><span class="rvts6"> is returned.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static method</span><br/><span class="rvts6">String Values containing numbers such as "100.0" and "0.0" will return true However "100" will return false.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfuncIsInteger.html">IsInteger()</a><span class="rvts6">, </span><a class="rvts12" href="MfuncIsNumeric.html">IsNumeric()</a><span class="rvts6">, </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">, </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6">, </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6">, </span><a class="rvts12" href="MfByte.html">MfByte</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">100</span><span class="rvts30">) &nbsp; &nbsp; </span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">100.0</span><span class="rvts30">) &nbsp; </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(-</span><span class="rvts72">100</span><span class="rvts30">) &nbsp; &nbsp;</span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(-</span><span class="rvts72">100.0</span><span class="rvts30">) &nbsp;</span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(+</span><span class="rvts72">100.0</span><span class="rvts30">) &nbsp;</span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts42">"100"</span><span class="rvts30">) &nbsp; </span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">0x100A</span><span class="rvts30">) &nbsp;</span><span class="rvts31">; Displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts42">"100.0"</span><span class="rvts30">) </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">10.5</span><span class="rvts30">) &nbsp; &nbsp;</span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">0.25</span><span class="rvts30">) &nbsp; &nbsp;</span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">.25</span><span class="rvts30">) &nbsp; &nbsp; </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">0.0</span><span class="rvts30">) &nbsp; &nbsp; </span><span class="rvts31">; Displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IsFloat</span><span class="rvts30">(</span><span class="rvts72">.0</span><span class="rvts30">) &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; Displays 1 for true</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

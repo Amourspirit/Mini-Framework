@@ -1,0 +1,132 @@
+﻿<html>
+	
+<head>
+	<title>GetValue()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfInt64GetValue");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetValue()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfInt64.html">MfInt64</a> &rsaquo;&rsaquo; <a href="MfInt64Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfInt64Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfInt64GetTypeCode.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfInt64GreaterThen.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetValue()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfPrimitiveGetValue.html">MfPrimitive.GetValue()</a><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := MfInt64.GetValue(Obj)</span><br/><span class="rvts48">OutputVar := MfInt64.GetValue(Obj, Default)</span><br/><span class="rvts48">OutputVar := MfInt64.GetValue(Obj, Default, AllowAny)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfInt64</span></span><span class="rvts0"><span class="rvts16">.GetValue(Obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets the integer number from Object or var containing </span><span class="rvts15">integer</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Obj</span></p>
+<p class="rvps22"><span class="rvts53">The Object or var containing</span><span class="rvts69">,</span><span class="rvts53"> </span><span class="rvts69">integer</span><span class="rvts53"> or </span><span class="rvts69">hex</span><span class="rvts53"> value</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">. </span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a var containing a </span><span class="rvts15">integer </span><span class="rvts6">No less then </span><a class="rvts12" href="MfInt64MinValue.html">MinValue</a><span class="rvts6"> and no greater then </span><a class="rvts12" href="MfInt64MaxValue.html">MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">Throws an error if unable to convert </span><span class="rvts54">Obj</span><span class="rvts6"> to integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts54">Obj</span><span class="rvts6"> is less then </span><a class="rvts12" href="MfInt64MinValue.html">MinValue</a><span class="rvts6"> or Greater then </span><a class="rvts12" href="MfInt64MaxValue.html">MaxValue</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if argument </span><span class="rvts54">Obj</span><span class="rvts6"> is can not be converted to integer value.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfInt64</span></span><span class="rvts0"><span class="rvts16">.GetValue(Obj, Default)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a integer number from </span><span class="rvts54">Obj</span><span class="rvts6"> or returns </span><span class="rvts54">Default</span><span class="rvts6"> value if </span><span class="rvts54">Obj</span><span class="rvts6"> is unable to be converted to integer. Default must be a value that can be converted to integer or it will be ignored if </span><span class="rvts54">Obj</span><span class="rvts6"> can not be converted to integer an error will be thrown.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Obj</span></p>
+<p class="rvps22"><span class="rvts53">The Object or var containing</span><span class="rvts69">,</span><span class="rvts53"> </span><span class="rvts69">integer</span><span class="rvts53"> or </span><span class="rvts69">hex</span><span class="rvts53"> value</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">. </span></p>
+<p class="rvps21"><span class="rvts51">Default</span></p>
+<p class="rvps22"><span class="rvts53">The value to return if </span><span class="rvts76">Obj</span><span class="rvts53"> is Cannot be converted</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53"> or var of integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a var containing a </span><span class="rvts15">integer</span><span class="rvts6"> or </span><span class="rvts54">Default</span><span class="rvts6"> value if </span><span class="rvts54">Obj</span><span class="rvts6"> is unable to be converted to integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">If Default is not a valid integer or </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6"> instance then </span><span class="rvts41">GetValue</span><span class="rvts6"> will throw an error if </span><span class="rvts54">Obj</span><span class="rvts6"> can not be converted to integer. </span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">Default</span><span class="rvts6"> can not be converted to a integer then this would method will yield the same results as calling </span><span class="rvts43">MfInt64.GetValue(Obj)</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfInt64.GetValue(Obj, Default, AllowAny)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a integer number from </span><span class="rvts54">Obj</span><span class="rvts6"> or returns </span><span class="rvts54">Default</span><span class="rvts6"> value if </span><span class="rvts54">Obj</span><span class="rvts6"> is unable to be converted to integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Obj</span></p>
+<p class="rvps22"><span class="rvts53">The Object or var containing</span><span class="rvts69">,</span><span class="rvts53"> </span><span class="rvts69">integer</span><span class="rvts53"> or </span><span class="rvts69">hex</span><span class="rvts53"> value</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">. </span></p>
+<p class="rvps21"><span class="rvts51">Default</span></p>
+<p class="rvps22"><span class="rvts53">The value to return if </span><span class="rvts76">Obj</span><span class="rvts53"> is Cannot be converted</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53"> or var of integer.</span></p>
+<p class="rvps21"><span class="rvts51">AlowAny</span></p>
+<p class="rvps22"><span class="rvts53">Determines if </span><span class="rvts76">Default</span><span class="rvts53"> can be a value other then integer. If true </span><span class="rvts76">Default</span><span class="rvts53"> can be any var, Object or null; Otherwise </span><span class="rvts76">Default</span><span class="rvts53"> must be a integer value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static Method.</span><br/><span class="rvts6">If </span><span class="rvts54">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6"> then </span><span class="rvts54">Default</span><span class="rvts6"> can be any value including var, object or null. However if </span><span class="rvts54">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6"> then this method will yield the same result as calling </span><span class="rvts43">MfInt64.GetValue(Obj, Default)</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">AllowAny</span><span class="rvts6"> is not a valid boolean.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">General Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">Obj</span><span class="rvts6"> is a float or </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance then </span><span class="rvts41">GetValue()</span><span class="rvts6"> will alway round down for positive number and round up for negative numbers. For instance </span><span class="rvts43">MfInt64.GetValue(2.8)</span><span class="rvts6"> will be </span><span class="rvts18">2</span><span class="rvts6"> and </span><span class="rvts43">MfInt64.GetValue(-2.8)</span><span class="rvts6"> will be </span><span class="rvts18">-2</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if incorrect number of parameters are passed in.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">Obj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInt64</span><span class="rvts30">(</span><span class="rvts33">233</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(Obj)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 233</span><br/><span class="rvts30"></span><br/><span class="rvts30">Obj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInt64</span><span class="rvts30">(</span><span class="rvts72">214</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(Obj)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 214</span><br/><span class="rvts31"></span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts72">214</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 214</span><br/><span class="rvts31"></span><br/><span class="rvts31">; the following will throw MfArgumentOutOfRangeException</span><br/><span class="rvts31">; MfInt64 can be min of -9223372036854775808 and max of 9223372036854775807</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts72">9223372036854825810.201</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val%</span><br/><span class="rvts31"></span><br/><span class="rvts31">; the following will display zero due to int64 overflow Default is returned</span><br/><span class="rvts31">; MfInt64 can be min of -9223372036854775808 and max of 9223372036854775807</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts72">9223372036854825810.201</span><span class="rvts30">, </span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 0</span><br/><span class="rvts31"></span><br/><span class="rvts30">flt := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfFloat</span><span class="rvts30">(</span><span class="rvts72">92233720368.8</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(flt)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 92233720368</span><br/><span class="rvts31"></span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts72">0x00F4</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 244</span><br/><span class="rvts31"></span><br/><span class="rvts31">; the following will throw MfArgumentException</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val%</span><br/><span class="rvts31"></span><br/><span class="rvts31">; the Default set to 25 will be returned</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">, </span><span class="rvts72">25</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 25</span><br/><span class="rvts31"></span><br/><span class="rvts30">VarDefault := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInt64</span><span class="rvts30">(</span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts34">MaxValue</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">, VarDefault)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 9223372036854775807</span><br/><span class="rvts31"></span><br/><span class="rvts31">; Default Obj is not a valid integer and Default</span><br/><span class="rvts31">; is not a valid integer but AllowAny is true</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">, </span><span class="rvts42">"Undefined"</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays Undefined</span><br/><span class="rvts31"></span><br/><span class="rvts31">; MfNumberStyles.Instance.Number is MfEnum.EnumItem</span><br/><span class="rvts31">; and MfEnum.EnumItem is of type IsIntegerNumber</span><br/><span class="rvts30">val := </span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts33">MfNumberStyles</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">Number</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 111</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

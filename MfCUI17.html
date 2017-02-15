@@ -1,0 +1,107 @@
+﻿<html>
+	
+<head>
+	<title>MfCharUnicodeInfo</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCUI17");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MfCharUnicodeInfo</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfBidiCategoryVerifyIsNotInstanc.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCUI17GetDecimalDigitValue.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfCharUnicodeInfo Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">Retrieves information about a Unicode character. This class cannot be inherited.</span><br/><span class="rvts6">All methods are </span><span class="rvts15">static</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if instance is created.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Members</span></span></h2>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><a class="rvts12" href="MfCUI17GetDecimalDigitValue.html">GetDecimalDigitValue() Method</a></li>
+<li class="rvps2"><a class="rvts12" href="MfCUI17GetDigitValue.html">GetDigitValue() Method</a></li>
+<li class="rvps2"><a class="rvts12" href="MfCUI17GetNumericValue.html">GetNumericValue() Method</a></li>
+</ul>
+<p class="rvps2"><span class="rvts6">The </span><a class="rvts14" href="http://www.unicode.org/" target="_blank">Unicode Standard</a><span class="rvts6"> defines a number of Unicode character categories. For example, a character might be categorized as an uppercase letter, a lowercase letter, a decimal digit number, a letter number, a paragraph separator, a math symbol, or a currency symbol. Your application can use the character category to govern string-based operations, such as parsing. The UnicodeCategory enumeration defines the possible character categories.</span></p>
+<p class="rvps2"><span class="rvts6">You use the </span><a class="rvts12" href="MfCUI17.html">MfCharUnicodeInfo</a><span class="rvts6"> class to obtain the UnicodeCategory value for a specific character. The CharUnicodeInfo class defines methods that return the following Unicode character values:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">Numeric value. Applies only to numeric characters, including fractions, subscripts, superscripts, Roman numerals, currency numerators, encircled numbers, and script-specific digits.</span></li>
+<li class="rvps2"><span class="rvts6">Digit value. Applies to numeric characters that can be combined with other numeric characters to represent a whole number in a numbering system.</span></li>
+<li class="rvps2"><span class="rvts6">Decimal digit value. Applies only to characters that represent decimal digits in the decimal (base 10) system. A decimal digit can be one of ten digits, from zero through nine. These characters are members of the </span><a class="rvts12" href="MfUC17DecimalDigitNumber.html">MfUnicodeCategory.DecimalDigitNumber</a><span class="rvts6"> category.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">When using this class in your applications, keep in mind the following programming considerations for using the </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> type. The type can be difficult to use, and strings are generally preferable for representing linguistic content.</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">A </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> object does not always correspond to a single character. Although the </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> type represents a single 16-bit value, some characters (such as grapheme clusters and surrogate pairs) consist of two or more UTF-16 code units.</span></li>
+<li class="rvps2"><span class="rvts6">The notion of a "character" is also flexible. A character is often thought of as a glyph, but many glyphs require multiple code points. For example, ä can be represented either by two code points ("a" plus U+0308, which is the combining diaeresis), or by a single code point ("ä" or U+00A4). Some languages have many letters, characters, and glyphs that require multiple code points, which can cause confusion in linguistic content representation. For example, there is a ΰ (U+03B0, Greek small letter upsilon with dialytika and tonos), but there is no equivalent capital letter. Uppercasing such a value simply retrieves the original value.</span></li>
+</ul>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

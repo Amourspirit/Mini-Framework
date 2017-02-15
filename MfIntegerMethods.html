@@ -1,0 +1,117 @@
+﻿<html>
+	
+<head>
+	<title>Methods</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfIntegerMethods");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Methods</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfInteger.html">MfInteger</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfInteger.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfIntegerValue.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfIntegerAdd.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		<h1 class="rvps11"><span class="rvts0"><span class="rvts25">MfInteger Class</span></span></h1>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="PME_List"><ul class="Child_Topic">
+<li Class="Child_Topic"><a href="MfIntegerAdd.html">Add()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerAddAttribute.html">AddAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerCompareTo.html">CompareTo()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerConstructor.html">Constructor()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerDivide.html">Divide()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerEquals.html">Equals()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGetAttribute.html">GetAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGetAttributes.html">GetAttributes()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGetHashCode.html">GetHashCode()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGetIndexOfAttribute.html">GetIndexOfAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGetType.html">GetType()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGetTypeCode.html">GetTypeCode()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGetValue.html">GetValue()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGreaterThen.html">GreaterThen()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerGreaterThenOrEqual.html">GreaterThenOrEqual()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerHasAttribute.html">HasAttribute()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerIs.html">Is()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerIsInstance.html">IsInstance()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerLessThen.html">LessThen()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerLessThenOrEqual.html">LessThenOrEqual()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerMultiply.html">Multiply()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerMemberwiseClone.html">MemberwiseClone()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerParse.html">Parse()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerSubtract.html">Subtract()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerToString.html">ToString()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerTryParse.html">TryParse()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerVerifyIsInstance.html">VerifyIsInstance()</a></li>
+<li Class="Child_Topic"><a href="MfIntegerVerifyIsNotInstance.html">VerifyIsNotInstance()</a></li>
+</ul>
+</div>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,142 @@
+﻿<html>
+	
+<head>
+	<title>Value</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharValue");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Value</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfChar.html">MfChar</a> &rsaquo;&rsaquo; <a href="MfCharProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCharProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCharReturnAsObject.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCharMethods.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Value</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the value associated with the this instance of </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6">.</span><br/><span class="rvts6">Overrides </span><a class="rvts12" href="MfPrimitiveValue.html">MfPrimitive.Value</a><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Value</span><br/><span class="rvts50">instance</span><span class="rvts48">.Value := Value</span></p>
+<p class="rvps21"><span class="rvts51">value</span></p>
+<p class="rvps22"><span class="rvts53">Value is a char and can be var or MfChar, MfString, any type that matches </span><a class="rvts52" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts53">. </span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Set the </span><span class="rvts54">value</span><span class="rvts6"> of the instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets string </span><span class="rvts54">value</span><span class="rvts6"> as var that represents the current char.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Value</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets the value of the </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> instance.</span><br/><span class="rvts6">Can be &nbsp;</span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> instance or var containing char.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> on set if </span><a class="rvts12" href="MfCharReadonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> if error setting value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">c <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfChar</span>()<span style="color: #408080; font-style: italic;"> ; create a new instance of MfChar class.</span>
+c<span style="color: #666666;">.</span>Value <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"a"</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span>Value
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays a</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"F"</span>
+c<span style="color: #666666;">.</span><span style="color: #000080;">ReturnAsObject</span> <span style="color: #666666;">:=</span> <span style="color: #19177c;">true</span><span style="color: #408080; font-style: italic;"> ; return MfChar object instances on methods it applys to.</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays F</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"hello world"</span><span style="color: #408080; font-style: italic;"> ; only the first char will be used</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span>Value
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays h</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> <span style="color: #666666;">237</span><span style="color: #408080; font-style: italic;"> ; only the first char of 237 which is 2 will be used</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 2</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> <span style="color: #666666;">-642</span><span style="color: #408080; font-style: italic;"> ; only the first char of -642 which is - will be used</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays -</span>
+
+str <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>(<span style="color: #ba2121;">"Hello world"</span>)
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> str<span style="color: #408080; font-style: italic;"> ; assigning str to c.Value is converted into first char of string</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays H</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> <span style="color: #666666;">0x0045</span><span style="color: #408080; font-style: italic;"> ; hex values inf formart of 0x#### are converted into the Unicode a character same as c.Value := "0x0045"</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays E</span>
+
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> <span style="color: #666666;">0x45</span><span style="color: #408080; font-style: italic;"> ; hex value is not in format of 0x#### and is treated like string</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays 0</span>
+
+i <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfInteger</span>(<span style="color: #666666;">89</span>)<span style="color: #408080; font-style: italic;"> ; create new MfInteger instance</span>
+c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span> <span style="color: #666666;">:=</span> i<span style="color: #408080; font-style: italic;"> ; Set MfInteger as Value and it is converted to char value</span>
+var <span style="color: #666666;">:=</span> c<span style="color: #666666;">.</span><span style="color: #000080;">Value</span>
+<span style="color: #008000;">MsgBox</span> <span style="color: #19177c;">%var%</span><span style="color: #408080; font-style: italic;"> ; displays Y</span>
+</pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,325 @@
+﻿<html>
+	
+<head>
+	<title>Process()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Process">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncProcess");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Process()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncPixelSearch.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncRandom.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Process()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.Process(Cmd [, PID-or-Name, Param3])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.Process(Cmd [, PID-or-Name, Param3])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Performs one of the following operations on a process: checks if it exists; changes its priority; closes it; waits for it to close.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Cmd</span></p>
+<p class="rvps22"><span class="rvts53">One of the following words:</span><br/><span class="rvts75">Exist</span><span class="rvts53">: Sets ErrorLevel to the Process ID (PID) if a matching process exists, or 0 otherwise. If the PID-or-Name parameter is blank, the script's own PID is retrieved. An alternate, single-line method to retrieve the script's PID is</span><span class="rvts101"> PID := DllCall("GetCurrentProcessId")</span><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts75">Close</span><span class="rvts53">: If a matching process is successfully terminated, </span><a class="rvts59" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts53"> is set to its former Process ID (PID). Otherwise (there was no matching process or there was a problem terminating it), it is set to 0. Since the process will be abruptly terminated -- possibly interrupting its work at a critical point or resulting in the loss of unsaved data in its windows (if it has any) -- this method should be used only if a process cannot be closed by using </span><a class="rvts59" href="http://ahkscript.org/docs/commands/WinClose.htm" target="_blank">WinClose</a><span class="rvts53"> on one of its windows.</span><br/><span class="rvts53"></span><br/><span class="rvts75">List</span><span class="rvts53">: Although List is not yet supported, the </span><a class="rvts52" href="MfuncProcess.htm#example1">examples section</a><span class="rvts53"> demonstrates how to retrieve a list of processes via DllCall.</span><br/><span class="rvts53"></span><br/><span class="rvts75">Priority</span><span class="rvts53">: Changes the priority (as seen in Windows Task Manager) of the first matching process to Param3 and sets </span><a class="rvts59" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts53"> to its Process ID (PID). If the PID-or-Name parameter is blank, the script's own priority will be changed. If there is no matching process or there was a problem changing its priority, ErrorLevel is set to 0.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Param3 should be one of the following letters or words: L (or Low), B (or BelowNormal), N (or Normal), A (or AboveNormal), H (or High), R (or Realtime). Note: Any process not designed to run at Realtime priority might reduce system stability if set to that level.</span><br/><span class="rvts53"></span><br/><span class="rvts75">Wait</span><span class="rvts53">: Waits up to Param3 seconds (can contain a decimal point) for a matching process to exist. If Param3 is omitted, the command will wait indefinitely. If a matching process is discovered, </span><a class="rvts59" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts53"> is set to its Process ID (PID). If the command times out, ErrorLevel is set to 0.</span><br/><span class="rvts53"></span><br/><span class="rvts75">WaitClose</span><span class="rvts53">: Waits up to Param3 seconds (can contain a decimal point) for ALL matching processes to close. If Param3 is omitted, the command will wait indefinitely. If all matching processes are closed, ErrorLevel is set to 0. If the command times out, </span><a class="rvts59" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts53"> is set to the Process ID (PID) of the first matching process that still exists.</span></p>
+<p class="rvps21"><span class="rvts51">PID</span></p>
+<p class="rvps22"><span class="rvts53">or-Name - This parameter can be either a number (the PID) or a process name as described below. It can also be left blank to change the priority of the script itself.</span><br/><span class="rvts53"></span><br/><span class="rvts53">PID: The Process ID, which is a number that uniquely identifies one specific process (this number is valid only during the lifetime of that process). The PID of a newly launched process can be determined via the </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Run.htm" target="_blank">Run</a><span class="rvts53"> command. Similarly, the PID of a window can be determined with </span><a class="rvts59" href="http://ahkscript.org/docs/commands/WinGet.htm" target="_blank">WinGet</a><span class="rvts53">. The Process command itself can also be used to discover a PID.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Name: The name of a process is usually the same as its executable (without path), e.g. notepad.exe or winword.exe. Since a name might match multiple running processes, only the first process will be operated upon. The name is not case sensitive.</span></p>
+<p class="rvps21"><span class="rvts51">Param3</span></p>
+<p class="rvps22"><span class="rvts53">See Cmd above for details.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Process.htm" target="_blank">AutoHotkey Docs - Process</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">For Wait and WaitClose: Processes are checked every 100 milliseconds; the moment the condition is satisfied, the command stops waiting. In other words, rather than waiting for the timeout to expire, it immediately sets </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> as described above, then continues execution of the script. Also, while the command is in a waiting state, new </span><a class="rvts13" href="http://ahkscript.org/docs/misc/Threads.htm" target="_blank">threads</a><span class="rvts6"> can be launched via </span><a class="rvts13" href="http://ahkscript.org/docs/Hotkeys.htm" target="_blank">hotkey</a><span class="rvts6">, </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Menu.htm" target="_blank">custom menu item</a><span class="rvts6">, or </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetTimer.htm" target="_blank">timer</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/Process.htm" target="_blank">AutoHotkey Docs - Process</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><a name="example1"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%">  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre></td><td><pre style="margin: 0; line-height: 125%"><span style="color: #408080; font-style: italic">; Example #1:</span>
+
+NewPID <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;Notepad.exe&quot;</span>)
+Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;priority&quot;</span>,NewPID, <span style="color: #BA2121">&quot;High&quot;</span>)
+<span style="color: #008000">MsgBox</span> The newly launched notepad's PID <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #19177C">%NewPID%</span><span style="color: #666666">.</span><span style="color: #408080; font-style: italic"></span>
+
+
+<span style="color: #408080; font-style: italic">; Example #2:</span>
+
+Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;wait&quot;</span>, <span style="color: #BA2121">&quot;Notepad.exe&quot;</span>, <span style="color: #666666">5.5</span>)
+NewPID <span style="color: #666666">=</span> <span style="color: #19177C">%ErrorLevel%</span><span style="color: #408080; font-style: italic">  ; Save the value immediately since ErrorLevel is often changed.</span>
+<span style="color: #008000">if </span>NewPID <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+{
+    <span style="color: #008000">MsgBox</span> The specified process did <span style="color: #AA22FF; font-weight: bold">not</span> appear within <span style="color: #666666">5.5</span> seconds<span style="color: #666666">.</span>
+    <span style="color: #008000">return</span>
+}<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">; Otherwise:</span>
+<span style="color: #008000">MsgBox</span> A matching process has appeared (Process ID <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #19177C">%NewPID%</span>)<span style="color: #666666">.</span>
+Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;priority&quot;</span>, NewPID, <span style="color: #BA2121">&quot;Low&quot;</span>)
+Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;priority&quot;</span>, , <span style="color: #BA2121">&quot;High&quot;</span>)<span style="color: #408080; font-style: italic">  ; Have the script set itself to high priority.</span>
+<span style="color: #008000">WinClose</span> Untitled <span style="color: #666666">-</span> Notepad
+Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;WaitClose&quot;</span>, NewPID, <span style="color: #666666">5</span>)
+<span style="color: #008000">if </span><span style="color: #19177C">ErrorLevel</span><span style="color: #408080; font-style: italic"> ; The PID still exists.</span>
+    <span style="color: #008000">MsgBox</span> The process did <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #0000FF">close</span> within <span style="color: #666666">5</span> seconds<span style="color: #666666">.</span><span style="color: #408080; font-style: italic"></span>
+
+
+<span style="color: #408080; font-style: italic">; Example #3: A hotkey to change the priority of the active window's process:</span>
+
+<span style="color: #A0A000">#z::</span><span style="color: #408080; font-style: italic"> ; Win+Z hotkey</span>
+active_pid <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>WinGet(<span style="color: #BA2121">&quot;PID&quot;</span>, <span style="color: #BA2121">&quot;A&quot;</span>)
+active_title <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>WinGetTitle(<span style="color: #BA2121">&quot;A&quot;</span>)
+<span style="color: #008000">Gui</span>, <span style="color: #666666">5:</span>Add, Text,, Press ESCAPE to cancel, <span style="color: #AA22FF; font-weight: bold">or</span> double<span style="color: #666666">-</span>click a new<span style="color: #BB6622; font-weight: bold">`n</span>priority level for the following window<span style="color: #666666">:</span><span style="color: #BB6622; font-weight: bold">`n</span><span style="color: #19177C">%active_title%</span>
+<span style="color: #008000">Gui</span>, <span style="color: #666666">5:</span>Add, ListBox, vMyListBox gMyListBox r5, Normal<span style="color: #666666">|</span>High<span style="color: #666666">|</span>Low<span style="color: #666666">|</span>BelowNormal<span style="color: #666666">|</span>AboveNormal
+<span style="color: #008000">Gui</span>, <span style="color: #666666">5:</span>Add, Button, default, OK
+<span style="color: #008000">Gui</span>, <span style="color: #666666">5:</span>Show,, Set Priority
+<span style="color: #008000">return</span>
+
+<span style="color: #A0A000">5GuiEscape:</span>
+<span style="color: #A0A000">5GuiClose:</span>
+<span style="color: #008000">Gui</span>, Destroy
+<span style="color: #008000">return</span>
+
+<span style="color: #A0A000">MyListBox:</span>
+<span style="color: #008000">if </span><span style="color: #19177C">A_GuiEvent</span> <span style="color: #666666">&lt;&gt;</span> DoubleClick
+    <span style="color: #008000">return</span><span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">; else fall through to the next label:</span>
+<span style="color: #A0A000">5ButtonOK:</span>
+<span style="color: #008000">GuiControlGet</span>, MyListBox
+<span style="color: #008000">Gui</span>, Destroy
+Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;Priority&quot;</span>, active_pid, MyListBox)
+<span style="color: #008000">if </span><span style="color: #19177C">ErrorLevel</span>
+    <span style="color: #008000">MsgBox</span> Success<span style="color: #666666">:</span> Its priority was changed to <span style="color: #BA2121">&quot;%MyListBox%&quot;</span><span style="color: #666666">.</span>
+<span style="color: #008000">else</span>
+    <span style="color: #008000">MsgBox</span> Error<span style="color: #666666">:</span> Its priority could <span style="color: #AA22FF; font-weight: bold">not</span> be changed to <span style="color: #BA2121">&quot;%MyListBox%&quot;</span><span style="color: #666666">.</span>
+<span style="color: #008000">return</span><span style="color: #408080; font-style: italic"></span>
+
+
+<span style="color: #408080; font-style: italic">; Example #4: Retrieves a list of running processes via DllCall then shows them in a MsgBox.</span>
+
+d <span style="color: #666666">:=</span> <span style="color: #BA2121">&quot;  |  &quot;</span><span style="color: #408080; font-style: italic">  ; string separator</span>
+s <span style="color: #666666">:=</span> <span style="color: #666666">4096</span><span style="color: #408080; font-style: italic">  ; size of buffers and arrays (4 KB)</span>
+
+Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;Exist&quot;</span>)<span style="color: #408080; font-style: italic">  ; sets ErrorLevel to the PID of this running script</span>
+<span style="color: #408080; font-style: italic">; Get the handle of this script with PROCESS_QUERY_INFORMATION (0x0400)</span>
+h <span style="color: #666666">:=</span> <span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;OpenProcess&quot;</span>, <span style="color: #BA2121">&quot;UInt&quot;</span>, <span style="color: #666666">0x0400</span>, <span style="color: #BA2121">&quot;Int&quot;</span>, <span style="color: #19177C">false</span>, <span style="color: #BA2121">&quot;UInt&quot;</span>, <span style="color: #19177C">ErrorLevel</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>)<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">; Open an adjustable access token with this process (TOKEN_ADJUST_PRIVILEGES = 32)</span>
+<span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;Advapi32.dll\OpenProcessToken&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, h, <span style="color: #BA2121">&quot;UInt&quot;</span>, <span style="color: #666666">32</span>, <span style="color: #BA2121">&quot;PtrP&quot;</span>, t)
+<span style="color: #0000FF">VarSetCapacity</span>(ti, <span style="color: #666666">16</span>, <span style="color: #666666">0</span>)<span style="color: #408080; font-style: italic">  ; structure of privileges</span>
+<span style="color: #0000FF">NumPut</span>(<span style="color: #666666">1</span>, ti, <span style="color: #666666">0</span>, <span style="color: #BA2121">&quot;UInt&quot;</span>)<span style="color: #408080; font-style: italic">  ; one entry in the privileges array...</span>
+<span style="color: #408080; font-style: italic">; Retrieves the locally unique identifier of the debug privilege:</span>
+<span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;Advapi32.dll\LookupPrivilegeValue&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, <span style="color: #666666">0</span>, <span style="color: #BA2121">&quot;Str&quot;</span>, <span style="color: #BA2121">&quot;SeDebugPrivilege&quot;</span>, <span style="color: #BA2121">&quot;Int64P&quot;</span>, luid)
+<span style="color: #0000FF">NumPut</span>(luid, ti, <span style="color: #666666">4</span>, <span style="color: #BA2121">&quot;Int64&quot;</span>)
+<span style="color: #0000FF">NumPut</span>(<span style="color: #666666">2</span>, ti, <span style="color: #666666">12</span>, <span style="color: #BA2121">&quot;UInt&quot;</span>)<span style="color: #408080; font-style: italic">  ; enable this privilege: SE_PRIVILEGE_ENABLED = 2</span>
+<span style="color: #408080; font-style: italic">; Update the privileges of this process with the new access token:</span>
+r <span style="color: #666666">:=</span> <span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;Advapi32.dll\AdjustTokenPrivileges&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, t, <span style="color: #BA2121">&quot;Int&quot;</span>, <span style="color: #19177C">false</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, <span style="color: #666666">&amp;</span>ti, <span style="color: #BA2121">&quot;UInt&quot;</span>, <span style="color: #666666">0</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, <span style="color: #666666">0</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, <span style="color: #666666">0</span>)
+<span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;CloseHandle&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, t)<span style="color: #408080; font-style: italic">  ; close this access token handle to save memory</span>
+<span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;CloseHandle&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, h)<span style="color: #408080; font-style: italic">  ; close this process handle to save memory</span>
+
+hModule <span style="color: #666666">:=</span> <span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;LoadLibrary&quot;</span>, <span style="color: #BA2121">&quot;Str&quot;</span>, <span style="color: #BA2121">&quot;Psapi.dll&quot;</span>)<span style="color: #408080; font-style: italic">  ; increase performance by preloading the library</span>
+s <span style="color: #666666">:=</span> <span style="color: #0000FF">VarSetCapacity</span>(a, s)<span style="color: #408080; font-style: italic">  ; an array that receives the list of process identifiers:</span>
+c <span style="color: #666666">:=</span> <span style="color: #666666">0</span><span style="color: #408080; font-style: italic">  ; counter for process idendifiers</span>
+<span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;Psapi.dll\EnumProcesses&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, <span style="color: #666666">&amp;</span>a, <span style="color: #BA2121">&quot;UInt&quot;</span>, s, <span style="color: #BA2121">&quot;UIntP&quot;</span>, r)
+<span style="color: #008000">Loop</span>, <span style="color: #666666">%</span> r <span style="color: #666666">//</span> <span style="color: #666666">4</span><span style="color: #408080; font-style: italic">  ; parse array for identifiers as DWORDs (32 bits):</span>
+{
+   id <span style="color: #666666">:=</span> <span style="color: #0000FF">NumGet</span>(a, <span style="color: #19177C">A_Index</span> <span style="color: #666666">*</span> <span style="color: #666666">4</span>, <span style="color: #BA2121">&quot;UInt&quot;</span>)<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">   ; Open process with: PROCESS_VM_READ (0x0010) | PROCESS_QUERY_INFORMATION (0x0400)</span>
+   h <span style="color: #666666">:=</span> <span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;OpenProcess&quot;</span>, <span style="color: #BA2121">&quot;UInt&quot;</span>, <span style="color: #666666">0x0010</span> <span style="color: #666666">|</span> <span style="color: #666666">0x0400</span>, <span style="color: #BA2121">&quot;Int&quot;</span>, <span style="color: #19177C">false</span>, <span style="color: #BA2121">&quot;UInt&quot;</span>, id, <span style="color: #BA2121">&quot;Ptr&quot;</span>)
+   if <span style="color: #666666">!</span>h
+      <span style="color: #008000">continue</span>
+   <span style="color: #0000FF">VarSetCapacity</span>(n, s, <span style="color: #666666">0</span>)<span style="color: #408080; font-style: italic">  ; a buffer that receives the base name of the module:</span>
+   e <span style="color: #666666">:=</span> <span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;Psapi.dll\GetModuleBaseName&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, h, <span style="color: #BA2121">&quot;Ptr&quot;</span>, <span style="color: #666666">0</span>, <span style="color: #BA2121">&quot;Str&quot;</span>, n, <span style="color: #BA2121">&quot;UInt&quot;</span>, <span style="color: #19177C">A_IsUnicode</span> <span style="color: #666666">?</span> s<span style="color: #666666">//2</span> <span style="color: #666666">:</span> s)
+   if <span style="color: #666666">!</span>e<span style="color: #408080; font-style: italic">    ; fall-back method for 64-bit processes when in 32-bit mode:</span>
+      <span style="color: #008000">if </span>e <span style="color: #666666">:=</span> <span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;Psapi.dll\GetProcessImageFileName&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, h, <span style="color: #BA2121">&quot;Str&quot;</span>, n, <span style="color: #BA2121">&quot;UInt&quot;</span>, <span style="color: #19177C">A_IsUnicode</span> <span style="color: #666666">?</span> s<span style="color: #666666">//2</span> <span style="color: #666666">:</span> s)
+         Mfunc<span style="color: #666666">.</span>SplitPath(n, n)
+   <span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;CloseHandle&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, h)<span style="color: #408080; font-style: italic">  ; close process handle to save memory</span>
+   if (n <span style="color: #666666">&amp;&amp;</span> e)<span style="color: #408080; font-style: italic">  ; if image is not null add to list:</span>
+      l <span style="color: #666666">.=</span> n <span style="color: #666666">.</span> d, c<span style="color: #666666">++</span>
+}
+<span style="color: #0000FF">DllCall</span>(<span style="color: #BA2121">&quot;FreeLibrary&quot;</span>, <span style="color: #BA2121">&quot;Ptr&quot;</span>, hModule)<span style="color: #408080; font-style: italic">  ; unload the library to free memory</span>
+<span style="color: #408080; font-style: italic">;Sort, l, C  ; uncomment this line to sort the list alphabetically</span>
+<span style="color: #008000">MsgBox</span>, <span style="color: #666666">0</span>, <span style="color: #19177C">%c%</span> Processes, <span style="color: #19177C">%l%</span><span style="color: #408080; font-style: italic"></span>
+
+
+<span style="color: #408080; font-style: italic">; Example #5: Retrieves a list of running processes via COM.</span>
+
+<span style="color: #008000">Gui</span>, Add, ListView, x2 y0 w400 h500, Mfunc<span style="color: #666666">.</span>Process(<span style="color: #BA2121">&quot;Name|Command Line&quot;</span>)
+for process <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #0000FF">ComObjGet</span>(<span style="color: #BA2121">&quot;winmgmts:&quot;</span>)<span style="color: #666666">.</span>ExecQuery(<span style="color: #BA2121">&quot;Select * from Win32_Process&quot;</span>)
+    <span style="color: #0000FF">LV_Add</span>(<span style="color: #BA2121">&quot;&quot;</span>, process<span style="color: #666666">.</span>Name, process<span style="color: #666666">.</span>CommandLine)
+<span style="color: #008000">Gui</span>, Show,, Process List
+</pre></td></tr></table></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

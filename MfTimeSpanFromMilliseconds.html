@@ -1,0 +1,101 @@
+﻿<html>
+	
+<head>
+	<title>FromMilliseconds()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfTimeSpanFromMilliseconds");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FromMilliseconds()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfTimeSpan.html">MfTimeSpan</a> &rsaquo;&rsaquo; <a href="MfTimeSpanMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfTimeSpanMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfTimeSpanFromHours.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfTimeSpanFromMinutes.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FromMilliseconds()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfTimeSpan.FromMilliseconds(value)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfTimeSpan.FromMilliseconds(value)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> that represents a specified number of milliseconds, where the specification is accurate to the nearest millisecond.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">value</span></p>
+<p class="rvps22"><span class="rvts53">A number of hours, accurate to the nearest millisecond.</span><br/><span class="rvts53">Can be var containing float or any object that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns an instance of </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object that represents </span><span class="rvts54">value</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfOE19.html">MfOverflowException</a><span class="rvts6"> if </span><span class="rvts54">value</span><span class="rvts6"> is less than </span><a class="rvts12" href="MfTimeSpanMinValue.html">MinValue</a><span class="rvts6"> or greater than </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MaxValue</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfICE22.html">MfInvalidCastException</a><span class="rvts6"> if </span><span class="rvts54">value</span><span class="rvts6"> cannot be cast to </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method.</span><br/><span class="rvts6">The </span><span class="rvts54">value</span><span class="rvts6"> parameter is converted to milliseconds, which is converted to ticks, and that number of ticks is used to initialize the new </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6">. Therefore, </span><span class="rvts54">value</span><span class="rvts6"> will only be considered accurate to the nearest millisecond. Note that, because of the loss of precision of the </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> data type, this conversion can cause an </span><a class="rvts12" href="MfOE19.html">MfOverflowException</a><span class="rvts6"> for values that are near to but still in the range of either </span><a class="rvts12" href="MfTimeSpanMinValue.html">MinValue</a><span class="rvts6"> or </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">; A_TickCount is the number of milliseconds since the computer was rebooted</span><br/><span class="rvts30">ts := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">FromMilliseconds</span><span class="rvts30">(</span><span class="rvts32">A_TickCount</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"Computer Uptime is Days:{0}, Hours:{1}, Minutes:{2}, Seconds:{3}"</span><br/><span class="rvts30"> &nbsp; &nbsp;, ts.</span><span class="rvts34">Days</span><span class="rvts30">, ts.</span><span class="rvts34">Hours</span><span class="rvts30">, ts.</span><span class="rvts34">Minutes</span><span class="rvts30">, ts.</span><span class="rvts34">Seconds</span><span class="rvts30">)</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

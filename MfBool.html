@@ -1,0 +1,93 @@
+﻿<html>
+	
+<head>
+	<title>MfBool</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Bool, Boolean">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfBool");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MfBool</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfAttributeVerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfBoolFields.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfBool Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">Represents MfBool object for handling true and false values.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfBoolFields.html">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfBoolProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfBoolMethods.html">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfBoolConstructor.html">Constructor()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">UserInput := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">InputBox</span><span class="rvts30">(</span><span class="rvts42">"Question!"</span><span class="rvts30">, </span><span class="rvts42">"Programming is cool (true or false)"</span><span class="rvts30">, , </span><span class="rvts72">300</span><span class="rvts30">, </span><span class="rvts72">140</span><span class="rvts30">)</span><br/><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts32">ErrorLevel</span><span class="rvts30">)</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, CANCEL was pressed.</span><br/><span class="rvts30">}</span><br/><span class="rvts32">else</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">try</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;bValue := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfBool</span><span class="rvts30">(</span><span class="rvts33">MfBool</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(UserInput))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (bValue.</span><span class="rvts34">IsTrue</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Aggreed, I aggree!</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Artistic!, Maybe you would enjoy something a little more artistic.</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">catch</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">16</span><span class="rvts30">, Bad Input, The input was not acceptable.</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

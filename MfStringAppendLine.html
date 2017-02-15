@@ -1,0 +1,114 @@
+﻿<html>
+	
+<head>
+	<title>AppendLine()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="AppendLine">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfStringAppendLine");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">AppendLine()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfString.html">MfString</a> &rsaquo;&rsaquo; <a href="MfStringMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfStringMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfStringAppend.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStringCompare.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">AppendLine()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutPutVar := </span><span class="rvts50">instance</span><span class="rvts48">.AppendLine()</span><br/><span class="rvts48">OutPutVar := </span><span class="rvts50">instance</span><span class="rvts48">.AppendLine(value)</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">value</span></p>
+<p class="rvps22"><span class="rvts53">The new value to add to current instance of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53">. Can be var containing string or any object derived from </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53">.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">AppendLine()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends a new line to current </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts15">string</span><span class="rvts6"> that that has new line appended.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is </span><span class="rvts18">true</span><span class="rvts6"> then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns </span><span class="rvts15">var</span><span class="rvts6"> containing </span><span class="rvts15">string</span><span class="rvts6">. See </span><a class="rvts12" href="MfStringAppendLine.htm#Example2">example 2</a><span class="rvts6">.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">AppendLine(value)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Append value followed by a new line to current </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts15">string</span><span class="rvts6"> that that has value and new line appended.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is </span><span class="rvts18">true</span><span class="rvts6"> then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns </span><span class="rvts15">var</span><span class="rvts6"> containing </span><span class="rvts15">string</span><span class="rvts6">. See </span><a class="rvts12" href="MfStringAppendLine.htm#Example2">example 2</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><a class="rvts12" href="MfStringReadonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if current instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfICE22.html">MfInvalidCastException</a><span class="rvts6"> if value cannot be cast to string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">value</span><span class="rvts6"> is empty no error is thrown and nothing is added to the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance.</span></p>
+<p class="rvps2"><span class="rvts6">This Operation will fail if </span><a class="rvts12" href="MfStringReadonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><a name="Example1"></a>
+<span class="rvts0"><span class="rvts17">Example 1</span></span></h3>
+<p class="rvps2"><span class="rvts6">The following code produces the message box shown in </span><a class="rvts12" href="MfStringAppendLine.htm#fig1">figure 1</a><span class="rvts6">.</span></p>
+<p class="rvps14"><span class="rvts30">mfs := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">()</span><br/><span class="rvts30">mfs.</span><span class="rvts45">AppendLine</span><span class="rvts30">(</span><span class="rvts42">"The quick brown fox."</span><span class="rvts30">)</span><br/><span class="rvts30">mfs.</span><span class="rvts45">AppendLine</span><span class="rvts30">(</span><span class="rvts42">"Jumped over the lazy cat."</span><span class="rvts30">)</span><br/><span class="rvts30">mfs.Append(</span><span class="rvts42">"The Cat was sleeping."</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Result, % mfs.</span><span class="rvts34">Value</span></p>
+<h3 class="rvps6"><a name="Example2"></a>
+<span class="rvts0"><span class="rvts17">Exampe 2</span></span></h3>
+<p class="rvps2"><span class="rvts6">The following code produces the message box shown in </span><a class="rvts12" href="MfStringAppendLine.htm#fig1">figure 1</a><span class="rvts6">. Notice that </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> is set to </span><span class="rvts18">true</span><span class="rvts6"> allowing method chaining. This achieves the same result as </span><a class="rvts12" href="MfStringAppendLine.htm#Example1">example 1</a><span class="rvts6">.</span></p>
+<p class="rvps14"><span class="rvts30">mfs := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">()</span><br/><span class="rvts30">mfs.</span><span class="rvts34">ReturnAsObject</span><span class="rvts30"> := </span><span class="rvts32">true</span><br/><span class="rvts30">mfs.</span><span class="rvts45">AppendLine</span><span class="rvts30">(</span><span class="rvts42">"The quick brown fox."</span><span class="rvts30">).</span><span class="rvts45">AppendLine</span><span class="rvts30">(</span><span class="rvts42">"Jumped over the lazy cat."</span><span class="rvts30">).</span><span class="rvts45">Append</span><span class="rvts30">(</span><span class="rvts42">"The Cat was sleeping."</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Result, % mfs.</span><span class="rvts34">Value</span></p>
+<p class="rvps2"><a name="fig1"></a>
+<span class="rvts18">Figure 1: </span><br/><img alt="" style="padding : 1px;" src="lib/ImgMfStringAppendLineFig1.png"><span class="rvts6"> </span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

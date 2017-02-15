@@ -1,0 +1,109 @@
+﻿<html>
+	
+<head>
+	<title>VerifyIsNotInstance()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfIOORE26VerifyIsNotInstance");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">VerifyIsNotInstance()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Exceptions.html">Exceptions</a> &rsaquo;&rsaquo; <a href="MfIOORE26.html">MfIndexOutOfRangeException</a> &rsaquo;&rsaquo; <a href="MfIOORE26Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfIOORE26Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfIOORE26VerifyIsInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfMAE23.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">VerifyIsNotInstance()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Inherits from </span><a class="rvts12" href="MfObject.html">MfObject</a></p>
+<p class="rvps20"><span class="rvts48">OutputVar := this.VerifyIsNotInstance([MethodName, LineFile, LineNumber, Source])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">VerifyIsNotInstance([MethodName, LineFile, LineNumber, Source])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Verifies the the current object is </span><span class="rvts18">NOT</span><span class="rvts6"> set to an instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">MethodName</span></p>
+<p class="rvps22"><span class="rvts53">The name of the calling method or property. Will be passed to the </span><a class="rvts52" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts53"> error message if not an instance.</span><br/><span class="rvts53">Can </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or string var</span></p>
+<p class="rvps21"><span class="rvts51">LineFile</span></p>
+<p class="rvps22"><span class="rvts53">The LineFile to pass to the </span><a class="rvts52" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts53"> if not an instance.</span><br/><span class="rvts53">Can </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or string var</span></p>
+<p class="rvps21"><span class="rvts51">LineNume</span></p>
+<p class="rvps22"><span class="rvts53">The LineNumber to pass to the </span><a class="rvts52" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts53"> if not an instance.</span><br/><span class="rvts53">can be integer var</span></p>
+<p class="rvps21"><span class="rvts51">Source</span></p>
+<p class="rvps22"><span class="rvts53">The source to pass to the </span><a class="rvts52" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts53"> if not an instance</span><br/><span class="rvts53">Can be var or any object.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns true if object is an instance otherwise </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> instance is thrown.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Protected</span><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">This method is intended to make it easier for implementers to ensure class is being called correctly in derived classes.</span><br/><span class="rvts6">You can use this method to ensure static methods are called as static method only in derived classes</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if class is an instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">vme := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">VerifyMethodsExample</span><span class="rvts30">()</span><br/><span class="rvts30">varA := vme.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; method succeeds.</span><br/><span class="rvts31">; the following line fails and throws error instance can not call static method</span><br/><span class="rvts30">varB := vme.</span><span class="rvts45">GetValue</span><span class="rvts30">(SomeObject)</span><br/><span class="rvts30"></span><br/><span class="rvts31">; the following line fails and throws error method can not be called as static method</span><br/><span class="rvts30">varC := </span><span class="rvts33">VerifyMethodsExample</span><span class="rvts30">.</span><span class="rvts45">ToString</span><span class="rvts30">()</span><br/><span class="rvts30">varD := </span><span class="rvts33">VerifyMethodsExample</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(SomeObject) </span><span class="rvts31">; method succeeds.</span><br/><span class="rvts32"></span><br/><span class="rvts32">class</span><span class="rvts30"> </span><span class="rvts33">VerifyMethodsExample</span><span class="rvts30"> </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">__New</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">Base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; some other code here...</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; static method</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">GetValue</span><span class="rvts30">(obj) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; throw an error if not called as a static method</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">VerifyIsNotInstance</span><span class="rvts30">(</span><span class="rvts32">A_ThisFunc</span><span class="rvts30">, </span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; more code here...</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; override base ToString method</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">ToString</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp;&nbsp;</span><span class="rvts31"> ; throw an error if called as static method</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts32">VerifyIsInstance</span><span class="rvts30">(</span><span class="rvts32">this</span><span class="rvts30">, </span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts42">"My Super Cool Class"</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

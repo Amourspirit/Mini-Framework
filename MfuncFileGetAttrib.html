@@ -1,0 +1,107 @@
+﻿<html>
+	
+<head>
+	<title>FileGetAttrib()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="FileGetAttrib, File, Attribute">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileGetAttrib");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileGetAttrib()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileDelete.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileGetShortcut.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileGetAttrib()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.FileGetAttrib([Filename])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileGetAttrib([Filename])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports whether a file or folder is read-only, hidden, etc.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Filename</span></p>
+<p class="rvps22"><span class="rvts53">The name of the target file, which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. If omitted, the current file of the innermost </span><span class="rvts53">enclosing </span><a class="rvts59" href="http://ahkscript.org/docs/commands/LoopFile.htm" target="_blank">File-Loop</a><span class="rvts53"> will be used instead.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a string with a subset of the letters "RASHNDOCT"</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> is non-zero then </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> has a message of </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileGetAttrib.htm" target="_blank">AutoHotkey Docs - FileGetAttrib</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">The string returned will contain a subset of the letters in the string "RASHNDOCT":</span><br/><span class="rvts18">R</span><span class="rvts6"> = read-only</span><br/><span class="rvts18">A </span><span class="rvts6">= ARCHIVE</span><br/><span class="rvts18">S</span><span class="rvts6"> = SYSTEM</span><br/><span class="rvts18">H</span><span class="rvts6"> = HIDDEN</span><br/><span class="rvts18">N</span><span class="rvts6"> = NORMAL</span><br/><span class="rvts18">D</span><span class="rvts6"> = DIRECTORY</span><br/><span class="rvts18">O</span><span class="rvts6"> = OFFLINE</span><br/><span class="rvts18">C</span><span class="rvts6"> = COMPRESSED</span><br/><span class="rvts18">T</span><span class="rvts6"> = TEMPORARY</span></p>
+<p class="rvps2"><span class="rvts6">To check if a particular attribute is present in the retrieved string, following this example:</span></p>
+<p class="rvps14"><span class="rvts30">Attributes := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetAttrib</span><span class="rvts30">(</span><span class="rvts42">"C:\My File.txt"</span><span class="rvts30">)</span><br/><span class="rvts32">IfInString</span><span class="rvts30">, Attributes, H </span><span class="rvts32">MsgBox</span><span class="rvts30"> The file is hidden.</span></p>
+<p class="rvps2"><span class="rvts6">On a related note, to retrieve a file's 8.3 short name, follow this example:</span></p>
+<p class="rvps14"><span class="rvts32">Loop</span><span class="rvts30">, C:\My Documents\Address List.txt</span><br/><span class="rvts30">ShortPathName = %A_LoopFileShortPath% </span><span class="rvts31">; Will yield something similar to C:\MYDOCU~1\ADDRES~1.txt</span></p>
+<p class="rvps2"><span class="rvts18">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileGetAttrib.htm" target="_blank">AutoHotkey Docs - FileGetAttrib</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetAttrib</span><span class="rvts30">(</span><span class="rvts105">"C:\New Folder"</span><span class="rvts30">)</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

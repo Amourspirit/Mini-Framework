@@ -1,0 +1,124 @@
+﻿<html>
+	
+<head>
+	<title>GetObjOrNull()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNullGetObjOrNull");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetObjOrNull()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfNull.html">MfNull</a> &rsaquo;&rsaquo; <a href="MfNullMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNullMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNullGetInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNullGetType.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetObjOrNull()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfNull.GetObjOrNull(obj)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetObjOrNull()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if an object is null and returns a value</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">obj</span></p>
+<p class="rvps22"><span class="rvts53">The Object or var to check to see if it is Null</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns if </span><span class="rvts54">obj</span><span class="rvts6"> is null then </span><a class="rvts12" href="MfNullNull.html">MfNull.Null</a><span class="rvts6"> is returned. Otherwise the </span><span class="rvts54">obj</span><span class="rvts6"> is returned.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Will always return an object, to check if null object is returned you could use </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a><span class="rvts6"> as show in the example below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">intC <span style="color: #333333;">:=</span> <span style="color: #0000dd; font-weight: bold;">0</span>
+<span style="color: #007020;">While</span> intC <span style="color: #333333;">&lt;</span> <span style="color: #0000dd; font-weight: bold;">5</span>
+{
+	varV <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">GetObjOrNull</span>(MyGetSomeValueMethod(intC))
+	if (<span style="color: #0000ff;">MfObject</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Equals</span>(varV, <span style="color: #0000ff;">Mfnull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Null</span>)) {
+		<span style="color: #007020;">MsgBox</span>, <span style="color: #0000dd; font-weight: bold;">64</span>, Null, This time the value <span style="color: #000000; font-weight: bold;">is</span> null
+	}
+	<span style="color: #007020;">else</span> {
+		<span style="color: #007020;">MsgBox</span>, <span style="color: #0000dd; font-weight: bold;">64</span>, Integer, <span style="color: #333333;">%</span> <span style="background-color: #fff0f0;">"<span style="color: #800000;">This time the value is:</span> "</span> <span style="color: #333333;">.</span> varV<span style="color: #333333;">.</span><span style="color: #0000ff;">Value</span>
+	}
+	intC<span style="color: #333333;">++</span>
+}
+
+MyGetSomeValueMethod(cnt) {
+	if (<span style="color: #0066bb; font-weight: bold;">Mod</span>(cnt, <span style="color: #0000dd; font-weight: bold;">2</span>)) {
+		<span style="color: #007020;">return</span> null
+	}
+	<span style="color: #007020;">else</span> {
+		<span style="color: #007020;">return</span> <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">MfInteger</span>(cnt)
+	}
+}
+
+<span style="color: #007020;">ExitApp</span>
+</pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,161 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Mini-Framework Help</title>
+    <script type="text/javascript">
+      function escapeHtml(unsafe) {
+        return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/:/g, "");
+      }
+      var sTopic = "";
+      if (top.location.href.lastIndexOf("?") > 0)
+        sTopic = top.location.href.substring(top.location.href.lastIndexOf("?") + 1, top.location.href.length);
+      if (sTopic == "") sTopic = "index.html";
+	  sTopic = escapeHtml(sTopic);
+      document.write('<frameset cols="300,*">');
+      document.write('<frame src="toc.html" name="FrameTOC">');
+      document.write('<frame src="' + sTopic + '" name="FrameMain">');
+      document.write('</frameset>');
+    </script>
+
+</head>
+
+<noscript>
+	<frameset cols="300,*">
+		<frame src="toc.html" name="FrameTOC">
+		<frame src="index.html" name="FrameMain">
+	</frameset>
+</noscript>
+
+</html>
+
+<html>
+	
+<head>
+	<title>Introduction</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("index");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Introduction</h1>
+				
+				</div>
+			<div id="topic_header_nav">
+				<a href="License.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps4"><span class="rvts0"><span class="rvts21">Mini-Framework</span></span><span class="rvts0"><span class="rvts11">, version 0.3.8.1</span></span></h1>
+<p class="rvps2"><span class="rvts6">Library of </span><span class="rvts6">Mini-Framework</span><br/><span class="rvts6">Copyright (c) 2013, - </span><span class="rvts6">2017</span><span class="rvts6"> </span><span class="rvts6">Paul Moss</span><br/><span class="rvts6">Licensed under the </span><a class="rvts12" href="License.html">GNU General Public License GPL-2.0</a></p>
+<p class="rvps2"><span class="rvts6">Requires </span><a class="rvts13" href="http://ahkscript.org/" target="_blank">AutoHotkey</a><span class="rvts6"> [v1.1.21+]</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Introduction</span></span></h2>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> is as collection of classes built for </span><a class="rvts13" href="http://ahkscript.org/" target="_blank">AutoHotkey</a><span class="rvts6"> that help give functionality similar to a strongly typed language. The </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> class can be used to get information from an object. All objects have a GetType() method that returns an instance of the </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> class. All object inherit from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> and therefore inherit all the </span><a class="rvts12" href="MfObjectMethods.html">methods</a><span class="rvts6"> of </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> attempts to bridge the gap between the powerful scripting language of </span><a class="rvts13" href="http://ahkscript.org/" target="_blank">AutoHotkey</a><span class="rvts6"> and a more strongly typed language. The classes are built in a </span><span class="rvts15">Mono/.Net</span><span class="rvts6"> style.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> classes are built with the power of strongly type object while maintaining flexibility with </span><a class="rvts13" href="http://ahkscript.org/" target="_blank">AutoHotkey</a><span class="rvts6"> variables. Many of the classes accept variables in their methods, constructors and overloads methods to make using this framework flexible.</span></p>
+<p class="rvps2"><span class="rvts6">All the Classes are prefixed with </span><span class="rvts18">Mf</span><span class="rvts6"> to help avoid any conflicts with naming conventions and variables in existing projects.</span></p>
+<p class="rvps2"><span class="rvts6">There is also a package available for </span><a class="rvts14" href="http://www.sublimetext.com/" target="_blank">Sublime Text</a><span class="rvts6"> to give </span><a class="rvts14" href="https://en.wikipedia.org/wiki/Intelligent_code_completion" target="_blank">intellisense</a><span class="rvts6"> and syntax highlighting to </span><span class="rvts6">Mini-Framework</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">All </span><span class="rvts15">objects</span><span class="rvts6"> derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> use a </span><span class="rvts18">Zero-Based</span><span class="rvts6"> index.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Namespaces</span></span></h3>
+<p class="rvps2"><span class="rvts6">This framework loosely uses name-spaces. AutoHotkey does on support Namespace at this time and this framework mimics name-spaces by using includes organizes in specific groups. See </span><a class="rvts12" href="NameSapce.html">Namespace</a><span class="rvts6"> for more information.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Primitives</span></span></h3>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> has what might be considered primitives in other languages. These are objects that are used to represent string and numbers in a more object oriented way.</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> represents a Unicode character.</span></li>
+<li class="rvps2"><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> represents a string.</span></li>
+<li class="rvps2"><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> represents a boolean.</span></li>
+<li class="rvps2"><a class="rvts12" href="MfByte.html">MfByte</a><span class="rvts6"> represents a Byte with a </span><a class="rvts12" href="MfByteMinValue.html">MinValue</a><span class="rvts6"> and a </span><a class="rvts12" href="MfByteMaxValue.html">MaxValue</a><span class="rvts6">.</span></li>
+<li class="rvps2"><a class="rvts12" href="MfInt16.html">MfInt16</a><span class="rvts6"> represents an integer with a </span><a class="rvts12" href="MfInt16MinValue.html">MinValue</a><span class="rvts6"> and a </span><a class="rvts12" href="MfInt16MaxValue.html">MaxValue</a><span class="rvts22"> (short)</span><span class="rvts6">.</span></li>
+<li class="rvps2"><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> represents an integer with a </span><a class="rvts12" href="MfIntegerMinValue.html">MinValue</a><span class="rvts6"> and a </span><a class="rvts12" href="MfIntegerMaxValue.html">MaxValue</a><span class="rvts6"> </span><span class="rvts22">(Int32)</span><span class="rvts6">.</span></li>
+<li class="rvps2"><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6"> represents a 64 bit integer with a </span><a class="rvts12" href="MfInt64MinValue.html">MinValue</a><span class="rvts6"> and a </span><a class="rvts12" href="MfInt64MaxValue.html">MaxValue</a><span class="rvts22"> (long)</span><span class="rvts6">.</span></li>
+<li class="rvps2"><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> represents a float.</span></li>
+</ul>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">List/Array/Dictionary</span></span></h3>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> has several classes to help with </span><span class="rvts15">List</span><span class="rvts6">, </span><span class="rvts15">Arrays</span><span class="rvts6"> and </span><span class="rvts15">Dictionaries</span><span class="rvts6"> such as </span><a class="rvts12" href="MfCollection.html">MfCollection</a><span class="rvts6">, </span><a class="rvts12" href="MfDictionary.html">MfDictionary</a><span class="rvts6">, </span><a class="rvts12" href="MfGenericList.html">MfGenericList</a><span class="rvts6">, </span><a class="rvts12" href="MfList.html">MfList</a><span class="rvts6">, </span><a class="rvts12" href="MfQueue.html">MfQueue</a><span class="rvts6">, and </span><a class="rvts12" href="MfStack.html">MfStack</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Classes such as </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6">, </span><a class="rvts12" href="MfDB16.html">MfDictionaryBase</a><span class="rvts6"> and </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6"> can be used in your project to create custom list and dictionary classes.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Exceptions</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="Exceptions.html">Exceptions</a><span class="rvts6"> are used extensively throughout </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> to gather and display error information. All exceptions are derived from the </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> class. </span><a class="rvts12" href="Exceptions.html">Exceptions</a><span class="rvts6"> are used in place of AutoHotkey </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Throw.htm#Exception" target="_blank">Exception</a><span class="rvts6"> and </span><a class="rvts13" href="https://autohotkey.com/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> unless otherwise noted.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Method Overloads</span></span></h3>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> uses method overloading extensively. Overloading allows a method to have different variations of parameters based upon the type that is passed in. For an example of Overloads see the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> </span><a class="rvts12" href="MfTimeSpanConstructor.html">Constructor</a><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is a class designed for working with method overloads.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Enumerations</span></span></h3>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> uses enumerations such as </span><a class="rvts12" href="MfDigitShapes.html">MfDigitShapes</a><span class="rvts6">, </span><a class="rvts12" href="MfEqualsOptions.html">MfEqualsOptions</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6">, </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6">, </span><a class="rvts12" href="MfSFNT.html">MfSetFormatNumberType</a><span class="rvts6">, </span><a class="rvts12" href="MfSSO20.html">MfStringSplitOptions</a><span class="rvts6">, </span><a class="rvts12" href="MfSC18.html">MfStringComparison</a><span class="rvts6">. All enumerations inherit from the </span><a class="rvts12" href="MfEnum.html">MfEnum</a><span class="rvts6"> class. All Enumeration classes enumeration values are instances of </span><a class="rvts12" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">To create custom enumerations for you project inherit your class from the </span><a class="rvts12" href="MfEnum.html">MfEnum</a><span class="rvts6"> class.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Null Values</span></span></h3>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> has several different options for working with nulls. The Primary way is the </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6"> class using the </span><a class="rvts12" href="MfNullIsNull.html">MfNull.IsNull()</a><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">There is also a global variable named </span><a class="rvts12" href="Globals.htm#Null">Null</a><span class="rvts6"> with a value of "" for convenience. For another option you can use global variable </span><a class="rvts12" href="Globals.htm#undefined">Undefined</a><span class="rvts6">. </span></p>
+<p class="rvps2"><span class="rvts6">Also see </span><a class="rvts12" href="MfStringIsNullOrEmpty.html">MfString.IsNullOrEmpty()</a><span class="rvts6"> method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Environment</span></span></h3>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> uses The </span><a class="rvts12" href="MfEnvironment.html">MfEnvironment</a><span class="rvts6"> class to access various environment variables. See </span><a class="rvts12" href="MfEnvironment.html">MfEnvironment</a><span class="rvts6"> </span><a class="rvts12" href="MfEnvironmentProperties.html">Properties</a><span class="rvts6"> for a list of Environment variables.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Command Wrappers</span></span></h3>
+<p class="rvps2"><span class="rvts6">Mini-Framework</span><span class="rvts6"> uses the </span><a class="rvts12" href="Mfunc.html">Mfunc</a><span class="rvts6"> create a wrapper for many of the built in AutoHotkey command functions and adds a few other functions for common use. See the </span><a class="rvts12" href="Mfunc.html">Mfunc</a><span class="rvts6"> </span><a class="rvts12" href="MfuncMethods.html">Methods</a><span class="rvts6">.</span></p>
+<h4 class="rvps7"><span class="rvts0"><span class="rvts19">How to Include in my project?</span></span></h4>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="Distribution.html">Distribution</a></p>
+<h4 class="rvps7"><span class="rvts0"><span class="rvts19">Will adding </span></span><span class="rvts0"><span class="rvts19">Mini-Framework</span></span><span class="rvts0"><span class="rvts19"> cause cause performance issues due to the number of objects?</span></span></h4>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/" target="_blank">AutoHotkey</a><span class="rvts6"> Documentation </span><a class="rvts13" href="https://autohotkey.com/docs/Variables.htm#cap" target="_blank">states</a><span class="rvts6"> </span><span class="rvts20">"There is no limit to how many variables a script may create. The program is designed to support at least several million variables without a significant drop in performance."</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

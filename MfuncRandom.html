@@ -1,0 +1,122 @@
+﻿<html>
+	
+<head>
+	<title>Random()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Random">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncRandom");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Random()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncProcess.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncRegRead.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Random()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.Random([ Min, Max])</span><br/><span class="rvts48">OutputVar := Mfunc.Random(, NewSeed)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.Random()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Generates a pseudo-random number.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Min</span></p>
+<p class="rvps22"><span class="rvts53">The smallest number that can be generated, which can be negative, floating point, or an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. If omitted, the smallest number will be 0. The lowest allowed value is -2147483648 for integers, but floating point numbers have no restrictions.</span></p>
+<p class="rvps21"><span class="rvts51">Max</span></p>
+<p class="rvps22"><span class="rvts53">The largest number that can be generated, which can be negative, floating point, or an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. If omitted, the largest number will be 2147483647 (which is also the largest allowed integer value -- but floating point numbers have no restrictions).</span></p>
+<p class="rvps21"><span class="rvts51">NewSeed</span></p>
+<p class="rvps22"><span class="rvts53">This mode reseeds the random number generator with NewSeed (which can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">). This affects all subsequently generated random numbers. NewSeed should be an integer between 0 and 4294967295 (0xFFFFFFFF). Reseeding can improve the quality/security of generated random numbers, especially when NewSeed is a genuine random number rather than one of lesser quality such as a pseudo-random number. Generally, reseeding does not need to be done more than once.</span><br/><span class="rvts53"></span><br/><span class="rvts53">If reseeding is never done by the script, the seed starts off as the low-order 32-bits of the 64-bit value that is the number of 100-nanosecond intervals since January 1, 1601. This value travels from 0 to 4294967295 every ~7.2 minutes.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns random number as var. The format of stored floating point numbers is determined by </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetFormat.htm" target="_blank">SetFormat</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Random.htm" target="_blank">AutoHotkey Docs - Random</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">This command yields a pseudo-randomly generated number, which is a number that simulates a true random number but is really a number based on a complicated formula to make determination/guessing of the next number extremely difficult.</span></p>
+<p class="rvps2"><span class="rvts6">All numbers within the specified range have approximately the same probability of being generated (however, see "known limitations" below).</span></p>
+<p class="rvps2"><span class="rvts6">If either Min or Max contains a decimal point, the end result will be a floating point number in the format set by </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetFormat.htm" target="_blank">SetFormat</a><span class="rvts6">. Otherwise, the result will be an integer.</span></p>
+<p class="rvps2"><span class="rvts6">Known limitations for floating point: 1) only about 4,294,967,296 distinct numbers can be generated for any particular range, so all other numbers in the range will never be generated; 2) occasionally a result can be slightly greater than the specified Max (this is caused in part by the imprecision inherent in floating point numbers).</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/Random.htm" target="_blank">AutoHotkey Docs - Random</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Comments based on the original source</span></p>
+<p class="rvps2"><span class="rvts6">This function uses the Mersenne Twister random number generator, MT19937, written by Takuji Nishimura and Makoto Matsumoto, Shawn Cokus, Matthe Bellew and Isaku Wada.</span></p>
+<p class="rvps2"><span class="rvts6">The Mersenne Twister is an algorithm for generating random numbers. It was designed with consideration of the flaws in various other generators. The period, 219937-1, and the order of equidistribution, 623 dimensions, are far greater. The generator is also fast; it avoids multiplication and division, and it benefits from caches and pipelines. For more information see the inventors' web page at www.math.keio.ac.jp/~matumoto/emt.html</span></p>
+<p class="rvps2"><span class="rvts6">Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura, All rights reserved.</span></p>
+<p class="rvps2"><span class="rvts6">Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</span></p>
+<ol style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: decimal;">
+<li value="1" class="rvps2"><span class="rvts6">Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</span></li>
+<li value="2" class="rvps2"><span class="rvts6">Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</span></li>
+<li value="3" class="rvps2"><span class="rvts6">The names of its contributors may not be used to endorse or promote products derived from this software without specific prior written permission.</span></li>
+</ol>
+<p class="rvps2"><span class="rvts6">THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</span></p>
+<p class="rvps2"><span class="rvts6">Do NOT use for CRYPTOGRAPHY without securely hashing several returned values together, otherwise the generator state can be learned after reading 624 consecutive values.</span></p>
+<p class="rvps2"><span class="rvts6">When you use this, send an email to: matumoto@math.keio.ac.jp with an appropriate reference to your work. It would be nice to CC: rjwagner@writeme.com and Cokus@math.washington.edu when you write.</span></p>
+<p class="rvps2"><span class="rvts6">This above has been already been done for AutoHotkey, but if you use the Random command in a publicly distributed application, consider sending an e-mail to the above people to thank them.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">rand := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Random</span><span class="rvts30">(</span><span class="rvts72">1</span><span class="rvts30">, </span><span class="rvts72">10</span><span class="rvts30">)</span><br/><span class="rvts30">rand := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Random</span><span class="rvts30">(</span><span class="rvts72">0.0</span><span class="rvts30">, </span><span class="rvts72">1.0</span><span class="rvts30">)</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

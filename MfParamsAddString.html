@@ -1,0 +1,101 @@
+﻿<html>
+	
+<head>
+	<title>AddString()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfParamsAddString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">AddString()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfParams.html">MfParams</a> &rsaquo;&rsaquo; <a href="MfParamsMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfParamsMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfParamsAddRange.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfParamsB.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">AddString()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := instance.AddString(value)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">AddString()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Add </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> to the current </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">value</span></p>
+<p class="rvps22"><span class="rvts53">the </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> object or var containing string to add to the </span><a class="rvts52" href="MfParams.html">MfParams</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts54">value</span><span class="rvts6"> zero-based index within the collection as integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is not set to an instance.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> if there is a error adding value to </span><a class="rvts12" href="MfParams.html">MfParams</a><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if argument value is Object but is not a valid instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> class.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfICE22.html">MfInvalidCastException</a><span class="rvts6"> if </span><span class="rvts54">value</span><span class="rvts6"> cannot be cast to </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfStringReturnAsObject.html">RetrunAsObject</a><span class="rvts6"> property for </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance to </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance using this method is always </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">()</span><br/><span class="rvts30">p.</span><span class="rvts45">AddString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">MyMethod(p)</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

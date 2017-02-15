@@ -1,0 +1,137 @@
+﻿<html>
+	
+<head>
+	<title>ImageSearch()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="ImageSearch, Image">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncImageSearch");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ImageSearch()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncIfNotIn.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncIniDelete.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ImageSearch()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.ImageSearch(OutputVarX, OutputVarY, X1, Y1, X2, Y2, ImageFile)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.ImageSearch(OutputVarX, OutputVarY, X1, Y1, X2, Y2, ImageFile)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Searches a region of the screen for an image.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">OutputVarX/Y</span></p>
+<p class="rvps22"><span class="rvts53">The names of the variables in which to store the X and Y coordinates of the upper-left pixel of where the image was found on the screen (if no match is found, the variables are made blank). Coordinates are relative to the active window unless </span><a class="rvts59" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts53"> was used to change that.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Either or both of these parameters may be left blank, in which case ErrorLevel (see below) can be used to determine whether a match was found.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing </span><span class="rvts69">integer</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">X1,Y1</span></p>
+<p class="rvps22"><span class="rvts53">The X and Y coordinates of the upper left corner of the rectangle to search, which can be </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expressions</a><span class="rvts53">. Coordinates are relative to the</span><span class="rvts75"> active window unless </span><a class="rvts107" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts75"> was used to change that.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing </span><span class="rvts69">integer</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">X2,Y2</span></p>
+<p class="rvps22"><span class="rvts53">The X and Y coordinates of the lower right corner of the rectangle to search, which can be </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expressions</a><span class="rvts53">. Coordinates are relative to the </span><span class="rvts75">active window unless </span><a class="rvts107" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts75"> was used to change that.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing </span><span class="rvts69">integer</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">ImageFile</span></p>
+<p class="rvps22"><span class="rvts53">See ImageFile Parameter below</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">ImageFile Parameter</span></span></h3>
+<p class="rvps2"><span class="rvts6">The file name of an image, which is assumed to be in </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts6"> if an absolute path isn't specified. All operating systems support GIF, JPG, BMP, ICO, CUR, and ANI images (BMP images must be 16-bit or higher). Other sources of icons include the following types of files: EXE, DLL, CPL, SCR, and other types that contain icon resources. On Windows XP or later, additional image formats such as PNG, TIF, Exif, WMF, and EMF are supported. Operating systems older than XP can be given support by copying Microsoft's free GDI+ DLL into the AutoHotkey.exe folder (but in the case of a </span><a class="rvts13" href="http://ahkscript.org/docs/Scripts.htm#ahk2exe" target="_blank">compiled script</a><span class="rvts6">, copy the DLL into the script's folder). To download the DLL, search for the following phrase at </span><a class="rvts14" href="http://www.microsoft.com/" target="_blank">www.microsoft.com</a><span class="rvts6">: gdi redistributable</span></p>
+<p class="rvps2"><span class="rvts6">Can be </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or var containing </span><span class="rvts15">string</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Options</span><span class="rvts6">: Zero or more of the following strings may be also be present immediately before the name of the file. Separate each option from the next with a single space or tab. For example: </span><span class="rvts43">*2 *w100 *h-1 C:\Main Logo.bmp</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">*IconN</span><span class="rvts6">: To use an icon group other than the first one in the file, specify *Icon followed immediately by the number of the group. For example,</span><span class="rvts43"> *Icon2</span><span class="rvts6"> would load the default icon from the second icon group.</span></p>
+<p class="rvps2"><span class="rvts18">*n</span><span class="rvts6"> (variation): Specify for n a number between 0 and 255 (inclusive) to indicate the allowed number of shades of variation in either direction for the intensity of the red, green, and blue components of each pixel's color. For example, </span><span class="rvts43">*2</span><span class="rvts6"> would allow two shades of variation. This parameter is helpful if the coloring of the image varies slightly or if ImageFile uses a format such as GIF or JPG that does not accurately represent an image on the screen. If you specify 255 shades of variation, all colors will match. The default is 0 shades.</span></p>
+<p class="rvps2"><span class="rvts18">*TransN</span><span class="rvts6">: This option makes it easier to find a match by specifying one color within the image that will match any color on the screen. It is most commonly used to find PNG, GIF, and TIF files that have some transparent areas (however, icons do not need this option because their transparency is automatically supported). For GIF files,</span><span class="rvts43"> *TransWhite</span><span class="rvts6"> might be most likely to work. For PNG and TIF files, </span><span class="rvts43">*TransBlack</span><span class="rvts6"> might be best. Otherwise, specify for </span><span class="rvts18">N</span><span class="rvts6"> some other color name or RGB value (see the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Progress.htm#colors" target="_blank">color chart</a><span class="rvts6"> for guidance, or use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/PixelGetColor.htm" target="_blank">PixelGetColor</a><span class="rvts6"> in its RGB mode). Examples: </span><span class="rvts43">*TransBlack</span><span class="rvts6">, </span><span class="rvts43">*TransFFFFAA</span><span class="rvts6">, </span><span class="rvts43">*Trans0xFFFFAA</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">*wn</span><span class="rvts6"> and </span><span class="rvts18">*hn</span><span class="rvts6">: Width and height to which to scale the image (this width and height also determines which icon to load from a multi-icon .ICO file). If both these options are omitted, icons loaded from ICO, DLL, or EXE files are scaled to the system's default small-icon size, which is usually 16 by 16 (you can force the actual/internal size to be used by specifying </span><span class="rvts43">*w0 *h0</span><span class="rvts6">). Images that are not icons are loaded at their actual size. To shrink or enlarge the image while preserving its aspect ratio, specify -1 for one of the dimensions and a positive number for the other. For example, specifying </span><span class="rvts43">*w200 *h-1</span><span class="rvts6"> would make the image 200 pixels wide and cause its height to be set automatically.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/ImageSearch.htm" target="_blank">AutoHotkey Docs - ImageSearch</a><span class="rvts6">.</span><br/><span class="rvts6">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">ImageSearch can be used to detect graphical objects on the screen that either lack text or whose text cannot be easily retrieved. For example, it can be used to discover the position of picture buttons, icons, web page links, or game objects. Once located, such objects can be clicked via Click.</span></p>
+<p class="rvps2"><span class="rvts6">A strategy that is sometimes useful is to search for a small clipping from an image rather than the entire image. This can improve reliability in cases where the image as a whole varies, but certain parts within it are always the same. One way to extract a clipping is to:</span><br/><span class="rvts6">1. Press Alt+PrintScreen while the image is visible in the active window. This places a screen-shot on the clipboard.</span><br/><span class="rvts6">2. Open an image processing program such as Paint.</span><br/><span class="rvts6">3. Paste the contents of the clipboard (that is, the screen-shot.</span><br/><span class="rvts6">3. Select a region that does not vary and that is unique to the image.</span><br/><span class="rvts6">4. Copy and paste that region to a new image document.</span><br/><span class="rvts6">6. Save it as a small file for use with ImageSearch.</span></p>
+<p class="rvps2"><span class="rvts6">To be a match, an image on the screen must be the same size as the one loaded via the ImageFile parameter and its options.</span></p>
+<p class="rvps2"><span class="rvts6">The region to be searched must be visible; in other words, it is not possible to search a region of a window hidden behind another window. By contrast, images that lie partially beneath the mouse cursor can usually be detected. The exception to this is game cursors, which in most cases will obstruct any images beneath them.</span></p>
+<p class="rvps2"><span class="rvts6">Since the search starts at the top row of the region and moves downward, if there is more than one match, the one closest to the top will be found.</span></p>
+<p class="rvps2"><span class="rvts6">Icons containing a transparent color automatically allow that color to match any color on the screen. Therefore, the color of what lies behind the icon does not matter.</span></p>
+<p class="rvps2"><span class="rvts6">ImageSearch supports 8-bit color screens (256-color) or higher.</span></p>
+<p class="rvps2"><span class="rvts6">The search behavior may vary depending on the display adapter's color depth (especially for GIF and JPG files). Therefore, if a script will run under multiple color depths, it is best to test it on each depth setting. You can use the shades-of-variation option (*n) to help make the behavior consistent across multiple color depths.</span></p>
+<p class="rvps2"><span class="rvts6">If the image on the screen is translucent, ImageSearch will probably fail to find it. To work around this, try the shades-of-variation option (*n) or make the window temporarily opaque via </span><span class="rvts43">WinSet, Transparent, Off</span><span class="rvts6">.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set to </span><span class="rvts18">0</span><span class="rvts6"> if the image was found in the specified region, </span><span class="rvts18">1</span><span class="rvts6"> if it was not found, or </span><span class="rvts18">2</span><span class="rvts6"> if there was a problem that prevented the command from conducting the search (such as failure to open the image file or a badly formatted option).</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/ImageSearch.htm" target="_blank">AutoHotkey Docs - ImageSearch</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/ImageSearch.htm" target="_blank">Autohotkey - ImageSearch</a><span class="rvts6"> error message.</span><br/><span class="rvts6">No error is thrown when only </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Mfunc<span style="color: #666666">.</span>ImageSearch(FoundX, FoundY, <span style="color: #666666">40</span>,<span style="color: #666666">40</span>, <span style="color: #666666">300</span>, <span style="color: #666666">300</span>, <span style="color: #BA2121">&quot;C:\My Images\test.bmp&quot;</span>)
+
+<span style="color: #008000">CoordMode</span> Pixel<span style="color: #408080; font-style: italic">  ; Interprets the coordinates below as relative to the screen rather than the active window.</span>
+Mfunc<span style="color: #666666">.</span>ImageSearch(FoundX, FoundY, <span style="color: #666666">0</span>, <span style="color: #666666">0</span>, <span style="color: #19177C">A_ScreenWidth</span>, <span style="color: #19177C">A_ScreenHeight</span>, <span style="color: #BA2121">&quot;*Icon3 %A_ProgramFiles%\SomeApp\SomeApp.exe&quot;</span>)
+<span style="color: #008000">if </span><span style="color: #19177C">ErrorLevel</span> <span style="color: #666666">=</span> <span style="color: #666666">2</span>
+    <span style="color: #008000">MsgBox</span> Could <span style="color: #AA22FF; font-weight: bold">not</span> conduct the search<span style="color: #666666">.</span>
+<span style="color: #008000">else</span> if <span style="color: #19177C">ErrorLevel</span> <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+    <span style="color: #008000">MsgBox</span> Icon could <span style="color: #AA22FF; font-weight: bold">not</span> be found on the screen<span style="color: #666666">.</span>
+<span style="color: #008000">else</span>
+    <span style="color: #008000">MsgBox</span> The icon was found at <span style="color: #19177C">%FoundX%</span>x<span style="color: #19177C">%FoundY%</span><span style="color: #666666">.</span>
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

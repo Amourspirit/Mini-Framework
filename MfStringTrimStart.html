@@ -1,0 +1,105 @@
+﻿<html>
+	
+<head>
+	<title>TrimStart()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="TrimStart, Trim">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfStringTrimStart");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">TrimStart()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfString.html">MfString</a> &rsaquo;&rsaquo; <a href="MfStringMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfStringMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfStringTrimEnd.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStringUnEscape.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">TrimStart()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.TrimStart()</span><br/><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.TrimStart(trimChars)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">TrimStart()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Removes all leading occurrences of white-space from the current </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">TrimStart(trimChars)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Removes all leading occurrences of a set of characters specified in </span><span class="rvts54">trimchars</span><span class="rvts6"> from the current </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">trimChars</span></p>
+<p class="rvps22"><span class="rvts53">String value containing chars to remove as </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string; or </span><a class="rvts52" href="MfGenericList.html">MfGenericList</a><span class="rvts53"> of </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53">; or null.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns The string that remains after all occurrences of the characters in the </span><span class="rvts54">trimChars</span><span class="rvts6"> parameter are removed from the start of the current </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">. If </span><span class="rvts54">trimChars</span><span class="rvts6"> is null or an empty, White-space characters are removed instead.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">;Otherwise returns var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This Operation will fail if </span><a class="rvts12" href="MfStringReadonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><a class="rvts12" href="MfStringReadonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">trimChars</span><span class="rvts6"> is incorrect type.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">mfsStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"$%%%$Hello World!!!"</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts30">result := mfsStr.</span><span class="rvts45">TrimEnd</span><span class="rvts30">(</span><span class="rvts42">"!"</span><span class="rvts30">).</span><span class="rvts45">TrimStart</span><span class="rvts30">(</span><span class="rvts42">"$%"</span><span class="rvts30">).</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %result% </span><span class="rvts31">; displays Hello World</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfStringTrimEnd.html">TrimEnd()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringTrim.html">Trim()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringSubstring.html">SubString()</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

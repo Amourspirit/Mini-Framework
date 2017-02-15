@@ -1,0 +1,102 @@
+﻿<html>
+	
+<head>
+	<title>Value</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfEnumValue");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Value</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfEnum.html">MfEnum</a> &rsaquo;&rsaquo; <a href="MfEnumProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfEnumProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfEnumMaxValue.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfEnumMethods.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Value</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the value associated with the derived </span><a class="rvts12" href="MfEnum.html">MfEnum</a><span class="rvts6"> class.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := MfEnum.Value</span><br/><span class="rvts48">MfEnum.Value := Value</span></p>
+<p class="rvps21"><span class="rvts51">Value</span></p>
+<p class="rvps22"><span class="rvts53">Integer var or object representing integer.</span><br/><span class="rvts53">Can be any object that matches type </span><a class="rvts52" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets an Integer var that represents then current </span><span class="rvts41">Value</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets the </span><span class="rvts41">Value</span><span class="rvts6"> of the derived </span><a class="rvts12" href="MfEnum.html">MfEnum</a><span class="rvts6"> class</span><br/><span class="rvts6">Can be var containing intege or any object that matches type </span><a class="rvts12" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">When property is set the new </span><span class="rvts22">Value</span><span class="rvts6"> is returned. See example below</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">In derived classes this property gets the value associated with the instance.</span></p>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">myEnum := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfNumberStyles</span><span class="rvts30">(</span><span class="rvts33">MfNumberStyles</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">AllowDecimalPoint</span><span class="rvts30">) </span><span class="rvts31">; myEnum.Value will be 32</span><br/><span class="rvts30">myOthEnum &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfNumberStyles</span><span class="rvts30">(</span><span class="rvts33">MfNumberStyles</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">AllowParentheses</span><span class="rvts30">) &nbsp;</span><span class="rvts31">; myOthEnum.Value will be 16</span><br/><span class="rvts31"></span><br/><span class="rvts30">myEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts33">MfNumberStyles</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">Any</span><span class="rvts30"> </span><span class="rvts31">; myEnum.Value will be 515</span><br/><span class="rvts31"></span><br/><span class="rvts30">myEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := myOthEnum </span><span class="rvts31">; myEnum.Value will be 16</span><br/><span class="rvts31"></span><br/><span class="rvts31">; the MfEnum.Value property returns its current value after it is set and thus can be written as shown below</span><br/><span class="rvts30">myvar := (myEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := myOthEnum) </span><span class="rvts31">; myvar will contain the new value myEnum.Value which is 16 in this case</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %myvar% </span><span class="rvts31">; Displays message box with message of 16</span><br/><span class="rvts30"></span><br/><span class="rvts30">myint := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">111</span><span class="rvts30">)</span><br/><span class="rvts30">myEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := myint </span><span class="rvts31">; myEnum.Value will be 111</span><br/><span class="rvts30">myvar := (myEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := myint) </span><span class="rvts31">; myEnum.Value will be 111 and myvar will be 111</span><br/><span class="rvts30"></span><br/><span class="rvts30">myEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts42">"0x80"</span><span class="rvts30"> </span><span class="rvts31">; hex can be assigned as well myEnum.Value will be 128</span><br/><span class="rvts31"></span><br/><span class="rvts31">; Throws MfInvalidCastException when unable to convert value to integer</span><br/><span class="rvts31">; the following will throw an error</span><br/><span class="rvts32">try</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp;myvar := (myEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts42">"abc"</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> %myvar%</span><br/><span class="rvts30">} </span><span class="rvts32">catch</span><span class="rvts30"> e {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> % e.</span><span class="rvts34">Message</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts32">ExitApp</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

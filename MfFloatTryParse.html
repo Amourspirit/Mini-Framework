@@ -1,0 +1,107 @@
+﻿<html>
+	
+<head>
+	<title>TryParse()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfFloatTryParse");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">TryParse()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfFloat.html">MfFloat</a> &rsaquo;&rsaquo; <a href="MfFloatMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfFloatMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfFloatToString.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfFloatVerifyIsInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">TryParse()</span></span></h1>
+<p class="rvps20"><span class="rvts48">MfFloat.TryParse()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfFloat.TryParse(byRef flt, obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent. A return boolean value indicates whether the conversion succeeded.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">flt</span></p>
+<p class="rvps22"><span class="rvts76">flt</span><span class="rvts53"> contains the value equivalent to the number contained in obj, if the conversion succeeded.</span><br/><span class="rvts53">The conversion fails if the </span><span class="rvts76">obj</span><span class="rvts53"> parameter is </span><span class="rvts75">null</span><span class="rvts53">, is not of the correct format. This parameter is passed uninitialized.</span><br/><span class="rvts76">flt</span><span class="rvts53"> can be instance of </span><a class="rvts52" href="MfFloat.html">MfFloat</a><span class="rvts53"> or var containing </span><span class="rvts69">float</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">obj</span></p>
+<p class="rvps22"><span class="rvts53">An object convert.</span><br/><span class="rvts53">Can be instance of </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53">, </span><a class="rvts52" href="MfString.html">MfString</a><br/><span class="rvts53">Can be var containing </span><span class="rvts69">string</span><span class="rvts53">, </span><span class="rvts69">integer</span><br/><span class="rvts53">Can also be instance of </span><a class="rvts52" href="MfParams.html">MfParams</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if parse is a success; Otherwise </span><span class="rvts18">false</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If parameter flt is passed in as an object it must in initialized as an instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> first. Eg: </span><span class="rvts43">myFlt := new MfFloat(0.0)</span><br/><span class="rvts6">If parameter flt is passed in as var it must in initialized as float first. Eg: </span><span class="rvts43">myFlt := 0.0</span><br/><span class="rvts6">Whitespaces are allowed at the beginning or end of the string to parse.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfFloatParse.html">Parse()</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatGetValue.html">GetValue()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">; this example uses objects</span><br/><span class="rvts30">pStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts42">("-1056.459"</span><span class="rvts30">)</span><br/><span class="rvts30">myFlt := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfFloat</span><span class="rvts30">() </span><span class="rvts142">; must be initialized to instance of MfInteger before call to TryParse</span><br/><span class="rvts142"></span><br/><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">TryParse</span><span class="rvts30">(myFlt, pStr)) {</span><br/><span class="rvts30"> &nbsp; &nbsp;val := myFlt.</span><span class="rvts34">Value</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> The value is in pStr is:%val%</span><br/><span class="rvts30">} </span><span class="rvts32">else</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> Unable to parse any value from pStr</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts31">; this example does not use objects</span><br/><span class="rvts30">pStr := </span><span class="rvts31">" 0x33"</span><br/><span class="rvts30">myFlt := </span><span class="rvts72">0</span><span class="rvts30"> </span><span class="rvts31">; must be initialized to integer before call to TryParse</span><br/><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">TryParse</span><span class="rvts30">(myFlt, pStr)) {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> The value is in pStr is:%myFlt%</span><br/><span class="rvts30">} </span><span class="rvts32">else</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> Unable to parse any value from pStr</span><br/><span class="rvts30">}</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfFloatParse.html">Parse</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

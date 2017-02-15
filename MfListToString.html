@@ -1,0 +1,96 @@
+﻿<html>
+	
+<head>
+	<title>ToString()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfListToString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ToString()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfList.html">MfList</a> &rsaquo;&rsaquo; <a href="MfListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfListRemoveAt.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfListVerifyIsInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ToString()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Inherited from </span><a class="rvts12" href="MfListBase.html">MfListBase</a></p>
+<p class="rvps20"><span class="rvts48">OutPutVar := instance.ToString()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">ToString()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a string representation of the object</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns string value representing object</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">mfLst := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfList</span><span class="rvts30">()</span><br/><span class="rvts30">i := </span><span class="rvts72">0</span><br/><span class="rvts30">iEnd := </span><span class="rvts72">10</span><br/><span class="rvts32">While</span><span class="rvts30">, (i &lt; iEnd)</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts45">Mod</span><span class="rvts30">(i, </span><span class="rvts72">2</span><span class="rvts30">)) </span><span class="rvts31">; only odd numbers</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mss := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mss.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"String Value: '{0}"</span><span class="rvts30">, i)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mfLst.</span><span class="rvts45">Add</span><span class="rvts30">(mss)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;msi := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(i)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mfLst.</span><span class="rvts45">Add</span><span class="rvts30">(msi)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;i++</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts30">stud1 := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">Student</span><span class="rvts30">()</span><br/><span class="rvts30">stud1.</span><span class="rvts34">Id</span><span class="rvts30"> := </span><span class="rvts42">"RT34TTTSV"</span><br/><span class="rvts30">stud1.</span><span class="rvts34">Name</span><span class="rvts30"> := </span><span class="rvts42">"Frank Smith"</span><br/><span class="rvts30">stud1.</span><span class="rvts34">Age</span><span class="rvts30"> := </span><span class="rvts72">21</span><br/><span class="rvts30">stud1.</span><span class="rvts34">HomeRoom</span><span class="rvts30"> := </span><span class="rvts42">"English 101"</span><br/><span class="rvts30"></span><br/><span class="rvts30">myObj := </span><span class="rvts33">Object</span><span class="rvts30">()</span><br/><span class="rvts30"></span><br/><span class="rvts30">mfLst.</span><span class="rvts45">Add</span><span class="rvts30">(myObj)</span><br/><span class="rvts30">mfLst.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">mfLst.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts72">557</span><span class="rvts30">)</span><br/><span class="rvts30">mfLst.</span><span class="rvts45">Add</span><span class="rvts30">(stud1)</span><br/><span class="rvts30"></span><br/><span class="rvts30">strOut := mfLst.</span><span class="rvts45">ToString</span><span class="rvts30">()</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %strOut%</span><br/><span class="rvts30"></span><br/><span class="rvts31">; strOut contains</span><br/><span class="rvts31">/*</span><br/><span class="rvts31">0: {MfInteger} 0</span><br/><span class="rvts31">1: {MfString} String Value: '1</span><br/><span class="rvts31">2: {MfInteger} 2</span><br/><span class="rvts31">3: {MfString} String Value: '3</span><br/><span class="rvts31">4: {MfInteger} 4</span><br/><span class="rvts31">5: {MfString} String Value: '5</span><br/><span class="rvts31">6: {MfInteger} 6</span><br/><span class="rvts31">7: {MfString} String Value: '7</span><br/><span class="rvts31">8: {MfInteger} 8</span><br/><span class="rvts31">9: {MfString} String Value: '9</span><br/><span class="rvts31">10: {Object}</span><br/><span class="rvts31">11: 'Hello World'</span><br/><span class="rvts31">12: '557'</span><br/><span class="rvts31">13: {Student} ID:'RT34TTTSV', Name:'Frank Smith', Age:'21'</span><br/><span class="rvts31">*/</span><br/><span class="rvts30"></span><br/><span class="rvts32">Class</span><span class="rvts30"> </span><span class="rvts33">Student</span><span class="rvts30"> </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;m_Id := </span><span class="rvts42">""</span><br/><span class="rvts30"> &nbsp; &nbsp;m_Name := </span><span class="rvts42">""</span><br/><span class="rvts30"> &nbsp; &nbsp;m_Age := </span><span class="rvts72">0</span><br/><span class="rvts30"> &nbsp; &nbsp;m_HomeRoom := </span><span class="rvts42">""</span><br/><span class="rvts30"> &nbsp; &nbsp;m_EnrollmentYear := </span><span class="rvts72">0</span><br/><span class="rvts42"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts34">Id</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">get</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Id</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">set</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_Id := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Id</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts34">Name</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;get {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Name</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;set {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_Name := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Name</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts31"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts34">Age</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;get {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Age</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;set {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_Age := </span><span class="rvts33">MfInteger</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(value, </span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_Age</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts31"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts34">HomeRoom</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;get {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_HomeRoom</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;set {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_HomeRoom := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_HomeRoom</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts31"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts34">EnrollmentYear</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;get {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_EnrollmentYear</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;set {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_EnrollmentYear := </span><span class="rvts33">MfInteger</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(value, </span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_EnrollmentYear</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts31"></span><br/><span class="rvts31"> &nbsp; ; Override ToString()</span><br/><span class="rvts31"> &nbsp; </span><span class="rvts45">ToString</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; throw an error if called as static method</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts32">VerifyIsInstance</span><span class="rvts30">(</span><span class="rvts32">this</span><span class="rvts30">, </span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"ID:'{0}', Name:'{1}', Age:'{2}'</span><span class="rvts30">", </span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts34">Id</span><span class="rvts30">, </span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts34">Name</span><span class="rvts30">, </span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts34">Age</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; }</span><br/><span class="rvts30">}</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

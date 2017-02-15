@@ -1,0 +1,267 @@
+﻿<html>
+	
+<head>
+	<title>Run()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Run, Run">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncRun");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Run()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncRegWrite.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncRunWait.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Run()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.Run(Target [, WorkingDir, Max|Min|Hide|UseErrorLevel])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.Run(Target [, WorkingDir, Max|Min|Hide|UseErrorLevel])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Runs an external program. Unlike Run, </span><a class="rvts12" href="MfuncRunWait.html">RunWait</a><span class="rvts6"> will wait until the program finishes before continuing.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Target</span></p>
+<p class="rvps22"><span class="rvts53">A document, URL, executable file (.exe, .com, .bat, etc.), shortcut (.lnk), or </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Run.htm#verbs" target="_blank">system verb</a><span class="rvts53"> to launch (see remarks). If Target is a local file and no path was specified with it, </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">A_WorkingDir</a><span class="rvts53"> will be searched first. If no matching file is found there, the system will search for and launch the file if it is integrated ("known"), e.g. by being contained in one of the PATH folders.</span><br/><span class="rvts53"></span><br/><span class="rvts53">To pass parameters, add them immediately after the program or document name. If a parameter contains spaces, it is safest to enclose it in double quotes (even though it may work without them in some cases).</span></p>
+<p class="rvps21"><span class="rvts51">WorkingDir</span></p>
+<p class="rvps22"><span class="rvts53">The working directory for the launched item. Do not enclose the name in double quotes even if it contains spaces. If omitted, the script's own working directory (</span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">A_WorkingDir</a><span class="rvts53">) will be used.</span></p>
+<p class="rvps21"><span class="rvts51">Max|Min|Hide</span><br/><span class="rvts51">UseErrorLevel</span></p>
+<p class="rvps22"><span class="rvts53">If omitted, Target will be launched normally. Alternatively, it can contain one or more of these words:</span><br/><span class="rvts53"></span><br/><span class="rvts75">Max</span><span class="rvts53">: launch maximized</span><br/><span class="rvts53"></span><br/><span class="rvts75">Min</span><span class="rvts53">: launch minimized</span><br/><span class="rvts53"></span><br/><span class="rvts75">Hide</span><span class="rvts53">: launch hidden (cannot be used in combination with either of the above)</span><br/><span class="rvts53"></span><br/><span class="rvts53">Note: Some applications (e.g. Calc.exe) do not obey the requested startup state and thus Max/Min/Hide will have no effect.</span><br/><span class="rvts53"></span><br/><span class="rvts75">UseErrorLevel</span><span class="rvts53">: UseErrorLevel can be specified alone or in addition to one of the above words (by separating it from the other word with a space). If the launch fails, this option skips the warning dialog, sets </span><a class="rvts59" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts53"> to the word ERROR, and allows the </span><a class="rvts59" href="http://ahkscript.org/docs/misc/Threads.htm" target="_blank">current thread</a><span class="rvts53"> to continue. If the launch succeeds, RunWait sets </span><a class="rvts59" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts53"> to the program's exit code, and Run sets it to 0.</span><br/><span class="rvts53"></span><br/><span class="rvts53">When UseErrorLevel is specified, the variable </span><span class="rvts75">A_LastError</span><span class="rvts53"> is set to the result of the operating system's GetLastError() function. </span><span class="rvts75">A_LastError</span><span class="rvts53"> is a number between 0 and 4294967295 (always formatted as decimal, not hexadecimal). Zero (0) means success, but any other number means the launch failed. Each number corresponds to a specific error condition (to get a list, search </span><a class="rvts68" href="http://www.microsoft.com/" target="_blank">www.microsoft.com</a><span class="rvts53"> for "system error codes"). Like </span><a class="rvts59" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts53">, </span><span class="rvts75">A_LastError</span><span class="rvts53"> is a per-thread setting; that is, interruptions by other </span><a class="rvts59" href="http://ahkscript.org/docs/misc/Threads.htm" target="_blank">threads</a><span class="rvts53"> cannot change it. However, </span><span class="rvts75">A_LastError</span><span class="rvts53"> is also set by </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DllCall.htm" target="_blank">DllCall</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Run.htm" target="_blank">Autohotkey - Run</a><span class="rvts6"> error message.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">ErrorLevel</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfuncRun.html">Mfunc.Run</a><span class="rvts6"> unless UseErrorLevel (above) is in effect, in which case </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set to the word </span><span class="rvts18">ERROR</span><span class="rvts6"> upon failure or </span><span class="rvts18">0</span><span class="rvts6"> upon success.</span></p>
+<p class="rvps2"><a class="rvts12" href="MfuncRunWait.html">Mfunc.RunWait</a><span class="rvts6"> to the program's exit code (a signed 32-bit integer). If UseErrorLevel is in effect and the launch failed, the word </span><span class="rvts18">ERROR</span><span class="rvts6"> is stored.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the name of the variable in which to store the newly launched program's unique </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Process.htm" target="_blank">Process ID (PID)</a><span class="rvts6">. The variable will be made blank if the PID could not be determined, which usually happens if a system verb, document, or shortcut is launched rather than a direct executable file. RunWait also supports this parameter, though its OuputVarPID must be checked in </span><a class="rvts13" href="http://ahkscript.org/docs/misc/Threads.htm" target="_blank">another thread</a><span class="rvts6"> (otherwise, the PID will be invalid because the process will have terminated by the time the line following RunWait executes).</span></p>
+<p class="rvps2"><span class="rvts6">After the Run command retrieves a PID, any windows to be created by the process might not exist yet. To wait for at least one window to be created, use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinWait.htm" target="_blank">WinWait</a><span class="rvts6"> ahk_pid %OutputVarPID%.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Run.htm" target="_blank">AutoHotkey Docs - Run/RunWait</a><span class="rvts6">.</span><br/><span class="rvts15">Static</span><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">Unlike Run, RunWait will wait until Target is closed or exits, at which time </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> will be set to the program's exit code (as a signed 32-bit integer). Some programs will appear to return immediately even though they are still running; these programs spawn another process.</span></p>
+<p class="rvps2"><span class="rvts6">If Target contains any commas, they may ( but not necessary ) be </span><a class="rvts13" href="http://ahkscript.org/docs/commands/_EscapeChar.htm" target="_blank">escaped</a><span class="rvts6"> as shown three times in the following example:</span></p>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Run</span><span class="rvts30">(</span><span class="rvts42">"rundll32.exe shell32.dll`,Control_RunDLL desk.cpl`,`, 3"</span><span class="rvts30">) </span><span class="rvts31">; Opens Control Panel &gt; Display Properties &gt; Settings</span><br/><span class="rvts31">; Escape is not necessary with Mfunc.Run()</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Run</span><span class="rvts30">(</span><span class="rvts42">"rundll32.exe shell32.dll,Control_RunDLL desk.cpl,, 3"</span><span class="rvts30">) </span><span class="rvts31">; Opens Control Panel &gt; Display Properties &gt; Settings</span></p>
+<p class="rvps2"><span class="rvts6">When running a program via </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#ComSpec" target="_blank">Comspec</a><span class="rvts6"> (cmd.exe) -- perhaps because you need to redirect the program's input or output -- if the path or name of the executable contains spaces, the entire string should be enclosed in an outer pair of quotes and all inner quotes need to be doubled as shown in this example:</span></p>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Run</span><span class="rvts30">(comspec . </span><span class="rvts42">" /c ""C:\My Utility.exe"" ""param 1"" ""second param"" &gt;""C:\My File.txt"""</span><span class="rvts30">)</span></p>
+<p class="rvps2"><span class="rvts6">If Target cannot be launched, an error window is displayed and the current thread is exited, unless the string UseErrorLevel is included in the third parameter or the error is caught by a </span><a class="rvts12" href="http://ahkscript.org/docs/commands/Try.htm" target="_blank">Try</a><span class="rvts6"> /</span><a class="rvts12" href="http://ahkscript.org/docs/commands/Catch.htm" target="_blank">Catch</a><span class="rvts6"> statement.</span></p>
+<p class="rvps2"><span class="rvts6">Performance may be slightly improved if Target is an exact path, e.g. </span><span class="rvts43">Mfunc.Run("C:\Windows\Notepad.exe ""C:\My Documents\Test.txt""")</span><span class="rvts6"> rather than </span><span class="rvts43">Mfunc.Run("C:\My Documents\Test.txt")</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Special CLSID folders may be opened via Run. For example:</span></p>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Run</span><span class="rvts42">("::{20d04fe0-3aea-1069-a2d8-08002b30309d}"</span><span class="rvts30">) </span><span class="rvts31">; Opens the "My Computer" folder.</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Run</span><span class="rvts30">(</span><span class="rvts42">"::{645ff040-5081-101b-9f08-00aa002f954e}"</span><span class="rvts30">) </span><span class="rvts31">; Opens the Recycle Bin.</span></p>
+<p class="rvps2"><span class="rvts6">System verbs correspond to actions available in a file's right-click menu in the Explorer. If a file is launched without a verb, the default verb (usually "open") for that particular file type will be used. If specified, the verb should be followed by the name of the target file. The following verbs are currently supported:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">*verb - </span><span class="rvts41">AutoHotkey [v1.0.90+]:</span><span class="rvts6"> Any system-defined or custom verb. For example: </span><span class="rvts43">Mfunc.Run("*Compile " . A_ScriptFullPath)</span><span class="rvts6"> On Windows Vista and later, the *RunAs verb may be used in place of the Run As Administrator right-click menu item.</span></li>
+<li class="rvps2"><span class="rvts6">properties - Displays the Explorer's properties window for the indicated file. For example: Run, properties "C:\My File.txt" Note: The properties window will automatically close when the script terminates. To prevent this, use WinWait to wait for the window to appear, then use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinWaitClose.htm" target="_blank">WinWaitClose</a><span class="rvts6"> to wait for the user to close it.</span></li>
+<li class="rvps2"><span class="rvts6">find - Opens an instance of the Explorer's Search Companion or Find File window at the indicated folder. For example:</span><span class="rvts43"> Mfunc.Run("find D:\")</span></li>
+<li class="rvps2"><span class="rvts6">explore - Opens an instance of Explorer at the indicated folder. For example: </span><span class="rvts43">Mfunc.Run("explore " . A_ProgramFiles)</span><span class="rvts6">.</span></li>
+<li class="rvps2"><span class="rvts6">edit - Opens the indicated file for editing. It might not work if the indicated file's type does not have an "edit" action associated with it. For example: </span><span class="rvts43">Mfunc.Run("edit ""C:\My File.txt""")</span></li>
+<li class="rvps2"><span class="rvts6">open - Opens the indicated file (normally not needed because it is the default action for most file types). For example: </span><span class="rvts43">Mfunc.Run("open ""My File.txt""")</span><span class="rvts6">.</span></li>
+<li class="rvps2"><span class="rvts6">print - Prints the indicated file with the associated application, if any. For example:</span><span class="rvts43"> Mfunc.Run("print ""My File.txt""")</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">While RunWait is in a waiting state, new </span><a class="rvts13" href="http://ahkscript.org/docs/misc/Threads.htm" target="_blank">threads</a><span class="rvts6"> can be launched via </span><a class="rvts13" href="http://ahkscript.org/docs/Hotkeys.htm" target="_blank">hotkey</a><span class="rvts6">, </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Menu.htm" target="_blank">custom menu item</a><span class="rvts6">, or </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetTimer.htm" target="_blank">timer</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfStringhtml.htm">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/Run.htm" target="_blank">AutoHotkey Docs - Run/RunWait</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><table><tr><td><pre style="margin: 0; line-height: 125%"> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre></td><td><pre style="margin: 0; line-height: 125%">Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;Notepad.exe&quot;</span>, <span style="color: #BA2121">&quot;C:\My Documents&quot;</span>, <span style="color: #BA2121">&quot;max&quot;</span>)
+
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;mailto:someone@domain.com?subject=This is the subject line&amp;body=This is the message body's text.&quot;</span>)
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;ReadMe.doc&quot;</span>, , <span style="color: #BA2121">&quot;Max UseErrorLevel&quot;</span>)<span style="color: #408080; font-style: italic"> ; Launch maximized and don't display dialog if it fails.</span>
+<span style="color: #008000">if </span><span style="color: #19177C">ErrorLevel</span> <span style="color: #666666">=</span> ERROR
+    <span style="color: #008000">MsgBox</span> The document could <span style="color: #AA22FF; font-weight: bold">not</span> be launched<span style="color: #666666">.</span>
+
+Mfunc<span style="color: #666666">.</span>RunWait(<span style="color: #19177C">comspec</span> <span style="color: #666666">.</span> <span style="color: #BA2121">&quot; /c dir c:\ &gt;&gt;c:\DirTest.txt&quot;</span>, , <span style="color: #BA2121">&quot;min&quot;</span>)
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;c:\DirTest.txt&quot;</span>)
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;properties c:\DirTest.txt&quot;</span>)
+
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;http://www.google.com&quot;</span>)<span style="color: #408080; font-style: italic"> ; i.e. any URL can be launched.</span>
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;mailto:someone@somedomain.com&quot;</span>)<span style="color: #408080; font-style: italic">  ; This should open the default e-mail application.</span>
+
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;::{20d04fe0-3aea-1069-a2d8-08002b30309d}&quot;</span>)<span style="color: #408080; font-style: italic"> ; Opens the &quot;My Computer&quot; folder.</span>
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #BA2121">&quot;::{645ff040-5081-101b-9f08-00aa002f954e}&quot;</span>)<span style="color: #408080; font-style: italic">  ; Opens the Recycle Bin.</span>
+
+<span style="color: #408080; font-style: italic">; To run multiple commands consecutively, use &quot;&amp;&amp;&quot; between each:</span>
+Mfunc<span style="color: #666666">.</span>Run(<span style="color: #19177C">comspec</span><span style="color: #666666">.</span> <span style="color: #BA2121">&quot; /c dir /b &gt; C:\list.txt &amp;&amp; type C:\list.txt &amp;&amp; pause&quot;</span>)<span style="color: #408080; font-style: italic"></span>
+
+
+<span style="color: #408080; font-style: italic">; The following can be used to run a command and retrieve its output:</span>
+<span style="color: #008000">MsgBox</span> <span style="color: #666666">%</span> RunWaitOne(<span style="color: #BA2121">&quot;dir &quot;</span> <span style="color: #19177C">A_ScriptDir</span>)<span style="color: #408080; font-style: italic"></span>
+
+<span style="color: #408080; font-style: italic">; ...or run multiple commands in one go and retrieve their output:</span>
+<span style="color: #008000">MsgBox</span> <span style="color: #666666">%</span> RunWaitMany(<span style="color: #BA2121">&quot;</span>
+(
+echo Put your commands here,
+echo each one will be run,
+echo and you'll get the output.
+)<span style="color: #BA2121">&quot;)</span>
+
+RunWaitOne(command) {<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">    ; WshShell object: http://msdn.microsoft.com/en-us/library/aew9yb99</span>
+    shell <span style="color: #666666">:=</span> <span style="color: #0000FF">ComObjCreate</span>(<span style="color: #BA2121">&quot;WScript.Shell&quot;</span>)<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">    ; Execute a single command via cmd.exe</span>
+    exec <span style="color: #666666">:=</span> shell<span style="color: #666666">.</span>Exec(<span style="color: #19177C">ComSpec</span> <span style="color: #BA2121">&quot; /C &quot;</span> command)<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">    ; Read and return the command's output</span>
+    <span style="color: #008000">return</span> exec<span style="color: #666666">.</span>StdOut<span style="color: #666666">.</span>ReadAll()
+}
+
+RunWaitMany(commands) {
+    shell <span style="color: #666666">:=</span> <span style="color: #0000FF">ComObjCreate</span>(<span style="color: #BA2121">&quot;WScript.Shell&quot;</span>)<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">    ; Open cmd.exe with echoing of commands disabled</span>
+    exec <span style="color: #666666">:=</span> shell<span style="color: #666666">.</span>Exec(<span style="color: #19177C">ComSpec</span> <span style="color: #BA2121">&quot; /Q /K echo off&quot;</span>)<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">    ; Send the commands to execute, separated by newline</span>
+    exec<span style="color: #666666">.</span>StdIn<span style="color: #666666">.</span><span style="color: #0000FF">WriteLine</span>(commands <span style="color: #BA2121">&quot;</span><span style="color: #BB6622; font-weight: bold">`n</span><span style="color: #BA2121">exit&quot;</span>)<span style="color: #408080; font-style: italic">  ; Always exit at the end!</span>
+<span style="color: #408080; font-style: italic">    ; Read and return the output of all commands</span>
+    <span style="color: #008000">return</span> exec<span style="color: #666666">.</span>StdOut<span style="color: #666666">.</span>ReadAll()
+}<span style="color: #408080; font-style: italic"></span>
+
+
+<span style="color: #408080; font-style: italic">; ExecScript: Executes the given code as a new AutoHotkey process.</span>
+ExecScript(Script, Wait<span style="color: #666666">:=</span><span style="color: #19177C">true</span>)
+{
+    shell <span style="color: #666666">:=</span> <span style="color: #0000FF">ComObjCreate</span>(<span style="color: #BA2121">&quot;WScript.Shell&quot;</span>)
+    exec <span style="color: #666666">:=</span> shell<span style="color: #666666">.</span>Exec(<span style="color: #BA2121">&quot;AutoHotkey.exe /ErrorStdOut *&quot;</span>)
+    exec<span style="color: #666666">.</span>StdIn<span style="color: #666666">.</span><span style="color: #0000FF">Write</span>(script)
+    exec<span style="color: #666666">.</span>StdIn<span style="color: #666666">.</span><span style="color: #0000FF">Close</span>()
+    <span style="color: #008000">if </span>Wait
+        <span style="color: #008000">return</span> exec<span style="color: #666666">.</span>StdOut<span style="color: #666666">.</span>ReadAll()
+}<span style="color: #408080; font-style: italic"></span>
+
+<span style="color: #408080; font-style: italic">; Example:</span>
+<span style="color: #008000">InputBox</span> expr,, Enter an expression to evaluate as a new script<span style="color: #666666">.</span>,,,,,,,, <span style="color: #0000FF">Asc</span>(<span style="color: #BA2121">&quot;*&quot;</span>)
+result <span style="color: #666666">:=</span> ExecScript(<span style="color: #BA2121">&quot;FileAppend % (&quot;</span> expr <span style="color: #BA2121">&quot;), *&quot;</span>)
+<span style="color: #008000">MsgBox</span> <span style="color: #666666">%</span> <span style="color: #BA2121">&quot;Result: &quot;</span> result
+</pre></td></tr></table></div>
+</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfuncRunWait.html">RunWait()</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

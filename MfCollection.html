@@ -1,0 +1,93 @@
+﻿<html>
+	
+<head>
+	<title>MfCollection</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Collection">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCollection");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MfCollection</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCharVerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCollectionProperties.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfCollection Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">Provides the class for a strongly typed collection.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfCollectionProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfCollectionMethods.html">Methods</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">mfCol := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfCollection</span><span class="rvts30">()</span><br/><span class="rvts30">i := </span><span class="rvts72">0</span><br/><span class="rvts30">iEnd := </span><span class="rvts72">10</span><br/><span class="rvts32">While</span><span class="rvts30">, (i &lt; iEnd)</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts45">Mod</span><span class="rvts30">(i, </span><span class="rvts72">2</span><span class="rvts30">)) </span><span class="rvts31">; only odd numbers</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mss := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mss.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"String Value: '{0}'"</span><span class="rvts30">, i)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mfCol.</span><span class="rvts45">Add</span><span class="rvts30">(mss)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;msi := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(i)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mfCol.</span><span class="rvts45">Add</span><span class="rvts30">(msi)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;i++</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts30">mfsOutput := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">()</span><br/><span class="rvts30">mfiOutput := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">()</span><br/><span class="rvts30"></span><br/><span class="rvts32">For</span><span class="rvts30"> i, var in mfCol</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfObject</span><span class="rvts30">.</span><span class="rvts45">IsObjInstance</span><span class="rvts30">(var, </span><span class="rvts33">MfString</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mfsOutput.</span><span class="rvts45">AppendLine</span><span class="rvts30">(var)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">else if</span><span class="rvts30"> (</span><span class="rvts33">MfObject</span><span class="rvts30">.</span><span class="rvts45">IsObjInstance</span><span class="rvts30">(var, </span><span class="rvts33">MfInteger</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;mfiOutput.</span><span class="rvts45">Add</span><span class="rvts30">(var)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Text, % mfsOutput.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Total, % mfiOutput.</span><span class="rvts45">ToString</span><span class="rvts30">()</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

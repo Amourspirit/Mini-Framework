@@ -1,0 +1,108 @@
+﻿<html>
+	
+<head>
+	<title>OnSetComplete()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCB16OnSetComplete");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">OnSetComplete()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCB16.html">MfCollectionBase</a> &rsaquo;&rsaquo; <a href="MfCB16Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCB16Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCB16OnSet.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCB16OnValidate.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">OnSetComplete()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OnSetComplete(index, oldValue, newValue)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">OnSetComplete(index, ByRef oldValue, ByRef newValue)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Performs additional custom processes after setting a value in the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">index</span></p>
+<p class="rvps22"><span class="rvts53">The </span><span class="rvts75">zero-based</span><span class="rvts53"> index at which </span><span class="rvts76">oldValue</span><span class="rvts53"> can be found.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var integer.</span></p>
+<p class="rvps21"><span class="rvts51">oldValue</span></p>
+<p class="rvps22"><span class="rvts53">The value to replace with </span><span class="rvts76">newValue</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">newValue</span></p>
+<p class="rvps22"><span class="rvts53">The new value of the element at </span><span class="rvts76">index</span><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Protected</span><span class="rvts6"> Method.</span><br/><span class="rvts6">The default implementation of this method is intended to be overridden by a derived class to perform some action after the specified element is set.</span></p>
+<p class="rvps2"><span class="rvts6">The collection reverts back to its previous state if one of the following occurs:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">The process fails.</span></li>
+<li class="rvps2"><span class="rvts6">This method is overridden to throw an exception.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">The default implementation of this method is an O(1) operation.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Notes to Implementers</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method allows implementers to define processes that must be performed after setting the specified element in the underlying </span><a class="rvts12" href="MfList.html">MfList</a><span class="rvts6">. By defining this method, implementers can add functionality to inherited methods without having to override all other methods.</span></p>
+<p class="rvps2"><a class="rvts12" href="MfCB16OnSet.html">OnSet()</a><span class="rvts6"> is invoked before the standard Set behavior, whereas </span><span class="rvts41">OnSetComplete()</span><span class="rvts6"> is invoked after the standard Set behavior.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

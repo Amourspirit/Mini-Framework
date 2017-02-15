@@ -1,0 +1,113 @@
+﻿<html>
+	
+<head>
+	<title>Substring()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Substring, Substring">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfStringSubstring");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Substring()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfString.html">MfString</a> &rsaquo;&rsaquo; <a href="MfStringMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfStringMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfStringStartsWith.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStringToCharArray.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Substring()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Substring(startIndex)</span><br/><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Substring(startIndex, length)</span><br/><span class="rvts48">OutputVar := MfString.Substring(str, startIndex)</span><br/><span class="rvts48">OutputVar := MfString.Substring(str, startIndex, length)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">SubString(startIndex)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves a substring from this instance. The substring starts at a specified character position.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">SubString(startIndex, length)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves a substring from this instance. The substring starts at a specified character position and has a specified length.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfString.SubString(str, startIndex)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves a substring from the str. The substring starts at a specified character position. </span><br/><span class="rvts6">Static Method.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfString.SubString(str, startIndex, length)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves a substring from the str. The substring starts at a specified character position and has a specified length.</span><br/><span class="rvts6">Static Method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">str</span></p>
+<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> or var containing string to get the substring of. Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">startIndex</span></p>
+<p class="rvps22"><span class="rvts53">The zero-based </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> starting character position of a substring in this instance. Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">length</span></p>
+<p class="rvps22"><span class="rvts53">Integer value containing the number of characters in the substring. Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> that is equivalent to the substring of length length that begins at </span><span class="rvts54">startIndex</span><span class="rvts6"> in this instance if </span><span class="rvts54">str</span><span class="rvts6"> is omitted or </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6"> if </span><span class="rvts54">startIndex</span><span class="rvts6"> is equal to the length of this instance and length is zero.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">; Otherwise returns var containing </span><span class="rvts15">string</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps34"><span class="rvts73">Variadic</span><span class="rvts18"> Method</span><span class="rvts6">; This method is </span><span class="rvts15">Variadic</span><span class="rvts6"> so you may construct an instance of </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> containing any of the overload method parameters listed above and pass in the </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> instance to the method instead of using the overloads described above. See </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> for more information.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">See Also</span></span></h3>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts12" href="MfParams.html">MfParams</a><br/><span class="rvts6">See Also:</span><a class="rvts12" href="MfString.html">MfString</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if the incorrect number or type of parameters are passed in.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if startIndex or length is out of range.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if Overloads can not match Parameters.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30">MyStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">() </span><span class="rvts31">; create a new instance of the MfParams class</span><br/><span class="rvts30">p.</span><span class="rvts45">AddInteger</span><span class="rvts30">(</span><span class="rvts72">6</span><span class="rvts30">) </span><span class="rvts31">; add startIndex to MfParams</span><br/><span class="rvts30">result := MyStr.</span><span class="rvts45">SubString</span><span class="rvts30">(p) </span><span class="rvts31">; Get the results; result = World</span><br/><span class="rvts30"></span><br/><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30">MyStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">iStart := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">6</span><span class="rvts30">) </span><span class="rvts31">; create a new instance of MfInteger</span><br/><span class="rvts30">result := MyStr.</span><span class="rvts45">SubString</span><span class="rvts30">(iStart) </span><span class="rvts31">; Get the results; result = World</span><br/><span class="rvts30"></span><br/><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30">s := </span><span class="rvts42">"Hello World"</span><br/><span class="rvts30">result := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">SubString</span><span class="rvts30">(s, </span><span class="rvts72">6</span><span class="rvts30">, </span><span class="rvts72">1</span><span class="rvts30">) </span><span class="rvts42">; Get the results; result = W</span><br/><span class="rvts42"></span><br/><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30">MyStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">result := MyStr.</span><span class="rvts45">SubString</span><span class="rvts30">(</span><span class="rvts137">6</span><span class="rvts30">, </span><span class="rvts72">1</span><span class="rvts30">) </span><span class="rvts31">; Get the results; result = W</span><br/><span class="rvts30"></span><br/><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30">MyStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">iStart := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">6</span><span class="rvts30">) </span><span class="rvts31">; create a new instance of MfInteger</span><br/><span class="rvts30">iLength := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">1</span><span class="rvts30">) </span><span class="rvts31">; create a new instance of MfInteger</span><br/><span class="rvts30">result := MyStr.</span><span class="rvts45">SubString</span><span class="rvts30">(iStart, iLength) </span><span class="rvts31">; Get the results; result = W</span><br/><span class="rvts30"></span><br/><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30">result := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">SubString</span><span class="rvts30">(</span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts45">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">), </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">6</span><span class="rvts30">)) </span><span class="rvts31">; Get the results; result = World</span><br/><span class="rvts31"></span><br/><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30">result := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">SubString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">, </span><span class="rvts72">6</span><span class="rvts30">) </span><span class="rvts31">; Get the results; result = World</span><br/><span class="rvts30"></span><br/><span class="rvts31">;---------------------------------------------------</span><br/><span class="rvts30"></span><br/><span class="rvts30">mystr := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"OsType:{0} Version:{1}"</span><span class="rvts30">, </span><span class="rvts32">A_OSType</span><span class="rvts30">, </span><span class="rvts32">A_OSVersion</span><span class="rvts30">)</span><br/><span class="rvts30">i := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">5</span><span class="rvts30">) str := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Cool computer"</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts30">mystr := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"My computer is named:{0} and I have had it for {1} years"</span><span class="rvts30">, str, i)</span><br/><span class="rvts31">; set MfString instance to return it method outputs as objects. This allows for method chaining</span><br/><span class="rvts30">strObjA := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(mystr, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts30">resultA := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(strObjA, str, i).</span><span class="rvts45">Substring</span><span class="rvts30">(</span><span class="rvts72">58</span><span class="rvts30">).</span><span class="rvts45">PadLeft</span><span class="rvts30">(</span><span class="rvts72">20</span><span class="rvts30">, </span><span class="rvts42">"."</span><span class="rvts30">).</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %resultA% </span><span class="rvts31">; displays ...............years</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,190 @@
+﻿<html>
+	
+<head>
+	<title>Equals()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfEnumEnumItemEquals");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Equals()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfEnum.html">MfEnum</a> &rsaquo;&rsaquo; <a href="MfEnumEnumItem.html">EnumItem</a> &rsaquo;&rsaquo; <a href="MfEnumEnumItemMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfEnumEnumItemMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfEnumEnumItemConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfEnumEnumItemGetAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Equals()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Compares </span><a class="rvts12" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts6"> or </span><a class="rvts12" href="MfEnum.html">MfEnum</a><span class="rvts6"> objects to see if they are the same value.</span><br/><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals</a><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := MfEnum.EnumItem.Equals(objA, ObjB)</span><br/><span class="rvts48">OutputVar := </span><span class="rvts89">MfEnum</span><span class="rvts48">.Instance.</span><span class="rvts89">EnumItem</span><span class="rvts48">.Equals(objA)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Equals(objA)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Compares </span><span class="rvts54">objA</span><span class="rvts6"> against current </span><a class="rvts12" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts6"> instance to see if they have the same value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns var containing Boolean value of </span><span class="rvts88">true</span><span class="rvts6"> if the </span><a class="rvts12" href="MfEnumEnumItem.html">MfEnum.EnumItem.Value</a><span class="rvts6"> or </span><a class="rvts12" href="MfEnum.html">MfEnum.Value</a><span class="rvts6"> are the same as this instance </span><a class="rvts12" href="MfEnumEnumItemValue.html">Value</a><span class="rvts6"> otherwise </span><span class="rvts88">false</span><span class="rvts6">.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Equals(objA, ObjB)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Compares </span><span class="rvts54">objA</span><span class="rvts6"> against </span><span class="rvts54">objB</span><span class="rvts6"> to see if they have the same value.</span></p>
+<p class="rvps2"><span class="rvts87">Static</span><span class="rvts6"> method</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns var containing Boolean value of </span><span class="rvts88">true</span><span class="rvts6"> if the </span><a class="rvts12" href="MfEnumEnumItem.html">MfEnum.EnumItem.Value</a><span class="rvts6"> or </span><a class="rvts12" href="MfEnum.html">MfEnum.Value</a><span class="rvts6"> instances have the samve </span><span class="rvts87">Value</span><span class="rvts6"> otherwise </span><span class="rvts88">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">objA</span></p>
+<p class="rvps22"><span class="rvts53">The first </span><a class="rvts52" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts53"> or </span><a class="rvts52" href="MfEnum.html">MfEnum</a><span class="rvts53"> derived instance to compare.</span></p>
+<p class="rvps21"><span class="rvts51">objB</span></p>
+<p class="rvps22"><span class="rvts53">The second </span><a class="rvts52" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts53"> or </span><a class="rvts52" href="MfEnum.html">MfEnum</a><span class="rvts53"> derived instance to compare.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts54">objA</span><span class="rvts6"> is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if Non-Static</span><span class="rvts22"> [Equals(objA)]</span><span class="rvts6"> method is called when insance as not be created</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">objA</span><span class="rvts6"> or </span><span class="rvts54">objB</span><span class="rvts6"> are not type of </span><a class="rvts12" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts6"> or </span><a class="rvts12" href="MfEnum.html">MfEnum</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">In most cases it would likely be more practical to use </span><a class="rvts12" href="MfEnumEquals.html">MfEnum.Equals()</a><span class="rvts6"> than this method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfEnumEquals.html">MfEnum.Equals()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">mykey := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">IniRead</span><span class="rvts30">(</span><span class="rvts42">"C:\Temp\myfile.ini"</span><span class="rvts30">, </span><span class="rvts42">"REG"</span><span class="rvts30">, </span><span class="rvts42">"KEYS_REG_DWORD"</span><span class="rvts30">)</span><br/><span class="rvts31">; mykey is expected to contain value of KeysRegDword</span><br/><span class="rvts30"></span><br/><span class="rvts30">MyRegOpt := </span><span class="rvts32">new</span><span class="rvts30"> RegOptEnum()</span><br/><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">RegOptEnum</span><span class="rvts30">.</span><span class="rvts45">TryParse</span><span class="rvts30">(mykey, MyRegOpt) = </span><span class="rvts32">false</span><span class="rvts30">) {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">16</span><span class="rvts30">, Fail, Failed to parse Registry Option Item.</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">Exit</span><span class="rvts30">, </span><span class="rvts72">1</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts30">cVal := </span><span class="rvts33">RegOptEnum</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">AutoresponseRegSz</span><span class="rvts30">.</span><span class="rvts45">Equals</span><span class="rvts30">(MyRegOpt)</span><br/><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">RegOptEnum</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">AutoresponseRegSz</span><span class="rvts30">.</span><span class="rvts45">Equals</span><span class="rvts30">(MyRegOpt)) {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Match, Result is Equal to AutoresponseRegSz</span><br/><span class="rvts30">}</span><br/><span class="rvts32">else</span><span class="rvts30"> </span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">RegOptEnum</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">KeysRegDword</span><span class="rvts30">.</span><span class="rvts45">Equals</span><span class="rvts30">(MyRegOpt)) {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Match, Result is Equal to KeysRegDword</span><br/><span class="rvts30">}</span><br/><span class="rvts32">else</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, No Match, No match was found in valid choices</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts32">ExitApp</span><br/><span class="rvts30"><div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;"><span style="color: #888888;">; create a new enumeration class by inheriting/extending the MfEnum</span>
+<span style="color: #0000ff;">class</span> RegOptEnum <span style="color: #0000ff;">extends MfEnum</span>
+{
+    <span style="color: #007020;">static</span> m_Instance <span style="color: #333333;">:=</span> <span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Null</span>
+
+    __New(args<span style="color: #333333;">*</span>)
+    {
+        if (<span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">base</span><span style="color: #333333;">.</span>__Class <span style="color: #333333;">!=</span> <span style="background-color: #fff0f0;">"<span style="color: #800000;">RegOptEnum</span>"</span>)
+        {
+            <span style="color: #0000ff;">throw new MfNotSupportedException</span>(<span style="color: #0000ff;">MfEnvironment</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Instance</span><span style="color: #333333;">.</span><span style="color: #0000ff;">GetResourceString</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">NotSupportedException_Sealed_Class</span>"</span>,<span style="background-color: #fff0f0;">"<span style="color: #800000;">RegOptEnum</span>"</span>))
+        }
+        <span style="color: #0000ff;">base</span><span style="color: #333333;">.</span>__New(args<span style="color: #333333;">*</span>)
+<span style="color: #888888;">	; set MfObject m_isInherited flag for testing if Class is inherited/extended if needed</span>
+<span style="color: #888888;">	; This could be set to false as this class cannot be inherited/extended as set in this constructor above</span>
+<span style="color: #888888;">	; but will do it the standard way.</span>
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span>m_isInherited <span style="color: #333333;">:=</span> <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span>__Class <span style="color: #333333;">!=</span> <span style="background-color: #fff0f0;">"<span style="color: #800000;">RegOptEnum</span>"</span>
+    }
+<span style="color: #888888;">    ; override the base AddEnums, this is required</span><br/>    <span style="color: #888888;">; add all the enum values for your enum here</span>
+    <span style="color: #0000ff;">AddEnums</span>() {
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">RegDword</span>"</span>, <span style="color: #0000dd; font-weight: bold;">0</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysRegDword</span>"</span>, <span style="color: #0000dd; font-weight: bold;">1</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">RegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">2</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysRegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">3</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">RegBinary</span>"</span>, <span style="color: #0000dd; font-weight: bold;">4</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysRegBinary</span>"</span>, <span style="color: #0000dd; font-weight: bold;">5</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">AutoresponseRegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">6</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysAutoresponseRegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">7</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">AutoupdateRegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">8</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysAutoupdateRegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">9</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">AutoupdateRegBinary</span>"</span>, <span style="color: #0000dd; font-weight: bold;">10</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysAutoupdateRegBinary</span>"</span>, <span style="color: #0000dd; font-weight: bold;">11</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeypathsRegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">12</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysKeypathsRegSz</span>"</span>, <span style="color: #0000dd; font-weight: bold;">13</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeypathsRegDword</span>"</span>, <span style="color: #0000dd; font-weight: bold;">14</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysKeypathsRegDword</span>"</span>, <span style="color: #0000dd; font-weight: bold;">15</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">WindowplacementRegBinary</span>"</span>, <span style="color: #0000dd; font-weight: bold;">16</span>)
+        <span style="color: #0000ff;">this</span><span style="color: #333333;">.</span><span style="color: #0000ff;">AddEnumValue</span>(<span style="background-color: #fff0f0;">"<span style="color: #800000;">KeysWindowplacementRegBinary</span>"</span>, <span style="color: #0000dd; font-weight: bold;">17</span>)
+    }<br/><br/>    <span style="color: #808080;">; override the base DestroyInstance, this is required</span><br/>    <span style="color: #0000ff;">DestroyInstance</span>()<br/>    {<br/>        RegOptEnum.m_Instance := <span style="color: #0000ff;">Null</span><br/>    }
+    <br/>    <span style="color: #888888;">; override the base GetInstance, this is required</span><br/><span style="color: #888888;">    ; Get a static default instance, create if not exist yet</span><br/>    <span style="color: #0000ff;">GetInstance</span>()
+    {
+        if (<span style="color: #0000ff;">MfNull</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsNull</span>(RegOptEnum<span style="color: #333333;">.</span>m_Instance))
+        {
+            RegOptEnum<span style="color: #333333;">.</span>m_Instance <span style="color: #333333;">:=</span> <span style="color: #0000ff;">new</span> RegOptEnum(<span style="color: #0000dd; font-weight: bold;">0</span>)
+        }
+        <span style="color: #007020;">return</span> RegOptEnum<span style="color: #333333;">.</span>m_Instance
+    }
+
+<span style="color: #888888;">    ; override the base Is method so we can add this type of class</span>
+    <span style="color: #0000ff;">Is</span>(type)
+    {
+        typeName <span style="color: #333333;">:=</span> null
+        if (<span style="color: #0066bb; font-weight: bold;">IsObject</span>(type))
+        {
+            if (<span style="color: #0000ff;">MfObject</span><span style="color: #333333;">.</span><span style="color: #0000ff;">IsObjInstance</span>(type, <span style="background-color: #fff0f0;">"<span style="color: #800000;">MfType</span>"</span>))
+            {
+                typeName <span style="color: #333333;">:=</span> type<span style="color: #333333;">.</span><span style="color: #0000ff;">ClassName</span>
+            }
+            <span style="color: #007020;">else</span> if (type<span style="color: #333333;">.</span>__Class)
+            {
+                typeName <span style="color: #333333;">:=</span> type<span style="color: #333333;">.</span>__Class
+            }
+            <span style="color: #007020;">else</span> if (type<span style="color: #333333;">.</span><span style="color: #0000ff;">base</span><span style="color: #333333;">.</span>__Class)
+            {
+                typeName <span style="color: #333333;">:=</span> type<span style="color: #333333;">.</span><span style="color: #0000ff;">base</span><span style="color: #333333;">.</span>__Class
+            }
+        }
+        <span style="color: #007020;">else</span> if (type <span style="color: #333333;">~=</span> <span style="background-color: #fff0f0;">"<span style="color: #800000;">^[a-zA-Z0-9.]+$</span>"</span>)
+        {
+            typeName <span style="color: #333333;">:=</span> type
+        }
+        if (typeName <span style="color: #333333;">=</span> <span style="background-color: #fff0f0;">"<span style="color: #800000;">RegOptEnum</span>"</span>)
+        {
+            <span style="color: #007020;">return</span> <span style="color: #996633;">true</span>
+        }
+        <span style="color: #007020;">return</span> <span style="color: #0000ff;">base</span><span style="color: #333333;">.</span><span style="color: #0000ff;">Is</span>(type)
+    }
+}
+</pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

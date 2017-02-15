@@ -1,0 +1,105 @@
+﻿<html>
+	
+<head>
+	<title>GetHashCode()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfAOORE29GetHashCode");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetHashCode()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Exceptions.html">Exceptions</a> &rsaquo;&rsaquo; <a href="MfAOORE29.html">MfArgumentOutOfRangeException</a> &rsaquo;&rsaquo; <a href="MfAOORE29Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfAOORE29Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfAOORE29GetBaseException.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfAOORE29GetIndexOfAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps27"><span class="rvts0"><span class="rvts85">GetHashCode()</span></span></h1>
+<p class="rvps34"><span class="rvts6">Inherited from </span><a class="rvts116" href="MfException.html">MfException</a></p>
+<p class="rvps28"><span class="rvts61">instance.GetHashCode()</span></p>
+<h2 class="rvps37"><span class="rvts0"><span class="rvts115">GetHashCode()</span></span></h2>
+<p class="rvps34"><span class="rvts6">Gets A hash code for the current </span><a class="rvts83" href="MfException.html">MfException</a><span class="rvts6"> or derived class.</span></p>
+<h3 class="rvps35"><span class="rvts0"><span class="rvts77">Returns</span></span></h3>
+<p class="rvps34"><span class="rvts6">Returns A hash code for the current </span><a class="rvts83" href="MfException.html">MfException</a><span class="rvts6"> or derived class.</span></p>
+<h3 class="rvps35"><span class="rvts0"><span class="rvts77">Throws</span></span></h3>
+<p class="rvps34"><span class="rvts6">Throws </span><a class="rvts83" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if class is a not an instance.</span></p>
+<h3 class="rvps35"><span class="rvts0"><span class="rvts77">Remarks</span></span></h3>
+<p class="rvps34"><span class="rvts6">A hash code is an alpha-numeric value that is used to insert and identify an object in a hash-based collection such as a Hash table. The GetHashCode() method provides this hash code for hashing algorithms and data structures such as a hash table.</span></p>
+<p class="rvps34"><span class="rvts6">Two objects that are equal return hash codes that are equal. However, the reverse is not true: equal hash codes do not imply object equality, because different (unequal) objects can have identical hash codes. Furthermore, the this Framework does not guarantee the default implementation of the GetHashCode() method, and the value this method returns may differ between Framework versions such as 32-bit and 64-bit platforms. For these reasons, do not use the default implementation of this method as a unique object identifier for hashing purposes.</span></p>
+<h3 class="rvps35"><span class="rvts0"><span class="rvts77">Caution</span></span></h3>
+<p class="rvps34"><span class="rvts6">A hash code is intended for efficient insertion and lookup in collections that are based on a hash table. A hash code is not a permanent value. For this reason:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps34"><span class="rvts6">Do not serialize hash code values or store them in databases.</span></li>
+<li class="rvps34"><span class="rvts6">Do not use the hash code as the key to retrieve an object from a keyed collection.</span></li>
+<li class="rvps34"><span class="rvts6">Do not test for equality of hash codes to determine whether two objects are equal. (Unequal objects can have identical hash codes.) To test for equality, call the </span><span class="rvts83">ReferenceEquals()</span><span class="rvts6"> or </span><a class="rvts83" href="MfExceptionEquals.html">Equals()</a><span class="rvts6"> method.</span></li>
+</ul>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

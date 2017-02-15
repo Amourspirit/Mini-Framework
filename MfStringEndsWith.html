@@ -1,0 +1,113 @@
+﻿<html>
+	
+<head>
+	<title>EndsWith()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="EndsWith">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfStringEndsWith");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">EndsWith()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfString.html">MfString</a> &rsaquo;&rsaquo; <a href="MfStringMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfStringMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfStringDifference.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStringEquals.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">EndsWith()</span></span></h1>
+<p class="rvps2"><span class="rvts47">Determines whether the end of this string instance matches the specified string.</span></p>
+<p class="rvps30"><span class="rvts61">OutputVar := </span><span class="rvts93">instance</span><span class="rvts61">.EndsWith(str)</span><br/><span class="rvts61">OutputVar := </span><span class="rvts93">instance</span><span class="rvts61">.EndsWith(str, comparisonType)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">EndsWith(str)</span></span></h2>
+<p class="rvps2"><span class="rvts47">Determines whether the end of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts47"> instance matches </span><span class="rvts54">str</span><span class="rvts47">. Case is Ignored</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">EndsWith(str, comparisonType)</span></span></h2>
+<p class="rvps2"><span class="rvts47">Determines whether the end of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts47"> instance matches </span><span class="rvts54">str </span><span class="rvts47">and uses case rules set by </span><span class="rvts54">comparisonType</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">str</span></p>
+<p class="rvps22"><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or a var containing string</span></p>
+<p class="rvps21"><span class="rvts51">comparisonType</span></p>
+<p class="rvps22"><span class="rvts53">One of the </span><a class="rvts52" href="MfSC18.html">MfStringComparison</a><span class="rvts53"> enumeration values that specifies the rules to use in the comparison</span><br/><span class="rvts53">Can also be integer var matching an enurmation value of </span><a class="rvts52" href="MfSC18.html">MfStringComparison</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">True</span><span class="rvts6"> if value matches the end of this instance; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if method is run on a non-instance of </span><a class="rvts12" href="MfString.html">MfString</a><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if Overloads can not match Parameters.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if there is an error get a value from a parameter.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Overloads method supports using all vars or all objects. Mixing of vars and Objects is supported for this method.</span></p>
+<p class="rvps34"><span class="rvts73">Variadic</span><span class="rvts18"> Method</span><span class="rvts6">; This method is </span><span class="rvts15">Variadic</span><span class="rvts6"> so you may construct an instance of </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> containing any of the overload method parameters listed above and pass in the </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> instance to the method instead of using the overloads described above. See </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> for more information.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts70">mfs := </span><span class="rvts32">new</span><span class="rvts70"> </span><span class="rvts33">MfString</span><span class="rvts70">(</span><span class="rvts42">"Hello World"</span><span class="rvts70">)</span><br/><span class="rvts45">if</span><span class="rvts70"> (mfs.</span><span class="rvts45">EndsWith</span><span class="rvts70">(</span><span class="rvts42">"world"</span><span class="rvts70">, </span><span class="rvts33">MfStringComparison</span><span class="rvts70">.</span><span class="rvts34">Instance</span><span class="rvts70">.</span><span class="rvts34">OrdinalIgnoreCase</span><span class="rvts70">))</span><br/><span class="rvts70">{</span><br/><span class="rvts32"> &nbsp; &nbsp;MsgBox</span><span class="rvts70">, </span><span class="rvts72">64</span><span class="rvts70">, Result, Result was found to end with 'world'.</span><br/><span class="rvts70">}</span><br/><span class="rvts70"></span><br/><span class="rvts31">; could also be written as</span><br/><span class="rvts70"></span><br/><span class="rvts70">mfs := </span><span class="rvts32">new</span><span class="rvts70"> </span><span class="rvts33">MfString</span><span class="rvts70">(</span><span class="rvts42">"Hello World"</span><span class="rvts70">)</span><br/><span class="rvts45">if</span><span class="rvts70"> (mfs.</span><span class="rvts45">EndsWith</span><span class="rvts70">(</span><span class="rvts42">"world"</span><span class="rvts70">, </span><span class="rvts72">5</span><span class="rvts70">))</span><br/><span class="rvts70">{</span><br/><span class="rvts32"> &nbsp; &nbsp;MsgBox</span><span class="rvts70">, </span><span class="rvts72">64</span><span class="rvts70">, Result, Result was found to end with 'world'.</span><br/><span class="rvts70">}</span></p>
+<p class="rvps2"><span class="rvts47">The result of running the example are shown in </span><span class="rvts67">figure 1</span><span class="rvts47">.</span></p>
+<p class="rvps2"><span class="rvts98">Figure 1:</span><br/><img alt="" style="padding : 1px;" src="lib/ImgMfStringEndsWithfig1.png"></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps34"><span class="rvts73">Variadic</span><span class="rvts18"> Method</span><span class="rvts6">; This method is </span><span class="rvts15">Variadic</span><span class="rvts6"> so you may construct an instance of </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> containing any of the overload method parameters listed above and pass in the </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> instance to the method instead of using the overloads described above. See </span><a class="rvts83" href="MfParams.html">MfParams</a><span class="rvts6"> for more information.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfStringStartsWith.html">StartsWith()</a><br/><a class="rvts12" href="MfStringEquals.html">Equals()</a><br/><a class="rvts12" href="MfStringDifference.html">Difference()</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,100 @@
+﻿<html>
+	
+<head>
+	<title>Item</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfDictionaryItem");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Item</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfDictionary.html">MfDictionary</a> &rsaquo;&rsaquo; <a href="MfDictionaryProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfDictionaryProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfDictionaryIsReadOnly.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfDictionaryKeys.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Item</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the value associated with the specified key.</span><br/><span class="rvts6">Inherited from </span><a class="rvts12" href="MfDB16.html">MfDictionaryBase</a></p>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Item[Key]</span><br/><span class="rvts50">instance</span><span class="rvts48">.Item[Key] := Value</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">key</span></p>
+<p class="rvps22"><span class="rvts53">The key whose value to get or set.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Value</span></span></h3>
+<p class="rvps2"><span class="rvts6">The value to set for the </span><span class="rvts54">key</span><span class="rvts6"> whose value to set.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts54">key</span><span class="rvts6"> is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><span class="rvts54">key</span><span class="rvts6"> is an object and does not derive from </span><a class="rvts12" href="MfObject.html">MfObject</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Get Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><span class="rvts54">key</span><span class="rvts6"> is not in Dictionary.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The value associated with the specified key. If the specified key is not found, attempting to get it returns </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6">, and attempting to set it creates a new element using the specified key.</span><br/><span class="rvts6">On Set if key element is not null then </span><a class="rvts12" href="MfDictionaryOnSet.html">OnSet</a><span class="rvts6"> and </span><a class="rvts12" href="MfDictionaryOnSetComplete.html">OnSetComplete</a><span class="rvts6"> will contain </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6"> for the obj parameter.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

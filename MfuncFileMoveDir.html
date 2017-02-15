@@ -1,0 +1,105 @@
+﻿<html>
+	
+<head>
+	<title>FileMoveDir()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="FileMoveDir, File, Folder">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileMoveDir");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileMoveDir()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileMove.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileRead.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileMoveDir()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.FileMoveDir(Source, Dest [, Flag])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileMoveDir(Source, Dest [, Flag])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Moves a folder along with all its sub-folders and files. It can also rename a folder.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Source</span></p>
+<p class="rvps22"><span class="rvts53">Name of the source directory (with no trailing backslash), which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. For example: C:\My Folder</span></p>
+<p class="rvps21"><span class="rvts51">Dest</span></p>
+<p class="rvps22"><span class="rvts53">The new path and name of the directory (with no trailing baskslash), which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. For example: D:\My Folder. Note: Dest is the actual path and name that the directory will have after it is moved; it is not the directory into which Source is moved (except for the known limitation mentioned below).</span></p>
+<p class="rvps21"><span class="rvts51">Flag</span></p>
+<p class="rvps22"><span class="rvts53">(options) Specify one of the following single characters:</span><br/><span class="rvts75">0</span><span class="rvts53"> (default): Do not overwrite existing files. The operation will fail if Dest already exists as a file or directory.</span><br/><span class="rvts75">1</span><span class="rvts53">: Overwrite existing files. However, any files or subfolders inside Dest that do not have a counterpart in Source will not be deleted. Known limitation: If Dest already exists as a folder and it is on the same volume as Source, Source will be moved into it rather than overwriting it. To avoid this, see the next option.</span><br/><span class="rvts75">2</span><span class="rvts53">: The same as mode 1 above except that the limitation is absent.</span><br/><span class="rvts75">R</span><span class="rvts53">: Rename the directory rather than moving it. Although renaming normally has the same effect as moving, it is helpful in cases where you want "all or none" behavior; that is, when you don't want the operation to be only partially successful when Source or one of its files is locked (in use). Although this method cannot move Source onto a different volume, it can move it to any other directory on its own volume. The operation will fail if Dest already exists as a file or directory.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileMoveDir.htm" target="_blank">Autohotkey - FileMoveDir</a><span class="rvts6"> error message.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> any other general error occurs.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileMoveDir.htm" target="_blank">AutoHotkey Docs - FileMoveDir</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">FileMoveDir moves a single folder to a new location. To instead move the contents of a folder (all its files and subfolders), see the examples section of </span><a class="rvts12" href="MfuncFileMove.html">Mfunc.FileMove</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileMoveDir.htm" target="_blank">AutoHotkey Docs - FileMoveDir</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileMoveDir</span><span class="rvts30">(</span><span class="rvts42">"C:\My Folder"</span><span class="rvts30">, </span><span class="rvts42">"D:\My Folder"</span><span class="rvts30">) </span><span class="rvts31">; Move to a new drive.</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileMoveDir</span><span class="rvts30">(</span><span class="rvts42">"C:\My Folder"</span><span class="rvts30">, </span><span class="rvts42">"C:\My Folder (renamed)"</span><span class="rvts30">, </span><span class="rvts42">"R"</span><span class="rvts30">) </span><span class="rvts31">; Simple rename.</span><br/><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileMoveDir</span><span class="rvts30">(</span><span class="rvts42">"C:\My Folder"</span><span class="rvts30">, </span><span class="rvts42">"C:\New Location\My Folder"</span><span class="rvts30">, </span><span class="rvts42">"R"</span><span class="rvts30">) </span><span class="rvts31">; Folders can be "renamed into" another location as long as it's on the same volume.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -1,0 +1,100 @@
+﻿<html>
+	
+<head>
+	<title>Is()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfHashTableIs");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Is()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfHashTable.html">MfHashTable</a> &rsaquo;&rsaquo; <a href="MfHashTableMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfHashTableMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfHashTableHasAttribute.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfHashTableIsInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Is()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Inherited from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Is(ObjType)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Is(ObjType)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets if current instance of object is of the same type as </span><span class="rvts54">ObjType</span><span class="rvts6"> or derived from </span><span class="rvts54">ObjType</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">ObjType</span></p>
+<p class="rvps22"><span class="rvts53">The </span><span class="rvts69">object</span><span class="rvts53"> or </span><span class="rvts69">type</span><span class="rvts53"> to compare to this instance </span><a class="rvts52" href="MfType.html">Type</a><span class="rvts53">.</span><br/><span class="rvts76">ObjType</span><span class="rvts53"> can be an instance of </span><a class="rvts52" href="MfType.html">MfType</a><span class="rvts53"> or an object derived from </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> or an instance of or a string containing the name of the object type such as "MfObject"</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if current object instance is of the same </span><a class="rvts12" href="MfType.html">Type</a><span class="rvts6"> as the </span><span class="rvts54">ObjType</span><span class="rvts6"> or if &nbsp;current instance is derived from </span><span class="rvts54">ObjType</span><span class="rvts6">; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If a string is used as the Type case is ignored so "MfObject" is the same as "mfobject"</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">; Is checking examples</span><br/><span class="rvts30">MyBar := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">Bar</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">, </span><span class="rvts42">"have a nice day!"</span><span class="rvts30">)</span><br/><span class="rvts30">MyFoo := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">Foo</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">MySubFoo := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">Foo</span><span class="rvts30">.</span><span class="rvts33">SubFoo</span><span class="rvts30">(</span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MyBar.</span><span class="rvts45">Is</span><span class="rvts30">(</span><span class="rvts33">Foo</span><span class="rvts30">) </span><span class="rvts31">; displays 1 for true as Bar inherits foo</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MyBar.</span><span class="rvts45">Is</span><span class="rvts30">(</span><span class="rvts33">MfObject</span><span class="rvts30">) </span><span class="rvts31">; displays 1 for true as Bar inherits foo and foo inherits MfObject</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MyFoo.</span><span class="rvts45">Is</span><span class="rvts30">(</span><span class="rvts33">MfObject</span><span class="rvts30">) </span><span class="rvts31">; displays 1 for true as foo inherits MfObject</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MyFoo.</span><span class="rvts45">Is</span><span class="rvts30">(Bar) </span><span class="rvts31">; displays 0 for false as foo does not inherit from bar</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MyBar.</span><span class="rvts45">Is</span><span class="rvts30">(MyFoo.</span><span class="rvts45">GetType</span><span class="rvts30">()) </span><span class="rvts31">; displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MySubFoo.</span><span class="rvts45">Is</span><span class="rvts30">(</span><span class="rvts42">"MfObject"</span><span class="rvts30">) </span><span class="rvts31">; displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MySubFoo.</span><span class="rvts45">Is</span><span class="rvts30">(</span><span class="rvts33">Foo</span><span class="rvts30">.</span><span class="rvts33">SubFoo</span><span class="rvts30">) </span><span class="rvts31">; displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MyFoo.</span><span class="rvts45">Is</span><span class="rvts30">(MySubFoo.</span><span class="rvts45">GetType</span><span class="rvts30">()) </span><span class="rvts31">; displays 0 for false</span><br/><span class="rvts30"></span><br/><span class="rvts32">ExitApp</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Create a classes that derives from MfObject</span><br/><span class="rvts30"></span><br/><span class="rvts32">class</span><span class="rvts30"> Foo </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;m_FooMsg := ""</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">__New</span><span class="rvts30">(msg) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts32">__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_FooMsg := msg</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">GetFoo</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (this.</span><span class="rvts45">IsInstance</span><span class="rvts30">()) { </span><span class="rvts31">; check to see if class is actual instance</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_FooMsg</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts42">"Error: Not an instance"</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">class</span><span class="rvts30"> SubFoo </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts45">__New</span><span class="rvts30">(value) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; </span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">try</span><span class="rvts30"> { </span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_stuff := </span><span class="rvts33">MfBool</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} </span><span class="rvts32">catch</span><span class="rvts30"> e {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInvalidCastException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"InvalidCastException_ValueToBoolean"</span><span class="rvts30">), e)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">throw</span><span class="rvts30"> ex</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; </span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;m_stuff := </span><span class="rvts32">Null</span><br/><span class="rvts32"></span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts34">IsStuff</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">get</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_stuff</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">set</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfNotSupportedException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"NotSupportedException_readonly_Property"</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">throw</span><span class="rvts30"> ex</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts32">class</span><span class="rvts30"> Bar </span><span class="rvts32">extends</span><span class="rvts30"> Foo</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;m_BarMsg := ""</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">__New</span><span class="rvts30">(msgFoo, msgBar) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">(msgFoo)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_BarMsg := msgBar</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">GetFooBar</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">IsInstance</span><span class="rvts30">()) { </span><span class="rvts31">; check to see if class is actual instance</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;str := </span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">GetFoo</span><span class="rvts30">() . </span><span class="rvts42">", "</span><span class="rvts30"> . </span><span class="rvts32">this</span><span class="rvts30">.m_BarMsg</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> str</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts42">"Error: Not an instance"</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">class</span><span class="rvts30"> SubBar </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;m_barStuff := false</span><br/><span class="rvts30"> &nbsp; &nbsp; </span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts34">IsBarStuff</span><span class="rvts30">[]</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">get</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts32">this</span><span class="rvts30">.m_barStuff</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">set</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">try</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_barStuff := </span><span class="rvts33">MfBool</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;} </span><span class="rvts32">catch</span><span class="rvts30"> e {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInvalidCastException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"InvalidCastException_ValueToBoolean"</span><span class="rvts30">), e)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">throw</span><span class="rvts30"> ex</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

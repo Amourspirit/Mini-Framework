@@ -1,0 +1,111 @@
+﻿<html>
+	
+<head>
+	<title>TypeOfName()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfTypeTypeOfName");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">TypeOfName()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfType.html">MfType</a> &rsaquo;&rsaquo; <a href="MfTypeMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfTypeMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfTypeTypeOf.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfTypeVerifyIsInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">TypeOfName()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfType.TypeOfName(obj)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">TypeOfName(obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a string var of class or type name.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">obj</span></p>
+<p class="rvps22"><span class="rvts53">The object to get type name from. Can be Class, Instance of Class, String, Instance of MfType</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the name of the the class represented by </span><span class="rvts54">obj</span><span class="rvts6">.</span><br/><span class="rvts6">However if </span><span class="rvts54">obj</span><span class="rvts6"> does not match class naming rules the </span><a class="rvts12" href="Globals.htm#undefined">Undefined</a><span class="rvts6"> is returned.</span></p>
+<p class="rvps2"><span class="rvts6">All </span><span class="rvts87">Objects</span><span class="rvts6"> that are not a class will return a string value of </span><span class="rvts18">object</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">When </span><span class="rvts54">obj</span><span class="rvts6"> is a string var and it matches a valid class name then that class name is returned. Otherwise </span><a class="rvts12" href="Globals.htm#undefined">Undefined</a><span class="rvts6"> is returned. See </span><a class="rvts12" href="MfTypeTypeOfName.htm#string_var_ex">example</a><span class="rvts6"> below.</span><br/><span class="rvts6">When </span><span class="rvts54">obj</span><span class="rvts6"> is a string var the existence of the class or object is not confirmed. Only valid name.</span><br/><span class="rvts6">When passing class into obj it can be and instance or non instance</span></p>
+<p class="rvps14"><span class="rvts100">MyStr := </span><span class="rvts32">new</span><span class="rvts100"> </span><span class="rvts33">MfString</span><span class="rvts100">(</span><span class="rvts42">"Hello World"</span><span class="rvts100">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(MyStr) </span><span class="rvts31">; displays MfString</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts33">MfString</span><span class="rvts30">) </span><span class="rvts31">; displays MfString</span></p>
+<p class="rvps2"><span class="rvts6">Nested classes are returned with their parent name(s) seperated by . </span><span class="rvts22">(dot)</span><span class="rvts6"> </span><br/><span class="rvts6">For instance if classB is nested in classA then:</span></p>
+<p class="rvps14"><span class="rvts30">varName := </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(classB)</span><br/><span class="rvts31">; varName has a value of classA.ClassB</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">class</span><span class="rvts30"> classA </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30">{</span><br/><span class="rvts32"> &nbsp; &nbsp;class</span><span class="rvts30"> classB </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">class</span><span class="rvts30"> classC </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+<p class="rvps14"><span class="rvts30">MyClassC := new </span><span class="rvts33">classA</span><span class="rvts30">.</span><span class="rvts33">classB</span><span class="rvts30">.</span><span class="rvts33">classC</span><span class="rvts30">()</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(MyClassC) </span><span class="rvts31">; displays classA.classB.classC</span><br/><span class="rvts31"></span><br/><span class="rvts31">; Type can also be used to get name</span><br/><span class="rvts30">T := MyClassC.</span><span class="rvts45">GetType</span><span class="rvts30">()</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(T) </span><span class="rvts31">; displays classA.classB.classC</span></p>
+<p class="rvps14"><span class="rvts30">MyClassA := new classA()</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(MyClassA) </span><span class="rvts31">; displays classA</span></p>
+<p class="rvps14"><span class="rvts30">MyObj := </span><span class="rvts32">Object</span><span class="rvts30">()</span><br/><span class="rvts30"></span><br/><span class="rvts30">varName := </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(MyObj)</span><br/><span class="rvts31">; varName will be Object in this case</span><br/><span class="rvts31">; all objects that are not a class will return object</span><br/><span class="rvts32">if</span><span class="rvts30"> (varName = </span><span class="rvts32">"Object"</span><span class="rvts30">)</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Type Name, The Type name is: Object</span><br/><span class="rvts30">}</span></p>
+<p class="rvps2"><a name="string_var_ex"></a>
+<span class="rvts54">obj</span><span class="rvts6"> parameter can be string var.</span></p>
+<p class="rvps14"><span class="rvts31">; string var can be passed in</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">"MyClass"</span><span class="rvts30">) </span><span class="rvts31">; displays MyClass</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">"MyClass.MySubClass"</span><span class="rvts30">) </span><span class="rvts31">; displays MyClass.MySublcass</span><br/><span class="rvts31"></span><br/><span class="rvts31">; in the next example we have an invalid class name that .. in the name</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">"MyClass..MySubClass"</span><span class="rvts30">) </span><span class="rvts31">; displays undefined</span><br/><span class="rvts31"></span><br/><span class="rvts31">; in the next example we have an invalid class name that starts with a . (dot)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">".MyClass"</span><span class="rvts30">) </span><span class="rvts31">; displays undefined</span><br/><span class="rvts31"></span><br/><span class="rvts31">; in the next example we have an invalid class name that ends with a . (dot)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">"MyClass."</span><span class="rvts30">) </span><span class="rvts31">; displays undefined</span><br/><span class="rvts31"></span><br/><span class="rvts31">; in the next example we have an class name that has letters and numbers</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">"A45.55B"</span><span class="rvts30">) </span><span class="rvts31">; displays A45.55B</span><br/><span class="rvts31"></span><br/><span class="rvts31">; in the next example we have an invalid class name that has only numbers and .</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">"45.55"</span><span class="rvts30">) </span><span class="rvts31">; displays undefined</span></p>
+<p class="rvps2"><span class="rvts6">To test if obj is valid or returns </span><a class="rvts12" href="Globals.htm#undefined">Undefined</a><span class="rvts6"> you can use the following. </span><a class="rvts12" href="Globals.htm#undefined">Undefined</a><span class="rvts6"> is a </span><a class="rvts12" href="Globals.html">Global variable</a><span class="rvts6">.</span></p>
+<p class="rvps14"><span class="rvts30">varName := </span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">TypeOfName</span><span class="rvts30">(</span><span class="rvts42">"MyClass.MySubClass"</span><span class="rvts30">)</span><br/><span class="rvts32">if</span><span class="rvts30"> (varName = </span><span class="rvts32">Undefined</span><span class="rvts30">)</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">48</span><span class="rvts30">, UNDEFINED, The object type name is undefined.</span><br/><span class="rvts30">}</span><br/><span class="rvts32">else</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Type Name, % </span><span class="rvts42">"The Type name is: "</span><span class="rvts30"> . varName</span><br/><span class="rvts30">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

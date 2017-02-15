@@ -1,0 +1,114 @@
+﻿<html>
+	
+<head>
+	<title>Exceptions</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("Exceptions");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Exceptions</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="NS_System.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfAE19.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Exceptions</span></span></h1>
+<p class="rvps2"><span class="rvts6">Exceptions represents errors that occur during application execution.</span><br/><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Exceptions Links</span></span></h3>
+<div class="Exceptions_List"><ul class="Child_Topic">
+<li Class="Child_Topic"><a href="MfAE19.html">MfArgumentException</a></li>
+<li Class="Child_Topic"><a href="MfANE23.html">MfArgumentNullException</a></li>
+<li Class="Child_Topic"><a href="MfAOORE29.html">MfArgumentOutOfRangeException</a></li>
+<li Class="Child_Topic"><a href="MfAE21.html">MfArithmeticException</a></li>
+<li Class="Child_Topic"><a href="MfDByZ.html">MfDivideByZeroException</a></li>
+<li Class="Child_Topic"><a href="MfException.html">MfException</a></li>
+<li Class="Child_Topic"><a href="MfFE17.html">MfFormatException</a></li>
+<li Class="Child_Topic"><a href="MfICE22.html">MfInvalidCastException</a></li>
+<li Class="Child_Topic"><a href="MfIOE27.html">MfInvalidOperationException</a></li>
+<li Class="Child_Topic"><a href="MfIOORE26.html">MfIndexOutOfRangeException</a></li>
+<li Class="Child_Topic"><a href="MfMAE23.html">MfMemberAccessException</a></li>
+<li Class="Child_Topic"><a href="MfMFE23.html">MfMissingFieldException</a></li>
+<li Class="Child_Topic"><a href="MfMME25.html">MfMissingMemberException</a></li>
+<li Class="Child_Topic"><a href="MfMME24.html">MfMissingMethodException</a></li>
+<li Class="Child_Topic"><a href="MfNIE25.html">MfNotImplementedException</a></li>
+<li Class="Child_Topic"><a href="MfNMOE22.html">MfNonMfObjectException</a></li>
+<li Class="Child_Topic"><a href="MfNRE24.html">MfNullReferenceException</a></li>
+<li Class="Child_Topic"><a href="MfNSE23.html">MfNotSupportedException</a></li>
+<li Class="Child_Topic"><a href="MfOE19.html">MfOverflowException</a></li>
+<li Class="Child_Topic"><a href="MfSE17.html">MfSystemException</a></li>
+</ul>
+</div>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

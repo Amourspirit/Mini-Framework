@@ -1,0 +1,108 @@
+﻿<html>
+	
+<head>
+	<title>SetProp()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNRE24SetProp");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">SetProp()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Exceptions.html">Exceptions</a> &rsaquo;&rsaquo; <a href="MfNRE24.html">MfNullReferenceException</a> &rsaquo;&rsaquo; <a href="MfNRE24Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNRE24Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNRE24MemberwiseClone.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNRE24ToStringhtml.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">SetProp()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Helper method to set basic properties if </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6">.</span><br/><span class="rvts6">Inherited from </span><a class="rvts83" href="MfException.html">MfException</a></p>
+<p class="rvps20"><span class="rvts48">instance.SetProp()</span><br/><span class="rvts48">instance.SetProp(file)</span><br/><span class="rvts48">instance.SetProp(file, line)</span><br/><span class="rvts48">instance.SetProp(file, line, source)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">SetProp()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionFile.html">File</a><span class="rvts6"> to </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6">.</span><br/><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionLine.html">Line</a><span class="rvts6"> to 0.</span><br/><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionSource.html">Source</a><span class="rvts6"> to null.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">SetProp(file)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionFile.html">File</a><span class="rvts6"> to the value of </span><span class="rvts54">file</span><br/><a class="rvts12" href="MfExceptionLine.html">Line</a><span class="rvts6"> is unchanged.</span><br/><a class="rvts12" href="MfExceptionSource.html">Source</a><span class="rvts6"> is unchanged.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">SetProp(file, line)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionFile.html">File</a><span class="rvts6"> to the value of </span><span class="rvts54">file</span><span class="rvts6">.</span><br/><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionLine.html">Line</a><span class="rvts6"> to the value of </span><span class="rvts54">line</span><span class="rvts6">.</span><br/><a class="rvts12" href="MfExceptionSource.html">Source</a><span class="rvts6"> is unchanged.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">SetProp(file, line, source)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionFile.html">File</a><span class="rvts6"> to the value of </span><span class="rvts54">file</span><span class="rvts6">.</span><br/><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionLine.html">Line</a><span class="rvts6"> to the value of </span><span class="rvts54">line</span><span class="rvts6">.</span><br/><span class="rvts6">Sets </span><a class="rvts12" href="MfExceptionSource.html">Source</a><span class="rvts6"> to the value of </span><span class="rvts54">source</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">file</span></p>
+<p class="rvps22"><span class="rvts53">Sets the value of the </span><a class="rvts52" href="MfExceptionFile.html">File</a><span class="rvts53"> property. If Null value then </span><a class="rvts52" href="MfExceptionFile.html">File</a><span class="rvts53"> is set to </span><a class="rvts52" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">line</span></p>
+<p class="rvps22"><span class="rvts53">Sets the value of the </span><a class="rvts52" href="MfExceptionLine.html">Line</a><span class="rvts53"> property. If Null value then </span><a class="rvts52" href="MfExceptionLine.html">Line</a><span class="rvts53"> is set to 0;</span></p>
+<p class="rvps21"><span class="rvts51">source</span></p>
+<p class="rvps22"><span class="rvts53">Sets the value of the </span><a class="rvts52" href="MfExceptionSource.html">Source</a><span class="rvts53"> property. If Null Value then source is set to Null</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if there is an error setting a Argument value to a Property</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">if</span><span class="rvts30">(!</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts33">IsObjInstance</span><span class="rvts30">(obj, </span><span class="rvts33">MfString</span><span class="rvts30">))</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;err := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfArgumentException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"Argument_Object_Equals"</span><span class="rvts30">),</span><span class="rvts42">"obj"</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp;err.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">) </span><span class="rvts31">; set File, Line and Source Properties</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">throw</span><span class="rvts30"> err</span><br/><span class="rvts30">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

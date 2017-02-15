@@ -1,0 +1,93 @@
+﻿<html>
+	
+<head>
+	<title>MfArgumentNullException</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="ArgumentNullException, Exceptions">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfANE23");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MfArgumentNullException</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Exceptions.html">Exceptions</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="Exceptions.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfAE19VerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfANE23Properties.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfArgumentNullException Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">The exception that is thrown when a null reference is passed to a method that does not accept it as a valid argument.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfANE23Properties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfANE23Methods.html">Methods</a><span class="rvts6">,</span><a class="rvts12" href="MfANE23Constructor.html"> Constructor()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps23"><span class="rvts61">str := </span><span class="rvts62">MfString</span><span class="rvts61">(</span><span class="rvts63">"Hello World"</span><span class="rvts61">) </span><span class="rvts60">; str will be null as we did not use a new constructor</span><br/><span class="rvts61">Myfunction(x) {</span><br/><span class="rvts61"> &nbsp; &nbsp;</span><span class="rvts64">if</span><span class="rvts61"> (!</span><span class="rvts64">IsObject</span><span class="rvts61">(x))</span><br/><span class="rvts61"> &nbsp; &nbsp;{</span><br/><span class="rvts61"> &nbsp; &nbsp; &nbsp; &nbsp;err := </span><span class="rvts64">new</span><span class="rvts61"> </span><span class="rvts62">MfArgumentNullException</span><span class="rvts61">(</span><span class="rvts63">"x"</span><span class="rvts61">,</span><span class="rvts63">"Argument it null"</span><span class="rvts61">,)</span><br/><span class="rvts61"> &nbsp; &nbsp; &nbsp; &nbsp;err.</span><span class="rvts65">Source</span><span class="rvts61"> := </span><span class="rvts64">A_ThisFunc</span><br/><span class="rvts61"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts64">throw</span><span class="rvts61"> err</span><br/><span class="rvts61"> &nbsp; &nbsp;}</span><br/><span class="rvts61"> &nbsp; &nbsp;</span><span class="rvts64">try</span><span class="rvts61"> {</span><br/><span class="rvts61"> &nbsp; &nbsp; &nbsp; &nbsp;retval := DoSomething(x)</span><br/><span class="rvts61"> &nbsp; &nbsp;} </span><span class="rvts64">catch</span><span class="rvts61"> e {</span><br/><span class="rvts61"> &nbsp; &nbsp; &nbsp; &nbsp;err := </span><span class="rvts64">new</span><span class="rvts61"> </span><span class="rvts62">MfException</span><span class="rvts61">(</span><span class="rvts63">"Error, DoSomething did not succeed"</span><span class="rvts61">, e)</span><br/><span class="rvts61"> &nbsp; &nbsp; &nbsp; &nbsp;err.</span><span class="rvts66">SetProp</span><span class="rvts61">(</span><span class="rvts64">A_LineFile</span><span class="rvts61">, </span><span class="rvts64">A_LineNumber</span><span class="rvts61">, </span><span class="rvts64">A_ThisFunc</span><span class="rvts61">)</span><br/><span class="rvts61"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts64">throw</span><span class="rvts61"> err</span><br/><span class="rvts61"> &nbsp; &nbsp;}</span><br/><span class="rvts61"> &nbsp; &nbsp;</span><span class="rvts64">return</span><span class="rvts61"> retval</span><br/><span class="rvts61">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

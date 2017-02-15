@@ -1,0 +1,150 @@
+﻿<html>
+	
+<head>
+	<title>Transform()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Transform, Number">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncTransform");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Transform()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncSysGet.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncWinActivate.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Transform()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.Transform(Cmd, Value1 [, Value2])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.Transform(Cmd, Value1 [, Value2])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Performs miscellaneous math functions, bitwise operations, and tasks such as ASCII/Unicode conversion.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps2"><span class="rvts6">Cmd, Value1/2</span></p>
+<p class="rvps2"><span class="rvts6">See list below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the result of Cmd.</span><a class="rvts12" href="MfuncSetFormat.html"> </a><a class="rvts12" href="MfuncSetFormat.html">Mfunc.SetFormat</a><span class="rvts6"> determines whether integers are stored as hexadecimal or decimal.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Cmd, Value1, Value2</span></span></h3>
+<p class="rvps2"><span class="rvts6">The Cmd, Value1 and Value2 parameters are dependent upon each other and their usage is described below.</span></p>
+<p class="rvps2"><span class="rvts18">Unicode [, String]</span><span class="rvts6">: (This command is not available in Unicode versions of AutoHotkey.) Retrieves or stores Unicode text on the clipboard. Note: The entire clipboard may be saved and restored by means of </span><a class="rvts13" href="http://ahkscript.org/docs/misc/Clipboard.htm#ClipboardAll" target="_blank">ClipboardAll</a><span class="rvts6">, which allows "Transform Unicode" to operate without losing the original contents of the clipboard.</span></p>
+<p class="rvps2"><span class="rvts6">There are two modes of operation as illustrated in the following examples:</span></p>
+<p class="rvps14"><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Transform</span><span class="rvts30">(</span><span class="rvts42">"Unicode"</span><span class="rvts30">) </span><span class="rvts31">; Retrieves the clipboard's Unicode text as a UTF-8 string.</span><br/><span class="rvts30">Clipboard := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Transform</span><span class="rvts30">(</span><span class="rvts42">"Unicode"</span><span class="rvts30">, MyUTF_String) </span><span class="rvts31">; Places Unicode text onto the clipboard.</span></p>
+<p class="rvps2"><span class="rvts6">In the second example above, a literal UTF-8 string ( wrapped in double quotes ) may be optionally used in place of MyUTF_String.</span></p>
+<p class="rvps2"><span class="rvts6">Use a hotkey such as the following to determine the UTF-8 string that corresponds to a given Unicode string:</span></p>
+<p class="rvps14"><span class="rvts30">^!u:: </span><span class="rvts31">; Control+Alt+U hotkey.</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Copy some Unicode text onto the clipboard, then return to this window and press OK to continue.</span><br/><span class="rvts30">ClipUTF := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Transform</span><span class="rvts30">(</span><span class="rvts42">"Unicode"</span><span class="rvts30">)</span><br/><span class="rvts32">Clipboard</span><span class="rvts30"> := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Transform</span><span class="rvts30">("Unicode", ClipUTF . </span><span class="rvts42">"`r`n"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> The clipboard now contains the following line that you can paste into your script. When executed, this line will cause the original Unicode string you copied to be placed onto the clipboard:`n`n%Clipboard%</span><br/><span class="rvts32">return</span></p>
+<p class="rvps2"><span class="rvts6">Note: The </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Send.htm#sendu" target="_blank">Send {U+nnnn}</a><span class="rvts6"> command is an alternate way to produce Unicode characters.</span></p>
+<p class="rvps2"><span class="rvts18">Asc, String:</span><span class="rvts6"> Retrieves the ASCII code (a number between 1 and 255) for the first character in String. If String is empty, OutputVar will also be made empty. For example: OutputVar := Mfunc.Transform("Asc", VarContainingString). Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Asc" target="_blank">Asc(String)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Deref, String</span><span class="rvts6">: Expands variable references and </span><a class="rvts13" href="http://ahkscript.org/docs/commands/_EscapeChar.htm" target="_blank">escape sequences</a><span class="rvts6"> contained inside other variables. Any badly formatted variable references will be omitted from the expanded result. The same is true if OutputVar is expanded into itself; in other words, any references to OutputVar inside String's variables will be omitted from the expansion (note however that String itself can be %OutputVar%). In the following example, if var1 contains the string "test" and var2 contains the literal string "%var1%", OutputVar will be set to the string "test": OutputVar := Mfunc.Transform("deref", var2). Within a </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm" target="_blank">function</a><span class="rvts6">, each variable in String always resolves to a local variable unless there is no such variable, in which case it resolves to a global variable (or blank if none).</span></p>
+<p class="rvps2"><span class="rvts18">HTML, String [, Flags]:</span></p>
+<p class="rvps2"><span class="rvts6">For ANSI executables: Converts String into its HTML equivalent by translating characters whose ASCII values are above 127 to their HTML names (e.g. £ becomes &amp;pound;). In addition, the four characters "&amp;&lt;&gt; are translated to &amp;quot;&amp;amp;&amp;lt;&amp;gt;. Finally, each linefeed (`n) is translated to &lt;br&gt;`n (i.e. &lt;br&gt; followed by a linefeed). The Flags parameter is ignored.</span></p>
+<p class="rvps2"><span class="rvts6">For Unicode executables: In addition of the functionality above, Flags can be zero or a combination (sum) of the following values. If omitted, it defaults to 1.</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">1: Converts certain characters to named expressions. e.g. € is converted to </span><span class="rvts43">&amp;euro;</span></li>
+<li class="rvps2"><span class="rvts6">2: Converts certain characters to numbered expressions. e.g. € is converted to </span><span class="rvts43">&amp;#8364;</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">Only non-ASCII characters are affected. If Flags = 3, numbered expressions are used only where a named expression is not available. The following characters are always converted:</span><span class="rvts43"> &lt;&gt;"&amp;</span><span class="rvts6"> and </span><span class="rvts43">`n</span><span class="rvts6"> (line feed).</span></p>
+<p class="rvps2"><span class="rvts18">FromCodePage / ToCodePage</span><span class="rvts6">: Deprecated. Use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/StrPutGet.htm" target="_blank">StrPut() / StrGet()</a><span class="rvts6"> instead.</span></p>
+<p class="rvps2"><span class="rvts18">Mod, Dividend, Divisor</span><span class="rvts6">: Retrieves the remainder of Dividend divided by Divisor. If Divisor is zero, Return value will be null (empty). Dividend and Divisor can both contain a decimal point. If negative, Divisor will be treated as positive for the calculation. In the following example, the result is 2: </span><span class="rvts43">OutputVar := Mfunc.Transform("mod", 5, 3)</span><span class="rvts6">. Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Mod" target="_blank">Mod(Dividend, Divisor)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Pow, Base, Exponent</span><span class="rvts6">: Retrieves Base raised to the power of Exponent. Both Base and Exponent may contain a decimal point. If Exponent is negative, Return value will be formatted as a floating point number even if Base and Exponent are both integers. A negative Base combined with a fractional Exponent such as 1.5 is not supported; it will cause OutputVar to be made blank. See also: </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#pow" target="_blank">** operator</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Exp, N</span><span class="rvts6">: Retrieves e (which is approximately 2.71828182845905) raised to the Nth power. N may be negative and may contain a decimal point. Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Exp" target="_blank">Exp(N)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Sqrt, Value1</span><span class="rvts6">: Retrieves the square root of Value1. If Value1 is negative, Return value will be made null (empty). Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Sqrt" target="_blank">Sqrt(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Log, Value1</span><span class="rvts6">: Retrieves the logarithm (base 10) of Value1. If Value1 is negative, Return value will be made null (empty). Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Log" target="_blank">Log(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Ln, Value1</span><span class="rvts6">: Retrieves the natural logarithm (base e) of Value1. If Value1 is negative, Return value will be made null (empty). Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Ln" target="_blank">Ln(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Round, Value1 [, N</span><span class="rvts6">]: If N is omitted, OutputVar will be set to Value1 rounded to the nearest integer. If N is positive number, Value1 will be rounded to N decimal places. If N is negative, Value1 will be rounded by N digits to the left of the decimal point. For example, -1 rounds to the ones place, -2 rounds to the tens place, and-3 rounds to the hundreds place. Note: Round does not remove trailing zeros when rounding decimal places. For example, 12.333 rounded to one decimal place would become 12.300000. This behavior can be altered by using something like </span><a class="rvts109" href="MfuncSetFormat.html">Mfunc.SetFormat</a><span class="rvts43">("Float", 0.1)</span><span class="rvts6"> prior to the operation (in fact,</span><a class="rvts12" href="MfuncSetFormat.html">Mfunc.SetFormat</a><span class="rvts6"> might eliminate the need to use Round in the first place). Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Round" target="_blank">Round(Number [, N]</a><span class="rvts6">).</span></p>
+<p class="rvps2"><span class="rvts18">Ceil, Value1</span><span class="rvts6">: Retrieves Value1 rounded up to the nearest integer. Corresponding function: </span><a class="rvts13" href="https://autohotkey.com/docs/commands/Math.htm#Ceil" target="_blank">Ceil(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Floor, Value1</span><span class="rvts6">: Retrieves Value1 rounded down to the nearest integer. Corresponding function: </span><a class="rvts13" href="https://autohotkey.com/docs/commands/Math.htm#Floor" target="_blank">Floor(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Abs, Value1</span><span class="rvts6">: Retrieves the absolute value of Value1, which is computed by removing the leading minus sign (dash) from Value1 if it has one. Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Abs" target="_blank">Abs(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Sin, Value1</span><span class="rvts6">: Retrieves the trigonometric sine of Value1. Value1 must be expressed in radians. Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Sin" target="_blank">Sin(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Cos, Value1</span><span class="rvts6">: Retrieves the trigonometric cosine of Value1. Value1 must be expressed in radians. Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Cos" target="_blank">Cos(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">Tan, Value1</span><span class="rvts6">: Retrieves the trigonometric tangent of Value1. Value1 must be expressed in radians. Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Tan" target="_blank">Tan(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">ASin, Value1</span><span class="rvts6">: Retrieves the arcsine (the number whose sine is Value1) in radians. If Value1 is less than -1 or greater than 1, Return value will be made null (empty). Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#ASin" target="_blank">ASin(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">ACos, Value1</span><span class="rvts6">: Retrieves the arccosine (the number whose cosine is Value1) in radians. If Value1 is less than -1 or greater than 1, Return value will be made null (empty). Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#ACos" target="_blank">ACos(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">ATan, Value1</span><span class="rvts6">: Retrieves the arctangent (the number whose tangent is Value1) in radians. Corresponding function: </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#ATan" target="_blank">ATan(Number)</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">NOTE: Each of the following bitwise operations has a more concise </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#bitwise" target="_blank">bitwise operator</a><span class="rvts6"> for use in expressions.</span></p>
+<p class="rvps2"><span class="rvts18">BitNot, Value1</span><span class="rvts6">: Stores the bit-inverted version of Value1 in Return value (if Value1 is floating point, it is truncated to an integer prior to the calculation). If Value1 is between 0 and 4294967295 (0xffffffff), it will be treated as an unsigned 32-bit value. Otherwise, it is treated as a signed 64-bit value. In the following example, the result is 0xfffff0f0 (4294963440): </span><span class="rvts43">OutputVar := Mfunc.Transform("BitNot", 0xf0f)</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">BitAnd, Value1, Value2</span><span class="rvts6">: Retrieves the result of the bitwise-AND of Value1 and Value2 (floating point values are truncated to integers prior to the calculation). In the following example, the result is 0xff00 (65280): </span><span class="rvts43">OutputVar := Mfunc.Transform("BitAnd", 0xff0f, 0xfff0)</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">BitOr, Value1, Value2</span><span class="rvts6">: Retrieves the result of the bitwise-OR of Value1 and Value2 (floating point values are truncated to integers prior to the calculation). In the following example, the result is 0xf0f0 (61680): </span><span class="rvts43">OutputVar := Mfunc.Transform("BitOr", 0xf000, 0x00f0)</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">BitXOr, Value1, Value2</span><span class="rvts6">: Retrieves the result of the bitwise-EXCLUSIVE-OR of Value1 and Value2 (floating point values are truncated to integers prior to the calculation). In the following example, the result is 0xff00 (65280): </span><span class="rvts43">OutputVar := Mfunc.Transform("BitXOr", 0xf00f, 0x0f0f)</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">BitShiftLeft, Value1, Value2</span><span class="rvts6">: Retrieves the result of shifting Value1 to the left by Value2 bit positions, which is equivalent to multiplying Value1 by "2 to the Value2th power" (floating point values are truncated to integers prior to the calculation). In the following example, the result is 8: </span><span class="rvts43">OutputVar := Mfunc.Transform("BitShiftLeft", 1, 3)</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">BitShiftRight, Value1, Value2</span><span class="rvts6">: Retrieves the result of shifting Value1 to the right by Value2 bit positions, which is equivalent to dividing Value1 by "2 to the Value2th power", truncating the remainder (floating point values are truncated to integers prior to the calculation). In the following example, the result is 2: </span><span class="rvts43">OutputVar := Mfunc.Transform("BitShiftRight", 17, 3)</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Transform.htm" target="_blank">AutoHotkey Docs - Transform</a><span class="rvts6">.</span><br/><span class="rvts6">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">Sub-commands that accept numeric parameters can also use </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expressions</a><span class="rvts6"> for those parameters.</span></p>
+<p class="rvps2"><span class="rvts6">If either Value1 or Value2 is a floating point number, the following Cmds will retrieve a floating point number rather than an integer: Mod, Pow, Round, and Abs. The number of decimal places retrieved is determined by </span><a class="rvts12" href="MfuncSetFormat.html">Mfunc.SetFormat</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">To convert a radians value to degrees, multiply it by 180/pi (approximately 57.29578). To convert a degrees value to radians, multiply it by pi/180 (approximately 0.01745329252).</span></p>
+<p class="rvps2"><span class="rvts6">The value of pi (approximately 3.141592653589793) is 4 times the arctangent of 1.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing </span><span class="rvts15">string</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/Transform.htm" target="_blank">AutoHotkey Docs - Transform</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Transform</span><span class="rvts30">(</span><span class="rvts42">"Asc"</span><span class="rvts30">, </span><span class="rvts42">"A"</span><span class="rvts30">) </span><span class="rvts31">; Get the ASCII code of the letter A.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfChar.html">MfChar</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

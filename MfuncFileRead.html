@@ -1,0 +1,112 @@
+﻿<html>
+	
+<head>
+	<title>FileRead()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="File, FileRead">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncFileRead");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FileRead()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFileMoveDir.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncFileReadLine.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileRead()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.FileRead(Filename)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileRead(Filename)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reads a file's contents and returns them.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Filename</span></p>
+<p class="rvps22"><span class="rvts53">The name of the file to read, which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified.</span><br/><span class="rvts53"></span><br/><span class="rvts75">Options</span><span class="rvts53">: Zero or more of the following strings may be also be present immediately before the name of the file. Separate each option from the next with a single space or tab. For example: </span><span class="rvts101">t m5000 C:\Log Files\200601.txt.</span><br/><span class="rvts53"></span><br/><span class="rvts75">*c</span><span class="rvts53">: Load a </span><a class="rvts59" href="http://ahkscript.org/docs/misc/Clipboard.htm#ClipboardAll" target="_blank">ClipboardAll</a><span class="rvts53"> file or other binary data. All other options are ignored when </span><span class="rvts75">*c</span><span class="rvts53"> is present.</span><br/><span class="rvts53"></span><br/><span class="rvts75">*m1024</span><span class="rvts53">: If this option is omitted, the entire file is loaded unless there is insufficient memory, in which case an error message is shown and the thread exits (but Try can be used to avoid this). Otherwise, replace 1024 with a decimal or hexadecimal number of bytes. If the file is larger than this, only its leading part is loaded. Note: This might result in the last line ending in a naked carriage return (`r) rather than `r`n.</span><br/><span class="rvts53"></span><br/><span class="rvts75">*t</span><span class="rvts53">: Replaces any/all occurrences of carriage return &amp; linefeed (`r`n) with linefeed (`n). However, this translation reduces performance and is usually not necessary. For example, text containing `r`n is already in the right format to be added to a </span><a class="rvts59" href="http://ahkscript.org/docs/commands/StringReplace.htm" target="_blank">Gui Edit control</a><span class="rvts53">. Similarly, </span><a class="rvts59" href="http://ahkscript.org/docs/commands/FileAppend.htm" target="_blank">FileAppend</a><span class="rvts53"> detects the presence of `r`n when it opens a new file; it knows to write each `r`n as-is rather than translating it to `r`r`n. Finally, the following parsing loop will work correctly regardless of whether each line ends in `r`n or just `n: </span><span class="rvts101">Loop, parse, MyFileContents, `n, `r</span><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts75">*Pnnn</span><span class="rvts53">: </span><span class="rvts95">AutoHotkey [v1.0.90+]:</span><span class="rvts53"> Overrides the default encoding set by </span><a class="rvts59" href="http://ahkscript.org/docs/commands/FileEncoding.htm" target="_blank">FileEncoding</a><span class="rvts53">, where nnn must be a numeric </span><a class="rvts59" href="http://msdn.microsoft.com/en-us/library/dd317756.aspx" target="_blank">code page identifier</a><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the contents of the file represented by parameter Filename</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> if a problem occurs such as the file being "in use", not existing or files greater then 1 GB.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileRead.htm" target="_blank">AutoHotkey Docs - FileRead</a><span class="rvts6">.</span><br/><span class="rvts6">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">When the goal is to load all or a large part of a file into memory, FileRead performs much better than using a </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopReadFile.htm" target="_blank">file-reading loop</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">FileRead does not obey </span><a class="rvts13" href="http://ahkscript.org/docs/commands/_MaxMem.htm" target="_blank">#MaxMem</a><span class="rvts6">. If there is concern about using too much memory, check the file size beforehand with </span><a class="rvts12" href="MfuncFileGetSize.html">Mfunc.FileGetSize</a><span class="rvts6">.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/FileOpen.htm" target="_blank">FileOpen()</a><span class="rvts6"> provides more advanced functionality than FileRead, such as reading or writing data at a specific location in the file without reading the entire file into memory. See </span><a class="rvts13" href="http://ahkscript.org/docs/objects/File.htm" target="_blank">File Object</a><span class="rvts6"> for a list of functions.</span></p>
+<p class="rvps2"><span class="rvts6">Reading Binary Data</span></p>
+<p class="rvps2"><span class="rvts6">Depending on the file, parameters and default settings, FileRead may interpret the file data as text and convert it to the </span><a class="rvts13" href="http://ahkscript.org/docs/Compat.htm#Format" target="_blank">native encoding</a><span class="rvts6"> used by the script. This is likely to cause problems if the file contains binary data, except in the following cases:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">If the </span><span class="rvts18">*C</span><span class="rvts6"> option is present, all code page and end-of-line translations are unconditionally bypassed.</span></li>
+<li class="rvps2"><span class="rvts6">If the </span><span class="rvts18">*Pnnn</span><span class="rvts6"> option is present and nnn corresponds to the native string encoding, no code page translation occurs.</span></li>
+<li class="rvps2"><span class="rvts6">If the current </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileEncoding.htm" target="_blank">file encoding</a><span class="rvts6"> setting corresponds to the native string encoding, no code page translation occurs.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">Note that once the data has been read into OutputVar, only the text before the first binary zero (if any are present) will be "seen" by most AutoHotkey commands and functions. However, the entire contents are still present and can be accessed by advanced methods such as </span><a class="rvts13" href="http://ahkscript.org/docs/commands/NumGet.htm" target="_blank">NumGet()</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Finally, </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileOpen.htm" target="_blank">FileOpen()</a><span class="rvts6"> and </span><a class="rvts13" href="http://ahkscript.org/docs/objects/File.htm#RawRead" target="_blank">File.RawRead</a><span class="rvts6"> or </span><a class="rvts13" href="http://ahkscript.org/docs/objects/File.htm#ReadNum" target="_blank">File.ReadNum</a><span class="rvts6"> may be used to read binary data without first reading the entire file into memory.</span></p>
+<p class="rvps2"><span class="rvts18">Also See</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileRead.htm" target="_blank">AutoHotkey Docs - FileRead</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

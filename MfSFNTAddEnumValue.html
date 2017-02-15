@@ -1,0 +1,102 @@
+﻿<html>
+	
+<head>
+	<title>AddEnumValue()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfSFNTAddEnumValue");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">AddEnumValue()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfSFNT.html">MfSetFormatNumberType</a> &rsaquo;&rsaquo; <a href="MfSFNTMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfSFNTMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfSFNTAddEnums.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfSFNTAddFlag.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps27"><span class="rvts0"><span class="rvts85">AddEnumValue()</span></span></h1>
+<p class="rvps38"><span class="rvts6">Inherited from </span><a class="rvts83" href="MfEnum.html">MfEnum</a><span class="rvts6">.</span></p>
+<p class="rvps28"><span class="rvts61">AddEnumValue(name, value)</span></p>
+<h2 class="rvps37"><span class="rvts0"><span class="rvts115">AddEnumValue(name, value)</span></span></h2>
+<p class="rvps38"><span class="rvts6">Adds new Enum Name to </span><a class="rvts83" href="MfEnum.html">MfEnum</a><span class="rvts6"> derived class that represents an instance of </span><a class="rvts83" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts6">.</span></p>
+<h3 class="rvps24"><span class="rvts0"><span class="rvts77">Parameters</span></span></h3>
+<p class="rvps2"><span class="rvts78">name</span></p>
+<p class="rvps25"><span class="rvts79">the name of the new MfEnum to add to derived class. Can be </span><a class="rvts80" href="MfString.html">MfString</a><span class="rvts79"> or var containing string value.</span></p>
+<p class="rvps2"><span class="rvts78">value</span></p>
+<p class="rvps25"><span class="rvts79">the numeric value for to for the instance of </span><a class="rvts80" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts79">. Can be </span><a class="rvts80" href="MfInteger.html">MfInteger</a><span class="rvts79"> or var containing integer value.</span></p>
+<h3 class="rvps24"><span class="rvts0"><span class="rvts77">Remarks</span></span></h3>
+<p class="rvps38"><span class="rvts6">Each name represents an object instance of </span><a class="rvts83" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts6">.</span><br/><span class="rvts6">Each name adds a new Property of </span><span class="rvts118">name</span><span class="rvts6"> that is an instance of </span><a class="rvts83" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts6">.</span></p>
+<p class="rvps38"><span class="rvts6">This method is intended to &nbsp;be used as a </span><span class="rvts15">Protected</span><span class="rvts6"> method in derived classes.</span><br/><span class="rvts6">Howerver if called directly on a class derived from &nbsp;</span><a class="rvts83" href="MfEnum.html">MfEnum</a><span class="rvts6"> then it would add new enum to the instance.</span></p>
+<p class="rvps38"><span class="rvts6">This method is usually called inside of the </span><a class="rvts83" href="MfEnumAddEnums.html">AddEnums</a><span class="rvts6"> method of derived classes.</span></p>
+<h3 class="rvps24"><span class="rvts0"><span class="rvts77">Throws</span></span></h3>
+<p class="rvps38"><span class="rvts6">Throws </span><a class="rvts83" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if name is null.</span><br/><span class="rvts6">Throws </span><a class="rvts83" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if name is not a string var.</span><br/><span class="rvts6">Throws </span><a class="rvts83" href="MfException.html">MfException</a><span class="rvts6"> with innerException if any other errors occur.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

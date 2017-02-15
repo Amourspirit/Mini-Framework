@@ -1,0 +1,113 @@
+﻿<html>
+	
+<head>
+	<title>Constructor()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfUC17Constructor");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Constructor()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfUC17.html">MfUnicodeCategory</a> &rsaquo;&rsaquo; <a href="MfUC17Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfUC17Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfUC17CompareTo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfUC17DestroyInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Constructor()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := new MfUnicodeCategory()</span><br/><span class="rvts48">OutputVar := new MfUnicodeCategory(num)</span><br/><span class="rvts48">OutputVar := new MfUnicodeCategory(instanceEnum)</span><br/><span class="rvts48">OutputVar := new MfUnicodeCategory(enumItem)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor ()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Creates a new instance of </span><a class="rvts12" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts6"> class and set initial value to the value of </span><a class="rvts12" href="MfUC17UppercaseLetter.html">UppercaseLetter</a><span class="rvts6">.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor (num)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Creates a new instance of </span><a class="rvts12" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts6"> class and sets initial value to value of </span><span class="rvts54">num</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">num</span></p>
+<p class="rvps22"><span class="rvts53">An integer value representing an </span><span class="rvts69">Enumeration</span><span class="rvts53"> Value of </span><a class="rvts52" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">MyEnum := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfUnicodeCategory</span><span class="rvts30">(</span><span class="rvts72">4</span><span class="rvts30">) </span><span class="rvts31">; OtherLetter</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor (instanceEnum)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Creates a new instance of </span><a class="rvts12" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts6"> class an set the intial value to the value of </span><span class="rvts54">instanceEnum</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">instanceEnum</span></p>
+<p class="rvps22"><span class="rvts53">an instance of </span><a class="rvts52" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts53"> whose </span><a class="rvts52" href="MfSC18Value.html">Value</a><span class="rvts53"> is used to construct this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">MyEnum := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfUnicodeCategory</span><span class="rvts30">() </span><span class="rvts31">; create instance with default value</span><br/><span class="rvts30">MyEnum.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts33">MfUnicodeCategory</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">SpacingCombiningMark</span><span class="rvts30">.</span><span class="rvts34">Value</span><br/><span class="rvts30">MfE := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfUnicodeCategory</span><span class="rvts30">(MyEnum) </span><span class="rvts31">; create a new instance and sets it value to the value of MyEnum</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor (enumItem)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Creates a new instance of </span><a class="rvts12" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts6"> and set its value </span><span class="rvts54">enumItem</span><span class="rvts6"> value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">enumItem</span></p>
+<p class="rvps22"><a class="rvts52" href="MfEnumEnumItem.html">MfEnum.EnumItem</a><span class="rvts53"> value must </span><span class="rvts69">Enumeration</span><span class="rvts53"> of </span><a class="rvts52" href="MfUC17.html">MfUnicodeCategory</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">MyEnum := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfUnicodeCategory</span><span class="rvts30">(</span><span class="rvts33">MfUnicodeCategory</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">SpacingCombiningMark</span><span class="rvts30">)</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if this sealed class is extended or inherited.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if arguments are not correct.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

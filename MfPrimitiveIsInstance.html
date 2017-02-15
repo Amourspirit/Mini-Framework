@@ -1,0 +1,95 @@
+﻿<html>
+	
+<head>
+	<title>IsInstance()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfPrimitiveIsInstance");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsInstance()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfPrimitive.html">MfPrimitive</a> &rsaquo;&rsaquo; <a href="MfPrimitiveMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfPrimitiveMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfPrimitiveIs.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfPrimitiveMemberwiseClone.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps4"><span class="rvts0"><span class="rvts11">IsInstance()</span></span></h1>
+<p class="rvps34"><span class="rvts6">Inherited from </span><a class="rvts116" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+<p class="rvps28"><span class="rvts61">OutputVar := </span><span class="rvts93">instance</span><span class="rvts61">.IsInstance()</span></p>
+<h2 class="rvps37"><span class="rvts0"><span class="rvts115">IsInstance()</span></span></h2>
+<p class="rvps34"><span class="rvts6">Get if the current class is an instance.</span></p>
+<h3 class="rvps35"><span class="rvts0"><span class="rvts77">Returns</span></span></h3>
+<p class="rvps34"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if object is instance; Otherwise </span><span class="rvts18">false</span></p>
+<h3 class="rvps35"><span class="rvts0"><span class="rvts77">Remarks</span></span></h3>
+<p class="rvps34"><span class="rvts6">Object must a class </span><span class="rvts15">extended</span><span class="rvts6"> from </span><a class="rvts116" href="MfObject.html">MfObject</a><span class="rvts6">.</span><br/><span class="rvts6">Method should be treated as a protected method and used internally in </span><span class="rvts15">extended</span><span class="rvts6"> classes.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

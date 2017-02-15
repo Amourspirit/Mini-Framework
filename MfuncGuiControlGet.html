@@ -1,0 +1,132 @@
+﻿<html>
+	
+<head>
+	<title>GuiControlGet()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="GuiControlGet, Gui">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncGuiControlGet");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GuiControlGet()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncFunctions.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncIfBetween.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GuiControlGet()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.GuiControlGet([Sub-command, ControlID, Param4])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.GuiControlGet([Sub-command, ControlID, Param4])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves various types of information about a control in a GUI window.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Sub</span></p>
+<p class="rvps22"><span class="rvts53">command - See list below.</span></p>
+<p class="rvps21"><span class="rvts51">ControlID</span></p>
+<p class="rvps22"><span class="rvts53">If the target control has an associated variable, specify the variable's name as the ControlID (this method takes precedence over the ones described next). For this reason, it is usually best to assign a variable to any control that will later be accessed via GuiControl or GuiControlGet, even if that control is not input-capable (such as GroupBox or Text).</span><br/><span class="rvts53"></span><br/><span class="rvts53">Otherwise, ControlID can be either ClassNN (the classname and instance number of the control) or the control's text, both of which can be determined via Window Spy. When using text, the matching behavior is determined by </span><a class="rvts59" href="http://ahkscript.org/docs/commands/SetTitleMatchMode.htm" target="_blank">SetTitleMatchMode</a><span class="rvts53">. Note: a picture control's file name (as it was specified at the time the control was created) may be used as its ControlID.</span><br/><span class="rvts53"></span><br/><span class="rvts95">AutoHotkey [v1.1.04+]</span><span class="rvts53">: ControlID can be the </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Gui.htm#HwndOutputVar" target="_blank">HWND</a><span class="rvts53"> of a control. As with any other ControlID, Sub-command must also include the name or number of the GUI if it is not the </span><a class="rvts59" href="http://ahkscript.org/docs/commands/GuiControlGet.htm#Remarks" target="_blank">default window</a><span class="rvts53">.</span><br/><span class="rvts53">For example, Value := GuiControlGet("2:", Hwnd).</span></p>
+<p class="rvps21"><span class="rvts51">Param4 This parameter is omitted except where noted in the list of sub</span></p>
+<p class="rvps22"><span class="rvts53">commands below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns result of Sub-command. If the command cannot complete (see ErrorLevel below), this variable is made blank.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sub-commands</span></span></h3>
+<p class="rvps2"><span class="rvts18">(Blank)</span><span class="rvts6">: Leave Sub-command blank to retrieve the control's contents. All control types are self-explanatory except the following:</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Picture" target="_blank">Picture</a><span class="rvts6">: Retrieves the picture's file name as it was originally specified when the control was created. This name does not change even if a new picture file name is specified.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Edit" target="_blank">Edit</a><span class="rvts6">: Retrieves the contents but any line breaks in the text will be represented as plain linefeeds (`n) rather than the traditional CR+LF (`r`n) used by non-GUI commands such as </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Edit" target="_blank">ControlGetText</a><span class="rvts6"> and </span><a class="rvts13" href="http://ahkscript.org/docs/commands/ControlSetText.htm" target="_blank">ControlSetText</a><span class="rvts6">.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Hotkey" target="_blank">Hotkey</a><span class="rvts6">: Retrieves a blank value if there is no hotkey in the control. Otherwise it retrieves the modifiers and key name. Examples:</span><span class="rvts43"> ^!C, ^Home, +^NumpadHome</span><span class="rvts6">.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Checkbox" target="_blank">Checkbox</a><span class="rvts6"> /</span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Radio" target="_blank">Radio</a><span class="rvts6">: Retrieves 1 if the control is checked, 0 if it is unchecked, or -1 if it has a gray checkmark. To retrieve the control's text/caption instead, specify the word Text for Param4. Note: Unlike the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#Submit" target="_blank">Gui Submit</a><span class="rvts6"> command, radio buttons are always retrieved individually, regardless of whether they are in a radio group.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#UpDown" target="_blank">UpDown</a><span class="rvts6">/ </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Slider" target="_blank">Slider</a><span class="rvts6">/ </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Progress" target="_blank">Progress</a><span class="rvts6">: Retrieves the control's current position.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#Tab" target="_blank">Tab</a><span class="rvts6">/ </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#DropDownList" target="_blank">DropDownList</a><span class="rvts6">/ </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#ComboBox" target="_blank">ComboBox</a><span class="rvts6">/ </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#ListBox" target="_blank">ListBox</a><span class="rvts6">: Retrieves the text of the currently selected item/tab (or its position if the control has the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#AltSubmit" target="_blank">AltSubmit</a><span class="rvts6"> property). For a ComboBox, if there is no selected item, the text in the control's edit field is retrieved instead. For a </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#ListBoxMulti" target="_blank">multi-select ListBox</a><span class="rvts6">, the output uses the window's </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#Delimiter" target="_blank">current delimiter</a><span class="rvts6">.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/ListView.htm" target="_blank">ListView</a><span class="rvts6"> and </span><a class="rvts13" href="http://ahkscript.org/docs/commands/TreeView.htm" target="_blank">TreeView</a><span class="rvts6">: These are not supported when Sub-command is blank. Instead, use the built-in </span><a class="rvts13" href="http://ahkscript.org/docs/commands/ListView.htm#BuiltIn" target="_blank">ListView functions</a><span class="rvts6"> and </span><a class="rvts13" href="http://ahkscript.org/docs/commands/TreeView.htm#BuiltIn" target="_blank">TreeView functions</a></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#StatusBar" target="_blank">StatusBar</a><span class="rvts6">: Retrieves only the first part's text.</span></p>
+<p class="rvps2"><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControls.htm#ActiveX" target="_blank">ActiveX:</a><span class="rvts6"> Retrieves a new wrapper object for the control's ActiveX component.</span></p>
+<p class="rvps2"><span class="rvts18">Note</span><span class="rvts6">: To unconditionally retrieve any control's text/caption rather than its contents, specify the word Text for Param4.</span></p>
+<p class="rvps2"><span class="rvts18">GuiControlGet, OutputVar, Pos</span><span class="rvts6">: Retrieves the position and size of the control. The position is relative to the GUI window's client area, which is the area not including title bar, menu bar, and borders. The information is stored in four variables whose names all start with OutputVar. For example:</span></p>
+<p class="rvps14"><span class="rvts30">MyEdit := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(</span><span class="rvts42">"Pos"</span><span class="rvts30">, </span><span class="rvts42">"MyEdit"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> The X coordinate is %MyEditX%. The Y coordinate is %MyEditY%. The width is %MyEditW%. The height is %MyEditH%.</span></p>
+<p class="rvps2"><span class="rvts6">Within a </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm" target="_blank">function</a><span class="rvts6">, to create a set of variables that is global instead of local, </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#Global" target="_blank">declare</a><span class="rvts6"> OutputVar as a global variable prior to using this command (the converse is true for </span><a class="rvts13" href="http://ahkscript.org/docs/Functions.htm#AssumeGlobal" target="_blank">assume-global</a><span class="rvts6"> functions).</span></p>
+<p class="rvps2"><span class="rvts18">GuiControlGet, OutputVar, Focus</span><span class="rvts6">: Retrieves the control identifier (ClassNN) for the control that currently has keyboard focus. Since the specified GUI window must be </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinActivate.htm" target="_blank">active</a><span class="rvts6"> for one of its controls to have focus, OutputVar will be made blank if it is not active. Example usage:</span><span class="rvts43"> focused_control := Mfunc.GuiControlGet("focus")</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts18">GuiControlGet, OutputVar, FocusV</span><span class="rvts6"> </span><span class="rvts41">[v1.0.43.06+]</span><span class="rvts6">: Same as Focus (above) except that it retrieves the name of the focused control's </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#Events" target="_blank">associated</a><span class="rvts6"> variable. If that control lacks an associated </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#Events" target="_blank">variable</a><span class="rvts6">, the first 63 characters of the control's text/caption is retrieved instead (this is most often used to avoid giving each button a variable name).</span></p>
+<p class="rvps2"><span class="rvts18">GuiControlGet, OutputVar, Enabled</span><span class="rvts6">: Retrieves 1 if the control is enabled or 0 if it is disabled.</span></p>
+<p class="rvps2"><span class="rvts18">GuiControlGet, OutputVar, Visible</span><span class="rvts6">: Retrieves 1 if the control is visible or 0 if it is hidden.</span></p>
+<p class="rvps2"><span class="rvts18">GuiControlGet, OutputVar, Hwnd</span><span class="rvts6"> </span><span class="rvts41">[v1.0.46.16+]</span><span class="rvts6">: Retrieves the window handle (HWND) of the control. A control's HWND is often used with </span><a class="rvts13" href="http://ahkscript.org/docs/commands/PostMessage.htm" target="_blank">PostMessage</a><span class="rvts6">, </span><a class="rvts13" href="http://ahkscript.org/docs/commands/PostMessage.htm" target="_blank">SendMessage</a><span class="rvts6">, and </span><a class="rvts13" href="http://ahkscript.org/docs/commands/DllCall.htm" target="_blank">DllCall</a><span class="rvts6">. Note: </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#HwndOutputVar" target="_blank">HwndOutputVar</a><span class="rvts6"> is usually a more concise way to get the HWND.</span></p>
+<p class="rvps2"><span class="rvts6">GuiControlGet, OutputVar, Name </span><span class="rvts41">[v1.1.03+]</span><span class="rvts6">: Retrieves the name of the control's </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#Events" target="_blank">associated variable</a><span class="rvts6"> if it has one, otherwise return value is made blank.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControlGet.htm" target="_blank">AutoHotkey Docs - GuiControlGet</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">To operate upon a window other than the default (see below), include its name or number followed by a colon in front of the sub-command as in these examples:</span></p>
+<p class="rvps14"><span class="rvts30">MyEdit := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(</span><span class="rvts42">"MyGui:"</span><span class="rvts30">)</span><br/><span class="rvts30">MyEdit := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(</span><span class="rvts42">"MyGui:Pos"</span><span class="rvts30">)</span><br/><span class="rvts30">Outputvar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(</span><span class="rvts42">"MyGui:Focus"</span><span class="rvts30">)</span></p>
+<p class="rvps2"><span class="rvts6">This is required even if ControlID is a control's associated variable or HWND.</span><br/><span class="rvts6">A GUI </span><a class="rvts13" href="http://ahkscript.org/docs/misc/Threads.htm" target="_blank">thread</a><span class="rvts6"> is defined as any thread launched as a result of a GUI action. GUI actions include selecting an item from a GUI window's menu bar, or triggering one of its </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#label" target="_blank">g-labels</a><span class="rvts6"> (such as by pressing a button).</span></p>
+<p class="rvps2"><span class="rvts6">The </span><a class="rvts13" href="http://ahkscript.org/docs/commands/Gui.htm#DefaultWin" target="_blank">default window name</a><span class="rvts6"> for a GUI thread is that of the window that launched the thread. Non-GUI threads use 1 as their default.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/GuiControlGet.htm" target="_blank">AutoHotkey Docs - GuiControlGet</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileRemoveDir.htm" target="_blank">Autohotkey - FileRemoveDir</a><span class="rvts6"> error message.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> any other general error occurs.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">MyEdit := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(, </span><span class="rvts42">"MyEdit"</span><span class="rvts30">)</span><br/><span class="rvts30">CtrlContents := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(, </span><span class="rvts42">"MyEdit"</span><span class="rvts30">)</span><span class="rvts31"> ; Same as the above except uses a non-default output variable.</span><br/><span class="rvts30">MyCheckbox1 := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(, </span><span class="rvts42">"MyCheckbox1"</span><span class="rvts30">) </span><span class="rvts31">; Retrieves 1 if it is checked, 0 if it is unchecked.</span><br/><span class="rvts30">MyCheckbox1 := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(, </span><span class="rvts42">"MyCheckbox1"</span><span class="rvts30">, </span><span class="rvts42">"Text"</span><span class="rvts30">) </span><span class="rvts31">; Retrieves the caption/text of the checkbox.</span><br/><span class="rvts30">Pic := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">GuiControlGet</span><span class="rvts30">(, </span><span class="rvts42">"Pos"</span><span class="rvts30">, </span><span class="rvts42">"Static4"</span><span class="rvts30">) </span><span class="rvts31">; The position/size will be stored in PicX, PicY, PicW, and PicH</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

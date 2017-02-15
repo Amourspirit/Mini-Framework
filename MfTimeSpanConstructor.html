@@ -1,0 +1,134 @@
+﻿<html>
+	
+<head>
+	<title>Constructor()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfTimeSpanConstructor");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Constructor()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfTimeSpan.html">MfTimeSpan</a> &rsaquo;&rsaquo; <a href="MfTimeSpanMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfTimeSpanMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfTimeSpanCompareTo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfTimeSpanDuration.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Constructor()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := new MfTimeSpan()</span><br/><span class="rvts48">OutputVar := new MfTimeSpan(ts)</span><br/><span class="rvts48">OutputVar := new MfTimeSpan(ticks)</span><br/><span class="rvts48">OutputVar := new MfTimeSpan(hours, minutes, seconds)</span><br/><span class="rvts48">OutputVar := new MfTimeSpan(days, hours, minutes, seconds)</span><br/><span class="rvts48">OutputVar := new MfTimeSpan(days, hours, minutes, seconds, milliseconds)</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">ts</span></p>
+<p class="rvps22"><span class="rvts53">An instance of </span><a class="rvts52" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">ticks</span></p>
+<p class="rvps22"><span class="rvts53">A time period expressed in 100-nanosecond units. Can be instance of </span><a class="rvts52" href="MfInt64.html">MfInt64</a><span class="rvts53"> or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">days</span></p>
+<p class="rvps22"><span class="rvts53">Number of days. Can be instance of </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">hours</span></p>
+<p class="rvps22"><span class="rvts53">Number of hours. Can be instance of </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">minutes</span></p>
+<p class="rvps22"><span class="rvts53">Number of Minutes. Can be instance of </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">seconds</span></p>
+<p class="rvps22"><span class="rvts53">Number of seconds. Can be instance of </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">milliseconds</span></p>
+<p class="rvps22"><span class="rvts53">Number of milliseconds. Can be instance of </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> or var containing integer.</span></p>
+<ul style="text-indent: 0px; margin-left: 0px; list-style-position: inside;">
+<li class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if the parameters specify a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> value less than </span><a class="rvts12" href="MfTimeSpanMinValue.html">MinValue</a><span class="rvts6"> or greater than </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MaxValue</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if there is an error get a value from a parameter.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><br/><a class="rvts12" href="MfTimeSpanTicks.html">Ticks</a><span class="rvts6"> property will have a value of 0</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(ts)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to the specified number of ticks of ts.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><br/><a class="rvts12" href="MfTimeSpanTicks.html">Ticks</a><span class="rvts6"> property will have a value of ts</span><br/><span class="rvts6">Eg: myTs := new MfTimeSpan(MfTimeSpan.Zero)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(ticks)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to the specified number of ticks.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><br/><a class="rvts12" href="MfTimeSpanTicks.html">Ticks</a><span class="rvts6"> property will have a value of ticks</span><br/><span class="rvts6">A single tick represents one hundred nanoseconds or one ten-millionth of a second. There are 10,000 ticks in a millisecond.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(hours, minutes, seconds)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to a specified number of hours, minutes, and seconds.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><br/><a class="rvts12" href="MfTimeSpanTicks.html">Ticks</a><span class="rvts6"> property will have a value of hours, minutes, and seconds.</span><br/><span class="rvts6">The specified hours, minutes, and seconds are converted to ticks, and that value initializes this instance.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(days, hours, minutes, seconds)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to a specified number of days, hours, minutes, and seconds.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><br/><a class="rvts12" href="MfTimeSpanTicks.html">Ticks</a><span class="rvts6"> property will have a value of days, hours, minutes, and seconds.</span><br/><span class="rvts6">The specified days, hours, minutes, and seconds are converted to ticks, and that value initializes this instance.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(days, hours, minutes, seconds, milliseconds)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to a specified number of days, hours, minutes, seconds and milliseconds.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><br/><a class="rvts12" href="MfTimeSpanTicks.html">Ticks</a><span class="rvts6"> property will have a value of days, hours, minutes, seconds and milliseconds.</span><br/><span class="rvts6">The specified days, hours, minutes, seconds and milliseconds are converted to ticks, and that value initializes this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts34">Zero</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 00</span><br/><span class="rvts31"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">5624853448000</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 06.12:14:45.3448000</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07:14:00</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07:14:17</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">, </span><span class="rvts72">41</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">, </span><span class="rvts72">41</span><span class="rvts30">, </span><span class="rvts33">243</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41.2430000</span><br/><span class="rvts30"></span><br/><span class="rvts30">iHour := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">14</span><span class="rvts30">)</span><br/><span class="rvts30">iMin &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">57</span><span class="rvts30">)</span><br/><span class="rvts30">iSec &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">29</span><span class="rvts30">)</span><br/><span class="rvts30">span &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(iHour, iMin, iSec)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 14:57:29</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

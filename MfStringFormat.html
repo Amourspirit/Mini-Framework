@@ -1,0 +1,102 @@
+﻿<html>
+	
+<head>
+	<title>Format()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="Format, Format">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfStringFormat");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Format()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfString.html">MfString</a> &rsaquo;&rsaquo; <a href="MfStringMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfStringMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfStringEscapeSend.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStringGetAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Format()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfString.Format(str, arg, arg2, ..., argN)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfString.Format(str, arg, arg2, ..., argN)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Formats string replacing {#} with corresponding replacement </span><span class="rvts54">arg</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">str</span></p>
+<p class="rvps22"><span class="rvts53">String to format. Can be any object derived from </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">arg</span></p>
+<p class="rvps22"><span class="rvts53">One or more arg to format </span><span class="rvts76">str</span><span class="rvts53"> with.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns formated </span><span class="rvts15">string</span><span class="rvts6">.</span><br/><span class="rvts6">If </span><span class="rvts54">str</span><span class="rvts6"> Parameter is an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and that instance has </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> set to </span><span class="rvts18">true</span><span class="rvts6"> then a new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> will be returned containing the formated version; otherwise a var will be returned containing the formated version.</span><br/><span class="rvts6">If </span><span class="rvts54">str</span><span class="rvts6"> is null or empty then </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6"> value is returned.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Objects Derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> will call their ToString() method if Passed in as </span><span class="rvts54">arg</span><span class="rvts6">. If </span><span class="rvts54">arg</span><span class="rvts6"> is </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> and not an Instance then its type name is used </span><span class="rvts18">Objects</span><span class="rvts6"> passed in as </span><span class="rvts54">arg</span><span class="rvts6"> must be of type </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">. All </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> derived classes will call instance.ToString().</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">str</span><span class="rvts6"> is an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and that instance has it </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> set to </span><span class="rvts18">true</span><span class="rvts6"> then the return value will be a new instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">; Otherwise a string var is returned.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">myString := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"DateTime:{0}/{1}/{2}"</span><span class="rvts30">, </span><span class="rvts32">A_YYYY</span><span class="rvts30">, </span><span class="rvts32">A_MM</span><span class="rvts30">, </span><span class="rvts32">A_DD</span><span class="rvts30">) </span><span class="rvts31">; result DateTime:2016/06/01</span><br/><span class="rvts31"></span><br/><span class="rvts30">myOsInfo := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"OsType:{0} Version:{1}"</span><span class="rvts30">, </span><span class="rvts32">A_OSType</span><span class="rvts30">, </span><span class="rvts32">A_OSVersion</span><span class="rvts30">) </span><span class="rvts31">; OsType:WIN32_NT Version:WIN_8.1</span><br/><span class="rvts30"></span><br/><span class="rvts30">i := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">5</span><span class="rvts30">)</span><br/><span class="rvts30">str := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Cool computer"</span><span class="rvts30">)</span><br/><span class="rvts30">mystr := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"My computer is named:'{0}' and I have had it for {1} years"</span><span class="rvts30">, str, i)</span><br/><span class="rvts31">; My computer is named:'Cool computer' and I have had it for 5 years</span><br/><span class="rvts30"></span><br/><span class="rvts30">strObjA := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(mystr, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts31">; The above line sets MfString instance to return it method outputs as objects. This allows for method chaining</span><br/><span class="rvts31"></span><br/><span class="rvts31">; strObjA has ReturnAsObject set to true so ResultA will be an instance of MfString</span><br/><span class="rvts30">resultA := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(strObjA, str, i).</span><span class="rvts45">Substring</span><span class="rvts30">(</span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(</span><span class="rvts42">"I:58"</span><span class="rvts30">)).</span><span class="rvts45">PadLeft</span><span class="rvts30">(</span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(</span><span class="rvts42">"i=20,C=."</span><span class="rvts30">))</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % resultA.</span><span class="rvts34">Value</span><span class="rvts30"> </span><span class="rvts31">; displays ...............years</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

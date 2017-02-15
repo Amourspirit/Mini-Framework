@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>ToInteger()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfFloatToInteger");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ToInteger()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfFloat.html">MfFloat</a> &rsaquo;&rsaquo; <a href="MfFloatMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfFloatMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfFloatSubtract.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfFloatToString.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ToInteger()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfFloat.ToInteger()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfFloat.ToInteger(flt)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the value of the specified </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> to the equivalent </span><a class="rvts12" href="MfInteger.html">MfInteger</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">flt</span></p>
+<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfFloat.html">MfFloat</a><span class="rvts53"> object or var containing Float value</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> equivalent to the value of </span><a class="rvts12" href="MfFloat.html">MfFloat</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts54">flt</span><span class="rvts6"> is Null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">flt</span><span class="rvts6"> is not a value that can be converted.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static Method</span><br/><span class="rvts6">The returned </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> has its </span><a class="rvts12" href="MfIntegerReturnAsObject.html">MfInteger.ReturnAsObject</a><span class="rvts6"> property set to </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

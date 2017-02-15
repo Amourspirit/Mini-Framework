@@ -1,0 +1,133 @@
+﻿<html>
+	
+<head>
+	<title>GetValue()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfFloatGetValue");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetValue()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfFloat.html">MfFloat</a> &rsaquo;&rsaquo; <a href="MfFloatMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfFloatMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfFloatGetTypeCode.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfFloatGreaterThen.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetValue()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfPrimitiveGetValue.html">MfPrimitive.GetValue()</a><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := MfFloat.GetValue(Obj)</span><br/><span class="rvts48">OutputVar := MfFloat.GetValue(Obj, Default)</span><br/><span class="rvts48">OutputVar := MfFloat.GetValue(Obj, Default, AllowAny)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfFloat</span></span><span class="rvts0"><span class="rvts16">.GetValue(Obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets the Float number from Object or var containing </span><span class="rvts15">float</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Obj</span></p>
+<p class="rvps22"><span class="rvts53">The Object or var containing</span><span class="rvts69">, float,</span><span class="rvts53"> </span><span class="rvts69">integer</span><span class="rvts53"> or </span><span class="rvts69">hex</span><span class="rvts53"> value</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">. </span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a var containing a </span><span class="rvts15">float</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">Throws an error if unable to convert </span><span class="rvts54">Obj</span><span class="rvts6"> to float.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if argument </span><span class="rvts54">Obj</span><span class="rvts6"> is can not be converted to float value.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfFloat</span></span><span class="rvts0"><span class="rvts16">.GetValue(Obj, Default)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a Float number from </span><span class="rvts54">Obj</span><span class="rvts6"> or returns </span><span class="rvts54">Default</span><span class="rvts6"> value if </span><span class="rvts54">Obj</span><span class="rvts6"> is unable to be converted to flaot. Default must be a value that can be converted to float or it will be ignored if </span><span class="rvts54">Obj</span><span class="rvts6"> can not be converted to float an error will be thrown.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Obj</span></p>
+<p class="rvps22"><span class="rvts53">The Object or var containing</span><span class="rvts69">, float,</span><span class="rvts53"> </span><span class="rvts69">integer</span><span class="rvts53"> or </span><span class="rvts69">hex</span><span class="rvts53"> value</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">. </span></p>
+<p class="rvps21"><span class="rvts51">Default</span></p>
+<p class="rvps22"><span class="rvts53">The value to return if </span><span class="rvts76">Obj</span><span class="rvts53"> is Cannot be converted</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53"> or var of float.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a var containing a </span><span class="rvts15">integer</span><span class="rvts6"> or </span><span class="rvts54">Default</span><span class="rvts6"> value if </span><span class="rvts54">Obj</span><span class="rvts6"> is unable to be converted to float.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">If Default is not a valid float or </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance then </span><span class="rvts41">GetValue</span><span class="rvts6"> will throw an error if </span><span class="rvts54">Obj</span><span class="rvts6"> can not be converted to float. </span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">Default</span><span class="rvts6"> can not be converted to a float then this would method will yield the same results as calling </span><span class="rvts43">MfFloat.GetValue(Obj)</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfFloat</span></span><span class="rvts0"><span class="rvts16">.GetValue(Obj, Default, AllowAny)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a float number from </span><span class="rvts54">Obj</span><span class="rvts6"> or returns </span><span class="rvts54">Default</span><span class="rvts6"> value if </span><span class="rvts54">Obj</span><span class="rvts6"> is unable to be converted to float.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Obj</span></p>
+<p class="rvps22"><span class="rvts53">The Object or var containing</span><span class="rvts69">, float,</span><span class="rvts53"> </span><span class="rvts69">integer</span><span class="rvts53"> or </span><span class="rvts69">hex</span><span class="rvts53"> value</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53">. </span></p>
+<p class="rvps21"><span class="rvts51">Default</span></p>
+<p class="rvps22"><span class="rvts53">The value to return if </span><span class="rvts76">Obj</span><span class="rvts53"> is Cannot be converted</span><br/><span class="rvts53">Can be any type that matches </span><a class="rvts52" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts53"> or var of float.</span></p>
+<p class="rvps21"><span class="rvts51">AlowAny</span></p>
+<p class="rvps22"><span class="rvts53">Determines if </span><span class="rvts76">Default</span><span class="rvts53"> can be a value other then flaot. If true </span><span class="rvts76">Default</span><span class="rvts53"> can be any var, Object or null; Otherwise </span><span class="rvts76">Default</span><span class="rvts53"> must be a float value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static Method.</span><br/><span class="rvts6">If </span><span class="rvts54">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6"> then </span><span class="rvts54">Default</span><span class="rvts6"> can be any value including var, object or null. However if </span><span class="rvts54">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6"> then this method will yield the same result as calling </span><span class="rvts43">MfFloat.GetValue(Obj, Default)</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">AllowAny</span><span class="rvts6"> is not a valid boolean.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">General Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if incorrect number of parameters are passed in.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfFloatParse.html">Parse()</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatTryParse.html">TryParse()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">obj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInt64</span><span class="rvts30">(</span><span class="rvts33">MfInt64</span><span class="rvts30">.</span><span class="rvts34">MaxValue</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(obj)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 9223372036854775808.000000</span><br/><span class="rvts30"></span><br/><span class="rvts30">obj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfByte</span><span class="rvts30">(</span><span class="rvts72">214</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(obj)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 214.000000</span><br/><span class="rvts31"></span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts72">214</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 214.000000</span><br/><span class="rvts31"></span><br/><span class="rvts31">; when MfFloat instance is passe for obj then</span><br/><span class="rvts31">; the Format of the instance is applied</span><br/><span class="rvts30">obj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfFloat</span><span class="rvts30">(</span><span class="rvts72">799</span><span class="rvts30">, , ,</span><span class="rvts42">"0.0"</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(obj)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 799</span><br/><span class="rvts31"></span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts72">0xE5F4</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 58868.000000</span><br/><span class="rvts31"></span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"0xE5F4"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 58868.000000</span><br/><span class="rvts31"></span><br/><span class="rvts31">; the following will throw MfArgumentException</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val%</span><br/><span class="rvts31"></span><br/><span class="rvts31">; the default set to -1 will be returned</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">, -</span><span class="rvts72">1</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays -1.000000</span><br/><span class="rvts31"></span><br/><span class="rvts30">VarDefault := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfByte</span><span class="rvts30">(</span><span class="rvts33">MfByte</span><span class="rvts30">.</span><span class="rvts34">MaxValue</span><span class="rvts30">)</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">, VarDefault)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 255.000000</span><br/><span class="rvts31"></span><br/><span class="rvts31">; This line will throw an error because</span><br/><span class="rvts31">; default obj is not a valid float and default</span><br/><span class="rvts31">; is not a valid float</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">, </span><span class="rvts42">"Undefined"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val%</span><br/><span class="rvts30"></span><br/><span class="rvts31">; AllowAny is set to true, this will work</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts42">"abc"</span><span class="rvts30">, </span><span class="rvts42">"Undefined"</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays Undefined</span><br/><span class="rvts30"></span><br/><span class="rvts31">; MfNumberStyles.Instance.Number is MfEnum.EnumItem</span><br/><span class="rvts31">; and MfEnum.EnumItem is of type IsNumber</span><br/><span class="rvts30">val := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(</span><span class="rvts33">MfNumberStyles</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts34">Number</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> %val% </span><span class="rvts31">; displays 111.000000</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

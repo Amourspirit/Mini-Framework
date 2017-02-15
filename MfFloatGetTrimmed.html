@@ -1,0 +1,98 @@
+﻿<html>
+	
+<head>
+	<title>GetTrimmed()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfFloatGetTrimmed");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetTrimmed()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfFloat.html">MfFloat</a> &rsaquo;&rsaquo; <a href="MfFloatMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfFloatMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfFloatGetIndexOfAttribute.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfFloatGetType.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetTrimmed()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.GetTrimmed()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetTrimmed()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a float that has all leading and trailing 0's and spaces removed removed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts12" href="MfFloatReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance; otherwise returns float var containing value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts12" href="MfFloatValue.html">Value</a><span class="rvts6"> is a whole number then a value will be returned without a decimal.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfFloatReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then a </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance will be returned with its </span><a class="rvts12" href="MfFloatFormat.html">Format</a><span class="rvts6"> set to display a trimmed value, See example below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">f := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfFloat</span><span class="rvts30">(</span><span class="rvts72">0.5</span><span class="rvts30">) </span><span class="rvts31">; ReturnAsObject is false</span><br/><span class="rvts30">result := f.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'0.500000'</span><br/><span class="rvts31"></span><br/><span class="rvts30">result := f.</span><span class="rvts45">GetTrimmed</span><span class="rvts30">() </span><span class="rvts31">; returns var</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; displays '0.5'</span><br/><span class="rvts30"></span><br/><span class="rvts30">f := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfFloat</span><span class="rvts30">(</span><span class="rvts72">0.5</span><span class="rvts30">, , , </span><span class="rvts42">"10.5"</span><span class="rvts30">) </span><span class="rvts31">; ReturnAsObject and Readonly are false</span><br/><span class="rvts30">result := f.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:' &nbsp; 0.50000'</span><br/><span class="rvts30"></span><br/><span class="rvts30">result := f.</span><span class="rvts45">GetTrimmed</span><span class="rvts30">() </span><span class="rvts31">; returns var</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; displays '0.5'</span><br/><span class="rvts30"></span><br/><span class="rvts30">f := </span><span class="rvts31">new</span><span class="rvts30"> </span><span class="rvts33">MfFloat</span><span class="rvts30">(</span><span class="rvts72">256.030</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">, , </span><span class="rvts42">"10.5"</span><span class="rvts30">) </span><span class="rvts31">; ReturnAsObject is true, Readonly is False</span><br/><span class="rvts30">result := f.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:' 256.03000'</span><br/><span class="rvts30"></span><br/><span class="rvts30">fTrim := f.</span><span class="rvts45">GetTrimmed</span><span class="rvts30">() </span><span class="rvts31">; returns MfFloat object instance because ReturnAsObject is true</span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'256.03'</span><br/><span class="rvts30"></span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Format</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'0.2'</span><br/><span class="rvts30"></span><br/><span class="rvts30">f := new </span><span class="rvts33">MfFloat</span><span class="rvts30">()</span><br/><span class="rvts30">f.</span><span class="rvts34">TotalWidth</span><span class="rvts30"> := </span><span class="rvts42">"012"</span><br/><span class="rvts30">f.</span><span class="rvts34">DecimalPlaces</span><span class="rvts30"> := </span><span class="rvts42">"5"</span><br/><span class="rvts30">f.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts72">256.030</span><br/><span class="rvts30">f.</span><span class="rvts34">ReturnAsObject</span><span class="rvts30"> := </span><span class="rvts32">true</span><br/><span class="rvts30">result := f.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'000256.03000'</span><br/><span class="rvts31"></span><br/><span class="rvts30">fTrim := f.</span><span class="rvts45">GetTrimmed</span><span class="rvts30">() </span><span class="rvts31">; returns MfFloat object instance because ReturnAsObject is true</span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'256.03'</span><br/><span class="rvts30"></span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Format</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'0.2'</span><br/><span class="rvts30"></span><br/><span class="rvts30">f := new </span><span class="rvts33">MfFloat</span><span class="rvts30">()</span><br/><span class="rvts30">f.</span><span class="rvts34">Format</span><span class="rvts30"> := </span><span class="rvts42">"-012.5"</span><br/><span class="rvts30">f.</span><span class="rvts34">Value</span><span class="rvts30"> := </span><span class="rvts72">256.1</span><br/><span class="rvts30">f.</span><span class="rvts34">ReturnAsObject</span><span class="rvts30"> := </span><span class="rvts32">true</span><br/><span class="rvts30">result := f.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'256.10000 &nbsp; '</span><br/><span class="rvts30"></span><br/><span class="rvts30">fTrim := f.</span><span class="rvts45">GetTrimmed</span><span class="rvts30">() </span><span class="rvts31">; returns MfFloat object instance because ReturnAsObject is true</span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'256.1'</span><br/><span class="rvts30"></span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Format</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'0.1'</span><br/><span class="rvts30"></span><br/><span class="rvts30">f := new </span><span class="rvts33">MfFloat</span><span class="rvts30">(</span><span class="rvts72">256.0</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">, , "10.5") </span><span class="rvts31">; ReturnAsObject is true, Readonly is False</span><br/><span class="rvts30">result := f.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:' 256.00000'</span><br/><span class="rvts30"></span><br/><span class="rvts30">fTrim := f.</span><span class="rvts45">GetTrimmed</span><span class="rvts30">() </span><span class="rvts31">; returns MfFloat object instance because ReturnAsObject is true</span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Value</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; a whole number is returned - Displays Result:'256'</span><br/><span class="rvts30"></span><br/><span class="rvts30">result := fTrim.</span><span class="rvts34">Format</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> Result:'%result%' </span><span class="rvts31">; Displays Result:'0.0'</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

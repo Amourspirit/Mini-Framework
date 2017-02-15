@@ -1,0 +1,103 @@
+﻿<html>
+	
+<head>
+	<title>AllowEmptyString</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfParamsAllowEmptyString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">AllowEmptyString</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfParams.html">MfParams</a> &rsaquo;&rsaquo; <a href="MfParamsProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfParamsProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfParamsProperties.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfParamsAllowEmptyValue.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">AllowEmptyString</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets a value indicating whether the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance accepts empty </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instances.</span></p>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.AllowEmptyString</span><br/><span class="rvts50">instance</span><span class="rvts48">.AllowEmptyString := value</span></p>
+<p class="rvps21"><span class="rvts51">Value</span></p>
+<p class="rvps22"><a class="rvts52" href="MfBool.html">MfBool</a><span class="rvts53"> instance or var boolean</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets a value var boolean indicating whether the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance accepts empty </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instances.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets a value indicating whether the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance accepts empty </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instances.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Default Value is </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">If set to true then you may add "" values into the </span><a class="rvts12" href="MfParamsAdd.html">Add()</a><span class="rvts6"> method. The default value is false so adding null value in using the </span><a class="rvts12" href="MfParamsConstructor.html">constructor</a><span class="rvts6"> is not possible. You must first create an instance of </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">, set </span><span class="rvts41">AllowEmptyString</span><span class="rvts6"> to true and then you can use the </span><a class="rvts12" href="MfParamsAdd.html">Add()</a><span class="rvts6"> method to add null values.</span></p>
+<p class="rvps2"><span class="rvts6">If an attempt to set a null value using </span><a class="rvts12" href="MfParamsAdd.html">Add()</a><span class="rvts6"> is made with first setting </span><span class="rvts41">AllowEmptyString</span><span class="rvts6"> to </span><span class="rvts18">true</span><span class="rvts6"> then an </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> will be thrown by </span><a class="rvts12" href="MfParamsAdd.html">Add()</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts12" href="MfParamsAllowEmptyValue.html">AllowEmptyValue</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6"> and </span><span class="rvts41">AllowEmptyString</span><span class="rvts6"> is true then the </span><a class="rvts12" href="MfParamsAdd.html">Add()</a><span class="rvts6"> method will add "" values as Undefined to the underlying list. </span><a class="rvts12" href="MfParamsAllowOnlyAhkObj.html">AllowOnlyAhkObj</a><span class="rvts6"> takes priority over </span><a class="rvts12" href="MfParamsAllowEmptyValue.html">AllowEmptyValue</a><span class="rvts6"> and if </span><a class="rvts12" href="MfParamsAllowOnlyAhkObj.html">AllowOnlyAhkObj</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6"> Empty values such as </span><a class="rvts12" href="Globals.htm#Null">null</a><span class="rvts6"> or </span><a class="rvts12" href="Globals.htm#undefined">Undefined</a><span class="rvts6"> cannot be added to the underlying list.</span></p>
+<p class="rvps2"><span class="rvts6">To ensure that "" is added as in instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> you could set </span><span class="rvts41">AllowEmptyString</span><span class="rvts6"> to </span><span class="rvts18">true</span><span class="rvts6"> and use the </span><a class="rvts12" href="MfParamsAddString.html">AddString()</a><span class="rvts6"> method which converts "" to </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> with empty </span><a class="rvts12" href="MfStringValue.html">Value</a><span class="rvts6"> and adds to the underlying list</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">()</span><br/><span class="rvts30">p.</span><span class="rvts34">AllowEmptyString</span><span class="rvts30"> := </span><span class="rvts32">true</span><br/><span class="rvts30">p.</span><span class="rvts45">AddString</span><span class="rvts30">(</span><span class="rvts42">""</span><span class="rvts30">) </span><span class="rvts31">; converts to MfString with value of "" if AllowEmptyString is true</span><br/><span class="rvts30">p.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">33</span><span class="rvts30">))</span><br/><span class="rvts30"></span><br/><span class="rvts31">; converts to MfString with value of "" if AllowEmptyValue if false and AllowEmptyString is true</span><br/><span class="rvts30">p.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts34">Null</span><span class="rvts30">)</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

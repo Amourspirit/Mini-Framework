@@ -1,0 +1,146 @@
+﻿<html>
+	
+<head>
+	<title>IfNotContains()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="IfNotContains">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncIfNotContains");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IfNotContains()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncIfNotBetween.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncIfNotIn.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IfNotContains()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.IfNotContains(ByRef var, MatchList)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.IfNotContains(ByRef var, MatchList)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks whether a variable's contents does not match one of the items in a list.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">var</span></p>
+<p class="rvps22"><span class="rvts53">The name of the </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm" target="_blank">variable</a><span class="rvts53"> whose contents will be checked. For the "contains" operator, a match occurs more easily: whenever Var contains one of the list items as a substring.</span></p>
+<p class="rvps21"><span class="rvts51">MatchList</span></p>
+<p class="rvps22"><span class="rvts53">A comma-separated list of strings, each of which will be compared to the contents of </span><span class="rvts76">var</span><span class="rvts53"> for a match.</span><span class="rvts75"> Any spaces or tabs around the delimiting commas are significant</span><span class="rvts53">, meaning that they are part of the match string. For example, if MatchList is set to </span><span class="rvts101">"ABC , XYZ"</span><span class="rvts53"> then </span><span class="rvts76">var</span><span class="rvts53"> must contain either ABC with a trailing space or XYZ with a leading space to cause a match.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">var</span><span class="rvts6"> is not contained </span><span class="rvts54">MatchList</span><span class="rvts6">; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The comparison is always done alphabetically, not numerically.</span><br/><span class="rvts15">Static Method.</span></p>
+<p class="rvps2"><span class="rvts18">See Also:</span><span class="rvts6"> </span><a class="rvts13" href="http://ahkscript.org/docs/commands/IfIn.htm" target="_blank">AutoHotKey if var in/contains</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">if (Mfunc<span style="color: #666666">.</span>IfNotIn(var, <span style="color: #BA2121">&quot;exe,bat,com&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span> The file extension <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> an executable type<span style="color: #666666">.</span>
+}<span style="color: #408080; font-style: italic"></span>
+
+<span style="color: #408080; font-style: italic">; Avoid spaces in list.</span>
+if (Mfunc<span style="color: #666666">.</span>IfNotIn(var, <span style="color: #BA2121">&quot;1,2,3,5,7,11&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span> <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> a small prime number<span style="color: #666666">.</span>
+}<span style="color: #408080; font-style: italic"></span>
+
+<span style="color: #408080; font-style: italic">; Note that it compares the values as strings, not numbers.</span>
+if (Mfunc<span style="color: #666666">.</span>IfNotContains(var, <span style="color: #BA2121">&quot;1,3&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span> Var does <span style="color: #AA22FF; font-weight: bold">not</span> contains the digit <span style="color: #666666">1</span> <span style="color: #AA22FF; font-weight: bold">or</span> <span style="color: #666666">3</span>
+}<span style="color: #408080; font-style: italic"></span>
+
+<span style="color: #408080; font-style: italic">; Avoid spaces in list.</span>
+if (Mfunc<span style="color: #666666">.</span>IfNotIn(var, MyItemList))
+{
+	<span style="color: #008000">MsgBox</span> <span style="color: #19177C">%var%</span> <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #AA22FF; font-weight: bold">in</span> the list<span style="color: #666666">.</span>
+}
+
+
+<span style="color: #008000">InputBox</span>, UserInput, Enter YES <span style="color: #AA22FF; font-weight: bold">or</span> NO
+if (Mfunc<span style="color: #666666">.</span>IfNotIn(UserInput, <span style="color: #BA2121">&quot;yes,no&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span> Your input <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> valid<span style="color: #666666">.</span>
+}
+
+
+<span style="color: #008000">WinGetTitle</span>, active_title, A<span style="color: #408080; font-style: italic"></span>
+<span style="color: #408080; font-style: italic">; Note that it compares the values as strings, not numbers.</span>
+if (Mfunc<span style="color: #666666">.</span>IfNotContains(active_title, <span style="color: #BA2121">&quot;Address List.txt,Customer List.txt&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span> None of the desired windows are active<span style="color: #666666">.</span>
+}<span style="color: #408080; font-style: italic"></span>
+
+<span style="color: #408080; font-style: italic">; Note that it compares the values as strings, not numbers.</span>
+if (Mfunc<span style="color: #666666">.</span>IfNotContains(active_title, <span style="color: #BA2121">&quot;metapad,Notepad&quot;</span>))
+{
+	<span style="color: #008000">MsgBox</span> But the file <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> open <span style="color: #AA22FF; font-weight: bold">in</span> either Metapad <span style="color: #AA22FF; font-weight: bold">or</span> Notepad<span style="color: #666666">.</span>
+}
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

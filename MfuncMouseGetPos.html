@@ -1,0 +1,120 @@
+﻿<html>
+	
+<head>
+	<title>MouseGetPos()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="MouseGetPos, Mouse">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncMouseGetPos");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MouseGetPos()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncIsNumeric.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncPixelGetColor.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MouseGetPos()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.MouseGetPos([OutputVarX, OutputVarY, OutputVarWin, OutputVarControl, 1|2|3])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.MouseGetPos([OutputVarX, OutputVarY, OutputVarWin, OutputVarControl, 1|2|3])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves the current position of the mouse cursor, and optionally which window and control it is hovering over.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">OutputVarX/Y</span></p>
+<p class="rvps22"><span class="rvts53">The names of the variables in which to store the X and Y coordinates. The retrieved coordinates are relative to the active window unless </span><a class="rvts59" href="http://ahkscript.org/docs/commands/CoordMode.htm" target="_blank">CoordMode</a><span class="rvts53"> was used to change to screen coordinates.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts51">OutputVarWin</span></p>
+<p class="rvps22"><span class="rvts53">This optional parameter is the name of the variable in which to store the </span><a class="rvts59" href="http://ahkscript.org/docs/commands/WinGet.htm" target="_blank">unique ID number</a><span class="rvts53"> of the window under the mouse cursor. If the window cannot be determined, this variable will be made blank.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">OutputVarControl</span></p>
+<p class="rvps22"><span class="rvts53">This optional parameter is the name of the variable in which to store the name (ClassNN) of the control under the mouse cursor. If the control cannot be determined, this variable will be made blank.</span><br/><span class="rvts53"></span><br/><span class="rvts53">The names of controls should always match those shown by the version of Window Spy distributed with </span><span class="rvts95">AutoHotkey [v1.0.14+]</span><span class="rvts53"> (but not necessarily older versions of Window Spy). However, unlike Window Spy, the window under the mouse cursor does not have to be active for a control to be detected.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts51">1|2|3</span></p>
+<p class="rvps22"><span class="rvts53">If omitted, it defaults to </span><span class="rvts75">0</span><span class="rvts53">. Otherwise, specify one of the following digits:</span><br/><span class="rvts53"></span><br/><span class="rvts75">1</span><span class="rvts53">: Uses a simpler method to determine OutputVarControl. This method correctly retrieves the active/topmost child window of an Multiple Document Interface (MDI) application such as SysEdit or TextPad. However, it is less accurate for other purposes such as detecting controls inside a GroupBox control.</span><br/><span class="rvts53"></span><br/><span class="rvts75">2</span><span class="rvts53"> &nbsp;</span><span class="rvts95">AutoHotkey</span><span class="rvts53"> </span><span class="rvts95">[v1.0.43.06+]</span><span class="rvts53">: Stores the control's </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Gui.htm#HwndOutputVar" target="_blank">HWND</a><span class="rvts53"> in OutputVarControl rather than the control's ClassNN.</span><br/><span class="rvts53"></span><br/><span class="rvts75">3</span><span class="rvts53"> </span><span class="rvts95">AutoHotkey [v1.0.43.06+]</span><span class="rvts53">: A combination of 1 and 2 above.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfByte.html">MfByte</a><span class="rvts53"> instance or var containing 1,2 or 3.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/MouseGetPos.htm" target="_blank">AutoHotkey Docs - MouseGetPos</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/MouseGetPos.htm" target="_blank">AutoHotkey Docs - MouseGetPos</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">Mfunc<span style="color: #666666">.</span>MouseGetPos(xpos, ypos)
+<span style="color: #008000">Msgbox</span>, The cursor <span style="color: #AA22FF; font-weight: bold">is</span> at X<span style="color: #19177C">%xpos%</span> Y<span style="color: #19177C">%ypos%</span><span style="color: #666666">.</span><span style="color: #408080; font-style: italic"> </span>
+
+<span style="color: #408080; font-style: italic">; This example allows you to move the mouse around to see</span>
+<span style="color: #408080; font-style: italic">; the title of the window currently under the cursor:</span>
+<span style="color: #008000">#Persistent</span>
+<span style="color: #008000">SetTimer</span>, WatchCursor, <span style="color: #666666">100</span>
+<span style="color: #008000">return</span>
+
+<span style="color: #A0A000">WatchCursor:</span>
+Mfunc<span style="color: #666666">.</span>MouseGetPos(, , id, control)
+title <span style="color: #666666">=</span> Mfunc<span style="color: #666666">.</span>WinGetTitle(<span style="color: #BA2121">&quot;ahk_id&quot;</span> <span style="color: #666666">.</span> id)
+class <span style="color: #666666">:=</span> Mfunc<span style="color: #666666">.</span>WinGetClass(<span style="color: #BA2121">&quot;ahk_id&quot;</span> <span style="color: #666666">.</span> id)
+<span style="color: #008000">ToolTip</span>, ahk_id <span style="color: #19177C">%id%</span><span style="color: #BB6622; font-weight: bold">`n</span>ahk_class <span style="color: #19177C">%class%</span><span style="color: #BB6622; font-weight: bold">`n</span><span style="color: #19177C">%title%</span><span style="color: #BB6622; font-weight: bold">`n</span>Control<span style="color: #666666">:</span> <span style="color: #19177C">%control%</span>
+<span style="color: #008000">return</span>
+</pre></div>
+</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

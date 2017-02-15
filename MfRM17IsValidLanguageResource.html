@@ -1,0 +1,100 @@
+﻿<html>
+	
+<head>
+	<title>IsValidLanguageResource()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfRM17IsValidLanguageResource");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsValidLanguageResource()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfRM17.html">MfResourceManager</a> &rsaquo;&rsaquo; <a href="MfRM17Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfRM17Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfRM17IsInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfRM17MemberwiseClone.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsValidLanguageResource()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutPutVar := </span><span class="rvts50">instance</span><span class="rvts48">.IsValidLanguageResource(lang)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">IsValidLanguageResource()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Test to see if a resource file can be found for a given language at predefined locations.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">lang</span></p>
+<p class="rvps22"><span class="rvts53">The language to check for such as "en-US"</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns true if the resource file if found otherwise false.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">Valid Resource paths are in the following locations.</span></p>
+<p class="rvps2"><span class="rvts6">There is an option to set a</span><span class="rvts18"> Super Global</span><span class="rvts6"> in your project that takes the highest priority for the location of </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> resources.</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfEnvironmentResourceFolder.html">MfEnvironment.ResourceFolder</a><span class="rvts6"> for details.</span></p>
+<p class="rvps2"><span class="rvts6"></span><br/><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\Core\Resource</span><br/><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\System\Resource</span><br/><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\Resource</span><br/><span class="rvts18">{Script Folder}</span><span class="rvts6">\Lib\Resources</span><br/><span class="rvts18">{Script Folder}</span><br/><span class="rvts18">{Program Files}</span><span class="rvts6">\AutoHotkey\Lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\System\Resource</span><br/><span class="rvts22">Resource Path set by </span><span class="rvts22">Mini-Framework</span><span class="rvts22"> installer usually the same as the previous line</span><br/><span class="rvts18">{Path set by AutoHotkey installer}</span><span class="rvts6">\lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\System\Resource</span><br/><span class="rvts18">{My Documents}</span><span class="rvts6">\AutoHotkey\Lib\Mini_Framwork\</span><span class="rvts6">0.3</span><span class="rvts6">\System\Resource</span></p>
+<p class="rvps2"><span class="rvts6"></span><br/><span class="rvts6">Resource file are named in the format of </span><span class="rvts18">MfResource_Core_en-US.dll</span><span class="rvts6"> where </span><span class="rvts18">en-US</span><span class="rvts6"> is Substituted for the language being checked for by the </span><span class="rvts54">lang</span><span class="rvts6"> parameter</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

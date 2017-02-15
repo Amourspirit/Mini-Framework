@@ -1,0 +1,127 @@
+﻿<html>
+	
+<head>
+	<title>StringMid()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="StringMid, String, Substring">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncStringMid");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">StringMid()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncStringLower.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncStringReplace.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">StringMid()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.StringMid(Input, StartChar [, Count , L])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.StringMid(Input, StartChar [, Count , L])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves one or more characters from the specified position in a string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Input</span></p>
+<p class="rvps22"><span class="rvts53">The name of the variable from whose contents the substring will be extracted.</span></p>
+<p class="rvps21"><span class="rvts51">StartChar</span></p>
+<p class="rvps22"><span class="rvts53">The position of the first character to be extracted, which can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. Unlike </span><a class="rvts52" href="MfuncStringGetPos.html">Mfunc.StringGetPos</a><span class="rvts53">, </span><span class="rvts75">1</span><span class="rvts53"> is the first character. If </span><span class="rvts76">StartChar</span><span class="rvts53"> is less than </span><span class="rvts75">1</span><span class="rvts53">, it will be assumed to be </span><span class="rvts75">1</span><span class="rvts53">. If </span><span class="rvts76">StartChar</span><span class="rvts53"> is beyond the end of the string, </span><span class="rvts76">OutputVar</span><span class="rvts53"> is made null (blank).</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing </span><span class="rvts69">integer</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">Count</span></p>
+<p class="rvps22"><span class="rvts53">In </span><span class="rvts95">AutoHotKey</span><span class="rvts53"> </span><span class="rvts95">[v1.0.43.10+]</span><span class="rvts53">, this parameter may be omitted or left blank, which is the same as specifying an integer large enough to retrieve all characters from the string.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Otherwise, specify the number of characters to extract, which can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. If Count is less than or equal to zero, return value will be made empty (blank). If Count exceeds the length of </span><span class="rvts76">Input</span><span class="rvts53"> measured from StartChar, return value will be set equal to the entirety of </span><span class="rvts76">Input</span><span class="rvts53"> starting at StartChar.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing </span><span class="rvts69">integer</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">L</span></p>
+<p class="rvps22"><span class="rvts53">The letter </span><span class="rvts75">L</span><span class="rvts53"> can be used to extract characters that lie to the left of StartChar rather than to the right.</span><br/><span class="rvts53">Can be var containing the value of </span><span class="rvts75">L</span><span class="rvts53"> or </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> containing the value of </span><span class="rvts75">L</span><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">In the following example, return value will be set to Red:</span></p>
+<p class="rvps26"><span class="rvts84">Input</span><span class="rvts84"> = The Red Fox</span><br/><span class="rvts84">OutputVar := </span><span class="rvts102">Mfunc</span><span class="rvts84">.</span><span class="rvts103">StringMid</span><span class="rvts84">(Input, </span><span class="rvts108">7</span><span class="rvts84">, </span><span class="rvts108">3</span><span class="rvts84">, </span><span class="rvts104">"L"</span><span class="rvts84">)</span></p>
+<p class="rvps22"><span class="rvts53">If the </span><span class="rvts76">L</span><span class="rvts53"> option is present and </span><span class="rvts76">StartChar</span><span class="rvts53"> is less than 1, return value will be made null (empty). If </span><span class="rvts76">StartChar</span><span class="rvts53"> is beyond the length of </span><span class="rvts76">Input</span><span class="rvts53">, only those characters within reach of </span><span class="rvts76">Count</span><span class="rvts53"> will be extracted. For example, the below will set return value to Fox:</span></p>
+<p class="rvps26"><span class="rvts84">Input</span><span class="rvts84"> = The Red Fox</span><br/><span class="rvts84">OutputVar := </span><span class="rvts102">Mfunc</span><span class="rvts84">.</span><span class="rvts103">StringMid</span><span class="rvts84">(Input, </span><span class="rvts108">14</span><span class="rvts84">, </span><span class="rvts108">6</span><span class="rvts84">, </span><span class="rvts104">"L"</span><span class="rvts84">)</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the substring extracted from </span><span class="rvts54">Input</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/StringMid.htm" target="_blank">AutoHotkey Docs - StringMid</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">InputVar <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"The quick brown fox jumps over the lazy dog."</span>
+result <span style="color: #666666;">:=</span> <span style="color: #000080;">Mfunc.StringMid</span>(InputVar , <span style="color: #666666;">21</span>, <span style="color: #666666;">5</span>)
+<span style="color: #008000;">MsgBox</span>, <span style="color: #19177c;">%result%</span><span style="color: #408080; font-style: italic;"> ; Displays: jumps</span>
+
+result <span style="color: #666666;">:=</span> <span style="color: #000080;">Mfunc.StringMid</span>(InputVar , <span style="color: #666666;">21</span>, <span style="color: #666666;">5</span>, <span style="color: #ba2121;">"L"</span>)
+<span style="color: #008000;">MsgBox</span>, <span style="color: #19177c;">%result%</span><span style="color: #408080; font-style: italic;"> ; Displays: fox j</span>
+
+mfsInputVar <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>(InputVar)
+mfsL <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>(<span style="color: #ba2121;">"L"</span>)
+
+result <span style="color: #666666;">:=</span> <span style="color: #000080;">Mfunc.StringMid</span>(mfsInputVar , <span style="color: #666666;">21</span>, <span style="color: #666666;">5</span>)
+<span style="color: #008000;">MsgBox</span>, <span style="color: #19177c;">%result%</span><span style="color: #408080; font-style: italic;"> ; Displays: jumps</span>
+
+result <span style="color: #666666;">:=</span> <span style="color: #000080;">Mfunc.StringMid</span>(mfsInputVar , <span style="color: #666666;">21</span>, <span style="color: #666666;">5</span>, mfsL)
+<span style="color: #008000;">MsgBox</span>, <span style="color: #19177c;">%result%</span><span style="color: #408080; font-style: italic;"> ; Displays: fox j</span>
+</pre>
+</div></span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">, </span><a class="rvts12" href="MfStringSubstring.html">MfString.Substring()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringStartsWith.html">MfString.StartsWith()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringEndsWith.html">MfString.EndsWith()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringIndexOf.html">MfString.IndexOf()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringLastIndexOf.html">MfString.LastIndexOf()</a><span class="rvts6">, </span><a class="rvts12" href="MfuncStringGetPos.html">Mfunc.StringGetPos()</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

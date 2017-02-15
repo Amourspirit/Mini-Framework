@@ -1,0 +1,152 @@
+﻿<html>
+	
+<head>
+	<title>SplitPath()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="SplitPath, Split">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncSplitPath");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">SplitPath()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncSoundGetWaveVolume.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncStatusBarGetText.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">SplitPath()</span></span></h1>
+<p class="rvps20"><span class="rvts48">Mfunc.SplitPath(Input [, OutFileName, OutDir, OutExtension, OutNameNoExt, OutDrive])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.SplitPath(Input [, OutFileName, OutDir, OutExtension, OutNameNoExt, OutDrive])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Separates a file name or URL into its name, directory, extension, and drive.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">Input</span></p>
+<p class="rvps22"><span class="rvts53">Name of the variable containing the file name to be analyzed.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">OutFileName</span></p>
+<p class="rvps22"><span class="rvts53">Name of the variable in which to store the file name without its path. The file's extension is included.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">OutDir</span></p>
+<p class="rvps22"><span class="rvts53">Name of the variable in which to store the directory of the file, including drive letter or share name (if present). The final backslash is not included even if the file is located in a drive's root directory.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">OutExtension</span></p>
+<p class="rvps22"><span class="rvts53">Name of the variable in which to store the file's extension (e.g. TXT, DOC, or EXE). The dot is not included.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">OutNameNoExt</span></p>
+<p class="rvps22"><span class="rvts53">Name of the variable in which to store the file name without its path, dot and extension.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">OutDrive</span></p>
+<p class="rvps22"><span class="rvts53">Name of the variable in which to store the drive letter or server name of the file. If the file is on a local or mapped drive, the variable will be set to the drive letter followed by a colon (no backslash). If the file is on a network path (UNC), the variable will be set to the share name, e.g. \\Workstation01</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SplitPath.htm" target="_blank">AutoHotkey Docs - SplitPath</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">Any of the output variables may be omitted if the corresponding information is not needed.</span></p>
+<p class="rvps2"><span class="rvts6">If InputVar contains a filename that lacks a drive letter (that is, it has no path or merely a relative path), </span><span class="rvts54">OutDrive</span><span class="rvts6"> will be made blank but all the other output variables will be set correctly. Similarly, if there is no path present, </span><span class="rvts54">OutDir</span><span class="rvts6"> will be made blank; and if there is a path but no file name present, </span><span class="rvts54">OutFileName</span><span class="rvts6"> and </span><span class="rvts54">OutNameNoExt</span><span class="rvts6"> will be made blank.</span></p>
+<p class="rvps2"><span class="rvts6">Actual files and directories in the file system are not checked by this command. It simply analyzes the string given in InputVar.</span></p>
+<p class="rvps2"><span class="rvts6">Wildcards (* and ?) and other characters illegal in filenames are treated the same as legal characters, with the exception of colon, backslash, and period (dot), which are processed according to their nature in delimiting the drive letter, directory, and extension of the file.</span></p>
+<p class="rvps2"><span class="rvts18">Support for URLs</span><span class="rvts6">: If </span><span class="rvts54">Input</span><span class="rvts6"> contains a colon-double-slash, such as http://domain.com or ftp://domain.com, OutDir is set to the protocol prefix + domain name + directory (e.g. http://domain.com/images) and </span><span class="rvts54">OutDrive</span><span class="rvts6"> is set to the protocol prefix + domain name (e.g. http://domain.com). All other variables are set according to their definitions above.</span></p>
+<p class="rvps2"><span class="rvts6">Any and/or all parameter for this function can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> or var containing string.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/SplitPath.htm" target="_blank">AutoHotkey Docs - SplitPath</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6"><div style="background: #f8f8f8; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
+<pre style="margin: 0; line-height: 125%;">FullFileName <span style="color: #666666;">:=</span> <span style="color: #ba2121;">"C:\My Documents\Address List.txt"</span>
+
+<span style="color: #408080; font-style: italic;">; To fetch only the bare filename from the above:</span>
+<span style="color: #000080;">Mfunc.SplitPath</span>(FullFileName, name)
+
+<span style="color: #408080; font-style: italic;">; To fetch only its directory:</span>
+<span style="color: #000080;">Mfunc.SplitPath</span>(FullFileName,, dir)
+
+<span style="color: #408080; font-style: italic;">; To fetch all info:</span>
+<span style="color: #000080;">Mfunc.SplitPath</span>(FullFileName, name, dir, ext, name_no_ext, drive)
+
+<span style="color: #408080; font-style: italic;">; The above will set the variables as follows:</span>
+<span style="color: #408080; font-style: italic;">; name = Address List.txt</span>
+<span style="color: #408080; font-style: italic;">; dir = C:\My Documents</span>
+<span style="color: #408080; font-style: italic;">; ext = txt</span>
+<span style="color: #408080; font-style: italic;">; name_no_ext = Address List</span>
+<span style="color: #408080; font-style: italic;">; drive = C:</span>
+
+<span style="color: #408080; font-style: italic;">;--------------------------------------------------</span>
+<span style="color: #408080; font-style: italic;">; Example using MfString Objects</span>
+sInput <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>(<span style="color: #ba2121;">"D:\Users\user\Documents\AutoHotkey\Scripts\Documentation\DocCleanup_00020.ahk"</span>)
+sFile <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>()
+sDir <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>()
+sExt <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>()
+sNoExt <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>()
+sOutDrive <span style="color: #666666;">:=</span> <span style="color: #000080;">new MfString</span>()
+<span style="color: #000080;">Mfunc.SplitPath</span>(sInput, sFile, sDir, sExt, sNoExt, sOutDrive)
+<span style="color: #008000;">MsgBox</span> <span style="color: #666666;">%</span> <span style="color: #000080;">MfString.Format</span>(<span style="color: #ba2121;">"Split Results;{5}FileName:'{0}'{5}Folder:'{1}'{5}Extension:'{2}'{5}Name No Ext: '{3}'{5}Drive:'{4}'"</span>
+	, sFile, sDir, sExt, sNoExt, sOutDrive, MfEnvironment<span style="color: #666666;">.</span>Instance<span style="color: #666666;">.</span>NewLine)
+<span style="color: #408080; font-style: italic;">; MsgBox will Display the following</span>
+<span style="color: #408080; font-style: italic;">; Split Results;</span>
+<span style="color: #408080; font-style: italic;">; FileName:'DocCleanup_00020.ahk'</span>
+<span style="color: #408080; font-style: italic;">; Folder:'D:\Users\user\Documents\AutoHotkey\Scripts\Documentation'</span>
+<span style="color: #408080; font-style: italic;">; Extension:'ahk'</span>
+<span style="color: #408080; font-style: italic;">; Name No Ext: 'DocCleanup_00020'</span>
+<span style="color: #408080; font-style: italic;">; Drive:'D:'</span>
+</pre>
+</div></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

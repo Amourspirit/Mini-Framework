@@ -1,0 +1,104 @@
+﻿<html>
+	
+<head>
+	<title>Parse()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfTimeSpanParse");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Parse()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfTimeSpan.html">MfTimeSpan</a> &rsaquo;&rsaquo; <a href="MfTimeSpanMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfTimeSpanMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfTimeSpanNegate.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfTimeSpanSubtract.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Parse()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := MfTimeSpan.Parse(str)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfTimeSpan.Parse(str)</span></span></h2>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method.</span><br/><span class="rvts6">Converts the string representation of a time interval to its </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> equivalent.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">str</span></p>
+<p class="rvps22"><span class="rvts53">A string that specifies the time interval to convert. Can be instance of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a time interval that corresponds to str.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> if str has an invalid format.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfOE19.html">MfOverflowException</a><span class="rvts6"> if represents a number that is less than </span><a class="rvts12" href="MfTimeSpanMinValue.html">MinValue</a><span class="rvts6"> or greater than </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MaxValue</a><span class="rvts6"> or At least one of the </span><span class="rvts15">days</span><span class="rvts6">, </span><span class="rvts15">hours</span><span class="rvts6">, </span><span class="rvts15">minutes</span><span class="rvts6">, or </span><span class="rvts15">seconds</span><span class="rvts6"> components is outside its valid range.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method.</span><br/><span class="rvts6">The s parameter contains a time interval specification in the form:</span></p>
+<p class="rvps2"><span class="rvts6">[ws][-]{ d | [d.]hh:mm[:ss[.ff]] }[ws]</span></p>
+<p class="rvps2"><span class="rvts18">ws</span><span class="rvts6"> - Optional white space.</span><br/><span class="rvts18">-</span><span class="rvts6"> An optional minus sign, which indicates a negative </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6">.</span><br/><span class="rvts18">d</span><span class="rvts6"> - Days, ranging from 0 to 10675199.</span><br/><span class="rvts18">.</span><span class="rvts6"> - Seperator symbol.</span><br/><span class="rvts18">hh</span><span class="rvts6"> - Hours, ranging from 0 to 23.</span><br/><span class="rvts18">:</span><span class="rvts6"> - Seperator symbol.</span><br/><span class="rvts18">mm</span><span class="rvts6"> - Minutes, ranging from 0 to 59.</span><br/><span class="rvts18">ss</span><span class="rvts6"> - Optional seconds, ranging from 0 to 59.</span><br/><span class="rvts18">.</span><span class="rvts6"> - Seperator symbol that separates seconds from fractions of a second.</span><br/><span class="rvts18">ff</span><span class="rvts6"> - Optional fractional seconds, consisting of one to seven decimal digits.</span></p>
+<p class="rvps2"><span class="rvts6">The components of s must collectively specify a time interval that is greater than or equal to </span><a class="rvts12" href="MfTimeSpanMinValue.html">MinValue</a><span class="rvts6"> and less than or equal to </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts30">span := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(</span><span class="rvts42">"7"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.00:00:00</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(</span><span class="rvts42">"7.14"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:00:00</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(</span><span class="rvts42">"7.14:17"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:00</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(</span><span class="rvts42">"7.14:17:41"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() ;</span><span class="rvts31"> Displays: 07.14:17:41</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(</span><span class="rvts42">"7.14:17:41.2434"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41.2434000</span><br/><span class="rvts30"></span><br/><span class="rvts30">str := new MfString(</span><span class="rvts42">"5.14:17:41"</span><span class="rvts30">)</span><br/><span class="rvts30">span := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(str)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(</span><span class="rvts42">"5.14:17:41.023"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 05.14:17:41.0230000</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

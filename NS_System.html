@@ -1,0 +1,147 @@
+﻿<html>
+	
+<head>
+	<title>System</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("NS_System");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">System</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NameSapce.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="NameSapce.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="Exceptions.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">System Namespace</span></span></h1>
+<p class="rvps2"><span class="rvts6">Core System Classes, Enumerations and Exceptions.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">System Links</span></span></h3>
+<div class="Internal_List"><ul class="Child_Topic">
+<li Class="Child_Topic"><a href="Exceptions.html">Exceptions</a></li>
+<li Class="Child_Topic"><a href="MfAttribute.html">MfAttribute</a></li>
+<li Class="Child_Topic"><a href="MfBool.html">MfBool</a></li>
+<li Class="Child_Topic"><a href="MfByte.html">MfByte</a></li>
+<li Class="Child_Topic"><a href="MfChar.html">MfChar</a></li>
+<li Class="Child_Topic"><a href="MfCollection.html">MfCollection</a></li>
+<li Class="Child_Topic"><a href="MfCB16.html">MfCollectionBase</a></li>
+<li Class="Child_Topic"><a href="MfDictionary.html">MfDictionary</a></li>
+<li Class="Child_Topic"><a href="MfDB16.html">MfDictionaryBase</a></li>
+<li Class="Child_Topic"><a href="MfDE17.html">MfDictionaryEntry</a></li>
+<li Class="Child_Topic"><a href="MfDigitShapes.html">MfDigitShapes</a></li>
+<li Class="Child_Topic"><a href="MfEnvironment.html">MfEnvironment</a></li>
+<li Class="Child_Topic"><a href="MfEnum.html">MfEnum</a></li>
+<li Class="Child_Topic"><a href="MfEB16.html">MfEnumerableBase</a></li>
+<li Class="Child_Topic"><a href="MfECB22.html">MfEqualityComparerBase</a></li>
+<li Class="Child_Topic"><a href="MfEqualsOptions.html">MfEqualsOptions</a></li>
+<li Class="Child_Topic"><a href="MFFA16.html">MfFlagsAttribute</a></li>
+<li Class="Child_Topic"><a href="MfFloat.html">MfFloat</a></li>
+<li Class="Child_Topic"><a href="MfFP16.html">MfFormatProvider</a></li>
+<li Class="Child_Topic"><a href="MfGenericList.html">MfGenericList</a></li>
+<li Class="Child_Topic"><a href="MfHashTable.html">MfHashTable</a></li>
+<li Class="Child_Topic"><a href="MfInt16.html">MfInt16</a></li>
+<li Class="Child_Topic"><a href="MfInt64.html">MfInt64</a></li>
+<li Class="Child_Topic"><a href="MfInteger.html">MfInteger</a></li>
+<li Class="Child_Topic"><a href="MfList.html">MfList</a></li>
+<li Class="Child_Topic"><a href="MfListBase.html">MfListBase</a></li>
+<li Class="Child_Topic"><a href="MfNFI18.html">MfNumberFormatInfo</a></li>
+<li Class="Child_Topic"><a href="MfNFIB22.html">MfNumberFormatInfoBase</a></li>
+<li Class="Child_Topic"><a href="MfNS14.html">MfNumberStyles</a></li>
+<li Class="Child_Topic"><a href="MfNull.html">MfNull</a></li>
+<li Class="Child_Topic"><a href="MfNullBase.html">MfNullBase</a></li>
+<li Class="Child_Topic"><a href="MfObject.html">MfObject</a></li>
+<li Class="Child_Topic"><a href="MfParams.html">MfParams</a></li>
+<li Class="Child_Topic"><a href="MfPrimitive.html">MfPrimitive</a></li>
+<li Class="Child_Topic"><a href="MfQueue.html">MfQueue</a></li>
+<li Class="Child_Topic"><a href="MfSFNT.html">MfSetFormatNumberType</a></li>
+<li Class="Child_Topic"><a href="MfSB15.html">MfSingletonBase</a></li>
+<li Class="Child_Topic"><a href="MfStack.html">MfStack</a></li>
+<li Class="Child_Topic"><a href="MfString.html">MfString</a></li>
+<li Class="Child_Topic"><a href="MfSC18.html">MfStringComparison</a></li>
+<li Class="Child_Topic"><a href="MfSSO20.html">MfStringSplitOptions</a></li>
+<li Class="Child_Topic"><a href="MfTimeSpan.html">MfTimeSpan</a></li>
+<li Class="Child_Topic"><a href="MfType.html">MfType</a></li>
+<li Class="Child_Topic"><a href="MfTypeCode.html">MfTypeCode</a></li>
+<li Class="Child_Topic"><a href="MfUC17.html">MfUnicodeCategory</a></li>
+<li Class="Child_Topic"><a href="MfValueType.html">MfValueType</a></li>
+<li Class="Child_Topic"><a href="MfVersion.html">MfVersion</a></li>
+<li Class="Child_Topic"><a href="Mfunc.html">Mfunc</a></li>
+<li Class="Child_Topic"><a href="MfInfo.html">MfInfo</a></li>
+<li Class="Child_Topic"><a href="MfRM17.html">MfResourceManager</a></li>
+<li Class="Child_Topic"><a href="MfRSB23.html">MfResourceSingletonBase</a></li>
+<li Class="Child_Topic"><a href="MfBidiCategory.html">MfBidiCategory</a></li>
+<li Class="Child_Topic"><a href="MfCUI17.html">MfCharUnicodeInfo</a></li>
+</ul>
+</div>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

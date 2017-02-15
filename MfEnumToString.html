@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>ToString()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfEnumToString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ToString()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfEnum.html">MfEnum</a> &rsaquo;&rsaquo; <a href="MfEnumMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfEnumMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfEnumToObject.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfEnumTryParse.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ToString()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectToString.html">MfObject.ToString</a></p>
+<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.ToString()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">ToString()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a string representation of the object.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns var string value representing name(s) of the corresponding the name of the the current </span><a class="rvts12" href="MfEnumValue.html">Value</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if method is called on a non-instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts12" href="MfEnum.html">MfEnum</a><span class="rvts6"> has </span><a class="rvts12" href="MFFA16.html">MfFlagsAttribute</a><span class="rvts6"> as one of it attributes then </span><span class="rvts18">ToString()</span><span class="rvts6"> will return one or more names separated by comma. One for each flag that is set. Otherwise there will always be only one name in the return string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">; set var initial value to null</span><br/><span class="rvts30">outEnum := </span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts34">Null</span><br/><span class="rvts30"></span><br/><span class="rvts31">; wrap in try block as ParseItem can throw MfException</span><br/><span class="rvts32">try</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;outEnum := </span><span class="rvts33">MfEnum</span><span class="rvts30">.</span><span class="rvts45">ToObject</span><span class="rvts30">(</span><span class="rvts33">RegOptEnum</span><span class="rvts30">.</span><span class="rvts45">GetType</span><span class="rvts30">(), </span><span class="rvts72">4</span><span class="rvts30">) </span><span class="rvts31">; 4 is RegBinary</span><br/><span class="rvts30">}</span><br/><span class="rvts32">catch</span><span class="rvts30"> e</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">16</span><span class="rvts30">, Error, % </span><span class="rvts42">"There was an error Parsing Item: "</span><span class="rvts30"> . e.</span><span class="rvts34">Message</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">Exit</span><span class="rvts30">, </span><span class="rvts72">1</span><br/><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Display RegBinary in Msgbox</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % outEnum.</span><span class="rvts45">Tostring</span><span class="rvts30">()</span><br/><span class="rvts30"></span><br/><span class="rvts32">ExitApp</span><br/><span class="rvts30"></span><br/><span class="rvts31">; create a new enumeration class by inheriting/extending the MfEnum</span><br/><span class="rvts32">class</span><span class="rvts30"> </span><span class="rvts33">RegOptEnum</span><span class="rvts30"> </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfEnum</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;static m_Instance := </span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts34">Null</span><br/><span class="rvts45"> &nbsp; &nbsp;__New</span><span class="rvts30">(args*)</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;if</span><span class="rvts30"> (</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts32">__Class</span><span class="rvts30"> != </span><span class="rvts42">"RegOptEnum"</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;throw</span><span class="rvts30"> </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfNotSupportedException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"NotSupportedException_Sealed_Class"</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;,</span><span class="rvts42">"RegOptEnum"</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">(args*)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; set MfObject m_isInherited flag for testing if Class is inherited/extended if needed</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;; This could be set to false as this class cannot be inherited/extended as set in this constructor above</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;; but will do it the standard way.</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_isInherited := </span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts32">__Class</span><span class="rvts30"> != </span><span class="rvts42">"RegOptEnum"</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; override the base AddEnums, this is required</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; add all the enum values for your enum here</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">AddEnums</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"RegDword"</span><span class="rvts30">, </span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysRegDword"</span><span class="rvts30">, </span><span class="rvts72">1</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"RegSz"</span><span class="rvts30">, </span><span class="rvts72">2</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysRegSz"</span><span class="rvts30">, </span><span class="rvts72">3</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"RegBinary"</span><span class="rvts30">, </span><span class="rvts72">4</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysRegBinary"</span><span class="rvts30">, </span><span class="rvts72">5</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"AutoresponseRegSz"</span><span class="rvts30">, </span><span class="rvts72">6</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysAutoresponseRegSz"</span><span class="rvts30">, </span><span class="rvts72">7</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"AutoupdateRegSz"</span><span class="rvts30">, </span><span class="rvts72">8</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysAutoupdateRegSz"</span><span class="rvts30">, </span><span class="rvts72">9</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"AutoupdateRegBinary"</span><span class="rvts30">, </span><span class="rvts72">10</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysAutoupdateRegBinary"</span><span class="rvts30">, </span><span class="rvts72">11</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeypathsRegSz"</span><span class="rvts30">, </span><span class="rvts72">12</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysKeypathsRegSz"</span><span class="rvts30">, </span><span class="rvts72">13</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeypathsRegDword"</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysKeypathsRegDword"</span><span class="rvts30">, </span><span class="rvts72">15</span><span class="rvts30">)</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"WindowplacementRegBinary"</span><span class="rvts30">, </span><span class="rvts72">16</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts45">AddEnumValue</span><span class="rvts30">(</span><span class="rvts42">"KeysWindowplacementRegBinary"</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; override the base DestroyInstance, this is required</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">DestroyInstance</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">RegOptEnum</span><span class="rvts30">.m_Instance := </span><span class="rvts32">Null</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts31">; override the base GetInstance, this is required</span><br/><span class="rvts31"> &nbsp; &nbsp;; Get a static default instance, create if not exist yet</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts45">GetInstance</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts45">IsNull</span><span class="rvts30">(</span><span class="rvts33">RegOptEnum</span><span class="rvts30">.m_Instance))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">RegOptEnum</span><span class="rvts30">.m_Instance := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">RegOptEnum</span><span class="rvts30">(</span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">return</span><span class="rvts30"> </span><span class="rvts33">RegOptEnum</span><span class="rvts30">.m_Instance</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

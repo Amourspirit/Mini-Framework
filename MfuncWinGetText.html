@@ -1,0 +1,114 @@
+﻿<html>
+	
+<head>
+	<title>WinGetText()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="WinGetText, Win">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+
+				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
+				// change top.location.href to point to index.html
+				// also comment out '' in index.pas.html to force index.html generation
+				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
+				top.location.href = "index.html?" + sTopicId
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfuncWinGetText");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">WinGetText()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="Mfunc.html">Mfunc</a> &rsaquo;&rsaquo; <a href="MfuncMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfuncMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfuncWinGetClass.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfuncWinGetTitle.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts27">WinGetText()</span></span></h1>
+<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.WinGetText([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.WinGetText([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Retrieves the text from the specified window.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts51">WinTitle</span></p>
+<p class="rvps22"><span class="rvts53">A window title or other criteria identifying the target window. See </span><a class="rvts59" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">WinText</span></p>
+<p class="rvps22"><span class="rvts53">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts53"> is ON.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">ExcludeTitle</span></p>
+<p class="rvps22"><span class="rvts53">Windows whose titles include this value will not be considered.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts51">ExcludeText</span></p>
+<p class="rvps22"><span class="rvts53">Windows whose text include this value will not be considered.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> throw any errors with </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> set to the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinGetText.htm" target="_blank">Autohotkey - WinGetText</a><span class="rvts6"> error message.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> any other general error occurs.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns the retrieved text.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinGetText.htm" target="_blank">AutoHotkey Docs - WinGetText</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
+<p class="rvps2"><span class="rvts6">The text retrieved is generally the same as what Window Spy shows for that window. However, if </span><a class="rvts13" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts6"> has been turned off, hidden text is omitted from OutputVar.</span></p>
+<p class="rvps2"><span class="rvts6">Each text element ends with a carriage return and linefeed (CR+LF), which can be represented in the script as `r`n. To extract individual lines or substrings, use commands such as </span><a class="rvts12" href="MfuncStringGetPos.html">Mfunc.StringGetPos</a><span class="rvts6"> and </span><a class="rvts12" href="MfuncStringMid.html">Mfunc.StringMid</a><span class="rvts6">. A </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopParse.htm" target="_blank">parsing loop</a><span class="rvts6"> can also be used to examine each line or word one by one.</span></p>
+<p class="rvps2"><span class="rvts6">If the retrieved text appears to be truncated (incomplete), try using </span><a class="rvts109" href="http://ahkscript.org/docs/commands/VarSetCapacity.htm" target="_blank">VarSetCapacity(OutputVar, 55)</a><span class="rvts6"> prior to WinGetText [replace 55 with a size that is considerably longer than the truncated text]. This is necessary because some applications do not respond properly to the WM_GETTEXTLENGTH message, which causes AutoHotkey to make the output variable too small to fit all the text.</span></p>
+<p class="rvps2"><span class="rvts6">The amount of text retrieved is limited to a variable's maximum capacity (which can be changed via the </span><a class="rvts13" href="http://ahkscript.org/docs/commands/_MaxMem.htm" target="_blank">#MaxMem</a><span class="rvts6"> directive). As a result, this command might use a large amount of RAM if the target window (e.g. an editor with a large document open) contains a large quantity of text. To avoid this, it might be possible to retrieve only portions of the window's text by using </span><a class="rvts13" href="http://ahkscript.org/docs/commands/ControlGetText.htm" target="_blank">ControlGetText</a><span class="rvts6"> instead. In any case, a variable's memory can be freed later by assigning it to nothing, i.e. </span><span class="rvts43">OutputVar =</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">To retrieve a list of all controls in a window, follow this example: </span><span class="rvts43">WinGet, OutputVar, ControlList, WinTitle</span></p>
+<p class="rvps2"><span class="rvts6">Window titles and text are case sensitive. Hidden windows are not detected unless </span><a class="rvts13" href="http://ahkscript.org/docs/commands/DetectHiddenWindows.htm" target="_blank">DetectHiddenWindows</a><span class="rvts6"> has been turned on.</span></p>
+<p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinGetText.htm" target="_blank">AutoHotkey Docs - WinGetText</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Run</span><span class="rvts30">(</span><span class="rvts42">"Calc.exe"</span><span class="rvts30">)</span><br/><span class="rvts32">WinWait</span><span class="rvts30">, Calculator</span><br/><span class="rvts30">text := </span><span class="rvts34">Mfunc</span><span class="rvts30">.</span><span class="rvts45">WinGetText</span><span class="rvts30">() </span><span class="rvts31">; The window found above will be used.</span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, The text is:`n%text%</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+
