@@ -21,7 +21,7 @@ There is also a package available for Sublime Text to give intellisense and synt
 All objects derived from MfObject use a Zero-Based index.
 ###Installation
 Installation of Mini-Framework is simple and can be installed with a single installer.  
-Download the lstest version of [MfSetup.exe][4]
+Download the latest version of [MfSetup.exe][4]
 
 ###Getting Help
 There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2].  
