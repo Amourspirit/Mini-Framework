@@ -19,9 +19,12 @@ All the Classes are prefixed with Mf to help avoid any conflicts with naming con
 There is also a package available for Sublime Text to give intellisense and syntax highlighting to Mini-Framework.
 
 All objects derived from MfObject use a Zero-Based index.
+
 ###Installation
 Installation of Mini-Framework is simple and can be installed with a single installer.  
 Download the latest version of [MfSetup.exe][4]
+
+If required [AutoHotkey {v1.1.21+}][1] version of [AutoHotkey][1] is not installed then  [MfSetup.exe][4] will automatically donwload and installed it first.
 
 ###Getting Help
 There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2].  
