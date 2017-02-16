@@ -25,7 +25,15 @@ Download the latest version of [MfSetup.exe][4]
 
 ###Getting Help
 There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2].  
-Help is available online and as a separate help file and can also be accesed online [here][3]
+Help is available online and as a separate help file and can also be accesed online [here][3].
+
+A program named **AutoHotKey Snippit** is built in part upon **Mini-Framework** and can be download [here][5]. **AutoHotkey Snippit** come with a preinstalled template named *AutoHotkey* that contains plugins to quickly bring up the help file for **Mini-Framework** or **AutoHotkey**. By selecting a word in your favourite AutoHotkey editor you can simply click a shortcut key to get help on that word.
+
+Shortcut keys can be set to what ever you want in AutoHotkey Snippit but the defaults for help are `ctl+F1` to get help on a Mini-Framework class or method and `ctl+F2` to get help on an AutoHotkey keyworkd.
+
+Note: User of [AHS Studio][5] may need to compile [AHS Studio][5] before **AutoHotKey Snippit** can act upon it.
+
+
 ###Getting started
 Adding Mini-Framework to your project is as simple as adding `#Include <inc_mf_0_3>` in the top of your script.
 
@@ -46,3 +54,5 @@ See the [help][3] file for information on how to distribute with your applicatio
 [2]:http://www.sublimetext.com
 [3]:https://amourspirit.github.io/Mini-Framework/
 [4]:https://github.com/Amourspirit/Mini-Framework/raw/master/Latest/stable/0.3x/MfSetup.exe
+[5]:https://github.com/Amourspirit/AutoHotkey-Snippit
+[6]:https://github.com/maestrith/AHK-Studio/wiki
