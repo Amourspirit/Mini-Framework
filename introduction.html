@@ -26,12 +26,7 @@
 			if (top.frames.length == 0)
 			{
 				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
-
-				// http://www.helpndoc.com/sites/default/files/documentation/html/UseindexhtmlasthedefaultHTMLpage.html
-				// change top.location.href to point to index.html
-				// also comment out '' in index.pas.html to force index.html generation
-				//top.location.href = "Mini-Framework.html?" + sTopicUrl;
-				top.location.href = "index.html?" + sTopicId
+				top.location.href = "index.html?" + sTopicUrl
 			}
 			else
 			{
@@ -40,7 +35,7 @@
 				{
 					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
 					{
-						top.FrameTOC.SelectTocItem("introduction");
+						top.FrameTOC.SelectTocItem("Introduction");
 						bTocSelected = true;
 					}
 					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
@@ -77,6 +72,7 @@
 <p class="rvps2"><span class="rvts6">All the Classes are prefixed with </span><span class="rvts18">Mf</span><span class="rvts6"> to help avoid any conflicts with naming conventions and variables in existing projects.</span></p>
 <p class="rvps2"><span class="rvts6">There is also a package available for </span><a class="rvts14" href="http://www.sublimetext.com/" target="_blank">Sublime Text</a><span class="rvts6"> to give </span><a class="rvts14" href="https://en.wikipedia.org/wiki/Intelligent_code_completion" target="_blank">intellisense</a><span class="rvts6"> and syntax highlighting to </span><span class="rvts6">Mini-Framework</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">All </span><span class="rvts15">objects</span><span class="rvts6"> derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> use a </span><span class="rvts18">Zero-Based</span><span class="rvts6"> index.</span></p>
+<p class="rvps2"><span class="rvts6"></span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Namespaces</span></span></h3>
 <p class="rvps2"><span class="rvts6">This framework loosely uses name-spaces. AutoHotkey does on support Namespace at this time and this framework mimics name-spaces by using includes organizes in specific groups. See </span><a class="rvts12" href="NameSapce.html">Namespace</a><span class="rvts6"> for more information.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Primitives</span></span></h3>
