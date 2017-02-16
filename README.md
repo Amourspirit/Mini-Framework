@@ -2,29 +2,35 @@
 Mini-Framework for AutoHotkey
 
 Library of Mini-Framework
-Copyright (c) 2013, - 2017 Paul Moss
+Copyright (c) 2013 - 2017 Paul Moss
 Licensed under the GNU General Public License GPL-2.0
 
 Requires [AutoHotkey {v1.1.21+}][1]
 
 ##Introduction
-Mini-Framework is as collection of classes built for [AutoHotkey][1] that help give functionality similar to a strongly typed language. The MfType class can be used to get information from an object. All objects have a GetType() method that returns an instance of the MfType class. All object inherit from MfObject and therefore inherit all the methods of MfObject.
+Mini-Framework is as collection of classes built for [AutoHotkey][1] that help give functionality similar to a strongly typed language.
 
 Mini-Framework attempts to bridge the gap between the powerful scripting language of [AutoHotkey][1] and a more strongly typed language. The classes are built in a Mono/.Net style.
 
-The Mini-Framework classes are built with the power of strongly type object while maintaining flexibility with AutoHotkey variables. Many of the classes accept variables in their methods, constructors and overloads methods to make using this framework flexible.
+The [MfType][7] class can be used to get information from an object. All objects have a [GetType()][9] method that returns an instance of the [MfType][7] class. All object inherit from [MfObject][8] and therefore inherit all the methods of [MfObject][8].
 
-All the Classes are prefixed with Mf to help avoid any conflicts with naming conventions and variables in existing projects.
+The Mini-Framework classes are built with the power of strongly type objects while maintaining flexibility with [AutoHotkey][1] variables. Many of the classes accept variables as parameters in their methods. Overloades are made possible Mini-Framework.
 
-There is also a package available for Sublime Text to give intellisense and syntax highlighting to Mini-Framework.
+All the Classes are prefixed with **Mf** to help avoid any conflicts with naming conventions and variables in existing projects.
 
-All objects derived from MfObject use a Zero-Based index.
+There is also a package available for [Sublime Text][2] to give intellisense and syntax highlighting to Mini-Framework.
+
+All list and collectins use a **Zero-Based index**.
+
+Thre are classe the represent [Object][8], [Boolean][10], [String][11], [Byte][12], [Int16][13], [1nt32][14], [Int64][15] and [Float][16].  
+Mini-Framework alos has many built in [Exceptions][17] as well for refined error control.  
+There are many other classes incldued in the Mini-Framework as well.
 
 ###Installation
 Installation of Mini-Framework is simple and can be installed with a single installer.  
 Download the latest version of [MfSetup.exe][4]
 
-If required [AutoHotkey {v1.1.21+}][1] version of [AutoHotkey][1] is not installed then  [MfSetup.exe][4] will automatically donwload and installed it first.
+If required [AutoHotkey {v1.1.21+}][1] version of [AutoHotkey][1] is not installed then  [MfSetup.exe][4] will automatically download and installed it first.
 
 ###Getting Help
 There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2].  
@@ -59,3 +65,14 @@ See the [help][3] file for information on how to distribute with your applicatio
 [4]:https://github.com/Amourspirit/Mini-Framework/raw/master/Latest/stable/0.3x/MfSetup.exe
 [5]:https://github.com/Amourspirit/AutoHotkey-Snippit
 [6]:https://github.com/maestrith/AHK-Studio/wiki
+[7]:https://amourspirit.github.io/Mini-Framework/index.html?MfType.html
+[8]:https://amourspirit.github.io/Mini-Framework/index.html?MfObject.html
+[9]:https://amourspirit.github.io/Mini-Framework/index.html?MfObjectGetType.html
+[10]:https://amourspirit.github.io/Mini-Framework/index.html?MfBool.html
+[11]:https://amourspirit.github.io/Mini-Framework/index.html?MfString.html
+[12]:https://amourspirit.github.io/Mini-Framework/index.html?MfByte.html
+[13]:https://amourspirit.github.io/Mini-Framework/index.html?MfInt16.html
+[14]:https://amourspirit.github.io/Mini-Framework/index.html?MfInteger.html
+[15]:https://amourspirit.github.io/Mini-Framework/index.html?MfInt64.html
+[16]:https://amourspirit.github.io/Mini-Framework/index.html?MfFloat.html
+[17]:https://amourspirit.github.io/Mini-Framework/index.html?Exceptions.html
