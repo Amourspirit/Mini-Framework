@@ -22,8 +22,8 @@ There is also a package available for [Sublime Text][2] to give intellisense and
 
 All list and collectins use a **Zero-Based index**.
 
-Thre are classe the represent [Object][8], [Boolean][10], [String][11], [Byte][12], [Int16][13], [1nt32][14], [Int64][15] and [Float][16].  
-Mini-Framework alos has many built in [Exceptions][17] as well for refined error control.  
+There are classes that represent [Object][8], [Boolean][10], [String][11], [Byte][12], [Int16][13], [Int32][14], [Int64][15] and [Float][16].  
+Mini-Framework also has many built in [Exceptions][17] as well for refined error control.  
 There are many other classes incldued in the Mini-Framework as well.
 
 ###Installation
