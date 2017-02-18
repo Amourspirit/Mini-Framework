@@ -33,7 +33,7 @@ Download the latest version of [MfSetup.exe][4]
 If required [AutoHotkey {v1.1.21+}][1] version of [AutoHotkey][1] is not installed then  [MfSetup.exe][4] will automatically download and installed it first.
 
 ###Getting Help
-There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2].  
+There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2]. Get the Sublime Text package [Here][18]  
 Help is available online and as a separate help file and can also be accesed online [here][3].
 
 A program named **AutoHotKey Snippit** is built in part upon **Mini-Framework** and can be download [here][5]. **AutoHotkey Snippit** come with a preinstalled template named *AutoHotkey* that contains plugins to quickly bring up the help file for **Mini-Framework** or **AutoHotkey**. By selecting a word in your favourite AutoHotkey editor you can simply click a shortcut key to get help on that word.
@@ -76,3 +76,4 @@ See the [help][3] file for information on how to distribute with your applicatio
 [15]:https://amourspirit.github.io/Mini-Framework/index.html?MfInt64.html
 [16]:https://amourspirit.github.io/Mini-Framework/index.html?MfFloat.html
 [17]:https://amourspirit.github.io/Mini-Framework/index.html?Exceptions.html
+[18]:https://github.com/Amourspirit/SublimeMiniFrameworkAutoHotkey
