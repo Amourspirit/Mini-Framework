@@ -32,12 +32,94 @@ Class MfUInt64 extends MfPrimitive
 
 ; End:Static Methods ;}
 ;{ Constructor
-	__New(uInt) {
+	__New(args*) {
 		if (this.__Class != "MfUInt64")
 		{
 			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfUInt64"))
 		}
-		base.__New(uInt, false, false)
+
+		_int := "0"
+		_returnAsObject := false
+		_readonly := false
+
+		pArgs := this._ConstructorParams(A_ThisFunc, args*)
+
+		pList := pArgs.ToStringList()
+		s := Null
+		pIndex := 0
+		if (pList.Count > 0)
+		{
+			s := pList.Item[pIndex].Value
+			if ((s = "MfInteger") 
+				|| (s = "MfInt64")
+				|| (s = "MfInt16")
+				|| (s = "MfByte"))
+			{
+				_int := pArgs.Item[pIndex].Value
+				if (_int < 0)
+				{
+					ex := new MfArgumentOutOfRangeException("varInt"
+						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+						,MfUInt64.MinValue, MfUInt64.MaxValue))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				_int .= ""
+			}
+			else if (s = "MfUInt64")
+			{
+				_int := pArgs.Item[pIndex].Value
+			}
+			else
+			{
+				tErr := this._ErrorCheckParameter(pIndex, pArgs)
+				if (tErr)
+				{
+					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					Throw tErr
+				}
+			}
+
+		}
+		if (pList.Count > 1)
+		{
+			pIndex++
+			s := pList.Item[pIndex].Value
+			if (s = "MfBool")
+			{
+				_returnAsObject := pArgs.Item[pIndex].Value
+			}
+			else
+			{
+				tErr := this._ErrorCheckParameter(pIndex, pArgs)
+				if (tErr)
+				{
+					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					Throw tErr
+				}
+			}
+		}
+		if (pList.Count > 2)
+		{
+			pIndex++
+			s := pList.Item[pIndex].Value
+			if (s = "MfBool")
+			{
+				_readonly := pArgs.Item[pIndex].Value
+			}
+			else
+			{
+				tErr := this._ErrorCheckParameter(pIndex, pArgs)
+				if (tErr)
+				{
+					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					Throw tErr
+				}
+			}
+		}
+	
+		base.__New(_int, _returnAsObject, _readonly)
+		this.m_isInherited := false
 	}
 ; End:Constructor ;}
 ;{ _ConstructorParams
@@ -116,12 +198,15 @@ Class MfUInt64 extends MfPrimitive
 						else if (i = 1) ; uint64
 						{
 
-							; cannot construct an instacne of MfInt64 here with parameters
+							; cannot construct an instacne of MfUInt64 here with parameters
 							; we are already calling from the constructor
 							; create a new instance without parameters and set the properties
 							try
 							{
-
+								_val := new MfUInt64()
+								_val.ReturnAsObject := false
+								_val.Value := MfUInt64._GetValueFromVar(arg) ; string value
+								pIndex := p.Add(_val)
 							}
 							catch e
 							{
@@ -129,19 +214,7 @@ Class MfUInt64 extends MfPrimitive
 								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 								throw ex
 							}
-							if Mfunc.IsInteger(arg)
-							{
-								_val := new MfInt64()
-								_val.ReturnAsObject := false
-								_val.Value := arg
-								pIndex := p.Add(_val)
-							}
-							Else
-							{
-								ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
-								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-								throw ex
-							}
+							
 							
 						}
 						else ; all params past 1 are boolean
@@ -165,6 +238,81 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:_ConstructorParams ;}
 ;{ Methods
+	Add(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value := "0"
+		if (IsObject(value))
+		{
+			tryAgain := false
+			try
+			{
+				_value :=  MfInt64.GetValue(value)
+				_value .= ""
+			}
+			catch
+			{
+				tryAgain := true
+			}
+			if (tryAgain = true)
+			{
+				try
+				{
+					_value :=  MfUInt64.GetValue(value)
+				}
+				catch e
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+		}
+		else
+		{
+			try
+			{
+				_value :=  MfUInt64._GetValueFromVar(value, true) ; get possible negative value
+			}
+			catch e
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		
+		_newValue := this._LongIntStringAdd(this.Value, _value)
+		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MaxValue)
+		if (iComp > 0)
+		{
+			; needs to be changed to overflow exception
+			ex := new MfArgumentOutOfRangeException("value"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+				,MfUInt64.MinValue, MfUInt64.MaxValue))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MinValue)
+		if (iComp < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("value"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+				,MfUInt64.MinValue, MfUInt64.MaxValue))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_newValue .= ""
+		this.Value := _newValue
+		return this._ReturnUInt64(this)
+	}
 ;{ GetValue
 	GetValue(args*)  {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -269,7 +417,7 @@ Class MfUInt64 extends MfPrimitive
 					return obj.Value
 				}
 				T := new MfType(obj)
-				else if (T.IsIntegerNumber)
+				if (T.IsIntegerNumber)
 				{
 					retval := obj.Value + ""
 					if ((retval < MfUInt64.MinValue) || (retval > MfUInt64.MaxValue))
@@ -316,7 +464,7 @@ Class MfUInt64 extends MfPrimitive
 ; 	End:_GetValue ;}
 ;{ 	_GetValueFromVar
 	; internal method
-	_GetValueFromVar(varInt) {
+	_GetValueFromVar(varInt, AllowNegative=false) {
 		
 		retval := "" ; necessary for integer fast
 		try
@@ -350,6 +498,20 @@ Class MfUInt64 extends MfPrimitive
 				}
 				retval := varInt
 			}
+			else if ((AllowNegative = true) && (varInt ~= "^-[0-9]{1,20}$"))
+			{
+				tmpVarInt := SubStr(varInt, 2, StrLen(varInt) - 1) ; get abs number
+				iComp := this._CompareLongIntStrings(tmpVarInt, MfUInt64.MaxValue)
+				if (iComp > 0)
+				{
+					ex := new MfArgumentOutOfRangeException("varInt"
+						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+						,MfUInt64.MinValue, MfUInt64.MaxValue))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				retval := varInt
+			}
 			else {
 				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IntegerVar", "varInt"), "varInt")
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -370,6 +532,19 @@ Class MfUInt64 extends MfPrimitive
 		return retval
 	}
 ; 	End:_GetValueFromVar ;}
+;{ _ReturnUInt64
+	_ReturnUInt64(obj) {
+		if (MfObject.IsObjInstance(obj, MfUInt64)) {
+			if (obj.ReturnAsObject) {
+				return obj
+			} else {
+				return obj.Value
+			}
+		}
+		retval := this.ReturnAsObject? new MfUInt64(obj, true):obj
+		return retval
+	}
+; End:_ReturnUInt64 ;}
 ; End:Methods ;}
 ;{ Properties
 ;{ 	MaxValue
@@ -407,7 +582,7 @@ Class MfUInt64 extends MfPrimitive
 		Gets the smallest possible value of an MfUInt64.
 	Remarks:
 		Can be accessed using MfUInt64.MinValue
-		Value = -9223372036854775808 (-0x8000000000000000) hex
+		Value = "0"
 */
 	MinValue[]
 	{
@@ -680,11 +855,11 @@ Class MfUInt64 extends MfPrimitive
 	   StringLen, MaxLength, FirstLongString
 	   loop, %MaxLength%
 	   {
-	      StringMid,value1,FirstLongString,MaxLength+1-A_index,1 
-	      StringMid,value2,SecondLongString,MaxLength+1-A_index,1 
-	      Sum := Value1+Value2+rem
-	      Erg := this._Mod(Sum,10)
-	      Rem := this._Div(Sum,10)
+	      StringMid, value1, FirstLongString, MaxLength + 1 - A_index, 1 
+	      StringMid, value2, SecondLongString, MaxLength + 1 - A_index, 1 
+	      Sum := Value1 + Value2 + rem
+	      Erg := this._Mod(Sum, 10)
+	      Rem := this._Div(Sum, 10)
 	      ResultString=%Erg%%ResultString%
 	   }
 	  return, %Resultstring%
