@@ -325,6 +325,66 @@ Class MfUInt64 extends MfPrimitive
 		
 	}
 ; End:CompareTo(c) ;}
+;{ 	Divide
+	Divide(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Equals("0"))
+		{
+			return this._ReturnUInt64(this)
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfInt64.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_value = 0)
+		{
+			ex := new MfDivideByZeroException()
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		; divisor must be greater than 0 of UInt otherwise result will be negative
+		if (_value < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		; with floor divide  any result less then 1 will be zero
+		_newValue := this._LongIntStringDivide(this.Value, _value, r)
+		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MaxValue)
+		if (iComp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MinValue)
+		if (iComp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_newValue .= ""
+		this.Value := _newValue
+		return this._ReturnUInt64(this)
+
+	}
+; 	End:Divide ;}
 ;{ 	Equals()			- Overrides - MfObject
 	Equals(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -935,6 +995,64 @@ Class MfUInt64 extends MfPrimitive
 		return retval
 	}
 ; End:_ReturnUInt64 ;}
+;{ _StringDivide
+/*
+	Method: _LongIntStringDivide()
+	Parameters:
+		dividend
+			String Integer Number
+		divisor
+			Integer to Divide by. Must be less then or equal to MfInt64.MaxValue
+			Must be integer number
+		remainder
+			The integer reminder of result of the division
+	Returns:
+		The result of the division as integer value string var
+	Remarks:
+		Mimicks Long Divison, in theroy as no limits to the size of dividend
+*/
+	_LongIntStringDivide(dividend, divisor, ByRef remainder) {
+		q := ""
+		sNum := ""
+		iLength := StrLen(dividend)
+		cMod := 0
+		remainder := 0
+		loop, parse, dividend
+		{
+			sNum .= A_LoopField
+			cNum := sNum + 0 ; convert to int
+			if ( (cNum = 0) && (A_Index > 1) && (A_Index < iLength))
+			{
+				q .= "0"
+				sNum := ""
+				continue
+			}
+			if ( (cNum < divisor) && (A_Index < iLength) )
+			{
+				if (A_Index > 1)
+				{
+					q .= "0"
+				}
+				continue
+			}
+			cQ := cNum // divisor
+			q .= cQ . ""
+			cMod := Mod(cNum, divisor)
+			if (cMod = 0 )
+			{
+				sNum := ""
+			}
+			else
+			{
+				sNum := cMod . ""
+			}
+			
+		}
+		remainder := cMod
+		this._RemoveLeadingZeros(q)
+		return q
+	}
+; End:_StringDivide ;}
 ; End:Methods ;}
 ;{ Properties
 ;{ 	MaxValue
