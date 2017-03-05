@@ -293,19 +293,14 @@ Class MfUInt64 extends MfPrimitive
 		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MaxValue)
 		if (iComp > 0)
 		{
-			; needs to be changed to overflow exception
-			ex := new MfArgumentOutOfRangeException("value"
-				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				,MfUInt64.MinValue, MfUInt64.MaxValue))
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MinValue)
 		if (iComp < 0)
 		{
-			ex := new MfArgumentOutOfRangeException("value"
-				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				,MfUInt64.MinValue, MfUInt64.MaxValue))
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -313,6 +308,401 @@ Class MfUInt64 extends MfPrimitive
 		this.Value := _newValue
 		return this._ReturnUInt64(this)
 	}
+;{ 	CompareTo()			- Overrides	- MfObject
+	CompareTo(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value)) {
+			return 1
+		}
+		if (!MfObject.IsObjInstance(obj, MfUInt64)) {
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Object_Equals"),"obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value1 := this.Value . ""
+		_value2 := obj.value . ""
+		return this._CompareLongIntStrings(_value1, _value2)
+		
+	}
+; End:CompareTo(c) ;}
+;{ 	Equals()			- Overrides - MfObject
+	Equals(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			return false
+		}
+		retval := false
+		_value := "0"
+		try
+		{
+			_value1 := this.Value . ""
+			_value2 :=  MfUInt64.GetValue(value)
+			
+			retval := this._CompareLongIntStrings(_value1, _value2) = 0
+		}
+		catch 
+		{
+			retval := false
+		}
+		return retval
+	}
+; 	End:Equals ;}
+;{ 	GreaterThen
+	GreaterThen(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		retval := false
+		if (MfNull.IsNull(value)) {
+			return retval
+		}
+		if (MfObject.IsObjInstance(value, MfUInt64)) {
+			_value1 := this.Value
+			_value2 := value.Value
+			return this._CompareLongIntStrings(_value1, _value2) > 0
+		}
+		try
+		{
+			_value1 := this.Value
+			_value2 :=  MfUInt64.GetValue(value)
+			retval := this._CompareLongIntStrings(_value1, _value2) > 0
+		}
+		Catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return retval
+	}
+; 	End:GreaterThen ;}
+;{ 	GreaterThenOrEqual
+	GreaterThenOrEqual(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		retval := false
+		if (MfNull.IsNull(value)) {
+			return retval
+		}
+		if (MfObject.IsObjInstance(value, MfUInt64)) {
+			_value1 := this.Value
+			_value2 := value.Value
+			return this._CompareLongIntStrings(_value1, _value2) >= 0
+		}
+		try
+		{
+			_value1 := this.Value
+			_value2 :=  MfUInt64.GetValue(value)
+			retval := this._CompareLongIntStrings(_value1, _value2) >= 0
+		}
+		Catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return retval
+	}
+; 	End:GreaterThenOrEqual ;}
+;{ 	LessThen
+	LessThen(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		retval := false
+		if (MfNull.IsNull(value)) {
+			return retval
+		}
+		if (MfObject.IsObjInstance(value, MfUInt64)) {
+			_value1 := this.Value
+			_value2 := value.Value
+			return this._CompareLongIntStrings(_value1, _value2) < 0
+		}
+		try
+		{
+			_value1 := this.Value
+			_value2 :=  MfUInt64.GetValue(value)
+			retval := this._CompareLongIntStrings(_value1, _value2) < 0
+		}
+		Catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return retval
+	}
+; 	End:LessThen ;}
+;{ 	LessThenOrEqual
+	LessThenOrEqual(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		retval := false
+		if (MfNull.IsNull(value)) {
+			return retval
+		}
+		if (MfObject.IsObjInstance(value, MfUInt64)) {
+			_value1 := this.Value
+			_value2 := value.Value
+			return this._CompareLongIntStrings(_value1, _value2) <= 0
+		}
+		try
+		{
+			_value1 := this.Value
+			_value2 :=  MfUInt64.GetValue(value)
+			retval := this._CompareLongIntStrings(_value1, _value2) <= 0
+		}
+		Catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return retval
+	}
+; 	End:LessThenOrEqual ;}
+;{ 	Multiply
+	Multiply(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Equals("0"))
+		{
+			return this._ReturnUInt64(this)
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfUInt64.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_value = "0")
+		{
+			return this._ReturnUInt64(this)
+		}
+		_newVal := this._LongIntStringMult(this.Value, _value)
+
+
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
+		if (icomp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
+		if (icomp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_newVal .= ""
+		this.Value := _newVal
+		return this._ReturnUInt64(this)
+
+	}
+; 	End:Multiply ;}
+;{ 	Parse()
+	Parse(args*) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfObject.IsObjInstance(args[1], MfParams)) {
+			objParams := args[1] ; arg 1 is a MfParams object so we will use it
+		} else {
+			objParams := new MfParams()
+			for index, arg in args
+			{
+				objParams.Add(arg)
+			}
+		}
+		retval := MfNull.Null
+		try {
+			strP := objParams.ToString()
+			if (strP = "MfUInt64")
+			{
+				retval := objParams.Item[0].Value
+			}
+			else if (strP = "MfChar")
+			{
+				c := objParams.Item[0]
+				if (MfChar.IsDigit(c)) {
+					retval := MfInt64.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
+				}
+			}
+			else if (strP = "MfString")
+			{
+				strV := objParams.Item[0].Value
+				retval := MfUInt64.GetValue(strV)
+			}
+			else if (strP = "MfInt64")
+			{
+				retval := objParams.Item[0].Value
+			}
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (!MfNull.IsNull(retval))
+		{
+			iComp := this._CompareLongIntStrings(retval, MfUInt64.MaxValue)
+			if (iComp > 0)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			iComp := this._CompareLongIntStrings(retval, MfUInt64.MinValue)
+			if (iComp < 0)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (objParams.Data.Contains("ReturnAsObject") && (objParams.Data.Item["ReturnAsObject"] = true))
+			{
+				return new MfUInt64(retval, true)
+			}
+			else
+			{
+				return retval . ""
+			}
+			
+		}
+		ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; End:Parse() ;}
+;{	Subtract()
+	Subtract(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value := "0"
+		if (IsObject(value))
+		{
+			tryAgain := false
+			try
+			{
+				_value :=  MfInt64.GetValue(value)
+				_value .= ""
+			}
+			catch
+			{
+				tryAgain := true
+			}
+			if (tryAgain = true)
+			{
+				try
+				{
+					_value :=  MfUInt64.GetValue(value)
+				}
+				catch e
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+		}
+		else
+		{
+			try
+			{
+				_value :=  MfUInt64._GetValueFromVar(value, true) ; get possible negative value
+			}
+			catch e
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		
+		_newValue := this._LongIntStringSub(this.Value, _value)
+		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MaxValue)
+		if (iComp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MinValue)
+		if (iComp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_newValue .= ""
+		this.Value := _newValue
+		return this._ReturnUInt64(this)
+	}
+; End:Subtract() ;}
+;{ 	ToString()			- Overrides	- MfPrimitive
+/*
+	Method: ToString()
+		Overrides MfPrimitive.ToString()
+
+	OutputVar := instance.ToString()
+
+	ToString()
+		Gets a string representation of the MfUInt64 instance.
+	Returns
+		Returns string var representing current instance Value.
+	Throws
+		Throws MfNullReferenceException if called as a static method
+*/
+	ToString() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		retval := this.Value
+		return retval . ""
+	}
+;  End:ToString() ;}
+;{ 	TryParse()
+	TryParse(byref int, args*) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		_isObj := false
+		if (IsObject(Int)) {
+			if (MfObject.IsObjInstance(int, "MfUInt64")) {
+				_isObj := true
+			} else {
+				; Int is an object but not an MfUInt64 instance
+				; only MfUInt64 is allowed as object
+				return false
+			}
+		}
+		retval := false
+		try {
+			iVal := MfUInt64.Parse(args*)
+			if (_isObj = true)
+			{
+				int.Value := iVal.Value
+			}
+			else
+			{
+				int := iVal.Value
+			}
+		} catch e {
+			retval := false
+		}
+		return retval
+	}
+; End:TryParse() ;}
 ;{ GetValue
 	GetValue(args*)  {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -809,37 +1199,37 @@ Class MfUInt64 extends MfPrimitive
 	   WS1 := this._ABSLongIntString(FirstLongString)
 	   WS2 := this._ABSLongIntString(SecondLongString)
 	   ;//compare absolute size of BigNums
-	   ABSCompi := this._CompareLongintStrings(WS1,WS2,0)
+	   ABSCompi := this._CompareLongintStrings(WS1, WS2, 0)
 	   ;//Make Strings same length with added zeroes
-	   this._MakeFitLength(WS1,WS2)
-	   If (FIsNeg="0" and SIsNeg="1") ;//First pos, second neg.  "x - -y" => "(x+y)"
-	     WSResult := this._ABSLongIntStringAdd(WS1,WS2)
+	   this._MakeFitLength(WS1, WS2)
+	   If (FIsNeg = "0" and SIsNeg = "1") ;//First pos, second neg.  "x - -y" => "(x+y)"
+	     WSResult := this._ABSLongIntStringAdd(WS1, WS2)
 	   else
-	   If (FIsNeg="1" and SIsNeg="0") ;//First neg, sec pos. "-x - y" => "-(x+y)"
-	     WSResult := -this._ABSLongIntStringAdd(WS1,WS2)
+	   If (FIsNeg = "1" and SIsNeg = "0") ;//First neg, sec pos. "-x - y" => "-(x+y)"
+	     WSResult := -this._ABSLongIntStringAdd(WS1, WS2)
 	   else
-	   If (FIsNeg="1" and SIsNeg="1") ;//Both are negative
+	   If (FIsNeg= "1" and SIsNeg= "1" ) ;//Both are negative
 	   {
-	      if (ABSCompi=0)  ;//Both are same ABS-size. E.G. -5 - -5 => Result 0
+	      if (ABSCompi = 0)  ;//Both are same ABS-size. E.G. -5 - -5 => Result 0
 	        return, 0
 	      else
 	      if (ABSCompi=1)  ;//E.G. -1000 - -20 = -980 => Result negative
-	         WSResult := -this._ABSLongIntStringSub(WS1,WS2)
+	         WSResult := -this._ABSLongIntStringSub(WS1, WS2)
 	      else
 	      if (ABSCompi=-1) ;//E.G. -20 - -1000 = +980 => Result positive
-	         WSResult := this._ABSLongIntStringSub(WS2,WS1)
+	         WSResult := this._ABSLongIntStringSub(WS2, WS1)
 	   }   
 	   else
-	   If (FIsNeg="0" and SIsNeg="0") ;//Both are positive
+	   If (FIsNeg = "0" and SIsNeg = "0") ;//Both are positive
 	   {
-	      if (ABSCompi=0)  ;//Both are same ABS-size. E.G. 5 - 5 => Result 0
+	      if (ABSCompi = 0)  ;//Both are same ABS-size. E.G. 5 - 5 => Result 0
 	        return, 0
 	      else
-	      if (ABSCompi=1)  ;//E.G. 1000 - 20 = 980 => Result positive
-	         WSResult := this._ABSLongIntStringSub(WS1,WS2)
+	      if (ABSCompi = 1)  ;//E.G. 1000 - 20 = 980 => Result positive
+	         WSResult := this._ABSLongIntStringSub(WS1, WS2)
 	      else
 	      if (ABSCompi=-1) ;//E.G. 20 - 1000 = -980 => Result negative
-	         WSResult := -this._ABSLongIntStringSub(WS2,WS1)
+	         WSResult := -this._ABSLongIntStringSub(WS2, WS1)
 	   }
 	   this._RemoveLeadingZeros(WSResult)
 	   return, %WSResult%
@@ -935,34 +1325,34 @@ Class MfUInt64 extends MfPrimitive
 	  WS1 := this._ABSLongIntString(FirstLongString)
 	  WS2 := this._ABSLongIntString(SecondLongString)
 	  ;//compare absolute size of BigNums
-	  ABSCompi := this._CompareLongintStrings(WS1,WS2,0)
+	  ABSCompi := this._CompareLongintStrings(WS1, WS2, 0)
 	  if (ABSCompi=1)   ;//We do BiggerNum * SmallerNum
-	      this._Swap_Values(WS1,WS2)
+	      this._Swap_Values(WS1, WS2)
 	  StringLen, Loop1Count, WS1
 	  StringLen, Loop2Count, WS2
 	  OutLoopCounter=0
 	  loop, %Loop1Count% 
 	  {
-	     OutLoopCounter+=1
+	     OutLoopCounter += 1
 	     Help =
 	     Rem = 0
 	     InLoopCounter=0
 	     loop, %loop2Count%
 	     {
 	        InLoopCounter += 1
-	        RightVal := this._StringGetChar(WS2,InLoopCounter,R)
-	        LeftVal := this._StringGetChar(WS1,OutLoopCounter,R)
-	        MulRes := (LeftVal*RightVal)+rem
-	        rem := this._Div(Mulres,10)
-	        Rest := this._Mod(Mulres,10)
+	        RightVal := this._StringGetChar(WS2, InLoopCounter, R)
+	        LeftVal := this._StringGetChar(WS1, OutLoopCounter, R)
+	        MulRes := (LeftVal * RightVal) + rem
+	        rem := this._Div(Mulres, 10)
+	        Rest := this._Mod(Mulres, 10)
 	        Help = %Rest%%Help%
 	     }     
 	     Help = %rem%%Help%  ;/Not sure if thies right ???
 	     ZeroAdd := OutLoopCounter-1
 	     loop, %ZeroAdd%
-	        Help=%Help%0          
-	     this._MakeFitLength(ResultString,Help)
-	     ResultString := this._ABSLongIntStringAdd(ResultString,Help)
+	        Help = %Help%0          
+	     this._MakeFitLength(ResultString, Help)
+	     ResultString := this._ABSLongIntStringAdd(ResultString, Help)
 	  }
 	  this._RemoveLeadingZeros(ResultString)
 	  If ((FIsNeg = "1") and (SIsNeg = "0")) or ((FIsNeg = "0") and (SIsNeg = "1"))
