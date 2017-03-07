@@ -21,7 +21,7 @@ Class MfUInt64 extends MfPrimitive
 	TypeCode[]
 	{
 		get {
-			return 122
+			return 26
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -210,7 +210,7 @@ Class MfUInt64 extends MfPrimitive
 							}
 							catch e
 							{
-								ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
+								ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToUInt64"), e)
 								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 								throw ex
 							}
@@ -315,7 +315,7 @@ Class MfUInt64 extends MfPrimitive
 			return 1
 		}
 		if (!MfObject.IsObjInstance(obj, MfUInt64)) {
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Object_Equals"),"obj")
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Object_Equals"), "obj")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -325,6 +325,139 @@ Class MfUInt64 extends MfPrimitive
 		
 	}
 ; End:CompareTo(c) ;}
+;{ ConvertFromInt64
+	ConvertFromInt64(value, ReturnAsObject = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+
+		_value := MfInt64.GetValue(value)
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+
+		if (_value >= 0)
+		{
+			if (_ReturnAsObject)
+			{
+				Return new MfUint64(_value)
+			}
+			else
+			{
+				return _value . ""
+			}
+		}
+
+		; _value is now known to be negative
+		_value .= ""
+		; remove negative sign
+		_value := SubStr(_value, 2 , StrLen(_value) - 1)
+		; get the ones complement
+		; UInt64 and Int64 are identical in binary
+		strBinary := "0" . this._LongIntStringToBin(_value)
+
+		bits := ""
+		iBit := 0
+		; loop and create the twos complement
+		Loop, Parse, strBinary
+		{
+			iBit := A_LoopField + 0 ; convert to int
+			
+			if (iBit = 0)
+			{
+				bits .= "1"
+			}
+			else
+			{
+				bits .= "0"
+			}
+		}
+
+		; add binary 1 to twos complement
+		bits := this._BinaryStringAddOne(bits)
+		iLength := StrLen(bits)
+		
+		if (iLength > 64)
+		{
+			bits := SubStr(bits, iLength - 64, 64)
+			iLength := 64
+		}
+		
+		_newVal := this._LongBinStringToLongInt(bits)
+		
+		if (_ReturnAsObject)
+		{
+			return new MfUint64(_newVal)
+		}
+		else
+		{
+			return _newVal . ""
+		}
+	}
+; End:ConvertFromInt64 ;}
+;{ ConvertToInt64
+	ConvertToInt64(ReturnAsObject = false) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.Equals("0"))
+		{
+			return 0
+		}
+		if (this.LessThenOrEqual(MfInt64.MaxValue))
+		{
+			return this.Value
+		}
+		
+		; get the ones complement
+		; UInt64 and Int64 are identical in binary
+		strBinary := this._LongIntStringToBin(this.Value)
+		; flip all the bits and add 1
+		bits := ""
+		iBit := 0
+		; loop and create the twos complement
+		Loop, Parse, strBinary
+		{
+			if (A_Index = 1)
+			{
+				; we are dropping the first bit as it represents the negative or positive sign
+				; which in the case of UInt64 is always positive
+				Continue
+			}
+			iBit := A_LoopField + 0 ; convert to int
+			
+			if (iBit = 0)
+			{
+				bits .= "1"
+			}
+			else
+			{
+				bits .= "0"
+			}
+		}
+
+		; add binary 1 to twos complement
+		bits := this._BinaryStringAddOne(bits)
+		iLength := StrLen(bits)
+		
+		if (iLength > 63)
+		{
+			bits := SubStr(bits, iLength - 63, 63)
+			iLength := 63
+		}
+		if (iLength < 63)
+		{
+			bits := MfString.PadLeft(bits, 63, "1")
+		}
+
+		_newVal := this._LongBinStringToLongInt(bits)
+
+		_newVal := "-" . _newVal
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		if (_ReturnAsObject)
+		{
+			return new MfInt64(_newVal + 0)
+		}
+		else
+		{
+			return _newVal + 0
+		}
+	}
+; End:ConvertToInt64 ;}
 ;{ 	Divide
 	Divide(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -408,6 +541,39 @@ Class MfUInt64 extends MfPrimitive
 		return retval
 	}
 ; 	End:Equals ;}
+;{ 	GetHashCode()		- Overrides	- MfObject
+/*
+	Method: GetHashCode()
+		Overrides MfObject.GetHashCode()
+	
+	OutputVar := instance.GetHashCode()
+	
+	GetHashCode()
+		Gets A hash code for the MfUInt64 instance.
+	Returns
+		A 32-bit signed integer hash code as var.
+	Throws
+		Throws MfNullReferenceException if object is not an instance.
+*/
+	GetHashCode() {
+		;return (int)this ^ (int)(this >> 32);
+		i := this._cInt64ToInt(this.Value)
+		iShift := this.Value >> 32
+		iShift := this._cInt64ToInt(iShift)
+		return i ^ iShift
+	}
+; End:GetHashCode() ;}
+;{ 	GetTypeCode()
+/*
+	Method: GetTypeCode()
+		Get an enumeration value of MfTypeCode the represents MfInt64 Type Code.
+	Returns
+		And instance of MfEnum.EnumItem with a constant value that represents the type of MfInt64.
+*/
+	GetTypeCode() {
+		return MfTypeCode.Instance.UInt64
+	}
+; End:GetTypeCode() ;}
 ;{ GetValue
 	GetValue(args*)  {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -479,7 +645,7 @@ Class MfUInt64 extends MfPrimitive
 			}
 			catch e
 			{
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToUInt64"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -989,14 +1155,12 @@ Class MfUInt64 extends MfPrimitive
 		{
 			strBinary1 := MfString.PadLeft(strBinary1, iLenBinary2, "0")
 		}
-
 		
 		lstBinary1 := Mfunc.StringSplit(strBinary1)
 		lstBinary2 := Mfunc.StringSplit(strBinary2)
 
 		Count1 := lstBinary1.Count
 		strAnd := ""
-
 
 		loop, %Count1%
 		{
@@ -1025,6 +1189,7 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+
 		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
 		if (icomp < 0)
 		{
@@ -1068,6 +1233,7 @@ Class MfUInt64 extends MfPrimitive
 		strBinary := MfString.PadRight(strBinary, iTotalWidth, "0")
 		strSubBinary := MfString.Substring(strBinary, iTotalWidth - 64 , 64)
 		_newVal := this._LongBinStringToLongInt(strSubBinary)
+
 		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
 		if (icomp > 0)
 		{
@@ -1075,6 +1241,7 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+
 		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
 		if (icomp < 0)
 		{
@@ -1126,6 +1293,7 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+
 		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
 		if (icomp < 0)
 		{
@@ -1196,6 +1364,7 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+
 		iComp := this._CompareLongIntStrings(_newValue, MfUInt64.MinValue)
 		if (iComp < 0)
 		{
@@ -1402,6 +1571,48 @@ Class MfUInt64 extends MfPrimitive
 		return retval
 	}
 ; End:_ReturnUInt64 ;}
+;{ _BinaryStringAddOne
+	; add 1 to a string representing binary
+	; returns the new binary string with 1 added
+	_BinaryStringAddOne(str) {
+		if (MfString.IsNullOrEmpty(str))
+		{
+			return "1"
+		}
+		rBits := MfString.Reverse(str)
+		aBits := ""
+		IsAdded := false
+		Loop, Parse, rBits
+		{
+			iRbit := A_LoopField + 0 ; convert to int
+			if (IsAdded = false)
+			{
+				if (iRbit = 1)
+				{
+					aBits .= "0"
+				}
+				else
+				{
+					IsAdded := true
+					aBits .= "1"
+				}
+			}
+			else
+			{
+				aBits .= A_LoopField
+			}
+		}
+		; check to make sure did not process only string of 111111's
+		if (IsAdded = false)
+		{
+			IsAdded := true
+			aBits .= "1"
+		}
+		
+		; reverse the bits Back
+		return MfString.Reverse(aBits)
+	}
+; End:_BinaryStringAddOne ;}
 ;{ _LongIntStringDivide
 /*
 	Method: _LongIntStringDivide()

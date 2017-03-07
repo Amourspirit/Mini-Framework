@@ -47,7 +47,8 @@ class MfType extends MfObject
 					,"MfInt64"
 					,"MfTimeSpan"
 					,"MfEnum.EnumItem",
-					,"MfInt16")
+					,"MfInt16"
+					,"MfUInt64")
 ;{ internal members	
 	m_TypeName	:= Null
 	m_TypeCode	:= Null
