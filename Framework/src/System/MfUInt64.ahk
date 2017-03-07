@@ -408,6 +408,96 @@ Class MfUInt64 extends MfPrimitive
 		return retval
 	}
 ; 	End:Equals ;}
+;{ GetValue
+	GetValue(args*)  {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		i := MfParams.GetArgCount(args*)
+		if ((i = 0) || (i > 3))
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		CanThrow := False
+		bAllow := False
+		_default := 0
+		obj := args[1]
+		if (i = 1)
+		{
+			CanThrow := True
+		}
+		else if (i = 2)
+		{
+			try
+			{
+				_default := MfUInt64._GetValue(args[2])
+			}
+			catch e
+			{
+				CanThrow := true
+			}
+		}
+		else
+		{
+			; 3 params obj, default, AllowAny
+			; if AllowAny is true then default can be anything, otherwise default must be a valid integer
+			try
+			{
+				bAllow := MfBool._GetValue(args[3])
+			}
+			catch e
+			{
+				err := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToBoolean"), e)
+				err.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "AllowAny", err)
+				ex.SetProp(err.File, err.Line, A_ThisFunc)
+				throw ex
+			}
+			
+			if (bAllow = true)
+			{
+				_default := args[2]
+			}
+			else
+			{
+				try
+				{
+					_default := MfUInt64._GetValue(args[2])
+				}
+				catch e
+				{
+					CanThrow := true
+				}
+			}
+		}
+		retval := CanThrow = true? 0:_default
+		if (CanThrow = true)
+		{
+			try
+			{
+				retval := MfUInt64._GetValue(obj)
+			}
+			catch e
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		else
+		{
+			try
+			{
+				retval := MfUInt64._GetValue(obj)
+			}
+			catch e
+			{
+				retval := _default
+			}
+		}
+		return retval
+	}
+; End:GetValue ;}
 ;{ 	GreaterThen
 	GreaterThen(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -641,6 +731,411 @@ Class MfUInt64 extends MfPrimitive
 		throw ex
 	}
 ; End:Parse() ;}
+;{ BitAnd
+	BitAnd(Value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Equals("0"))
+		{
+			return
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfUInt64.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		strBinary1 := this._LongIntStringToBin(this.Value)
+		strBinary2 := this._LongIntStringToBin(_value)
+		
+		iLenBinary1 := StrLen(strBinary1)
+		iLenBinary2 := StrLen(strBinary2)
+
+		if (iLenBinary1 > iLenBinary2)
+		{
+			strBinary2 := MfString.PadLeft(strBinary2, iLenBinary1, "0")
+		}
+		else if (iLenBinary2 > iLenBinary1)
+		{
+			strBinary1 := MfString.PadLeft(strBinary1, iLenBinary2, "0")
+		}
+
+		
+		lstBinary1 := Mfunc.StringSplit(strBinary1)
+		lstBinary2 := Mfunc.StringSplit(strBinary2)
+
+		Count1 := lstBinary1.Count
+		;Count2 := lstBinary2.Count
+		strAnd := ""
+
+
+		loop, %Count1%
+		{
+			iValue := lstBinary1[A_Index] + 0
+			if (iValue = 1)
+			{
+				iValue2 := lstBinary2[A_Index] + 0
+				if (iValue2 = 1)
+				{
+					strAnd .= "1"
+				}
+				Else
+				{
+					strAnd .= "0"
+				}
+			}
+			else
+			{
+				strAnd .= "0"
+			}
+		}
+
+		_newVal := this._LongBinStringToLongInt(strAnd)
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
+		if (icomp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
+		if (icomp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Value := _newVal
+	}
+; End:BitAnd ;}
+;{ BitNot
+	BitNot() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		
+		if (this.Equals("0"))
+		{
+			return
+		}
+		
+		strBinary := this._LongIntStringToBin(this.Value)
+			
+		strNot := ""
+		; flip all the bits
+		Loop, Parse, strBinary
+		{
+			iValue := A_LoopField + 0
+			if (iValue = 1)
+			{
+				strNot .= "0"
+			}
+			else
+			{
+				strNot .= "1"
+			}
+		}
+		; flip all 64 bit leading bits to 1
+		strNot := MfString.PadLeft(strNot, 64, "1")
+
+		_newVal := this._LongBinStringToLongInt(strNot)
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
+		if (icomp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
+		if (icomp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Value := _newVal
+	}
+; End:BitNot ;}
+;{ BitOr
+	BitOr(Value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Equals("0"))
+		{
+			return
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfUInt64.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		strBinary1 := this._LongIntStringToBin(this.Value)
+		strBinary2 := this._LongIntStringToBin(_value)
+		
+		iLenBinary1 := StrLen(strBinary1)
+		iLenBinary2 := StrLen(strBinary2)
+
+		if (iLenBinary1 > iLenBinary2)
+		{
+			strBinary2 := MfString.PadLeft(strBinary2, iLenBinary1, "0")
+		}
+		else if (iLenBinary2 > iLenBinary1)
+		{
+			strBinary1 := MfString.PadLeft(strBinary1, iLenBinary2, "0")
+		}
+
+		
+		lstBinary1 := Mfunc.StringSplit(strBinary1)
+		lstBinary2 := Mfunc.StringSplit(strBinary2)
+
+		Count1 := lstBinary1.Count
+		strAnd := ""
+
+
+		loop, %Count1%
+		{
+			iValue1 := lstBinary1[A_Index] + 0
+			iValue2 := lstBinary2[A_Index] + 0
+
+			if ((iValue1 = 1) || (iValue2 = 1))
+			{
+				strAnd .= "1"
+			}
+			else
+			{
+				strAnd .= "0"
+			}
+		}
+
+		_newVal := this._LongBinStringToLongInt(strAnd)
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
+		if (icomp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
+		if (icomp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Value := _newVal
+	}
+; End:BitOr ;}
+;{ BitXor
+	BitXor(Value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Equals("0"))
+		{
+			return
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfUInt64.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		strBinary1 := this._LongIntStringToBin(this.Value)
+		strBinary2 := this._LongIntStringToBin(_value)
+		
+		iLenBinary1 := StrLen(strBinary1)
+		iLenBinary2 := StrLen(strBinary2)
+
+		if (iLenBinary1 > iLenBinary2)
+		{
+			strBinary2 := MfString.PadLeft(strBinary2, iLenBinary1, "0")
+		}
+		else if (iLenBinary2 > iLenBinary1)
+		{
+			strBinary1 := MfString.PadLeft(strBinary1, iLenBinary2, "0")
+		}
+
+		
+		lstBinary1 := Mfunc.StringSplit(strBinary1)
+		lstBinary2 := Mfunc.StringSplit(strBinary2)
+
+		Count1 := lstBinary1.Count
+		strAnd := ""
+
+
+		loop, %Count1%
+		{
+			iValue1 := lstBinary1[A_Index] + 0
+			iValue2 := lstBinary2[A_Index] + 0
+
+			if ((iValue1 = 0) && (iValue2 = 0))
+			{
+				strAnd .= "0"
+			}
+			else if ((iValue1 = 1) && (iValue2 = 1))
+			{
+				strAnd .= "0"
+			}
+			else
+			{
+				strAnd .= "1"
+			}
+		}
+
+		_newVal := this._LongBinStringToLongInt(strAnd)
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
+		if (icomp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
+		if (icomp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Value := _newVal
+	}
+; End:BitXor ;}
+;{ BitShiftLeft
+	BitShiftLeft(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Equals("0"))
+		{
+			return
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfUInt64.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		strBinary := this._LongIntStringToBin(this.Value)
+		iTotalWidth := 64 + _value
+		
+		strBinary := MfString.PadLeft(strBinary, 64, "0")
+		strBinary := MfString.PadRight(strBinary, iTotalWidth, "0")
+		strSubBinary := MfString.Substring(strBinary, iTotalWidth - 64 , 64)
+		_newVal := this._LongBinStringToLongInt(strSubBinary)
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
+		if (icomp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
+		if (icomp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Value := _newVal
+	}
+; End:BitShiftLeft ;}
+;{ BitShiftRight
+	BitShiftRight(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Equals("0"))
+		{
+			return
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfUInt64.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		strBinary := this._LongIntStringToBin(this.Value)
+		
+		iTotalWidth := 64 + _value
+		strBinary := MfString.PadLeft(strBinary, iTotalWidth, "0")
+	
+		strSubBinary := MfString.Substring(strBinary, 0, 64)
+
+		_newVal := this._LongBinStringToLongInt(strSubBinary)
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MaxValue)
+		if (icomp > 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		iComp := this._CompareLongIntStrings(_newVal, MfUInt64.MinValue)
+		if (icomp < 0)
+		{
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Value := _newVal
+	}
+; End:BitShiftRight ;}
 ;{	Subtract()
 	Subtract(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -763,96 +1258,8 @@ Class MfUInt64 extends MfPrimitive
 		return retval
 	}
 ; End:TryParse() ;}
-;{ GetValue
-	GetValue(args*)  {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		i := MfParams.GetArgCount(args*)
-		if ((i = 0) || (i > 3))
-		{
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		CanThrow := False
-		bAllow := False
-		_default := 0
-		obj := args[1]
-		if (i = 1)
-		{
-			CanThrow := True
-		}
-		else if (i = 2)
-		{
-			try
-			{
-				_default := MfUInt64._GetValue(args[2])
-			}
-			catch e
-			{
-				CanThrow := true
-			}
-		}
-		else
-		{
-			; 3 params obj, default, AllowAny
-			; if AllowAny is true then default can be anything, otherwise default must be a valid integer
-			try
-			{
-				bAllow := MfBool._GetValue(args[3])
-			}
-			catch e
-			{
-				err := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToBoolean"), e)
-				err.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "AllowAny", err)
-				ex.SetProp(err.File, err.Line, A_ThisFunc)
-				throw ex
-			}
-			
-			if (bAllow = true)
-			{
-				_default := args[2]
-			}
-			else
-			{
-				try
-				{
-					_default := MfUInt64._GetValue(args[2])
-				}
-				catch e
-				{
-					CanThrow := true
-				}
-			}
-		}
-		retval := CanThrow = true? 0:_default
-		if (CanThrow = true)
-		{
-			try
-			{
-				retval := MfUInt64._GetValue(obj)
-			}
-			catch e
-			{
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-		}
-		else
-		{
-			try
-			{
-				retval := MfUInt64._GetValue(obj)
-			}
-			catch e
-			{
-				retval := _default
-			}
-		}
-		return retval
-	}
-; End:GetValue ;}
+; End:Methods ;}
+;{ Internal Methods
 ;{ 	_GetValue
 	; internal method
 	_GetValue(obj) {
@@ -995,7 +1402,7 @@ Class MfUInt64 extends MfPrimitive
 		return retval
 	}
 ; End:_ReturnUInt64 ;}
-;{ _StringDivide
+;{ _LongIntStringDivide
 /*
 	Method: _LongIntStringDivide()
 	Parameters:
@@ -1052,8 +1459,154 @@ Class MfUInt64 extends MfPrimitive
 		this._RemoveLeadingZeros(q)
 		return q
 	}
-; End:_StringDivide ;}
-; End:Methods ;}
+; End:_LongIntStringDivide ;}
+;{ _LongIntStringToBin
+/*
+	Method: _LongIntStringToBin()
+	Parameters:
+		strN
+			String Integer Number
+	Returns:
+		The the representation of strN as string Binary
+*/	
+	 _LongIntStringToBin(strN) {
+		r := ""
+		retval := ""
+		uInt := new MfUInt64(strN)
+		While uInt.GreaterThen("0")
+		{
+			result := MfUInt64._LongIntStringDivide(uInt.Value, 2, r)
+			uInt.Value := result
+			r := r + 0 ; convert to integer
+			if (r = 0)
+			{
+				retval := "0" . retval
+			}
+			else
+			{
+				retval := "1" . retval
+			}
+		}
+		
+		return retval
+	}
+; End:_LongIntStringToBin ;}
+;{ _LongBinStringToLongInt
+/*
+	Method: _LongBinStringToLongInt()
+		Converts Binary String of numbers to Unsigned Integer string
+	Parameters:
+		strN
+			String Binary Number such as "1100101010001"
+	Returns:
+		The the representation of strN as string Unsigned Integer64
+*/	
+	_LongBinStringToLongInt(strN) {
+		strR := MfString.Reverse(strN)
+		iLength := StrLen(strR)
+		uInt := new MfUInt64("0")
+		uIntCount := new MfUInt64("1")
+		Loop, Parse, strR
+		{
+			if (A_Index > 1)
+			{
+				uIntCount.Multiply(2)
+			}
+			i := A_LoopField + 0
+			if (i = 1)
+			{
+				uInt.Add(uIntCount.Value)
+			}
+		}
+		return uInt.Value
+	}
+; End:_LongBinStringToLongInt ;}
+;{ _LongIntStringToHex
+/*
+	Method: _LongIntStringToHex()
+		Converts Unsigned Integer String of numbers to Hex
+	Parameters:
+		strN
+			String Unsigned Integer Number
+	Returns:
+		The the representation of strN as string of hex
+*/	
+	_LongIntStringToHex(strN) {
+		
+		r := ""
+		retval := ""
+		uInt := new MfUInt64(strN)
+		While uInt.GreaterThen("0")
+		{
+			result := MfUInt64._LongIntStringDivide(uInt.Value, 16, r)
+			uInt.Value := result
+			r := r + 0 ; convert to integer
+			if (r <= 9)
+			{
+				retval := r . retval
+			}
+			else if (r = 10)
+			{
+				retval := "A" . retval
+			}
+			else if (r = 11)
+			{
+				retval := "B" . retval
+			}
+			else if (r = 12)
+			{
+				retval := "C" . retval
+			}
+			else if (r = 13)
+			{
+				retval := "D" . retval
+			}
+			else if (r = 14)
+			{
+				retval := "E" . retval
+			}
+			else
+			{
+				retval := "F" . retval
+			}
+		}
+		return retval
+	}
+; End:_LongIntStringToHex ;}
+;{ _LongIntStringToOctal
+/*
+	Method: _LongIntStringToOctal()
+		Converts Unsigned Integer String of numbers to Octal
+	Parameters:
+		strN
+			String Unsigned Integer Number
+	Returns:
+		The the representation of strN as string of Octal
+*/	
+	_LongIntStringToOctal(strN) {
+		
+		r := ""
+		retval := ""
+		uInt := new MfUInt64(strN)
+		While uInt.GreaterThen("0")
+		{
+			result := MfUInt64._LongIntStringDivide(uInt.Value, 8, r)
+			uInt.Value := result
+			r := r + 0 ; convert to integer
+			if (r <= 7)
+			{
+				retval := r . retval
+			}
+			else if (r = 8)
+			{
+				retval := "10" . retval
+			}
+			
+		}
+		return retval
+	}
+; End:_LongIntStringToOctal ;}
+; End:Internal Methods ;}
 ;{ Properties
 ;{ 	MaxValue
 /*
