@@ -653,7 +653,7 @@ class MfType extends MfObject
 		}
 	}
 ;	End:IsInteger ;}
-;{	IsString
+;{	IsChar
 	/*
 		Property: IsChar [get]
 			Gets if the type is MfChar.
@@ -672,7 +672,7 @@ class MfType extends MfObject
 			Throw ex
 		}
 	}
-;	End:IsString ;}
+;	End:IsChar ;}
 ;{	IsMfObject
 	/*
 		Property: IsMfObject [get]
@@ -875,6 +875,26 @@ class MfType extends MfObject
 		}
 	}
 ;	End:IsInteger ;}
+;{	IsUInt64
+	/*
+		Property: IsUInt64 [get]
+			Gets if the type is MfUint64.
+		Remarks:
+			Read-only Property
+			Returns true if object is MfChar; Otherwise false.
+	*/
+	IsUInt64[]
+	{
+		get {
+			return (this.m_TypeCode = MfType.TypeCodes[26])
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+;	End:IsUInt64 ;}
 ;{	IsIntegerNumber
 	/*
 		Property: IsIntegerNumber [get]

@@ -391,16 +391,23 @@ Class MfUInt64 extends MfPrimitive
 		}
 	}
 ; End:ConvertFromInt64 ;}
-;{ ConvertToInt64
-	ConvertToInt64(ReturnAsObject = false) {
+;{ CastToInt64
+	CastToInt64(ReturnAsObject = false) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.Equals("0"))
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		
+		if ((this.GreaterThenOrEqual("0")) && (this.LessThenOrEqual(MfInt64.MaxValue)))
 		{
-			return 0
-		}
-		if (this.LessThenOrEqual(MfInt64.MaxValue))
-		{
-			return this.Value
+			_val := this.Value + 0
+			if (_ReturnAsObject)
+			{
+
+				return new MfInt64(_val)
+			}
+			else
+			{
+				return _val
+			}
 		}
 		
 		; get the ones complement
@@ -447,7 +454,6 @@ Class MfUInt64 extends MfPrimitive
 		_newVal := this._LongBinStringToLongInt(bits)
 
 		_newVal := "-" . _newVal
-		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
 		if (_ReturnAsObject)
 		{
 			return new MfInt64(_newVal + 0)
@@ -457,7 +463,95 @@ Class MfUInt64 extends MfPrimitive
 			return _newVal + 0
 		}
 	}
-; End:ConvertToInt64 ;}
+; End:CastToInt64 ;}
+;{ CastToInt32
+	CastToInt32(ReturnAsObject = false) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		
+		if ((this.GreaterThenOrEqual("0")) && (this.LessThenOrEqual(MfInteger.MaxValue)))
+		{
+			_val := this.Value + 0
+			if (_ReturnAsObject)
+			{
+
+				return new MfInteger(_val)
+			}
+			else
+			{
+				return _val
+			}
+		}
+		
+		; get the ones complement
+		; UInt64 and Int64 are identical in binary
+		strBinary := this._LongIntStringToBin(this.Value)
+		strBinary := MfString.PadLeft(strBinary, 64, "0")
+		strBinary := SubStr(strBinary, 33, 32) ; get the last 32 bites
+		; flip all the bits and add 1
+		iBit := 0
+		iFirstBit := SubStr(strBinary, 1, 1)
+		iFirstBit := iFirstBit + 0
+		bits := ""
+		; if iFirstBit = 1 then negative value so flip the bits and add 1
+		if (iFirstBit = 1)
+		{
+			; loop and create the twos complement
+			Loop, Parse, strBinary
+			{
+				if (A_Index = 1)
+				{
+					; we are dropping the first bit as it represents the negative or positive sign
+					Continue
+				}
+				iBit := A_LoopField + 0 ; convert to int
+				
+				if (iBit = 0)
+				{
+					bits .= "1"
+				}
+				else
+				{
+					bits .= "0"
+				}
+			}
+			; add binary 1 to twos complement
+			bits := this._BinaryStringAddOne(bits)
+		}
+		else
+		{
+			bits := SubStr(strBinary, 2, 31)
+		}
+			
+		iLength := StrLen(bits)
+		
+		if (iLength > 31)
+		{
+			bits := SubStr(bits, iLength - 31, 31)
+			iLength := 31
+		}
+		if (iLength < 31)
+		{
+			bits := MfString.PadLeft(bits, 31, "1")
+		}
+
+		_newVal := this._LongBinStringToLongInt(bits)
+		
+		if (iFirstBit = 1)
+		{
+			_newVal := "-" . _newVal
+		}
+		
+		if (_ReturnAsObject)
+		{
+			return new MfInteger(_newVal + 0)
+		}
+		else
+		{
+			return _newVal + 0
+		}
+	}
+; End:CastToInt32 ;}
 ;{ 	Divide
 	Divide(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -556,10 +650,10 @@ Class MfUInt64 extends MfPrimitive
 		Throws MfNullReferenceException if object is not an instance.
 */
 	GetHashCode() {
-		;return (int)this ^ (int)(this >> 32);
-		i := this._cInt64ToInt(this.Value)
-		iShift := this.Value >> 32
-		iShift := this._cInt64ToInt(iShift)
+		i := this.CastToInt32()
+		uint := new MfUInt64(this.Value)
+		uint.BitShiftRight(32)
+		iShift := uint.CastToInt32()
 		return i ^ iShift
 	}
 ; End:GetHashCode() ;}
@@ -1924,7 +2018,7 @@ Class MfUInt64 extends MfPrimitive
 	  LongIntString = %WS% ;//returns result BYREF !!!!
 	}
 
-	;//This function is comparing IntegerStrings (also WITH leading Minus)
+	;//MfUInt64 function is comparing IntegerStrings (also WITH leading Minus)
 	;//Leading Zeros are removed by default to make comparison possible
 	;//If First  is smaller than Second -1 is returned
 	;//If First and Second are equal 0 is returned
@@ -1932,8 +2026,8 @@ Class MfUInt64 extends MfPrimitive
 	;//If one of the Strings is empty it is assumed to be 0
 	_CompareLongIntStrings(ByRef FirstLongString, Byref SecondLongString) {
 	  local FSize, FCh, SSize, SCh, Output, Ret_Val
-	  this._RemoveLeadingZeros(FirstLongString)
-	  this._RemoveLeadingZeros(SecondLongString)
+	  MfUInt64._RemoveLeadingZeros(FirstLongString)
+	  MfUInt64._RemoveLeadingZeros(SecondLongString)
 	  StringLen, FSize, FirstLongString
 	  StringLen, SSize, SecondLongString
 	  StringLeft, FCh, FirstLongString, 1 
@@ -2023,8 +2117,8 @@ Class MfUInt64 extends MfPrimitive
 	;//leading Minus is kept. We add 3 reserve-zeros
 	_MakeFitLength(ByRef FirstLongString,Byref SecondLongString) {
 	   local LS1Size, LS2Size, FCh, SCh, Maxi, L1Diff, L2Diff
-	   this._RemoveLeadingZeros(FirstLongString)
-	   this._RemoveLeadingZeros(SecondLongString)
+	   MfUInt64._RemoveLeadingZeros(FirstLongString)
+	   MfUInt64._RemoveLeadingZeros(SecondLongString)
 	   StringLeft, FCh, FirstLongString, 1 
 	   StringLeft, SCh, SecondLongString, 1 
 	   ;//remove minus first if there are one
@@ -2034,7 +2128,7 @@ Class MfUInt64 extends MfPrimitive
 	    StringTrimLeft,SecondLongString,SecondLongString,1
 	   StringLen, LS1Size, FirstLongString
 	   StringLen, LS2Size, SecondLongString
-	   Maxi := this._Max(LS1Size,LS2Size)
+	   Maxi := MfUInt64._Max(LS1Size,LS2Size)
 	   L1Diff := Maxi-LS1Size+3
 	   L2Diff := Maxi-LS2Size+3
 	   loop, %L1Diff%
@@ -2048,10 +2142,10 @@ Class MfUInt64 extends MfPrimitive
 	    SecondLongString=-%SecondLongString%
 	}
 
-	;//This function is subtracting Second from first and ALWAYS awaits
+	;//MfUInt64 function is subtracting Second from first and ALWAYS awaits
 	;//positiveONLY Strings (leading zeros already removed), AND that First is 
 	;//bigger than second so the result always will be positive e.g. 1000-456=544. 
-	;//This function is only for internal use and called by the real ADD-SUB-Functions
+	;//MfUInt64 function is only for internal use and called by the real ADD-SUB-Functions
 	_ABSLongIntStringSub(FirstLongString,SecondLongString) {
 	   local MaxLength, ResultString, Erg, value1, value2, Sum, Rem
 	   Rem = 0
@@ -2062,33 +2156,33 @@ Class MfUInt64 extends MfPrimitive
 	      StringMid,value1,FirstLongString,MaxLength+1-A_index,1 
 	      StringMid,value2,SecondLongString,MaxLength+1-A_index,1 
 	      Sum := value1-(value2+rem)
-	      Rem := this._Div((9-sum),10)
-	      Erg := this._Mod((sum+10),10)
+	      Rem := MfUInt64._Div((9-sum),10)
+	      Erg := MfUInt64._Mod((sum+10),10)
 	      ResultString=%Erg%%ResultString%
 	   }
 	  return, %Resultstring%
 	}
 
-	;//This is the REAL Function that is able to subtract one LongIntString
+	;//MfUInt64 is the REAL Function that is able to subtract one LongIntString
 	;//from another. Is subtracting Second from First (LongStrings) and returns the 
 	;//Result as STRING. Now is supporting positive AND negative Long-Integers
 	_LongIntStringSub(FirstLongString, SecondLongString) {
 	   local WS1, WS2, WSResult, FIsNeg, SIsNeg, ABSCompi
 	   ;//remember the minus
-	   FIsNeg := this._IsNeg(FirstLongString)
-	   SIsNeg := this._IsNeg(SecondLongString)
+	   FIsNeg := MfUInt64._IsNeg(FirstLongString)
+	   SIsNeg := MfUInt64._IsNeg(SecondLongString)
 	   ;//remove the minus on workstrings
-	   WS1 := this._ABSLongIntString(FirstLongString)
-	   WS2 := this._ABSLongIntString(SecondLongString)
+	   WS1 := MfUInt64._ABSLongIntString(FirstLongString)
+	   WS2 := MfUInt64._ABSLongIntString(SecondLongString)
 	   ;//compare absolute size of BigNums
-	   ABSCompi := this._CompareLongintStrings(WS1, WS2, 0)
+	   ABSCompi := MfUInt64._CompareLongintStrings(WS1, WS2, 0)
 	   ;//Make Strings same length with added zeroes
-	   this._MakeFitLength(WS1, WS2)
+	   MfUInt64._MakeFitLength(WS1, WS2)
 	   If (FIsNeg = "0" and SIsNeg = "1") ;//First pos, second neg.  "x - -y" => "(x+y)"
-	     WSResult := this._ABSLongIntStringAdd(WS1, WS2)
+	     WSResult := MfUInt64._ABSLongIntStringAdd(WS1, WS2)
 	   else
 	   If (FIsNeg = "1" and SIsNeg = "0") ;//First neg, sec pos. "-x - y" => "-(x+y)"
-	     WSResult := -this._ABSLongIntStringAdd(WS1, WS2)
+	     WSResult := -MfUInt64._ABSLongIntStringAdd(WS1, WS2)
 	   else
 	   If (FIsNeg= "1" and SIsNeg= "1" ) ;//Both are negative
 	   {
@@ -2096,10 +2190,10 @@ Class MfUInt64 extends MfPrimitive
 	        return, 0
 	      else
 	      if (ABSCompi=1)  ;//E.G. -1000 - -20 = -980 => Result negative
-	         WSResult := -this._ABSLongIntStringSub(WS1, WS2)
+	         WSResult := -MfUInt64._ABSLongIntStringSub(WS1, WS2)
 	      else
 	      if (ABSCompi=-1) ;//E.G. -20 - -1000 = +980 => Result positive
-	         WSResult := this._ABSLongIntStringSub(WS2, WS1)
+	         WSResult := MfUInt64._ABSLongIntStringSub(WS2, WS1)
 	   }   
 	   else
 	   If (FIsNeg = "0" and SIsNeg = "0") ;//Both are positive
@@ -2108,18 +2202,18 @@ Class MfUInt64 extends MfPrimitive
 	        return, 0
 	      else
 	      if (ABSCompi = 1)  ;//E.G. 1000 - 20 = 980 => Result positive
-	         WSResult := this._ABSLongIntStringSub(WS1, WS2)
+	         WSResult := MfUInt64._ABSLongIntStringSub(WS1, WS2)
 	      else
 	      if (ABSCompi=-1) ;//E.G. 20 - 1000 = -980 => Result negative
-	         WSResult := -this._ABSLongIntStringSub(WS2, WS1)
+	         WSResult := -MfUInt64._ABSLongIntStringSub(WS2, WS1)
 	   }
-	   this._RemoveLeadingZeros(WSResult)
+	   MfUInt64._RemoveLeadingZeros(WSResult)
 	   return, %WSResult%
 	}
 
-	;//This function is adding First and Second and always awaits Strings
+	;//MfUInt64 function is adding First and Second and always awaits Strings
 	;//(minuses removed) and prepared with MakeFitLength()
-	;//This function is only for internal use and called by the real ADD-SUB-Functions
+	;//MfUInt64 function is only for internal use and called by the real ADD-SUB-Functions
 	_ABSLongIntStringAdd(FirstLongString, SecondLongString) {
 	   local MaxLength, ResultString, Erg, value1, value2, sum, Rem
 	   Rem = 0
@@ -2130,8 +2224,8 @@ Class MfUInt64 extends MfPrimitive
 	      StringMid, value1, FirstLongString, MaxLength + 1 - A_index, 1 
 	      StringMid, value2, SecondLongString, MaxLength + 1 - A_index, 1 
 	      Sum := Value1 + Value2 + rem
-	      Erg := this._Mod(Sum, 10)
-	      Rem := this._Div(Sum, 10)
+	      Erg := MfUInt64._Mod(Sum, 10)
+	      Rem := MfUInt64._Div(Sum, 10)
 	      ResultString=%Erg%%ResultString%
 	   }
 	  return, %Resultstring%
@@ -2141,20 +2235,20 @@ Class MfUInt64 extends MfPrimitive
 	_LongIntStringAdd(FirstLongString, SecondLongString) {
 	   local WS1, WS2, WSResult, FIsNeg, SIsNeg, ABSCompi
 	   ;//remember the minus
-	   FIsNeg := this._IsNeg(FirstLongString)
-	   SIsNeg := this._IsNeg(SecondLongString)
+	   FIsNeg := MfUInt64._IsNeg(FirstLongString)
+	   SIsNeg := MfUInt64._IsNeg(SecondLongString)
 	   ;//remove the minus on workstrings
-	   WS1 := this._ABSLongIntString(FirstLongString)
-	   WS2 := this._ABSLongIntString(SecondLongString)
+	   WS1 := MfUInt64._ABSLongIntString(FirstLongString)
+	   WS2 := MfUInt64._ABSLongIntString(SecondLongString)
 	   ;//compare absolute size of BigNums
-	   ABSCompi := this._CompareLongintStrings(WS1,WS2,0)
+	   ABSCompi := MfUInt64._CompareLongintStrings(WS1,WS2,0)
 	   ;//Make Strings same length with added zeroes
-	   this._MakeFitLength(WS1,WS2)
+	   MfUInt64._MakeFitLength(WS1,WS2)
 	   If (FIsNeg="0" and SIsNeg="0") ;//Both positive =>Result positive
-	     WSResult := this._ABSLongIntStringAdd(WS1,WS2)
+	     WSResult := MfUInt64._ABSLongIntStringAdd(WS1,WS2)
 	   else
 	   If (FIsNeg="1" and SIsNeg="1") ;//Both negative =>Result negative
-	     WSResult := -this._ABSLongIntStringAdd(WS1,WS2)
+	     WSResult := -MfUInt64._ABSLongIntStringAdd(WS1,WS2)
 	   else
 	   If (FIsNeg="1" and SIsNeg="0") ;//First negative, Second positive, further checking
 	   {
@@ -2162,10 +2256,10 @@ Class MfUInt64 extends MfPrimitive
 	        return, 0
 	      else
 	      if (ABSCompi=1)  ;//E.G. -1000 + 20 = -980 => Result negative
-	         WSResult := -this._ABSLongIntStringSub(WS1,WS2)
+	         WSResult := -MfUInt64._ABSLongIntStringSub(WS1,WS2)
 	      else
 	      if (ABSCompi=-1) ;//-20 + 1000 = +980 => Result positive
-	         WSResult := this._ABSLongIntStringSub(WS2,WS1)
+	         WSResult := MfUInt64._ABSLongIntStringSub(WS2,WS1)
 	   }
 	   else
 	   If (FIsNeg="0" and SIsNeg="1") ;//First positive, Second negative, further checking
@@ -2174,11 +2268,11 @@ Class MfUInt64 extends MfPrimitive
 	        return, 0
 	      else
 	      if (ABSCompi=1)  ;//E.G. 1000 + -20 = +980 => Result positive
-	         WSResult := this._ABSLongIntStringSub(WS1,WS2)
+	         WSResult := MfUInt64._ABSLongIntStringSub(WS1,WS2)
 	      if (ABSCompi=-1) ;//E.G. 20 + -1000 = -980 => Result negative
-	         WSResult := -this._ABSLongIntStringSub(WS2,WS1)
+	         WSResult := -MfUInt64._ABSLongIntStringSub(WS2,WS1)
 	   }
-	   this._RemoveLeadingZeros(WSResult)
+	   MfUInt64._RemoveLeadingZeros(WSResult)
 	   return, %WSResult%
 	}
 
@@ -2201,15 +2295,15 @@ Class MfUInt64 extends MfPrimitive
 	  local ResultString, MulRes, RightVal, LeftVal, Loop1Count, OutLoopCounter
 	  local Loop2Count, InLoopCounter, ABSCompi, Help, ZeroAdd, FIsNeg, SIsNeg
 	  ;//remember the minus
-	  FIsNeg := this._IsNeg(FirstLongString)
-	  SIsNeg := this._IsNeg(SecondLongString)
+	  FIsNeg := MfUInt64._IsNeg(FirstLongString)
+	  SIsNeg := MfUInt64._IsNeg(SecondLongString)
 	  ;//remove the minus on workstrings
-	  WS1 := this._ABSLongIntString(FirstLongString)
-	  WS2 := this._ABSLongIntString(SecondLongString)
+	  WS1 := MfUInt64._ABSLongIntString(FirstLongString)
+	  WS2 := MfUInt64._ABSLongIntString(SecondLongString)
 	  ;//compare absolute size of BigNums
-	  ABSCompi := this._CompareLongintStrings(WS1, WS2, 0)
+	  ABSCompi := MfUInt64._CompareLongintStrings(WS1, WS2, 0)
 	  if (ABSCompi=1)   ;//We do BiggerNum * SmallerNum
-	      this._Swap_Values(WS1, WS2)
+	      MfUInt64._Swap_Values(WS1, WS2)
 	  StringLen, Loop1Count, WS1
 	  StringLen, Loop2Count, WS2
 	  OutLoopCounter=0
@@ -2222,21 +2316,21 @@ Class MfUInt64 extends MfPrimitive
 	     loop, %loop2Count%
 	     {
 	        InLoopCounter += 1
-	        RightVal := this._StringGetChar(WS2, InLoopCounter, R)
-	        LeftVal := this._StringGetChar(WS1, OutLoopCounter, R)
+	        RightVal := MfUInt64._StringGetChar(WS2, InLoopCounter, R)
+	        LeftVal := MfUInt64._StringGetChar(WS1, OutLoopCounter, R)
 	        MulRes := (LeftVal * RightVal) + rem
-	        rem := this._Div(Mulres, 10)
-	        Rest := this._Mod(Mulres, 10)
+	        rem := MfUInt64._Div(Mulres, 10)
+	        Rest := MfUInt64._Mod(Mulres, 10)
 	        Help = %Rest%%Help%
 	     }     
 	     Help = %rem%%Help%  ;/Not sure if thies right ???
 	     ZeroAdd := OutLoopCounter-1
 	     loop, %ZeroAdd%
 	        Help = %Help%0          
-	     this._MakeFitLength(ResultString, Help)
-	     ResultString := this._ABSLongIntStringAdd(ResultString, Help)
+	     MfUInt64._MakeFitLength(ResultString, Help)
+	     ResultString := MfUInt64._ABSLongIntStringAdd(ResultString, Help)
 	  }
-	  this._RemoveLeadingZeros(ResultString)
+	  MfUInt64._RemoveLeadingZeros(ResultString)
 	  If ((FIsNeg = "1") and (SIsNeg = "0")) or ((FIsNeg = "0") and (SIsNeg = "1"))
 	    return, -%Resultstring%
 	  else
