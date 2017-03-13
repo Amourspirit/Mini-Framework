@@ -119,7 +119,7 @@ class MfConvert extends MfObject
 				return MfConvert._RetrunAsObjByte(0, _ReturnAsObject)
 			}
 			Val := MfByte.Parse(obj.Value)
-			return MfConvert._RetrunAsObjBool(Val, _ReturnAsObject)
+			return MfConvert._RetrunAsObjByte(Val, _ReturnAsObject)
 		}
 
 		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
@@ -152,42 +152,57 @@ class MfConvert extends MfObject
 		}
 		else if (t.IsFloat)
 		{
-			if (obj.GreaterThenOrEqual(0.0))
+			tFloat := new MfFloat(obj.Value,,,obj.Format)
+			if (tFloat.GreaterThenOrEqual(0.0))
 			{
-				if (obj.LessThen(2147483647.5))
+				if (tFloat.LessThen(2147483647.5))
 				{
-					int num = (int)value;
-					double num2 = value - (double)num;
-					if (num2 > 0.5 || (num2 == 0.5 && (num & 1) != 0))
+					i := Floor(obj.Value)
+					tFloat.Subtract(i)
+					if ((tFloat.GreaterThen(0.5)) || ((tFloat.Equals(0.5)) && (i & 1) != 0))
 					{
-						num++;
+						i++
 					}
-					return num;
+					return MfConvert._RetrunAsObjInt32(i, _ReturnAsObject)
 				}
 			}
-			else if (obj.GreaterThen(-2147483648.5))
+			else if (tFloat.GreaterThen(-2147483648.5))
 			{
-				int num3 = (int)value;
-				double num4 = value - (double)num3;
-				if (num4 < -0.5 || (num4 == -0.5 && (num3 & 1) != 0))
+				i := Ceil(tFloat.Value)
+				tFloat.Subtract(i)
+				if ((tFloat.LessThen(-0.5)) || ((tFloat.Equals(-0.5)) && (i & 1) != 0))
 				{
-					num3--;
+					i--
 				}
-				return num3;
+				return MfConvert._RetrunAsObjInt32(i, _ReturnAsObject)
 			}
-			throw new OverflowException(Environment.GetResourceString("Overflow_Int32"));
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 		else if (t.IsBoolean)
 		{
+			i := 0
+			if (obj.Value = true)
+			{
+				i := 1
+			}
 			if (_ReturnAsObject)
 			{
-				return obj
+				return new MfInteger(i)
 			}
-			return obj.Value
+			return i
 		}
 		else if (t.IsUInt64)
 		{
-			return MfConvert._RetrunAsObjInt32(obj.GreaterThen(0), _ReturnAsObject)
+			if (obj.GreaterThen(MfInteger.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			i := obj.Value + 0
+			return MfConvert._RetrunAsObjInt32(i, _ReturnAsObject)
 		}
 		else if (t.IsString)
 		{
@@ -195,8 +210,8 @@ class MfConvert extends MfObject
 			{
 				return MfConvert._RetrunAsObjInt32(false, _ReturnAsObject)
 			}
-			bVal := MfBool.GetValue(obj, false)
-			return MfConvert._RetrunAsObjInt32(bVal, _ReturnAsObject)
+			i := MfInteger.Parse(obj)
+			return MfConvert._RetrunAsObjInt32(i, _ReturnAsObject)
 		}
 		
 		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
@@ -204,6 +219,88 @@ class MfConvert extends MfObject
 		throw ex
 	}
 ; 	End:ToInt32 ;}
+;{ ToInt64
+	ToInt64(obj, ReturnAsObject = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ObjCheck := MfConvert._IsNotMfObj(obj)
+		if (ObjCheck)
+		{
+			ObjCheck.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ObjCheck
+		}
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		
+		T := new MfType(obj)
+		if (T.IsIntegerNumber)
+		{
+			if ((obj.Value < MfInt64.MinValue) || (obj.Value > MfInt64.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			return MfConvert._RetrunAsObjInt64(obj.Value, _ReturnAsObject)
+
+		}
+		else if (t.IsFloat)
+		{
+			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
+			try
+			{
+				i := Round(obj.Value)
+				return MfConvert._RetrunAsObjInt64(i, _ReturnAsObject)
+			}
+			catch e
+			{
+				throw e
+			}
+			finally
+			{
+				 Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wf)
+			}
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int64"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		else if (t.IsBoolean)
+		{
+			i := 0
+			if (obj.Value = true)
+			{
+				i := 1
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfInteger(i)
+			}
+			return i
+		}
+		else if (t.IsUInt64)
+		{
+			if (obj.GreaterThen(MfInt64.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			i := obj.Value + 0
+			return MfConvert._RetrunAsObjInt64(i, _ReturnAsObject)
+		}
+		else if (t.IsString)
+		{
+			if (MfString.IsNullOrEmpty(obj))
+			{
+				return MfConvert._RetrunAsObjInt64(0, _ReturnAsObject)
+			}
+			i := MfInt64.Parse(obj)
+			return MfConvert._RetrunAsObjInt64(i, _ReturnAsObject)
+		}
+		
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; End:ToInt64 ;}
 ; End:Methods ;}
 ;{ Internal Methods
 ;{ 	_IsNotMfObj
@@ -236,7 +333,7 @@ class MfConvert extends MfObject
 		return Value
 	}
 ; 	End:_RetrunAsObjByte ;}
-;{ 	_RetrunAsObjByte
+;{ 	_RetrunAsObjInt32
 	_RetrunAsObjInt32(Value, AsObj) {
 		if (AsObj)
 		{
@@ -244,6 +341,24 @@ class MfConvert extends MfObject
 		}
 		return Value
 	}
-; 	End:_RetrunAsObjByte ;}
+; 	End:_RetrunAsObjInt32 ;}
+;{ 	_RetrunAsObjInt64
+	_RetrunAsObjInt64(Value, AsObj) {
+		if (AsObj)
+		{
+			return new MfInt64(Value)
+		}
+		return Value
+	}
+; 	End:_RetrunAsObjInt64 ;}
+;{ 	_RetrunAsObjUInt64
+	_RetrunAsObjUInt64(Value, AsObj) {
+		if (AsObj)
+		{
+			return new MfUInt64(Value)
+		}
+		return Value
+	}
+; 	End:_RetrunAsObjUInt64 ;}
 ; End:Internal Methods ;}
 }

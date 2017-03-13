@@ -21,7 +21,7 @@ Class MfUInt64 extends MfPrimitive
 	TypeCode[]
 	{
 		get {
-			return 26
+			return 27
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))

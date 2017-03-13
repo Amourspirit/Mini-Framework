@@ -166,12 +166,19 @@ class MfBitConverter extends MfObject
 		}
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		if ((_startIndex < 0) || (_startIndex >= (bytes.Count - 1)))
+		if (_startIndex < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if (_startIndex >= (bytes.Count - 1))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
 		bArray := new MfByteList()
 		i := 0
 		while i < 2
@@ -236,9 +243,15 @@ class MfBitConverter extends MfObject
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
 		iMaxIndex := bytes.Count - 1
-		if ((_startIndex < 0) || (_startIndex >= (bytes.Count - 3)))
+		if (_startIndex < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_startIndex >= (bytes.Count - 3))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -306,9 +319,15 @@ class MfBitConverter extends MfObject
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
 		iMaxIndex := bytes.Count - 1
-		if ((_startIndex < 0) || (_startIndex >= (bytes.Count) - 7))
+		if (_startIndex < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_startIndex >= (bytes.Count - 7))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -389,9 +408,15 @@ class MfBitConverter extends MfObject
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
 		iMaxIndex := bytes.Count - 1
-		if ((_startIndex < 0) || (_startIndex >= (bytes.Count - 7)))
+		if (_startIndex < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_startIndex >= (bytes.Count - 7))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}

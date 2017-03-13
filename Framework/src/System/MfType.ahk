@@ -469,6 +469,11 @@ class MfType extends MfObject
 			this.m_TypeCode := MfType.TypeCodes[23]
 			return
 		}
+		if (obj.Is(MfType.TypeCodes[27])) {
+			this.m_TypeName := "MfUInt64"
+			this.m_TypeCode := MfType.TypeCodes[26]
+			return
+		}
 		; check for EnumItem before MfEnum
 		; EnumItem will repurt true to Is MfEnum
 		; However MfEnum will not report true to EnumItem
