@@ -739,6 +739,15 @@ Class MfInt64 extends MfPrimitive
 		try
 		{
 			SetFormat, IntegerFast, D
+			strVarInt := varInt . ""
+			iF (MfMath._IsValidInt64Range(strVarInt, true) = false)
+			{
+				ex := new MfArgumentOutOfRangeException("varInt"
+						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+						,MfInt64.MinValue, MfInt64.MaxValue))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+			}
 			if (Mfunc.IsInteger(varInt)) {
 				retval := varInt + 0 ; force conversion from any hex values
 				if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue)) {

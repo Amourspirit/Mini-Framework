@@ -1962,6 +1962,34 @@ Class MfUInt64 extends MfPrimitive
 		}
 	}
 ; 	End:MinValue ;}
+;{	Value
+/*
+	Property: Value [get/set]
+		Overrides MfPrimitive.Value
+		Gets or sets the value associated with the this instance of MfUInt64
+	Value:
+		Value is a integer and can be var or any type that matches MfType.IsIntegerNumber.
+	Sets:
+		Set the Value of the instance. Can  be var or any type that matches MfType.IsIntegerNumber. 
+	Gets:
+		Gets integer Value as var with a value no less then MinValue and no greater than MaxValue.
+	Throws
+		Throws MfNotSupportedException on set if Readonly is true.
+		Throws MfArgumentOutOfRangeException if value is less then MinValue or greater then MaxValue
+		Throws MfArgumentException for other errors.
+*/
+	Value[]
+	{
+		get {
+			return Base.Value
+		}
+		set {
+			this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+			Base.Value := MfUInt64._GetValue(value)
+			return Base.Value
+		}
+	}
+;	End:Value ;}
 ; End:Properties ;}
 ;{ BigInteger-Calculation with AHK
 ;	https://autohotkey.com/board/topic/3474-biginteger-calculation-with-ahk/

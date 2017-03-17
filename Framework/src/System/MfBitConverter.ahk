@@ -18,9 +18,171 @@
 class MfBitConverter extends MfObject
 {
 ;{ Methods
+;{ 	CompareUnsignedByteArrays
+	CompareUnsignedByteArrays(objA, objB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(objA, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(objB, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return MfBitConverter._CompareUnSignedIntegerArraysLe(objA, objB)
+	}
+; 	End:CompareUnsignedByteArrays ;}
+;{ 	CompareSignedByteArrays
+	CompareSignedByteArrays(objA, objB)	{
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(objA, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(objB, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(objA.Count = 0)
+		{
+			return -1
+		}
+		if(objB.Count = 0)
+		{
+			return 1
+		}
+		MostSigbitA := MfBitConverter._GetFirstHexNumber(objA.Item[objA.Count -1])
+		MostSigbitInfoA := MfBitConverter.HexBitTable.Item[MostSigbitA]
+		
+		MostSigbitB := MfBitConverter._GetFirstHexNumber(objB.Item[objB.Count -1])
+		MostSigbitInfoB := MfBitConverter.HexBitTable.Item[MostSigbitB]
+		if ((MostSigbitInfoA.IsNeg = true) && (MostSigbitInfoB.IsNeg = false))
+		{
+			return -1
+		}
+		if ((MostSigbitInfoA.IsNeg = false) && (MostSigbitInfoB.IsNeg = true))
+		{
+			return 1
+		}
+		if ((MostSigbitInfoA.IsNeg = false) && (MostSigbitInfoB.IsNeg = false))
+		{
+			return MfBitConverter._CompareUnSignedIntegerArraysLe(objA, objB)
+		}
+		if (MostSigbitInfoA.IsNeg = true)
+		{
+			ObjA := MfBitConverter._FlipBytes(ObjA)
+		}
+		if (MostSigbitInfoB.IsNeg = true)
+		{
+			ObjB := MfBitConverter._FlipBytes(ObjB)
+		}
+		result := MfBitConverter._CompareUnSignedIntegerArraysLe(objA, objB)
+		if (result > 0)
+		{
+			return -1
+		}
+		if (result < 0)
+		{
+			return 1
+		}
+		return result
+	}
+; 	End:CompareSignedByteArrays ;}
+;{ CompareUnsignedNibbleArrays
+	CompareUnsignedNibbleArrays(objA, objB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(objA, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(objB, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return MfBitConverter._CompareUnSignedIntegerArraysBe(objA, objB)
+	}
+; End:CompareUnsignedNibbleArrays ;}
+	CompareSignedNibbleArrays(objA, objB)	{
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(objA, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(objB, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(objA.Count = 0)
+		{
+			return -1
+		}
+		if(objB.Count = 0)
+		{
+			return 1
+		}
+		HexA := MfBitConverter._GetHexValue(objA.Item[0])
+		MostSigbitInfoA :=  MfBitConverter.HexBitTable.Item[HexA]
+		
+		HexB := MfBitConverter._GetHexValue(objA.Item[0])
+		MostSigbitInfoB :=  MfBitConverter.HexBitTable.Item[HexB]
+		if ((MostSigbitInfoA.IsNeg = true) && (MostSigbitInfoB.IsNeg = false))
+		{
+			return -1
+		}
+		if ((MostSigbitInfoA.IsNeg = false) && (MostSigbitInfoB.IsNeg = true))
+		{
+			return 1
+		}
+		if ((MostSigbitInfoA.IsNeg = false) && (MostSigbitInfoB.IsNeg = false))
+		{
+			return MfBitConverter._CompareUnSignedIntegerArraysBe(objA, objB)
+		}
+		if (MostSigbitInfoA.IsNeg = true)
+		{
+			ObjA := MfBitConverter._FlipNibbles(ObjA)
+		}
+		if (MostSigbitInfoB.IsNeg = true)
+		{
+			ObjB := MfBitConverter._FlipNibbles(ObjB)
+		}
+		result := MfBitConverter._CompareUnSignedIntegerArraysBe(objA, objB)
+		if (result > 0)
+		{
+			return -1
+		}
+		if (result < 0)
+		{
+			return 1
+		}
+		return result
+	}
 ;{ GetBytes
 	GetBytes(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (!IsObject(obj))
+		{
+			IsNeg := False
+			if(MfMath._IsStringInt(obj, IsNeg))
+			{
+				return MfBitConverter._LongIntStringToHexArray(obj, 0)
+			}
+		}
 		ObjCheck := MfConvert._IsNotMfObj(obj)
 		if (ObjCheck)
 		{
@@ -96,6 +258,140 @@ class MfBitConverter extends MfObject
 		return MfBitConverter._GetSecondHexNumber(_byte)
 	}
 ; End:GetNibbleLow ;}
+;{ 	BytesAdd
+	BytesAdd(BytesA, BytesB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(BytesA, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "BytesA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(BytesB, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "BytesB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(BytesA.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "BytesA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(BytesB.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "BytesB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nibA := MfNibbleList.FromByteList(BytesA)
+		nibB := MfNibbleList.FromByteList(BytesB)
+		nibResult := MfBitConverter.NibbleListAdd(nibA, nibB)
+		result := nibResult.ToByteList()
+		return result
+	}
+; 	End:BytesAdd ;}
+	BytesMultiply(BytesA, BytesB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(BytesA, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "BytesA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(BytesB, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "BytesB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(BytesA.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "BytesA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(BytesB.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "BytesB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nibA := MfNibbleList.FromByteList(BytesA)
+		nibB := MfNibbleList.FromByteList(BytesB)
+		nibResult := MfBitConverter.NibbleListMultiply(nibA, nibB)
+		result := nibResult.ToByteList()
+		return result
+	}
+;{ NibbleListsAdd
+	NibbleListAdd(ListA, ListB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(ListA, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(ListB, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(ListA.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(ListB.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (ListA.Count > ListB.Count)
+		{
+			return MfBitConverter._NibListsAdd(ListA, ListB)
+		}
+		return MfBitConverter._NibListsAdd(ListB, ListA)
+		
+	}
+; End:NibbleListsAdd ;}
+	NibbleListMultiply(ListA, ListB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(ListA, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(ListB, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(ListA.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(ListB.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		Compare := MfBitConverter.CompareSignedNibbleArrays(ListA, ListB)
+		if (Compare > 0)
+		{
+			return MfBitConverter._MultiplyNibList(ListA, ListB)
+		}
+		return MfBitConverter._MultiplyNibList(ListA, ListB)
+	}
 ;{ ToBool
 	ToBool(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -105,43 +401,62 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		if ((_startIndex < 0) || (_startIndex >= bytes.Count))
+		if ((_startIndex < 0) || (_startIndex > (bytes.Count - 1)))
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		bArray := new MfByteList()
-		i := 0
-		while i < 1
-		{
-			index := i + _startIndex
-			itm := bytes.Item[index]
-			bArray.Add(itm)
-			i++
-		}
-		
-		result := "0x"
+		return bytes.Item[_startIndex] != 0
 
-		for i , b in bArray
+	}
+
+; End:ToBool ;}
+;{ 	ToByte
+	ToByte(bytes, startIndex = 0, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
 		{
-			result .= b
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
-		result := result + 0x0
-		b := new MfBool()
-		if (result > 0)
+		if(bytes.Count = 0)
 		{
-			b.Value := true
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
+		_startIndex := MfInt64.GetValue(startIndex, 0)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		if ((_startIndex < 0) || (_startIndex > (bytes.Count - 1)))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		retval := "0x"
+		b := bytes.Item[_startIndex]
+		HexChar1 := MfBitConverter._GetFirstHexNumber(b)
+		HexChar2 := MfBitConverter._GetSecondHexNumber(b)
+		retval .= HexChar1 . HexChar2
+		retval := retval + 0x0
 		if (_ReturnAsObj)
 		{
-			return b
+			return new MfByte(retval)
 		}
-		return b.Value
+		return retval
+
 	}
-; End:ToBool ;}
+; 	End:ToByte ;}
 ;{ ToChar
 	ToChar(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -161,6 +476,12 @@ class MfBitConverter extends MfObject
 		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -190,7 +511,7 @@ class MfBitConverter extends MfObject
 		}
 		if (MfBitConverter.IsLittleEndian)
 		{
-			;bArray := MfBitConverter._SwapBytes(bArray)
+			bArray := MfBitConverter._SwapBytes(bArray)
 		}
 		retval := "0x"
 		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
@@ -240,6 +561,12 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
 		iMaxIndex := bytes.Count - 1
@@ -266,7 +593,7 @@ class MfBitConverter extends MfObject
 		}
 		if (MfBitConverter.IsLittleEndian)
 		{
-			;bArray := MfBitConverter._SwapBytes(bArray)
+			bArray := MfBitConverter._SwapBytes(bArray)
 		}
 		retval := "0x"
 		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
@@ -316,6 +643,12 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
 		iMaxIndex := bytes.Count - 1
@@ -342,7 +675,7 @@ class MfBitConverter extends MfObject
 		}
 		if (MfBitConverter.IsLittleEndian)
 		{
-			;bArray := MfBitConverter._SwapBytes(bArray)
+			bArray := MfBitConverter._SwapBytes(bArray)
 		}
 		retval := "0x"
 		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
@@ -402,6 +735,12 @@ class MfBitConverter extends MfObject
 		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -481,9 +820,9 @@ class MfBitConverter extends MfObject
 		}
 		
 		retval := ""
-		i := _length - 1
+		i := _startIndex
 		iCount := 0
-		while i >= _startIndex
+		while i < _length
 		{
 			b := bytes.Item[i]
 			bit1 := b // 16
@@ -499,7 +838,7 @@ class MfBitConverter extends MfObject
 			{
 				retval .= bitChar1 . bitChar2
 			}
-			i--
+			i++
 			iCount++
 		}
 		
@@ -508,6 +847,254 @@ class MfBitConverter extends MfObject
 ; End:ToString ;}
 ;{ 	Methods
 ;{ Internal Methods
+;{ 	_CompareUnSignedIntegerArraysLe
+	_CompareUnSignedIntegerArraysLe(objA, objB) {
+		
+		if(objA.Count = 0)
+		{
+			return -1
+		}
+		if(objB.Count = 0)
+		{
+			return 1
+		}
+		x := objA.Count - 1
+		y := objB.Count - 1
+		
+		While objA.Item[x] = 0 && x > -1
+		{
+			x--
+		}
+		While objB.Item[y] = 0 && y > -1
+		{
+			y--
+		}
+		if (x = 0 && y = 0)
+		{
+			NumA := objA.Item[x]
+			MumB := objB.Item[y]
+			if (NumA > MumB)
+			{
+				return 1
+			}
+			if (NumA < MumB)
+			{
+				return -1
+			}
+			return 0
+		}
+		
+		if (x > y)
+		{
+			return 1
+		}
+		if (x < y)
+		{
+			return -1
+		}
+		; array non zero index are the same length
+		xOffset := x
+		yOffset := y
+		while yOffset >= 0
+		{
+			NumA := objA.Item[xOffset]
+			MumB := objB.Item[yOffset]
+			if (NumA > MumB)
+			{
+				return 1
+			}
+			if (NumA < MumB)
+			{
+				return -1
+			}
+			xOffset--
+			yOffset--
+		}
+		return 0
+	}
+; 	End:_CompareUnSignedIntegerArraysLe ;}
+;{ _CompareUnSignedIntegerArraysBe
+	_CompareUnSignedIntegerArraysBe(objA, objB) {
+		
+		if(objA.Count = 0)
+		{
+			return -1
+		}
+		if(objB.Count = 0)
+		{
+			return 1
+		}
+		x := 0
+		y := 0
+		
+		While ((x < objA.Count) && (objA.Item[x] = 0))
+		{
+			x++
+		}
+		While ((y < objB.Count) && (objB.Item[y] = 0))
+		{
+			y++
+		}
+		if (x = 0 && y = 0)
+		{
+			NumA := objA.Item[x]
+			MumB := objB.Item[y]
+			if (NumA > MumB)
+			{
+				return 1
+			}
+			if (NumA < MumB)
+			{
+				return -1
+			}
+			return 0
+		}
+		
+		xOffset := objA.Count - x
+		yOffset := objA.Count - y
+		if (xOffset > yOffset)
+		{
+			return 1
+		}
+		if (xOffset < yOffset)
+		{
+			return -1
+		}
+		; array non zero index are the same length
+		xOffset := x
+		yOffset := y
+		while yOffset < objB.Count
+		{
+			NumA := objA.Item[xOffset]
+			MumB := objB.Item[yOffset]
+			if (NumA > MumB)
+			{
+				return 1
+			}
+			if (NumA < MumB)
+			{
+				return -1
+			}
+			xOffset++
+			yOffset++
+		}
+		return 0
+	}
+; End:_CompareUnSignedIntegerArraysBe ;}
+;{ 	_NibListMultiplyByNib
+	_NibListMultiplyByNib(lst, iNib, ShiftAmount=0) {
+		ans := new MfNibbleList()
+		iCarry := 0
+		i := lst.Count - 1
+		bZero := true
+		while i >= 0
+		{
+			n := lst.Item[i]
+			p := (n * iNib) + iCarry
+			R := 0
+			iCarry := 0
+			if (p > 0)
+			{
+				bZero := false
+				iCarry := MfMath.DivRem(p, 16, R)
+			}
+			ans.Add(R)
+			i--
+		}
+		if (bZero)
+		{
+			ans.Clear()
+			ans.Add(0)
+			return ans
+		}
+		While (iCarry > 0)
+		{
+			iCarry := MfMath.DivRem(iCarry, 16, R)
+			ans.Add(R)
+		}
+		x := ans.count -1
+		while ans.Item[x] = 0 && x >= 0
+		{
+			x--
+		}
+		result := new MfNibbleList()
+		i := x
+		while i >= 0
+		{
+			result.Add(ans.Item[i])
+			i--
+		}
+		
+		i := 0
+		while i < ShiftAmount
+		{
+			result.Add(0)
+			i++
+		}
+		
+		return result
+	}
+; 	End:_NibListMultiplyByNib ;}
+;{ 	_MultiplyNibList
+	_MultiplyNibList(lstA, lstB){
+		; Order of array is expected to be left to right making lst.Count -1 the MSB
+		; in this method LstA.count is excpected to be Greater then or equal to  lstB.Count
+		; lstB.Count tells us how many arrays will need to be added together in the end
+		; lstA to be Multiplied by lstB
+		lst := new MfList()
+		
+		
+		iMaxIndexA := lstA.Count - 1
+		iMaxIndexB := lstB.Count - 1
+		
+		x := 0
+		While lstB.Item[x] = 0 && x < lstB.Count
+		{
+			x++
+		}
+
+		if (x >= lstB.Count)
+		{
+			return lstA
+		}
+		iStartIndexA := x
+		i := iMaxIndexB
+		iCount := 0
+		jCount := 0
+		While i >= iStartIndexA
+		{
+			n := lstB.Item[i]
+			iResult := MfBitConverter._NibListMultiplyByNib(lstA, n, iCount)
+			lst.Add(iResult)
+			iCount ++
+			i--
+		}
+		lstN := lst.Item[0]
+		
+		if (lst.Count <= 1)
+		{
+			return lstN
+		}
+		ans := new MfNibbleList()
+		i := 0
+		for i, n in lstN
+		{
+			ans.Add(n)
+		}
+		i := 0
+		for i, obj in lst
+		{
+			if (i = 0)
+			{
+				continue
+			}
+			lstN := lst.Item[i]
+			ans := MfBitConverter.NibbleListAdd(ans, lstN)
+			
+		}
+		return ans
+	}
+; 	End:_MultiplyNibList ;}
 ;{ _GetHexValue
 	_GetHexValue(i)	{
 		iChar := 0
@@ -796,7 +1383,7 @@ class MfBitConverter extends MfObject
 				;~ ; when negative Add 1
 				IsAdded := MfBitConverter._AddOneToByteList(bArray)
 			}
-			bArray := MfBitConverter._SwapBytes(bArray)
+			;bArray := MfBitConverter._SwapBytes(bArray)
 		}
 		else ; if (IsNegative)
 		{
@@ -806,7 +1393,7 @@ class MfBitConverter extends MfObject
 				bArray.Add(0)
 			}
 			;bArray := MfBitConverter._ReverseList(bArray)
-			bArray := MfBitConverter._SwapBytes(bArray)
+			;bArray := MfBitConverter._SwapBytes(bArray)
 			
 		}
 		return bArray
@@ -832,6 +1419,19 @@ class MfBitConverter extends MfObject
 		return bArray
 	}
 ; End:_FlibBytes ;}
+	_FlipNibbles(lst) {
+		nArray := new MfNibbleList()
+		iMaxIndex := lst.Count - 1
+		for i, b in lst
+		{
+			Hex := MfBitConverter._GetHexValue(b)
+			bInfo := MfBitConverter.HexBitTable.Item[Hex]
+			bInfoFlipped := MfBitConverter.HexBitTable.Item[bInfo.HexFlip]
+			
+			nArray.Add(bInfoFlipped.IntValue)
+		}
+		return nArray
+	}
 ;{ _LongIntStringToHexArray
 /*
 	Method: _LongIntStringToHex()
@@ -843,13 +1443,7 @@ class MfBitConverter extends MfObject
 		The the representation of strN as MfByteList of hex values in Litte Endian format
 */	
 	_LongIntStringToHexArray(strN, bitCount = 32) {
-		If (bitCount < 4 )
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Under", "4"), "bitCount")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (Mod(bitCount, 4))
+		if ((bitCount > 0) && (Mod(bitCount, 4)))
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Not_Divisable_By", "4"), "bitCount")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -860,8 +1454,14 @@ class MfBitConverter extends MfObject
 		sResult := strN . ""
 		IsNegative := false
 		bArray := new MfByteList()
+		ActualBitCount := 0
+		KnownBitCount := false
+		if (bitCount > 0)
+		{
+			KnownBitCount := true
+			ActualBitCount := bitCount // 4
+		}
 		
-		ActualBitCount := bitCount // 4
 
 		if ((MfString.IsNullOrEmpty(sResult) = true)
 			|| (sResult = "0"))
@@ -939,6 +1539,11 @@ class MfBitConverter extends MfObject
 				break
 			}
 		}
+		if (KnownBitCount = false)
+		{
+			; there is know know bit count but sign requires a bit
+			bArray.Add(0)
+		}
 				
 		if (IsNegative)
 		{
@@ -954,7 +1559,7 @@ class MfBitConverter extends MfObject
 			IsAdded := MfBitConverter._AddOneToByteList(bArray)
 
 			
-			bArray := MfBitConverter._SwapBytes(bArray)
+			;bArray := MfBitConverter._SwapBytes(bArray)
 		}
 		else ; if (IsNegative)
 		{
@@ -965,7 +1570,7 @@ class MfBitConverter extends MfObject
 				bArray.Add(0)
 			}
 			;bArray := MfBitConverter._ReverseList(bArray)
-			bArray := MfBitConverter._SwapBytes(bArray)
+			;bArray := MfBitConverter._SwapBytes(bArray)
 			
 		}
 	
@@ -1129,6 +1734,78 @@ class MfBitConverter extends MfObject
 		return retval
 	}
 ; End:_Int64ToFloat ;}
+;{ 	_NibListsAdd
+	_NibListsAdd(lstA, lstB) {
+		; lstA.Count is assumed to be greater then or equal to lstB.count
+		aLong := Compare > 0
+		
+		ans := new MfNibbleList()
+		iCarry := 0
+		i := lstB.Count - 1
+		offset := lstA.Count - lstB.Count
+		iCount := 0
+		while i >= 0
+		{
+			j := i + offset
+			nA := lstA.Item[j]
+			nB := lstB.Item[i]
+			sum := (nA + nB) + iCarry
+			R := 0
+			if (sum > 0)
+			{
+				q := MfMath.DivRem(sum, 16, R)
+				iCarry := q
+			}
+			ans.Add(R)
+			i--
+			iCount++
+		}
+		i :=  lstA.Count - 1 - iCount
+		While (iCarry > 0)
+		{
+			R := 0
+			if (i >= 0)
+			{
+				nA := lstA.Item[i]
+				sum := nA  + iCarry
+				iCarry := 0
+				if (sum > 0)
+				{
+					iCarry := MfMath.DivRem(sum, 16, R)
+				}
+				i--
+				iCount++
+			}
+			else
+			{
+				iCarry := MfMath.DivRem(iCarry, 16, R)
+			}
+			
+			ans.Add(R)
+		}
+		; if there are any remainint elements in lstA add them to ans
+		i := lstA.Count - 1 - iCount
+		while i >= 0
+		{
+			ans.Add(lstA.Item[i])
+			i--
+			iCount++
+		}
+		
+		; create a new list to hold the reverse nibbles
+		result := new MfNibbleList()
+		i := 0
+				
+		i := ans.count -1
+		while i >= 0
+		{
+			result.Add(ans.Item[i])
+			i--
+		}
+		return result
+		
+	}
+; 	End:_NibListsAdd ;}
 ; End:Internal Methods ;}
 ;{ Properties
 	;{ IsLittleEndian

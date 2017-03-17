@@ -143,6 +143,236 @@ class MfMath extends MfObject
 		throw ex
 	}
 ; 	End:Abs ;}
+;{ 	Ceiling
+	Ceiling(obj, ReturnAsObject = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		if (IsObject(obj) = false)
+		{
+			if(Mfunc.IsInteger(obj))
+			{
+				if (_ReturnAsObject)
+				{
+					return new MfFloat(obj)
+				}
+				return obj
+			}
+			if (Mfunc.IsFloat(obj)) {
+				flt := new MfFloat(obj)
+				return MfMath.Ceiling(flt, _ReturnAsObject)
+			}
+		}
+		if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
+			try
+			{
+				i := Ceil(obj.Value)
+				if (_ReturnAsObject)
+				{
+					retval := new MfFloat(0.0, obj.ReturnAsObject,,obj.Format)
+					retval.Add(i)
+					return retval
+				}
+				return i
+			}
+			catch e
+			{
+				throw e
+			}
+			finally
+			{
+				 Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wf)
+			}
+		}
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:Ceiling ;}
+	DivRem(a, b, byref result) {
+		if (MfNull.IsNull(a))
+		{
+			ex := new MfArgumentNullException("a")
+		}
+		if (MfNull.IsNull(b))
+		{
+			ex := new MfArgumentNullException("b")
+		}
+		
+		;~ If (MfMath._IsValidInt64Range(a . "", true))
+		;~ {
+			;~ Dividend := MfInt64.GetValue(a)
+		;~ }
+		;~ else
+		;~ {
+			;~ Dividend := "NaN"
+		;~ }
+		;~ If (MfMath._IsValidInt64Range(b . "", true))
+		;~ {
+			;~ Divisor := MfInt64.GetValue(b)
+		;~ }
+		;~ else
+		;~ {
+			;~ Divisor := "NaN"
+		;~ }
+		Dividend := MfInt64.GetValue(a, "NaN", true)
+		Divisor := MfInt64.GetValue(b, "NaN", true)
+		IsObj := false
+
+		If (IsObject(result))
+		{
+			If (MfObject.IsObjInstance(result, MfPrimitive) = false)
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType_Generic"), "result")
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			IsObj := true
+		}
+		wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
+		try
+		{
+						If (Dividend == "NaN" || Divisor == "NaN")
+			{
+				; attempt to do math as long string math
+				NegDividend := false
+				NegDivisor := false
+				If (Dividend == "NaN")
+				{
+					if (MfMath._IsStringInt(a, NegDividend) = false)
+					{
+						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger_Param", "a"))
+						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+						throw ex
+					}
+					Dividend := a
+				}
+				If (Divisor == "NaN")
+				{
+					If (MfMath._IsStringInt(b, NegDivisor) = false)
+					{
+						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger_Param", "b"))
+						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+						throw ex
+					}
+					Divisor := b
+				}
+
+				if (Divisor = 0 || Divisor == "0")
+				{
+					ex := new MfDivideByZeroException(MfEnvironment.Instance.GetResourceString("Arg_DivideByZero"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				strRemainder := ""
+				retval := MfMath._LongIntStringDivide(Dividend, Divisor, strRemainder)
+				if (IsObj)
+				{
+					try
+					{
+						result.Value :=strRemainder
+					}
+					catch e
+					{
+						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToString_Param", remainder), e)
+						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+						throw ex
+					}
+				}
+				else
+				{
+					result := strRemainder
+				}
+				return retval
+			}
+			; proceed as normal math ( not string math )
+			if (Divisor = 0)
+			{
+				ex := new MfDivideByZeroException(MfEnvironment.Instance.GetResourceString("Arg_DivideByZero"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			retval := Dividend // Divisor
+			if (IsObj)
+			{
+				try
+				{
+					result.Value := Mod(Dividend, Divisor)
+				}
+				catch e
+				{
+					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("Arg_ArgumentOutOfRangeException"), e)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			else
+			{
+				result := Mod(Dividend, Divisor)
+			}
+			return retval
+		}
+		catch e
+		{
+			throw e
+		}
+		finally
+		{
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
+		}
+	}
+;{ 	Floor
+	Floor(obj, ReturnAsObject = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		if (IsObject(obj) = false)
+		{
+			if(Mfunc.IsInteger(obj))
+			{
+				if (_ReturnAsObject)
+				{
+					return new MfFloat(obj)
+				}
+				return obj
+			}
+			if (Mfunc.IsFloat(obj)) {
+				flt := new MfFloat(obj)
+				return MfMath.Floor(flt, _ReturnAsObject)
+			}
+		}
+		if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
+			try
+			{
+				i := Floor(obj.Value)
+				if (_ReturnAsObject)
+				{
+					retval := new MfFloat(0.0, obj.ReturnAsObject,,obj.Format)
+					retval.Add(i)
+					return retval
+				}
+				return i
+			}
+			catch e
+			{
+				throw e
+			}
+			finally
+			{
+				 Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wf)
+			}
+		}
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:Floor ;}
+	
+
 ;{ 	Round
 	; rounds a float value
 	; Parrams
@@ -545,5 +775,153 @@ class MfMath extends MfObject
 			}
 		}
 	; End:roundPower10Double ;}
+;{ 	_LongIntStringDivide
+	_LongIntStringDivide(dividend, divisor, ByRef remainder) {
+		q := ""
+		sNum := ""
+		iLength := StrLen(dividend)
+		cMod := 0
+		remainder := 0
+		loop, parse, dividend
+		{
+			sNum .= A_LoopField
+			cNum := sNum + 0 ; convert to int
+			if ( (cNum = 0) && (A_Index > 1) && (A_Index < iLength))
+			{
+				q .= "0"
+				sNum := ""
+				continue
+			}
+			if ( (cNum < divisor) && (A_Index < iLength) )
+			{
+				if (A_Index > 1)
+				{
+					q .= "0"
+				}
+				continue
+			}
+			cQ := cNum // divisor
+			q .= cQ . ""
+			cMod := Mod(cNum, divisor)
+			if (cMod = 0 )
+			{
+				sNum := ""
+			}
+			else
+			{
+				sNum := cMod . ""
+			}
+			
+		}
+		remainder := cMod
+		MfMath._RemoveLeadingZeros(q)
+		return q
+	}
+; 	End:_LongIntStringDivide ;}
+;{ 	_RemoveLeadingZeros
+	;//Is removing leading zeros from an LongInt String. If the String holds
+	;//an leading Minus it is kept -0000123 => -123 and 00985 => 985
+	_RemoveLeadingZeros(ByRef LongIntString) {
+		local LCh, ZCh, WS
+		WS = %LongIntString%
+		StringLeft, LCh, WS, 1 
+		if (LCh = "-")
+		 StringTrimLeft, WS, WS, 1
+		 loop
+		 {
+		 	StringLeft, ZCh, WS, 1 
+		 	if (ZCh = "0")
+		 	StringTrimLeft, WS, WS, 1
+		 	 else
+		 	 break  
+		}
+		If (WS = "")   ;//If it is empty now make it 0
+		 	WS = 0
+		if (LCh = "-") ;//Add minus again if there was one
+			WS = -%WS%
+		LongIntString = %WS% ;//returns result BYREF !!!!
+	}
+; 	End:_RemoveLeadingZeros ;}
+;{ 	_IsStringInt
+	_IsStringInt(varInt, byRef IsNeg) {
+		if (IsObject(varInt))
+		{
+			return false
+		}
+		If (MfString.IsNullOrEmpty(varInt))
+		{
+			return false
+		}
+		if (varInt ~= "^[0-9]+$")
+		{
+			IsNeg := false
+			return true
+		}
+		else if (varInt ~= "^\+[0-9]+$")
+		{
+			IsNeg := false
+			return true
+		}
+		else if (varInt ~= "^-[0-9]+$")
+		{
+			IsNeg := true
+			return true
+		}
+		return false
+	}
+; 	End:_IsStringInt ;}
+;{ 	IsValidInt64Range
+	; value must be passed in as a string
+	; "9223372036854775808" will report false
+	; 9223372036854775808 will report true as without
+	; quotes AutoHotkey will convert to 9223372036854775807 (Integer Max)
+	;
+	; value can have leading sign of - or + but must be a string
+	_IsValidInt64Range(value, AllowFloatValue = false) {
+		strX := value . ""
+		xLen := StrLen(strX)
+		If (xLen > 20)
+			return false
+		strLead := SubStr(strX, 1, 4)
+		if (strLead ~= "^(?:-)?0x[0-9a-fA-F]+$")
+		{
+			if (strX ~= "^(?:-)?0x[0-9a-fA-F]{1,16}$")
+				return true
+			return false
+		}
+		_AllowFloatValue := MfBool.GetValue(AllowFloatValue, false)
+		if (_AllowFloatValue = true)
+		{
+			dotIndex := InStr(strX, ".") -1
+			;dotIndex := MfString.IndexOf(strX, ".")
+			if (dotIndex = 0)
+			{
+				return true ; zero value
+			}
+			if (dotIndex > 0)
+			{
+				strX := MfString.Substring(strX, 0, dotIndex)
+			}
+		}
+		; maximum length of Integer Max or Min with sign is 20 characters
+		
+		; positive sign will be dropped by format
+		; negative sign will not be droped
+		x1 := format("x{:i}", value)
+			
+		; check for a positive sign and remove it if exist
+		if (strLead ~= "\+[0-9]+")
+		{
+			x2 := "x" . SubStr(strX, 2)
+		}
+		else
+		{
+			x2 := "x" . strX
+		}
+		if (x1 == x2)
+			return true
+		return false
+	}
+; 	End:IsValidInt64Range ;}
 
 }
