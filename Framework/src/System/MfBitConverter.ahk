@@ -18,8 +18,9 @@
 class MfBitConverter extends MfObject
 {
 ;{ Methods
-;{ 	CompareUnsignedByteArrays
-	CompareUnsignedByteArrays(objA, objB) {
+
+;{ 	CompareUnsignedByteList
+	CompareUnsignedByteList(objA, objB) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(objA, MfByteList) = false)
 		{
@@ -35,9 +36,9 @@ class MfBitConverter extends MfObject
 		}
 		return MfBitConverter._CompareUnSignedIntegerArraysLe(objA, objB)
 	}
-; 	End:CompareUnsignedByteArrays ;}
-;{ 	CompareSignedByteArrays
-	CompareSignedByteArrays(objA, objB)	{
+; 	End:CompareUnsignedByteList ;}
+;{ 	CompareSignedByteList
+	CompareSignedByteList(objA, objB)	{
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(objA, MfByteList) = false)
 		{
@@ -60,10 +61,10 @@ class MfBitConverter extends MfObject
 			return 1
 		}
 		MostSigbitA := MfBitConverter._GetFirstHexNumber(objA.Item[objA.Count -1])
-		MostSigbitInfoA := MfBitConverter.HexBitTable.Item[MostSigbitA]
+		MostSigbitInfoA := MfNibConverter.HexBitTable[MostSigbitA]
 		
 		MostSigbitB := MfBitConverter._GetFirstHexNumber(objB.Item[objB.Count -1])
-		MostSigbitInfoB := MfBitConverter.HexBitTable.Item[MostSigbitB]
+		MostSigbitInfoB := MfNibConverter.HexBitTable[MostSigbitB]
 		if ((MostSigbitInfoA.IsNeg = true) && (MostSigbitInfoB.IsNeg = false))
 		{
 			return -1
@@ -95,83 +96,8 @@ class MfBitConverter extends MfObject
 		}
 		return result
 	}
-; 	End:CompareSignedByteArrays ;}
-;{ CompareUnsignedNibbleArrays
-	CompareUnsignedNibbleArrays(objA, objB) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if(MfObject.IsObjInstance(objA, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objA"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(MfObject.IsObjInstance(objB, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objB"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		return MfBitConverter._CompareUnSignedIntegerArraysBe(objA, objB)
-	}
-; End:CompareUnsignedNibbleArrays ;}
-	CompareSignedNibbleArrays(objA, objB)	{
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if(MfObject.IsObjInstance(objA, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objA"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(MfObject.IsObjInstance(objB, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "objB"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(objA.Count = 0)
-		{
-			return -1
-		}
-		if(objB.Count = 0)
-		{
-			return 1
-		}
-		HexA := MfBitConverter._GetHexValue(objA.Item[0])
-		MostSigbitInfoA :=  MfBitConverter.HexBitTable.Item[HexA]
-		
-		HexB := MfBitConverter._GetHexValue(objA.Item[0])
-		MostSigbitInfoB :=  MfBitConverter.HexBitTable.Item[HexB]
-		if ((MostSigbitInfoA.IsNeg = true) && (MostSigbitInfoB.IsNeg = false))
-		{
-			return -1
-		}
-		if ((MostSigbitInfoA.IsNeg = false) && (MostSigbitInfoB.IsNeg = true))
-		{
-			return 1
-		}
-		if ((MostSigbitInfoA.IsNeg = false) && (MostSigbitInfoB.IsNeg = false))
-		{
-			return MfBitConverter._CompareUnSignedIntegerArraysBe(objA, objB)
-		}
-		if (MostSigbitInfoA.IsNeg = true)
-		{
-			ObjA := MfBitConverter._FlipNibbles(ObjA)
-		}
-		if (MostSigbitInfoB.IsNeg = true)
-		{
-			ObjB := MfBitConverter._FlipNibbles(ObjB)
-		}
-		result := MfBitConverter._CompareUnSignedIntegerArraysBe(objA, objB)
-		if (result > 0)
-		{
-			return -1
-		}
-		if (result < 0)
-		{
-			return 1
-		}
-		return result
-	}
+; 	End:CompareSignedByteList ;}
+
 ;{ GetBytes
 	GetBytes(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -285,10 +211,10 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		nibA := MfNibbleList.FromByteList(BytesA)
-		nibB := MfNibbleList.FromByteList(BytesB)
-		nibResult := MfBitConverter.NibbleListAdd(nibA, nibB)
-		result := nibResult.ToByteList()
+		nibA := MfNibConverter.FromByteList(BytesA)
+		nibB := MfNibConverter.FromByteList(BytesB)
+		nibResult := MfNibConverter.NibbleListAdd(nibA, nibB)
+		result := MfNibConverter.ToByteList(nibResult)
 		return result
 	}
 ; 	End:BytesAdd ;}
@@ -318,80 +244,13 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		nibA := MfNibbleList.FromByteList(BytesA)
-		nibB := MfNibbleList.FromByteList(BytesB)
-		nibResult := MfBitConverter.NibbleListMultiply(nibA, nibB)
-		result := nibResult.ToByteList()
+		nibA := MfNibConverter.FromByteList(BytesA)
+		nibB := MfNibConverter.FromByteList(BytesB)
+		nibResult := MfNibConverter.NibbleListMultiply(nibA, nibB)
+		result := MfNibConverter.ToByteList(nibResult)
 		return result
 	}
-;{ NibbleListsAdd
-	NibbleListAdd(ListA, ListB) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if(MfObject.IsObjInstance(ListA, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListA"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(MfObject.IsObjInstance(ListB, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListB"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(ListA.Count = 0)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListA"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(ListB.Count = 0)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListB"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (ListA.Count > ListB.Count)
-		{
-			return MfBitConverter._NibListsAdd(ListA, ListB)
-		}
-		return MfBitConverter._NibListsAdd(ListB, ListA)
-		
-	}
-; End:NibbleListsAdd ;}
-	NibbleListMultiply(ListA, ListB) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if(MfObject.IsObjInstance(ListA, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListA"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(MfObject.IsObjInstance(ListB, MfNibbleList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "ListB"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(ListA.Count = 0)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListA"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(ListB.Count = 0)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "ListB"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		Compare := MfBitConverter.CompareSignedNibbleArrays(ListA, ListB)
-		if (Compare > 0)
-		{
-			return MfBitConverter._MultiplyNibList(ListA, ListB)
-		}
-		return MfBitConverter._MultiplyNibList(ListA, ListB)
-	}
+
 ;{ ToBool
 	ToBool(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -415,8 +274,10 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		return bytes.Item[_startIndex] != 0
-
+		retval := bytes.Item[_startIndex] != 0
+		if (_ReturnAsObj)
+			return new MfBool(retval)
+		return retval
 	}
 
 ; End:ToBool ;}
@@ -435,6 +296,12 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if(nibbles.Count < 1)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
 		if ((_startIndex < 0) || (_startIndex > (bytes.Count - 1)))
@@ -449,6 +316,13 @@ class MfBitConverter extends MfObject
 		HexChar2 := MfBitConverter._GetSecondHexNumber(b)
 		retval .= HexChar1 . HexChar2
 		retval := retval + 0x0
+
+		if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue)) {
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Byte"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
 		if (_ReturnAsObj)
 		{
 			return new MfByte(retval)
@@ -515,7 +389,7 @@ class MfBitConverter extends MfObject
 		}
 		retval := "0x"
 		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
-		bInfo := MfBitConverter.HexBitTable.Item[HexKey]
+		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
 		{
@@ -524,8 +398,8 @@ class MfBitConverter extends MfObject
 			{
 				Hex1 := MfBitConverter._GetFirstHexNumber(b)
 				Hex2 := MfBitConverter._GetSecondHexNumber(b)
-				bInfo1 := MfBitConverter.HexBitTable.Item[Hex1]
-				bInfo2 := MfBitConverter.HexBitTable.Item[Hex2]
+				bInfo1 := MfNibConverter.HexBitTable[Hex1]
+				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
 				FlipHex := FlipHex + 0x0
 				bArray.Item[i] := FlipHex
@@ -544,6 +418,11 @@ class MfBitConverter extends MfObject
 		if (IsNeg)
 		{
 			retval := retval - 0x1
+		}
+		if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 		if (_ReturnAsObj)
 		{
@@ -597,7 +476,7 @@ class MfBitConverter extends MfObject
 		}
 		retval := "0x"
 		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
-		bInfo := MfBitConverter.HexBitTable.Item[HexKey]
+		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
 		{
@@ -606,8 +485,8 @@ class MfBitConverter extends MfObject
 			{
 				Hex1 := MfBitConverter._GetFirstHexNumber(b)
 				Hex2 := MfBitConverter._GetSecondHexNumber(b)
-				bInfo1 := MfBitConverter.HexBitTable.Item[Hex1]
-				bInfo2 := MfBitConverter.HexBitTable.Item[Hex2]
+				bInfo1 := MfNibConverter.HexBitTable[Hex1]
+				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
 				FlipHex := FlipHex + 0x0
 				bArray.Item[i] := FlipHex
@@ -626,6 +505,11 @@ class MfBitConverter extends MfObject
 		if (IsNeg)
 		{
 			retval := retval - 0x1
+		}
+		if ((retval < MfInteger.MinValue) || (retval > MfInteger.MaxValue)) {
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 		if (_ReturnAsObj)
 		{
@@ -679,7 +563,7 @@ class MfBitConverter extends MfObject
 		}
 		retval := "0x"
 		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
-		bInfo := MfBitConverter.HexBitTable.Item[HexKey]
+		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
 		{
@@ -688,8 +572,8 @@ class MfBitConverter extends MfObject
 			{
 				Hex1 := MfBitConverter._GetFirstHexNumber(b)
 				Hex2 := MfBitConverter._GetSecondHexNumber(b)
-				bInfo1 := MfBitConverter.HexBitTable.Item[Hex1]
-				bInfo2 := MfBitConverter.HexBitTable.Item[Hex2]
+				bInfo1 := MfNibConverter.HexBitTable[Hex1]
+				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
 				FlipHex := FlipHex + 0x0
 				bArray.Item[i] := FlipHex
@@ -781,6 +665,32 @@ class MfBitConverter extends MfObject
 		return retval
 	}
 ; End:ToUInt64 ;}
+;{ 	ToIntegerString
+	ToIntegerString(bytes, startIndex=0) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_startIndex := MfInteger.GetValue(startIndex, 0)
+		if ((_startIndex < 0) || (_startIndex >= bytes.Count))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nibList := MfNibConverter.FromByteList(bytes, _startIndex)
+		return MfNibConverter.ToIntegerString(nibList)
+	}
+; 	End:ToIntegerString ;}
 ;{ ToString
 	ToString(bytes, returnAsObj = false, startIndex = 0, length="") {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -913,188 +823,7 @@ class MfBitConverter extends MfObject
 		return 0
 	}
 ; 	End:_CompareUnSignedIntegerArraysLe ;}
-;{ _CompareUnSignedIntegerArraysBe
-	_CompareUnSignedIntegerArraysBe(objA, objB) {
-		
-		if(objA.Count = 0)
-		{
-			return -1
-		}
-		if(objB.Count = 0)
-		{
-			return 1
-		}
-		x := 0
-		y := 0
-		
-		While ((x < objA.Count) && (objA.Item[x] = 0))
-		{
-			x++
-		}
-		While ((y < objB.Count) && (objB.Item[y] = 0))
-		{
-			y++
-		}
-		if (x = 0 && y = 0)
-		{
-			NumA := objA.Item[x]
-			MumB := objB.Item[y]
-			if (NumA > MumB)
-			{
-				return 1
-			}
-			if (NumA < MumB)
-			{
-				return -1
-			}
-			return 0
-		}
-		
-		xOffset := objA.Count - x
-		yOffset := objA.Count - y
-		if (xOffset > yOffset)
-		{
-			return 1
-		}
-		if (xOffset < yOffset)
-		{
-			return -1
-		}
-		; array non zero index are the same length
-		xOffset := x
-		yOffset := y
-		while yOffset < objB.Count
-		{
-			NumA := objA.Item[xOffset]
-			MumB := objB.Item[yOffset]
-			if (NumA > MumB)
-			{
-				return 1
-			}
-			if (NumA < MumB)
-			{
-				return -1
-			}
-			xOffset++
-			yOffset++
-		}
-		return 0
-	}
-; End:_CompareUnSignedIntegerArraysBe ;}
-;{ 	_NibListMultiplyByNib
-	_NibListMultiplyByNib(lst, iNib, ShiftAmount=0) {
-		ans := new MfNibbleList()
-		iCarry := 0
-		i := lst.Count - 1
-		bZero := true
-		while i >= 0
-		{
-			n := lst.Item[i]
-			p := (n * iNib) + iCarry
-			R := 0
-			iCarry := 0
-			if (p > 0)
-			{
-				bZero := false
-				iCarry := MfMath.DivRem(p, 16, R)
-			}
-			ans.Add(R)
-			i--
-		}
-		if (bZero)
-		{
-			ans.Clear()
-			ans.Add(0)
-			return ans
-		}
-		While (iCarry > 0)
-		{
-			iCarry := MfMath.DivRem(iCarry, 16, R)
-			ans.Add(R)
-		}
-		x := ans.count -1
-		while ans.Item[x] = 0 && x >= 0
-		{
-			x--
-		}
-		result := new MfNibbleList()
-		i := x
-		while i >= 0
-		{
-			result.Add(ans.Item[i])
-			i--
-		}
-		
-		i := 0
-		while i < ShiftAmount
-		{
-			result.Add(0)
-			i++
-		}
-		
-		return result
-	}
-; 	End:_NibListMultiplyByNib ;}
-;{ 	_MultiplyNibList
-	_MultiplyNibList(lstA, lstB){
-		; Order of array is expected to be left to right making lst.Count -1 the MSB
-		; in this method LstA.count is excpected to be Greater then or equal to  lstB.Count
-		; lstB.Count tells us how many arrays will need to be added together in the end
-		; lstA to be Multiplied by lstB
-		lst := new MfList()
-		
-		
-		iMaxIndexA := lstA.Count - 1
-		iMaxIndexB := lstB.Count - 1
-		
-		x := 0
-		While lstB.Item[x] = 0 && x < lstB.Count
-		{
-			x++
-		}
 
-		if (x >= lstB.Count)
-		{
-			return lstA
-		}
-		iStartIndexA := x
-		i := iMaxIndexB
-		iCount := 0
-		jCount := 0
-		While i >= iStartIndexA
-		{
-			n := lstB.Item[i]
-			iResult := MfBitConverter._NibListMultiplyByNib(lstA, n, iCount)
-			lst.Add(iResult)
-			iCount ++
-			i--
-		}
-		lstN := lst.Item[0]
-		
-		if (lst.Count <= 1)
-		{
-			return lstN
-		}
-		ans := new MfNibbleList()
-		i := 0
-		for i, n in lstN
-		{
-			ans.Add(n)
-		}
-		i := 0
-		for i, obj in lst
-		{
-			if (i = 0)
-			{
-				continue
-			}
-			lstN := lst.Item[i]
-			ans := MfBitConverter.NibbleListAdd(ans, lstN)
-			
-		}
-		return ans
-	}
-; 	End:_MultiplyNibList ;}
 ;{ _GetHexValue
 	_GetHexValue(i)	{
 		iChar := 0
@@ -1200,7 +929,7 @@ class MfBitConverter extends MfObject
 	; in theroy no limit to the number of bytes that can be turned
 	; into string integer
 	_LongHexArrayToLongInt(lst) {
-		; bInfo := MfBitConverter.HexBitTable.Item[lst.Item[0]]
+		; bInfo := MfNibConverter.HexBitTable[lst.Item[0]]
 		; IsNeg := bInfo.IsNeg
 		bArray := new MfList()
 		; remove leading zero's this should speed up long string
@@ -1215,8 +944,8 @@ class MfBitConverter extends MfObject
 
 			Hex1 := MfBitConverter._GetFirstHexNumber(b)
 			Hex2 := MfBitConverter._GetSecondHexNumber(b)
-			bInfo1 := MfBitConverter.HexBitTable.Item[Hex1]
-			bInfo2 := MfBitConverter.HexBitTable.Item[Hex2]
+			bInfo1 := MfNibConverter.HexBitTable[Hex1]
+			bInfo2 := MfNibConverter.HexBitTable[Hex2]
 			IsleadZero = False
 			bArray.Add(bInfo1.HexValue)
 			bArray.Add(bInfo2.HexValue)
@@ -1238,7 +967,7 @@ class MfBitConverter extends MfObject
 				sPower := MfUInt64._LongIntStringMult(sPower, 16)
 			}
 			b := bArray.Item[iLoop]
-			bi := MfBitConverter.HexBitTable.Item[b]
+			bi := MfNibConverter.HexBitTable[b]
 			if (bi.IntValue > 0)
 			{
 				s := MfUInt64._LongIntStringMult(sPower, bi.IntValue)
@@ -1409,8 +1138,8 @@ class MfBitConverter extends MfObject
 			Hex1 := MfBitConverter._GetFirstHexNumber(b)
 			Hex2 := MfBitConverter._GetSecondHexNumber(b)
 
-			bInfo1 := MfBitConverter.HexBitTable.Item[Hex1]
-			bInfo2 := MfBitConverter.HexBitTable.Item[Hex2]
+			bInfo1 := MfNibConverter.HexBitTable[Hex1]
+			bInfo2 := MfNibConverter.HexBitTable[Hex2]
 			
 			strHex := MfString.Format("0x{0}{1}", bInfo1.HexFlip, bInfo2.HexFlip)
 			hex := strHex + 0x0
@@ -1419,19 +1148,7 @@ class MfBitConverter extends MfObject
 		return bArray
 	}
 ; End:_FlibBytes ;}
-	_FlipNibbles(lst) {
-		nArray := new MfNibbleList()
-		iMaxIndex := lst.Count - 1
-		for i, b in lst
-		{
-			Hex := MfBitConverter._GetHexValue(b)
-			bInfo := MfBitConverter.HexBitTable.Item[Hex]
-			bInfoFlipped := MfBitConverter.HexBitTable.Item[bInfo.HexFlip]
-			
-			nArray.Add(bInfoFlipped.IntValue)
-		}
-		return nArray
-	}
+	
 ;{ _LongIntStringToHexArray
 /*
 	Method: _LongIntStringToHex()
@@ -1578,6 +1295,11 @@ class MfBitConverter extends MfObject
 	}
 ; End:_LongIntStringToHexArray ;}
 ;{ _AddOneToByteList
+	; adds one to the value of lst only if there
+	; is no carry.
+	; returns true is value of one was added otherwise false
+	; If AddToFront is true then value is added at the beginning Of
+	; the list otherwise at the end of the list.
 	_AddOneToByteList(byref bArray, AddToFront = true) {
 		
 		IsAdded := false
@@ -1734,78 +1456,7 @@ class MfBitConverter extends MfObject
 		return retval
 	}
 ; End:_Int64ToFloat ;}
-;{ 	_NibListsAdd
-	_NibListsAdd(lstA, lstB) {
-		; lstA.Count is assumed to be greater then or equal to lstB.count
-		aLong := Compare > 0
-		
-		ans := new MfNibbleList()
-		iCarry := 0
-		i := lstB.Count - 1
-		offset := lstA.Count - lstB.Count
-		iCount := 0
-		while i >= 0
-		{
-			j := i + offset
-			nA := lstA.Item[j]
-			nB := lstB.Item[i]
-			sum := (nA + nB) + iCarry
-			R := 0
-			if (sum > 0)
-			{
-				q := MfMath.DivRem(sum, 16, R)
-				iCarry := q
-			}
-			ans.Add(R)
-			i--
-			iCount++
-		}
-		i :=  lstA.Count - 1 - iCount
-		While (iCarry > 0)
-		{
-			R := 0
-			if (i >= 0)
-			{
-				nA := lstA.Item[i]
-				sum := nA  + iCarry
-				iCarry := 0
-				if (sum > 0)
-				{
-					iCarry := MfMath.DivRem(sum, 16, R)
-				}
-				i--
-				iCount++
-			}
-			else
-			{
-				iCarry := MfMath.DivRem(iCarry, 16, R)
-			}
-			
-			ans.Add(R)
-		}
-		; if there are any remainint elements in lstA add them to ans
-		i := lstA.Count - 1 - iCount
-		while i >= 0
-		{
-			ans.Add(lstA.Item[i])
-			i--
-			iCount++
-		}
-		
-		; create a new list to hold the reverse nibbles
-		result := new MfNibbleList()
-		i := 0
-				
-		i := ans.count -1
-		while i >= 0
-		{
-			result.Add(ans.Item[i])
-			i--
-		}
-		return result
-		
-	}
-; 	End:_NibListsAdd ;}
+
 ; End:Internal Methods ;}
 ;{ Properties
 	;{ IsLittleEndian
@@ -1830,67 +1481,5 @@ class MfBitConverter extends MfObject
 			}
 		}
 	; End:IsLittleEndian ;}
-	;{ HexBitTable
-		static m_HexBitTable := ""
-		/*!
-			Property: HexBitTable [get]
-				Gets the HexBitTable value associated with the this instance
-			Value:
-				Var representing the HexBitTable property of the instance
-			Remarks:
-				Readonly Property
-		*/
-		HexBitTable[]
-		{
-			get {
-				if (MfBitConverter.m_HexBitTable = "")
-				{
-					MfBitConverter.m_HexBitTable := new MfHashTable(16)
-					MfBitConverter.m_HexBitTable.Add("0", new MfBitConverter.HexBitInfo("0", "F", "0000","1111", 0))
-					MfBitConverter.m_HexBitTable.Add("1", new MfBitConverter.HexBitInfo("1", "E", "0001","1000", 1))
-					MfBitConverter.m_HexBitTable.Add("2", new MfBitConverter.HexBitInfo("2", "D", "0010","1101", 2))
-					MfBitConverter.m_HexBitTable.Add("3", new MfBitConverter.HexBitInfo("3", "C", "0011","1100", 3))
-					MfBitConverter.m_HexBitTable.Add("4", new MfBitConverter.HexBitInfo("4", "B", "0100","1011", 4))
-					MfBitConverter.m_HexBitTable.Add("5", new MfBitConverter.HexBitInfo("5", "A", "0101","1010", 5))
-					MfBitConverter.m_HexBitTable.Add("6", new MfBitConverter.HexBitInfo("6", "9", "0110","1001", 6))
-					MfBitConverter.m_HexBitTable.Add("7", new MfBitConverter.HexBitInfo("7", "8", "0111","1000", 7))
 
-					MfBitConverter.m_HexBitTable.Add("8", new MfBitConverter.HexBitInfo("8", "7", "1000","0111", 8, true))
-					MfBitConverter.m_HexBitTable.Add("9", new MfBitConverter.HexBitInfo("9", "6", "1001","0110", 9, true))
-					MfBitConverter.m_HexBitTable.Add("A", new MfBitConverter.HexBitInfo("A", "5", "1010","0101", 10, true))
-					MfBitConverter.m_HexBitTable.Add("B", new MfBitConverter.HexBitInfo("B", "4", "1011","0100", 11, true))
-					MfBitConverter.m_HexBitTable.Add("C", new MfBitConverter.HexBitInfo("C", "3", "1100","0011", 12, true))
-					MfBitConverter.m_HexBitTable.Add("D", new MfBitConverter.HexBitInfo("D", "2", "1101","0010", 13, true))
-					MfBitConverter.m_HexBitTable.Add("E", new MfBitConverter.HexBitInfo("E", "1", "1000","0001", 14, true))
-					MfBitConverter.m_HexBitTable.Add("F", new MfBitConverter.HexBitInfo("F", "0", "1111","0000", 15, true))
-				}
-				return MfBitConverter.m_HexBitTable
-			}
-			set {
-				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-				ex.SetProp(A_LineFile, A_LineNumber, "HexBitTable")
-				Throw ex
-			}
-		}
-	; End:HexBitTable ;}
-; End:Properties ;}
-;{ Internal Class HexBitInfo
-	class HexBitInfo
-	{
-		__new(hv, hf, b, bf, int, Neg = false) {
-			this.HexValue := hv
-			this.HexFlip := hf
-			this.Bin := b
-			this.BinFlip := bf
-			this.IntValue := int
-			this.IsNeg := Neg
-		}
-		HexValue := ""
-		HexFlip := ""
-		Bin := ""
-		BinFlip := ""
-		IsNeg := False
-		IntValue := 0
-	}
-; End:Internal Class HexBitInfo ;}
 }

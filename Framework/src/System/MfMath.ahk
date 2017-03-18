@@ -883,10 +883,36 @@ class MfMath extends MfObject
 		If (xLen > 20)
 			return false
 		strLead := SubStr(strX, 1, 4)
-		if (strLead ~= "^(?:-)?0x[0-9a-fA-F]+$")
+		;^(?:-)?0x[0-9a-fA-F]+$
+		if (strLead ~= "^0x[0-9a-fA-F]+$")
 		{
-			if (strX ~= "^(?:-)?0x[0-9a-fA-F]{1,16}$")
-				return true
+			if (strX ~= "^0x[0-9a-fA-F]{1,16}$")
+			{
+				Hex := format("Z{:X}", value) ; will remove leading zeros
+				zValue := "Z" . LTrim(SubStr(value,3),"0")
+				if (Hex = zValue)
+				{
+					return true
+				}
+			}
+			return false
+		}
+		if (strLead ~= "^-0x[0-9a-fA-F]+$")
+		{
+			if (strX ~= "^-0x[0-9a-fA-F]{1,16}$")
+			{				
+				Hex := format("Z{:X}", SubStr(value, 2)) ; remove leading sign or format will flip bits
+				zValue := "Z" . LTrim(SubStr(value,4),"0")
+				if (Hex = zValue)
+				{
+					return true
+				}
+				if (zValue = "Z8000000000000000")
+				{
+					; special case for integer max min value of -0x8000000000000000
+					return true
+				}
+			}
 			return false
 		}
 		_AllowFloatValue := MfBool.GetValue(AllowFloatValue, false)
