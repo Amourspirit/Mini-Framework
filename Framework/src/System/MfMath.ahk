@@ -195,10 +195,14 @@ class MfMath extends MfObject
 		if (MfNull.IsNull(a))
 		{
 			ex := new MfArgumentNullException("a")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 		if (MfNull.IsNull(b))
 		{
 			ex := new MfArgumentNullException("b")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 		
 		;~ If (MfMath._IsValidInt64Range(a . "", true))
@@ -234,13 +238,17 @@ class MfMath extends MfObject
 		wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
 		try
 		{
-						If (Dividend == "NaN" || Divisor == "NaN")
+			If (Dividend == "NaN" || Divisor == "NaN")
 			{
 				; attempt to do math as long string math
 				NegDividend := false
 				NegDivisor := false
 				If (Dividend == "NaN")
 				{
+					If (MfObject.IsObjInstance(a, MfPrimitive) = true) ; for MfUInt64 and such
+					{
+						a := a.Value
+					}
 					if (MfMath._IsStringInt(a, NegDividend) = false)
 					{
 						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger_Param", "a"))
@@ -251,6 +259,10 @@ class MfMath extends MfObject
 				}
 				If (Divisor == "NaN")
 				{
+					If (MfObject.IsObjInstance(b, MfPrimitive) = true) ; for MfUInt64 and such
+					{
+						b := b.Value
+					}
 					If (MfMath._IsStringInt(b, NegDivisor) = false)
 					{
 						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger_Param", "b"))
@@ -272,7 +284,7 @@ class MfMath extends MfObject
 				{
 					try
 					{
-						result.Value :=strRemainder
+						result.Value := strRemainder
 					}
 					catch e
 					{
@@ -371,8 +383,94 @@ class MfMath extends MfObject
 		throw ex
 	}
 ; 	End:Floor ;}
-	
+;{ 	IntCompare
+	IntCompare(intA, intB) {
+		if (MfNull.IsNull(intA))
+		{
+			ex := new MfArgumentNullException("intA")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfNull.IsNull(intb))
+		{
+			ex := new MfArgumentNullException("intB")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_intA := MfInt64.GetValue(intA, "NaN", true)
+		_intB := MfInt64.GetValue(intB, "NaN", true)
 
+		If (_intA == "NaN" || _intB == "NaN")
+		{
+			If (MfObject.IsObjInstance(intA, MfPrimitive) = true) ; for MfUInt64 and such
+			{
+				strA := intA.Value
+			}
+			else
+			{
+				strA :=  intA
+			}
+			If (MfObject.IsObjInstance(intB, MfPrimitive) = true) ; for MfUInt64 and such
+			{
+				strB := intB.Value
+			}
+			else
+			{
+				strB := intB
+			}
+			return MfMath._CompareLongIntStrings(strA, strB)
+		}
+		if (_IntA > _IntB)
+		{
+			return 1
+		}
+		if (_IntA < _IntB)
+		{
+			return -1
+		}
+		return 0
+	}
+; 	End:IntCompare ;}
+;{ 	IntGreaterThen
+	IntGreaterThen(intA, intB) {
+		result := MfMath.IntCompare(intA, IntB)
+		if (result > 0)
+		{
+			return true
+		}
+		return false
+	}
+; 	End:IntGreaterThen ;}
+;{ 	IntGreaterThenOrEqualTo
+	IntGreaterThenOrEqualTo(intA, intB) {
+		result := MfMath.IntCompare(intA, IntB)
+		if (result >= 0)
+		{
+			return true
+		}
+		return false
+	}
+; 	End:IntGreaterThenOrEqualTo ;}
+;{ 	IntLessThen
+	IntLessThen(intA, intB) {
+		result := MfMath.IntCompare(intA, IntB)
+		if (result < 0)
+		{
+			return true
+		}
+		return false
+	}
+; 	End:IntLessThen ;}
+;{ 	IntLessThenOrEqualTo
+	IntLessThenOrEqualTo(intA, intB) {
+		result := MfMath.IntCompare(intA, IntB)
+		if (result <= 0)
+		{
+			return true
+		}
+		return false
+	}
+; 	End:IntLessThenOrEqualTo ;}
 ;{ 	Round
 	; rounds a float value
 	; Parrams
@@ -950,4 +1048,134 @@ class MfMath extends MfObject
 	}
 ; 	End:IsValidInt64Range ;}
 
+;{ 	_GreaterThenIntString
+	_GreaterThenIntString(FirstLongString, SecondLongString) {
+		If (MfString.IsNullOrEmpty(SecondLongString))
+		{
+			return false
+		}
+		If (MfString.IsNullOrEmpty(FirstLongString))
+		{
+			return false
+		}
+
+		result := MfMath._CompareLongIntStrings(FirstLongString, SecondLongString)
+		return result > 0
+	}
+; 	End:_GreaterThenIntString ;}
+;{ 	_GreaterThenOrEqualToIntString
+	_GreaterThenOrEqualToIntString(FirstLongString, SecondLongString) {
+		If (MfString.IsNullOrEmpty(SecondLongString))
+		{
+			return false
+		}
+		If (MfString.IsNullOrEmpty(FirstLongString))
+		{
+			return false
+		}
+		result := MfMath._CompareLongIntStrings(FirstLongString, SecondLongString)
+		return result > -1
+	}
+; 	End:_GreaterThenOrEqualToIntString ;}
+;{ 	_LessThenIntString
+	_LessThenIntString(FirstLongString, SecondLongString) {
+		If (MfString.IsNullOrEmpty(SecondLongString))
+		{
+			return false
+		}
+		If (MfString.IsNullOrEmpty(FirstLongString))
+		{
+			return false
+		}
+		result := MfMath._CompareLongIntStrings(FirstLongString, SecondLongString)
+		return result < 0
+	}
+; 	End:_LessThenIntString ;}
+;{ 	_LessThenOrEqualToIntString
+	_LessThenOrEqualToIntString(FirstLongString, SecondLongString) {
+		If (MfString.IsNullOrEmpty(SecondLongString))
+		{
+			return false
+		}
+		If (MfString.IsNullOrEmpty(FirstLongString))
+		{
+			return false
+		}
+		result := MfMath._CompareLongIntStrings(FirstLongString, SecondLongString)
+		return result < 1
+	}
+; 	End:_LessThenOrEqualToIntString ;}
+;{ 	_CompareLongIntStrings
+	; Comparing IntegerStrings (also WITH leading Minus)
+	; Leading Zeros are removed by default to make comparison possible
+	; If First  is smaller than Second -1 is returned
+	; If First and Second are equal 0 is returned
+	; If First is  bigger than Second  1 is returned
+	; If one of the Strings is empty it is assumed to be 0
+	_CompareLongIntStrings(FirstLongString, SecondLongString) {
+
+	  local FSize, FCh, SSize, SCh, Output, Ret_Val
+	  MfMath._RemoveLeadingZeros(FirstLongString)
+	  MfMath._RemoveLeadingZeros(SecondLongString)
+	  StringLen, FSize, FirstLongString
+	  StringLen, SSize, SecondLongString
+	  StringLeft, FCh, FirstLongString, 1 
+	  StringLeft, SCh, SecondLongString, 1 
+	  if (FCh = "-") and (SCh <> "-")
+	     Ret_Val = -1
+	  else   
+	  if (SCh = "-") and (FCh <> "-")
+	     Ret_Val = 1
+	  else   
+	  {
+	    if (FSize > SSize)
+	    {
+	      if (FCh = "-") and (SCh = "-") 
+	         Ret_Val = -1
+	      else
+	         Ret_Val = 1
+	    }
+	    else
+	    if (SSize > FSize)
+	    {
+	      if (FCh= "-" ) and (SCh = "-") 
+	         Ret_Val = 1
+	      else
+	         Ret_Val = -1
+	    }
+	    else
+	    if (SSize = FSize)
+	    {
+	      Ret_Val = 0 ;//assume we find no difference
+	      loop, %SSize%
+	      {
+	        StringMid, Dig1, FirstLongString, %A_index%, 1 
+	        StringMid, Dig2, SecondLongString, %A_index%, 1 
+	        if (Dig1<>Dig2)  ;//Found a different digit
+	        {
+	          if (Dig1>Dig2)
+	          {
+	            If (FCh = "-") and (SCh = "-")
+	               Ret_Val = -1
+	            else
+	               Ret_Val = 1
+	            break   
+	          }     
+	          else
+	          if (Dig2 > Dig1)
+	          {
+	            If (FCh = "-") and (SCh = "-")
+	               Ret_Val = 1
+	            else
+	               Ret_Val = -1
+	            break   
+	          }     
+	        }
+	      } 
+	    }
+	  }
+	  
+	  return, Ret_Val 
+	}
+; 	End:_CompareLongIntStrings ;}
 }

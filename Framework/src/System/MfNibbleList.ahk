@@ -425,7 +425,9 @@ class MfNibbleList extends MfListBase
 		}
 		i := _index + 1 ; step up to one based index for AutoHotkey array
 		vRemoved := this.m_InnerList.RemoveAt(i)
-		if (vRemoved) {
+		iLen := this.m_InnerList.Length()
+		; if vremoved is an empty string or vRemoved is 0 then, If (vRemoved ) would computed to false
+		if (iLen = _index) {
 			this.m_InnerList.Count --
 		} else {
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_FailedToRemove"))
@@ -492,6 +494,23 @@ class MfNibbleList extends MfListBase
 		iMaxIndex := length -1
 		len := iMaxIndex - startIndex
 		iChunk := 0
+		If ((length & 1) && (iMaxIndex >= 0))
+		{
+			MSB := this.Item[0]
+			HexChar := MfNibConverter._GetHexValue(MSB)
+			mInfo := MfNibConverter.HexBitTable[HexChar]
+			if (mInfo.IsNeg)
+			{
+				retval .= "FF-"
+			}
+			else
+			{
+				retval .= "0"
+				retval .= HexChar
+				retval .= "-"
+			}
+			i++
+		}
 		while i <= iMaxIndex
 		{
 			bit1 := this.Item[i]

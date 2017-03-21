@@ -20,7 +20,7 @@
 	Inherits:
 		MfListBase
 */
-class MfByteList extends MfListBase
+class MfBinaryList extends MfListBase
 {
 	m_InnerList			:= Null
 	m_Enum				:= Null
@@ -31,7 +31,7 @@ class MfByteList extends MfListBase
 	*/
 	__New() {
 		base.__New()
-		this.m_isInherited := this.__Class != "MfByteList"
+		this.m_isInherited := this.__Class != "MfBinaryList"
 		this.m_InnerList := []
 		this.m_InnerList.Count := 0
 		this.m_Enum := Null
@@ -66,6 +66,14 @@ class MfByteList extends MfListBase
 			throw ex
 		}
 		_value := MfByte.GetValue(obj)
+		if (_value < 0 || _value > 1)
+		{
+			ex := new MfArgumentOutOfRangeException("obj"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
+				, "0", "1"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		_newCount := this.m_InnerList.Count + 1
 		this.m_InnerList[_newCount] := _value
 		this.m_InnerList.Count := _newCount
@@ -73,6 +81,37 @@ class MfByteList extends MfListBase
 		return retval
 	}
 ;	End:Add(value) ;}
+	AddByte(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value := MfByte.GetValue(obj)
+		
+		MSB := 0
+		LSB := 0
+
+		if (_value > 0) 
+		{
+			MSB := _Value // 16
+			LSB := Mod(_Value, 16)
+		}
+		
+		_newCount := this.m_InnerList.Count + 1
+		this.m_InnerList[_newCount] := MSB
+		_newCount++
+		this.m_InnerList[_newCount] := LSB
+		this.m_InnerList.Count := _newCount
+		retval := _newCount - 1
+		return retval
+	}
 ;{ 	Clear()				- Overrides - MfListBase
 /*
 	Method: Clear()
@@ -124,7 +163,20 @@ class MfByteList extends MfListBase
 		if (this.m_InnerList.Count <= 0) {
 			return retval
 		}
-		_value := MfByte.GetValue(obj)
+		try
+		{
+			_value := MfByte.GetValue(obj)
+		}
+		catch
+		{
+			return false
+		}
+		
+		if (_value < 0 || _value > 15)
+		{
+			return false
+		}
+
 		for i, b in this.m_InnerList
 		{
 			if (b = _value)
@@ -204,6 +256,14 @@ class MfByteList extends MfListBase
 			return int
 		}
 		_value := MfByte.GetValue(obj)
+		if (_value < 0 || _value > 1)
+		{
+			ex := new MfArgumentOutOfRangeException("obj"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
+				, "0", "1"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		for index, b in this.m_InnerList
 		{
 			if (b = _value)
@@ -274,6 +334,14 @@ class MfByteList extends MfListBase
 		}
 		i := _index + 1 ; step up to one based index for AutoHotkey array
 		_value := MfByte.GetValue(obj)
+		if (_value < 0 || _value > 1)
+		{
+			ex := new MfArgumentOutOfRangeException("obj"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
+				, "0", "1"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		this.m_InnerList.InsertAt(i, _value)
 		this.m_InnerList.Count ++
 	}
@@ -370,11 +438,12 @@ class MfByteList extends MfListBase
 	}
 ;	End:RemoveAt(int) ;}
 ;{ 	ToString
-	ToString(returnAsObj = false, startIndex = 0, length="") {
+	ToString(returnAsObj = false, startIndex = 0, length="", Format=0) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		
 		_returnAsObj := MfBool.GetValue(returnAsObj, false)
-		_startIndex := MfInt64.GetValue(startIndex, 0)
+		_Format := MfInteger.GetValue(Format, false)
+		_startIndex := MfInteger.GetValue(startIndex, 0)
 		if (_startIndex < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndex"))
@@ -386,7 +455,7 @@ class MfByteList extends MfListBase
 		}
 		else
 		{
-			_length := MfInt64.GetValue(length)
+			_length := MfInteger.GetValue(length)
 		}
 		if (_length < 0)
 		{
@@ -401,34 +470,69 @@ class MfByteList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		
+		if (_Format = 1)
+		{
+			return this._ToByteArrayString(_returnAsObj, _startIndex, _length)
+		}
 		retval := ""
 		i := _startIndex
 		iMaxIndex := _length - 1
-		iCount := 0
 		while i <= iMaxIndex
 		{
-			b := this.Item[i]
-			bit1 := b // 16
-			bit2 := Mod(b, 16)
-			bitChar1 := MfBitConverter._GetHexValue(bit1)
-			bitChar2 := MfBitConverter._GetHexValue(bit2)
-
-			if (iCount > 0)
-			{
-				retval .= "-" . bitChar1 . bitChar2
-			}
-			Else
-			{
-				retval .= bitChar1 . bitChar2
-			}
+			n := this.Item[i]
+			hexChar := MfBitConverter._GetHexValue(n)
+			retval .= hexChar
 			i++
-			iCount++
 		}
 		
 		return _returnAsObj = true?new MfString(retval):retval
 	}
 ; 	End:ToString ;}
+	_ToByteArrayString(returnAsObj, startIndex, length) {
+		retval := ""
+		i := startIndex
+		iMaxIndex := length -1
+		len := iMaxIndex - startIndex
+		iChunk := 0
+		rem := Mod(this.Count, 4)
+		iCount := 0
+		if (rem > 0)
+		{
+			offset := (4 - rem)
+			k := 0
+			While k <= offset
+			{
+				retval .= "0"
+				k++
+			}
+			iCount := offset
+			;i += offset
+		}
+		iLoopCount := 0
+		while i <= iMaxIndex
+		{
+			if (iLoopCount > 0)
+			{
+				retval .= "-"
+			}
+			while iCount < 4
+			{
+				if (i > iMaxIndex)
+				{
+					break
+				}
+				retval .= this.Item[i]
+				iCount++
+				i++
+			}
+			
+			iLoopCount++
+			iCount := 0
+			
+		}
+		
+		return returnAsObj = true?new MfString(retval):retval
+	}
 	_AutoIncrease()
 	{
 		if (this.IsFixedSize) {
@@ -569,6 +673,14 @@ class MfByteList extends MfListBase
 				}
 			}
 			_value := MfByte.GetValue(value)
+			if (_value < 0 || _value > 1)
+			{
+				ex := new MfArgumentOutOfRangeException("value"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
+					, "0", "1"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
 			_index ++ ; increase value for one based array
 			this.m_InnerList[_index] := _value
 			return this.m_InnerList[_index]

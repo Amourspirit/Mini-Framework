@@ -103,11 +103,8 @@ class MfBitConverter extends MfObject
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (!IsObject(obj))
 		{
-			IsNeg := False
-			if(MfMath._IsStringInt(obj, IsNeg))
-			{
-				return MfBitConverter._LongIntStringToHexArray(obj, 0)
-			}
+			Nibbles := MfNibConverter.GetNibbles(obj)
+			return MfNibConverter.ToByteList(Nibbles)
 		}
 		ObjCheck := MfConvert._IsNotMfObj(obj)
 		if (ObjCheck)
@@ -218,6 +215,7 @@ class MfBitConverter extends MfObject
 		return result
 	}
 ; 	End:BytesAdd ;}
+;{ 	BytesMultiply
 	BytesMultiply(BytesA, BytesB) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(BytesA, MfByteList) = false)
@@ -250,7 +248,7 @@ class MfBitConverter extends MfObject
 		result := MfNibConverter.ToByteList(nibResult)
 		return result
 	}
-
+; 	End:BytesMultiply ;}
 ;{ ToBool
 	ToBool(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -335,7 +333,11 @@ class MfBitConverter extends MfObject
 	ToChar(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		result := MfBitConverter.ToInt16(bytes, startIndex, false)
-		c := new MfChar(result)
+		if (result < 0)
+		{
+			result := Abs(result)
+		}
+		c := new MfChar()
 		c.CharCode := result
 		if (_ReturnAsObj)
 		{
@@ -864,8 +866,8 @@ class MfBitConverter extends MfObject
 		return ex
 	}
 ; 	End:_IsNotMfObj ;}
-
-	_GetBytesInt(value, bitCount = 32) {
+;{ 	_GetBytesInt
+	_GetBytesInt(value, bitCount = 64) {
 		If (bitCount < 4 )
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Under", "4"), "bitCount")
@@ -886,6 +888,8 @@ class MfBitConverter extends MfObject
 		return MfBitConverter._IntToHexArray(value, bitCount)
 
 	}
+; 	End:_GetBytesInt ;}
+;{ 	_GetBytesUInt
 	_GetBytesUInt(value, bitCount = 32) {
 		If (bitCount < 4 )
 		{
@@ -923,7 +927,7 @@ class MfBitConverter extends MfObject
 		return MfBitConverter._IntToHexArray(Abs(value), bitCount)
 
 	}
-
+; 	End:_GetBytesUInt ;}
 ;{ _LongHexStringToLongInt
 	; takse a MfByteList of hex values and converts to a postive string value of integer
 	; in theroy no limit to the number of bytes that can be turned
@@ -1159,139 +1163,16 @@ class MfBitConverter extends MfObject
 	Returns:
 		The the representation of strN as MfByteList of hex values in Litte Endian format
 */	
-	_LongIntStringToHexArray(strN, bitCount = 32) {
+	_LongIntStringToHexArray(strN, bitCount = 64) {
 		if ((bitCount > 0) && (Mod(bitCount, 4)))
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Not_Divisable_By", "4"), "bitCount")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		r := ""
-		retval := ""
-		sResult := strN . ""
-		IsNegative := false
-		bArray := new MfByteList()
-		ActualBitCount := 0
-		KnownBitCount := false
-		if (bitCount > 0)
-		{
-			KnownBitCount := true
-			ActualBitCount := bitCount // 4
-		}
-		
 
-		if ((MfString.IsNullOrEmpty(sResult) = true)
-			|| (sResult = "0"))
-		{
-			bArray.Add(0)
-			while (bArray.Count * 2) < ActualBitCount
-			{
-				bArray.Add(0)
-			}
-			return bArray
-		}
-		if (sResult ~= "^-[0-9]+$")
-		{
-			IsNegative := true
-			sResult := SubStr(sResult, 2, (StrLen(sResult) -1))
-		}
-		else if (sResult ~= "^\+[0-9]+$")
-		{
-			sResult := SubStr(sResult, 2, (StrLen(sResult) -1))
-		}
-		if (!(sResult ~= "^[0-9]+$"))
-		{
-			ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		loop
-		{
-			byte := ""
-			i := 0
-			while i < 2
-			{
-				if (sResult = "0")
-				{
-					break
-				}
-				sResult := MfBitConverter._LongIntStringDivide(sResult, 16, r)
-				r := r + 0 ; convert to integer
-				if (r <= 9)
-				{
-					byte := r . byte
-				}
-				else if (r = 10)
-				{
-					byte := "A" . byte
-				}
-				else if (r = 11)
-				{
-					byte := "B" . byte
-				}
-				else if (r = 12)
-				{
-					byte := "C" . byte
-				}
-				else if (r = 13)
-				{
-					byte := "D" . byte
-				}
-				else if (r = 14)
-				{
-					byte := "E" . byte
-				}
-				else
-				{
-					byte := "F" . byte
-				}
-				i++
-			}
-			byte := "0x" . byte
-			byte := byte + 0x0
-			bArray.Add(byte)
-
-			if (sResult = "0")
-			{
-				break
-			}
-		}
-		if (KnownBitCount = false)
-		{
-			; there is know know bit count but sign requires a bit
-			bArray.Add(0)
-		}
-				
-		if (IsNegative)
-		{
-			while (bArray.Count * 2 ) < ActualBitCount
-			{
-				bArray.Add(0)
-			}
-			;bArray := MfBitConverter._ReverseList(bArray)
-			; flip all the bits
-			bArray := MfBitConverter._FlipBytes(bArray)
-			
-			;~ ; when negative Add 1
-			IsAdded := MfBitConverter._AddOneToByteList(bArray)
-
-			
-			;bArray := MfBitConverter._SwapBytes(bArray)
-		}
-		else ; if (IsNegative)
-		{
-			
-			; add zero's to end of postivie array
-			while (bArray.Count * 2) < ActualBitCount
-			{
-				bArray.Add(0)
-			}
-			;bArray := MfBitConverter._ReverseList(bArray)
-			;bArray := MfBitConverter._SwapBytes(bArray)
-			
-		}
-	
-		return bArray
+		nibList := MfNibConverter._LongIntStringToHexArray(strN, bitCount)
+		return MfNibConverter.ToByteList(nibList)
 	}
 ; End:_LongIntStringToHexArray ;}
 ;{ _AddOneToByteList
