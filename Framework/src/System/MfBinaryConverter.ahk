@@ -21,6 +21,11 @@ class MfBinaryConverter extends MfObject
 ;{ 	GetBytes
 	GetBits(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (!IsObject(obj))
+		{
+			Nibbles := MfNibConverter.GetNibbles(obj)
+			return MfNibConverter.ToBinaryList(Nibbles)
+		}
 		ObjCheck := MfBinaryConverter._IsNotMfObj(obj)
 		if (ObjCheck)
 		{
@@ -55,6 +60,10 @@ class MfBinaryConverter extends MfObject
 		{
 			return MfBinaryConverter._GetBytesUInt(obj.Value, 64)
 		}
+
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
 	}
 ;{ GetBytes
 ;{ 	IsNegative
@@ -100,6 +109,118 @@ class MfBinaryConverter extends MfObject
 		return retval
 	}
 ; 	End:IsNegative ;}
+	ShiftLeft(bits, ShiftCount) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ShiftCount := MfInteger.GetValue(ShiftCount)
+		if (ShiftCount = 0)
+		{
+			return bits.Clone()
+		}
+
+		if (ShiftCount < 0)
+		{
+			return MfBinaryConverter.ShiftRight(bits, Abs(ShiftCount), Wrap)
+		}
+		bits := bits.Clone()
+		while (i < ShiftCount)
+		{
+			bits.RemoveAt(0)
+			bits.Add(0)
+			i++
+		}
+		
+		return bits
+	}
+;{ 	ShiftRight
+	ShiftRight(bits, ShiftCount) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ShiftCount := MfInteger.GetValue(ShiftCount)
+		if (ShiftCount = 0)
+		{
+			return bits.Clone()
+		}
+
+		if (ShiftCount < 0)
+		{
+			return MfBinaryConverter.ShiftLeft(bits, Abs(ShiftCount), Wrap)
+		}
+
+
+		MSB := bits.Item[0]
+		i := 0
+		bits := bits.Clone()
+		while (i < ShiftCount)
+		{
+			bits.RemoveAt(bits.Count -1)
+			bits.Insert(0, MSB)
+			i++
+		}
+		return bits
+		
+	}
+;{ 	ShiftRight
+;{ 	ShiftRightUnsigned
+	ShiftRightUnsigned(bits, ShiftCount) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ShiftCount := MfInteger.GetValue(ShiftCount)
+		if (ShiftCount = 0)
+		{
+			return bits.Clone()
+		}
+
+		if (ShiftCount < 0)
+		{
+			return MfBinaryConverter.ShiftLeft(bits, Abs(ShiftCount), Wrap)
+		}
+
+		i := 0
+		bits := bits.Clone()
+		while (i < ShiftCount)
+		{
+			bits.RemoveAt(bits.Count -1)
+			bits.Insert(0, 0)
+			i++
+		}
+		return bits
+		
+	}
+; 	End:ShiftRightUnsigned ;}
 ;{ 	ToBool
 	ToBool(bits, startIndex = -1, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -565,9 +686,25 @@ class MfBinaryConverter extends MfObject
 		}
 	}
 ; 	End:_AddOneToBitsValue ;}
+;{ 	_GetByteInfo
+	; get Byte Info From 4 bytes of a bit list
 	_GetByteInfo(byref bits, startIndex) {
 		byte := ""
 		i := startIndex
+		iCount := 0
+		; if start index is withing one of bits.Count then padd with zero
+		while (i > (bits.Count - 1))
+		{
+			byte .= "0"
+			i--
+			iCount++
+			if (iCount = 3)
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"), "bits")
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
 		while iCount < 4
 		{
 			byte .= bits.Item[i]
@@ -576,6 +713,19 @@ class MfBinaryConverter extends MfObject
 		}
 		return MfBinaryConverter.ByteTable[byte]
 	}
+; 	End:_GetByteInfo ;}
+;{ 	_IsNotMfObj
+	_IsNotMfObj(obj) {
+		if (MfObject.IsObjInstance(obj))
+		{
+			return false
+		}
+		
+		ex := new MfException(MfEnvironment.Instance.GetResourceString("NonMfObjectException_General"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		return ex
+	}
+; 	End:_IsNotMfObj ;}
 ;{ 	_GetBytesInt
 	_GetBytesInt(value, bitCount = 32) {
 		If (bitCount < 4 )
@@ -629,6 +779,109 @@ class MfBinaryConverter extends MfObject
 		return retval
 	}
 ; 	End:_GetSubList ;}
+;{ 	_FromBinaryString
+	; Converts string into MfBinaryList
+	; Parameters
+	;	value
+	;		represents a binary string.
+	;		Accepts sign of - or + in front of binary string
+	;		If signe is neg then all bits are flipped
+	;	bitcount
+	;		the bitcount to pad the MfBinaryList
+	;		Bitcount in only applied if value is signed or ForcePadding is true
+	;		If return list count is greater then bitcount then it will not be padded
+	;	ForcePadding
+	;		If true then return list will be padded even if not signed
+	;		Padding will be the same bit as MSB before padding
+	_FromBinaryString(value, bitCount = 64, ForcePadding=false) {
+		If (bitCount < 1 )
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Under", "2"), "bitCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		lst := new MfBinaryList()
+		strLength := StrLen(value)
+		If (strLength = 0)
+		{
+			while (lst.Count < bitCount)
+			{
+				lst.Add(0)
+			}
+			return lst
+		}
+
+		IsNeg := False
+		IsSigned := False
+		strX := ""
+
+		If (strLength > 0)
+		{
+			strSign := SubStr(value, 1, 1)
+			if (strSign == "-")
+			{
+				IsNeg := true
+				IsSigned := true
+				strX := SubStr(value, 2)
+			}
+			else if (strSign == "+")
+			{
+				IsSigned := true
+				strX := SubStr(value, 2)
+			}
+			Else
+			{
+				strX := value
+			}
+
+		}
+
+		iCount := 0
+		Loop, Parse, strX
+		{
+			If (A_LoopField = 1)
+			{
+				If (IsSigned = false && iCount = 0)
+				{
+					IsNeg := True
+				}
+				If (IsNeg = true && IsSigned = true)
+				{
+					lst.Add(0)
+				}
+				Else
+				{
+					lst.Add(1)
+				}
+			}
+			else if (A_LoopField = 0)
+			{
+				If (IsSigned = false && iCount = 0)
+				{
+					IsNeg := false
+				}
+				If (IsNeg = true && IsSigned = true)
+				{
+					lst.Add(1)
+				}
+				Else
+				{
+					lst.Add(0)
+				}
+			}
+			iCount++
+		}
+
+		if (IsSigned = true || ForcePadding = true)
+		{
+			while (lst.Count) < bitCount
+			{
+				lst.insert(0,IsNeg?1:0)
+			}
+		}
+		return lst
+	}
+; 	End:_FromBinaryString ;}
 ;{ _FlipBits
 	_FlipBits(lst) {
 		nArray := new MfBinaryList()

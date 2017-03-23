@@ -656,6 +656,13 @@ class MfMath extends MfObject
 		}
 	}
 ; 	End:Round ;}
+	ShiftRightUnsigned(Value, ShiftCount) {
+
+		bits := MfBinaryConverter.GetBits(value)
+		result := MfBinaryConverter.ShiftRightUnsigned(bits, ShiftCount)
+		throw new MfNotImplementedException()
+		Return result
+	}
 ; End:Methods ;}
 ;{ Internal Methods
 ;{ 	_RoundParams

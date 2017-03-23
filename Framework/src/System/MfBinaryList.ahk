@@ -81,6 +81,7 @@ class MfBinaryList extends MfListBase
 		return retval
 	}
 ;	End:Add(value) ;}
+;{ 	AddByte
 	AddByte(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (this.IsFixedSize) {
@@ -102,16 +103,90 @@ class MfBinaryList extends MfListBase
 		{
 			MSB := _Value // 16
 			LSB := Mod(_Value, 16)
+			LsbHex := MfNibConverter._GetHexValue(LSB)
+			MsbHex := MfNibConverter._GetHexValue(MSB)
+			LsbInfo := MfNibConverter.HexBitTable[LsbHex]
+			MsbInfo := MfNibConverter.HexBitTable[MsbHex]
+			strBin := MsbInfo.Bin
+			Loop, Parse, strBin
+			{
+				_newCount := this.m_InnerList.Count + 1
+				this.m_InnerList[_newCount] := A_LoopField
+				this.m_InnerList.Count := _newCount
+			}
+			strBin := LsbInfo.Bin
+			Loop, Parse, strBin
+			{
+				_newCount := this.m_InnerList.Count + 1
+				this.m_InnerList[_newCount] := A_LoopField
+				this.m_InnerList.Count := _newCount
+			}
+		}
+		else
+		{
+			i := 0
+			while i < 8
+			{
+				_newCount := this.m_InnerList.Count + 1
+				this.m_InnerList[_newCount] := 0
+				this.m_InnerList.Count := _newCount
+				i++
+			}
 		}
 		
-		_newCount := this.m_InnerList.Count + 1
-		this.m_InnerList[_newCount] := MSB
-		_newCount++
-		this.m_InnerList[_newCount] := LSB
-		this.m_InnerList.Count := _newCount
-		retval := _newCount - 1
-		return retval
 	}
+; 	End:AddByte ;}
+;{ 	AddNibble
+	AddNibble(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value := MfByte.GetValue(obj)
+		if (_value < 0 || _value > 15)
+		{
+			ex := new MfArgumentOutOfRangeException("obj"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
+				, "0", "15"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		MSB := 0
+		LSB := 0
+
+		if (_value > 0) 
+		{
+			Hex := MfNibConverter._GetHexValue(_value)
+			Info := MfNibConverter.HexBitTable[Hex]
+			strBin := Info.Bin
+			Loop, Parse, strBin
+			{
+				_newCount := this.m_InnerList.Count + 1
+				this.m_InnerList[_newCount] := A_LoopField
+				this.m_InnerList.Count := _newCount
+			}
+		}
+		else
+		{
+			i := 0
+			while i < 4
+			{
+				_newCount := this.m_InnerList.Count + 1
+				this.m_InnerList[_newCount] := 0
+				this.m_InnerList.Count := _newCount
+				i++
+			}
+		}
+		
+	}
+; 	End:AddNibble ;}
 ;{ 	Clear()				- Overrides - MfListBase
 /*
 	Method: Clear()
@@ -139,6 +214,20 @@ class MfBinaryList extends MfListBase
 		this.m_Enum := Null
 	}
 ;	End:Clear() ;}
+;{ 	Clone
+	Clone() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		cLst := new MfBinaryList()
+		cLst.Clear()
+		for i, x in this
+		{
+			_newCount := cLst.m_InnerList.Count + 1
+			cLst.m_InnerList[_newCount] := x
+			cLst.m_InnerList.Count := _newCount
+		}
+		return cLst
+	}
+; 	End:Clone ;}
 ;{ 	Contains()			- Overrides - MfListBase
 /*!
 	Method: Contains()

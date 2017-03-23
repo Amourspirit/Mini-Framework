@@ -100,6 +100,20 @@ class MfByteList extends MfListBase
 		this.m_Enum := Null
 	}
 ;	End:Clear() ;}
+;{ 	Clone
+	Clone() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		cLst := new MfByteList()
+		cLst.Clear()
+		for i, x in this
+		{
+			_newCount := cLst.m_InnerList.Count + 1
+			cLst.m_InnerList[_newCount] := x
+			cLst.m_InnerList.Count := _newCount
+		}
+		return cLst
+	}
+; 	End:Clone ;}
 ;{ 	Contains()			- Overrides - MfListBase
 /*!
 	Method: Contains()
