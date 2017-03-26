@@ -441,6 +441,7 @@ class MfList extends MfListBase
 	Throws:
 		Throws MfArgumentOutOfRangeException if index is less than zero or index is equal to or greater than Count
 		Throws MfArgumentException if index is not a valid MfInteger instance or valid var containing Integer
+		Throws MfNotSupportedException if MfList is read-only or Fixed size on Set
 */
 	Item[index]
 	{
@@ -455,6 +456,11 @@ class MfList extends MfListBase
 			return this.m_InnerList[_index]
 		}
 		set {
+			if (this.IsReadOnly) {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
 			_index := MfInteger.GetValue(Index)
 			if (_index < 0 || _index >= this.Count) {
 				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))

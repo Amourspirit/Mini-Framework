@@ -471,6 +471,108 @@ class MfMath extends MfObject
 		return false
 	}
 ; 	End:IntLessThenOrEqualTo ;}
+;{ 	Max
+	Max(obj1, obj2) {
+		IsObj1 := IsObject(obj1)
+		IsObj2 := IsObject(obj2)
+		if (IsObj1 = false && IsObj2 = false)
+		{
+			result := MfMath.IntCompare(obj1, obj2)
+			if (result > 0)
+			{
+				return obj1
+			}
+			return obj2
+		}
+		if (MfObject.IsObjInstance(obj1, MfFloat) && MfObject.IsObjInstance(obj2, MfFloat))
+		{
+			If (obj1.GreaterThen(obj2))
+			{
+				return obj1
+			}
+			return obj2
+		}
+		if (MfObject.IsObjInstance(obj1, MfUInt64) && MfObject.IsObjInstance(obj2, MfUInt64))
+		{
+			If (obj1.GreaterThen(obj2))
+			{
+				return obj1
+			}
+			return obj2
+		}
+
+		result1 := MfInt64.GetValue(obj1, "NaN", true)
+		if (result1 == "NaN")
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		result2 := MfInt64.GetValue(obj2, "NaN", true)
+		if (result2 == "NaN")
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (result1 > result2)
+		{
+			return obj1
+		}
+		return obj2
+	}
+; 	End:Max ;}
+;{ 	Min
+	Min(obj1, obj2) {
+		IsObj1 := IsObject(obj1)
+		IsObj2 := IsObject(obj2)
+		if (IsObj1 = false && IsObj2 = false)
+		{
+			result := MfMath.IntCompare(obj1, obj2)
+			if (result > 0)
+			{
+				return obj2
+			}
+			return obj1
+		}
+		if (MfObject.IsObjInstance(obj1, MfFloat) && MfObject.IsObjInstance(obj2, MfFloat))
+		{
+			If (obj1.GreaterThen(obj2))
+			{
+				return obj2
+			}
+			return obj1
+		}
+		if (MfObject.IsObjInstance(obj1, MfUInt64) && MfObject.IsObjInstance(obj2, MfUInt64))
+		{
+			If (obj1.GreaterThen(obj2))
+			{
+				return obj2
+			}
+			return obj1
+		}
+
+		result1 := MfInt64.GetValue(obj1, "NaN", true)
+		if (result1 == "NaN")
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		result2 := MfInt64.GetValue(obj2, "NaN", true)
+		if (result2 == "NaN")
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (result1 > result2)
+		{
+			return obj2
+		}
+		return obj1
+	}
+; 	End:Min ;}
 ;{ 	Round
 	; rounds a float value
 	; Parrams
