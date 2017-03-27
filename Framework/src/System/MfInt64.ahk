@@ -576,6 +576,10 @@ Class MfInt64 extends MfPrimitive
 		Throws MfNotSupportedException if incorrect number of parameters are passed in.
 */
 	GetValue(args*) {
+		; _intA := MfInt64.GetValue("-0x123456789", "NaN", true) 1000 loops taks about 1 second
+		;_intA := MfInt64.GetValue("x123456789", "NaN", true) 1000 loops takes just over 1 Minutes
+		; when valid integer very fast. When not a valid integer much slower.
+		
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		;obj, default=0, AllowAny=false
 		i := 0

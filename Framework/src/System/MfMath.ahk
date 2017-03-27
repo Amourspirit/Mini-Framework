@@ -384,6 +384,7 @@ class MfMath extends MfObject
 	}
 ; 	End:Floor ;}
 ;{ 	IntCompare
+	; Less then one second to compare MfMath.IntCompare("12345634343","12345634343") 1000 times
 	IntCompare(intA, intB) {
 		if (MfNull.IsNull(intA))
 		{
@@ -984,6 +985,11 @@ class MfMath extends MfObject
 	; End:roundPower10Double ;}
 ;{ 	_LongIntStringDivide
 	_LongIntStringDivide(dividend, divisor, ByRef remainder) {
+		; bigX := MfBigInt.Parse(dividend)
+		; remainder := bigX.Divide(divisor)
+		; return
+
+		; string method is at least 100 time faster then MfBigInt method on 1000 loops
 		q := ""
 		sNum := ""
 		iLength := StrLen(dividend)
@@ -1085,6 +1091,7 @@ class MfMath extends MfObject
 	;
 	; value can have leading sign of - or + but must be a string
 	_IsValidInt64Range(value, AllowFloatValue = false) {
+		
 		strX := value . ""
 		xLen := StrLen(strX)
 		If (xLen > 20)
@@ -1096,6 +1103,11 @@ class MfMath extends MfObject
 			if (strX ~= "^0x[0-9a-fA-F]{1,16}$")
 			{
 				Hex := format("Z{:X}", value) ; will remove leading zeros
+				if (hex == "Z0")
+				{
+					; this is the case when value is 0x0
+					return true
+				}
 				zValue := "Z" . LTrim(SubStr(value,3),"0")
 				if (Hex = zValue)
 				{
@@ -1222,8 +1234,12 @@ class MfMath extends MfObject
 	; If First is  bigger than Second  1 is returned
 	; If one of the Strings is empty it is assumed to be 0
 	_CompareLongIntStrings(FirstLongString, SecondLongString) {
+		; x := MfBigInt.Parse(FirstLongString)
+		; return x.CompareTo(SecondLongString)
 
-	  local FSize, FCh, SSize, SCh, Output, Ret_Val
+		; using string method is 65 time faster then MfBigIntCompare on 1000 loop
+
+	  ;local FSize, FCh, SSize, SCh, Output, Ret_Val
 	  MfMath._RemoveLeadingZeros(FirstLongString)
 	  MfMath._RemoveLeadingZeros(SecondLongString)
 	  StringLen, FSize, FirstLongString
