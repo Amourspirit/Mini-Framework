@@ -45,6 +45,11 @@ class MfEnvironment extends MfResourceSingletonBase
 		} else {
 			this.m_Rm := new MfResourceManager() 
 		}
+        if (this.m_rm.ResourceAvailable = false)
+        {
+            this.m_NewLine := "`r`n"
+            ; was unable to locate valid resource file. set a few default for fail safe
+        }
     }
 ; End:Constructor ;}
 ;{ 	DestroyInstance()
@@ -99,6 +104,10 @@ class MfEnvironment extends MfResourceSingletonBase
         Var Containing string formated with any arg passed in.
 */
 	GetResourceString(key , args*) {
+        if (this.m_Rm.ResourceAvailable = false)
+		{
+			return this.m_Rm.ErrorMessage
+		}
         if (MfString.IsNullOrEmpty(key))
         {
             return this.m_Rm.GetResourceString("ArgumentNull_ResourceKey")
@@ -136,10 +145,14 @@ class MfEnvironment extends MfResourceSingletonBase
             One or more arguments to format the resource string.
 */
 	GetResourceStringBySection(key, section, args*) {
-      if (!args.MaxIndex()) {
+        if (this.m_Rm.ResourceAvailable = false)
+		{
+			return this.m_Rm.ErrorMessage
+		}
+        if (!args.MaxIndex()) {
             return this.m_Rm.GetResourceString(key, section)
         }
-		strRes := this.m_Rm.GetResourceString(key, section)
+        strRes := this.m_Rm.GetResourceString(key, section)
         if (MfString.IsNullOrEmpty(strRes)) {
             return MfString.Empty
         }

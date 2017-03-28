@@ -51,13 +51,42 @@ class MfResourceManager extends MfObject
 		if (this.__Class != "MfResourceManager") {
 			throw new MfNotSupportedException("MfResourceManager is seal class!")
 		}	
-		
-		this.SetResDir(lang)
+		this.m_ResourceAvailable := true
+		result := this.SetResDir(lang)
+		If (result)
+		{
+			this.m_ResourceAvailable := false
+			this.m_ErrorMessage := result
+		}
+				
 		this.m_isInherited := this.__Class != "MfResourceManager"
 		
 	}
 ; 	End:Constructor ;}
 ;{ 	Properties
+;{ ErrorMessage
+		m_ErrorMessage := ""
+	/*!
+		Property: ErrorMessage [get]
+			Gets the ErrorMessage value associated with the this instance
+		Value:
+			Var representing the ErrorMessage property of the instance
+		Remarks:
+			Readonly Property
+	*/
+	ErrorMessage[]
+	{
+		get {
+			return this.m_ErrorMessage
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "ErrorMessage")
+			Throw ex
+		}
+	}
+; End:ErrorMessage ;}
+;{ ResourceFolder
 	m_ResourceFolder		:= Null
 /*
 	Property: ResourceFolder [get]
@@ -82,7 +111,31 @@ class MfResourceManager extends MfObject
 			Throw ex
 		}
 	}
+; End:ResourceFolder ;}
+;{ ResourceAvailable
+		m_ResourceAvailable := false
+	/*!
+		Property: ResourceAvailable [get]
+			Gets the ResourceAvailable value associated with the this instance
+		Value:
+			Var representing the ResourceAvailable property of the instance
+		Remarks:
+			Readonly Property
+	*/
+	ResourceAvailable[]
+	{
+		get {
+			return this.m_ResourceAvailable
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "ResourceAvailable")
+			Throw ex
+		}
+	}
+; End:ResourceAvailable ;}
 ; 	End:Properties ;}
+
 ;{ 	SetResDir
 	/*
 		Method: SetResDir(lang)
@@ -99,7 +152,8 @@ class MfResourceManager extends MfObject
 		if (MfNull.IsNull(this.m_CoreRes)) {
 			sFile := MfString.Format("MfResource_Core_{0}.dll", lang) ;*[SetResDir]
 			
-			strVersion := MfInfo.Version.Major . "." . MfInfo.Version.Minor ; . "." . MfInfo.Version.Build
+			strVersion := MfString.Format("{0:i}.{1:i}", MfInfo.Version.Major, MfInfo.Version.Minor)
+			
 			
 			; start by looking for the Super Global MfResourceFolder. Give the script the Priority
 			if (!MfString.IsNullOrEmpty(MfResourceFolder))
@@ -107,7 +161,7 @@ class MfResourceManager extends MfObject
 				this.m_ResourceFolder := MfString.GetValue(MfResourceFolder)
 				this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 				if (FileExist(this.CoreRes)) {
-					return
+					return false
 				}
 			}
 			
@@ -115,34 +169,34 @@ class MfResourceManager extends MfObject
 			this.m_ResourceFolder := MfString.Format("{0}\Lib\Mini_Framwork\{1}\System\Resource", A_ScriptDir, strVersion)
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			
 			this.m_ResourceFolder := MfString.Format("{0}\Lib\System\Resource", A_ScriptDir)
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			; start by looking the scripts folder. Give the script the highest Priority
 			this.m_ResourceFolder := MfString.Format("{0}\Lib\Resource", A_ScriptDir)
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			this.m_ResourceFolder := MfString.Format("{0}\Resource", A_ScriptDir)
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			this.m_ResourceFolder := MfString.Format("{0}\Resources", A_ScriptDir)
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			this.m_ResourceFolder :=  A_ScriptDir
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			
 			; A_ProgramFiles will be "Program Files" on 32 bit machine
@@ -151,7 +205,7 @@ class MfResourceManager extends MfObject
 			this.m_ResourceFolder := MfString.Format("{0}\AutoHotkey\Lib\Mini_Framwork\{1}\System\Resource", A_ProgramFiles, strVersion)
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			if (A_Is64bitOS)
 			{
@@ -159,7 +213,7 @@ class MfResourceManager extends MfObject
 				this.m_ResourceFolder := MfString.Format("{0}\AutoHotkey\Lib\Mini_Framwork\{1}\System\Resource", PFiles64, strVersion)
 				this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 				if (FileExist(this.CoreRes)) {
-					return
+					return false
 				}
 			}
 			
@@ -177,7 +231,7 @@ class MfResourceManager extends MfObject
 				this.m_ResourceFolder :=  InstallPath
 				this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 				if (FileExist(this.CoreRes)) {
-					return
+					return false
 				}
 			}
 			catch e
@@ -194,7 +248,7 @@ class MfResourceManager extends MfObject
 				this.m_ResourceFolder :=  MfString.Format("{0}\lib\Mini_Framwork\{1}\System\Resource", InstallPath, strVersion)
 				this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 				if (FileExist(this.CoreRes)) {
-					return
+					return false
 				}
 			}
 			catch e
@@ -205,7 +259,7 @@ class MfResourceManager extends MfObject
 			this.m_ResourceFolder := MfString.Format("{0}\AutoHotkey\Lib\Mini_Framwork\{1}\System\Resource", A_MyDocuments, strVersion)
 			this.CoreRes := MfString.Format("{0}\MfResource_Core_{1}.dll", this.m_ResourceFolder, lang)
 			if (FileExist(this.CoreRes)) {
-				return
+				return false
 			}
 			
 			this.m_ResourceFolder := Null
@@ -213,12 +267,11 @@ class MfResourceManager extends MfObject
 			msg := "Unable to locate core Resource File.`nTry placing the core resource file (Resource_Core_{0}.dll) in a sub-folder"
 			msg .= " named Resource for the current running script.`nExpected Resource\Resource_Core_{0}.dll"
 			
-			ex := new MfSystemException(MfString.Format(msg, lang))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			return MfString.Format(msg, lang)
 		}
 	}
 ; 	End:SetResDir ;}
+	
 ;{ 	IsValidLanguageResource
 /*
 	Method: IsValidLanguageResource()
@@ -250,8 +303,7 @@ class MfResourceManager extends MfObject
 */
 	IsValidLanguageResource(lang) {
 		
-		strVersion := MfInfo.Version.Major . "." . MfInfo.Version.Minor ; . "." . MfInfo.Version.Build
-		
+		strVersion := MfString.Format("{0:i}.{1:i}", MfInfo.Version.Major, MfInfo.Version.Minor)
 		; start by looking for the Super Global MfResourceFolder. Give the script the Priority
 		if (!MfString.IsNullOrEmpty(MfResourceFolder))
 		{
@@ -379,6 +431,10 @@ class MfResourceManager extends MfObject
 		MfEnvironment.Instance.GetResourceStringBySection("MyKey", "someSection")
 */
 	GetResourceString(key, Section="CORE") {
+		if (this.m_ResourceAvailable = false)
+		{
+			return this.m_ErrorMessage
+		}
 		result := ""
 		_coreRes := this.CoreRes
 		result := Mfunc.IniRead(_coreRes, Section, key)

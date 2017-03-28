@@ -1227,12 +1227,170 @@ Class MfString extends MfPrimitive
 		All MfObject derived classes will call instance.ToString().
 */
 	Format(str, args*) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		
+		if (MfString.IsNullOrEmpty(str))
+		{
+			return MfString.Empty
+		}
+		_returnAsObj := false
+		if (MfObject.IsObjInstance(str, MfString))
+		{
+			retval := str.value
+			_returnAsObj := str.ReturnAsObject
+		} else {
+			retval := str
+		}
+		
+		Count := 0
+		; bench marks show that StringReplace is more than twice as fast
+		; on more complex string replacements than regex replace in AutoHotkey
+		strR := ""
+		aLst := new MfList()
+		for index,arg in args
+		{
+			aLst.Add(MfString._GetObValue(arg))
+		}
+
+		searchStart := 1
+		LastReplacemtIndex := -1
+		searchNoIndex := "{:"
+		NoIndexValue := false
+		NoNonIndexValues := false
+		; loop non index until hit a numbered index
+		; parse the numbered index and go again
+		loop
+		{
+			;~ if (searchStart >= strLen(retval))
+			;~ {
+				;~ break
+			;~ }
+			FoundPos := InStr(retval, "{", true, searchStart)
+			if (FoundPos)
+			{
+				EndPos := InStr(retval, "}", true, FoundPos + 1)
+				if (!EndPos)
+				{
+					break
+				}
+				ILen := StrLen(retval)
+				if (FoundPos + 2 <= ILen)
+				{
+					NextChar := SubStr(retval, FoundPos + 1, 1)
+					if (NextChar = ":")
+					{
+						; non indexed item
+						LastReplacemtIndex++
+						if (LastReplacemtIndex >= (aLst.Count))
+						{
+							searchStart := EndPos + 1
+							; no more args to replace
+							continue
+						}
+						len := (EndPos - FoundPos) + 1
+						placeholder := SubStr(retval, FoundPos, len)
+						formatter := SubStr(placeholder, 3, StrLen(placeholder) - 3)
+						strF := "{:" . formatter . "}"
+						replacement := format(strF, aLst.Item[LastReplacemtIndex])
+						retval := Mfunc.StringReplace(retval, placeholder, replacement, 0)
+						searchStart := FoundPos + StrLen(replacement)
+					}
+					else if (NextChar ~= "[0-9]")
+					{
+						; index replacement
+						len := (EndPos - FoundPos) + 1
+						placeholder := SubStr(retval, FoundPos, len)
+						
+						sIndex := ""
+						iIndexCount := 0
+						
+						Loop, Parse, placeholder
+						{
+							if (A_Index = 1)
+							{
+								continue
+							}
+							if (A_LoopField ~= "[0-9]")
+							{
+								sIndex .= A_LoopField
+								iIndexCount++
+							}
+							else
+							{
+								break
+							}
+						}
+						If (iIndexCount = 0)
+						{
+							searchStart := EndPos + 1
+							continue
+						}
+						sIndex += 0
+						if (sIndex >= aLst.Count)
+						{
+							searchStart := EndPos + 1
+							continue
+						}
+						if (iIndexCount = len - 2)
+						{
+							; simple find and replace in the format of {0}
+							placeholder := "{" . sIndex . "}"
+							replacement := aLst.Item[sIndex]
+							retval := Mfunc.StringReplace(retval, placeholder, replacement, 1) ; replace all
+							searchStart := FoundPos + StrLen(replacement)
+							LastReplacemtIndex := sIndex
+							continue
+						}
+						
+						formatter := SubStr(placeholder, iIndexCount + 2, StrLen(placeholder) - (iIndexCount + 2))
+						strF := "{" . formatter . "}"
+						replacement := format(strF, aLst.Item[sIndex])
+						retval := Mfunc.StringReplace(retval, placeholder, replacement, 1)
+						searchStart := FoundPos + StrLen(replacement)
+						LastReplacemtIndex := sIndex
+						continue
+					}
+				}
+					
+			}
+			else
+			{
+				break
+			}
+			continue
+			
+		}
+		
+		if (_returnAsObj) {
+			return new MfString(retval, true)
+		} else {
+			return retval
+		}
+		
+	}
+	_GetObValue(obj) {
+		retval := ""
+		if (IsObject(obj))
+		{
+			if (MfObject.IsObjInstance(obj, MfObject))
+			{
+				retval := obj.ToString()
+			}
+			else
+			{
+				retval := "Object"
+			}
+		}
+		else
+		{
+			retval := obj
+		}
+		return retval
+	}
+	__Format(str, args*) {
+		
 		if (MfString.IsNullOrEmpty(str)) {
 			return MfString.Empty
 		}
-		wf := A_FormatInteger
-		SetFormat, IntegerFast, D
 		_returnAsObj := false
 		if (MfObject.IsObjInstance(str, MfString)) {
 			retval := str.value
@@ -1244,32 +1402,92 @@ Class MfString extends MfPrimitive
 		Count := 0
 		; bench marks show that StringReplace is more than twice as fast
 		; on more complex string replacements than regex replace in AutoHotkey
-		strR := MfString.Empty
+		strR := ""
+		searchNoIndex := "{:"
+		searchStart := 1
 		for index,arg in args
 		{	
-			placeholder := "{" . Count . "}"
 			if (IsObject(arg))
 			{
-				if ((IsFunc(arg.Is)) && (arg.Is(MfObject)))
+				if (MfObject.IsObjInstance(arg, MfObject))
 				{
-					if (arg.IsInstance())
-					{
-						strR := arg.ToString()
-					} else {
-						t := new MfType(arg)
-						strR := t.ToString()
-					}
-				} else {
+					strR := arg.ToString()
+				}
+				else
+				{
 					strR := "Object"
 				}
-				
-			} else {
+			}
+			else
+			{
 				strR := arg
 			}
-			retval := Mfunc.StringReplace(retval, placeholder, strR, 1)
+			searchStr := "{" . format("{:i}", count)
+			FoundNumberic := false
+			loop
+			{
+				; InStr is much faster then regx
+				FoundPos := InStr(retval, searchStr, true, 1)
+				if(FoundPos)
+				{
+					FoundEnd := InStr(retval, "}", true, FoundPos + 1)
+					if (FoundEnd)
+					{
+						searchStart := FoundEnd + 1
+						len := (FoundEnd - FoundPos) + 1
+						if (len = 3)
+						{
+							; must be {0} format
+							placeholder := searchStr . "}"
+							retval := Mfunc.StringReplace(retval, placeholder, strR, 1)
+						}
+						else
+						{
+							placeholder := SubStr(retval, FoundPos, len)
+							formatter := SubStr(placeholder, 4, StrLen(placeholder) - 4)
+							strF := "{:" . formatter . "}"
+							replacement := format(strF, strR)
+							retval := Mfunc.StringReplace(retval, placeholder, replacement, 1)
+						}
+						FoundNumberic := true
+					}
+					else
+					{
+						stop := true
+						break
+					}
+				}
+				else
+				{
+					if (FoundNumberic)
+					{
+						break
+					}
+					FoundPos := InStr(retval, searchNoIndex, true, searchStart)
+					if(FoundPos)
+					{
+						FoundEnd := InStr(retval, "}", true, FoundPos + 1)
+						if (FoundEnd)
+						{
+							searchStart := FoundEnd + 1
+							len := (FoundEnd - FoundPos) + 1
+							placeholder := SubStr(retval, FoundPos, len)
+							formatter := SubStr(placeholder, 3, StrLen(placeholder) - 3)
+							strF := "{:" . formatter . "}"
+							replacement := format(strF, strR)
+							retval := Mfunc.StringReplace(retval, placeholder, replacement, 0)
+						}
+					}
+					; no more instances of {0 are located
+					break
+				}
+			}
+			if (stop)
+			{
+				break
+			}
 			Count ++
 		}
-		SetFormat, IntegerFast, %wf%
 		if (_returnAsObj) {
 			return new MfString(retval, true)
 		} else {
@@ -1277,7 +1495,6 @@ Class MfString extends MfPrimitive
 		}
 		
 	}
-	
 ; End:Format(str, args*);}	
 ;{	GetHashCode()
 /*

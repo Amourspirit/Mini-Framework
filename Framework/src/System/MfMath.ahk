@@ -1145,7 +1145,8 @@ class MfMath extends MfObject
 			}
 			if (dotIndex > 0)
 			{
-				strX := MfString.Substring(strX, 0, dotIndex)
+				strX := SubStr(strX, 1, dotIndex) ; way faster then current MfString.SubString
+				;strX := MfString.Substring(strX, 0, dotIndex)
 			}
 		}
 		; maximum length of Integer Max or Min with sign is 20 characters

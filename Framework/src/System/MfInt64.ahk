@@ -576,10 +576,9 @@ Class MfInt64 extends MfPrimitive
 		Throws MfNotSupportedException if incorrect number of parameters are passed in.
 */
 	GetValue(args*) {
-		; _intA := MfInt64.GetValue("-0x123456789", "NaN", true) 1000 loops taks about 1 second
-		;_intA := MfInt64.GetValue("x123456789", "NaN", true) 1000 loops takes just over 1 Minutes
-		; when valid integer very fast. When not a valid integer much slower.
-		
+		; _intA := MfInt64.GetValue("-0x123456789", "NaN", true) 1000 loops taks about 0.3 second
+		;_intA := MfInt64.GetValue("x123456789", "NaN", true) 1000 loops taks about 0.4 second
+		; measurements done on older dual core laptop		
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		;obj, default=0, AllowAny=false
 		i := 0
@@ -603,13 +602,14 @@ Class MfInt64 extends MfPrimitive
 		}
 		else if (i = 2)
 		{
-			try
-			{
-				_default := MfInt64._GetValue(args[2])
-			}
-			catch e
+			_default := MfInt64._GetValue(args[2], false)
+			If (_default == "NaN")
 			{
 				CanThrow := true
+			}
+			else
+			{
+				CanThrow := false
 			}
 		}
 		else
@@ -635,17 +635,18 @@ Class MfInt64 extends MfPrimitive
 			}
 			else
 			{
-				try
-				{
-					_default := MfInt64._GetValue(args[2])
-				}
-				catch e
+				_default := MfInt64._GetValue(args[2], false)
+				if (_default == "NaN")
 				{
 					CanThrow := true
 				}
+				else
+				{
+					CanThrow := false
+				}
 			}
 		}
-		retval := CanThrow = true? 0:_default
+		retval := 0
 		if (CanThrow = true)
 		{
 			try
@@ -661,146 +662,133 @@ Class MfInt64 extends MfPrimitive
 		}
 		else
 		{
-			try
+			retval := MfInt64._GetValue(obj, false)
+			if (retval == "NaN")
 			{
-				retval := MfInt64._GetValue(obj)
+				return _default
 			}
-			catch e
-			{
-				retval := _default
-			}
+			return retval
 		}
 		return retval
 	}
 ; End:GetValue() ;}	
 ;{ 	_GetValue
 	; internal method
-	_GetValue(obj) {
-		WasFormat := A_FormatInteger
-		try
-		{
-			SetFormat, IntegerFast, D
-			retval := 0
-			retval .= "" ; necessary for integer fast
-
-			if (IsObject(obj)) {
-				T := new MfType(obj)
-				if (T.IsIntegerNumber)
+	_GetValue(obj, CanThrow=true) {
+		retval := 0
+		if (IsObject(obj)) {
+			T := new MfType(obj)
+			if (T.IsIntegerNumber)
+			{
+				retval := obj.Value
+				if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue))
 				{
-					retval := obj.Value
-					if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue))
+					if (!CanThrow)
 					{
-						ex := new MfArgumentOutOfRangeException("obj"
-							, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-							,MfInt64.MinValue, MfInt64.MaxValue))
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
+						return "NaN"
 					}
-				}
-				else if (t.IsFloat)
-				{
-					if ((obj.LessThen(MfInt64.MinValue)) || (obj.GreaterThen(MfInt64.MaxValue))) {
-						ex := new MfArgumentOutOfRangeException("obj"
-							, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-							,MfInt64.MinValue, MfInt64.MaxValue))
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
-					}
-					if (obj.LessThen(0.0))
-					{
-						retval := Ceil(obj.Value)
-					} else {
-						retval := Floor(obj.Value)
-					}
-				}
-				else
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "int"))
+					ex := new MfArgumentOutOfRangeException("obj"
+						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+						,MfInt64.MinValue, MfInt64.MaxValue))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-			} else {
-				retval := MfInt64._GetValueFromVar(obj)
 			}
-		}
-		Catch e
-		{
-			throw e
-		}
-		Finally
-		{
-			SetFormat, IntegerFast, %WasFormat%
+			else if (t.IsFloat)
+			{
+				; coverting to string if 8 time faaster then using
+				; float LessThen and GreaterThen. Likely due to seting format of MfFloat
+				varInt := format("{:f}", obj.Value)
+				dotIndex := InStr(varInt, ".") - 1
+				if (dotIndex > 0)
+				{
+					varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
+				}
+				retval := varInt + 0 ; force conversion from any hex values
+				if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue)) {
+				if (!CanThrow)
+				{
+					return "NaN"
+				}
+					ex := new MfArgumentOutOfRangeException("varInt"
+						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+						,MfInt64.MinValue, MfInt64.MaxValue))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			else
+			{
+				if (!CanThrow)
+				{
+					return "NaN"
+				}
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "int"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		} else {
+			retval := MfInt64._GetValueFromVar(obj, CanThrow)
 		}
 		return retval
 	}
 ; 	End:_GetValue ;}
 ;{ 	_GetValueFromVar
 	; internal method
-	_GetValueFromVar(varInt) {
-		WasFormat := A_FormatInteger
-		retval := 0
-		retval .= "" ; necessary for integer fast
-		try
+	_GetValueFromVar(varInt, CanThrow=true) {
+		strVarInt := varInt . ""
+		iF (MfMath._IsValidInt64Range(strVarInt, true) = false)
 		{
-			SetFormat, IntegerFast, D
-			strVarInt := varInt . ""
-			iF (MfMath._IsValidInt64Range(strVarInt, true) = false)
+			if (!CanThrow)
 			{
-				ex := new MfArgumentOutOfRangeException("varInt"
-						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt64.MinValue, MfInt64.MaxValue))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
+				return "NaN"
 			}
-			if (Mfunc.IsInteger(varInt)) {
-				retval := varInt + 0 ; force conversion from any hex values
-				if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue)) {
-					ex := new MfArgumentOutOfRangeException("varInt"
-						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt64.MinValue, MfInt64.MaxValue))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
+			ex := new MfArgumentOutOfRangeException("varInt"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+					,MfInt64.MinValue, MfInt64.MaxValue))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+		}
+		if (Mfunc.IsInteger(varInt)) {
+			retval := varInt + 0 ; force conversion from any hex values
+			if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue)) {
+				if (!CanThrow)
+				{
+					return "NaN"
 				}
-			} else if (Mfunc.IsFloat(varInt)) {
-				sf := new MfFloat(varInt)
-				if ((sf.LessThen(MfInt64.MinValue)) || (sf.GreaterThen(MfInt64.MaxValue))) {
-					ex := new MfArgumentOutOfRangeException("varInt"
-						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt64.MinValue, MfInt64.MaxValue))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				if (sf.LessThen(0.0)) {
-					retval := Ceil(sf.Value)
-				} else {
-					retval := Floor(sf.Value)
-				}
-				if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue)) {
-					ex := new MfArgumentOutOfRangeException("varInt"
-						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt64.MinValue, MfInt64.MaxValue))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-			} else {
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IntegerVar", "varInt"), "varInt")
+				ex := new MfArgumentOutOfRangeException("varInt"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+					,MfInt64.MinValue, MfInt64.MaxValue))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-		}
-		catch e
-		{
-			if ((MfObject.IsObjInstance(e, MfException)) && (e.Source = A_ThisFunc))
+		} else if (Mfunc.IsFloat(varInt)) {
+			dotIndex := InStr(varInt, ".") - 1
+			if (dotIndex > 0)
 			{
-				throw e
+				varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
 			}
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			retval := varInt + 0 ; force conversion from any hex values
+			if ((retval < MfInt64.MinValue) || (retval > MfInt64.MaxValue)) {
+				if (!CanThrow)
+				{
+					return "NaN"
+				}
+				ex := new MfArgumentOutOfRangeException("varInt"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+					,MfInt64.MinValue, MfInt64.MaxValue))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			
+		} else {
+			if (!CanThrow)
+			{
+				return "NaN"
+			}
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IntegerVar", "varInt"), "varInt")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
-		}
-		finally
-		{
-			SetFormat, IntegerFast, %WasFormat%
 		}
 		return retval
 	}
