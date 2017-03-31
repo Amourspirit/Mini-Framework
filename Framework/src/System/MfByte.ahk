@@ -546,6 +546,9 @@ Class MfByte extends MfPrimitive
 			derived from [MfObject](MfObject.html) or a valid instance of [MfByte](MfByte.html) class.
 	*/
 	GetValue(args*) {
+		; _intA := MfInt64.GetValue("-0x123456789", "NaN", true) 1000 loops taks about 0.3 second
+		;_intA := MfInt64.GetValue("x123456789", "NaN", true) 1000 loops taks about 0.4 second
+		; measurements done on older dual core laptop		
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		;obj, default=0, AllowAny=false
 		i := 0
@@ -569,13 +572,14 @@ Class MfByte extends MfPrimitive
 		}
 		else if (i = 2)
 		{
-			try
-			{
-				_default := MfByte._GetValue(args[2])
-			}
-			catch e
+			_default := MfByte._GetValue(args[2], false)
+			If (_default == "NaN")
 			{
 				CanThrow := true
+			}
+			else
+			{
+				CanThrow := false
 			}
 		}
 		else
@@ -588,7 +592,7 @@ Class MfByte extends MfPrimitive
 			}
 			catch e
 			{
-				err := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToByte"), e)
+				err := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToBoolean"), e)
 				err.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "AllowAny", err)
 				ex.SetProp(err.File, err.Line, A_ThisFunc)
@@ -601,17 +605,18 @@ Class MfByte extends MfPrimitive
 			}
 			else
 			{
-				try
-				{
-					_default := MfByte._GetValue(args[2])
-				}
-				catch e
+				_default := MfByte._GetValue(args[2], false)
+				if (_default == "NaN")
 				{
 					CanThrow := true
 				}
+				else
+				{
+					CanThrow := false
+				}
 			}
 		}
-		retval := CanThrow = true? 0:_default
+		retval := 0
 		if (CanThrow = true)
 		{
 			try
@@ -620,151 +625,119 @@ Class MfByte extends MfPrimitive
 			}
 			catch e
 			{
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToByte"), e)
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
 		}
 		else
 		{
-			try
+			retval := MfByte._GetValue(obj, false)
+			if (retval == "NaN")
 			{
-				retval := MfByte._GetValue(obj)
+				return _default
 			}
-			catch e
-			{
-				retval := _default
-			}
+			return retval
 		}
 		return retval
 	}
 ; End:GetValue() ;}	
 ;{ 	_GetValue
-	_GetValue(obj) {
-		WasFormat := A_FormatInteger
-		try
-		{
-			SetFormat, IntegerFast, D
-			retval := 0
-			retval .= "" ; necessary for integer fast
-
-			if (IsObject(obj)) {
-				T := new MfType(obj)
-				if (T.IsIntegerNumber)
+	_GetValue(obj, CanThrow=true) {
+		retval := 0
+		if (IsObject(obj)) {
+			T := new MfType(obj)
+			if (T.IsIntegerNumber)
+			{
+				retval := obj.Value
+				if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue))
 				{
-					retval := obj.Value
-					if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue))
+					if (!CanThrow)
 					{
-						ex := new MfArgumentOutOfRangeException("obj"
-							, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-							,MfByte.MinValue, MfByte.MaxValue))
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
+						return "NaN"
 					}
-				}
-				else if (t.IsFloat)
-				{
-					
-					if ((obj.LessThen(MfByte.MinValue)) || (obj.GreaterThen(MfByte.MaxValue))) {
-						ex := new MfArgumentOutOfRangeException("obj"
-							, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-							,MfByte.MinValue, MfByte.MaxValue))
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
-					}
-					if (obj.LessThen(0.0))
-					{
-						retval := Ceil(obj.Value)
-					} else {
-						retval := Floor(obj.Value)
-					}
-					if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue))
-					{
-						ex := new MfArgumentOutOfRangeException("obj"
-							, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-							,MfByte.MinValue, MfByte.MaxValue))
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
-					}
-				}
-				else
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "int"))
+					ex := new MfArgumentOutOfRangeException("obj"
+						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+						,MfByte.MinValue, MfByte.MaxValue))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-			} else {
-				retval := MfByte._GetValueFromVar(obj)
 			}
-		}
-		Catch e
-		{
-			throw e
-		}
-		Finally
-		{
-			SetFormat, IntegerFast, %WasFormat%
+			else if (t.IsFloat)
+			{
+				varInt := format("{:f}", obj.Value)
+				dotIndex := InStr(varInt, ".") - 1
+				if (dotIndex > 0)
+				{
+					varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
+				}
+				retval := varInt + 0 ; force conversion from any hex values
+				if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue)) {
+				if (!CanThrow)
+				{
+					return "NaN"
+				}
+					ex := new MfArgumentOutOfRangeException("varInt"
+						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+						,MfByte.MinValue, MfByte.MaxValue))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			else
+			{
+				if (!CanThrow)
+				{
+					return "NaN"
+				}
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "int"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		} else {
+			retval := MfByte._GetValueFromVar(obj, CanThrow)
 		}
 		return retval
 	}
 ; 	End:_GetValue ;}
 ;{ 	_GetValueFromVar
-	_GetValueFromVar(varInt) {
-		WasFormat := A_FormatInteger
-		retval := 0
-		retval .= "" ; necessary for integer fast
-		try
-		{
-			SetFormat, IntegerFast, D
-			if (Mfunc.IsInteger(varInt)) {
-				retval := varInt + 0 ; force conversion from any hex values
-				if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue)) {
-					ex := new MfArgumentOutOfRangeException("varInt"
-						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfByte.MinValue, MfByte.MaxValue))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
+	_GetValueFromVar(varInt, CanThrow=true) {
+		strVarInt := varInt . ""
+		if (Mfunc.IsInteger(varInt)) {
+			retval := varInt
+			if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue)) {
+				if (!CanThrow)
+				{
+					return "NaN"
 				}
-			} else if (Mfunc.IsFloat(varInt)) {
-				sf := new MfFloat(varInt)
-				if ((sf.LessThen(MfByte.MinValue)) || (sf.GreaterThen(MfByte.MaxValue))) {
-					ex := new MfArgumentOutOfRangeException("varInt"
-						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfByte.MinValue, MfByte.MaxValue))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				if (sf.LessThen(0.0)) {
-					retval := Ceil(sf.Value)
-				} else {
-					retval := Floor(sf.Value)
-				}
-				if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue)) {
-					ex := new MfArgumentOutOfRangeException("varInt"
-						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfByte.MinValue, MfByte.MaxValue))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-			} else {
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_ByteVar", "varInt"), "varInt")
+				ex := new MfArgumentOutOfRangeException("varInt"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+					,MfByte.MinValue, MfByte.MaxValue))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-		}
-		catch e
-		{
-			if ((MfObject.IsObjInstance(e, MfException)) && (e.Source = A_ThisFunc))
-			{
-				throw e
+		} else if (Mfunc.IsFloat(varInt)) {
+			retval := Floor(varInt)
+			if ((retval < MfByte.MinValue) || (retval > MfByte.MaxValue)) {
+				if (!CanThrow)
+				{
+					return "NaN"
+				}
+				ex := new MfArgumentOutOfRangeException("varInt"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+					,MfByte.MinValue, MfByte.MaxValue))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			
+		} else {
+			if (!CanThrow)
+			{
+				return "NaN"
+			}
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IntegerVar", "varInt"), "varInt")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
-		}
-		finally
-		{
-			SetFormat, IntegerFast, %WasFormat%
 		}
 		return retval
 	}

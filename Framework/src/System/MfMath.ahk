@@ -107,6 +107,28 @@ class MfMath extends MfObject
 			i := MfMath._AbsHelperInt64(obj.Value)
 			return _ReturnAsObject = true?new MfInt64(i, obj.ReturnAsObject):i
 		}
+		else if (MfObject.IsObjInstance(obj, MfBigInt))
+		{
+			if (obj.IsNegative)
+			{
+				retval := obj.Clone()
+				obj.IsNegative := False
+				if (_ReturnAsObject)
+				{
+					return retval
+				}
+				return retval.Value
+			}
+			else
+			{
+				if (_ReturnAsObject)
+				{
+					retval := obj.Clone()
+					return retval
+				}
+				return obj.Value
+			}
+		}
 		else if (MfObject.IsObjInstance(obj, MfFloat))
 		{
 			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
@@ -335,6 +357,195 @@ class MfMath extends MfObject
 			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
 		}
 	}
+	FindPrimes(obj) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		
+		Primes := MfBigIntHelper.findPrimes(obj)
+		return Primes
+	}
+	FindPrimesSieve(max) {
+		max := MfInteger.GetValue(max) + 1
+		isPrimes := MfMath.MakeSieve(max)
+		Primes := new MfBigIntHelper.DList()
+		i := 2
+		while (i < max)
+		{
+			if(isPrimes.Item[i])
+			{
+				Primes.Add(i)
+			}
+			i++
+		}
+		
+		return Primes
+	}
+	_FindPrimesSieve(max) {
+		max := MfInteger.GetValue(max) + 1
+		isPrimes := []
+		Primes := new MfBigIntHelper.DList()
+		i := 2
+
+		while (i < max)
+		{
+			if(isPrimes[i + 1])
+			{
+				Primes.Add(i)
+			}
+			i++
+		}
+		
+		return Primes
+	}
+	FindPrimesSieve2(max) {
+		max := MfInteger.GetValue(max) + 1
+		isPrimes := MfMath._MakeSieve(max)
+		Primes := []
+		i := 2
+		iCount := 0
+		while (i < max)
+		{
+			if(isPrimes[i + 1])
+			{
+				Primes.Push(i)
+				iCount ++
+			}
+			i++
+		}
+		lst := new MfBigIntHelper.DList()
+		Primes.Count := iCount
+		lst.m_InnerList := Primes
+		return lst
+	}
+	_MakeSieve(max) {
+		max := MfInteger.GetValue(max)
+	    ;Make an array indicating whether numbers are prime.
+	    ;is_prime := new MfBinaryList(max + 1, 1)
+	    is_prime := []
+	    is_prime.Push(0)
+	    i := 1
+	    while (i <= max)
+	    {
+	    	is_prime[i + 1] := 1
+	    	i++
+	    }
+
+	    i := 2
+	    
+	    ;Cross out multiples.
+	    While ( i <= max)
+	    {
+	    	; See if i is prime.
+	    	if (is_prime[i + 1])
+	    	{
+	    		j := i * 2
+	    		; Knock out multiples of i.
+	    		while (j <= max)
+	    		{
+	    			is_prime[j + 1] := 0
+	    			j += i
+	    		}
+	    	}
+	    	i++
+	    }
+	    return is_prime
+	}
+	MakeSieve(max) {
+		max := MfInteger.GetValue(max)
+	    ;Make an array indicating whether numbers are prime.
+	    ;is_prime := new MfBinaryList(max + 1, 1)
+	    is_prime := new MfBigIntHelper.DList(max +1, 1)
+	    i := 2
+	    
+	    ;Cross out multiples.
+	    While ( i <= max)
+	    {
+	    	; See if i is prime.
+	    	if (is_prime.Item[i])
+	    	{
+	    		j := i * 2
+	    		; Knock out multiples of i.
+	    		while (j <= max)
+	    		{
+	    			is_prime.Item[j] := 0
+	    			j += i
+	    		}
+	    	}
+	    	i++
+	    }
+	    return is_prime
+	}
+	GetPrimesHash(MaxInt) {
+		noPrimes := {}
+		x := 2
+		n := MaxInt
+		sum := 0
+		while (x < n)
+		{
+			y := x * 2
+			while (y < n)
+			{
+				if(!noPrimes.HasKey(y))
+				{
+					noPrimes[y] := ""
+				}
+				y := y + x
+			}
+			x++
+		}
+		primes := new MfBigIntHelper.DList()
+		z := 2
+		While (z < n)
+		{
+			if(!noPrimes.HasKey(z))
+			{
+				primes.Add(z)
+				;sum += z
+			}
+			z++
+		}
+		return primes
+	}
+	GetPrimes(MaxInt) {
+		primes := new MfBigIntHelper.DList()
+
+		if (MaxInt > 0) primes.Add(2)
+
+		curTest := 3
+		while (primes.Count < MaxInt)
+		{
+
+			_sqrt := Floor(Sqrt(curTest))
+
+			isPrime := true
+			i := 0
+			pCount := primes.Count
+			While (i < pCount)
+			{
+				num := primes.Item[i]
+				if (num > _sqrt)
+				{
+					break
+				}
+				if (Mod(curTest, num) = 0)
+				{
+					isPrime := false
+					break
+				}
+				i++
+			}
+			
+			if (isPrime)
+			{
+				if (curTest >= MaxInt)
+				{
+					break
+				}
+				primes.Add(curTest)
+			}
+			curTest += 2
+		}
+		return primes
+	}
 ;{ 	Floor
 	Floor(obj, ReturnAsObject = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -501,6 +712,14 @@ class MfMath extends MfObject
 			}
 			return obj2
 		}
+		if (MfObject.IsObjInstance(obj1, MfBigInt) && MfObject.IsObjInstance(obj2, MfBigInt))
+		{
+			If (obj1.GreaterThen(obj2))
+			{
+				return obj1
+			}
+			return obj2
+		}
 
 		result1 := MfInt64.GetValue(obj1, "NaN", true)
 		if (result1 == "NaN")
@@ -545,6 +764,14 @@ class MfMath extends MfObject
 			return obj1
 		}
 		if (MfObject.IsObjInstance(obj1, MfUInt64) && MfObject.IsObjInstance(obj2, MfUInt64))
+		{
+			If (obj1.GreaterThen(obj2))
+			{
+				return obj2
+			}
+			return obj1
+		}
+		if (MfObject.IsObjInstance(obj1, MfBigInt) && MfObject.IsObjInstance(obj2, MfBigInt))
 		{
 			If (obj1.GreaterThen(obj2))
 			{

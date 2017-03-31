@@ -502,6 +502,74 @@ class MfNibbleList extends MfListBase
 		return _returnAsObj = true?new MfString(retval):retval
 	}
 ; 	End:ToString ;}
+;{ 	SubList
+	; The SubList() method extracts the elements from list, between two specified indices, and returns the a new list.
+	; This method extracts the element in a list between "startIndex" and "endIndex", not including "endIndex" itself.
+	; If "startIndex" is greater than "endIndex", this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
+	; If either "startIndex" or "endIndex" is less than 0, it is treated as if it were 0.
+	; startIndex and endIndex mimic javascript substring
+	; Params
+	;	startIndex
+	;		The position where to start the extraction. First element is at index 0
+	;	endIndex
+	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
+	SubList(startIndex=0, endIndex="") {
+		lst := new MfNibbleList()
+		maxIndex := this.Count - 1
+		IsEndIndex := true
+		if (MfString.IsNullOrEmpty(endIndex))
+		{
+			IsEndIndex := False
+		}
+		If (IsEndIndex = true && endIndex < 0)
+		{
+			endIndex := 0
+		}
+		if (startIndex < 0)
+		{
+			startIndex := 0
+		}
+		if ((IsEndIndex = false) && (startIndex > maxIndex))
+		{
+			Return retval
+		}
+		if ((IsEndIndex = true) && (startIndex > endIndex))
+		{
+			; swap values
+			tmp := startIndex
+			startIndex := endIndex
+			endIndex := tmp
+		}
+		if ((IsEndIndex = true) && (endIndex = startIndex))
+		{
+			return retval
+		}
+		if (startIndex > maxIndex)
+		{
+			return retval
+		}
+		if (IsEndIndex = true)
+		{
+			len :=  endIndex - startIndex
+		}
+		else
+		{
+			len := maxIndex
+		}
+		
+		
+		i := startIndex
+		iCount := 0
+		while iCount < len
+		{
+			lst.Add(this.Item[i])
+			i++
+			iCount++
+		}
+		return lst
+
+	}
+; 	End:SubList ;}
 	_ToByteArrayString(returnAsObj, startIndex, length) {
 		retval := ""
 		i := startIndex

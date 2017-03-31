@@ -149,6 +149,12 @@ class MfBitConverter extends MfObject
 				int := MfBitConverter._FloatToInt64(obj.Value)
 				return MfBitConverter._GetBytesInt(int, 64)
 			}
+			else if (MfObject.IsObjInstance(obj, MfBigInt))
+			{
+				
+				nibs := MfNibConverter.GetNibbles(obj)
+				return MfNibConverter.ToByteList(nibs)
+			}
 		}
 		Catch e
 		{
@@ -602,6 +608,50 @@ class MfBitConverter extends MfObject
 		return retval
 	}
 ; End:ToInt64 ;}
+	ToBigInt(bytes, startIndex=0 , Length=-1, ReturnAsObj=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		Length := MfInteger.GetValue(Length, 1)
+		if (Length < 0)
+		{
+			Length := bytes.Count
+		}
+		_startIndex := MfInteger.GetValue(startIndex, 0)
+		if (_startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		if (_startIndex < ((bytes.Count - _startIndex ) - Length))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		if (_startIndex > 0 && Length != bytes.Count)
+		{
+			bytes := bytes.SubList(startIndex, Length - 1)
+		}
+		; get Nibbles from Bytes
+		nibs := MfNibConverter.FromByteList(bytes)
+		return MfNibConverter.ToBigInt(nibs)
+
+
+	}
 ;{ ToFloat
 	ToFloat(bytes, startIndex = 0, ReturnAsObj = false) {
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)

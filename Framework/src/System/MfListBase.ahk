@@ -23,6 +23,9 @@
 */
 class MfListBase extends MfEnumerableBase
 {
+
+	m_InnerList			:= Null
+	m_Enum				:= Null
 ;{ Constructor()
 /*
 	Constructor()
@@ -39,175 +42,403 @@ class MfListBase extends MfEnumerableBase
 		}
 		
 		base.__New()
-		this.m_isInherited := this.__Class != "MfListBase"
+		this.m_InnerList := []
+		this.m_InnerList.Count := 0
+		this.m_isInherited := true
+		this.m_Enum := Null
 	}
 ; End:Constructor() ;}
 ;{ Methods
-;{ 	Add()
-/*!
+	;{ 		_NewEnum
+/*
+	Method: _NewEnum()
+		Overrides MfEnumerableBase._NewEnum()
+	_NewEnum()
+		Returns a new enumerator to enumerate this object's key-value pairs.
+		This method is usually not called directly, but by the for-loop or by GetEnumerator()
+*/
+	_NewEnum() {
+        return new MFListBase.Enumerator(this)
+    }
+; 		End:_NewEnum ;}
+;{ 	Add()				- Overrides - MfListBase
+/*
 	Method: Add()
-		This abstract method must be overridden in the derived class
+		This method must be overridden in the derived class
 	Add(obj)
-		Adds an object to append at the end of the MfListBase.
+		Adds an object to append at the end of the MfList
 	Parameters
 		obj
-			The Object to locate in the MfListBase
+			The Object to locate in the MfList
 	Returns
-		The index at which the obj has been added.
-	Remarks
-		Abstract Method.
-		Must be overridden in derived classes.
+		Var containing Integer of the zero-based index at which the obj has been added.
 	Throws
-		Throws MfNotImplementedException if the derived class does not override
+		Throws MfNullReferenceException if called as a static method.
 */
 	Add(obj) {
-		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodParentWithName", A_ThisFunc))
-		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-		throw ex
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_newCount := this.m_InnerList.Count + 1
+		this.m_InnerList[_newCount] := obj
+		this.m_InnerList.Count := _newCount
+		retval := _newCount - 1
+		return retval
 	}
-; End:Add(value) ;}
-;{ 	Clear()
-/*!
+;	End:Add(value) ;}
+;{ 	Clear()				- Overrides - MfListBase
+/*
 	Method: Clear()
-		This abstract method must be overridden in the derived class
+
 	Clear()
-		Removes all objects from the MfListBase instance.
-	Remarks
-		Abstract Method.
-		Must be overridden in derived classes.
+		Removes all objects from the MfList instance.
 	Throws
-		Throws MfNotImplementedException if the derived class does not override
+		Throws MfNullReferenceException if called as a static method.
 */
-	Clear()	{
+	Clear() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.m_InnerList := Null
+		this.m_InnerList := []
+		this.m_InnerList.Count := 0
+		this.m_Enum := Null
+	}
+;	End:Clear() ;}
+	Clone() {
 		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodParentWithName", A_ThisFunc))
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
-; End:Clear() ;}
-;{ 	Contains()
+;{ 	Contains()			- Overrides - MfListBase
 /*!
 	Method: Contains()
-		This abstract method must be overridden in the derived class
+		Overrides MfListBase.Contains()
 	Contains(obj)
-		Determines whether the MfListBase contains a specific element.
-	Parameters
-		value
-			The Object to locate in the MfListBase
-	Returns
-		Returns true if the MfListBase contains the specified value otherwise, false.
-	Throws
-		Throws MfNotImplementedException if the derived class does not override
-	Remarks
-		Abstract Method.
-		Must be overridden in derived classes.
-		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-*/
-	Contains(obj) {
-		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodParentWithName", A_ThisFunc))
-		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-		throw ex
-	}
-; End:Contains(obj) ;}
-;{ 	IndexOf()
-/*
-	Method: IndexOf()
-	This abstract method must be overridden in the derived class
-	IndexOf(obj)
-		Searches for the specified Object and returns the index of the first occurrence within the entire MfListBase.
+		Determines whether the MfList contains a specific element.
 	Parameters
 		obj
-			The object to locate in the MfListBase
-	Returns
-		Returns  index of the first occurrence of value within the entire MfListBase,
+			The Object to locate in the MfList
+		Returns
+			Returns true if the MfList contains the specified value otherwise, false.
 	Throws
-		Throws MfNotImplementedException if the derived class does not override
+		Throws MfNullReferenceException if called as a static method.
 	Remarks
-		Abstract Method.
-		Must be overridden in derived classes.
 		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
+		This method determines equality by calling MfObject.CompareTo().
+*/
+	Contains(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		bObj := IsObject(obj)
+		retval := false
+		if (this.m_InnerList.Count <= 0) {
+			return retval
+		}
+		for k, v in this.m_InnerList
+		{
+			if (bObj) {
+				try {
+					if (v.CompareTo(obj) = 0) {
+						retval := true
+						break
+					}
+				} catch e {
+					continue
+				}
+			} else {
+				if (obj = v) {
+					retval := true
+					break
+				}
+			}
+		}
+		return retval
+	}
+;	End:Contains(obj) ;}
+;{ 	IndexOf()			- Overrides - MfListBase
+/*
+	Method: IndexOf()
+
+	IndexOf(obj)
+		Searches for the specified Object and returns the zero-based index of the first occurrence within the entire MfList.
+	Parameters
+		obj
+			The object to locate in the MfList
+	Returns
+		Returns  index of the first occurrence of value within the entire MfList,
+	Throws
+		Throws MfNullReferenceException if called as a static method.
+	Remarks
+		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
+		This method determines equality by calling MfObject.CompareTo().
 */
 	IndexOf(obj) {
-		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodParentWithName", A_ThisFunc))
-		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-		throw ex
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		i := 0
+		bFound := false
+		bObj := IsObject(obj)
+		int := -1
+		if (this.m_InnerList.Count <= 0) {
+			return int
+		}
+		for k, v in this.m_InnerList
+		{
+			
+			if (bObj) {
+				try {
+					if (v.CompareTo(obj) = 0) {
+						bFound := true
+						break
+					}
+				} catch e {
+					i++
+					continue
+				}
+				
+			} else {
+				if (obj = v) {
+					bFound := true
+					break
+				}
+			}
+			i++
+		}
+		if (bFound = true) {
+			int := i
+			return int
+		}
+		return int
 	}
-; End:IndexOf(obj) ;}
-;{ 	Insert()
+;	End:IndexOf() ;}
+;{ 	Insert()			- Overrides - MfListBase
 /*!
 	Method: Insert()
-		This abstract method must be overridden in the derived class
-	Insert(index, value)
-		Inserts an element into the MfListBase at the specified index.
+	Insert(index, obj)
+		Inserts an element into the MfList at the specified index.
 	Parameters
 		index
 			The zero-based index at which value should be inserted.
-	value
-		The object to insert.
+		obj
+			The object to insert.
 	Throws
-		Throws MfNotImplementedException if the derived class does not override
+		Throws MfNullReferenceException if called as a static method.
+		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is greater than MfList.Count
+		Throws MfArgumentException if index is not a valid Integer object or valid var Integer.
+		Throws MfNotSupportedException if MfList is read-only or Fixed size.
 	Remarks
-		Abstract Method.
-		Must be overridden in derived classes.
-		In collections of contiguous elements, such as MfList, the elements that follow the insertion point move down to accommodate the new element.
+		If index is equal to Count, value is added to the end of MfGenericList.
+		In MfList the elements that follow the insertion point move down to accommodate the new element.
 		This method is an O(n) operation, where n is Count.
 */
 	Insert(index, obj) {
-		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodParentWithName", A_ThisFunc))
-		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-		throw ex
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_index := MfInteger.GetValue(index)
+		if ((_index < 0) || (_index > this.m_InnerList.Count))
+		{
+			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		If (_index = this.m_InnerList.Count)
+		{
+			this.Add(obj)
+			return
+		}
+		i := _index + 1 ; step up to one based index for AutoHotkey array
+		this.m_InnerList.InsertAt(i, obj)
+		this.m_InnerList.Count ++
 	}
-; End:Insert(index, obj) ;}
-;{ 	Remove()
+;	End:Insert(index, obj) ;}
+;{ 	LastIndexOf()
 /*
-	Method: Remove()
-		This abstract method must be overridden in the derived class
-	Remove(obj)
-		Removes the first occurrence of a specific object from the MfListBase.
+	Method: LastIndexOf()
+
+	LastIndexOf(obj)
+		Searches for the specified Object and returns the zero-based index of the Lasst occurrence within the entire List.
 	Parameters
 		obj
-			The object to remove from the MfListBase.
+			The object to locate in the List
+	Returns
+		Returns  index of the last occurrence of value within the entire List,
+	Throws
+		Throws MfNullReferenceException if called as a static method.
+	Remarks
+		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
+		This method determines equality by calling MfObject.CompareTo().
+*/
+	LastIndexOf(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		i := 0
+		bFound := false
+		bObj := IsObject(obj)
+		int := -1
+		if (this.m_InnerList.Count <= 0) {
+			return int
+		}
+		i := this.Count -1
+		while (i >= 0)
+		{
+			v := this.Item[i]
+			if (bObj) {
+				try {
+					if (v.CompareTo(obj) = 0) {
+						bFound := true
+						break
+					}
+				} catch e {
+					i--
+					continue
+				}
+				
+			} else {
+				if (obj = v) {
+					bFound := true
+					break
+				}
+			}
+			i--
+		}
+		
+		if (bFound = true) {
+			int := i
+			return int
+		}
+		return int
+	}
+;	End:LastIndexOf() ;}
+;{ 	Remove()
+/*!
+	Method: Remove
+
+	Remove(obj)
+		Removes the first occurrence of a specific object from the MfList.
+	Parameters
+		obj
+			The object to remove from the MfList.
 	Returns
 		On Success returns the Object or var that was removed; Otherwise returns null
 	Throws
-		Throws MfNotImplementedException if the derived class does not override
-		Throws MfArgumentException if the obj parameter was not found in the MfListBase
-	Remarks
-		Abstract Method.
-		Must be overridden in derived classes.
-	Remarks
-		This method is an O(n) operation, where n is Count.
-		In collections of contiguous elements, such as lists, the elements that follow the removed element move up to occupy the vacated spot.
-		If the collection is indexed, the indexes of the elements that are moved are also updated.
-		This behavior does not apply to collections where elements are conceptually grouped into buckets, such as a hash table.
+		Throws MfNullReferenceException if called as a static method.
+		Throws MfArgumentException if obj the parameter was not found in the MfList
 */
-	Remove(obj)	{
-		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodParentWithName", A_ThisFunc))
-		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-		throw ex
+	Remove(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		index := this.IndexOf(obj)
+		if (index < 0 ) {
+			msg := MfString.Format(MfEnvironment.Instance.GetResourceString("ArgumentNull_WithParamName"), "obj")
+			err := new MfArgumentException(msg)
+			err.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw err
+		}
+		return this.RemoveAt(index)
 	}
-; End:Remove(obj) ;}
+; 	End:Remove(obj) ;}
 ;{ 	RemoveAt()
-/*
+/*!
 	Method: RemoveAt()
-		This abstract method must be overridden in the derived class
-	RemoveAt(index)
+
+	RemoveAt()
 		Removes the MfList item at the specified index.
 	Parameters
 		index
-			The zero-based index of the item to remove. Can be instance of MfInteger or var containing integer.
+			The zero-based index of the item to remove.
+			Can be instance of MfInteger or var integer.
+	Returns
+		On Success returns the Object or var that was removed at index; Otherwise returns null.
 	Throws
-		Throws MfNotImplementedException if the derived class does not override
+		Throws MfNullReferenceException if called as a static method.
+		Throws MfNotSupportedException if MfList is read-only or Fixed size
+		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is equal to or greater than Count
+		Throws MfArgumentException if index is not a valid MfInteger instance or valid var Integer
 	Remarks
-		Abstract Method.
-		Must be overridden in derived classes.
+		This method is not overridable.
+		In MfGenericList the elements that follow the removed element move up to occupy the vacated spot.
 		This method is an O(n) operation, where n is Count.
 */
-	RemoveAt(index)	{
-		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodParentWithName", A_ThisFunc))
-		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-		throw ex
+	RemoveAt(index) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		_index := MfInteger.GetValue(index)
+		if ((_index < 0) || (_index >= this.m_InnerList.Count)) {
+			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		i := _index + 1 ; step up to one based index for AutoHotkey array
+		vRemoved := this.m_InnerList.RemoveAt(i)
+		iLen := this.m_InnerList.Length()
+		; if vremoved is an empty string or vRemoved is 0 then, If (vRemoved ) would computed to false
+		if (iLen = _index) {
+			this.m_InnerList.Count --
+		} else {
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_FailedToRemove"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return vRemoved
 	}
-; End:RemoveAt(int) ;}
+;	End:RemoveAt(int) ;}
+;{ 	ToArray
+	; to AutoHotkey one based Array
+	ToArray() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		retval := []
+		MaxIndex := this.m_InnerList.MaxIndex()
+		i := 1
+		while (i <= MaxIndex)
+		{
+			retval[i] := this.m_InnerList[i]
+			i++	
+		}
+		return retval
+	}
+; 	End:ToArray ;}
 ;{ 	ToString()			- Overrides	- MfObject	
 	/*!
 		Method: ToString()
@@ -217,6 +448,7 @@ class MfListBase extends MfEnumerableBase
 			Returns string value representing object elements
 	*/
 	ToString() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		str := ""
 		maxIndex := this.Count -1
 		for i, v in this
@@ -242,35 +474,63 @@ class MfListBase extends MfEnumerableBase
 	}
 ;	End:ToString() ;}
 ; End:Methods ;}
+;{ 	Internal Methods
+	_ToList() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		lst := new MfList()
+		lst.m_InnerList := this.m_InnerList
+		return lst
+	}
+	; intended to be used internally by framework only
+	; set the this.m_InnerList to aray objArray
+	_SetInnerList(objArray, SetCount=False) {
+		try
+		{
+			if (IsObject(objArray))
+			{
+				this.Clear()
+				this.m_InnerList := ""
+				this.m_InnerList := objArray
+				if(SetCount)
+				{
+					this.m_InnerList.Count := objArray.Length()
+				}
+			
+			}
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+	}
+; 	End:Internal Methods ;}
 ;{ Properties
-	;{	Count
+;{	Count[]
 /*
 	Property: Count [get]
-		Gets a value indicating if the MfListBase number of Elements.
-		This property must be overridden in the derived class
+		Gets a value indicating count of objects in the current MfList as an Integer
 	Value:
 		Var Integer
 	Gets:
-		Gets the count of elements in the list as var integer.
-	Throws:
-		Throws MfNotImplementedException if the derived class does not override
-	Remarks:
-		Must be overridden in derived classes.
+		Gets the count of elements in the MfList as var integer.
+	Remarks"
+		Read-only property.
 */
 	Count[]
 	{
 		get {
-			ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_PropertyWithName","Count"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			Throw ex
+			return this.m_InnerList.Count
 		}
 		set {
-			ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_PropertyWithName","Count"))
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
-;	End:Count ;}
+;	End:Count[] ;}
 ;{	IsFixedSize[]
 /*!
 	Property: IsFixedSize [get]
@@ -320,38 +580,84 @@ class MfListBase extends MfEnumerableBase
 	}
 ;	End:IsReadOnly[] ;}
 ;{	Item[index]
-/*!
-	Property: Item [index] [get\set]
+/*
+	Property: Item [get\set]
 		Gets or sets the element at the specified index.
 	Parameters:
 		index
 			The zero-based index of the element to get or set.
-	value:
-		the value of the item at the specified index
+		value
+			the value of the item at the specified index
 	Gets:
 		Gets element at the specified index.
 	Sets:
 		Sets the element at the specified index
 	Throws:
-		Throws MfNotImplementedException if not overridden in derived class.
-	Remarks:
-		This property must be overridden in the derived class
+		Throws MfArgumentOutOfRangeException if index is less than zero or index is equal to or greater than Count
+		Throws MfArgumentException if index is not a valid MfInteger instance or valid var containing Integer
+		Throws MfNotSupportedException if MfList is read-only or Fixed size on Set
 */
 	Item[index]
 	{
 		get {
-			ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_PropertyWithName","Item"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			Throw ex
+			_index := MfInteger.GetValue(Index)
+			if (_index < 0 || _index >= this.Count) {
+				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			_index ++ ; increase value for one based array
+			return this.m_InnerList[_index]
 		}
 		set {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			Throw ex
+			if (this.IsReadOnly) {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			_index := MfInteger.GetValue(Index)
+			if (_index < 0 || _index >= this.Count) {
+				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			_index ++ ; increase value for one based array
+			this.m_InnerList[_index] := value
+			return this.m_InnerList[_index]
 		}
 	}
 ;	End:Item[index] ;}
 ; End:Properties ;}
+;{ 		internal class Enumerator
+    class Enumerator
+	{
+		m_Parent := Null
+		m_KeyEnum := Null
+		m_index := 0
+		m_count := 0
+        __new(ByRef ParentClass) {
+            this.m_Parent := ParentClass
+			this.m_count := this.m_Parent.Count
+        }
+        
+       Next(ByRef key, ByRef value)
+	   {
+		
+			if (this.m_index < this.m_count) {
+				key := this.m_index
+				value := this.m_Parent.Item[key]
+			}
+			this.m_index++
+			if (this.m_index > (this.m_count)) {
+				return false
+			} else {
+				return true
+			}
+        }
+		
+		
+    }
+; 		End:class Enumerator ;}
 }
 /*!
 	End of class

@@ -29,13 +29,24 @@ class MfBinaryList extends MfListBase
 		Constructor: ()
 			Initializes a new instance of the MfList class.
 	*/
-	__New() {
-		base.__New()
-		this.m_isInherited := this.__Class != "MfBinaryList"
-		this.m_InnerList := []
-		this.m_InnerList.Count := 0
-		this.m_Enum := Null
-	}
+	__new(Size=0, default=0) {
+			base.__new()
+			size := MfInteger.GetValue(size, 0)
+			default := MfInteger.GetValue(default, 0)
+
+			if ((Size > 0) && ((default = 0) || (default = 1)))
+			{
+				i := 0
+				while (i <= size)
+				{
+					_newCount := i + 1
+					this.m_InnerList[_newCount] := default
+					i++
+				}
+				this.m_InnerList.Count := i
+			}
+
+		}
 ; End:Constructor ;}
 ;{ Methods
 ;{ 	Add()				- Overrides - MfListBase
@@ -55,16 +66,7 @@ class MfBinaryList extends MfListBase
 */
 	Add(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+		
 		_value := MfByte.GetValue(obj)
 		if (_value < 0 || _value > 1)
 		{
@@ -84,16 +86,7 @@ class MfBinaryList extends MfListBase
 ;{ 	AddByte
 	AddByte(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+		
 		_value := MfByte.GetValue(obj)
 		
 		MSB := 0
@@ -139,16 +132,7 @@ class MfBinaryList extends MfListBase
 ;{ 	AddNibble
 	AddNibble(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+		
 		_value := MfByte.GetValue(obj)
 		if (_value < 0 || _value > 15)
 		{
@@ -187,33 +171,6 @@ class MfBinaryList extends MfListBase
 		
 	}
 ; 	End:AddNibble ;}
-;{ 	Clear()				- Overrides - MfListBase
-/*
-	Method: Clear()
-		Overrides MfListBase.Clear()
-	Clear()
-		Removes all objects from the MfList instance.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-*/
-	Clear() {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		this.m_InnerList := Null
-		this.m_InnerList := []
-		this.m_InnerList.Count := 0
-		this.m_Enum := Null
-	}
-;	End:Clear() ;}
 ;{ 	Clone
 	Clone() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -221,10 +178,10 @@ class MfBinaryList extends MfListBase
 		cLst.Clear()
 		for i, x in this
 		{
-			_newCount := cLst.m_InnerList.Count + 1
+			_newCount := i + 1
 			cLst.m_InnerList[_newCount] := x
-			cLst.m_InnerList.Count := _newCount
 		}
+		cLst.m_InnerList.Count := _newCount
 		return cLst
 	}
 ; 	End:Clone ;}
@@ -247,26 +204,18 @@ class MfBinaryList extends MfListBase
 */
 	Contains(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		bObj := IsObject(obj)
+		
 		retval := false
-		if (this.m_InnerList.Count <= 0) {
+		if (this.Count <= 0) {
 			return retval
 		}
-		try
+		_value := MfInt16.GetValue(obj, -1)
+		if ((_value < 0) || (_value > 1))
 		{
-			_value := MfByte.GetValue(obj)
-		}
-		catch
-		{
-			return false
+			return retval
 		}
 		
-		if (_value < 0 || _value > 15)
-		{
-			return false
-		}
-
-		for i, b in this.m_InnerList
+		for i, b in this
 		{
 			if (b = _value)
 			{
@@ -277,46 +226,7 @@ class MfBinaryList extends MfListBase
 		return retval
 	}
 ;	End:Contains(obj) ;}
-;{ 		_NewEnum
-/*
-	Method: _NewEnum()
-		Overrides MfEnumerableBase._NewEnum()
-	_NewEnum()
-		Returns a new enumerator to enumerate this object's key-value pairs.
-		This method is usually not called directly, but by the for-loop or by GetEnumerator()
-*/
-	_NewEnum() {
-        return new MfList.Enumerator(this)
-    }
-; 		End:_NewEnum ;}
-;{ 		internal class Enumerator
-    class Enumerator
-	{
-		m_Parent := Null
-		m_KeyEnum := Null
-		m_index := 0
-		m_count := 0
-        __new(ParentClass) {
-            this.m_Parent := ParentClass
-			this.m_count := this.m_Parent.Count
-        }
-        
-       Next(ByRef key, ByRef value)
-	   {
-		
-			if (this.m_index < this.m_count) {
-				key := this.m_index
-				value := this.m_Parent.Item[key]
-			}
-			this.m_index++
-			if (this.m_index > (this.m_count)) {
-				return 0
-			} else {
-				return true
-			}
-        }
-    }
-; 		End:class Enumerator ;}
+
 
 ;{ 	IndexOf()			- Overrides - MfListBase
 /*
@@ -339,19 +249,14 @@ class MfBinaryList extends MfListBase
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		i := 0
 		bFound := false
-		bObj := IsObject(obj)
 		int := -1
-		if (this.m_InnerList.Count <= 0) {
+		if (this.Count <= 0) {
 			return int
 		}
-		_value := MfByte.GetValue(obj)
+		_value := MfInt16.GetValue(obj, -1)
 		if (_value < 0 || _value > 1)
 		{
-			ex := new MfArgumentOutOfRangeException("obj"
-				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
-				, "0", "1"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			return int
 		}
 		for index, b in this.m_InnerList
 		{
@@ -392,16 +297,7 @@ class MfBinaryList extends MfListBase
 */
 	Insert(index, obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+		
 		_index := MfInteger.GetValue(index)
 		if (this.AutoIncrease = true)
 		{
@@ -410,18 +306,12 @@ class MfBinaryList extends MfListBase
 				this._AutoIncrease()
 			}
 		}
-		if ((_index < 0) || (_index > this.m_InnerList.Count))
+		if ((_index < 0) || (_index > this.Count))
 		{
 			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		If (_index = this.m_InnerList.Count)
-		{
-			this.Add(obj)
-			return
-		}
-		i := _index + 1 ; step up to one based index for AutoHotkey array
 		_value := MfByte.GetValue(obj)
 		if (_value < 0 || _value > 1)
 		{
@@ -431,101 +321,65 @@ class MfBinaryList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		If (_index = this.Count)
+		{
+			this.Add(_value)
+			return
+		}
+		i := _index + 1 ; step up to one based index for AutoHotkey array
+		
 		this.m_InnerList.InsertAt(i, _value)
 		this.m_InnerList.Count ++
 	}
 ;	End:Insert(index, obj) ;}
-;{ 	Remove()			- Overrides - MfListBase
-/*!
-	Method: Remove
-		Overrides MfListBase.Remove()
-	Remove(obj)
-		Removes the first occurrence of a specific object from the MfList.
+;{ 	LastIndexOf()
+/*
+	Method: LastIndexOf()
+
+	LastIndexOf(obj)
+		Searches for the specified Object and returns the zero-based index of the Lasst occurrence within the entire List.
 	Parameters
 		obj
-			The object to remove from the MfList.
+			The object to locate in the List
 	Returns
-		On Success returns the Object or var that was removed; Otherwise returns null
+		Returns  index of the last occurrence of value within the entire List,
 	Throws
 		Throws MfNullReferenceException if called as a static method.
-		Throws MfArgumentException if obj the parameter was not found in the MfList
-*/
-	Remove(obj) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		index := this.IndexOf(obj)
-		if (index < 0 ) {
-			msg := MfString.Format(MfEnvironment.Instance.GetResourceString("ArgumentNull_WithParamName"), "obj")
-			err := new MfArgumentException(msg)
-			err.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw err
-		}
-		return this.RemoveAt(index)
-	}
-; 	End:Remove(obj) ;}
-;{ 	RemoveAt()			- Overrides - MfListBase
-/*!
-	Method: RemoveAt()
-		Overrides MfListBase.RemoveAt()
-	RemoveAt()
-		Removes the MfList item at the specified index.
-	Parameters
-		index
-			The zero-based index of the item to remove.
-			Can be instance of MfInteger or var integer.
-	Returns
-		On Success returns the Object or var that was removed at index; Otherwise returns null.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-		Throws MfNotSupportedException if MfList is read-only or Fixed size
-		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is equal to or greater than Count
-		Throws MfArgumentException if index is not a valid MfInteger instance or valid var Integer
 	Remarks
-		This method is not overridable.
-		In MfGenericList the elements that follow the removed element move up to occupy the vacated spot.
-		This method is an O(n) operation, where n is Count.
+		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
+		This method determines equality by calling MfObject.CompareTo().
 */
-	RemoveAt(index) {
+	LastIndexOf(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+		i := 0
+		bFound := false
+		int := -1
+		if (this.Count <= 0) {
+			return int
 		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+		_value := MfInt16.GetValue(obj, -1)
+		if (_value < 0 || _value > 1)
+		{
+			return int
 		}
-		_index := MfInteger.GetValue(index)
-		if ((_index < 0) || (_index >= this.m_InnerList.Count)) {
-			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+		i := this.Count - 1
+		while (i >= 0)
+		{
+			b := this.Item[i]
+			if (b = _value)
+			{
+				bFound := true
+				break
+			}
+			i--
 		}
-		i := _index + 1 ; step up to one based index for AutoHotkey array
-		vRemoved := this.m_InnerList.RemoveAt(i)
-		iLen := this.m_InnerList.Length()
-		; if vremoved is an empty string or vRemoved is 0 then, If (vRemoved ) would computed to false
-		if (iLen = _index) {
-			this.m_InnerList.Count --
-		} else {
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_FailedToRemove"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+		if (bFound = true) {
+			int := i
+			return int
 		}
-		return vRemoved
+		return int
 	}
-;	End:RemoveAt(int) ;}
+;	End:LastIndexOf() ;}
 ;{ 	ToString
 	ToString(returnAsObj = false, startIndex = 0, length="", Format=0) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)

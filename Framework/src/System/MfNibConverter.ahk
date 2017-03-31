@@ -70,6 +70,20 @@ class MfNibConverter extends MfObject
 			{
 				return MfNibConverter._GetBytesUInt(obj.Value, 64)
 			}
+			else if (MfObject.IsObjInstance(obj, MfBigInt))
+			{
+				objNeg := obj.IsNegative
+				obj.IsNegative := False
+				nibs := MfNibConverter._HexStringToNibList("+" . obj.ToString(16))
+				obj.IsNegative := objNeg
+				if (objNeg)
+				{
+					
+					nibs := MfNibConverter.ToComplement16(nibs)
+				}
+				return nibs
+			}
+			
 			else if (MfObject.IsObjInstance(obj, MfFloat))
 			{
 				int := MfBitConverter._FloatToInt64(obj.Value)
@@ -613,6 +627,65 @@ class MfNibConverter extends MfObject
 		return retval
 	}
 ; 	End:ToInt64 ;}
+	ToBigInt(nibbles, startIndex=0 , Length=-1, ReturnAsObj=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		Length := MfInteger.GetValue(Length, 1)
+		if (Length < 0)
+		{
+			Length := nibbles.Count
+		}
+		_startIndex := MfInteger.GetValue(startIndex, 0)
+		if (_startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		if (_startIndex < ((nibbles.Count - _startIndex ) - Length))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		if (_startIndex > 0 && Length != nibbles.Count)
+		{
+			nibbles := nibbles.SubList(startIndex, Length - 1)
+		}
+		
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		
+		retval := ""
+		iCount := 0
+		i := _startIndex
+		IsNeg := MfNibConverter.IsNegative(nibbles, 0)
+		if (IsNeg)
+		{
+			nibbles := MfNibConverter.ToComplement16(nibbles)
+		}
+		strH := "0x" . nibbles.ToString()
+		retval := MfBigInt.Parse(strH)
+		retval.IsNegative := IsNeg
+		if (_ReturnAsObj)
+		{
+			return retval
+		}
+		Return retval.Value
+	}
+;{ 	ToBinaryList
 	ToBinaryList(nList) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(nList, MfNibbleList) = false)
@@ -660,6 +733,7 @@ class MfNibConverter extends MfObject
 		}
 		return lst
 	}
+; 	End:ToBinaryList ;}
 ;{ 	ToByteList
 	ToByteList(nList) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1094,25 +1168,26 @@ class MfNibConverter extends MfObject
 ;{ 	_GetSubList
 	; returns a subset of a MfNibbleList as a new MfNibbleList instance
 	; counts from left to right so startIndex it from the end
-	_GetSubList(lst, startIndex, endIndex=0) {
-		_startIndex := MfInteger.GetValue(startIndex, -1)
-		_endIndex := MfInteger.GetValue(endIndex, 0)
-		if (_startIndex < 1 && _endIndex = 0)
-		{
-			return lst
-		}
-		if (_endIndex < _startIndex)
-		{
-			return lst
-		}
-		retval := new MfNibbleList()
-		i := endIndex
-		while i <= _startIndex
-		{
-			retval.Add(lst.Item[i])
-		}
+	_GetSubList(lst, startIndex, endIndex="") {
+		return lst.SubList(startIndex, endIndex)
+		; _startIndex := MfInteger.GetValue(startIndex, -1)
+		; _endIndex := MfInteger.GetValue(endIndex, 0)
+		; if (_startIndex < 1 && _endIndex = 0)
+		; {
+		; 	return lst
+		; }
+		; if (_endIndex < _startIndex)
+		; {
+		; 	return lst
+		; }
+		; retval := new MfNibbleList()
+		; i := endIndex
+		; while i <= _startIndex
+		; {
+		; 	retval.Add(lst.Item[i])
+		; }
 
-		return retval
+		; return retval
 	}
 ; 	End:_GetSubList ;}
 ;{ 	_FlipNibbles
@@ -2269,6 +2344,18 @@ class MfNibConverter extends MfObject
 				Signed := true
 				IsNeg := false
 			}
+			else if (strLead ~= "^-[0-9a-fA-F]+$")
+			{
+				strX := SubStr(value, 2)
+				Signed := true
+				IsNeg := true
+			}
+			else if (strLead ~= "^\+[0-9a-fA-F]+$")
+			{
+				strX := SubStr(value, 2)
+				Signed := true
+				IsNeg := false
+			}
 			else
 			{
 				strX := Value
@@ -2300,9 +2387,16 @@ class MfNibConverter extends MfObject
 		}
 		if (Signed = true)
 		{
-			while (lst.Count * 2) < ActualBitCount
+			if ((lst.Count * 2) >= ActualBitCount )
 			{
 				lst.insert(0,IsNeg?15:0)
+			}
+			else 
+			{
+				while (lst.Count * 2) < ActualBitCount
+				{
+					lst.insert(0,IsNeg?15:0)
+				}
 			}
 		}
 		

@@ -276,17 +276,13 @@ class MfBigIntHelper extends MfObject
 		s := new MfBigIntHelper.DList(n)
 		i := 0
 		p := 0
-		while (i < n )
-		{
-			s.Item[i] := 0
-			i++
-		}
+	
 		s.Item[0] := 2
 		p := 0 ; first p elements of s are primes, the rest are a sieve
 		while (s.Item[p] < n) ; s.Item[p] is the pth prime
 		{
-			
-			i := s.Item[p] * s.Item[p]
+			sp := s.Item[p]
+			i := sp * sp
 			while (i < n) 
 			{
 				; mark multiples of s.Item[p]
@@ -295,20 +291,22 @@ class MfBigIntHelper extends MfObject
 			}
 			p++
 			s.Item[p] := s.Item[p - 1] + 1
-			while ((s.Item[p] < n) && (s.Item[s.Item[p]] != 0))
+			sp := s.Item[p]
+			while ((sp < n) && (s.Item[sp]))
 			{
 				; find next prime (where s.Item[p] = 0)
-				s.Item[p]++
+				sp++
 			}
-			ans := new MfBigIntHelper.DList(p)
-			i := 0
-			while (i < p)
-			{
-				ans.Item[i] := s.Item[i]
-				i++
-			}
-			return ans
+			s.Item[p] := sp
 		}
+		ans := new MfBigIntHelper.DList(p -1)
+		i := 0
+		while (i < p)
+		{
+			ans.Item[i] := s.Item[i]
+			i++
+		}
+		return ans
 	}
 ; 	End:findPrimes ;}
 ;{ 	millerRabinInt
@@ -876,8 +874,8 @@ class MfBigIntHelper extends MfObject
 				break ; quit when y all zero elements except possibly y[0]
 			}
 
-			i := x.Count - 1
-			while ((i >= 0) && (x.Item[i] = 0))
+			i := x.Count
+			while ((i >= 0) && (!x.Item[i]))
 			{
 				; find most significant element of x
 				i--
@@ -919,20 +917,20 @@ class MfBigIntHelper extends MfObject
 				MfBigIntHelper.copy_(x, y)
 				MfBigIntHelper.copy_(y, MfBigIntHelper.tt)
 			}
-			if (y.Item[0] = 0)
-			{
-				return
-			}
-			t := MfBigIntHelper.modInt(x, y.Item[0])
-			MfBigIntHelper.copyInt_(x, y.Item[0])
+		}
+		if (y.Item[0] = 0)
+		{
+			return
+		}
+		t := MfBigIntHelper.modInt(x, y.Item[0])
+		MfBigIntHelper.copyInt_(x, y.Item[0])
+		y.Item[0] := t
+		while (y.Item[0] != 0)
+		{
+			x.Item[0] := mod(x.Item[0], y.Item[0])
+			t := x.Item[0]
+			x.Item[0] := y.Item[0]
 			y.Item[0] := t
-			while (y.Item[0] != 0)
-			{
-				x.Item[0] := mod(x.Item[0], y.Item[0])
-				t := x.Item[0]
-				x.Item[0] := y.Item[0]
-				y.Item[0] := t
-			}
 		}
 	}
 ; 	End:GCD_ ;}
@@ -966,8 +964,9 @@ class MfBigIntHelper extends MfObject
 		MfBigIntHelper.copyInt_(MfBigIntHelper.eg_C, 0)
 		MfBigIntHelper.copyInt_(MfBigIntHelper.eg_D, 1)
 
-		loop
+		loop ;*[Test]
 		{
+			; while eg_u is even
 			while (!(MfBigIntHelper.eg_u.Item[0] & 1))
 			{
 				MfBigIntHelper.halve_(MfBigIntHelper.eg_u)
@@ -1032,7 +1031,7 @@ class MfBigIntHelper extends MfObject
 					MfBigIntHelper.copyInt_(x, 0)
 					return false
 				}
-				return true
+				return false
 			}
 		}
 	}
@@ -1073,9 +1072,9 @@ class MfBigIntHelper extends MfObject
 	; Given positive bigInts x and y, change the bigints v, a, and b to positive bigInts such that:
 	;      v = GCD_(x,y) = a*x-b*y
 	; The bigInts v, a, b, must have exactly as many elements as the larger of x and y.
-	eGCD_(byref x, byref y, byref v, byref a, byref b) {
+	eGCD_(x, y, byref v, byref a, byref b) {
 		g := 0
-		k := MfMath.Max(z.Count, y.Count)
+		k := MfMath.Max(x.Count, y.Count)
 		if (MfBigIntHelper.eg_u.Count != k)
 		{
 			MfBigIntHelper.eg_u := new MfBigIntHelper.DList(k)
@@ -1179,7 +1178,7 @@ class MfBigIntHelper extends MfObject
 	; is (x << (shift*bpe)) > y?
 	; x and y are nonnegative bigInts
 	; shift is a nonnegative integer
-	greaterShift(byref x, byref y, shift) {
+	greaterShift(x, y, shift) {
 		kx := x.Count
 		ky := y.Count
 		k := ((kx + shift) < ky) ? (kx + shift) : ky
@@ -1188,7 +1187,7 @@ class MfBigIntHelper extends MfObject
 		{
 			if (x.Item[i] > 0)
 			{
-				return 1 ; if there are nonzeros in x to the left of the first column of y, then x is bigger
+				return true ; if there are nonzeros in x to the left of the first column of y, then x is bigger
 			}
 			i++
 		}
@@ -1198,7 +1197,7 @@ class MfBigIntHelper extends MfObject
 		{
 			if (y.Item[i] > 0)
 			{
-				return 0 ; if there are nonzeros in y to the left of the first column of x, then x is not bigger
+				return false ; if there are nonzeros in y to the left of the first column of x, then x is not bigger
 			}
 			i++
 		}
@@ -1208,15 +1207,15 @@ class MfBigIntHelper extends MfObject
 		{
 			if (x.Item[i - shift] > y.Item[i])
 			{
-				return 1
+				return true
 			}
 			else if (x.Item[i - shift] < y.Item[i])
 			{
-				return 0
+				return false
 			}
 			i--
 		}
-		return 0
+		return false
 	}
 ; 	End:greaterShift ;}
 ;{ 	greater
@@ -1255,7 +1254,7 @@ class MfBigIntHelper extends MfObject
 			}
 			i--
 		}
-		return true
+		return false
 	}
 ; 	End:greater ;}
 ;{ 	divide_
@@ -1299,6 +1298,9 @@ class MfBigIntHelper extends MfObject
 			MfBigIntHelper.subShift_(r, y, kx - ky)
 			q.Item[kx - ky]++
 		}
+		MfBigIntHelper.rightShift_(y, a) ; undo the normalization step
+		MfBigIntHelper.rightShift_(r, a) ; undo the normalization step
+			
 		i := kx - 1
 		while (i >= ky)
 		{
@@ -1328,7 +1330,7 @@ class MfBigIntHelper extends MfObject
 					break
 				}
 			}
-			
+
 			MfBigIntHelper.linCombShift_(r, y, -q.Item[i - ky], i - ky) ; r=r-q.Item[i-ky] * MfBigIntHelper.leftShift_(y, i - ky)
 			if (MfBigIntHelper.negative(r))
 			{
@@ -1337,8 +1339,6 @@ class MfBigIntHelper extends MfObject
 			}
 			i--
 		}
-		MfBigIntHelper.rightShift_(y, a) ; undo the normalization step
-		MfBigIntHelper.rightShift_(r, a) ; undo the normalization step
 	}
 ; 	End:divide_ ;}
 ;{ 	modInt
@@ -1925,7 +1925,7 @@ class MfBigIntHelper extends MfObject
 		{
 			MfBigIntHelper.copy_(MfBigIntHelper.s4, x)
 		}
-		if (s5.Count != x.Count)
+		if (MfBigIntHelper.s5.Count != x.Count)
 		{
 			MfBigIntHelper.s5 := MfBigIntHelper.dup(x)
 		}
@@ -2032,7 +2032,7 @@ class MfBigIntHelper extends MfObject
 		; calculate np from n for the Montgomery multiplications
 		MfBigIntHelper.copyInt_(MfBigIntHelper.s7, 0)
 		kn := n.Count
-		while (kn > 0 && !n[kn - 1])
+		while (kn > 0 && !n.Item[kn - 1])
 		{
 			kn--
 		}
@@ -2188,7 +2188,7 @@ class MfBigIntHelper extends MfObject
 			}
 			while (j < kn)
 			{
-				c += sa.Item[j] + ui * n.Item[j]
+				c += MfBigIntHelper.sa.Item[j] + ui * n.Item[j]
 				MfBigIntHelper.sa.Item[j - 1] := c & MfBigIntHelper.mask
 				c >>= MfBigIntHelper.bpe
 				j++
@@ -2287,7 +2287,7 @@ class MfBigIntHelper extends MfObject
 		__new() {
 			base.__new()
 			if (this.__Class != "MfBigIntHelper.DigitsChars" && this.__Class != "DigitsChars") {
-				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfString"))
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfBigIntHelper.DigitsChars"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -2486,11 +2486,13 @@ class MfBigIntHelper extends MfObject
 			if (Size > 0)
 			{
 				i := 0
-				while (i <= size)
+				while (i < size)
 				{
-					this.Add(default)
+					_newCount := i + 1
+					this.m_InnerList[_newCount] := default
 					i++
 				}
+				this.m_InnerList.Count := i
 			}
 
 		}
@@ -2735,6 +2737,9 @@ class MfBigIntHelper extends MfObject
 			return vRemoved
 		}
 	;	End:RemoveAt(int) ;}
+		ToList() {
+			return this._ToList()
+		}
 		; startIndex and endIndex mimic javascript substring
 		ToString(seperator=",", startIndex=0, endIndex="") {
 			retval := ""

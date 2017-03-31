@@ -17,15 +17,162 @@
 Class MfBigInt extends MfObject
 {
 	m_bi := ""
-	__new(value) {
+;{ 	Constructor
+	__new(args*) {
+		; Parameters all optional, Value=0, ReturnAsObject=false, ReadOnly=false
 		if (this.__Class != "MfBigInt")
 		{
 			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfInt64"))
 		}
 		base.__new()
-		this._FromAnyConstructor(value)
+		
+		_readonly := false
+		pArgs := this._ConstructorParams(A_ThisFunc, args*)
+		pList := pArgs.ToStringList()
+		pIndex := 0
+		if (pList.Count > 0)
+		{
+			this._FromAnyConstructor(pArgs.Item[pIndex].Value)
+		}
+		else
+		{
+			this.m_bi := new MfBigIntHelper.DList(3)
+		}
+		if (pList.Count > 1)
+		{
+			pIndex++
+			s := pList.Item[pIndex].Value
+			if (s = "MfBool")
+			{
+				this.m_ReturnAsObject := pArgs.Item[pIndex].Value
+			}
+			else
+			{
+				tErr := this._ErrorCheckParameter(pIndex, pArgs)
+				if (tErr)
+				{
+					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					Throw tErr
+				}
+			}
+		}
+		if (pList.Count > 2)
+		{
+			pIndex++
+			s := pList.Item[pIndex].Value
+			if (s = "MfBool")
+			{
+				this.m_ReadOnly := pArgs.Item[pIndex].Value
+			}
+			else
+			{
+				tErr := this._ErrorCheckParameter(pIndex, pArgs)
+				if (tErr)
+				{
+					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					Throw tErr
+				}
+			}
+		}
+		
+		
+		this.m_isInherited := False
 		
 	}
+; 	End:Constructor ;}
+;{ 	_ConstructorParams
+	_ConstructorParams(MethodName, args*) {
+
+		p := Null
+		cnt := MfParams.GetArgCount(args*)
+
+	
+		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
+		{
+			p := args[1] ; arg 1 is a MfParams object so we will use it
+			if (p.Count > 3)
+			{
+				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
+				e.SetProp(A_LineFile, A_LineNumber, MethodName)
+				throw e
+			}
+		}
+		else
+		{
+
+			p := new MfParams()
+			p.AllowEmptyString := false ; no strings for parameters in this case
+			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
+			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
+
+			
+			; can be up to five parameters
+			; Two parameters is not a possibility
+			if (cnt > 3)
+			{
+				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
+				e.SetProp(A_LineFile, A_LineNumber, MethodName)
+				throw e
+			}
+			
+			i := 1
+			while (i <= cnt)
+			{
+				arg := args[i]
+				try
+				{
+					if (IsObject(arg))
+					{
+						if (i > 1) ; all booleans from here
+						{
+							T := new MfType(arg)
+							if (T.IsNumber)
+							{
+								; convert all mf number object to boolean
+								b := new MfBool()
+								b.Value := arg.Value > 0
+								p.Add(b)
+							}
+							else
+							{
+								p.Add(arg)
+							}
+						}
+						else
+						{
+							p.Add(arg)
+						}
+					} 
+					else
+					{
+						if (MfNull.IsNull(arg))
+						{
+							pIndex := p.Add(arg)
+						}
+						else if (i = 1) ; bigInt any kind, add as string
+						{
+
+							p.AddString(arg)
+						}
+						else ; all params past 1 are boolean
+						{
+							pIndex := p.AddBool(arg)
+						}
+					}
+				}
+				catch e
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				i++
+			}
+			
+		}
+		return p
+	}
+; 	End:_ConstructorParams ;}
 ;{ 	Methods
 	Add(Value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -218,11 +365,6 @@ Class MfBigInt extends MfObject
 		{
 			return true
 		}
-		if (MfBigIntHelper.equals(this.m_bi, x.m_bi))
-		{
-			; MfBigIntHelper.greater returns true if they are equal
-			return false
-		}
 		if (this.IsNegative = true && x.IsNegative = true)
 		{
 			return MfBigIntHelper.greater(x.m_bi, this.m_bi)
@@ -296,11 +438,6 @@ Class MfBigInt extends MfObject
 		}
 		if (this.IsNegative = false && x.IsNegative = true)
 		{
-			return false
-		}
-		if (MfBigIntHelper.equals(this.m_bi, x.m_bi))
-		{
-			; MfBigIntHelper.greater returns true if they are equal
 			return false
 		}
 		if (this.IsNegative = true && x.IsNegative = true)
@@ -529,6 +666,7 @@ Class MfBigInt extends MfObject
 		{
 			retval := new MfBigInt(0)
 			retval.m_bi := str.Clone()
+			retval.m_bi := MfBigIntHelper.trim(retval.m_bi, 1)
 			return retval
 		}
 		_str := MfString.GetValue(str)
@@ -670,6 +808,7 @@ Class MfBigInt extends MfObject
 			{
 				retval := new MfBigInt(0)
 				retval.m_bi := x.Clone()
+				retval.m_bi := MfBigIntHelper.trim(retval.m_bi, 1)
 				return retval
 			}
 			else if (MfObject.IsObjInstance(x, MfObject))
@@ -690,21 +829,8 @@ Class MfBigInt extends MfObject
 		{
 			return MfBigInt._fromInt(num)
 		}
-		wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
-		try
-		{
-			num := num . ""
-			return MfBigInt.Parse(num)
-		}
-		catch e
-		{
-			throw e
-		}
-		finally
-		{
-			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
-		}
-		return new MfBigInt(0)
+		num := format("{:i}", num)
+		return MfBigInt.Parse(num)
 	}
 ; 	End:_FromAny ;}
 ;{ 	_FromAnyConstructor
@@ -754,26 +880,12 @@ Class MfBigInt extends MfObject
 			this.m_IsNegative := x.IsNegative
 			return
 		}
-		wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
-		try
-		{
-			num := num . ""
-			x := MfBigInt.Parse(num)
-			this.m_bi := x.m_bi.Clone()
-			this.m_IsNegative := x.IsNegative
-			return
-
-		}
-		catch e
-		{
-			throw e
-		}
-		finally
-		{
-			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
-		}
-		this.m_bi := new MfBigIntHelper.DList(3)
-		Return
+		num := format("{:i}", num)
+		x := MfBigInt.Parse(num)
+		this.m_bi := x.m_bi.Clone()
+		this.m_bi := MfBigIntHelper.trim(this.m_bi, 1)
+		this.m_IsNegative := x.IsNegative
+		return
 	}
 ; 	End:_FromAnyConstructor ;}
 ;{ 	_fromInt
@@ -790,6 +902,7 @@ Class MfBigInt extends MfObject
 		}
 
 		retval.m_bi := MfBigIntHelper.int2bigInt(n, 31, 4)
+		retval.m_bi := MfBigIntHelper.trim(retval.m_bi, 1)
 		return retval
 	}
 ; 	End:_fromInt ;}
@@ -802,7 +915,7 @@ Class MfBigInt extends MfObject
 		this.m_IsNegative := false
 		strLst := MfBigIntHelper.DList.FromString(str, false) ; ignore whitespace
 		i := 0
-
+		throw new MfNotImplementedException()
 	}
 ;{ 	_VerifyReadOnly
 	_VerifyReadOnly(args*) {
@@ -966,6 +1079,27 @@ Class MfBigInt extends MfObject
 ; End:_ErrorCheckParameter ;}
 ; 	End:Internal methods ;}
 ;{ Properties
+;{ InnerList
+	/*!
+		Property: InnerList [get]
+			Gets the InnerList value associated with the this instance
+		Value:
+			Var representing the InnerList property of the instance
+		Remarks:
+			Readonly Property
+	*/
+	InnerList[]
+	{
+		get {
+			return this.m_bi
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "InnerList")
+			Throw ex
+		}
+	}
+; End:InnerList ;}
 ;{ IsNegative
 	m_IsNegative := false
 	/*!
@@ -1010,6 +1144,25 @@ Class MfBigInt extends MfObject
 		}
 	}
 ;	End:ReadOnly ;}
+;{ ReturnAsObject
+	m_ReturnAsObject := false
+	/*!
+		Property: ReturnAsObject [get/set]
+			Gets or sets the ReturnAsObject value associated with the this instance
+		Value:
+			Var representing the ReturnAsObject property of the instance
+	*/
+	ReturnAsObject[]
+	{
+		get {
+			return this.m_ReturnAsObject
+		}
+		set {
+			this.m_ReturnAsObject := MfBool.GetValue(value)
+			return this.m_ReturnAsObject
+		}
+	}
+; End:ReturnAsObject ;}
 ;{ Value
 	/*!
 		Property: Value [get/set]

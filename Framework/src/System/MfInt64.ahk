@@ -159,8 +159,6 @@ Class MfInt64 extends MfPrimitive
 		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
 		{
 			p := args[1] ; arg 1 is a MfParams object so we will use it
-			; can be up to five parameters
-			; Two parameters is not a possibility
 			if (p.Count > 3)
 			{
 				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
