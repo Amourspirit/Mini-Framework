@@ -18,6 +18,189 @@
 class MfBinaryConverter extends MfObject
 {
 ;{ Methods
+;{ 	BitAnd
+	BitAnd(bitsA, bitsB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bitsA, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bitsA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(bitsB, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bitsB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ans := new MfBinaryList()
+		if(bitsA.Count > bitsB.Count)
+		{
+			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count)
+		}
+		else if(bitsB.Count > bitsA.Count)
+		{
+			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count)
+		}
+		ansl := ans.m_InnerList
+		la := bitsA.m_InnerList
+		lb := bitsB.m_InnerList
+		i := 1
+		lstCount := bitsA.Count
+		while (i <= lstCount)
+		{
+			if (la[i])
+			{
+				if (lb[i])
+				{
+					ansl.push(1)
+				}
+				else
+				{
+					ansl.push(0)
+				}
+			}
+			else
+			{
+				ansl.push(0)
+			}
+			i++
+		}
+		ansl.Count := lstCount
+		return ans
+	}
+; 	End:BitAnd ;}
+;{ 	BitNot
+	BitNot(bits) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ans := new MfBinaryList()
+		ansl := ans.m_InnerList
+		la := bits.m_InnerList
+		
+		i := 1
+		lstCount := bits.Count
+		while (i <= lstCount)
+		{
+			if (la[i])
+			{
+				ansl.push(0)
+			}
+			else
+			{
+				ansl.push(1)
+			}
+			i++
+		}
+		ansl.Count := lstCount
+		return ans
+	}
+; 	End:BitNot ;}
+;{ 	BitOr
+	BitOr(bitsA, bitsB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bitsA, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bitsA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(bitsB, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bitsB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ans := new MfBinaryList()
+		if(bitsA.Count > bitsB.Count)
+		{
+			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count)
+		}
+		else if(bitsB.Count > bitsA.Count)
+		{
+			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count)
+		}
+		ansl := ans.m_InnerList
+		la := bitsA.m_InnerList
+		lb := bitsB.m_InnerList
+		i := 1
+		lstCount := bitsA.Count
+		while (i <= lstCount)
+		{
+			if (la[i] && lb[i])
+			{
+				ansl.push(1)
+			}
+			else
+			{
+				ansl.push(0)
+			}
+			i++
+		}
+		ansl.Count := lstCount
+		return ans
+	}
+; 	End:BitOr ;}
+;{ 	BitXor
+	BitXor(bitsA, bitsB) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bitsA, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bitsA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(MfObject.IsObjInstance(bitsB, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bitsB"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ans := new MfBinaryList()
+		if(bitsA.Count > bitsB.Count)
+		{
+			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count)
+		}
+		else if(bitsB.Count > bitsA.Count)
+		{
+			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count)
+		}
+		ansl := ans.m_InnerList
+		la := bitsA.m_InnerList
+		lb := bitsB.m_InnerList
+		i := 1
+		lstCount := bitsA.Count
+		while (i <= lstCount)
+		{
+			if (la[i] && lb[i])
+			{
+				ansl.push(0)
+			}
+			else if (!la[i] && !lb[i])
+			{
+				ansl.push(0)
+			}
+			else
+			{
+				ansl.push(1)
+			}
+			i++
+		}
+		ansl.Count := lstCount
+		return ans
+	}
+; 	End:BitXor ;}
 ;{ 	GetBytes
 	GetBits(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -58,7 +241,28 @@ class MfBinaryConverter extends MfObject
 		}
 		else if (MfObject.IsObjInstance(obj, MfUInt64))
 		{
-			return MfBinaryConverter._GetBytesUInt(obj.Value, 64)
+			bigx := obj.m_bigx
+			bytes := MfBinaryConverter._GetBytesBinary(bigx.ToString(2), 64)
+			return bytes
+			;return MfBinaryConverter._GetBytesUInt(obj.Value, 64)
+		}
+		else if (MfObject.IsObjInstance(obj, MfBigInt))
+		{
+			byteCount :=  obj.BitSize + 1 ; pad to allow for MSB
+			objNeg := obj.IsNegative
+			obj.IsNegative := false
+			while (mod(byteCount, 4))
+			{
+				byteCount++
+			}
+			bytes := MfBinaryConverter._GetBytesBinary(obj.ToString(2), byteCount)
+			if (objNeg)
+			{
+				; flip the bits
+				bytes := MfBinaryConverter.ToComplement2(bytes)
+			}
+			obj.IsNegative := objNeg
+			return bytes
 		}
 
 		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
@@ -66,6 +270,41 @@ class MfBinaryConverter extends MfObject
 		throw ex
 	}
 ;{ GetBytes
+;{ 	Expand
+	; return a copy of x with at least n elements, adding leading zeros if needed
+	Expand(bits, n) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		n := MfInteger.GetValue(n, 0)
+		If (bits.Count >= n)
+		{
+			return bits.Clone()
+		}
+		diff := n - bits.Count
+		lst := new MfBinaryList()
+		nl := lst.m_InnerList
+		bl := bits.m_InnerList
+		i := 1
+		While (i <= diff)
+		{
+			nl.Push(0)
+			i++
+		}
+		i := 1
+		while (i <= bits.Count)
+		{
+			nl.Push(bl[i])
+			i++
+		}
+		nl.Count := n
+		return lst
+	}
+; 	End:Expand ;}
 ;{ 	IsNegative
 	IsNegative(bits, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -89,7 +328,7 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		MaxStartIndex := bits.Count - nCount
-		_startIndex := MfInteger.GetValue(startIndex, -1)
+		_startIndex := MfInteger.GetValue(startIndex, 0)
 		if (_startIndex < 0)
 		{
 			_startIndex := 0
@@ -109,7 +348,7 @@ class MfBinaryConverter extends MfObject
 		return retval
 	}
 ; 	End:IsNegative ;}
-	ShiftLeft(bits, ShiftCount) {
+	BitShiftLeft(bits, ShiftCount) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -131,20 +370,22 @@ class MfBinaryConverter extends MfObject
 
 		if (ShiftCount < 0)
 		{
-			return MfBinaryConverter.ShiftRight(bits, Abs(ShiftCount), Wrap)
+			return MfBinaryConverter.BitShiftRight(bits, Abs(ShiftCount), Wrap)
 		}
 		bits := bits.Clone()
+		ll := bits.m_InnerList
 		while (i < ShiftCount)
 		{
-			bits.RemoveAt(0)
-			bits.Add(0)
+			ll.RemoveAt(0)
+			ll.Push(0)
+			;bits.Add(0)
 			i++
 		}
 		
 		return bits
 	}
 ;{ 	ShiftRight
-	ShiftRight(bits, ShiftCount) {
+	BitShiftRight(bits, ShiftCount) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -166,17 +407,18 @@ class MfBinaryConverter extends MfObject
 
 		if (ShiftCount < 0)
 		{
-			return MfBinaryConverter.ShiftLeft(bits, Abs(ShiftCount), Wrap)
+			return MfBinaryConverter.BitShiftLeft(bits, Abs(ShiftCount), Wrap)
 		}
 
 
 		MSB := bits.Item[0]
 		i := 0
 		bits := bits.Clone()
+		ll := bits.m_InnerList
 		while (i < ShiftCount)
 		{
-			bits.RemoveAt(bits.Count -1)
-			bits.Insert(0, MSB)
+			ll.Pop()
+			ll.InsertAt(1, MSB)
 			i++
 		}
 		return bits
@@ -184,7 +426,7 @@ class MfBinaryConverter extends MfObject
 	}
 ;{ 	ShiftRight
 ;{ 	ShiftRightUnsigned
-	ShiftRightUnsigned(bits, ShiftCount) {
+	BitShiftRightUnsigned(bits, ShiftCount) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -206,15 +448,16 @@ class MfBinaryConverter extends MfObject
 
 		if (ShiftCount < 0)
 		{
-			return MfBinaryConverter.ShiftLeft(bits, Abs(ShiftCount), Wrap)
+			return MfBinaryConverter.BitShiftLeft(bits, Abs(ShiftCount), Wrap)
 		}
 
 		i := 0
 		bits := bits.Clone()
+		ll := bits.m_InnerList
 		while (i < ShiftCount)
 		{
-			bits.RemoveAt(bits.Count -1)
-			bits.Insert(0, 0)
+			ll.Pop()
+			ll.InsertAt(1, 0)
 			i++
 		}
 		return bits
@@ -263,7 +506,7 @@ class MfBinaryConverter extends MfObject
 	}
 ; 	End:ToBool ;}
 ;{ 	ToByte
-	ToByte(bits, startIndex = -1, ReturnAsObj = false) {
+	ToByte(bits, startIndex=-1, ReturnAsObj=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -285,21 +528,30 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		_startIndex := MfInteger.GetValue(startIndex, -1)
-		
-		MaxStartIndex := bits.Count - nCount
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+
+		MaxStartIndex := bits.Count  - nCount
 		if (_startIndex < 0)
 		{
 			_startIndex := MaxStartIndex
 		}
-		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		
+		if ((_startIndex > MaxStartIndex))
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		_EndIndex := (_startIndex + nCount) - 1
+		if (_EndIndex >= bits.Count)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		bits := MfBinaryConverter._GetSubList(bits, _startIndex, _EndIndex)
 		iCount := 0
-		i := _startIndex
+		i := 0
 		strMsb := ""
 		strLsb := ""
 		While iCount < 4
@@ -336,9 +588,51 @@ class MfBinaryConverter extends MfObject
 
 	}
 ; 	End:ToByte ;}
-;{ ToChar
-	ToChar(bits, startIndex = -1, ReturnAsObj = false) {
+;{ ToComplement1
+	ToComplement1(bList) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bList, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bList"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		if(bList.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bList"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		retval := MfBinaryConverter._FlipBits(bList)
+		return retval
+	}
+; End:ToComplement1 ;}
+;{ ToComplement2
+	ToComplement2(bList) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bList, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bList"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		if(bList.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bList"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		retval := MfBinaryConverter._FlipBits(bList)
+		MfBinaryConverter._AddOneToBitsValue(retval)
+		return retval
+	}
+; End:ToComplement2 ;}
+;{ ToChar
+	ToChar(bits, startIndex=-1, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
 		result := MfBinaryConverter.ToInt16(bits, startIndex, false)
 		if (result < 0)
 		{
@@ -354,7 +648,7 @@ class MfBinaryConverter extends MfObject
 	}
 ; End:ToChar ;}
 ;{ ToInt16
-	ToInt16(bits, startIndex = -1, ReturnAsObj = false) {
+	ToInt16(bits, startIndex=-1, ReturnAsObj=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -376,60 +670,71 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		_startIndex := MfInteger.GetValue(startIndex, -1)
-		
-		MaxStartIndex := bits.Count -1
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+
+		MaxStartIndex := bits.Count  - nCount
 		if (_startIndex < 0)
 		{
 			_startIndex := MaxStartIndex
 		}
-		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		
+		if ((_startIndex > MaxStartIndex))
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		IsNeg := MfBinaryConverter.IsNegative(bits, startIndex)
+		_EndIndex := (_startIndex + nCount) - 1
+		if (_EndIndex >= bits.Count)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		bits := MfBinaryConverter._GetSubList(bits, _startIndex, _EndIndex)
+
+		IsNeg := MfBinaryConverter.IsNegative(bits, 0)
 
 		val := 0
 		if (IsNeg)
 		{
-			_Index := (_startIndex - nCount) + 1
-			_IndexEnd := (_Index + nCount) - 1
-			subBits := MfBinaryConverter._GetSubList(bits, _Index, _IndexEnd)
-			FlipBits := MfBinaryConverter._FlipBits(subBits)
-			MfBinaryConverter._AddOneToBitsValue(FlipBits)
-			i := FlipBits.Count -1
-			iCount := 0
+			bits := MfBinaryConverter.ToComplement2(bits)
+			bl := bits.m_InnerList
+			i := bits.Count
 			Num := 1
-			while i >= 0
+			while i >= 1
 			{
-				bit := FlipBits.Item[i]
+				bit := bl[i]
 				if (bit = 1)
 				{
 					val -= num
 				}
 				num <<= 1
 				i--
-				iCount++
 			}
-			
-
 		}
 		Else
 		{
-			iCount := 0
-			i := _startIndex
-			Num := 1
-			while iCount < nCount
+			bl := bits.m_InnerList
+			i := 1
+			iMax := 1
+			; ignore leading zeros
+			while ((i < bits.Count) && !bl[i])
 			{
-				bit := bits.Item[i]
+				iMax++
+				i++
+			}
+			;iMax := bits.Count - iMax
+			i := bits.Count
+			Num := 1
+			while i >= iMax
+			{
+				bit := bl[i]
 				if (bit = 1)
 				{
 					val += num
 				}
 				Num <<= 1
-				iCount++
 				i--
 			}
 		}
@@ -447,7 +752,7 @@ class MfBinaryConverter extends MfObject
 	}
 ; End:ToInt16 ;}
 ;{ 	ToInt32
-	ToInt32(bits, startIndex = -1, ReturnAsObj = false) {
+	ToInt32(bits, startIndex=-1, ReturnAsObj=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -469,58 +774,71 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		_startIndex := MfInteger.GetValue(startIndex, -1)
-		
-		MaxStartIndex := bits.Count -1
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+
+		MaxStartIndex := bits.Count  - nCount
 		if (_startIndex < 0)
 		{
 			_startIndex := MaxStartIndex
 		}
-		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		
+		if ((_startIndex > MaxStartIndex))
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		IsNeg := MfBinaryConverter.IsNegative(bits, startIndex)
+		_EndIndex := (_startIndex + nCount) - 1
+		if (_EndIndex >= bits.Count)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		bits := MfBinaryConverter._GetSubList(bits, _startIndex, _EndIndex)
+
+		IsNeg := MfBinaryConverter.IsNegative(bits, 0)
 
 		val := 0
 		if (IsNeg)
 		{
-			_Index := (_startIndex - nCount) + 1
-			_IndexEnd := (_Index + nCount) - 1
-			subBits := MfBinaryConverter._GetSubList(bits, _Index, _IndexEnd)
-			FlipBits := MfBinaryConverter._FlipBits(subBits)
-			MfBinaryConverter._AddOneToBitsValue(FlipBits)
-			i := FlipBits.Count -1
-			iCount := 0
+			bits := MfBinaryConverter.ToComplement2(bits)
+			bl := bits.m_InnerList
+			i := bits.Count
 			Num := 1
-			while i >= 0
+			while i >= 1
 			{
-				bit := FlipBits.Item[i]
+				bit := bl[i]
 				if (bit = 1)
 				{
 					val -= num
 				}
 				num <<= 1
 				i--
-				iCount++
 			}
 		}
-		else
+		Else
 		{
-			iCount := 0
-			i := _startIndex
-			Num := 1
-			while iCount < nCount
+			bl := bits.m_InnerList
+			i := 1
+			iMax := 1
+			; ignore leading zeros
+			while ((i < bits.Count) && !bl[i])
 			{
-				bit := bits.Item[i]
+				iMax++
+				i++
+			}
+			;iMax := bits.Count - iMax
+			i := bits.Count
+			Num := 1
+			while i >= iMax
+			{
+				bit := bl[i]
 				if (bit = 1)
 				{
 					val += num
 				}
 				Num <<= 1
-				iCount++
 				i--
 			}
 		}
@@ -560,58 +878,71 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		_startIndex := MfInteger.GetValue(startIndex, -1)
-		
-		MaxStartIndex := bits.Count -1
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+
+		MaxStartIndex := bits.Count  - nCount
 		if (_startIndex < 0)
 		{
 			_startIndex := MaxStartIndex
 		}
-		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		
+		if ((_startIndex > MaxStartIndex))
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		IsNeg := MfBinaryConverter.IsNegative(bits, startIndex)
+		_EndIndex := (_startIndex + nCount) - 1
+		if (_EndIndex >= bits.Count)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		bits := MfBinaryConverter._GetSubList(bits, _startIndex, _EndIndex)
+
+		IsNeg := MfBinaryConverter.IsNegative(bits, 0)
 
 		val := 0
 		if (IsNeg)
 		{
-			_Index := (_startIndex - nCount) + 1
-			_IndexEnd := (_Index + nCount) - 1
-			subBits := MfBinaryConverter._GetSubList(bits, _Index, _IndexEnd)
-			FlipBits := MfBinaryConverter._FlipBits(subBits)
-			MfBinaryConverter._AddOneToBitsValue(FlipBits)
-			i := FlipBits.Count -1
-			iCount := 0
+			bits := MfBinaryConverter.ToComplement2(bits)
+			bl := bits.m_InnerList
+			i := bits.Count
 			Num := 1
-			while i >= 0
+			while i >= 1
 			{
-				bit := FlipBits.Item[i]
+				bit := bl[i]
 				if (bit = 1)
 				{
 					val -= num
 				}
 				num <<= 1
 				i--
-				iCount++
 			}
 		}
-		else
+		Else
 		{
-			iCount := 0
-			i := _startIndex
-			Num := 1
-			while iCount < nCount
+			bl := bits.m_InnerList
+			i := 1
+			iMax := 1
+			; ignore leading zeros
+			while ((i < bits.Count) && !bl[i])
 			{
-				bit := bits.Item[i]
+				iMax++
+				i++
+			}
+			;iMax := bits.Count - iMax
+			i := bits.Count
+			Num := 1
+			while i >= iMax
+			{
+				bit := bl[i]
 				if (bit = 1)
 				{
 					val += num
 				}
 				Num <<= 1
-				iCount++
 				i--
 			}
 		}
@@ -628,9 +959,183 @@ class MfBinaryConverter extends MfObject
 		return val
 	}
 ; 	End:ToInt64 ;}
+	ToUInt64(bits, startIndex=-1, ReturnAsObj=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nCount := 64 ; Number of bits needed for conversion
+		if (bits.Count < nCount)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_startIndex := MfInteger.GetValue(startIndex, -1)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+
+		MaxStartIndex := bits.Count  - nCount
+		if (_startIndex < 0)
+		{
+			_startIndex := MaxStartIndex
+		}
+		
+		if ((_startIndex > MaxStartIndex))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_EndIndex := (_startIndex + nCount) - 1
+		if (_EndIndex >= bits.Count)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		bits := MfBinaryConverter._GetSubList(bits, _startIndex, _EndIndex)
+		sBinary := MfBinaryConverter._ToBinaryString(bits)
+		bigx := MfBigMathInt.Str2bigInt(sBinary, 2, 2, 2)
+		bigx := MfBigMathInt.Trim(bigx, 1)
+		if (_ReturnAsObj)
+		{
+			retval := new MfUInt64(bigx)
+			return retval
+		}
+		return MfBigMathInt.BigInt2str(bitx, 10)
+	}
+
+	ToBigInt(bits, startIndex=0, ReturnAsObj=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nCount := 1 ; Number of bits needed for conversion
+		if (bits.Count < nCount)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_startIndex := MfInteger.GetValue(startIndex, -1)
+		
+		MaxStartIndex := bits.Count -1
+		if (_startIndex < 0)
+		{
+			_startIndex := 0
+		}
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+
+		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		IsNeg := MfBinaryConverter.IsNegative(bits, startIndex)
+		if (_startIndex > 0)
+		{
+			bits := MfBinaryConverter._GetSubList(bits, _startIndex)	
+		}
+		
+		if (IsNeg)
+		{
+			
+			bits := MfBinaryConverter.ToComplement2(bits)
+		}
+	
+		sBinary := MfBinaryConverter._ToBinaryString(bits)
+		
+		bigx := MfBigMathInt.Str2bigInt(sBinary, 2, 2, 2)
+		bigx := MfBigMathInt.Trim(bigx, 1)
+
+		if (_ReturnAsObj)
+		{
+			retval := new MfBigInt(bigx)
+			if ((IsNeg = true) && (MfBigMathInt.IsZero(bigx) = false))
+			{
+				retval.IsNegative := IsNeg
+			}
+			
+			return retval
+		}
+		return MfBigMathInt.BigInt2str(bitx, 10)
+	}
+
+	Trim(bits, n=0) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		n := MfInteger.GetValue(n, 0)
+		if (n < 0)
+		{
+			n = -n
+		}
+		nl := bits.m_InnerList
+		i := 1
+		iMax := 0
+		; ignore leading zeros
+		while ((i < bits.Count) && !nl[i])
+		{
+			iMax++
+			i++
+		}
+				
+		y := bits.SubList(iMax + n)
+		return y
+	}
 ;{ 	Methods
 
 ;{ Internal Methods
+	_ToBinaryString(bits) {
+		sBinary := ""
+		i := 1
+		iCount := bits.Count
+		ll := bits.m_InnerList
+		; ignore leading zeros
+		while (i < iCount && !ll[i])
+		{
+			i++
+		}
+		while (i <= iCount)
+		{
+			sBinary .= ll[i]
+			i++
+		}
+		if (sBinary = "")
+		{
+			sBinary := "0"
+		}
+		return sBinary
+	}
 	_DecToBin(strDec) {
 		lst := new MfBinaryList()
 		If (MfString.IsNullOrEmpty(strDec))
@@ -748,6 +1253,38 @@ class MfBinaryConverter extends MfObject
 		return MfBinaryConverter._IntToBinaryList(value, bitCount)
 
 	}
+	_GetBytesBinary(value, bitCount = 32) {
+		If (bitCount < 4 )
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Under", "4"), "bitCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Mod(bitCount, 4))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Not_Divisable_By", "4"), "bitCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		lst := new MfBinaryList()
+		ll := lst.m_InnerList
+		currentBits := StrLen(value)
+		iCount := 0
+		while currentBits < bitCount
+		{
+			iCount++
+			ll[iCount] := 0
+			currentBits++
+		}
+		loop, Parse, value
+		{
+			iCount++
+			ll[iCount] := A_LoopField
+		}
+		ll.Count := iCount
+		return lst
+
+	}
 ; 	End:_GetBytesInt ;}
 ;{ 	_LongIntStringToByteArray
 	_LongIntStringToByteArray(value, bitCount = 32) {
@@ -757,26 +1294,93 @@ class MfBinaryConverter extends MfObject
 ;{ 	_GetSubList
 	; returns a subset of a MfBinaryList as a new MfBinaryList instance
 	; counts from Right to left so startIndex it from the end
-	_GetSubList(lst, startIndex, endIndex=0) {
-		_startIndex := MfInteger.GetValue(startIndex, -1)
-		_endIndex := MfInteger.GetValue(endIndex, 0)
-		if (_startIndex < 1 && _endIndex = 0)
+	_GetSubList(lst, startIndex=0, endIndex="") {
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
+		maxIndex := lst.Count - 1
+		IsEndIndex := true
+		if (endIndex == "NaN")
+		{
+			IsEndIndex := False
+		}
+		If (IsEndIndex = true && endIndex < 0)
+		{
+			endIndex := 0
+		}
+		if (startIndex < 0)
+		{
+			startIndex := 0
+		}
+		if ((IsEndIndex = false) && (startIndex = 0))
+		{
+			Return lst
+		}
+		if ((IsEndIndex = false) && (startIndex > maxIndex))
+		{
+			Return lst
+		}
+		if ((IsEndIndex = true) && (startIndex > endIndex))
+		{
+			; swap values
+			tmp := startIndex
+			startIndex := endIndex
+			endIndex := tmp
+		}
+		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
 			return lst
 		}
-		if (_startIndex > _endIndex)
+		if (startIndex > maxIndex)
 		{
 			return lst
 		}
-		retval := new MfBinaryList()
-		i := _startIndex
-		while i <= _endIndex
+		if (IsEndIndex = true)
 		{
-			retval.Add(lst.Item[i])
-			i++
+			len :=  endIndex - startIndex
+			if ((len + 1) >= lst.Count)
+			{
+				return lst
+			}
 		}
+		else
+		{
+			len := maxIndex
+		}
+		
 
-		return retval
+		rLst := new MfBinaryList()
+		rl := rLst.m_InnerList
+
+		i := 1
+		iCount := 0
+		if (IsEndIndex = true)
+		{
+			While ((iCount + len) < (lst.Count - 1))
+			{
+				iCount++
+			}
+		}
+		else
+		{
+			While ((iCount + (len - startIndex)) < (lst.Count - 1))
+			{
+				iCount++
+			}
+		}
+			
+		ll := lst.m_InnerList
+		tl := this.m_InnerList
+		while iCount < lst.Count
+		{
+			iCount++
+			;lst.Add(this.Item[i])
+			rl[i] := ll[iCount]
+			i++
+			
+		}
+		rl.Count := i - 1
+		return rLst
+
 	}
 ; 	End:_GetSubList ;}
 ;{ 	_FromBinaryString
@@ -885,11 +1489,17 @@ class MfBinaryConverter extends MfObject
 ;{ _FlipBits
 	_FlipBits(lst) {
 		nArray := new MfBinaryList()
-		iMaxIndex := lst.Count - 1
-		for i, b in lst
+		; access inner list for faster processing
+		nl := nArray.m_InnerList
+		ll := lst.m_InnerList
+		iMaxIndex := lst.Count
+		i := 1
+		while i <= lst.Count
 		{
-			nArray.Add(b ^ 1)
+			nl[i] := !ll[i]
+			i++
 		}
+		nl.Count := lst.Count
 		return nArray
 	}
 ; End:_FlipBits ;}

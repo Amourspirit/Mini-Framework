@@ -388,12 +388,17 @@ class MfListVar extends MfListBase
 		
 		i := startIndex
 		iCount := 0
-		while iCount < len
+		ll := lst.m_InnerList
+		tl := this.m_InnerList
+		while iCount <= len
 		{
-			lst.Add(this.Item[i])
-			i++
 			iCount++
+			;lst.Add(this.Item[i])
+			ll[iCount] := tl[iCount]
+			i++
+			
 		}
+		ll.Count := iCount
 		return lst
 
 	}

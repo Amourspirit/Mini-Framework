@@ -627,6 +627,57 @@ class MfNibConverter extends MfObject
 		return retval
 	}
 ; 	End:ToInt64 ;}
+	ToUInt64(nibbles, startIndex = -1, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nCount := 16 ; Number of nibbles needed for conversion
+		if (nibbles.Count < nCount)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		MaxStartIndex := nibbles.Count - nCount
+		_startIndex := MfInteger.GetValue(startIndex, -1)
+		if (_startIndex < 0)
+		{
+			_startIndex := MaxStartIndex
+		}
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_startIndex > 0)
+		{
+			nibbles := nibbles.SubList(_startIndex, _startIndex + nCount)
+		}
+		if (MfNibConverter.IsNegative(nibbles))
+		{
+			nibbles := MfNibConverter.ToComplement16(nibbles)
+		}
+		
+		bigInt := MfBigInt.Parse(nibbles.ToString(), 16)
+
+		if (_ReturnAsObj)
+		{
+			return new MfUInt64(bigInt)
+		}
+		return bigInt.Value
+	}
 	ToBigInt(nibbles, startIndex=0 , Length=-1, ReturnAsObj=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)

@@ -32,11 +32,11 @@ Class MfBigInt extends MfObject
 		pIndex := 0
 		if (pList.Count > 0)
 		{
-			this._FromAnyConstructor(pArgs.Item[pIndex].Value)
+			this._FromAnyConstructor(pArgs.Item[pIndex])
 		}
 		else
 		{
-			this.m_bi := new MfBigIntHelper.DList(3)
+			this.m_bi := new MfListVar(3)
 		}
 		if (pList.Count > 1)
 		{
@@ -183,6 +183,7 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		this._ClearCache()
 		x := ""
 		try
 		{
@@ -196,36 +197,40 @@ Class MfBigInt extends MfObject
 		}
 		if (x.IsNegative = false && this.IsNegative = false)
 		{
-			this.m_bi := MfBigIntHelper.add(this.m_bi, x.m_bi)
+			this.m_bi := MfBigMathInt.add(this.m_bi, x.m_bi)
 			return this
 		}
 		if (x.IsNegative = true && this.IsNegative = true)
 		{
-			this.m_bi := MfBigIntHelper.add(this.m_bi, x.m_bi)
+			this.m_bi := MfBigMathInt.add(this.m_bi, x.m_bi)
 			return this
 		}
 		if (this.IsNegative != x.IsNegative)
 		{
-			If (MfBigIntHelper.equals(this.m_bi, x.m_bi))
+			If (MfBigMathInt.Equals(this.m_bi, x.m_bi))
 			{
-				tmp := new MfBigInt(0)
+				tmp := new MfBigInt(new MfInteger(0))
 				this.m_bi := tmp.m_bi
 				this.IsNegative := False
 				return this
 			}
-			If (MfBigIntHelper.greater(this.m_bi, x.m_bi))
+			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
-				this.m_bi := MfBigIntHelper.sub(this.m_bi, x.m_bi)
+				this.m_bi := MfBigMathInt.Sub(this.m_bi, x.m_bi)
 				this.IsNegative := !x.IsNegative
 			}
 			else
 			{
-				this.m_bi := MfBigIntHelper.sub(x.m_bi,this.m_bi)
+				this.m_bi := MfBigMathInt.Sub(x.m_bi,this.m_bi)
 				this.IsNegative := !this.IsNegative
 			}
 			return this
 		}
 
+	}
+	_ClearCache() {
+		this.strValue := ""
+		this.m_BitSize := ""
 	}
 ;{ 	CompareTo
 	CompareTo(value) {
@@ -269,6 +274,12 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if(this._IsZero())
+		{
+			return
+		}
+		
+		this._ClearCache()
 		x := ""
 		try
 		{
@@ -280,19 +291,19 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (MfBigIntHelper.isZero(x.m_bi))
+		if (MfBigMathInt.isZero(x.m_bi))
 		{
 			ex := new MfDivideByZeroException()
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		;q and r must be arrays that are exactly the same Count as x. (Or q can have more).
-		q := new MfBigIntHelper.DList(this.m_bi.Count)
-		r := new MfBigIntHelper.DList(q.Count)
+		q := new MfListVar(this.m_bi.Count)
+		r := new MfListVar(q.Count)
 
 		; divide_(ByRef x, ByRef y, ByRef q, ByRef r)
-		MfBigIntHelper.divide_(this.m_bi, x.m_bi, q, r)
-		q := MfBigIntHelper.trim(q, 1)
+		MfBigMathInt.divide_(this.m_bi, x.m_bi, q, r)
+		q := MfBigMathInt.trim(q, 1)
 		this.m_bi := q
 		if (this.IsNegative || x.IsNegative)
 		{
@@ -302,11 +313,11 @@ Class MfBigInt extends MfObject
 		{
 			this.IsNegative := false
 		}
-		if (this.IsNegative && MfBigIntHelper.isZero(this.m_bi))
+		if (this.IsNegative && MfBigMathInt.IsZero(this.m_bi))
 		{
 			this.IsNegative := false
 		}
-		MfBigIntHelper.bigInt2str(r, 10)
+		MfBigMathInt.BigInt2str(r, 10)
 	}
 ; 	End:Divide ;}
 ;{ 	Equals
@@ -333,7 +344,7 @@ Class MfBigInt extends MfObject
 		{
 			return false
 		}
-		return MfBigIntHelper.equals(this.m_bi, x.m_bi)
+		return MfBigMathInt.Equals(this.m_bi, x.m_bi)
 	}
 ; 	End:Equals ;}
 ;{ 	GreaterThen
@@ -367,9 +378,9 @@ Class MfBigInt extends MfObject
 		}
 		if (this.IsNegative = true && x.IsNegative = true)
 		{
-			return MfBigIntHelper.greater(x.m_bi, this.m_bi)
+			return MfBigMathInt.Greater(x.m_bi, this.m_bi)
 		}
-		return MfBigIntHelper.greater(this.m_bi, x.m_bi)
+		return MfBigMathInt.Greater(this.m_bi, x.m_bi)
 
 	}
 ; 	End:GreaterThen ;}
@@ -401,15 +412,15 @@ Class MfBigInt extends MfObject
 		{
 			return true
 		}
-		if (MfBigIntHelper.equals(this.m_bi, x.m_bi))
+		if (MfBigMathInt.Equals(this.m_bi, x.m_bi))
 		{
 			return true
 		}
 		if (this.IsNegative = true && x.IsNegative = true)
 		{
-			return MfBigIntHelper.greater(x.m_bi, this.m_bi)
+			return MfBigMathInt.Greater(x.m_bi, this.m_bi)
 		}
-		return MfBigIntHelper.greater(this.m_bi, x.m_bi)
+		return MfBigMathInt.Greater(this.m_bi, x.m_bi)
 	}
 ;{ 	LessThen
 	LessThen(value) {
@@ -442,9 +453,9 @@ Class MfBigInt extends MfObject
 		}
 		if (this.IsNegative = true && x.IsNegative = true)
 		{
-			return MfBigIntHelper.greater(this.m_bi, x.m_bi)
+			return MfBigMathInt.Greater(this.m_bi, x.m_bi)
 		}
-		return MfBigIntHelper.greater(x.m_bi, this.m_bi)
+		return MfBigMathInt.Greater(x.m_bi, this.m_bi)
 
 	}
 ; 	End:LessThen ;}
@@ -477,15 +488,15 @@ Class MfBigInt extends MfObject
 		{
 			return false
 		}
-		if (MfBigIntHelper.equals(this.m_bi, x.m_bi))
+		if (MfBigMathInt.Equals(this.m_bi, x.m_bi))
 		{
 			return true
 		}
 		if (this.IsNegative = true && x.IsNegative = true)
 		{
-			return MfBigIntHelper.greater(this.m_bi, x.m_bi)
+			return MfBigMathInt.Greater(this.m_bi, x.m_bi)
 		}
-		return MfBigIntHelper.greater(x.m_bi, this.m_bi)
+		return MfBigMathInt.Greater(x.m_bi, this.m_bi)
 
 	}
 ; 	End:LessThenOrEqual ;}
@@ -499,6 +510,12 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if(this._IsZero())
+		{
+			return
+		}
+		
+		this._ClearCache()
 		x := ""
 		try
 		{
@@ -510,28 +527,47 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if(this._IsOne(true))
+		{
+			if (this.IsNegative)
+			{
+				x.IsNegative := !x.IsNegative
+			}
+			this.m_bi := x.m_bi.Clone()
+			this.IsNegative := x.IsNegative
+			return this
+		}
+		if(x._IsOne(true))
+		{
+			if (x.IsNegative)
+			{
+				this.IsNegative := !this.IsNegative
+			}
+			return this
+		}
+
 		if ((x.IsNegative = false && this.IsNegative = false)
 			|| (x.IsNegative = true && this.IsNegative = true))
 		{
-			If (MfBigIntHelper.greater(this.m_bi, x.m_bi))
+			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
-				bigx := MfBigIntHelper.mult(this.m_bi, x.m_bi)
+				bigx := MfBigMathInt.Mult(this.m_bi, x.m_bi)
 			}
 			Else
 			{
-				bigx := MfBigIntHelper.mult(x.m_bi, this.m_bi)
+				bigx := MfBigMathInt.Mult(x.m_bi, this.m_bi)
 			}
 			this.m_bi := bigx
 			this.IsNegative := False
 			return this
 		}
-		If (MfBigIntHelper.greater(this.m_bi, x.m_bi))
+		If (MfBigMathInt.greater(this.m_bi, x.m_bi))
 		{
-			bigx := MfBigIntHelper.mult(this.m_bi, x.m_bi)
+			bigx := MfBigMathInt.Mult(this.m_bi, x.m_bi)
 		}
 		Else
 		{
-			bigx := MfBigIntHelper.mult(x.m_bi, this.m_bi)
+			bigx := MfBigMathInt.Mult(x.m_bi, this.m_bi)
 		}
 		this.m_bi := bigx
 		this.IsNegative := true
@@ -540,35 +576,53 @@ Class MfBigInt extends MfObject
 ; 	End:Multiply ;}
 ;{ 	Power
 	; Raise Value to the power of
-	Power(value, byRef R) {
+	Power(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this._VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
 
-
-		throw new MfNotImplementedException()
-
-
+		
 		if (MfNull.IsNull(value)) {
 			ex := new MfArgumentNullException("value")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		x := ""
-		try
+		if(this._IsZero())
 		{
-			x := MfBigInt._FromAny(value)
+			return
 		}
-		Catch e
+		if(this._IsOne(true))
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			if (this.IsNegative)
+			{
+				this.IsNegative := False
+			}
+			return
 		}
-		bigR := new MfBigIntHelper.DList(this.m_bi.Count)
-		result := MfBigIntHelper.powMod(this.m_bi, x.m_bi, bigR)
-		bigR := MfBigIntHelper.trim(bigR, 1)
-		result :=  MfBigIntHelper.trim(result, 1)
-		this.m_bi := result
+		
+		exp := MfInt64.GetValue(value)
+
+		if (exp < 0)
+		{
+			exp := Abs(exp)
+		}
+		if (exp = 1)
+		{
+			return
+		}
+		if (exp = 0)
+		{
+			this.Value := 1
+			return
+		}
+		this._ClearCache()	
+		bigX := this.m_bi.Clone()
+
+		i := 1
+		while (i < exp)
+		{
+			this.Multiply(bigX)
+			i++
+		}
 	}
 ; 	End:Power ;}
 ;{ Subtract
@@ -581,6 +635,7 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		this._ClearCache()
 		x := ""
 		try
 		{
@@ -594,20 +649,20 @@ Class MfBigInt extends MfObject
 		}
 		if (x.IsNegative = false && this.IsNegative = false)
 		{
-			If (MfBigIntHelper.equals(this.m_bi, x.m_bi))
+			If (MfBigMathInt.Equals(this.m_bi, x.m_bi))
 			{
-				tmp := new MfBigInt(0)
+				tmp := new MfBigInt(new MfInteger(0))
 				this.m_bi := tmp.m_bi
 				this.IsNegative := False
 				return this
 			}
-			If (MfBigIntHelper.greater(this.m_bi, x.m_bi))
+			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
-				this.m_bi := MfBigIntHelper.sub(this.m_bi, x.m_bi)
+				this.m_bi := MfBigMathInt.Sub(this.m_bi, x.m_bi)
 			}
 			else
 			{
-				this.m_bi := MfBigIntHelper.sub(x.m_bi,this.m_bi)
+				this.m_bi := MfBigMathInt.Sub(x.m_bi,this.m_bi)
 				this.IsNegative := true
 			}
 
@@ -615,20 +670,20 @@ Class MfBigInt extends MfObject
 		}
 		if (x.IsNegative = true && this.IsNegative = true)
 		{
-			If (MfBigIntHelper.equals(this.m_bi, x.m_bi))
+			If (MfBigMathInt.equals(this.m_bi, x.m_bi))
 			{
-				tmp := new MfBigInt(0)
+				tmp := new MfBigInt(new MfInteger(0))
 				this.m_bi := tmp.m_bi
 				this.IsNegative := False
 				return
 			}
-			If (MfBigIntHelper.greater(this.m_bi, x.m_bi))
+			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
-				this.m_bi := MfBigIntHelper.sub(this.m_bi, x.m_bi)
+				this.m_bi := MfBigMathInt.Sub(this.m_bi, x.m_bi)
 			}
 			else
 			{
-				this.m_bi := MfBigIntHelper.sub(x.m_bi,this.m_bi)
+				this.m_bi := MfBigMathInt.Sub(x.m_bi,this.m_bi)
 				this.IsNegative := false
 			}
 
@@ -636,14 +691,14 @@ Class MfBigInt extends MfObject
 		}
 		if (this.IsNegative != x.IsNegative)
 		{
-			If (MfBigIntHelper.greater(this.m_bi, x.m_bi))
+			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
-				this.m_bi := MfBigIntHelper.add(this.m_bi, x.m_bi)
+				this.m_bi := MfBigMathInt.Add(this.m_bi, x.m_bi)
 				this.IsNegative := !x.IsNegative
 			}
 			else
 			{
-				this.m_bi := MfBigIntHelper.add(x.m_bi,this.m_bi)
+				this.m_bi := MfBigMathInt.Add(x.m_bi,this.m_bi)
 				this.IsNegative := !x.IsNegative
 			}
 			return this
@@ -653,7 +708,7 @@ Class MfBigInt extends MfObject
 ;{ 	Clone
 	Clone() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		retval := new MfBigInt(0)
+		retval := new MfBigInt(new MfInteger(0))
 		retval.m_bi := this.m_bi.Clone()
 		retval.m_IsNegative := this.m_IsNegative
 		return retval
@@ -662,19 +717,19 @@ Class MfBigInt extends MfObject
 ;{ 	Parse
 	Parse(str, base="") {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (MfObject.IsObjInstance(str,  MfBigIntHelper.DList))
+		if (MfObject.IsObjInstance(str,  MfListVar))
 		{
-			retval := new MfBigInt(0)
+			retval := new MfBigInt(new MfInteger(0))
 			retval.m_bi := str.Clone()
-			retval.m_bi := MfBigIntHelper.trim(retval.m_bi, 1)
+			retval.m_bi := MfBigMathInt.Trim(retval.m_bi, 1)
 			return retval
 		}
 		_str := MfString.GetValue(str)
-		strLst := MfBigIntHelper.DList.FromString(_str, false) ; ignore whitespace
+		strLst := MfListVar.FromString(_str, false) ; ignore whitespace
 		
 		if (strLst.Count = 0)
 		{
-			return new MfBigInt(0)
+			return new MfBigInt(new MfInteger(0))
 		}
 		sign := true
 		i := 0
@@ -689,7 +744,7 @@ Class MfBigInt extends MfObject
 		}
 		if (i >= strLst.Count)
 		{
-			return new MfBigInt(0)
+			return new MfBigInt(new MfInteger(0))
 		}
 		if (MfNull.IsNull(base))
 		{
@@ -752,9 +807,9 @@ Class MfBigInt extends MfObject
 			len := 4 * ((strLst.Count + 1) - i)
 		}
 		len := (len >> 4) + 1
-		bigX := MfBigIntHelper.str2bigInt(strLst.ToString("", i), base, len, len)
-		bigX := MfBigIntHelper.trim(bigX, 1)
-		retval := new MfBigInt(0)
+		bigX := MfBigMathInt.Str2bigInt(strLst.ToString("", i), base, len, len)
+		bigX := MfBigMathInt.Trim(bigX, 1)
+		retval := new MfBigInt(new MfInteger(0))
 		retval.m_bi := bigX
 		retval.m_IsNegative := !sign
 		return retval
@@ -763,29 +818,52 @@ Class MfBigInt extends MfObject
 ;{ 	ToString
 	ToString(base=10) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		base := MfByte.GetValue(base, 10)
+		if (base > 95)
+		{
+			; max base is 95 so revert to 10 if greater
+			base := 10
+		}
 		s := ""
 		if (this.m_IsNegative)
 		{
 			s := "-"
 		}
-		s .= MfBigIntHelper.bigInt2str(this.m_bi, base)
+		s .= MfBigMathInt.BigInt2str(this.m_bi, base)
 		return s
 	}
 ; 	End:ToString ;}
 ; 	End:Methods ;}
 ;{ 	Internal methods
+	_IsZero() {
+		return MfBigMathInt.IsZero(this.m_bi)
+	}
+	_IsOne(IgnoreSign=false) {
+		If (IgnoreSign = false && this.IsNegative = true)
+		{
+			return false
+		}
+		return MfBigMathInt.Equals(this.m_bi, MfBigMathInt.one)
+	}
+	_IsNegOne() {
+		If (this.IsNegative = true)
+		{
+			return this._IsOne(true)
+		}
+		return false
+	}
 	_ComplementTwo() {
 		; x := this.m_bi.Clone()
-		; x2 := MfBigIntHelper.mult(x, x2)
+		; x2 := MfBigMathInt.mult(x, x2)
 
-		; xC := MfBigIntHelper.sub(x, x2)
-		; xC := MfBigIntHelper.addInt(xC, -1)
+		; xC := MfBigMathInt.sub(x, x2)
+		; xC := MfBigMathInt.addInt(xC, -1)
 		; retval := new MfBigInt(0)
 		; retval.m_bi := xC
 		; return retval
 
 		
-		hex := MfBigIntHelper.bigInt2str(this.m_bi, 16)
+		hex := MfBigMathInt.bigInt2str(this.m_bi, 16)
 		len := StrLen(hex)
 		
 		bitcount := (len & 1?len + 1:len) * 4
@@ -804,11 +882,17 @@ Class MfBigInt extends MfObject
 			{
 				return x
 			}
-			else if (MfObject.IsObjInstance(x, MfBigIntHelper.DList))
+
+			else if (MfObject.IsObjInstance(x, MfListVar))
 			{
-				retval := new MfBigInt(0)
-				retval.m_bi := x.Clone()
-				retval.m_bi := MfBigIntHelper.trim(retval.m_bi, 1)
+
+				retval := new MfBigInt(new MfInteger(0))
+				retval.m_bi := MfBigMathInt.Trim(x, 1)
+				return retval
+			}
+			else if (MfObject.IsObjInstance(x, MfUInt64))
+			{
+				retval := new MfBigInt(x)
 				return retval
 			}
 			else if (MfObject.IsObjInstance(x, MfObject))
@@ -817,7 +901,7 @@ Class MfBigInt extends MfObject
 			}
 			else
 			{
-				return new MfBigInt(0)
+				return new MfBigInt(new MfInteger(0))
 			}
 		}
 		num := MfInt64.GetValue(x,"NaN", true)
@@ -836,16 +920,41 @@ Class MfBigInt extends MfObject
 ;{ 	_FromAnyConstructor
 	; Internal Instance method used by constructor
 	_FromAnyConstructor(x) {
+		this._ClearCache()
 		if (IsObject(x))
 		{
 			if(MfObject.IsObjInstance(x, MfBigInt))
 			{
 				this.m_bi := x.m_bi.Clone()
+				this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
 				this.m_IsNegative := x.IsNegative
 			}
-			else if (MfObject.IsObjInstance(x, MfBigIntHelper.DList))
+			else if (MfObject.IsObjInstance(x, MfListVar))
 			{
 				this.m_bi := x.Clone()
+				this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
+			}
+			else if (MfObject.IsObjInstance(x, MfInteger))
+			{
+				; adding as MfInteger is necessary so methods like parse can create a new instance
+				; of MfbigInt without going into a recursion loop using vars, as you can see below
+				; unknow objects attempt to use parse to create a new instance
+				varx := x.Value
+				IsNeg := false
+				if (varx < 0)
+				{
+					IsNeg := true
+					varx := Abs(varx)
+				}
+				this.m_bi := MfBigMathInt.Str2bigInt(format("{:i}",varx), 10, 2, 2)
+				this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
+				this.m_IsNegative := IsNeg
+			}
+			else if (MfObject.IsObjInstance(x, MfUInt64))
+			{
+				this.m_bi := x.m_bigx.Clone()
+				this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
+				this.m_IsNegative := false
 			}
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
@@ -855,7 +964,7 @@ Class MfBigInt extends MfObject
 			}
 			else
 			{
-				this.m_bi := new MfBigIntHelper.DList(3)
+				this.m_bi := new MfListVar(3)
 			}
 			return
 		}
@@ -870,7 +979,7 @@ Class MfBigInt extends MfObject
 		}
 		if (num = 0)
 		{
-			this.m_bi := new MfBigIntHelper.DList(3)
+			this.m_bi := new MfListVar(2)
 			Return
 		}
 		if((num >= -2147483647) && (num <= 2147483647))
@@ -883,14 +992,13 @@ Class MfBigInt extends MfObject
 		num := format("{:i}", num)
 		x := MfBigInt.Parse(num)
 		this.m_bi := x.m_bi.Clone()
-		this.m_bi := MfBigIntHelper.trim(this.m_bi, 1)
 		this.m_IsNegative := x.IsNegative
 		return
 	}
 ; 	End:_FromAnyConstructor ;}
 ;{ 	_fromInt
 	_fromInt(n) {
-		retval := new MfBigInt(0)
+		retval := new MfBigInt(new MfInteger(0))
 		if (n < 0)
 		{
 			retval.IsNegative := true
@@ -901,8 +1009,8 @@ Class MfBigInt extends MfObject
 			retval.IsNegative := false
 		}
 
-		retval.m_bi := MfBigIntHelper.int2bigInt(n, 31, 4)
-		retval.m_bi := MfBigIntHelper.trim(retval.m_bi, 1)
+		retval.m_bi := MfBigMathInt.Int2bigInt(n, 31, 4)
+		retval.m_bi := MfBigMathInt.Trim(retval.m_bi, 1)
 		return retval
 	}
 ; 	End:_fromInt ;}
@@ -913,7 +1021,7 @@ Class MfBigInt extends MfObject
 			return
 		}
 		this.m_IsNegative := false
-		strLst := MfBigIntHelper.DList.FromString(str, false) ; ignore whitespace
+		strLst := MfListVar.FromString(str, false) ; ignore whitespace
 		i := 0
 		throw new MfNotImplementedException()
 	}
@@ -1079,6 +1187,32 @@ Class MfBigInt extends MfObject
 ; End:_ErrorCheckParameter ;}
 ; 	End:Internal methods ;}
 ;{ Properties
+	;{ BitSize
+		m_BitSize := ""
+		/*!
+			Property: BitSize [get]
+				Gets the BitSize value associated with the this instance
+			Value:
+				Var representing the BitSize property of the instance
+			Remarks:
+				Readonly Property
+		*/
+		BitSize[]
+		{
+			get {
+				if (this.m_BitSize = "")
+				{
+					this.m_BitSize := MfBigMathInt.BitSize(this.m_bi)
+				}
+				return this.m_BitSize
+			}
+			set {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+				ex.SetProp(A_LineFile, A_LineNumber, "BitSize")
+				Throw ex
+			}
+		}
+	; End:BitSize ;}
 ;{ InnerList
 	/*!
 		Property: InnerList [get]
@@ -1115,6 +1249,7 @@ Class MfBigInt extends MfObject
 		}
 		set {
 			this.m_IsNegative := MfBool.GetValue(value, false)
+			this._ClearCache()
 			return this.m_IsNegative
 		}
 	}
@@ -1163,6 +1298,7 @@ Class MfBigInt extends MfObject
 		}
 	}
 ; End:ReturnAsObject ;}
+	strValue := ""
 ;{ Value
 	/*!
 		Property: Value [get/set]
@@ -1173,7 +1309,11 @@ Class MfBigInt extends MfObject
 	Value[]
 	{
 		get {
-			return this.Tostring()
+			if (this.strValue = "")
+			{
+				this.strValue := this.ToString()
+			}
+			return this.strValue
 		}
 		set {
 			this._FromAnyConstructor(value)

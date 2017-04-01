@@ -36,8 +36,8 @@
 * of the same name without the underscore that takes care of the details for you.  
 * For each underscored function where a parameter is modified, that same variable 
 * must not be used as another argument too.  So, you cannot square x by doing 
-* multMod_(x,x,n).  You must use squareMod_(x,n) instead, or do y=dup(x); multMod_(x,y,n).
-* Or simply use the multMod(x,x,n) function without the underscore, where
+* multMod_(x,x,n).  You must use squareMod_(x,n) instead, or do y=Dup(x); multMod_(x,y,n).
+* Or simply use the MultMod(x,x,n) function without the underscore, where
 * such issues never arise, because non-underscored functions never change
 * their parameters; they always allocate new memory for the answer that is returned.
 *
@@ -52,7 +52,7 @@
 *
 * In the following, "bigInt" means a bigInt with at least one leading zero element,
 * and "integer" means a nonnegative integer less than radix.  In some cases, integer 
-* can be negative.  Negative bigInts are 2s complement.
+* can be Negative.  Negative bigInts are 2s complement.
 * 
 * The following functions do not modify their inputs.
 * Those returning a bigInt, string, or Array will dynamically allocate memory for that value.
@@ -60,36 +60,36 @@
 * Those returning boolean or int will not allocate memory except possibly on the first 
 * time they're called with a given parameter size.
 * 
-* bigInt  add(x,y)               *return (x+y) for bigInts x and y.  
-* bigInt  addInt(x,n)            *return (x+n) where x is a bigInt and n is an integer.
-* string  bigInt2str(x,base)     *return a string form of bigInt x in a given base, with 2 <= base <= 95
-* int     bitSize(x)             *return how many bits long the bigInt x is, not counting leading zeros
-* bigInt  dup(x)                 *return a copy of bigInt x
-* boolean equals(x,y)            *is the bigInt x equal to the bigint y?
-* boolean equalsInt(x,y)         *is bigint x equal to integer y?
-* bigInt  expand(x,n)            *return a copy of x with at least n elements, adding leading zeros if needed
-* Array   findPrimes(n)          *return array of all primes less than integer n
+* bigInt  Add(x,y)               *return (x+y) for bigInts x and y.  
+* bigInt  AddInt(x,n)            *return (x+n) where x is a bigInt and n is an integer.
+* string  BigInt2str(x,base)     *return a string form of bigInt x in a given base, with 2 <= base <= 95
+* int     BitSize(x)             *return how many bits long the bigInt x is, not counting leading zeros
+* bigInt  Dup(x)                 *return a copy of bigInt x
+* boolean Equals(x,y)            *is the bigInt x equal to the bigint y?
+* boolean EqualsInt(x,y)         *is bigint x equal to integer y?
+* bigInt  Expand(x,n)            *return a copy of x with at least n elements, adding leading zeros if needed
+* Array   FindPrimes(n)          *return array of all primes less than integer n
 * bigInt  GCD(x,y)               *return greatest common divisor of bigInts x and y (each with same number of elements).
-* boolean greater(x,y)           *is x>y?  (x and y are nonnegative bigInts)
-* boolean greaterShift(x,y,shift)*is (x <<(shift*bpe)) > y?
-* bigInt  int2bigInt(t,n,m)      *return a bigInt equal to integer t, with at least n bits and m array elements
-* bigInt  inverseMod(x,n)        *return (x**(-1) mod n) for bigInts x and n.  If no inverse exists, it returns null
-* int     inverseModInt(x,n)     *return x**(-1) mod n, for integers x and n.  Return 0 if there is no inverse
-* boolean isZero(x)              *is the bigInt x equal to zero?
-* boolean millerRabin(x,b)       *does one round of Miller-Rabin base integer b say that bigInt x is possibly prime? (b is bigInt, 1<b<x)
-* boolean millerRabinInt(x,b)    *does one round of Miller-Rabin base integer b say that bigInt x is possibly prime? (b is int,    1<b<x)
-* bigInt  mod(x,n)               *return a new bigInt equal to (x mod n) for bigInts x and n.
-* int     modInt(x,n)            *return x mod n for bigInt x and integer n.
-* bigInt  mult(x,y)              *return x*y for bigInts x and y. This is faster when y<x.
-* bigInt  multMod(x,y,n)         *return (x*y mod n) for bigInts x,y,n.  For greater speed, let y<x.
-* boolean negative(x)            *is bigInt x negative?
-* bigInt  powMod(x,y,n)          *return (x**y mod n) where x,y,n are bigInts and ** is exponentiation.  0**0=1. Faster for odd n.
-* bigInt  randBigInt(n,s)        *return an n-bit random BigInt (n>=1).  If s=1, then the most significant of those n bits is set to 1.
-* bigInt  randTruePrime(k)       *return a new, random, k-bit, true prime bigInt using Maurer's algorithm.
-* bigInt  randProbPrime(k)       *return a new, random, k-bit, probable prime bigInt (probability it's composite less than 2^-80).
-* bigInt  str2bigInt(s,b,n,m)    *return a bigInt for number represented in string s in base b with at least n bits and m array elements
-* bigInt  sub(x,y)               *return (x-y) for bigInts x and y.  Negative answers will be 2s complement
-* bigInt  trim(x,k)              *return a copy of x with exactly k leading zero elements
+* boolean Greater(x,y)           *is x>y?  (x and y are nonnegative bigInts)
+* boolean GreaterShift(x,y,shift)*is (x <<(shift*bpe)) > y?
+* bigInt  Int2bigInt(t,n,m)      *return a bigInt equal to integer t, with at least n bits and m array elements
+* bigInt  InverseMod(x,n)        *return (x**(-1) Mod n) for bigInts x and n.  If no inverse exists, it returns null
+* int     InverseModInt(x,n)     *return x**(-1) Mod n, for integers x and n.  Return 0 if there is no inverse
+* boolean IsZero(x)              *is the bigInt x equal to zero?
+* boolean MillerRabin(x,b)       *does one round of Miller-Rabin base integer b say that bigInt x is possibly prime? (b is bigInt, 1<b<x)
+* boolean MillerRabinInt(x,b)    *does one round of Miller-Rabin base integer b say that bigInt x is possibly prime? (b is int,    1<b<x)
+* bigInt  Mod(x,n)               *return a new bigInt equal to (x Mod n) for bigInts x and n.
+* int     ModInt(x,n)            *return x Mod n for bigInt x and integer n.
+* bigInt  Mult(x,y)              *return x*y for bigInts x and y. This is faster when y<x.
+* bigInt  MultMod(x,y,n)         *return (x*y Mod n) for bigInts x,y,n.  For Greater speed, let y<x.
+* boolean Negative(x)            *is bigInt x Negative?
+* bigInt  PowMod(x,y,n)          *return (x**y Mod n) where x,y,n are bigInts and ** is exponentiation.  0**0=1. Faster for odd n.
+* bigInt  RandBigInt(n,s)        *return an n-bit random BigInt (n>=1).  If s=1, then the most significant of those n bits is set to 1.
+* bigInt  RandTruePrime(k)       *return a new, random, k-bit, true prime bigInt using Maurer's algorithm.
+* bigInt  RandProbPrime(k)       *return a new, random, k-bit, probable prime bigInt (probability it's composite less than 2^-80).
+* bigInt  Str2bigInt(s,b,n,m)    *return a bigInt for number represented in string s in base b with at least n bits and m array elements
+* bigInt  Sub(x,y)               *return (x-y) for bigInts x and y.  Negative answers will be 2s complement
+* bigInt  Trim(x,k)              *return a copy of x with exactly k leading zero elements
 *
 *
 * The following functions each have a non-underscored version, which most users should call instead.
@@ -101,11 +101,11 @@
 * void    copy_(x,y)            *do x=y on bigInts x and y
 * void    copyInt_(x,n)         *do x=n on bigInt x and integer n
 * void    GCD_(x,y)             *set x to the greatest common divisor of bigInts x and y, (y is destroyed).  (This never overflows its array).
-* boolean inverseMod_(x,n)      *do x=x**(-1) mod n, for bigInts x and n. Returns 1 (0) if inverse does (doesn't) exist
-* void    mod_(x,n)             *do x=x mod n for bigInts x and n. (This never overflows its array).
+* boolean inverseMod_(x,n)      *do x=x**(-1) Mod n, for bigInts x and n. Returns 1 (0) if inverse does (doesn't) exist
+* void    mod_(x,n)             *do x=x Mod n for bigInts x and n. (This never overflows its array).
 * void    mult_(x,y)            *do x=x*y for bigInts x and y.
-* void    multMod_(x,y,n)       *do x=x*y  mod n for bigInts x,y,n.
-* void    powMod_(x,y,n)        *do x=x**y mod n, where x,y,n are bigInts (n is odd) and ** is exponentiation.  0**0=1.
+* void    multMod_(x,y,n)       *do x=x*y  Mod n for bigInts x,y,n.
+* void    powMod_(x,y,n)        *do x=x**y Mod n, where x,y,n are bigInts (n is odd) and ** is exponentiation.  0**0=1.
 * void    randBigInt_(b,n,s)    *do b = an n-bit random BigInt. if s=1, then nth bit (most significant bit) is set to 1. n>=1.
 * void    randTruePrime_(ans,k) *do ans = a random k-bit true random prime (not just probable prime) with 1 in the msb.
 * void    sub_(x,y)             *do x=x-y for bigInts x and y. Negative answers will be 2s complement.
@@ -126,7 +126,7 @@
 * void mont_(x,y,n,np)         *Montgomery multiplication (see comments where the function is defined)
 * void multInt_(x,n)           *do x=x*n where x is a bigInt and n is an integer.
 * void rightShift_(x,n)        *right shift bigInt x by n bits.  0 <= n < bpe. (This never overflows its array).
-* void squareMod_(x,n)         *do x=x*x  mod n for bigInts x,n
+* void squareMod_(x,n)         *do x=x*x  Mod n for bigInts x,n
 * void subShift_(x,y,ys)       *do x=x-(y<<(ys*bpe)). Negative answers will be 2s complement.
 *
 * The following functions are based on algorithms from the _Handbook of Applied Cryptography_
@@ -137,20 +137,20 @@
 *    divide_()           = algorithm 14.20  Multiple-precision division
 *    squareMod_()        = algorithm 14.16  Multiple-precision squaring
 *    randTruePrime_()    = algorithm  4.62, Maurer's algorithm
-*    millerRabin()       = algorithm  4.24, Miller-Rabin algorithm
+*    MillerRabin()       = algorithm  4.24, Miller-Rabin algorithm
 *
 * Profiling shows:
 *     randTruePrime_() spends:
 *         10% of its time in calls to powMod_()
-*         85% of its time in calls to millerRabin()
-*     millerRabin() spends:
+*         85% of its time in calls to MillerRabin()
+*     MillerRabin() spends:
 *         99% of its time in calls to powMod_()   (always with a base of 2)
 *     powMod_() spends:
 *         94% of its time in calls to mont_()  (almost always with x==y)
 *
 * This suggests there are several ways to speed up this library slightly:
 *     - convert powMod_ to use a Montgomery form of k-ary window (or maybe a Montgomery form of sliding window)
-*         -- this should especially focus on being fast when raising 2 to a power mod n
+*         -- this should especially focus on being fast when raising 2 to a power Mod n
 *     - convert randTruePrime_() to use a minimum r of 1/3 instead of 1/2 with the appropriate change to the test
 *     - tune the parameters in randTruePrime_(), including c, m, and recLimit
 *     - speed up the single loop in mont_() that takes 95% of the runtime, perhaps by reducing checking
@@ -173,10 +173,11 @@ class MfBigMathInt extends MfObject
 ;{ Globals
 	static bpe := 0 ; bits stored per array element
 	static mask := 0 ; AND this with an array element to chop it down to bpe bits
-	static radix := mask + 1 ; equals 2^bpe.  A single 1 bit to the left of the last bit of mask.
+	static radix := mask + 1 ; Equals 2^bpe.  A single 1 bit to the left of the last bit of mask.
 	;{ digitStr
 	static m_digitStr := ""
 	static one := ""
+	static m_Uint64Max := ""
 	static m_Init := MfBigMathInt.StaticInit()
 		/*!
 			Property: digitStr [get]
@@ -201,6 +202,21 @@ class MfBigMathInt extends MfObject
 				Throw ex
 			}
 		}
+		Uint64Max[]
+		{
+			get {
+				if (MfBigMathInt.m_Uint64Max = "")
+				{
+					MfBigMathInt.m_Uint64Max := MfBigMathInt.Str2bigInt("18446744073709551615", 10, 3, 3)
+				}
+				return MfBigMathInt.m_Uint64Max
+			}
+			set {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+				ex.SetProp(A_LineFile, A_LineNumber, "digitStr")
+				Throw ex
+			}
+		}
 		StaticInit() {
 			MfBigMathInt.bpe := 0
 			While ((1 << (MfBigMathInt.bpe + 1)) > (1 << MfBigMathInt.bpe))
@@ -213,7 +229,8 @@ class MfBigMathInt extends MfObject
 			MfBigMathInt.mask := ( 1 << MfBigMathInt.bpe) - 1 ; AND the mask with an integer to get its bpe least significant bits
 			MfBigMathInt.radix := MfBigMathInt.mask + 1 ; 2^bpe.  a single 1 bit to the left of the first bit of mask
 
-			MfBigMathInt.one := MfBigMathInt.int2bigInt(1,1,1)
+			MfBigMathInt.one := MfBigMathInt.Int2bigInt(1,1,1)
+			
 			return true
 		}
 	; End:digitStr ;}
@@ -225,13 +242,13 @@ class MfBigMathInt extends MfObject
 	static s3 		:= MfBigMathInt.t 	; used in powMod_()
 	static s4 		:= MfBigMathInt.t 	; used in mod_()
 	static s5 		:= MfBigMathInt.t 	; used in mod_()
-	static s6 		:= MfBigMathInt.t 	; used in bigInt2str()
+	static s6 		:= MfBigMathInt.t 	; used in BigInt2str()
 	static s7 		:= MfBigMathInt.t 	; used in powMod_()
 	static tt 		:= MfBigMathInt.t 	; used in GCD_()
 	static sa 		:= MfBigMathInt.t 	; used in mont_()
-	static mr_x1 	:= MfBigMathInt.t 	; used in millerRabin()
-	static mr_r 	:= MfBigMathInt.t 	; used in millerRabin()
-	static mr_a 	:= MfBigMathInt.t 	; used in millerRabin()
+	static mr_x1 	:= MfBigMathInt.t 	; used in MillerRabin()
+	static mr_r 	:= MfBigMathInt.t 	; used in MillerRabin()
+	static mr_a 	:= MfBigMathInt.t 	; used in MillerRabin()
 	static eg_v 	:= MfBigMathInt.t 	; used in eGCD_(), inverseMod_()
 	static eg_u 	:= MfBigMathInt.t 	; used in eGCD_(), inverseMod_()
 	static eg_A 	:= MfBigMathInt.t 	; used in eGCD_(), inverseMod_()
@@ -269,9 +286,9 @@ class MfBigMathInt extends MfObject
 
 ; End:Globals ;}
 ;{ Methods
-;{ 	findPrimes
+;{ 	FindPrimes
 	;return array of all primes less than integer n
-	findPrimes(n) {
+	FindPrimes(n) {
 		
 		lst := new MfListVar(n, 0)
 		s := lst.m_InnerList
@@ -313,33 +330,33 @@ class MfBigMathInt extends MfObject
 		lst._SetInnerList(ans, true)
 		return lst
 	}
-; 	End:findPrimes ;}
-;{ 	millerRabinInt
+; 	End:FindPrimes ;}
+;{ 	MillerRabinInt
 	; does a single round of Miller-Rabin base b consider x to be a possible prime?
 	; x is a bigInt, and b is an integer, with b<x
-	millerRabinInt(x, b) {
+	MillerRabinInt(x, b) {
 		if (MfBigMathInt.mr_x1.Count != x.Count)
 		{
-			MfBigMathInt.mr_x1 := MfBigMathInt.dup(x)
-			MfBigMathInt.mr_r := MfBigMathInt.dup(x)
-			MfBigMathInt.mr_a := MfBigMathInt.dup(x)
+			MfBigMathInt.mr_x1 := MfBigMathInt.Dup(x)
+			MfBigMathInt.mr_r := MfBigMathInt.Dup(x)
+			MfBigMathInt.mr_a := MfBigMathInt.Dup(x)
 		}
 
 		MfBigMathInt.copyInt_(MfBigMathInt.mr_a, b)
-		return MfBigMathInt.millerRabin(x, MfBigMathInt.mr_a)
+		return MfBigMathInt.MillerRabin(x, MfBigMathInt.mr_a)
 	}
-; 	End:millerRabinInt ;}
-;{ 	millerRabin
+; 	End:MillerRabinInt ;}
+;{ 	MillerRabin
 	; does a single round of Miller-Rabin base b consider x to be a possible prime?
 	; x and b are bigInts with b<x
-	millerRabin(x, b) {
+	MillerRabin(x, b) {
 		i := 0, j := 0, k := 0 , s := 0
 
 		if (MfBigMathInt.mr_x1.Count != x.Count)
 		{
-			MfBigMathInt.mr_x1 := MfBigMathInt.dup(x)
-			MfBigMathInt.mr_r := MfBigMathInt.dup(x)
-			MfBigMathInt.mr_a := MfBigMathInt.dup(x)
+			MfBigMathInt.mr_x1 := MfBigMathInt.Dup(x)
+			MfBigMathInt.mr_r := MfBigMathInt.Dup(x)
+			MfBigMathInt.mr_a := MfBigMathInt.Dup(x)
 		}
 
 		MfBigMathInt.copy_(MfBigMathInt.mr_a, b)
@@ -349,7 +366,7 @@ class MfBigMathInt extends MfObject
 		MfBigMathInt.addInt_(MfBigMathInt.mr_r, -1)
 		MfBigMathInt.addInt_(MfBigMathInt.mr_x1, -1)
 
-		if (MfBigMathInt.isZero(MfBigMathInt.mr_r))
+		if (MfBigMathInt.IsZero(MfBigMathInt.mr_r))
 		{
 			return 0
 		}
@@ -363,7 +380,7 @@ class MfBigMathInt extends MfObject
 
 		i := 1
 		j := 2
-		while (mod(MfBigMathInt.mr_r.m_InnerList[k], j) = 0)
+		while (Mod(MfBigMathInt.mr_r.m_InnerList[k], j) = 0)
 		{
 			j *= 2
 			i++
@@ -377,29 +394,29 @@ class MfBigMathInt extends MfObject
 
 		MfBigMathInt.powMod_(MfBigMathInt.mr_a, MfBigMathInt.mr_r, x)
 
-		if (!MfBigMathInt.equalsInt(MfBigMathInt.mr_a, 1) && !MfBigMathInt.equals(MfBigMathInt.mr_a, MfBigMathInt.mr_x1))
+		if (!MfBigMathInt.EqualsInt(MfBigMathInt.mr_a, 1) && !MfBigMathInt.Equals(MfBigMathInt.mr_a, MfBigMathInt.mr_x1))
 		{
 			j := 1
-			while ((j <= s) && (!MfBigMathInt.equals(MfBigMathInt.mr_a, MfBigMathInt.mr_x1)))
+			while ((j <= s) && (!MfBigMathInt.Equals(MfBigMathInt.mr_a, MfBigMathInt.mr_x1)))
 			{
 				MfBigMathInt.squareMod_(MfBigMathInt.mr_a, x)
-				if (MfBigMathInt.equalsInt(MfBigMathInt.mr_a, 1))
+				if (MfBigMathInt.EqualsInt(MfBigMathInt.mr_a, 1))
 				{
 					return 0
 				}
 				j++
 			}
-			if (!MfBigMathInt.equals(MfBigMathInt.mr_a, MfBigMathInt.mr_x1))
+			if (!MfBigMathInt.Equals(MfBigMathInt.mr_a, MfBigMathInt.mr_x1))
 			{
 				return 0
 			}
 		}
 		return 1
 	}
-; 	End:millerRabin ;}
-;{ 	bitSize
+; 	End:MillerRabin ;}
+;{ 	BitSize
 	; returns how many bits long the bigInt is, not counting leading zeros.
-	bitSize(x) {
+	BitSize(x) {
 		j := x.Count -1
 		if (j = 0)
 		{
@@ -421,26 +438,26 @@ class MfBigMathInt extends MfObject
 		z += MfBigMathInt.bpe * j
 		return z
 	}
-; 	End:bitSize ;}
-;{ 	expand
+; 	End:BitSize ;}
+;{ 	Expand
 	; return a copy of x with at least n elements, adding leading zeros if needed
-	expand(x, n) {
-		ans := MfBigMathInt.int2bigInt(0, (x.Count > n ? x.Count : n) * MfBigMathInt.bpe, 0)
+	Expand(x, n) {
+		ans := MfBigMathInt.Int2bigInt(0, (x.Count > n ? x.Count : n) * MfBigMathInt.bpe, 0)
 		MfBigMathInt.copy_(ans, x)
 		return ans
 	}
-; 	End:expand ;}
-;{ 	randTruePrime
+; 	End:Expand ;}
+;{ 	RandTruePrime
 	; return a k-bit true random prime using Maurer's algorithm.
-	randTruePrime(k) {
-		ans := MfBigMathInt.int2bigInt(0, k, 0)
+	RandTruePrime(k) {
+		ans := MfBigMathInt.Int2bigInt(0, k, 0)
 		MfBigMathInt.randTruePrime_(ans,k)
-		return MfBigMathInt.trim(ans, 1)
+		return MfBigMathInt.Trim(ans, 1)
 	}
-; 	End:randTruePrime ;}
-;{ 	randProbPrime
+; 	End:RandTruePrime ;}
+;{ 	RandProbPrime
 	; return a k-bit random probable prime with probability of error < 2^-80
-	randProbPrime(k) {
+	RandProbPrime(k) {
 		if (k >= 600)
 			return MfBigMathInt.randProbPrimeRounds(k, 2) ;numbers from HAC table 4.3
 		if (k >= 550)
@@ -464,24 +481,24 @@ class MfBigMathInt extends MfObject
 
 		return MfBigMathInt.randProbPrimeRounds(k, 40) ; number from HAC remark 4.26 (only an estimate)
 	}
-; 	End:randProbPrime ;}
+; 	End:RandProbPrime ;}
 ;{ 	randProbPrimeRounds
 	; return a k-bit probable random prime using n rounds of Miller Rabin (after trial division with small primes)	
-	randProbPrimeRounds(k, n) {
+	RandProbPrimeRounds(k, n) {
 		B := 30000 ; B is largest prime to use in trial division
 		i := 0
 		divisible := 0
-		ans := MfBigMathInt.int2bigInt(0, k, 0)
+		ans := MfBigMathInt.Int2bigInt(0, k, 0)
 		ansl := ans.m_InnerList
 
 		; optimization: try larger and smaller B to find the best limit.
 		if (MfBigMathInt.primes.Count = 0)
 		{
-			MfBigMathInt.primes := MfBigMathInt.findPrimes(30000)
+			MfBigMathInt.primes := MfBigMathInt.FindPrimes(30000)
 		}
 		if (MfBigMathInt.rpprb.Count != ans.Count)
 		{
-			MfBigMathInt.rpprb := MfBigMathInt.dup(ans)
+			MfBigMathInt.rpprb := MfBigMathInt.Dup(ans)
 		}
 		loop
 		{
@@ -498,7 +515,7 @@ class MfBigMathInt extends MfObject
 			i := 1 ; one based index
 			while ((i <= MfBigMathInt.primes.Count) && (MfBigMathInt.primes.m_InnerList[i] <= B))
 			{
-				if (MfBigMathInt.modInt(ans, MfBigMathInt.primes.m_InnerList[i]) = 0 && !(MfBigMathInt.equalsInt(ans, MfBigMathInt.primes.m_InnerList[i])))
+				if (MfBigMathInt.ModInt(ans, MfBigMathInt.primes.m_InnerList[i]) = 0 && !(MfBigMathInt.EqualsInt(ans, MfBigMathInt.primes.m_InnerList[i])))
 				{
 					divisible := 1
 					break
@@ -506,16 +523,16 @@ class MfBigMathInt extends MfObject
 				i++
 			}
 
-			; optimization: change millerRabin so the base can be bigger than the number being checked, then eliminate the while here.
+			; optimization: change MillerRabin so the base can be bigger than the number being checked, then eliminate the while here.
 			i :=  ; zero based index
 			while ((i < n) && !divisible)
 			{
 				MfBigMathInt.randBigInt_(MfBigMathInt.rpprb, k, 0)
-				while (!MfBigMathInt.greater(ans, MfBigMathInt.rpprb)) ;pick a random rpprb that's < ans
+				while (!MfBigMathInt.Greater(ans, MfBigMathInt.rpprb)) ;pick a random rpprb that's < ans
 				{
 					MfBigMathInt.randBigInt_(MfBigMathInt.rpprb, k, 0)
 				}
-				if (!MfBigMathInt.millerRabin(ans, MfBigMathInt.rpprb))
+				if (!MfBigMathInt.MillerRabin(ans, MfBigMathInt.rpprb))
 				{
 					divisible := 1
 				}
@@ -528,80 +545,80 @@ class MfBigMathInt extends MfObject
 		}
 	}
 ; 	End:randProbPrimeRounds ;}
-;{ 	mod
-	;return a new bigInt equal to (x mod n) for bigInts x and n.
-	mod(x, n) {
-		ans := MfBigMathInt.dup(x)
+;{ 	Mod
+	;return a new bigInt equal to (x Mod n) for bigInts x and n.
+	Mod(x, n) {
+		ans := MfBigMathInt.Dup(x)
 		MfBigMathInt.mod_(ans, n)
-		return MfBigMathInt.trim(ans, 1)
+		return MfBigMathInt.Trim(ans, 1)
 	}
-; 	End:mod ;}
-;{ 	addInt
+; 	End:Mod ;}
+;{ 	AddInt
 	; return (x+n) where x is a bigInt and n is an integer.
-	addInt(x, n) {
-		ans := MfBigMathInt.expand(x, x.Count + 1)
+	AddInt(x, n) {
+		ans := MfBigMathInt.Expand(x, x.Count + 1)
 		MfBigMathInt.addInt_(ans, n)
-		return MfBigMathInt.trim(ans, 1)
+		return MfBigMathInt.Trim(ans, 1)
 	}
-; 	End:addInt ;}
-;{ 	mult
+; 	End:AddInt ;}
+;{ 	Mult
 	; return x*y for bigInts x and y. This is faster when y<x.
-	mult(x, y) {
-		ans := MfBigMathInt.expand(x, x.Count + y.Count)
+	Mult(x, y) {
+		ans := MfBigMathInt.Expand(x, x.Count + y.Count)
 		MfBigMathInt.mult_(ans, y)
-		return MfBigMathInt.trim(ans, 1)
+		return MfBigMathInt.Trim(ans, 1)
 	}
-; 	End:mult ;}
-;{ 	powMod
-	; return (x**y mod n) where x,y,n are bigInts and ** is exponentiation.  0**0=1. Faster for odd n.
-	powMod(x, y, n) {
-		ans := MfBigMathInt.expand(x, n.Count)
+; 	End:Mult ;}
+;{ 	PowMod
+	; return (x**y Mod n) where x,y,n are bigInts and ** is exponentiation.  0**0=1. Faster for odd n.
+	PowMod(x, y, n) {
+		ans := MfBigMathInt.Expand(x, n.Count)
 
-		; this should work without the trim, but doesn't
-		MfBigMathInt.powMod_(ans, MfBigMathInt.trim(y, 2), MfBigMathInt.trim(n, 2), 0)
-		return MfBigMathInt.trim(ans, 1)
+		; this should work without the Trim, but doesn't
+		MfBigMathInt.powMod_(ans, MfBigMathInt.Trim(y, 2), MfBigMathInt.Trim(n, 2), 0)
+		return MfBigMathInt.Trim(ans, 1)
 	}
-; 	End:powMod ;}
-;{ 	sub
+; 	End:PowMod ;}
+;{ 	Sub
 	; return (x-y) for bigInts x and y.  Negative answers will be 2s complement
-	sub(x,y) {
-		ans := MfBigMathInt.expand(x, (x.Count > y.Count ? x.Count + 1 : y.Count + 1))
+	Sub(x,y) {
+		ans := MfBigMathInt.Expand(x, (x.Count > y.Count ? x.Count + 1 : y.Count + 1))
 		MfBigMathInt.sub_(ans, y)
-		return MfBigMathInt.trim(ans, 1)
+		return MfBigMathInt.Trim(ans, 1)
 	}
-; 	End:sub ;}
-;{ 	add
+; 	End:Sub ;}
+;{ 	Add
 	; return (x+y) for bigInts x and y.  
-	add(x,y) {
-		ans := MfBigMathInt.expand(x, (x.Count > y.Count ? x.Count + 1 : y.Count + 1))
+	Add(x,y) {
+		ans := MfBigMathInt.Expand(x, (x.Count > y.Count ? x.Count + 1 : y.Count + 1))
 		MfBigMathInt.add_(ans, y)
-		return MfBigMathInt.trim(ans, 1)
+		return MfBigMathInt.Trim(ans, 1)
 	}
-; 	End:add ;}
-;{ 	inverseMod
-	; return (x**(-1) mod n) for bigInts x and n.  If no inverse exists, it returns null
-	inverseMod(x,n) {
-		 ans := MfBigMathInt.expand(x, n.Count)
+; 	End:Add ;}
+;{ 	InverseMod
+	; return (x**(-1) Mod n) for bigInts x and n.  If no inverse exists, it returns null
+	InverseMod(x,n) {
+		 ans := MfBigMathInt.Expand(x, n.Count)
 		 s := MfBigMathInt.inverseMod_(ans, n)
-		 return s ? MfBigMathInt.trim(ans, 1) : null
+		 return s ? MfBigMathInt.Trim(ans, 1) : null
 	}
-; 	End:inverseMod ;}
-;{ 	multMod
-	; return (x*y mod n) for bigInts x,y,n.  For greater speed, let y<x.
-	 multMod(x,y,n) {
-	 	ans := MfBigMathInt.expand(x, n.Count)
+; 	End:InverseMod ;}
+;{ 	MultMod
+	; return (x*y Mod n) for bigInts x,y,n.  For Greater speed, let y<x.
+	 MultMod(x,y,n) {
+	 	ans := MfBigMathInt.Expand(x, n.Count)
 	 	MfBigMathInt.multMod_(ans,y,n)
-	 	return MfBigMathInt.trim(ans, 1)
+	 	return MfBigMathInt.Trim(ans, 1)
 	 }
-; 	End:multMod ;}
+; 	End:MultMod ;}
 ;{ 	randTruePrime_
 	; generate a k-bit true random prime using Maurer's algorithm,
 	; and put it into ans.  The bigInt ans must be large enough to hold it.
-	randTruePrime_(byref ans, k) {
+	RandTruePrime_(byref ans, k) {
 
 		if (MfBigMathInt.primes.Count = 0)
 		{
-			MfBigMathInt.primes := MfBigMathInt.findPrimes(30000) ; check for divisibility by primes <=30000
+			MfBigMathInt.primes := MfBigMathInt.FindPrimes(30000) ; check for divisibility by primes <=30000
 		}
 
 		if (MfBigMathInt.pows.Count = 0)
@@ -641,20 +658,20 @@ class MfBigMathInt extends MfObject
 
 			if (MfBigMathInt.s_i2.Count != ans.Count)
 			{
-				MfBigMathInt.s_i2 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_R 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_n1 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_r2 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_d 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_x1 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_x2 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_b 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_n 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_i 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_rm 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_q 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_a 	:= MfBigMathInt.dup(ans)
-				MfBigMathInt.s_aa 	:= MfBigMathInt.dup(ans)
+				MfBigMathInt.s_i2 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_R 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_n1 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_r2 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_d 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_x1 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_x2 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_b 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_n 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_i 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_rm 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_q 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_a 	:= MfBigMathInt.Dup(ans)
+				MfBigMathInt.s_aa 	:= MfBigMathInt.Dup(ans)
 			}
 			if (k <= recLimit)
 			{
@@ -707,13 +724,13 @@ class MfBigMathInt extends MfObject
 			MfBigMathInt.copyInt_(MfBigMathInt.s_i2, 0)
 			MfBigMathInt.s_i2.m_InnerList[floor((k - 2) / MfBigMathInt.bpe) + 1] |= (Mod((1 << (k - 2)), MfBigMathInt.bpe)) ; s_i2=2^(k-2)
 			MfBigMathInt.divide_(MfBigMathInt.s_i2, MfBigMathInt.s_q, MfBigMathInt.s_i, MfBigMathInt.s_rm) ; s_i=floor((2^(k-1))/(2q))
-			z =: MfBigMathInt.bitSize(MfBigMathInt.s_i)
+			z =: MfBigMathInt.BitSize(MfBigMathInt.s_i)
 			loop
 			{
 				loop
 				{
 					MfBigMathInt.randBigInt_(MfBigMathInt.s_R, z, 0)
-					if (MfBigMathInt.greater(MfBigMathInt.s_i, MfBigMathInt.s_R))
+					if (MfBigMathInt.Greater(MfBigMathInt.s_i, MfBigMathInt.s_R))
 					{
 						break
 					}
@@ -735,8 +752,8 @@ class MfBigMathInt extends MfObject
 				j := 1 ; one based index
 				while ((j <= MfBigMathInt.primes.Count) && (MfBigMathInt.primes.m_InnerList[j] < B))
 				{
-					if ((MfBigMathInt.modInt(MfBigMathInt.s_n, MfBigMathInt.primes.m_InnerList[j]) = 0)
-						&& (!MfBigMathInt.equalsInt(MfBigMathInt.s_n, MfBigMathInt.primes.m_InnerList[j])))
+					if ((MfBigMathInt.ModInt(MfBigMathInt.s_n, MfBigMathInt.primes.m_InnerList[j]) = 0)
+						&& (!MfBigMathInt.EqualsInt(MfBigMathInt.s_n, MfBigMathInt.primes.m_InnerList[j])))
 					{
 						divisible := 1
 						break
@@ -745,7 +762,7 @@ class MfBigMathInt extends MfObject
 
 				if (!divisible) ; if it passes small primes check, then try a single Miller-Rabin base 2
 				{
-					if (!MfBigMathInt.millerRabinInt(MfBigMathInt.s_n, 2)) ; this line represents 75% of the total runtime for randTruePrime_ 
+					if (!MfBigMathInt.MillerRabinInt(MfBigMathInt.s_n, 2)) ; this line represents 75% of the total runtime for randTruePrime_ 
 					{
 						divisible := 1
 					}
@@ -770,7 +787,7 @@ class MfBigMathInt extends MfObject
 					{
 						; generate z-bit numbers until one falls in the range [0,s_n-1]
 						MfBigMathInt.randBigInt_(MfBigMathInt.s_a, zz, 0)
-						if (MfBigMathInt.greater(MfBigMathInt.s_n, MfBigMathInt.s_a))
+						if (MfBigMathInt.Greater(MfBigMathInt.s_n, MfBigMathInt.s_a))
 						{
 							break
 						}
@@ -783,7 +800,7 @@ class MfBigMathInt extends MfObject
 					MfBigMathInt.addInt_(MfBigMathInt.s_n1, -1)
 					MfBigMathInt.powMod_(MfBigMathInt.s_b, MfBigMathInt.s_n1, MfBigMathInt.s_n) ; s_b=s_a^(s_n-1) modulo s_n
 					MfBigMathInt.addInt_(MfBigMathInt.s_b, -1)
-					if (MfBigMathInt.isZero(MfBigMathInt.s_b))
+					if (MfBigMathInt.IsZero(MfBigMathInt.s_b))
 					{
 						MfBigMathInt.copy_(MfBigMathInt.s_b, MfBigMathInt.s_a)
 						MfBigMathInt.powMod_(MfBigMathInt.s_b, MfBigMathInt.s_r2, MfBigMathInt.s_n)
@@ -791,7 +808,7 @@ class MfBigMathInt extends MfObject
 						MfBigMathInt.copy_(MfBigMathInt.s_aa, MfBigMathInt.s_n)
 						MfBigMathInt.copy_(MfBigMathInt.s_d, MfBigMathInt.s_b)
 						MfBigMathInt.GCD_(MfBigMathInt.s_d, MfBigMathInt.s_n)
-						if (MfBigMathInt.equalsInt(MfBigMathInt.s_d, 1))
+						if (MfBigMathInt.EqualsInt(MfBigMathInt.s_d, 1))
 						{
 							MfBigMathInt.copy_(ans, MfBigMathInt.s_aa)
 							return
@@ -834,10 +851,10 @@ class MfBigMathInt extends MfObject
 				bl[i] := floor(MfBigMathInt.Random_() * (1 << (MfBigMathInt.bpe -1)))
 				i++
 			}
-			bl[a -2] &= (2 << (mod((n -1), MfBigMathInt.bpe))) - 1
+			bl[a -2] &= (2 << (Mod((n -1), MfBigMathInt.bpe))) - 1
 			if (s = 1)
 			{
-				bl[a - 2] |= (1 << (mod((n-1), MfBigMathInt.bpe)))
+				bl[a - 2] |= (1 << (Mod((n-1), MfBigMathInt.bpe)))
 			}
 		}
 		catch e
@@ -857,8 +874,8 @@ class MfBigMathInt extends MfObject
 ;{ 	GCD
 	; Return the greatest common divisor of bigInts x and y (each with same number of elements).
 	GCD(x, y) {
-		xc := MfBigMathInt.dup(x)
-		yc := MfBigMathInt.dup(y)
+		xc := MfBigMathInt.Dup(x)
+		yc := MfBigMathInt.Dup(y)
 		MfBigMathInt.GCD_(xc, yc)
 		return xc
 	}
@@ -869,7 +886,7 @@ class MfBigMathInt extends MfObject
 	GCD_(byref x, byref y) {
 		if(MfBigMathInt.tt.Count != x.Count)
 		{
-			MfBigMathInt.tt := MfBigMathInt.dup(x)
+			MfBigMathInt.tt := MfBigMathInt.Dup(x)
 		}
 		xl := x.m_InnerList
 		yl := y.m_InnerList
@@ -879,7 +896,7 @@ class MfBigMathInt extends MfObject
 			; while y has nonzero elements other than y[0]
 			sing := 0
 			i := 1
-			i++ ; add 1 for one based index
+			i++ ; Add 1 for one based index
 			while (i <= y.Count)
 			{
 				if (yl[i])
@@ -953,12 +970,12 @@ class MfBigMathInt extends MfObject
 		{
 			return
 		}
-		t := MfBigMathInt.modInt(x, yl[1])
+		t := MfBigMathInt.ModInt(x, yl[1])
 		MfBigMathInt.copyInt_(x, yl[1])
 		yl[1] := t
 		while (yl[1] != 0)
 		{
-			xl[1] := mod(xl[1], yl[1])
+			xl[1] := Mod(xl[1], yl[1])
 			t := xl[1]
 			xl[1] := yl[1]
 			yl[1] := t
@@ -966,7 +983,7 @@ class MfBigMathInt extends MfObject
 	}
 ; 	End:GCD_ ;}
 ;{ 	inverseMod_
-	; do x=x**(-1) mod n, for bigInts x and n.
+	; do x=x**(-1) Mod n, for bigInts x and n.
 	; If no inverse exists, it sets x to zero and returns 0, else it returns 1.
 	; The x array must be at least as large as the n array.
 	inverseMod_(byref x, byref n) {
@@ -1004,7 +1021,7 @@ class MfBigMathInt extends MfObject
 				MfBigMathInt.halve_(MfBigMathInt.eg_u)
 				if (!(MfBigMathInt.eg_A.m_InnerList[1] & 1) && !(MfBigMathInt.eg_B.m_InnerList[1] & 1))
 				{
-					; if eg_A==eg_B==0 mod 2
+					; if eg_A==eg_B==0 Mod 2
 					MfBigMathInt.halve_(MfBigMathInt.eg_A)
 					MfBigMathInt.halve_(MfBigMathInt.eg_B)
 				}
@@ -1021,7 +1038,7 @@ class MfBigMathInt extends MfObject
 			while (!(MfBigMathInt.eg_v.m_InnerList[1] & 1))
 			{
 				MfBigMathInt.halve_(MfBigMathInt.eg_v)
-				; if eg_C==eg_D==0 mod 2
+				; if eg_C==eg_D==0 Mod 2
 				if (!(MfBigMathInt.eg_C.m_InnerList[1] & 1) && !(MfBigMathInt.eg_D.m_InnerList[1] & 1))
 				{
 					MfBigMathInt.halve_(MfBigMathInt.eg_C)
@@ -1037,7 +1054,7 @@ class MfBigMathInt extends MfObject
 			}
 
 			; eg_v <= eg_u
-			if (!MfBigMathInt.greater(MfBigMathInt.eg_v, MfBigMathInt.eg_u))
+			if (!MfBigMathInt.Greater(MfBigMathInt.eg_v, MfBigMathInt.eg_u))
 			{
 				MfBigMathInt.sub_(MfBigMathInt.eg_u, MfBigMathInt.eg_v)
 				MfBigMathInt.sub_(MfBigMathInt.eg_A, MfBigMathInt.eg_C)
@@ -1049,15 +1066,15 @@ class MfBigMathInt extends MfObject
 				MfBigMathInt.sub_(MfBigMathInt.eg_C, MfBigMathInt.eg_A)
 				MfBigMathInt.sub_(MfBigMathInt.eg_D, MfBigMathInt.eg_B)
 			}
-			if (MfBigMathInt.equalsInt(MfBigMathInt.eg_u, 0))
+			if (MfBigMathInt.EqualsInt(MfBigMathInt.eg_u, 0))
 			{
-				if (MfBigMathInt.negative(MfBigMathInt.eg_C))
+				if (MfBigMathInt.Negative(MfBigMathInt.eg_C))
 				{
 					; make sure answer is nonnegative
 					MfBigMathInt.add_(MfBigMathInt.eg_C, n)
 				}
 				MfBigMathInt.copy_(x, MfBigMathInt.eg_C)
-				if (!MfBigMathInt.equalsInt(MfBigMathInt.eg_v, 1))
+				if (!MfBigMathInt.EqualsInt(MfBigMathInt.eg_v, 1))
 				{
 					;if GCD_(x,n)!=1, then there is no inverse
 					MfBigMathInt.copyInt_(x, 0)
@@ -1068,8 +1085,8 @@ class MfBigMathInt extends MfObject
 		}
 	}
 ; 	End:inverseMod_ ;}
-;{ 	inverseModInt
-	inverseModInt(x, n) {
+;{ 	InverseModInt
+	InverseModInt(x, n) {
 		a := 1
 		b := 0
 		t := ""
@@ -1096,10 +1113,10 @@ class MfBigMathInt extends MfObject
 				return 0
 			}
 			a -= b * floor(z / n)
-			x := mod(x, n)
+			x := Mod(x, n)
 		}
 	}
-; 	End:inverseModInt ;}
+; 	End:InverseModInt ;}
 ;{ 	eGCD_
 	; Given positive bigInts x and y, change the bigints v, a, and b to positive bigInts such that:
 	;      v = GCD_(x,y) = a*x-b*y
@@ -1137,7 +1154,7 @@ class MfBigMathInt extends MfObject
 			{ 
 				MfBigMathInt.halve_(MfBigMathInt.eg_u)
 
-				; if A==B==0 mod 2
+				; if A==B==0 Mod 2
 				if (!(MfBigMathInt.eg_A.m_InnerList[1] & 1) && !(MfBigMathInt.eg_B.m_InnerList[1] & 1))
 				{ 
 					MfBigMathInt.halve_(MfBigMathInt.eg_A)
@@ -1158,7 +1175,7 @@ class MfBigMathInt extends MfObject
 			{ 
 				MfBigMathInt.halve_(v)
 
-				; if C==D==0 mod 2
+				; if C==D==0 Mod 2
 				if (!(MfBigMathInt.eg_C.m_InnerList[1] & 1) && !(MfBigMathInt.eg_D.m_InnerList[1] & 1))
 				{ 
 					MfBigMathInt.halve_(MfBigMathInt.eg_C)
@@ -1174,7 +1191,7 @@ class MfBigMathInt extends MfObject
 			}
 
 			; v<=u
-			if (!MfBigMathInt.greater(v, MfBigMathInt.eg_u))
+			if (!MfBigMathInt.Greater(v, MfBigMathInt.eg_u))
 			{ 
 				MfBigMathInt.sub_(MfBigMathInt.eg_u, v)
 				MfBigMathInt.sub_(MfBigMathInt.eg_A, MfBigMathInt.eg_C)
@@ -1186,10 +1203,10 @@ class MfBigMathInt extends MfObject
 				MfBigMathInt.sub_(MfBigMathInt.eg_C, MfBigMathInt.eg_A)
 				MfBigMathInt.sub_(MfBigMathInt.eg_D, MfBigMathInt.eg_B)
 			}
-			if (MfBigMathInt.equalsInt(MfBigMathInt.eg_u, 0))
+			if (MfBigMathInt.EqualsInt(MfBigMathInt.eg_u, 0))
 			{
 				; make sure a (C)is nonnegative
-				if (MfBigMathInt.negative(MfBigMathInt.eg_C))
+				if (MfBigMathInt.Negative(MfBigMathInt.eg_C))
 				{ 
 					MfBigMathInt.add_(MfBigMathInt.eg_C, y)
 					MfBigMathInt.sub_(MfBigMathInt.eg_D, x)
@@ -1203,17 +1220,17 @@ class MfBigMathInt extends MfObject
 		}
 	}
 ; 	End:eGCD_ ;}
-;{ 	negative
-	; is bigInt x negative?
-	negative(byref x) {
+;{ 	Negative
+	; is bigInt x Negative?
+	Negative(byref x) {
 		return ((x.m_InnerList[x.count] >> (MfBigMathInt.bpe - 1)) & 1)
 	}
-; 	End:negative ;}
-;{ 	greaterShift
+; 	End:Negative ;}
+;{ 	GreaterShift
 	; is (x << (shift*bpe)) > y?
 	; x and y are nonnegative bigInts
 	; shift is a nonnegative integer
-	greaterShift(x, y, shift) {
+	GreaterShift(x, y, shift) {
 		kx := x.Count
 		ky := y.Count
 		xl := x.m_InnerList
@@ -1258,10 +1275,10 @@ class MfBigMathInt extends MfObject
 		}
 		return false
 	}
-; 	End:greaterShift ;}
-;{ 	greater
+; 	End:GreaterShift ;}
+;{ 	Greater
 	; is x > y? (x and y both nonnegative)
-	greater(x, y) {
+	Greater(x, y) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
 
@@ -1301,9 +1318,9 @@ class MfBigMathInt extends MfObject
 		}
 		return false
 	}
-; 	End:greater ;}
+; 	End:Greater ;}
 ;{ 	divide_
-	; divide x by y giving quotient q and remainder r.  (q=floor(x/y),  r=x mod y).  All 4 are bigints.
+	; divide x by y giving quotient q and remainder r.  (q=floor(x/y),  r=x Mod y).  All 4 are bigints.
 	; x must have at least one leading zero element.
 	; y must be nonzero.
 	; q and r must be arrays that are exactly the same Count as x. (Or q can have more).
@@ -1342,7 +1359,7 @@ class MfBigMathInt extends MfObject
 		}
 
 		MfBigMathInt.copyInt_(q, 0) ; q=0
-		while (!MfBigMathInt.greaterShift(y, r, kx - ky))
+		while (!MfBigMathInt.GreaterShift(y, r, kx - ky))
 		{
 			MfBigMathInt.subShift_(r, y, kx - ky)
 			ql[((kx - ky) + 1)]++
@@ -1381,7 +1398,7 @@ class MfBigMathInt extends MfObject
 			}
 			
 			MfBigMathInt.linCombShift_(r, y, -ql[((i - ky) + 1)], i - ky) ; r=r-q.Item[i-ky] * MfBigMathInt.leftShift_(y, i - ky)
-			if (MfBigMathInt.negative(r))
+			if (MfBigMathInt.Negative(r))
 			{
 				MfBigMathInt.addShift_(r, y, i - ky)
 				ql[((i - ky) + 1)]--
@@ -1390,26 +1407,26 @@ class MfBigMathInt extends MfObject
 		}
 	}
 ; 	End:divide_ ;}
-;{ 	modInt
-	; return x mod n for bigInt x and integer n.
-	modInt(x, n) {
+;{ 	ModInt
+	; return x Mod n for bigInt x and integer n.
+	ModInt(x, n) {
 		c := 0
 		i := x.Count
 		while (i >= 1)
 		{
 			tmp := c * MfBigMathInt.radix + x.m_InnerList[i]
-			c := mod(tmp, n)
+			c := Mod(tmp, n)
 			i--
 		}
 		return c
 	}
-; 	End:modInt ;}
-;{ int2bigInt
+; 	End:ModInt ;}
+;{ Int2bigInt
 	; convert the integer t into a bigInt with at least the given number of bits.
 	; the returned array stores the bigInt in bpe-bit chunks, little endian (buff[0] is least significant word)
 	; Pad the array with leading zeros so that it has at least minSize elements.
 	; There will always be at least one leading 0 element.
-	int2bigInt(t, bits, minSize) {   
+	Int2bigInt(t, bits, minSize) {   
 	  
 	  k := ceil(bits / MfBigMathInt.bpe) + 1
 	  k := minSize > k ? minSize : k
@@ -1417,14 +1434,14 @@ class MfBigMathInt extends MfObject
 	  MfBigMathInt.copyInt_(buff, t)
 	  return buff
 	}
-; End:int2bigInt ;}
-;{ 	str2bigInt
+; End:Int2bigInt ;}
+;{ 	Str2bigInt
 	; return the bigInt given a string representation in a given base.  
 	; Pad the array with leading zeros so that it has at least minSize elements.
 	; If base=-1, then it reads in a comma-separated list of array elements in decimal.
 	; The array will always have at least one leading zero, unless base=-1.
 	; Base 10 and base 16 conversion are fastest and about the same speed
-	str2bigInt(s, base, minSize) {
+	Str2bigInt(s, base, minSize) {
 		sLst := MfListVar.FromString(s, false) ; string to list, ignore whitespace is false
 		k := sLst.Count
 		if (base = -1)
@@ -1463,7 +1480,7 @@ class MfBigMathInt extends MfObject
 		 	}
 		 	return x
 		}
-		x := MfBigMathInt.int2bigInt(0, base * k, 0)
+		x := MfBigMathInt.Int2bigInt(0, base * k, 0)
 		xl := x.m_InnerList
 		i := 1 ; move to one base
 		while (i <= k)
@@ -1506,11 +1523,11 @@ class MfBigMathInt extends MfObject
 		return y
 	}
 	
-; 	End:str2bigInt ;}
-;{ 	equalsInt
+; 	End:Str2bigInt ;}
+;{ 	EqualsInt
 	; is bigint x equal to integer y?
 	; y must have less than bpe bits
-	equalsInt(x, y) {
+	EqualsInt(x, y) {
 		xl := x.m_InnerList
 		if (xl[1] != y)
 		{
@@ -1527,11 +1544,11 @@ class MfBigMathInt extends MfObject
 		}
 		return 1
 	}
-; 	End:equalsInt ;}
-;{ 	equals
+; 	End:EqualsInt ;}
+;{ 	Equals
 	; are bigints x and y equal?
 	; this works even if x and y are different Counts and have arbitrarily many leading zeros
-	equals(x, y) {
+	Equals(x, y) {
 		 k := x.Count < y.Count ? x.Count : y.Count
 		 xl := x.m_InnerList
 		 yl := y.m_InnerList
@@ -1568,10 +1585,10 @@ class MfBigMathInt extends MfObject
 		 }
 		 return true
 	}
-; 	End:equals ;}
-;{ 	isZero
+; 	End:Equals ;}
+;{ 	IsZero
 	;is the bigInt x equal to zero?
-	isZero(x) {
+	IsZero(x) {
 		i := 1
 		xl := x.m_InnerList
 		while (i <= x.Count)
@@ -1584,16 +1601,16 @@ class MfBigMathInt extends MfObject
 		}
 		return true
 	}
-; 	End:isZero ;}
-;{ 	bigInt2str
+; 	End:IsZero ;}
+;{ 	BigInt2str
 	; convert a bigInt into a string in a given base, from base 2 up to base 95.
 	;Base -1 prints the contents of the array representing the number.
-	bigInt2str(x, base) {
+	BigInt2str(x, base) {
 		s := ""
 		xl := x.m_InnerList
 		if (MfBigMathInt.s6.Count != x.Count)
 		{
-			MfBigMathInt.s6 := MfBigMathInt.dup(x)
+			MfBigMathInt.s6 := MfBigMathInt.Dup(x)
 		}
 		else
 		{
@@ -1611,7 +1628,7 @@ class MfBigMathInt extends MfObject
 		}
 		else ; return the given base
 		{
-			while (!MfBigMathInt.isZero(MfBigMathInt.s6))
+			while (!MfBigMathInt.IsZero(MfBigMathInt.s6))
 			{
 				t := MfBigMathInt.divInt_(MfBigMathInt.s6, base)
 				MfBigMathInt.digitStr.Item
@@ -1624,15 +1641,15 @@ class MfBigMathInt extends MfObject
 		}
 		return s
 	}
-; 	End:bigInt2str ;}
-;{ 	dup
+; 	End:BigInt2str ;}
+;{ 	Dup
 	; returns a duplicate of bigInt x
-	dup(x) {
+	Dup(x) {
 		buff := new MfListVar(x.Count)
 		MfBigMathInt.copy_(buff, x)
 		return buff
 	}
-; 	End:dup ;}
+; 	End:Dup ;}
 ;{ 	copy_
 	; do x=y on bigInts x and y.  x must be an array
 	; at least as big as y (not counting the leading zeros in y).
@@ -1715,7 +1732,7 @@ class MfBigMathInt extends MfObject
 				xl[i] := 0
 				i++
 			}
-			n := mod(n, MfBigMathInt.bpe)
+			n := Mod(n, MfBigMathInt.bpe)
 		}
 		i := 1
 		while (i <= x.Count -1)
@@ -1758,7 +1775,7 @@ class MfBigMathInt extends MfObject
 				xl[i] := 0
 				i--
 			}
-			n := mod(n, MfBigMathInt.bpe)
+			n := Mod(n, MfBigMathInt.bpe)
 		}
 		if (!n)
 		{
@@ -1927,7 +1944,7 @@ class MfBigMathInt extends MfObject
 ;{ 	sub_
 	; do x=x-y for bigInts x and y.
 	; x must be large enough to hold the answer.
-	; negative answers will be 2s complement
+	; Negative answers will be 2s complement
 	sub_(ByRef x, y) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
@@ -2001,11 +2018,11 @@ class MfBigMathInt extends MfObject
 	}
 ; 	End:mult_ ;}
 ;{ 	mod_
-	; do x=x mod n for bigInts x and n.
+	; do x=x Mod n for bigInts x and n.
 	mod_(ByRef x, byRef n) {
 		if (MfBigMathInt.s4.Count != x.Count)
 		{
-			MfBigMathInt.s4 := MfBigMathInt.dup(x)
+			MfBigMathInt.s4 := MfBigMathInt.Dup(x)
 		}
 		else
 		{
@@ -2013,14 +2030,14 @@ class MfBigMathInt extends MfObject
 		}
 		if (MfBigMathInts5.Count != x.Count)
 		{
-			MfBigMathInt.s5 := MfBigMathInt.dup(x)
+			MfBigMathInt.s5 := MfBigMathInt.Dup(x)
 		}
 		MfBigMathInt.divide_(MfBigMathInt.s4, n, MfBigMathInt.s5, x) ; x = remainder of s4 / n
 	}
 ; 	End:mod_ ;}
 ;{ 	multMod_
-	; do x=x*y mod n for bigInts x,y,n.
-	; for greater speed, let y<x.
+	; do x=x*y Mod n for bigInts x,y,n.
+	; for Greater speed, let y<x.
 	multMod_(ByRef x, ByRef y, ByRef n) {
 		yl := y.m_InnerList
 		if (MfBigMathInt.s0.Count != 2 * x.Count)
@@ -2042,7 +2059,7 @@ class MfBigMathInt extends MfObject
 	}
 ; 	End:multMod_ ;}
 ;{ 	squareMod_
-	; do x=x*x mod n for bigInts x,n.
+	; do x=x*x Mod n for bigInts x,n.
 	squareMod_(byRef x, byRef n) {
 		xl := x.m_InnerList
 		kk := x.Count
@@ -2080,9 +2097,9 @@ class MfBigMathInt extends MfObject
 		MfBigMathInt.copy_(x, MfBigMathInt.s0)
 	}
 ; 	End:squareMod_ ;}
-;{ 	trim
+;{ 	Trim
 	; return x with exactly k leading zero elements
-	trim(x, k) {
+	Trim(x, k) {
 		i := x.Count
 		while (i > 0 && !x.m_InnerList[i])
 		{
@@ -2092,16 +2109,16 @@ class MfBigMathInt extends MfObject
 		MfBigMathInt.copy_(y, x)
 		return y
 	}
-; 	End:trim ;}
+; 	End:Trim ;}
 ;{ 	powMod_
-	; do x=x**y mod n, where x,y,n are bigInts and ** is exponentiation.  0**0=1.
+	; do x=x**y Mod n, where x,y,n are bigInts and ** is exponentiation.  0**0=1.
 	; this is faster when n is odd.  x usually needs to have as many elements as n.
 	powMod_(ByRef x, ByRef y, ByRef n) {
 		yl := y.m_InnerList
 		nl := n.m_InnerList
 		if (MfBigMathInt.s7.Count != n.Count)
 		{
-			MfBigMathInt.s7 := MfBigMathInt.dup(n)
+			MfBigMathInt.s7 := MfBigMathInt.Dup(n)
 		}
 		; for even modulus, use a simple square-and-multiply algorithm,
 		; rather than using the more complex Montgomery algorithm.
@@ -2109,7 +2126,7 @@ class MfBigMathInt extends MfObject
 		{
 			MfBigMathInt.copy_(MfBigMathInt.s7, x)
 			MfBigMathInt.copyInt_(x, 1)
-			while (!MfBigMathInt.equalsInt(y, 0))
+			while (!MfBigMathInt.EqualsInt(y, 0))
 			{
 				if (yl[1] & 1)
 				{
@@ -2127,13 +2144,13 @@ class MfBigMathInt extends MfObject
 		{
 			kn--
 		}
-		np := MfBigMathInt.radix - MfBigMathInt.inverseModInt(MfBigMathInt.modInt(n, MfBigMathInt.radix), MfBigMathInt.radix)
+		np := MfBigMathInt.radix - MfBigMathInt.InverseModInt(MfBigMathInt.ModInt(n, MfBigMathInt.radix), MfBigMathInt.radix)
 		MfBigMathInt.s7.m_InnerList[kn + 1] := 1
-		MfBigMathInt.multMod_(x, MfBigMathInt.s7, n) ; x = x * 2**(kn*bp) mod n
+		MfBigMathInt.multMod_(x, MfBigMathInt.s7, n) ; x = x * 2**(kn*bp) Mod n
 
 		if (MfBigMathInt.s3.Count != x.Count)
 		{
-			MfBigMathInt.s3 := MfBigMathInt.dup(x)
+			MfBigMathInt.s3 := MfBigMathInt.Dup(x)
 		}
 		else
 		{
@@ -2180,8 +2197,8 @@ class MfBigMathInt extends MfObject
 	}
 ; 	End:powMod_ ;}
 ;{ 	mont_
-	; do x=x*y*Ri mod n for bigInts x,y,n, 
-	;   where Ri = 2**(-kn*bpe) mod n, and kn is the 
+	; do x=x*y*Ri Mod n for bigInts x,y,n, 
+	;   where Ri = 2**(-kn*bpe) Mod n, and kn is the 
 	;   number of elements in the n array, not 
 	;   counting leading zeros.  
 	; x array must have at least as many elemnts as the n array
@@ -2189,7 +2206,7 @@ class MfBigMathInt extends MfObject
 	; must have:
 	;   x,y < n
 	;   n is odd
-	;   np = -(n^(-1)) mod radix
+	;   np = -(n^(-1)) Mod radix
 	mont_(byRef x, ByRef y, ByRef n, np) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
@@ -2312,7 +2329,7 @@ class MfBigMathInt extends MfObject
 			MfBigMathInt.sa.m_InnerList[j] := c & MfBigMathInt.mask
 			i++
 		}
-		if (!MfBigMathInt.greater(n, MfBigMathInt.sa))
+		if (!MfBigMathInt.Greater(n, MfBigMathInt.sa))
 		{
 			MfBigMathInt.sub_(MfBigMathInt.sa, n)
 		}
@@ -2413,9 +2430,9 @@ class MfBigMathInt extends MfObject
 			{
 				if (i < 36 || i > 61)
 				{
-					this.m_htKeyChar.Add(A_LoopField, i) ; add char and index
+					this.m_htKeyChar.Add(A_LoopField, i) ; Add char and index
 				}
-				this.m_IndexLst.Add(A_LoopField) ; add char and index
+				this.m_IndexLst.Add(A_LoopField) ; Add char and index
 				i++
 			
 			}

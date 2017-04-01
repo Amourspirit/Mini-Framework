@@ -431,6 +431,103 @@ class MfBinaryList extends MfListBase
 		return _returnAsObj = true?new MfString(retval):retval
 	}
 ; 	End:ToString ;}
+;{ 		SubList
+	; The SubList() method extracts the elements from list, between two specified indices, and returns the a new list.
+	; This method extracts the element in a list between "startIndex" and "endIndex", not including "endIndex" itself.
+	; If "startIndex" is greater than "endIndex", this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
+	; If either "startIndex" or "endIndex" is less than 0, it is treated as if it were 0.
+	; startIndex and endIndex mimic javascript substring
+	; Params
+	;	startIndex
+	;		The position where to start the extraction. First element is at index 0
+	;	endIndex
+	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
+	SubList(startIndex=0, endIndex="") {
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
+		maxIndex := this.Count - 1
+		IsEndIndex := true
+		if (endIndex == "NaN")
+		{
+			IsEndIndex := False
+		}
+		If (IsEndIndex = true && endIndex < 0)
+		{
+			endIndex := 0
+		}
+		if (startIndex < 0)
+		{
+			startIndex := 0
+		}
+		if ((IsEndIndex = false) && (startIndex = 0))
+		{
+			Return this
+		}
+		if ((IsEndIndex = false) && (startIndex > maxIndex))
+		{
+			Return this
+		}
+		if ((IsEndIndex = true) && (startIndex > endIndex))
+		{
+			; swap values
+			tmp := startIndex
+			startIndex := endIndex
+			endIndex := tmp
+		}
+		if ((IsEndIndex = true) && (endIndex = startIndex))
+		{
+			return this
+		}
+		if (startIndex > maxIndex)
+		{
+			return this
+		}
+		if (IsEndIndex = true)
+		{
+			len :=  endIndex - startIndex
+			if ((len + 1) >= this.Count)
+			{
+				return this
+			}
+		}
+		else
+		{
+			len := maxIndex
+		}
+		rLst := new MfBinaryList()
+		rl := rLst.m_InnerList
+
+		i := 1
+		iCount := 0
+		if (IsEndIndex = true)
+		{
+			While ((iCount + len) < (this.Count - 1))
+			{
+				iCount++
+			}
+		}
+		else
+		{
+			While ((iCount + (len - startIndex)) < (this.Count - 1))
+			{
+				iCount++
+			}
+		}
+			
+		ll := this.m_InnerList
+		while iCount < ll.Count
+		{
+			iCount++
+			;lst.Add(this.Item[i])
+			rl[i] := ll[iCount]
+			i++
+			
+		}
+		rl.Count := i - 1
+		return rLst
+
+	}
+; 		End:SubList ;}
 	_ToByteArrayString(returnAsObj, startIndex, length) {
 		retval := ""
 		i := startIndex
