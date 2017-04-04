@@ -53,7 +53,7 @@ class MfByteList extends MfListBase
 				this.m_InnerList.Push(default)
 				i++
 			}
-			this.m_InnerList.Count := i
+			this.m_Count := i
 		}
 	}
 ; End:Constructor ;}
@@ -86,40 +86,11 @@ class MfByteList extends MfListBase
 			throw ex
 		}
 		_value := MfByte.GetValue(obj)
-		_newCount := this.m_InnerList.Count + 1
-		this.m_InnerList[_newCount] := _value
-		this.m_InnerList.Count := _newCount
-		retval := _newCount - 1
-		return retval
+		this.m_InnerList.Push(_value)
+		this.m_Count++
+		return this.m_Count
 	}
 ;	End:Add(value) ;}
-;{ 	Clear()				- Overrides - MfListBase
-/*
-	Method: Clear()
-		Overrides MfListBase.Clear()
-	Clear()
-		Removes all objects from the MfList instance.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-*/
-	Clear() {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		this.m_InnerList := Null
-		this.m_InnerList := []
-		this.m_InnerList.Count := 0
-		this.m_Enum := Null
-	}
-;	End:Clear() ;}
 ;{ 	Clone
 	Clone() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -128,12 +99,12 @@ class MfByteList extends MfListBase
 		bl := cLst.m_InnerList
 		ll := this.m_InnerList
 		i := 1
-		while (i <= ll.Count)
+		while (i <= this.m_Count)
 		{
 			bl[i] := ll[i]
 			i++
 		}
-		bl.Count := ll.Count
+		cLst.m_Count := cLst.m_Count
 		return cLst
 	}
 ; 	End:Clone ;}
@@ -179,21 +150,21 @@ class MfByteList extends MfListBase
 				this._AutoIncrease()
 			}
 		}
-		if ((_index < 0) || (_index > this.m_InnerList.Count))
+		if ((_index < 0) || (_index > this.Count))
 		{
 			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		_value := MfByte.GetValue(obj)
-		If (_index = this.m_InnerList.Count)
+		If (_index = this.Count)
 		{
 			this.Add(_value)
 			return
 		}
 		i := _index + 1 ; step up to one based index for AutoHotkey array
 		this.m_InnerList.InsertAt(i, _value)
-		this.m_InnerList.Count ++
+		this.m_Count++
 	}
 ;	End:Insert(index, obj) ;}
 
@@ -209,13 +180,8 @@ class MfByteList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (MfNull.IsNull(length)) {
-			_length := this.Count - _startIndex
-		}
-		else
-		{
-			_length := MfInt64.GetValue(length)
-		}
+		_length := MfInteger.GetValue(length, this.Count - _startIndex)
+		
 		if (_length < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_GenericPositive"))
@@ -290,11 +256,11 @@ class MfByteList extends MfListBase
 		}
 		if ((IsEndIndex = false) && (startIndex = 0))
 		{
-			Return this
+			Return this.Clone()
 		}
 		if ((IsEndIndex = false) && (startIndex > maxIndex))
 		{
-			Return this
+			Return this.Clone()
 		}
 		if ((IsEndIndex = true) && (startIndex > endIndex))
 		{
@@ -305,18 +271,18 @@ class MfByteList extends MfListBase
 		}
 		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
-			return this
+			return this.Clone()
 		}
 		if (startIndex > maxIndex)
 		{
-			return this
+			return this.Clone()
 		}
 		if (IsEndIndex = true)
 		{
 			len :=  endIndex - startIndex
 			if ((len + 1) >= this.Count)
 			{
-				return this
+				return this.Clone()
 			}
 		}
 		else
@@ -335,7 +301,7 @@ class MfByteList extends MfListBase
 				rl[i] := ll[i]
 				i++
 			}
-			rl.Count := i - 1
+			rLst.m_Count := i - 1
 			return rLst
 		}
 		
@@ -358,7 +324,7 @@ class MfByteList extends MfListBase
 		}
 			
 		
-		while iCount < ll.Count
+		while iCount < this.m_Count
 		{
 			iCount++
 			rl[i] := ll[iCount]
@@ -366,7 +332,7 @@ class MfByteList extends MfListBase
 			
 		}
 		
-		rl.Count := i - 1
+		rLst.m_Count := i - 1
 		return rLst
 
 	}
@@ -385,13 +351,15 @@ class MfByteList extends MfListBase
 		}
 		If (this.Count < 1)
 		{
-			this.Add(0)
+			this.m_InnerList.Push(0)
+			this.m_Count++
 			return
 		}
 		NewCount := this.Count * 2
 		while this.Count < NewCount
 		{
-			this.Add(0)
+			this.m_InnerList.Push(0)
+			this.m_Count++
 		}
 	}
 ; End:Methods ;}
@@ -460,7 +428,7 @@ class MfByteList extends MfListBase
 					throw ex
 				}
 			}
-			_index ++ ; increase value for one based array
+			_index++ ; increase value for one based array
 			return this.m_InnerList[_index]
 		}
 		set {
@@ -488,7 +456,7 @@ class MfByteList extends MfListBase
 				}
 			}
 			_value := MfByte.GetValue(value)
-			_index ++ ; increase value for one based array
+			_index++ ; increase value for one based array
 			this.m_InnerList[_index] := _value
 			return this.m_InnerList[_index]
 		}

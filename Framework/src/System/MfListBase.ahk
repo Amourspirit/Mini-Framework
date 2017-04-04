@@ -26,6 +26,7 @@ class MfListBase extends MfEnumerableBase
 
 	m_InnerList			:= Null
 	m_Enum				:= Null
+	m_count				:= 0
 ;{ Constructor()
 /*
 	Constructor()
@@ -43,7 +44,7 @@ class MfListBase extends MfEnumerableBase
 		
 		base.__New()
 		this.m_InnerList := []
-		this.m_InnerList.Count := 0
+		this.m_Count := 0
 		this.m_isInherited := true
 		this.m_Enum := Null
 	}
@@ -87,11 +88,9 @@ class MfListBase extends MfEnumerableBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		_newCount := this.m_InnerList.Count + 1
-		this.m_InnerList[_newCount] := obj
-		this.m_InnerList.Count := _newCount
-		retval := _newCount - 1
-		return retval
+		this.m_InnerList.Push(obj)
+		this.m_Count++
+		return this.m_Count
 	}
 ;	End:Add(value) ;}
 ;{ 	Clear()				- Overrides - MfListBase
@@ -117,7 +116,7 @@ class MfListBase extends MfEnumerableBase
 		}
 		this.m_InnerList := Null
 		this.m_InnerList := []
-		this.m_InnerList.Count := 0
+		this.m_Count := 0
 		this.m_Enum := Null
 	}
 ;	End:Clear() ;}
@@ -147,7 +146,7 @@ class MfListBase extends MfEnumerableBase
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		bObj := IsObject(obj)
 		retval := false
-		if (this.m_InnerList.Count <= 0) {
+		if (this.m_Count <= 0) {
 			return retval
 		}
 		for k, v in this.m_InnerList
@@ -194,7 +193,7 @@ class MfListBase extends MfEnumerableBase
 		bFound := false
 		bObj := IsObject(obj)
 		int := -1
-		if (this.m_InnerList.Count <= 0) {
+		if (this.m_Count <= 0) {
 			return int
 		}
 		for k, v in this.m_InnerList
@@ -259,20 +258,20 @@ class MfListBase extends MfEnumerableBase
 			throw ex
 		}
 		_index := MfInteger.GetValue(index)
-		if ((_index < 0) || (_index > this.m_InnerList.Count))
+		if ((_index < 0) || (_index > this.m_Count))
 		{
 			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		If (_index = this.m_InnerList.Count)
+		If (_index = this.m_Count)
 		{
 			this.Add(obj)
 			return
 		}
 		i := _index + 1 ; step up to one based index for AutoHotkey array
 		this.m_InnerList.InsertAt(i, obj)
-		this.m_InnerList.Count ++
+		this.m_Count++
 	}
 ;	End:Insert(index, obj) ;}
 ;{ 	LastIndexOf()
@@ -298,13 +297,13 @@ class MfListBase extends MfEnumerableBase
 		bFound := false
 		bObj := IsObject(obj)
 		int := -1
-		if (this.m_InnerList.Count <= 0) {
+		if (this.m_Count <= 0) {
 			return int
 		}
-		i := this.Count -1
+		i := this.m_Count -1
 		while (i >= 0)
 		{
-			v := this.Item[i]
+			v := ths.m_InnerList[i + 1]
 			if (bObj) {
 				try {
 					if (v.CompareTo(obj) = 0) {
@@ -405,7 +404,7 @@ class MfListBase extends MfEnumerableBase
 		}
 		
 		_index := MfInteger.GetValue(index)
-		if ((_index < 0) || (_index >= this.m_InnerList.Count)) {
+		if ((_index < 0) || (_index >= this.m_Count)) {
 			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
@@ -415,7 +414,7 @@ class MfListBase extends MfEnumerableBase
 		iLen := this.m_InnerList.Length()
 		; if vremoved is an empty string or vRemoved is 0 then, If (vRemoved ) would computed to false
 		if (iLen = _index) {
-			this.m_InnerList.Count --
+			this.m_Count--
 		} else {
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_FailedToRemove"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -429,11 +428,11 @@ class MfListBase extends MfEnumerableBase
 	ToArray() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := []
-		MaxIndex := this.m_InnerList.MaxIndex()
+		ll := this.m_InnerList
 		i := 1
-		while (i <= MaxIndex)
+		while (i <= this.m_Count)
 		{
-			retval[i] := this.m_InnerList[i]
+			retval[i] := ll[i]
 			i++	
 		}
 		return retval
@@ -450,26 +449,33 @@ class MfListBase extends MfEnumerableBase
 	ToString() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		str := ""
-		maxIndex := this.Count -1
-		for i, v in this
+		maxIndex := this.m_Count - 1
+		ll := this.m_InnerList
+		i := 1
+		nl := MfEnvironment.Instance.NewLine
+		while (i <= this.m_Count)
 		{
-		 valStr := ""
+			valStr := ""
 			
-		 if (IsObject(v))
-		 {
-			valStr := "{" . MfType.TypeOfName(v) . "}"
-			if(IsFunc(v.ToString)){
-			   valStr .= " " .  v.ToString()
+			if (IsObject(v))
+			{
+				valStr := "{" . MfType.TypeOfName(v) . "}"
+				if(IsFunc(v.ToString)){
+				   valStr .= " " .  v.ToString()
+				}
 			}
-		 } else {
-			valStr := "'" v "'"
-		 }
-		 str .= i ": " . valStr
-		 If (i < maxIndex)
-		 {
-		 	str .= MfEnvironment.Instance.NewLine
-		 }
+			else
+			{
+				valStr := "'" v "'"
+			}
+			str .= i ": " . valStr
+			If (i < this.m_Count)
+			{
+				str .= nl
+			}
+			i++
 		}
+		
 		return str
 	}
 ;	End:ToString() ;}
@@ -493,7 +499,7 @@ class MfListBase extends MfEnumerableBase
 				this.m_InnerList := objArray
 				if(SetCount)
 				{
-					this.m_InnerList.Count := objArray.Length()
+					this.m_Count := objArray.Length()
 				}
 			
 			}
@@ -522,7 +528,7 @@ class MfListBase extends MfEnumerableBase
 	Count[]
 	{
 		get {
-			return this.m_InnerList.Count
+			return this.m_Count
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -601,7 +607,7 @@ class MfListBase extends MfEnumerableBase
 	{
 		get {
 			_index := MfInteger.GetValue(Index)
-			if (_index < 0 || _index >= this.Count) {
+			if (_index < 0 || _index >= this.m_Count) {
 				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
@@ -616,7 +622,7 @@ class MfListBase extends MfEnumerableBase
 				throw ex
 			}
 			_index := MfInteger.GetValue(Index)
-			if (_index < 0 || _index >= this.Count) {
+			if (_index < 0 || _index >= this.m_Count) {
 				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
@@ -635,9 +641,11 @@ class MfListBase extends MfEnumerableBase
 		m_KeyEnum := Null
 		m_index := 0
 		m_count := 0
+		m_InnerList
         __new(ByRef ParentClass) {
             this.m_Parent := ParentClass
 			this.m_count := this.m_Parent.Count
+			this.m_InnerList := this.m_Parent.m_InnerList
         }
         
        Next(ByRef key, ByRef value)
@@ -645,7 +653,7 @@ class MfListBase extends MfEnumerableBase
 		
 			if (this.m_index < this.m_count) {
 				key := this.m_index
-				value := this.m_Parent.Item[key]
+				value := this.m_InnerList[key + 1]
 			}
 			this.m_index++
 			if (this.m_index > (this.m_count)) {
@@ -654,8 +662,6 @@ class MfListBase extends MfEnumerableBase
 				return true
 			}
         }
-		
-		
     }
 ; 		End:class Enumerator ;}
 }

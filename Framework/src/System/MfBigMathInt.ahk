@@ -335,7 +335,7 @@ class MfBigMathInt extends MfObject
 	; does a single round of Miller-Rabin base b consider x to be a possible prime?
 	; x is a bigInt, and b is an integer, with b<x
 	MillerRabinInt(x, b) {
-		if (MfBigMathInt.mr_x1.Count != x.Count)
+		if (MfBigMathInt.mr_x1.m_Count != x.m_Count)
 		{
 			MfBigMathInt.mr_x1 := MfBigMathInt.Dup(x)
 			MfBigMathInt.mr_r := MfBigMathInt.Dup(x)
@@ -352,7 +352,7 @@ class MfBigMathInt extends MfObject
 	MillerRabin(x, b) {
 		i := 0, j := 0, k := 0 , s := 0
 
-		if (MfBigMathInt.mr_x1.Count != x.Count)
+		if (MfBigMathInt.mr_x1.m_Count != x.m_Count)
 		{
 			MfBigMathInt.mr_x1 := MfBigMathInt.Dup(x)
 			MfBigMathInt.mr_r := MfBigMathInt.Dup(x)
@@ -417,7 +417,7 @@ class MfBigMathInt extends MfObject
 ;{ 	BitSize
 	; returns how many bits long the bigInt is, not counting leading zeros.
 	BitSize(x) {
-		j := x.Count -1
+		j := x.m_Count -1
 		if (j = 0)
 		{
 			return 0
@@ -442,7 +442,7 @@ class MfBigMathInt extends MfObject
 ;{ 	Expand
 	; return a copy of x with at least n elements, adding leading zeros if needed
 	Expand(x, n) {
-		ans := MfBigMathInt.Int2bigInt(0, (x.Count > n ? x.Count : n) * MfBigMathInt.bpe, 0)
+		ans := MfBigMathInt.Int2bigInt(0, (x.m_Count > n ? x.m_Count : n) * MfBigMathInt.bpe, 0)
 		MfBigMathInt.copy_(ans, x)
 		return ans
 	}
@@ -492,11 +492,11 @@ class MfBigMathInt extends MfObject
 		ansl := ans.m_InnerList
 
 		; optimization: try larger and smaller B to find the best limit.
-		if (MfBigMathInt.primes.Count = 0)
+		if (MfBigMathInt.primes.m_Count = 0)
 		{
 			MfBigMathInt.primes := MfBigMathInt.FindPrimes(30000)
 		}
-		if (MfBigMathInt.rpprb.Count != ans.Count)
+		if (MfBigMathInt.rpprb.m_Count != ans.m_Count)
 		{
 			MfBigMathInt.rpprb := MfBigMathInt.Dup(ans)
 		}
@@ -513,7 +513,7 @@ class MfBigMathInt extends MfObject
 
 			; check ans for divisibility by small primes up to B
 			i := 1 ; one based index
-			while ((i <= MfBigMathInt.primes.Count) && (MfBigMathInt.primes.m_InnerList[i] <= B))
+			while ((i <= MfBigMathInt.primes.m_Count) && (MfBigMathInt.primes.m_InnerList[i] <= B))
 			{
 				if (MfBigMathInt.ModInt(ans, MfBigMathInt.primes.m_InnerList[i]) = 0 && !(MfBigMathInt.EqualsInt(ans, MfBigMathInt.primes.m_InnerList[i])))
 				{
@@ -556,7 +556,7 @@ class MfBigMathInt extends MfObject
 ;{ 	AddInt
 	; return (x+n) where x is a bigInt and n is an integer.
 	AddInt(x, n) {
-		ans := MfBigMathInt.Expand(x, x.Count + 1)
+		ans := MfBigMathInt.Expand(x, x.m_Count + 1)
 		MfBigMathInt.addInt_(ans, n)
 		return MfBigMathInt.Trim(ans, 1)
 	}
@@ -564,7 +564,7 @@ class MfBigMathInt extends MfObject
 ;{ 	Mult
 	; return x*y for bigInts x and y. This is faster when y<x.
 	Mult(x, y) {
-		ans := MfBigMathInt.Expand(x, x.Count + y.Count)
+		ans := MfBigMathInt.Expand(x, x.m_Count + y.m_Count)
 		MfBigMathInt.mult_(ans, y)
 		return MfBigMathInt.Trim(ans, 1)
 	}
@@ -572,7 +572,7 @@ class MfBigMathInt extends MfObject
 ;{ 	PowMod
 	; return (x**y Mod n) where x,y,n are bigInts and ** is exponentiation.  0**0=1. Faster for odd n.
 	PowMod(x, y, n) {
-		ans := MfBigMathInt.Expand(x, n.Count)
+		ans := MfBigMathInt.Expand(x, n.m_Count)
 
 		; this should work without the Trim, but doesn't
 		MfBigMathInt.powMod_(ans, MfBigMathInt.Trim(y, 2), MfBigMathInt.Trim(n, 2), 0)
@@ -582,7 +582,7 @@ class MfBigMathInt extends MfObject
 ;{ 	Sub
 	; return (x-y) for bigInts x and y.  Negative answers will be 2s complement
 	Sub(x,y) {
-		ans := MfBigMathInt.Expand(x, (x.Count > y.Count ? x.Count + 1 : y.Count + 1))
+		ans := MfBigMathInt.Expand(x, (x.m_Count > y.m_Count ? x.m_Count + 1 : y.m_Count + 1))
 		MfBigMathInt.sub_(ans, y)
 		return MfBigMathInt.Trim(ans, 1)
 	}
@@ -590,7 +590,7 @@ class MfBigMathInt extends MfObject
 ;{ 	Add
 	; return (x+y) for bigInts x and y.  
 	Add(x,y) {
-		ans := MfBigMathInt.Expand(x, (x.Count > y.Count ? x.Count + 1 : y.Count + 1))
+		ans := MfBigMathInt.Expand(x, (x.m_Count > y.m_Count ? x.m_Count + 1 : y.m_Count + 1))
 		MfBigMathInt.add_(ans, y)
 		return MfBigMathInt.Trim(ans, 1)
 	}
@@ -598,7 +598,7 @@ class MfBigMathInt extends MfObject
 ;{ 	InverseMod
 	; return (x**(-1) Mod n) for bigInts x and n.  If no inverse exists, it returns null
 	InverseMod(x,n) {
-		 ans := MfBigMathInt.Expand(x, n.Count)
+		 ans := MfBigMathInt.Expand(x, n.m_Count)
 		 s := MfBigMathInt.inverseMod_(ans, n)
 		 return s ? MfBigMathInt.Trim(ans, 1) : null
 	}
@@ -606,7 +606,7 @@ class MfBigMathInt extends MfObject
 ;{ 	MultMod
 	; return (x*y Mod n) for bigInts x,y,n.  For Greater speed, let y<x.
 	 MultMod(x,y,n) {
-	 	ans := MfBigMathInt.Expand(x, n.Count)
+	 	ans := MfBigMathInt.Expand(x, n.m_Count)
 	 	MfBigMathInt.multMod_(ans,y,n)
 	 	return MfBigMathInt.Trim(ans, 1)
 	 }
@@ -616,12 +616,12 @@ class MfBigMathInt extends MfObject
 	; and put it into ans.  The bigInt ans must be large enough to hold it.
 	RandTruePrime_(byref ans, k) {
 
-		if (MfBigMathInt.primes.Count = 0)
+		if (MfBigMathInt.primes.m_Count = 0)
 		{
 			MfBigMathInt.primes := MfBigMathInt.FindPrimes(30000) ; check for divisibility by primes <=30000
 		}
 
-		if (MfBigMathInt.pows.Count = 0)
+		if (MfBigMathInt.pows.m_Count = 0)
 		{
 			wf := A_FormatFloat
 			SetFormat, FloatFast, 0.16
@@ -656,7 +656,7 @@ class MfBigMathInt extends MfObject
 			m := 20 ;generate this k-bit number by first recursively generating a number that has between k/2 and k-m bits 
 			recLimit := 20 ;stop recursion when k <=recLimit.  Must have recLimit >= 2
 
-			if (MfBigMathInt.s_i2.Count != ans.Count)
+			if (MfBigMathInt.s_i2.m_Count != ans.m_Count)
 			{
 				MfBigMathInt.s_i2 	:= MfBigMathInt.Dup(ans)
 				MfBigMathInt.s_R 	:= MfBigMathInt.Dup(ans)
@@ -687,7 +687,7 @@ class MfBigMathInt extends MfObject
 					ans.m_InnerList[1] := 1 | (1 << (k - 1)) | tmp
 					j := 1
 					jOne := j + 1
-					while ((j < MfBigMathInt.primes.Count) && ((MfBigMathInt.primes.m_InnerList[jOne] & pm) = MfBigMathInt.primes.m_InnerList[jOne]))
+					while ((j < MfBigMathInt.primes.m_Count) && ((MfBigMathInt.primes.m_InnerList[jOne] & pm) = MfBigMathInt.primes.m_InnerList[jOne]))
 					{
 						; trial division by all primes 3...sqrt(2^k)
 						if (0 = Mod(ans.m_InnerList[1], MfBigMathInt.primes.m_InnerList[jOne]))
@@ -750,7 +750,7 @@ class MfBigMathInt extends MfObject
 				; check s_n for divisibility by small primes up to B
 				divisible := 0
 				j := 1 ; one based index
-				while ((j <= MfBigMathInt.primes.Count) && (MfBigMathInt.primes.m_InnerList[j] < B))
+				while ((j <= MfBigMathInt.primes.m_Count) && (MfBigMathInt.primes.m_InnerList[j] < B))
 				{
 					if ((MfBigMathInt.ModInt(MfBigMathInt.s_n, MfBigMathInt.primes.m_InnerList[j]) = 0)
 						&& (!MfBigMathInt.EqualsInt(MfBigMathInt.s_n, MfBigMathInt.primes.m_InnerList[j])))
@@ -770,7 +770,7 @@ class MfBigMathInt extends MfObject
 				if (!divisible)
 				{
 					MfBigMathInt.addInt_(MfBigMathInt.s_n, -3)
-					j := MfBigMathInt.s_n.Count - 1
+					j := MfBigMathInt.s_n.m_Count - 1
 					while ((MfBigMathInt.s_n.m_InnerList[j + 1] = 0) && (j > 0))
 					{
 						j--
@@ -835,7 +835,7 @@ class MfBigMathInt extends MfObject
 		
 		bl := b.m_InnerList
 		i := 1
-		while (i <= b.Count)
+		while (i <= b.m_Count)
 		{
 			bl[i] := 0
 			i++
@@ -884,7 +884,7 @@ class MfBigMathInt extends MfObject
 	; set x to the greatest common divisor of bigInts x and y (each with same number of elements).
 	; y is destroyed.
 	GCD_(byref x, byref y) {
-		if(MfBigMathInt.tt.Count != x.Count)
+		if(MfBigMathInt.tt.m_Count != x.m_Count)
 		{
 			MfBigMathInt.tt := MfBigMathInt.Dup(x)
 		}
@@ -897,7 +897,7 @@ class MfBigMathInt extends MfObject
 			sing := 0
 			i := 1
 			i++ ; Add 1 for one based index
-			while (i <= y.Count)
+			while (i <= y.m_Count)
 			{
 				if (yl[i])
 				{
@@ -911,7 +911,7 @@ class MfBigMathInt extends MfObject
 				break ; quit when y all zero elements except possibly y[0]
 			}
 
-			i := x.Count ; zero based index
+			i := x.m_Count ; zero based index
 			i++ ; one base index
 			while ((i >= 1) && (!xl[i]))
 			{
@@ -989,7 +989,7 @@ class MfBigMathInt extends MfObject
 	inverseMod_(byref x, byref n) {
 		xl := x.m_InnerList
 		nl := n.m_InnerList
-		k := 1 + 2 * MfMath.Max(x.Count, n.Count)
+		k := 1 + 2 * MfMath.Max(x.m_Count, n.m_Count)
 
 		; if both inputs are even, then inverse doesn't exist
 		if (!(xl[1] & 1) && !(nl[10] & 1))
@@ -997,7 +997,7 @@ class MfBigMathInt extends MfObject
 			MfBigMathInt.copyInt_(x, 0)
 			return false
 		}
-		if (MfBigMathInt.eg_u.Count != k)
+		if (MfBigMathInt.eg_u.m_Count != k)
 		{
 			MfBigMathInt.eg_u := new MfListVar(k)
 			MfBigMathInt.eg_v := new MfListVar(k)
@@ -1123,8 +1123,8 @@ class MfBigMathInt extends MfObject
 	; The bigInts v, a, b, must have exactly as many elements as the larger of x and y.
 	eGCD_(x, y, byref v, byref a, byref b) {
 		g := 0
-		k := MfMath.Max(x.Count, y.Count)
-		if (MfBigMathInt.eg_u.Count != k)
+		k := MfMath.Max(x.m_Count, y.m_Count)
+		if (MfBigMathInt.eg_u.m_Count != k)
 		{
 			MfBigMathInt.eg_u := new MfListVar(k)
 			MfBigMathInt.eg_A := new MfListVar(k)
@@ -1231,8 +1231,8 @@ class MfBigMathInt extends MfObject
 	; x and y are nonnegative bigInts
 	; shift is a nonnegative integer
 	GreaterShift(x, y, shift) {
-		kx := x.Count
-		ky := y.Count
+		kx := x.m_Count
+		ky := y.m_Count
 		xl := x.m_InnerList
 		yl := y.m_InnerList
 
@@ -1282,9 +1282,9 @@ class MfBigMathInt extends MfObject
 		xl := x.m_InnerList
 		yl := y.m_InnerList
 
-		k := (x.Count < y.Count) ? x.Count : y.Count
-		i := x.Count
-		while (i < y.Count)
+		k := (x.m_Count < y.m_Count) ? x.m_Count : y.m_Count
+		i := x.m_Count
+		while (i < y.m_Count)
 		{
 			if (yl[i + 1])
 			{
@@ -1293,8 +1293,8 @@ class MfBigMathInt extends MfObject
 			i++
 		}
 
-		i := y.Count
-		while (i < x.Count)
+		i := y.m_Count
+		while (i < x.m_Count)
 		{
 			if (xl[i + 1])
 			{
@@ -1323,11 +1323,11 @@ class MfBigMathInt extends MfObject
 	; divide x by y giving quotient q and remainder r.  (q=floor(x/y),  r=x Mod y).  All 4 are bigints.
 	; x must have at least one leading zero element.
 	; y must be nonzero.
-	; q and r must be arrays that are exactly the same Count as x. (Or q can have more).
+	; q and r must be arrays that are exactly the same m_Count as x. (Or q can have more).
 	; Must have x.Count >= y.Count >= 2.
 	divide_(ByRef x, ByRef y, ByRef q, ByRef r) {
 		MfBigMathInt.copy_(r, x)
-		ky := y.Count
+		ky := y.m_Count
 		xl := x.m_InnerList
 		yl := y.m_InnerList
 		ql := q.m_InnerList
@@ -1352,7 +1352,7 @@ class MfBigMathInt extends MfObject
 		MfBigMathInt.leftShift_(y, a)
 		MfBigMathInt.leftShift_(r, a)
 
-		kx := r.Count
+		kx := r.m_Count
 		while(rl[kx] = 0 && kx > ky)
 		{
 			kx--
@@ -1411,7 +1411,7 @@ class MfBigMathInt extends MfObject
 	; do carries and borrows so each element of the bigInt x fits in bpe bits.
 	carry_(x) {
 		ll := x.m_InnerList
-		k := x.Count
+		k := x.m_Count
 		c := 0
 		i := 1
 		while (i <= k)
@@ -1427,14 +1427,14 @@ class MfBigMathInt extends MfObject
 			c := (c >> MfBigMathInt.bpe) - b
 			i++
 		}
-		ll.Count := ll.Length()
+		x.m_Count := ll.Length()
 	}
 ; 	End:carry_ ;}
 ;{ 	ModInt
 	; return x Mod n for bigInt x and integer n.
 	ModInt(x, n) {
 		c := 0
-		i := x.Count
+		i := x.m_Count
 		while (i >= 1)
 		{
 			tmp := c * MfBigMathInt.radix + x.m_InnerList[i]
@@ -1466,7 +1466,7 @@ class MfBigMathInt extends MfObject
 	; Base 10 and base 16 conversion are fastest and about the same speed
 	Str2bigInt(s, base, minSize) {
 		sLst := MfListVar.FromString(s, false) ; string to list, ignore whitespace is false
-		k := sLst.Count
+		k := sLst.m_Count
 		if (base = -1)
 		{
 		 	; comma-separated list of array elements in decimal
@@ -1474,10 +1474,10 @@ class MfBigMathInt extends MfObject
 		 	xl := x.m_InnerList
 		 	loop
 		 	{
-		 		y := new MfListVar(x.Count + 1)
+		 		y := new MfListVar(x.m_Count + 1)
 		 		yl := y.m_InnerList
 		 		i := 1 ; one base index
-		 		while (i <= x.Count)
+		 		while (i <= x.m_Count)
 		 		{
 		 			yl[i] := xl[i]
 		 			i++
@@ -1490,12 +1490,12 @@ class MfBigMathInt extends MfObject
 		 			break
 		 		}
 		 		sLst := sLst.SubList(d + 1)
-		 		if (sLst.Count = 0)
+		 		if (sLst.m_Count = 0)
 		 		{
 		 			break
 		 		}
 		 	}
-		 	if (x.Count < minSize)
+		 	if (x.m_Count < minSize)
 		 	{
 		 		y := new MfListVar(minSize)
 		 		MfBigMathInt.copy_(y, x)
@@ -1522,7 +1522,7 @@ class MfBigMathInt extends MfObject
 			MfBigMathInt.addInt_(x, d)
 			i++
 		}
-		k := x.Count
+		k := x.m_Count
 		; strip off leading zeros
 		while (k > 0 && !xl[k])
 		{
@@ -1531,7 +1531,7 @@ class MfBigMathInt extends MfObject
 		k := minSize > k + 1 ? minSize : k + 1
 		y := new MfListVar(k)
 		yl := y.m_InnerList
-		kk := k < x.Count ? k : x.Count
+		kk := k < x.m_Count ? k : x.m_Count
 		i := 1 ; move to one base
 		while (i <= kk)
 		{
@@ -1557,7 +1557,7 @@ class MfBigMathInt extends MfObject
 			return 0
 		}
 		i := 2
-		while (i <= x.Count)
+		while (i <= x.m_Count)
 		{
 			if (xl[i])
 			{
@@ -1570,9 +1570,9 @@ class MfBigMathInt extends MfObject
 ; 	End:EqualsInt ;}
 ;{ 	Equals
 	; are bigints x and y equal?
-	; this works even if x and y are different Counts and have arbitrarily many leading zeros
+	; this works even if x and y are different m_Counts and have arbitrarily many leading zeros
 	Equals(x, y) {
-		 k := x.Count < y.Count ? x.Count : y.Count
+		 k := x.m_Count < y.m_Count ? x.m_Count : y.m_Count
 		 xl := x.m_InnerList
 		 yl := y.m_InnerList
 		 i := 1
@@ -1584,9 +1584,9 @@ class MfBigMathInt extends MfObject
 		 	}
 		 	i++
 		 }
-		 if (x.Count > y.Count)
+		 if (x.m_Count > y.m_Count)
 		 {
-		 	while (i <= x.Count)
+		 	while (i <= x.m_Count)
 		 	{
 		 		if (xl[i])
 		 		{
@@ -1597,7 +1597,7 @@ class MfBigMathInt extends MfObject
 		 }
 		 else
 		 {
-		 	while (i < y.Count)
+		 	while (i < y.m_Count)
 		 	{
 		 		if (yl[i])
 		 		{
@@ -1614,7 +1614,7 @@ class MfBigMathInt extends MfObject
 	IsZero(x) {
 		i := 1
 		xl := x.m_InnerList
-		while (i <= x.Count)
+		while (i <= x.m_Count)
 		{
 			if (xl[i])
 			{
@@ -1631,7 +1631,7 @@ class MfBigMathInt extends MfObject
 	BigInt2str(x, base) {
 		s := ""
 		xl := x.m_InnerList
-		if (MfBigMathInt.s6.Count != x.Count)
+		if (MfBigMathInt.s6.m_Count != x.m_Count)
 		{
 			MfBigMathInt.s6 := MfBigMathInt.Dup(x)
 		}
@@ -1641,7 +1641,7 @@ class MfBigMathInt extends MfObject
 		}
 		if (base = -1) ; return the list of array contents
 		{
-			i := x.Count
+			i := x.m_Count
 			while (i > 1)
 			{
 				s .= xl[i] . ","
@@ -1668,7 +1668,7 @@ class MfBigMathInt extends MfObject
 ;{ 	Dup
 	; returns a duplicate of bigInt x
 	Dup(x) {
-		buff := new MfListVar(x.Count)
+		buff := new MfListVar(x.m_Count)
 		MfBigMathInt.copy_(buff, x)
 		return buff
 	}
@@ -1677,7 +1677,7 @@ class MfBigMathInt extends MfObject
 	; do x=y on bigInts x and y.  x must be an array
 	; at least as big as y (not counting the leading zeros in y).
 	copy_(ByRef x, y) {
-		k := x.Count < y.Count ? x.Count : y.Count
+		k := x.m_Count < y.m_Count ? x.m_Count : y.m_Count
 		xl := x.m_InnerList
 		yl := y.m_InnerList
 		i := 1
@@ -1687,7 +1687,7 @@ class MfBigMathInt extends MfObject
 			i++
 		}
 		i := k
-		while (i < x.Count)
+		while (i < x.m_Count)
 		{
 			xl[i] := 0
 			i++
@@ -1700,7 +1700,7 @@ class MfBigMathInt extends MfObject
 		c := n
 		xl := x.m_InnerList
 		i := 1
-		while (i <= x.Count)
+		while (i <= x.m_Count)
 		{
 			xl[i] := c & MfBigMathInt.mask
 			c >>= MfBigMathInt.bpe
@@ -1714,7 +1714,7 @@ class MfBigMathInt extends MfObject
 	addInt_(ByRef x, n) {
 		xl := x.m_InnerList
 		xl[1] += n
-		k := x.Count
+		k := x.m_Count
 		c := 0
 		i := 1
 		while (i <= k)
@@ -1745,12 +1745,12 @@ class MfBigMathInt extends MfObject
 		if (k)
 		{
 			i := 1
-			while (i <= x.Count - k)
+			while (i <= x.m_Count - k)
 			{
 				xl[i] :=  xl[i + k]	
 				i++
 			}
-			while (i <= x.Count)
+			while (i <= x.m_Count)
 			{
 				xl[i] := 0
 				i++
@@ -1758,28 +1758,28 @@ class MfBigMathInt extends MfObject
 			n := Mod(n, MfBigMathInt.bpe)
 		}
 		i := 1
-		xl.Count := xl.Length()
-		while (i <= x.Count -1)
+		x.m_Count := xl.Length()
+		while (i <= x.m_Count -1)
 		{
 			xl[i] := MfBigMathInt.mask & ((xl[i + 1] << (MfBigMathInt.bpe - n)) | (xl[i] >> n))
 			i++
 		}
 		xl[i] >>= n
-		xl.Count := xl.Length()
+		x.m_Count := xl.Length()
 	}
 ; 	End:rightShift_ ;}
 ;{ 	halve_
 	halve_(ByRef x) {
 		xl := x.m_InnerList
 		i := 1
-		while (i <= x.Count - 1)
+		while (i <= x.m_Count - 1)
 		{
 			xl[i] := MfBigMathInt.mask & ((xl[i + 1] << (MfBigMathInt.bpe - 1)) | (xl[i] >> 1))
 			i++
 		}
 		; most significant bit stays the same
 		xl[i] := (xl[i] >> 1) | (xl[i] & (MfBigMathInt.radix >> 1))
-		xl.Count := xl.Length()
+		x.m_Count := xl.Length()
 	}
 ; 	End:halve_ ;}
 ;{ 	leftShift_
@@ -1789,7 +1789,7 @@ class MfBigMathInt extends MfObject
 		xl := x.m_InnerList
 		if (k)
 		{
-			i := x.Count
+			i := x.m_Count
 			While (i >= k)
 			{
 				xl[i + 1] := xl[(i - k) + 1]
@@ -1816,7 +1816,7 @@ class MfBigMathInt extends MfObject
 		}
 		i++ ; one based index
 		xl[i] := MfBigMathInt.mask & (xl[i] << n)
-		xl.Count := xl.Length()
+		x.m_Count := xl.Length()
 
 	}
 ; 	End:leftShift_ ;}
@@ -1829,7 +1829,7 @@ class MfBigMathInt extends MfObject
 		{
 			return
 		}
-		k := x.Count
+		k := x.m_Count
 		c := 0
 		i := 1
 		while (i <= k)
@@ -1845,7 +1845,7 @@ class MfBigMathInt extends MfObject
 			c := (c >> MfBigMathInt.bpe) - b
 			i++
 		}
-		xl.Count := xl.Length()
+		x.m_Count := xl.Length()
 	}
 ; 	End:multInt_ ;}
 ;{ 	divInt_
@@ -1853,7 +1853,7 @@ class MfBigMathInt extends MfObject
 	divInt_(byRef x, n) {
 		xl := x.m_InnerList
 		r := 0
-		i := x.Count 
+		i := x.m_Count 
 		while (i >= 1)
 		{
 			s := r * MfBigMathInt.radix + xl[i]
@@ -1861,7 +1861,7 @@ class MfBigMathInt extends MfObject
 			r := Mod(s , n)
 			i--
 		}
-		xl.Count := xl.Length()
+		x.m_Count := xl.Length()
 		return r
 	}
 ; 	End:divInt_ ;}
@@ -1871,8 +1871,8 @@ class MfBigMathInt extends MfObject
 	linComb_(ByRef x, y, a, b) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
-		k := x.Count < y.Count ? x.Count : y.Count
-		kk := x.Count
+		k := x.m_Count < y.m_Count ? x.m_Count : y.m_Count
+		kk := x.m_Count
 		c := 0
 		i := 1
 		while (i <= k)
@@ -1898,8 +1898,8 @@ class MfBigMathInt extends MfObject
 	linCombShift_(ByRef x, y, b, ys) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
-		k := x.Count < (ys + y.Count) ? x.Count : (ys + y.Count)
-		kk := x.Count
+		k := x.m_Count < (ys + y.m_Count) ? x.m_Count : (ys + y.m_Count)
+		kk := x.m_Count
 		c := 0
 		i := ys + 1
 		while (i <= k)
@@ -1925,8 +1925,8 @@ class MfBigMathInt extends MfObject
 	addShift_(ByRef x, y, ys) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
-		k := x.Count < ys + y.Count ? x.Count : ys + y.Count
-		kk := x.Count
+		k := x.m_Count < ys + y.m_Count ? x.m_Count : ys + y.m_Count
+		kk := x.m_Count
 		c := 0
 		i := ys + 1
 		while (i <= k)
@@ -1952,8 +1952,8 @@ class MfBigMathInt extends MfObject
 	subShift_(ByRef x, y, ys) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
-		k := x.Count < ys + y.Count ? x.Count : ys + y.Count
-		kk := x.Count
+		k := x.m_Count < ys + y.m_Count ? x.m_Count : ys + y.m_Count
+		kk := x.m_Count
 		c := 0
 		i := ys + 1
 		while (i <= k)
@@ -1980,7 +1980,7 @@ class MfBigMathInt extends MfObject
 	sub_(ByRef x, y) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
-		k := x.Count < y.Count ? x.Count : y.Count
+		k := x.m_Count < y.m_Count ? x.m_Count : y.m_Count
 		c := 0
 		i := 1
 		while (i <= k)
@@ -1991,7 +1991,7 @@ class MfBigMathInt extends MfObject
 			i++
 		}
 		i := k + 1
-		while (c && i <= x.Count)
+		while (c && i <= x.m_Count)
 		{
 			c += xl[i]
 			xl[i] := c & MfBigMathInt.mask
@@ -2006,7 +2006,7 @@ class MfBigMathInt extends MfObject
 	add_(ByRef x, y) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
-		k := x.Count < y.Count ? x.Count : y.Count
+		k := x.m_Count < y.m_Count ? x.m_Count : y.m_Count
 		c := 0
 		i := 1
 		while (i <= k)
@@ -2017,7 +2017,7 @@ class MfBigMathInt extends MfObject
 			i++
 		}
 		i := k + 1
-		while (c && i <= x.Count)
+		while (c && i <= x.m_Count)
 		{
 			c += xl[i]
 			xl[i] := c & MfBigMathInt.mask
@@ -2031,14 +2031,14 @@ class MfBigMathInt extends MfObject
 	mult_(ByRef x, y) {
 		xl := x.m_InnerList
 		yl := y.m_InnerList
-		if (MfBigMathInt.ss.Count != 2 * x.Count)
+		if (MfBigMathInt.ss.m_Count != 2 * x.m_Count)
 		{
-			MfBigMathInt.ss := new MfListVar(2 * x.Count)
+			MfBigMathInt.ss := new MfListVar(2 * x.m_Count)
 		}
 		MfBigMathInt.copyInt_(MfBigMathInt.ss, 0)
 		ssl := MfBigMathInt.ss.m_InnerList
 		i := 1
-		while (i <= y.Count)
+		while (i <= y.m_Count)
 		{
 			if (yl[i])
 			{
@@ -2052,7 +2052,7 @@ class MfBigMathInt extends MfObject
 ;{ 	mod_
 	; do x=x Mod n for bigInts x and n.
 	mod_(ByRef x, byRef n) {
-		if (MfBigMathInt.s4.Count != x.Count)
+		if (MfBigMathInt.s4.m_Count != x.m_Count)
 		{
 			MfBigMathInt.s4 := MfBigMathInt.Dup(x)
 		}
@@ -2060,7 +2060,7 @@ class MfBigMathInt extends MfObject
 		{
 			MfBigMathInt.copy_(MfBigMathInt.s4, x)
 		}
-		if (MfBigMathInts5.Count != x.Count)
+		if (MfBigMathInts5.m_Count != x.m_Count)
 		{
 			MfBigMathInt.s5 := MfBigMathInt.Dup(x)
 		}
@@ -2072,13 +2072,13 @@ class MfBigMathInt extends MfObject
 	; for Greater speed, let y<x.
 	multMod_(ByRef x, ByRef y, ByRef n) {
 		yl := y.m_InnerList
-		if (MfBigMathInt.s0.Count != 2 * x.Count)
+		if (MfBigMathInt.s0.m_Count != 2 * x.m_Count)
 		{
-			MfBigMathInt.s0 := new MfListVar(2 * x.Count)
+			MfBigMathInt.s0 := new MfListVar(2 * x.m_Count)
 		}
 		MfBigMathInt.copyInt_(MfBigMathInt.s0, 0)
 		i := 1
-		while (i <= y.Count)
+		while (i <= y.m_Count)
 		{
 			if(yl[i])
 			{
@@ -2094,15 +2094,15 @@ class MfBigMathInt extends MfObject
 	; do x=x*x Mod n for bigInts x,n.
 	squareMod_(byRef x, byRef n) {
 		xl := x.m_InnerList
-		kk := x.Count
+		kk := x.m_Count
 		; ignore leading zeros in x
 		while (kx > 0 && !xl[kx])
 		{
 			kx--
 		}
 		; k=# elements in the product, which is twice the elements in the larger of x and n
-		k := kx > n.Count ? 2 * kx : 2 * n.Count
-		if (MfBigMathInt.s0.Count != k)
+		k := kx > n.m_Count ? 2 * kx : 2 * n.m_Count
+		if (MfBigMathInt.s0.m_Count != k)
 		{
 			MfBigMathInt.s0 := new MfListVar(k)
 		}
@@ -2132,7 +2132,7 @@ class MfBigMathInt extends MfObject
 ;{ 	Trim
 	; return x with exactly k leading zero elements
 	Trim(x, k) {
-		i := x.Count
+		i := x.m_Count
 		while (i > 0 && !x.m_InnerList[i])
 		{
 			i--
@@ -2148,7 +2148,7 @@ class MfBigMathInt extends MfObject
 	powMod_(ByRef x, ByRef y, ByRef n) {
 		yl := y.m_InnerList
 		nl := n.m_InnerList
-		if (MfBigMathInt.s7.Count != n.Count)
+		if (MfBigMathInt.s7.m_Count != n.m_Count)
 		{
 			MfBigMathInt.s7 := MfBigMathInt.Dup(n)
 		}
@@ -2171,7 +2171,7 @@ class MfBigMathInt extends MfObject
 		}
 		; calculate np from n for the Montgomery multiplications
 		MfBigMathInt.copyInt_(MfBigMathInt.s7, 0)
-		kn := n.Count
+		kn := n.m_Count
 		while (kn > 0 && !nl[kn])
 		{
 			kn--
@@ -2180,7 +2180,7 @@ class MfBigMathInt extends MfObject
 		MfBigMathInt.s7.m_InnerList[kn + 1] := 1
 		MfBigMathInt.multMod_(x, MfBigMathInt.s7, n) ; x = x * 2**(kn*bp) Mod n
 
-		if (MfBigMathInt.s3.Count != x.Count)
+		if (MfBigMathInt.s3.m_Count != x.m_Count)
 		{
 			MfBigMathInt.s3 := MfBigMathInt.Dup(x)
 		}
@@ -2189,7 +2189,7 @@ class MfBigMathInt extends MfObject
 			MfBigMathInt.copy_(MfBigMathInt.s3, x)
 		}
 		; first nonzero element of y
-		k1 := y.Count ; one base index
+		k1 := y.m_Count ; one base index
 		while (k1 > 1 & !yl[k1])
 		{
 			k1--
@@ -2244,10 +2244,10 @@ class MfBigMathInt extends MfObject
 		yl := y.m_InnerList
 		nl := n.m_InnerList
 
-		kn := n.Count
-		ky := y.Count
+		kn := n.m_Count
+		ky := y.m_Count
 
-		if (MfBigMathInt.sa.Count != kn)
+		if (MfBigMathInt.sa.m_Count != kn)
 		{
 			MfBigMathInt.sa := new MfListVar(kn)
 		}
@@ -2265,7 +2265,7 @@ class MfBigMathInt extends MfObject
 		}
 
 		; sa will never have more than this many nonzero elements.
-		ks := MfBigMathInt.sa.Count - 1
+		ks := MfBigMathInt.sa.m_Count - 1
 
 		; the following loop consumes 95% of the runtime for randTruePrime_() and powMod_() for large numbers
 		i := 1
@@ -2382,7 +2382,7 @@ class MfBigMathInt extends MfObject
 			lst := MfListVar.FromString(s, false) ; ignore whitespace
 		}
 		
-		if (lst.Count = 0)
+		if (lst.m_Count = 0)
 		{
 			return 0
 		}
@@ -2402,7 +2402,7 @@ class MfBigMathInt extends MfObject
 			StartIndex++
 		}
 		i++ ; Move to one base index
-		while (i <= lst.Count)
+		while (i <= lst.m_Count)
 		{
 			if(Mfunc.IsInteger(ll[i]) = false)
 			{

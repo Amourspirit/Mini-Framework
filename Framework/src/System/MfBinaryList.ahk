@@ -22,8 +22,7 @@
 */
 class MfBinaryList extends MfListBase
 {
-	m_InnerList			:= Null
-	m_Enum				:= Null
+
 ;{ Constructor
 	/*!
 		Constructor: ()
@@ -54,7 +53,7 @@ class MfBinaryList extends MfListBase
 				this.m_InnerList.Push(default)
 				i++
 			}
-			this.m_InnerList.Count := i
+			this.m_Count := i
 		}
 	}
 ; End:Constructor ;}
@@ -86,11 +85,9 @@ class MfBinaryList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		_newCount := this.m_InnerList.Count + 1
-		this.m_InnerList[_newCount] := _value
-		this.m_InnerList.Count := _newCount
-		retval := _newCount - 1
-		return retval
+		this.m_InnerList.Push(_value)
+		this.m_Count++
+		return this.m_Count
 	}
 ;	End:Add(value) ;}
 ;{ 	AddByte
@@ -113,16 +110,14 @@ class MfBinaryList extends MfListBase
 			strBin := MsbInfo.Bin
 			Loop, Parse, strBin
 			{
-				_newCount := this.m_InnerList.Count + 1
-				this.m_InnerList[_newCount] := A_LoopField
-				this.m_InnerList.Count := _newCount
+				this.m_InnerList.Push(A_LoopField)
+				this.m_Count++
 			}
 			strBin := LsbInfo.Bin
 			Loop, Parse, strBin
 			{
-				_newCount := this.m_InnerList.Count + 1
-				this.m_InnerList[_newCount] := A_LoopField
-				this.m_InnerList.Count := _newCount
+				this.m_InnerList.Push(A_LoopField)
+				this.m_Count++
 			}
 		}
 		else
@@ -130,9 +125,8 @@ class MfBinaryList extends MfListBase
 			i := 0
 			while i < 8
 			{
-				_newCount := this.m_InnerList.Count + 1
-				this.m_InnerList[_newCount] := 0
-				this.m_InnerList.Count := _newCount
+				this.m_InnerList.Push(0)
+				this.m_Count++
 				i++
 			}
 		}
@@ -162,9 +156,8 @@ class MfBinaryList extends MfListBase
 			strBin := Info.Bin
 			Loop, Parse, strBin
 			{
-				_newCount := this.m_InnerList.Count + 1
-				this.m_InnerList[_newCount] := A_LoopField
-				this.m_InnerList.Count := _newCount
+				this.m_InnerList.Push(A_LoopField)
+				this.m_Count++
 			}
 		}
 		else
@@ -172,9 +165,8 @@ class MfBinaryList extends MfListBase
 			i := 0
 			while i < 4
 			{
-				_newCount := this.m_InnerList.Count + 1
-				this.m_InnerList[_newCount] := 0
-				this.m_InnerList.Count := _newCount
+				this.m_InnerList.Push(0)
+				this.m_Count++
 				i++
 			}
 		}
@@ -189,12 +181,12 @@ class MfBinaryList extends MfListBase
 		bl := cLst.m_InnerList
 		ll := this.m_InnerList
 		i := 1
-		while (i <= ll.Count)
+		while (i <= this.m_Count)
 		{
 			bl[i] := ll[i]
 			i++
 		}
-		bl.Count := ll.Count
+		cLst.m_Count := this.m_Count
 		return cLst
 	}
 ; 	End:Clone ;}
@@ -225,7 +217,7 @@ class MfBinaryList extends MfListBase
 				iCount++
 			}
 		}
-		ll.Count := iCount
+		lst.m_Count := iCount
 		return lst
 
 	}
@@ -286,7 +278,7 @@ class MfBinaryList extends MfListBase
 		i := _index + 1 ; step up to one based index for AutoHotkey array
 		
 		this.m_InnerList.InsertAt(i, _value)
-		this.m_InnerList.Count ++
+		this.m_Count++
 	}
 ;	End:Insert(index, obj) ;}
 ;{ 	ToString
@@ -302,13 +294,8 @@ class MfBinaryList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (MfNull.IsNull(length)) {
-			_length := this.Count - _startIndex
-		}
-		else
-		{
-			_length := MfInteger.GetValue(length)
-		}
+		_length := MfInteger.GetValue(length, this.Count - _startIndex)
+		
 		if (_length < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_GenericPositive"))
@@ -377,7 +364,7 @@ class MfBinaryList extends MfListBase
 		}
 		if ((IsEndIndex = false) && (startIndex > maxIndex))
 		{
-			Return this
+			Return this.Clone()
 		}
 		if ((IsEndIndex = true) && (startIndex > endIndex))
 		{
@@ -388,18 +375,18 @@ class MfBinaryList extends MfListBase
 		}
 		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
-			return this
+			return this.Clone()
 		}
 		if (startIndex > maxIndex)
 		{
-			return this
+			return this.Clone()
 		}
 		if (IsEndIndex = true)
 		{
 			len :=  endIndex - startIndex
 			if ((len + 1) >= this.Count)
 			{
-				return this
+				return this.Clone()
 			}
 		}
 		else
@@ -418,11 +405,9 @@ class MfBinaryList extends MfListBase
 				rl[i] := ll[i]
 				i++
 			}
-			rl.Count := i - 1
+			rLst.m_Count := i - 1
 			return rLst
 		}
-		
-
 		i := 1
 		iCount := 0
 		if (IsEndIndex = true)
@@ -439,18 +424,15 @@ class MfBinaryList extends MfListBase
 				iCount++
 			}
 		}
-			
-		
-		while iCount < ll.Count
+		while iCount < this.m_Count
 		{
 			iCount++
 			;lst.Add(this.Item[i])
 			rl[i] := ll[iCount]
 			i++
-			
 		}
 		
-		rl.Count := i - 1
+		rLst.m_Count := i - 1
 		return rLst
 
 	}
@@ -515,13 +497,15 @@ class MfBinaryList extends MfListBase
 		}
 		If (this.Count < 1)
 		{
-			this.Add(0)
+			this.m_InnerList.Push(0)
+			this.m_Count++
 			return
 		}
 		NewCount := this.Count * 2
 		while this.Count < NewCount
 		{
-			this.Add(0)
+			this.m_InnerList.Push(0)
+			this.m_Count++
 		}
 	}
 ; End:Methods ;}

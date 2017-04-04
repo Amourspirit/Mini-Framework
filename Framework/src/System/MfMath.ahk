@@ -407,7 +407,7 @@ class MfMath extends MfObject
 			}
 			i++
 		}
-		al.Count := i - 1
+		ans.m_Count := i - 1
 		return ans
 
 	}
@@ -460,8 +460,8 @@ class MfMath extends MfObject
 			i++
 		}
 		lst := new MfBigIntHelper.DList()
-		Primes.Count := iCount
 		lst.m_InnerList := Primes
+		lst.m_Count := iCount
 		return lst
 	}
 	_MakeSieve(max) {

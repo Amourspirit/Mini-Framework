@@ -23,11 +23,10 @@ class MfListVar extends MfListBase
 			i := 0
 			while (i < size)
 			{
-				_newCount := i + 1
-				this.m_InnerList[_newCount] := default
+				this.m_InnerList.Push(default)
 				i++
 			}
-			this.m_InnerList.Count := i
+			this.m_Count := i
 		}
 		this.m_isInherited := false
 	}
@@ -45,22 +44,22 @@ class MfListVar extends MfListBase
 		Var containing Integer of the zero-based index at which the obj has been added.
 */
 	Add(obj) {
-		_newCount := this.m_InnerList.Count + 1
-		this.m_InnerList[_newCount] := obj
-		this.m_InnerList.Count := _newCount
-		retval := _newCount - 1
-		return retval
+		this.m_InnerList.Push(obj)
+		this.m_Count++
+		return this.m_Count
 	}
 ;	End:Add(value) ;}
 ;{ 	Clone
 	Clone() {
 		cLst := new MfListVar()
 		cLst.Clear()
-		for i, v in this
+		cl := cLst.m_InnerList
+		ll := this.m_InnerList
+		for i, v in ll
 		{
-			cLst.m_InnerList.Push(v)
+			cl.Push(v)
 		}
-		cLst.m_InnerList.Count := this.Count
+		cLst.m_Count := this.Count
 		return cLst
 	}
 ; 	End:Clone ;}
@@ -86,7 +85,8 @@ class MfListVar extends MfListBase
 			return false
 		}
 		retval := false
-		if (this.Count <= 0) {
+		if (this.Count <= 0)
+		{
 			return retval
 		}
 		retval := this.IndexOf(obj, 0) > -1
@@ -125,8 +125,8 @@ class MfListVar extends MfListBase
 			}
 		}
 			
-		lstArray.Count := iCount
-		lst._SetInnerList(lstArray)
+		lst.m_InnerList := lstArray
+		lst.m_Count := iCount
 		lst.CaseSensitive := !IgnoreCase
 		return lst
 	}
@@ -308,13 +308,12 @@ class MfListVar extends MfListBase
 		{
 			len := maxIndex + 1
 		}
-		
-		
 		i := startIndex
 		iCount := 0
-		while iCount < len
+		ll := this.m_InnerList
+		while iCount = len
 		{
-			v := this.Item[i]
+			v := ll[i + 1]
 			if (i < maxIndex)
 			{
 				retval .= v . seperator
@@ -339,11 +338,12 @@ class MfListVar extends MfListBase
 	;		The position where to start the extraction. First element is at index 0
 	;	endIndex
 	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
-	SubList(startIndex=0, endIndex="") {
+	SubList(startIndex=0, endIndex="", leftToRight=true) {
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
-		lst := new MfListVar()
+		leftToRight := MfBool.GetValue(leftToRight, true)
 		maxIndex := this.Count - 1
+		
 		IsEndIndex := true
 		if (endIndex == "NaN")
 		{
@@ -357,9 +357,13 @@ class MfListVar extends MfListBase
 		{
 			startIndex := 0
 		}
+		if ((IsEndIndex = false) && (startIndex = 0))
+		{
+			Return this.Clone()
+		}
 		if ((IsEndIndex = false) && (startIndex > maxIndex))
 		{
-			Return retval
+			Return this.Clone()
 		}
 		if ((IsEndIndex = true) && (startIndex > endIndex))
 		{
@@ -370,37 +374,69 @@ class MfListVar extends MfListBase
 		}
 		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
-			return retval
+			return this.Clone()
 		}
 		if (startIndex > maxIndex)
 		{
-			return retval
+			return this.Clone()
 		}
 		if (IsEndIndex = true)
 		{
 			len :=  endIndex - startIndex
+			if ((len + 1) >= this.Count)
+			{
+				return this.Clone()
+			}
 		}
 		else
 		{
 			len := maxIndex
 		}
+		rLst := new MfListVar()
+		rl := rLst.m_InnerList
+		ll := this.m_InnerList
+		if (leftToRight)
+		{
+			i := startIndex + 1 ; Move to one base index
+			len++ ; move for one based index
+			while (i <= len)
+			{
+				rl[i] := ll[i]
+				i++
+			}
+			rLst.m_Count := i - 1
+			return rLst
+		}
 		
-		
-		i := startIndex
+
+		i := 1
 		iCount := 0
-		ll := lst.m_InnerList
-		tl := this.m_InnerList
-		while iCount <= len
+		if (IsEndIndex = true)
+		{
+			While ((iCount + len) < (this.Count - 1))
+			{
+				iCount++
+			}
+		}
+		else
+		{
+			While ((iCount + (len - startIndex)) < (this.Count - 1))
+			{
+				iCount++
+			}
+		}
+			
+		
+		while iCount < this.m_Count
 		{
 			iCount++
 			;lst.Add(this.Item[i])
-			ll[iCount] := tl[iCount]
+			rl[i] := ll[iCount]
 			i++
-			
 		}
-		ll.Count := iCount
-		return lst
-
+		
+		rLst.m_Count := i - 1
+		return rLst
 	}
 ; 		End:SubList ;}
 ;{ 	Properties

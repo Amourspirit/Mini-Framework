@@ -152,13 +152,13 @@ class MfNibConverter extends MfObject
 			i++
 		}
 		i := 1
-		While (i <= ll.Count)
+		While (i <= nibbles.Count)
 		{
 			nl.Push(ll[i])
 			i++
 		}
 
-		nl.Count := nl.Length()
+		lst.m_Count := nl.Length()
 		return lst
 	}
 ; 	End:Expand ;}
@@ -1273,7 +1273,7 @@ class MfNibConverter extends MfObject
 			c := (c >> MfNibConverter.bpe) - b
 			i--
 		}
-		xl.Count := xl.Length()
+		x.m_Count := xl.Length()
 	}
 ; End:multInt_ ;}
 ;{ 	_AddOneToNibList

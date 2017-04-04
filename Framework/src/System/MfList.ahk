@@ -38,12 +38,12 @@ class MfList extends MfListBase
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		cLst := new MfList()
 		cLst.Clear()
-		for i, x in this
+		ll := this.m_InnerList
+		for i, x in ll
 		{
-			_newCount := cLst.m_InnerList.Count + 1
-			cLst.m_InnerList[_newCount] := x
-			cLst.m_InnerList.Count := _newCount
+			cLst.m_InnerList.Push(x)
 		}
+		cLst.m_Count := this.m_Count
 		return cLst
 	}
 ; 	End:Clone ;}

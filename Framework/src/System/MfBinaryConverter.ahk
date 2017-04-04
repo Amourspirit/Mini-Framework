@@ -60,7 +60,7 @@ class MfBinaryConverter extends MfObject
 			}
 			i++
 		}
-		ansl.Count := lstCount
+		ans.m_Count := lstCount
 		return ans
 	}
 ; 	End:BitAnd ;}
@@ -97,7 +97,7 @@ class MfBinaryConverter extends MfObject
 			}
 			i++
 		}
-		ansl.Count := lstCount
+		ans.m_Count := lstCount
 		return ans
 	}
 ; 	End:BitNot ;}
@@ -142,7 +142,7 @@ class MfBinaryConverter extends MfObject
 			}
 			i++
 		}
-		ansl.Count := lstCount
+		ans.m_Count := lstCount
 		return ans
 	}
 ; 	End:BitOr ;}
@@ -191,7 +191,7 @@ class MfBinaryConverter extends MfObject
 			}
 			i++
 		}
-		ansl.Count := lstCount
+		ans.m_Count := lstCount
 		return ans
 	}
 ; 	End:BitXor ;}
@@ -302,7 +302,7 @@ class MfBinaryConverter extends MfObject
 			nl.Push(bl[i])
 			i++
 		}
-		nl.Count := nl.Length()
+		lst.m_Count := nl.Length()
 		return lst
 	}
 ; 	End:Expand ;}
@@ -391,13 +391,13 @@ class MfBinaryConverter extends MfObject
 
 		bl := bits.m_InnerList
 		i := 2
-		While (i <= bl.Count && !bl[i])
+		While (i <= bits.Count && !bl[i])
 		{
 			i++
 		}
 		
 		iStartIndex := i
-		iEndIndex := (bl.Count - iStartIndex) + iStartIndex
+		iEndIndex := (bits.Count - iStartIndex) + iStartIndex
 		Anslen := iEndIndex - iStartIndex
 		
 		ans := new MfBinaryList()
@@ -427,7 +427,7 @@ class MfBinaryConverter extends MfObject
 			i++
 		}
 		ll.InsertAt(1, bl[1])
-		ll.Count := ll.Length()
+		ans.m_Count := ll.Length()
 		
 		if (MaintainBitCount = true)
 		{
@@ -514,13 +514,13 @@ class MfBinaryConverter extends MfObject
 		bl := bits.m_InnerList
 		; find leading zeor count
 		i := 1
-		While (i <= bl.Count && !bl[i])
+		While (i <= bits.Count && !bl[i])
 		{
 			i++
 		}
 		
 		iStartIndex := i
-		iEndIndex := (bl.Count - iStartIndex) + iStartIndex
+		iEndIndex := (bits.Count - iStartIndex) + iStartIndex
 		Anslen := iEndIndex - iStartIndex
 		; no leading zeros plut frist bit for  sign
 		LenBeforeShift := iEndIndex - iStartIndex + 1 ; plus one for sign
@@ -551,7 +551,7 @@ class MfBinaryConverter extends MfObject
 			ll.push(0)
 			i++
 		}
-		ll.Count := ll.Length()
+		ans.m_Count := ll.Length()
 		
 		
 		if (LimitBits = true && ans.Count > BitCount)
@@ -1554,7 +1554,7 @@ class MfBinaryConverter extends MfObject
 			iCount++
 			ll[iCount] := A_LoopField
 		}
-		ll.Count := iCount
+		lst.m_Count := iCount
 		return lst
 
 	}
@@ -1651,7 +1651,7 @@ class MfBinaryConverter extends MfObject
 			i++
 			
 		}
-		rl.Count := i - 1
+		rLst.m_Count := i - 1
 		return rLst
 
 	}
@@ -1772,7 +1772,7 @@ class MfBinaryConverter extends MfObject
 			nl[i] := !ll[i]
 			i++
 		}
-		nl.Count := lst.Count
+		nArray.m_Count := lst.Count
 		return nArray
 	}
 ; End:_FlipBits ;}

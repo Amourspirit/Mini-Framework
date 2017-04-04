@@ -145,7 +145,7 @@ class MfBitConverter extends MfObject
 
 		
 		i := 1
-		while (i <= ll.Count)
+		while (i <= bytes.Count)
 		{
 			bl.Push(ll[i])
 			i++
@@ -157,7 +157,7 @@ class MfBitConverter extends MfObject
 			bl.Push(MSB)
 			i++
 		}
-		bl.Count := bl.Length()
+		retval.m_Count := bl.Length()
 		return retval
 	}
 ;{ GetBytes
@@ -902,7 +902,7 @@ class MfBitConverter extends MfObject
 			c := (c >> MfBitConverter.bpe) - b
 			i--
 		}
-		xl.Count := xl.Length()
+		x.m_Count := xl.Length()
 	}
 ;{ 	_CompareUnSignedIntegerArraysLe
 	_CompareUnSignedIntegerArraysLe(objA, objB) {
