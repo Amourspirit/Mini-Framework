@@ -22,7 +22,7 @@ Class MfUInt64 extends MfPrimitive
 	TypeCode[]
 	{
 		get {
-			return 27
+			return 26
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -31,7 +31,7 @@ Class MfUInt64 extends MfPrimitive
 		}
 	}
 
-; End:Static Methods ;}
+; End:Static Properties ;}
 ;{ Constructor
 	__New(args*) {
 		if (this.__Class != "MfUInt64")
@@ -981,7 +981,7 @@ Class MfUInt64 extends MfPrimitive
 		
 		if (this._IsZero())
 		{
-			return
+			return this
 		}
 		_bits := MfBinaryConverter.GetBits(Value)
 		if (_bits.Count > 64)
@@ -1010,7 +1010,7 @@ Class MfUInt64 extends MfPrimitive
 		
 		if (this._IsZero())
 		{
-			return
+			return this
 		}
 		
 		localBits := MfBinaryConverter.GetBits(this)
@@ -1034,7 +1034,7 @@ Class MfUInt64 extends MfPrimitive
 		
 		if (this._IsZero())
 		{
-			return
+			return this
 		}
 		_bits := MfBinaryConverter.GetBits(Value)
 		if (_bits.Count > 64)
@@ -1069,7 +1069,7 @@ Class MfUInt64 extends MfPrimitive
 		
 		if (this._IsZero())
 		{
-			return
+			return this
 		}
 		_bits := MfBinaryConverter.GetBits(Value)
 		if (_bits.Count > 64)
@@ -1115,26 +1115,31 @@ Class MfUInt64 extends MfPrimitive
 
 		if (_value = 0)
 		{
-			return
+			return this
 		}
 		
 		if (this._IsZero())
 		{
-			return
+			return this
 		}
 		if (_value < 0)
 		{
-			bigx := new MfBigInt(0)
-			this.m_bigx := bigx
-			return
+			_value := Abs(_value)
+			r := mod(_value, 64)
+			_value := 64 - r
 		}
-		if (_value > 64)
+
+		if (_value >= 64)
 		{
 			_value := Mod(_value, 64)
 		}
+		if (_value < 0)
+		{
+			return this
+		}
 		
 		localBits := MfBinaryConverter.GetBits(this)
-		rBits := MfBinaryConverter.BitShiftLeft(localBits, _value)
+		rBits := MfBinaryConverter.BitShiftLeftUnSigned(localBits, _value, true, true)
 
 		uint := MfBinaryConverter.ToUInt64(rBits)
 		this.m_bigx := uint.m_bigx
@@ -1165,30 +1170,29 @@ Class MfUInt64 extends MfPrimitive
 
 		if (_value = 0)
 		{
-			return
+			return this
 		}
 		
 		if (this._IsZero())
 		{
-			return
+			return this
 		}
 		if (_value < 0)
 		{
-			bigx := new MfBigInt(0)
-			this.m_bigx := bigx
-			return
+			_value := Abs(_value)
+			r := mod(_value, 64)
+			_value := 64 - r
 		}
-		if (_value > 64)
+		if (_value >= 64)
 		{
 			_value := Mod(_value, 64)
 		}
-		
-		localBits := MfBinaryConverter.GetBits(this)
-		rBits := MfBinaryConverter.BitShiftRightUnsigned(localBits, _value)
-
-		uint := MfBinaryConverter.ToUInt64(rBits)
-		this.m_bigx := uint.m_bigx
-		Return this
+		if (_value < 0)
+		{
+			return this
+		}
+		this.m_bigx.BitShiftRight(_value)
+		return this
 	}
 ; End:BitShiftRight ;}
 ;{	Subtract()

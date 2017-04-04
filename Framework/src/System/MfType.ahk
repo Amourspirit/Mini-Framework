@@ -48,7 +48,8 @@ class MfType extends MfObject
 					,"MfTimeSpan"
 					,"MfEnum.EnumItem",
 					,"MfInt16"
-					,"MfUInt64")
+					,"MfUInt64"
+					,"MfBigInt")
 ;{ internal members	
 	m_TypeName	:= Null
 	m_TypeCode	:= Null
@@ -886,7 +887,7 @@ class MfType extends MfObject
 			Gets if the type is MfUint64.
 		Remarks:
 			Read-only Property
-			Returns true if object is MfChar; Otherwise false.
+			Returns true if object is IsUInt64; Otherwise false.
 	*/
 	IsUInt64[]
 	{
@@ -900,6 +901,26 @@ class MfType extends MfObject
 		}
 	}
 ;	End:IsUInt64 ;}
+;{	IsBigInt
+	/*
+		Property: IsBigInt [get]
+			Gets if the type is IsBigInt.
+		Remarks:
+			Read-only Property
+			Returns true if object is IsBigInt; Otherwise false.
+	*/
+	IsBigInt[]
+	{
+		get {
+			return (this.m_TypeCode = MfType.TypeCodes[27])
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+;	End:IsBigInt ;}
 ;{	IsIntegerNumber
 	/*
 		Property: IsIntegerNumber [get]

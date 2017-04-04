@@ -17,6 +17,20 @@
 Class MfBigInt extends MfObject
 {
 	m_bi := ""
+	;{ Static Properties
+	TypeCode[]
+	{
+		get {
+			return 27
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+
+; End:Static Properties ;}
 ;{ 	Constructor
 	__new(args*) {
 		; Parameters all optional, Value=0, ReturnAsObject=false, ReadOnly=false
@@ -228,6 +242,113 @@ Class MfBigInt extends MfObject
 		}
 
 	}
+	BitShiftLeft(Value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfInteger.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		if (_value = 0)
+		{
+			return
+		}
+		if(this._IsZero())
+		{
+			return
+		}
+		if (_value < 0)
+		{
+			this._SetZero()
+			return
+		}
+		this._ClearCache()
+		; Get how many positins may be needed for the shift
+		n := (_value // MfBigMathInt.bpe) + 1
+		; add new positions to the list
+		this.m_bi := MfBigMathInt.Trim(this.m_bi, n)
+		; do the shifting
+		MfBigMathInt.leftShift_(this.m_bi, _value)
+		; trim inner list back down
+		this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
+		if(this._IsZero())
+		{
+			this.IsNegitive := false
+		}
+	}
+	BitShiftRight(Value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value := 0
+		try
+		{
+			_value :=  MfInteger.GetValue(value)
+		}
+		catch e
+		{
+			ex := new MfArithmeticException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		if (_value = 0)
+		{
+			return
+		}
+		if(this._IsZero())
+		{
+			return
+		}
+		if (_value < 0)
+		{
+			this._SetZero()
+			return
+		}
+		this._ClearCache()
+		
+		; If (_value >= this.BitSize)
+		; {
+		; 	this._SetZero()
+		; 	return
+		; }
+		MfBigMathInt.rightShift_(this.m_bi, _value)
+		; trim inner list back down
+		this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
+		if (this.IsNegative)
+		{
+			this.m_bi := MfBigMathInt.Add(this.m_bi, MfBigMathInt.one)
+		}
+		this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
+		if(this._IsZero())
+		{
+			this.IsNegative := false
+		}
+	}
+	_SetZero() {
+		this._ClearCache()
+		this.m_bi := new MfListVar(2, 0)
+		this.IsNegative := false
+	}
 	_ClearCache() {
 		this.strValue := ""
 		this.m_BitSize := ""
@@ -347,6 +468,17 @@ Class MfBigInt extends MfObject
 		return MfBigMathInt.Equals(this.m_bi, x.m_bi)
 	}
 ; 	End:Equals ;}
+;{ 	GetTypeCode()
+/*
+	Method: GetTypeCode()
+		Get an enumeration value of MfTypeCode the represents MfInt64 Type Code.
+	Returns
+		And instance of MfEnum.EnumItem with a constant value that represents the type of MfInt64.
+*/
+	GetTypeCode() {
+		return MfTypeCode.Instance.MfBigInt
+	}
+; End:GetTypeCode() ;}
 ;{ 	GreaterThen
 	GreaterThen(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -726,20 +858,23 @@ Class MfBigInt extends MfObject
 		}
 		_str := MfString.GetValue(str)
 		strLst := MfListVar.FromString(_str, false) ; ignore whitespace
-		
+		ll := strLst.m_InnerList
 		if (strLst.Count = 0)
 		{
 			return new MfBigInt(new MfInteger(0))
 		}
-		sign := true
+		sign := false
+		IsNeg := false
 		i := 0
 		if (strLst.Item[0] = "-")
 		{
 			i++
-			sign := false
+			sign := true
+			IsNeg := true
 		}
 		if (strLst.Item[0] = "+")
 		{
+			sign := true
 			i++
 		}
 		if (i >= strLst.Count)
@@ -796,7 +931,28 @@ Class MfBigInt extends MfObject
 			{
 				i += 2
 			}
-			while (strLst.Item[i] = "0")
+			If ((base = 2 ) && sign = false && (strLst.Item[i] = "1"))
+			{
+				bits := MfBinaryList.FromString(strLst.ToString("", i))
+				c2bits := MfBinaryConverter.ToComplement2(bits)
+				strLst.m_InnerList := c2Bits.m_InnerList
+				ll := strLst.m_InnerList
+				i := 0
+				; only advance for sign if binary in not in the format of 1000000000000....
+				j := i + 2 ; move to one base index
+				While j <= strLst.Count
+				{
+					If (ll[j] = 1)
+					{
+						i++ ; advance for sign
+						break
+					}
+					j++
+				}
+				IsNeg := true
+			}
+			
+			while (ll[i + 1] = "0")
 			{
 				i++
 			}
@@ -811,7 +967,7 @@ Class MfBigInt extends MfObject
 		bigX := MfBigMathInt.Trim(bigX, 1)
 		retval := new MfBigInt(new MfInteger(0))
 		retval.m_bi := bigX
-		retval.m_IsNegative := !sign
+		retval.m_IsNegative := IsNeg
 		return retval
 	}
 ; 	End:Parse ;}

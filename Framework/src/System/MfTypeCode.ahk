@@ -91,6 +91,7 @@ class MfTypeCode extends MfEnum
 		this.AddEnumValue("EnumItem", 24)
 		this.AddEnumValue("Int16", 25)
 		this.AddEnumValue("UInt64", 26)
+		this.AddEnumValue("MfBigInt", 27)
 
 	}
 ; 	End:AddEnums() ;}

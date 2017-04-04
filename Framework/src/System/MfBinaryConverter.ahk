@@ -17,6 +17,7 @@
 
 class MfBinaryConverter extends MfObject
 {
+	
 ;{ Methods
 ;{ 	BitAnd
 	BitAnd(bitsA, bitsB) {
@@ -36,11 +37,11 @@ class MfBinaryConverter extends MfObject
 		ans := new MfBinaryList()
 		if(bitsA.Count > bitsB.Count)
 		{
-			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count)
+			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count, true)
 		}
 		else if(bitsB.Count > bitsA.Count)
 		{
-			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count)
+			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count, true)
 		}
 		ansl := ans.m_InnerList
 		la := bitsA.m_InnerList
@@ -49,16 +50,9 @@ class MfBinaryConverter extends MfObject
 		lstCount := bitsA.Count
 		while (i <= lstCount)
 		{
-			if (la[i])
+			if (la[i] && lb[i])
 			{
-				if (lb[i])
-				{
-					ansl.push(1)
-				}
-				else
-				{
-					ansl.push(0)
-				}
+				ansl.push(1)
 			}
 			else
 			{
@@ -125,11 +119,11 @@ class MfBinaryConverter extends MfObject
 		ans := new MfBinaryList()
 		if(bitsA.Count > bitsB.Count)
 		{
-			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count)
+			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count, true)
 		}
 		else if(bitsB.Count > bitsA.Count)
 		{
-			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count)
+			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count, true)
 		}
 		ansl := ans.m_InnerList
 		la := bitsA.m_InnerList
@@ -138,7 +132,7 @@ class MfBinaryConverter extends MfObject
 		lstCount := bitsA.Count
 		while (i <= lstCount)
 		{
-			if (la[i] && lb[i])
+			if (la[i] || lb[i])
 			{
 				ansl.push(1)
 			}
@@ -170,11 +164,11 @@ class MfBinaryConverter extends MfObject
 		ans := new MfBinaryList()
 		if(bitsA.Count > bitsB.Count)
 		{
-			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count)
+			bitsB := MfBinaryConverter.Expand(bitsB, BitsA.Count, true)
 		}
 		else if(bitsB.Count > bitsA.Count)
 		{
-			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count)
+			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count, true)
 		}
 		ansl := ans.m_InnerList
 		la := bitsA.m_InnerList
@@ -272,7 +266,7 @@ class MfBinaryConverter extends MfObject
 ;{ GetBytes
 ;{ 	Expand
 	; return a copy of x with at least n elements, adding leading zeros if needed
-	Expand(bits, n) {
+	Expand(bits, n, UseMsb=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -281,6 +275,13 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		n := MfInteger.GetValue(n, 0)
+		UseMsb := MfBool.GetValue(UseMsb, true)
+		MSB := 0
+		if (UseMsb = true && bits.Count > 0)
+		{
+			MSB := bits.Item[0]
+		}
+		
 		If (bits.Count >= n)
 		{
 			return bits.Clone()
@@ -292,7 +293,7 @@ class MfBinaryConverter extends MfObject
 		i := 1
 		While (i <= diff)
 		{
-			nl.Push(0)
+			nl.Push(MSB)
 			i++
 		}
 		i := 1
@@ -301,7 +302,7 @@ class MfBinaryConverter extends MfObject
 			nl.Push(bl[i])
 			i++
 		}
-		nl.Count := n
+		nl.Count := nl.Length()
 		return lst
 	}
 ; 	End:Expand ;}
@@ -348,7 +349,8 @@ class MfBinaryConverter extends MfObject
 		return retval
 	}
 ; 	End:IsNegative ;}
-	BitShiftLeft(bits, ShiftCount) {
+
+	BitShiftLeft(bits, ShiftCount, Wrap=false, MaintainBitCount=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -362,30 +364,109 @@ class MfBinaryConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		BitCount := bits.Count
 		ShiftCount := MfInteger.GetValue(ShiftCount)
+		MaintainBitCount := MfBool.GetValue(MaintainBitCount, false)
+		Wrap := MfBool.GetValue(Wrap, false)
+
+		if (ShiftCount < 0)
+		{
+			ShiftCount := Abs(ShiftCount)
+			r := mod(ShiftCount, BitCount)
+			ShiftCount := BitCount - r
+		}
+		if (Wrap && ShiftCount >= BitCount)
+		{
+			ShiftCount := Mod(ShiftCount, BitCount)
+		}
+				
 		if (ShiftCount = 0)
 		{
 			return bits.Clone()
 		}
 
-		if (ShiftCount < 0)
+		
+		; for signed binary list the first bit is for sign and can not shift
+		; all other bits can shift
+
+		bl := bits.m_InnerList
+		i := 2
+		While (i <= bl.Count && !bl[i])
 		{
-			return MfBinaryConverter.BitShiftRight(bits, Abs(ShiftCount), Wrap)
-		}
-		bits := bits.Clone()
-		ll := bits.m_InnerList
-		while (i < ShiftCount)
-		{
-			ll.RemoveAt(0)
-			ll.Push(0)
-			;bits.Add(0)
 			i++
 		}
 		
-		return bits
+		iStartIndex := i
+		iEndIndex := (bl.Count - iStartIndex) + iStartIndex
+		Anslen := iEndIndex - iStartIndex
+		
+		ans := new MfBinaryList()
+		ll := ans.m_InnerList
+
+		;len := (bl.Count - Anslen) - (Anslen + ShiftCount) - 1
+		len := (iStartIndex - ShiftCount) - 2
+		i := 0
+		; insert any space from orignal bits list
+		while (i < len)
+		{	ll.Push(0)
+			i++
+		}
+
+		i := iStartIndex
+		While (i <= iEndIndex)
+		{
+			ll.Push(bl[i])
+			i++
+		}
+		;i := ll.Length()
+		i := Anslen
+		iShiftAdd := i + ShiftCount
+		while (i < iShiftAdd)
+		{
+			ll.push(0)
+			i++
+		}
+		ll.InsertAt(1, bl[1])
+		ll.Count := ll.Length()
+		
+		if (MaintainBitCount = true)
+		{
+			if (ans.Count > BitCount)
+			{
+				StartIndex := ans.Count - BitCount ; zero based index
+				ans := ans.SubList(StartIndex)
+			}
+			
+		}
+		else
+		{
+			; trim off all leading MSB except for First
+			MSB := ll[1]
+			i := 2
+			While (ll[i] = MSB)
+			{
+				i++
+			}
+			i-- ; set to zero based index
+			If ((i > 1) && (i < ans.Count))
+			{
+				ans := ans.SubList(i,, true)
+				; insert the msb again
+				ans.Insert(0, MSB)
+			}
+			else if (i = ans.Count)
+			{
+				; all elements are MSB just return the first two
+				ans := ans.SubList(0,1, true)
+			}
+
+		}
+		
+		return ans
 	}
-;{ 	ShiftRight
-	BitShiftRight(bits, ShiftCount) {
+
+
+	BitShiftLeftUnSigned(bits, ShiftCount, Wrap=false, MaintainBitCount=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -399,10 +480,127 @@ class MfBinaryConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		BitCount := bits.Count
 		ShiftCount := MfInteger.GetValue(ShiftCount)
+		MaintainBitCount := MfBool.GetValue(MaintainBitCount, false)
+		Wrap := MfBool.GetValue(Wrap, false)
+
+		if (ShiftCount < 0)
+		{
+			ShiftCount := Abs(ShiftCount)
+			r := mod(ShiftCount, BitCount)
+			ShiftCount := BitCount - r
+		}
+		if (Wrap && ShiftCount >= BitCount)
+		{
+			ShiftCount := Mod(ShiftCount, BitCount)
+		}
+				
 		if (ShiftCount = 0)
 		{
 			return bits.Clone()
+		}
+
+		if (MaintainBitCount)
+		{
+			if (ShiftCount  >= BitCount)
+			{
+				return new MfBinaryList(BitCount, 0)
+			}
+		}
+
+		; for unsigned binary list the first bit can shift with all others
+
+		bl := bits.m_InnerList
+		; find leading zeor count
+		i := 1
+		While (i <= bl.Count && !bl[i])
+		{
+			i++
+		}
+		
+		iStartIndex := i
+		iEndIndex := (bl.Count - iStartIndex) + iStartIndex
+		Anslen := iEndIndex - iStartIndex
+		; no leading zeros plut frist bit for  sign
+		LenBeforeShift := iEndIndex - iStartIndex + 1 ; plus one for sign
+		
+		ans := new MfBinaryList()
+		ll := ans.m_InnerList
+
+		len := (iStartIndex - ShiftCount) - 1
+		i := 0
+		; insert any space from orignal bits list
+		while (i < len)
+		{	
+			ll.Push(0)
+			i++
+		}
+
+		i := iStartIndex
+		While (i <= iEndIndex)
+		{
+			ll.Push(bl[i])
+			i++
+		}
+
+		i := Anslen
+		iShiftAdd := i + ShiftCount
+		while (i < iShiftAdd)
+		{
+			ll.push(0)
+			i++
+		}
+		ll.Count := ll.Length()
+		
+		
+		if (LimitBits = true && ans.Count > BitCount)
+		{
+			StartIndex := ans.Count - BitCount ; zero based index
+			ans := ans.SubList(StartIndex)
+		}
+		return ans
+	}
+;{ 	ShiftRight
+	BitShiftRight(bits, ShiftCount, Wrap=false,  MaintainBitCount=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bits.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BitCount := bits.Count
+		ShiftCount := MfInteger.GetValue(ShiftCount)
+		MaintainBitCount := MfBool.GetValue(MaintainBitCount, false)
+		Wrap := MfBool.GetValue(Wrap, false)
+		if (ShiftCount = 0)
+		{
+			return bits.Clone()
+		}
+
+		if (Wrap)
+		{
+			if (ShiftCount < 0)
+			{
+				ShiftCount := Abs(ShiftCount)
+				r := mod(ShiftCount, bits.Count )
+				ShiftCount := bits.Count - r
+			}
+			if (ShiftCount >= bits.Count )
+			{
+				ShiftCount := Mod(ShiftCount, bits.Count)
+			}
+			if (ShiftCount <= 0)
+			{
+				return bits.Clone()
+			}
 		}
 
 		if (ShiftCount < 0)
@@ -413,20 +611,48 @@ class MfBinaryConverter extends MfObject
 
 		MSB := bits.Item[0]
 		i := 0
-		bits := bits.Clone()
-		ll := bits.m_InnerList
+		ans := bits.Clone()
+		ll := ans.m_InnerList
 		while (i < ShiftCount)
 		{
 			ll.Pop()
 			ll.InsertAt(1, MSB)
 			i++
 		}
-		return bits
+		if (MaintainBitCount = true)
+		{
+			if (ans.Count > BitCount)
+			{
+				ans := ans.SubList(0, BitCount -1, true)
+			}
+		}
+		else
+		{
+			; trim off all leading MSB except for First
+			i := 2
+			While (ll[i] = MSB)
+			{
+				i++
+			}
+			i-- ; set to zero based index
+			If ((i > 1) && (i < ans.Count))
+			{
+				ans := ans.SubList(i,, true)
+				; insert the msb again
+				ans.Insert(0, MSB)
+			}
+			else if (i = ans.Count)
+			{
+				; all elements are MSB just return the first two
+				ans := ans.SubList(0,1, true)
+			}
+		}
+		return ans
 		
 	}
 ;{ 	ShiftRight
 ;{ 	ShiftRightUnsigned
-	BitShiftRightUnsigned(bits, ShiftCount) {
+	BitShiftRightUnsigned(bits, ShiftCount, Wrap=false, MaintainBitCount=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -441,9 +667,29 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		ShiftCount := MfInteger.GetValue(ShiftCount)
+		Wrap := MfBool.GetValue(Wrap, false)
+		MaintainBitCount := MfBool.GetValue(MaintainBitCount, false)
+
 		if (ShiftCount = 0)
 		{
 			return bits.Clone()
+		}
+		if (Wrap)
+		{
+			if (ShiftCount < 0)
+			{
+				ShiftCount := Abs(ShiftCount)
+				r := mod(ShiftCount, bits.Count )
+				ShiftCount := bits.Count - r
+			}
+			if (ShiftCount >= bits.Count )
+			{
+				ShiftCount := Mod(ShiftCount, bits.Count)
+			}
+			if (ShiftCount <= 0)
+			{
+				return bits.Clone()
+			}
 		}
 
 		if (ShiftCount < 0)
@@ -452,15 +698,41 @@ class MfBinaryConverter extends MfObject
 		}
 
 		i := 0
-		bits := bits.Clone()
-		ll := bits.m_InnerList
+		ans := bits.Clone()
+		ll := ans.m_InnerList
 		while (i < ShiftCount)
 		{
 			ll.Pop()
 			ll.InsertAt(1, 0)
 			i++
 		}
-		return bits
+		if (MaintainBitCount = true)
+		{
+			if (ans.Count > BitCount)
+			{
+				ans := ans.SubList(0, BitCount -1, true)
+			}
+		}
+		else
+		{
+			; trim off all leading MSB except for First
+			i := 1
+			While (ll[i] = 0)
+			{
+				i++
+			}
+			i-- ; set to zero based index
+			If ((i > 0) && (i < ans.Count -1))
+			{
+				ans := ans.SubList(i,, true)
+			}
+			else if (i = ans.Count - 1)
+			{
+				; all elements are 0 just return the first two
+				ans := ans.SubList(0,1, true)
+			}
+		}
+		return ans
 		
 	}
 ; 	End:ShiftRightUnsigned ;}
@@ -1115,6 +1387,7 @@ class MfBinaryConverter extends MfObject
 ;{ 	Methods
 
 ;{ Internal Methods
+
 	_ToBinaryString(bits) {
 		sBinary := ""
 		i := 1

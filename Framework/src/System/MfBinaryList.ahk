@@ -30,23 +30,33 @@ class MfBinaryList extends MfListBase
 			Initializes a new instance of the MfList class.
 	*/
 	__new(Size=0, default=0) {
-			base.__new()
-			size := MfInteger.GetValue(size, 0)
-			default := MfInteger.GetValue(default, 0)
-
-			if ((Size > 0) && ((default = 0) || (default = 1)))
-			{
-				i := 0
-				while (i <= size)
-				{
-					_newCount := i + 1
-					this.m_InnerList[_newCount] := default
-					i++
-				}
-				this.m_InnerList.Count := i
-			}
-
+		base.__new()
+		size := MfInteger.GetValue(size, 0)
+		default := MfInteger.GetValue(default, 0)
+		If (size < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("Size")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
+		If (default < 0 || default > 1)
+		{
+			ex := new MfArgumentOutOfRangeException("default")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		if (Size > 0)
+		{
+			i := 0
+			while (i < size)
+			{
+				this.m_InnerList.Push(default)
+				i++
+			}
+			this.m_InnerList.Count := i
+		}
+	}
 ; End:Constructor ;}
 ;{ Methods
 ;{ 	Add()				- Overrides - MfListBase
@@ -176,104 +186,51 @@ class MfBinaryList extends MfListBase
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		cLst := new MfBinaryList()
 		cLst.Clear()
-		for i, x in this
+		bl := cLst.m_InnerList
+		ll := this.m_InnerList
+		i := 1
+		while (i <= ll.Count)
 		{
-			_newCount := i + 1
-			cLst.m_InnerList[_newCount] := x
+			bl[i] := ll[i]
+			i++
 		}
-		cLst.m_InnerList.Count := _newCount
+		bl.Count := ll.Count
 		return cLst
 	}
 ; 	End:Clone ;}
-;{ 	Contains()			- Overrides - MfListBase
-/*!
-	Method: Contains()
-		Overrides MfListBase.Contains()
-	Contains(obj)
-		Determines whether the MfList contains a specific element.
-	Parameters
-		obj
-			The Object to locate in the MfList
-		Returns
-			Returns true if the MfList contains the specified value otherwise, false.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-	Remarks
-		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
-*/
-	Contains(obj) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		
-		retval := false
-		if (this.Count <= 0) {
-			return retval
-		}
-		_value := MfInt16.GetValue(obj, -1)
-		if ((_value < 0) || (_value > 1))
+
+	FromString(str) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		str := MfString.GetValue(str)
+
+		lst := new MfBinaryList()
+		if (MfString.IsNullOrEmpty(str))
 		{
-			return retval
+			lst.Add(0)
+			lst.Add(0)
+			return lst
 		}
-		
-		for i, b in this
+		ll := lst.m_InnerList
+		iCount := 0
+		Loop, Parse, str
 		{
-			if (b = _value)
+			If (A_LoopField = "0")
 			{
-				retval := true
-				break
+				ll.Push(0)
+				iCount++
+			}
+			else if (A_LoopField = "1")
+			{
+				ll.Push(1)
+				iCount++
 			}
 		}
-		return retval
+		ll.Count := iCount
+		return lst
+
 	}
-;	End:Contains(obj) ;}
 
 
-;{ 	IndexOf()			- Overrides - MfListBase
-/*
-	Method: IndexOf()
-		Overrides MfListBase.IndexOf()
-	IndexOf(obj)
-		Searches for the specified Object and returns the zero-based index of the first occurrence within the entire MfList.
-	Parameters
-		obj
-			The object to locate in the MfList
-	Returns
-		Returns  index of the first occurrence of value within the entire MfList,
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-	Remarks
-		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
-*/
-	IndexOf(obj) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		i := 0
-		bFound := false
-		int := -1
-		if (this.Count <= 0) {
-			return int
-		}
-		_value := MfInt16.GetValue(obj, -1)
-		if (_value < 0 || _value > 1)
-		{
-			return int
-		}
-		for index, b in this.m_InnerList
-		{
-			if (b = _value)
-			{
-				bFound := true
-				break
-			}
-			i++
-		}
-		if (bFound = true) {
-			int := i
-			return int
-		}
-		return int
-	}
-;	End:IndexOf() ;}
 ;{ 	Insert()			- Overrides - MfListBase
 /*!
 	Method: Insert()
@@ -332,54 +289,6 @@ class MfBinaryList extends MfListBase
 		this.m_InnerList.Count ++
 	}
 ;	End:Insert(index, obj) ;}
-;{ 	LastIndexOf()
-/*
-	Method: LastIndexOf()
-
-	LastIndexOf(obj)
-		Searches for the specified Object and returns the zero-based index of the Lasst occurrence within the entire List.
-	Parameters
-		obj
-			The object to locate in the List
-	Returns
-		Returns  index of the last occurrence of value within the entire List,
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-	Remarks
-		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
-*/
-	LastIndexOf(obj) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		i := 0
-		bFound := false
-		int := -1
-		if (this.Count <= 0) {
-			return int
-		}
-		_value := MfInt16.GetValue(obj, -1)
-		if (_value < 0 || _value > 1)
-		{
-			return int
-		}
-		i := this.Count - 1
-		while (i >= 0)
-		{
-			b := this.Item[i]
-			if (b = _value)
-			{
-				bFound := true
-				break
-			}
-			i--
-		}
-		if (bFound = true) {
-			int := i
-			return int
-		}
-		return int
-	}
-;	End:LastIndexOf() ;}
 ;{ 	ToString
 	ToString(returnAsObj = false, startIndex = 0, length="", Format=0) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -420,9 +329,10 @@ class MfBinaryList extends MfListBase
 		retval := ""
 		i := _startIndex
 		iMaxIndex := _length - 1
+		ll := this.m_InnerList
 		while i <= iMaxIndex
 		{
-			n := this.Item[i]
+			n := ll[i + 1]
 			hexChar := MfBitConverter._GetHexValue(n)
 			retval .= hexChar
 			i++
@@ -442,10 +352,12 @@ class MfBinaryList extends MfListBase
 	;		The position where to start the extraction. First element is at index 0
 	;	endIndex
 	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
-	SubList(startIndex=0, endIndex="") {
+	SubList(startIndex=0, endIndex="", leftToRight=false) {
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
+		leftToRight := MfBool.GetValue(leftToRight, false)
 		maxIndex := this.Count - 1
+		
 		IsEndIndex := true
 		if (endIndex == "NaN")
 		{
@@ -496,6 +408,20 @@ class MfBinaryList extends MfListBase
 		}
 		rLst := new MfBinaryList()
 		rl := rLst.m_InnerList
+		ll := this.m_InnerList
+		if (leftToRight)
+		{
+			i := startIndex + 1 ; Move to one base index
+			len++ ; move for one based index
+			while (i <= len)
+			{
+				rl[i] := ll[i]
+				i++
+			}
+			rl.Count := i - 1
+			return rLst
+		}
+		
 
 		i := 1
 		iCount := 0
@@ -514,7 +440,7 @@ class MfBinaryList extends MfListBase
 			}
 		}
 			
-		ll := this.m_InnerList
+		
 		while iCount < ll.Count
 		{
 			iCount++
@@ -523,6 +449,7 @@ class MfBinaryList extends MfListBase
 			i++
 			
 		}
+		
 		rl.Count := i - 1
 		return rLst
 
@@ -548,6 +475,7 @@ class MfBinaryList extends MfListBase
 			iCount := offset
 			;i += offset
 		}
+		ll := this.m_InnerList
 		iLoopCount := 0
 		while i <= iMaxIndex
 		{
@@ -561,7 +489,7 @@ class MfBinaryList extends MfListBase
 				{
 					break
 				}
-				retval .= this.Item[i]
+				retval .= ll[i + 1]
 				iCount++
 				i++
 			}
@@ -618,30 +546,6 @@ class MfBinaryList extends MfListBase
 		}
 	}
 ;	End:AutoIncrease[] ;}
-;{	Count[]
-/*
-	Property: Count [get]
-		Overrides MfListBase.Count
-		Gets a value indicating count of objects in the current MfList as an Integer
-	Value:
-		Var Integer
-	Gets:
-		Gets the count of elements in the MfList as var integer.
-	Remarks"
-		Read-only property.
-*/
-	Count[]
-	{
-		get {
-			return this.m_InnerList.Count
-		}
-		set {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			Throw ex
-		}
-	}
-;	End:Count[] ;}
 ;{	Item[index]
 /*
 	Property: Item [get\set]

@@ -171,9 +171,9 @@
 class MfBigMathInt extends MfObject
 {
 ;{ Globals
-	static bpe := 0 ; bits stored per array element
-	static mask := 0 ; AND this with an array element to chop it down to bpe bits
-	static radix := mask + 1 ; Equals 2^bpe.  A single 1 bit to the left of the last bit of mask.
+	static bpe := 15 ; bits stored per array element
+	static mask := 32767 ; AND this with an array element to chop it down to bpe bits
+	static radix := 32768 ; Equals 2^bpe.  A single 1 bit to the left of the last bit of mask.
 	;{ digitStr
 	static m_digitStr := ""
 	static one := ""
@@ -218,16 +218,16 @@ class MfBigMathInt extends MfObject
 			}
 		}
 		StaticInit() {
-			MfBigMathInt.bpe := 0
-			While ((1 << (MfBigMathInt.bpe + 1)) > (1 << MfBigMathInt.bpe))
-			{
-				; bpe=number of bits in the mantissa on this platform
-				MfBigMathInt.bpe++ ; bpe=number of bits in one element of the array representing the bigInt
+			; MfBigMathInt.bpe := 0
+			; While ((1 << (MfBigMathInt.bpe + 1)) > (1 << MfBigMathInt.bpe))
+			; {
+			; 	; bpe=number of bits in the mantissa on this platform
+			; 	MfBigMathInt.bpe++ ; bpe=number of bits in one element of the array representing the bigInt
 				
-			}
-			MfBigMathInt.bpe >>= 1
-			MfBigMathInt.mask := ( 1 << MfBigMathInt.bpe) - 1 ; AND the mask with an integer to get its bpe least significant bits
-			MfBigMathInt.radix := MfBigMathInt.mask + 1 ; 2^bpe.  a single 1 bit to the left of the first bit of mask
+			; }
+			; MfBigMathInt.bpe >>= 1
+			; MfBigMathInt.mask := ( 1 << MfBigMathInt.bpe) - 1 ; AND the mask with an integer to get its bpe least significant bits
+			; MfBigMathInt.radix := MfBigMathInt.mask + 1 ; 2^bpe.  a single 1 bit to the left of the first bit of mask
 
 			MfBigMathInt.one := MfBigMathInt.Int2bigInt(1,1,1)
 			
@@ -1407,6 +1407,29 @@ class MfBigMathInt extends MfObject
 		}
 	}
 ; 	End:divide_ ;}
+;{ 	carry_
+	; do carries and borrows so each element of the bigInt x fits in bpe bits.
+	carry_(x) {
+		ll := x.m_InnerList
+		k := x.Count
+		c := 0
+		i := 1
+		while (i <= k)
+		{
+			c += ll[i]
+			b := 0
+			if (c < 0)
+			{
+				b := -(c >> MfBigMathInt.bpe)
+				c += b * MfBigMathInt.radix
+			}
+			ll[i] := c & MfBigMathInt.mask
+			c := (c >> MfBigMathInt.bpe) - b
+			i++
+		}
+		ll.Count := ll.Length()
+	}
+; 	End:carry_ ;}
 ;{ 	ModInt
 	; return x Mod n for bigInt x and integer n.
 	ModInt(x, n) {
@@ -1664,7 +1687,7 @@ class MfBigMathInt extends MfObject
 			i++
 		}
 		i := k
-		while (i <= x.Count)
+		while (i < x.Count)
 		{
 			xl[i] := 0
 			i++
@@ -1735,12 +1758,14 @@ class MfBigMathInt extends MfObject
 			n := Mod(n, MfBigMathInt.bpe)
 		}
 		i := 1
+		xl.Count := xl.Length()
 		while (i <= x.Count -1)
 		{
 			xl[i] := MfBigMathInt.mask & ((xl[i + 1] << (MfBigMathInt.bpe - n)) | (xl[i] >> n))
 			i++
 		}
 		xl[i] >>= n
+		xl.Count := xl.Length()
 	}
 ; 	End:rightShift_ ;}
 ;{ 	halve_
@@ -1754,40 +1779,45 @@ class MfBigMathInt extends MfObject
 		}
 		; most significant bit stays the same
 		xl[i] := (xl[i] >> 1) | (xl[i] & (MfBigMathInt.radix >> 1))
+		xl.Count := xl.Length()
 	}
 ; 	End:halve_ ;}
 ;{ 	leftShift_
 	; left shift bigInt x by n bits.
-	leftShift_(ByRef x, n) {
-		xl := x.m_InnerList
+	leftShift_(byref x, n) {
 		k := n // MfBigMathInt.bpe
+		xl := x.m_InnerList
 		if (k)
 		{
-			k++
-			i := x.Count + 1
+			i := x.Count
 			While (i >= k)
 			{
-				xl[i] := xl[i - k]
+				xl[i + 1] := xl[(i - k) + 1]
 				i--
 			}
+			i++ ; one based index
 			while (i >= 1)
 			{
 				xl[i] := 0
 				i--
 			}
-			n := Mod(n, MfBigMathInt.bpe)
+			n := mod(n, MfBigMathInt.bpe)
 		}
-		if (!n)
+		if(!n)
 		{
 			return
 		}
-		i := x.Count
-		while (i > 1)
+		; coumt may be different, use length()
+		i := xl.Length() - 1 ; zero based index
+		while (i > 0)
 		{
-			xl[i] := MfBigMathInt.mask & ((xl[i] << n) | (xl[i - 1] >> (MfBigMathInt.bpe - n)))
+			xl[i + 1] := MfBigMathInt.mask & ((xl[i + 1] << n) | (xl[i] >> (MfBigMathInt.bpe - n)))
 			i--
 		}
+		i++ ; one based index
 		xl[i] := MfBigMathInt.mask & (xl[i] << n)
+		xl.Count := xl.Length()
+
 	}
 ; 	End:leftShift_ ;}
 ;{ 	multInt_
@@ -1815,6 +1845,7 @@ class MfBigMathInt extends MfObject
 			c := (c >> MfBigMathInt.bpe) - b
 			i++
 		}
+		xl.Count := xl.Length()
 	}
 ; 	End:multInt_ ;}
 ;{ 	divInt_
@@ -1830,6 +1861,7 @@ class MfBigMathInt extends MfObject
 			r := Mod(s , n)
 			i--
 		}
+		xl.Count := xl.Length()
 		return r
 	}
 ; 	End:divInt_ ;}

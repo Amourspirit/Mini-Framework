@@ -17,6 +17,9 @@
 
 class MfBitConverter extends MfObject
 {
+	static bpe := 8
+	static mask := 255
+	static radix := 256
 ;{ Methods
 
 ;{ 	CompareUnsignedByteList
@@ -97,7 +100,66 @@ class MfBitConverter extends MfObject
 		return result
 	}
 ; 	End:CompareSignedByteList ;}
+	Expand(bytes, n, UseMsb=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		n := MfInteger.GetValue(n, 0)
+		UseMsb := MfBool.GetValue(UseMsb, true)
+		
+		If (bytes.Count >= n)
+		{
+			return bytes.Clone()
+		}
 
+		MSB := 0
+		if (UseMsb = true && bytes.Count > 0)
+		{
+			b := bytes.Item[bytes.Count - 1]
+			bHigh := MfBitConverter.GetNibbleHigh(b)
+
+			Hex := MfBitConverter._GetFirstHexNumber(b)
+			bInfo := MfNibConverter.HexBitTable[Hex]
+			if (bInfo.IsNeg)
+			{
+				MSB := 255
+			}
+		}
+		iCount := bytes.Count
+		diff := n - iCount
+		retval := new MfByteList()
+
+		bl := retval.m_InnerList
+		ll := bytes.m_InnerList
+
+		; ByteFirst := -1
+		; If ((iCount > 0))
+		; {
+		; 	ByteFirst := ll[ll.Count]
+		; }
+
+		
+		i := 1
+		while (i <= ll.Count)
+		{
+			bl.Push(ll[i])
+			i++
+		}
+		
+		i := 1
+		While (i <= diff)
+		{
+			bl.Push(MSB)
+			i++
+		}
+		bl.Count := bl.Length()
+		return retval
+	}
 ;{ GetBytes
 	GetBytes(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -106,12 +168,7 @@ class MfBitConverter extends MfObject
 			Nibbles := MfNibConverter.GetNibbles(obj)
 			return MfNibConverter.ToByteList(Nibbles)
 		}
-		ObjCheck := MfConvert._IsNotMfObj(obj)
-		if (ObjCheck)
-		{
-			ObjCheck.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ObjCheck
-		}
+		
 		wf := A_FormatInteger
 		Try
 		{
@@ -142,7 +199,8 @@ class MfBitConverter extends MfObject
 			}
 			else if (MfObject.IsObjInstance(obj, MfUInt64))
 			{
-				return MfBitConverter._GetBytesUInt(obj.Value, 64)
+				nibs := MfNibConverter.GetNibbles(obj)
+				return MfNibConverter.ToByteList(nibs)
 			}
 			else if (MfObject.IsObjInstance(obj, MfFloat))
 			{
@@ -809,6 +867,43 @@ class MfBitConverter extends MfObject
 ; End:ToString ;}
 ;{ 	Methods
 ;{ Internal Methods
+	divInt_(byRef x, n) {
+		r := 0
+		i := 1
+		ll := x.m_InnerList
+		while (i < x.Count)
+		{
+			s := r * MfBitConverter.radix + ll[i]
+			ll[i] := s // n
+			r := Mod(s , n)
+			i++
+		}
+		return r
+	}
+	multInt_(ByRef x, n) {
+		xl := x.m_InnerList
+		if (!n)
+		{
+			return
+		}
+		k := 1
+		c := 0
+		i := x.Count
+		while (i >= k)
+		{
+			c += xl[i] * n
+			b := 0
+			if (c < 0)
+			{
+				b := -(c >> MfBitConverter.bpe)
+				c += b * MfBitConverter.radix
+			}
+			xl[i] := c & MfBitConverter.mask
+			c := (c >> MfBitConverter.bpe) - b
+			i--
+		}
+		xl.Count := xl.Length()
+	}
 ;{ 	_CompareUnSignedIntegerArraysLe
 	_CompareUnSignedIntegerArraysLe(objA, objB) {
 		

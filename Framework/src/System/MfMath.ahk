@@ -359,9 +359,57 @@ class MfMath extends MfObject
 	}
 	FindPrimes(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		
-		Primes := MfBigIntHelper.findPrimes(obj)
+		max := MfInteger.GetValue(obj)
+		If (max < 0)
+		{
+			max := Abs(max)
+		}
+		; gets primes for cached values 30,000 or less
+		pCache := MfMath._GetPrimesFromCache(max)
+		if (pCache)
+		{
+			return pCache
+		}
+
+		Primes := MfBigMathInt.findPrimes(max)
 		return Primes
+	}
+	_GetPrimesFromCache(value) {
+		; next prime past 30,000 is 30,011
+		; MfBigMathInt caches all prime numbers
+		; up to 30,000 on some methods so lets
+		; take advantage of it
+		if (value > 30010)
+		{
+			return false
+		}
+		; If Prime numbers are not yet cached then find and cache
+		if (MfBigMathInt.primes.Count = 0)
+		{
+			MfBigMathInt.primes := MfBigMathInt.FindPrimes(30000)
+		}
+		
+		ll := MfBigMathInt.primes.m_InnerList
+		ans := new MfListvar()
+		al := ans.m_InnerList
+		i := 1
+		iCount := MfBigMathInt.primes.Count
+		while (i <= iCount)
+		{
+			x := ll[i]
+			if (x <= value)
+			{
+				al.push(x)
+			}
+			else
+			{
+				break
+			}
+			i++
+		}
+		al.Count := i - 1
+		return ans
+
 	}
 	FindPrimesSieve(max) {
 		max := MfInteger.GetValue(max) + 1

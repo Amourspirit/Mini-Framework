@@ -16,7 +16,9 @@
 ; End:License ;}
 class MfNibConverter extends MfObject
 {
-
+	static bpe := 4
+	static mask := 15
+	static radix := 16
 ;{ Methods
 ;{ 	GetNibbles
 	GetNibbles(obj) {
@@ -68,7 +70,9 @@ class MfNibConverter extends MfObject
 			}
 			else if (MfObject.IsObjInstance(obj, MfUInt64))
 			{
-				return MfNibConverter._GetBytesUInt(obj.Value, 64)
+				bigx := obj.m_bigx
+				nibs := MfNibConverter._HexStringToNibList("+" . bigx.ToString(16))
+				return nibs
 			}
 			else if (MfObject.IsObjInstance(obj, MfBigInt))
 			{
@@ -107,8 +111,200 @@ class MfNibConverter extends MfObject
 		throw ex
 	}
 ; 	End:GetNibbles ;}
+;{ 	Expand
+	; return a copy of x with at least n elements, adding leading zeros if needed
+	Expand(nibbles, n, UseMsb=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		n := MfInteger.GetValue(n, 0)
+		UseMsb := MfBool.GetValue(UseMsb, true)
+		MSB := 0
+		if (UseMsb = true && nibbles.Count > 0)
+		{
+			Hex := Format("{:X}", nibbles.Item[0])
+			bInfo := MfNibConverter.HexBitTable[Hex]
+			if (bInfo.IsNeg)
+			{
+				MSB := 15
+			}
+		}
+		
+		
+		If (nibbles.Count >= n)
+		{
+			return nibbles.Clone()
+		}
 
-	
+		diff := n - nibbles.Count
+		lst := new MfNibbleList()
+		nl := lst.m_InnerList
+		ll := nibbles.m_InnerList
+		i := 1
+		While (i <= diff)
+		{
+			nl.Push(MSB)
+			i++
+		}
+		i := 1
+		While (i <= ll.Count)
+		{
+			nl.Push(ll[i])
+			i++
+		}
+
+		nl.Count := nl.Length()
+		return lst
+	}
+; 	End:Expand ;}
+;{ 	BitShiftLeft
+	BitShiftLeft(nibbles, ShiftCount) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		ShiftCount := MfInteger.GetValue(ShiftCount)
+		if (ShiftCount = 0)
+		{
+			return nibbles.Clone()
+		}
+
+		if (ShiftCount < 0)
+		{
+			return ; MfNibConverter.BitShiftRight(bits, Abs(ShiftCount), Wrap)
+		}
+		r := Mod(ShiftCount, 4)
+		shiftAmt := ShiftCount // 4
+
+		nibbles := nibbles.Clone()
+		if (r > 0)
+		{
+			MfNibConverter.multInt_(nibbles, 2 ** r)
+		}
+		ll := nibbles.m_InnerList
+		i := 0
+		while (i < shiftAmt)
+		{
+			ll.RemoveAt(1)
+			ll.Push(0)
+			;bits.Add(0)
+			i++
+		}
+		
+		return nibbles
+	}
+; 	End:BitShiftLeft ;}
+;{ 	ShiftRightUnsigned
+	BitShiftRightUnsigned(nibbles, ShiftCount) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ShiftCount := MfInteger.GetValue(ShiftCount)
+		if (ShiftCount = 0)
+		{
+			return nibbles.Clone()
+		}
+
+		if (ShiftCount < 0)
+		{
+			return MfNibConverter.BitShiftLeft(nibbles, Abs(ShiftCount), Wrap)
+		}
+		r := Mod(ShiftCount, 4)
+		shiftAmt := ShiftCount // 4
+		if (shiftAmt >= nibbles.Count) {
+			lst := new MfNibbleList()
+			return MfNibConverter.Expand(lst, nibbles.Count)
+		}
+		
+
+		i := 0
+		nibbles := nibbles.Clone()
+		if (r > 0)
+		{
+			dr := MfNibConverter.divInt_(nibbles, 2 ** r)
+		}
+		; while (r > 0)
+		; {
+		; 	MfNibConverter.halve_(nibbles)
+		; 	r--
+		; }
+		ll := nibbles.m_InnerList
+		while (i < shiftAmt)
+		{
+			ll.Pop()
+			ll.InsertAt(1, 0)
+			i++
+		}
+		return nibbles
+		
+	}
+; 	End:ShiftRightUnsigned ;}
+;{ 	BitShiftRight
+	BitShiftRight(nibbles, ShiftCount) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ShiftCount := MfInteger.GetValue(ShiftCount)
+		if (ShiftCount = 0)
+		{
+			return bits.Clone()
+		}
+
+		if (ShiftCount < 0)
+		{
+			return MfBinaryConverter.BitShiftLeft(bits, Abs(ShiftCount), Wrap)
+		}
+
+
+		MSB := bits.Item[0]
+		i := 0
+		bits := bits.Clone()
+		ll := bits.m_InnerList
+		while (i < ShiftCount)
+		{
+			ll.Pop()
+			ll.InsertAt(1, MSB)
+			i++
+		}
+		return bits
+		
+	}
+; 	End:BitShiftRight ;}
 ;{ 	CompareUnsignedList
 	CompareUnsignedList(objA, objB) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -187,6 +383,7 @@ class MfNibConverter extends MfObject
 		return result
 	}
 ; 	End:CompareSignedList ;}
+
 ;{ 	FromByteList
 	; converts from MfByteList to MfNibbleList
 	FromByteList(bytes, startIndex=0) {
@@ -1038,7 +1235,47 @@ class MfNibConverter extends MfObject
 	}
 ;{ 	ToComplement16
 ; End:Methods ;}
-;{ Internal Methods
+;{ 	divInt_
+	divInt_(byRef x, n) {
+		r := 0
+		i := 1
+		ll := x.m_InnerList
+		while (i < x.Count)
+		{
+			s := r * MfNibConverter.radix + ll[i]
+			ll[i] := s // n
+			r := Mod(s , n)
+			i++
+		}
+		return r
+	}
+; 	End:divInt_ ;}
+;{ multInt_
+	multInt_(ByRef x, n) {
+		xl := x.m_InnerList
+		if (!n)
+		{
+			return
+		}
+		k := 1
+		c := 0
+		i := x.Count
+		while (i >= k)
+		{
+			c += xl[i] * n
+			b := 0
+			if (c < 0)
+			{
+				b := -(c >> MfNibConverter.bpe)
+				c += b * MfNibConverter.radix
+			}
+			xl[i] := c & MfNibConverter.mask
+			c := (c >> MfNibConverter.bpe) - b
+			i--
+		}
+		xl.Count := xl.Length()
+	}
+; End:multInt_ ;}
 ;{ 	_AddOneToNibList
 	; adds one to the value of lst only if there
 	; is no carry.
