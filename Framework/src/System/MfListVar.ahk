@@ -15,18 +15,20 @@ class MfListVar extends MfListBase
 			throw ex
 		}
 		base.__new()
-		this.m_Default := default ; set incase new default items are added via Item property
+		this.m_Default := default ; set in case new default items are added via Item property
 		IgnoreCase := MfBool.GetValue(IgnoreCase, false)
 		this.m_CaseSensitive := !IgnoreCase
+		; test show adding via index is about 26 times faster then using Push
+		; test was don by adding 1,000,000 zeros to a list
 		if (Size > 0)
 		{
-			i := 0
-			while (i < size)
+			i := 1
+			while (i <= size)
 			{
-				this.m_InnerList.Push(default)
+				this.m_InnerList[i] := default
 				i++
 			}
-			this.m_Count := i
+			this.m_Count := i - 1
 		}
 		this.m_isInherited := false
 	}
@@ -44,8 +46,8 @@ class MfListVar extends MfListBase
 		Var containing Integer of the zero-based index at which the obj has been added.
 */
 	Add(obj) {
-		this.m_InnerList.Push(obj)
 		this.m_Count++
+		this.m_InnerList[this.m_Count] := obj
 		return this.m_Count
 	}
 ;	End:Add(value) ;}
@@ -57,7 +59,7 @@ class MfListVar extends MfListBase
 		ll := this.m_InnerList
 		for i, v in ll
 		{
-			cl.Push(v)
+			cl[i] := v
 		}
 		cLst.m_Count := this.Count
 		return cLst
@@ -104,12 +106,13 @@ class MfListVar extends MfListBase
 		{
 			return lst
 		}
+		i := 1
 		if (includeWhiteSpace)
 		{
 			Loop, Parse, s
 			{
-				lstArray.Push(A_LoopField)
 				iCount++
+				lstArray[iCount] := A_LoopField
 			}
 		}
 		else
@@ -120,8 +123,8 @@ class MfListVar extends MfListBase
 				{
 					continue
 				}
-				lstArray.Push(A_LoopField)
 				iCount++
+				lstArray[iCount] := A_LoopField
 			}
 		}
 			
@@ -311,7 +314,7 @@ class MfListVar extends MfListBase
 		i := startIndex
 		iCount := 0
 		ll := this.m_InnerList
-		while iCount = len
+		while (iCount < len)
 		{
 			v := ll[i + 1]
 			if (i < maxIndex)

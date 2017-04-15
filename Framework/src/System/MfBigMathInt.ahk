@@ -324,7 +324,7 @@ class MfBigMathInt extends MfObject
 		i := 1 ; one based index
 		while (i <= p)
 		{
-			ans.Push(s[i])
+			ans[i] := s[i]
 			i++
 		}
 		lst._SetInnerList(ans, true)
@@ -1323,7 +1323,7 @@ class MfBigMathInt extends MfObject
 	; divide x by y giving quotient q and remainder r.  (q=floor(x/y),  r=x Mod y).  All 4 are bigints.
 	; x must have at least one leading zero element.
 	; y must be nonzero.
-	; q and r must be arrays that are exactly the same m_Count as x. (Or q can have more).
+	; q and r must be arrays that are exactly the same Count as x. (Or q can have more).
 	; Must have x.Count >= y.Count >= 2.
 	divide_(ByRef x, ByRef y, ByRef q, ByRef r) {
 		MfBigMathInt.copy_(r, x)
@@ -1654,8 +1654,7 @@ class MfBigMathInt extends MfObject
 			while (!MfBigMathInt.IsZero(MfBigMathInt.s6))
 			{
 				t := MfBigMathInt.divInt_(MfBigMathInt.s6, base)
-				MfBigMathInt.digitStr.Item
-				s := MfBigIntHelper.digitStr.Item[t] . s
+				s := MfBigMathInt.digitStr.Item[t] . s
 			}
 		}
 		if (s = "")
@@ -1674,7 +1673,7 @@ class MfBigMathInt extends MfObject
 	}
 ; 	End:Dup ;}
 ;{ 	copy_
-	; do x=y on bigInts x and y.  x must be an array
+	; do x=y on bigInts x and y.  x must be an big int
 	; at least as big as y (not counting the leading zeros in y).
 	copy_(ByRef x, y) {
 		k := x.m_Count < y.m_Count ? x.m_Count : y.m_Count
@@ -1932,16 +1931,16 @@ class MfBigMathInt extends MfObject
 		while (i <= k)
 		{
 			c += xl[i] + yl[i - ys]
-			xl[i] := c & MfBigIntHelper.mask
-			c >>= MfBigIntHelper.bpe
+			xl[i] := c & MfBigMathInt.mask
+			c >>= MfBigMathInt.bpe
 			i++
 		}
 		i := k + 1
 		while (c && i <= kk)
 		{
 			c += xl[i]
-			xl[i] := c & MfBigIntHelper.mask
-			c >>= MfBigIntHelper.bpe
+			xl[i] := c & MfBigMathInt.mask
+			c >>= MfBigMathInt.bpe
 			i++
 		}
 	}
@@ -2526,7 +2525,7 @@ class MfBigMathInt extends MfObject
 		Item[index]
 		{
 			get {
-				return this.m_IndexLst.Item[index]
+				return this.m_IndexLst.m_InnerList[index + 1]
 			}
 			set {
 				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))

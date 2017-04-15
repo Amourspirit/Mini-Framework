@@ -52,11 +52,11 @@ class MfBinaryConverter extends MfObject
 		{
 			if (la[i] && lb[i])
 			{
-				ansl.push(1)
+				ansl[i] := 1
 			}
 			else
 			{
-				ansl.push(0)
+				ansl[i] := 0
 			}
 			i++
 		}
@@ -89,11 +89,11 @@ class MfBinaryConverter extends MfObject
 		{
 			if (la[i])
 			{
-				ansl.push(0)
+				ansl[i] := 0
 			}
 			else
 			{
-				ansl.push(1)
+				ansl[i] := 1
 			}
 			i++
 		}
@@ -134,11 +134,11 @@ class MfBinaryConverter extends MfObject
 		{
 			if (la[i] || lb[i])
 			{
-				ansl.push(1)
+				ansl[i] := 1
 			}
 			else
 			{
-				ansl.push(0)
+				ansl[i] := 0
 			}
 			i++
 		}
@@ -179,15 +179,15 @@ class MfBinaryConverter extends MfObject
 		{
 			if (la[i] && lb[i])
 			{
-				ansl.push(0)
+				ansl[i] := 0
 			}
 			else if (!la[i] && !lb[i])
 			{
-				ansl.push(0)
+				ansl[i] := 0
 			}
 			else
 			{
-				ansl.push(1)
+				ansl[i] := 1
 			}
 			i++
 		}
@@ -293,14 +293,16 @@ class MfBinaryConverter extends MfObject
 		i := 1
 		While (i <= diff)
 		{
-			nl.Push(MSB)
+			nl[i] := MSB
 			i++
 		}
+		j := i
 		i := 1
 		while (i <= bits.Count)
 		{
-			nl.Push(bl[i])
+			nl[j] := bl[i] 
 			i++
+			j++
 		}
 		lst.m_Count := nl.Length()
 		return lst
@@ -405,26 +407,29 @@ class MfBinaryConverter extends MfObject
 
 		;len := (bl.Count - Anslen) - (Anslen + ShiftCount) - 1
 		len := (iStartIndex - ShiftCount) - 2
-		i := 0
+		i := 1
 		; insert any space from orignal bits list
-		while (i < len)
-		{	ll.Push(0)
+		while (i <= len)
+		{
+			ll[i] := 0
 			i++
 		}
-
+		j := i
 		i := iStartIndex
 		While (i <= iEndIndex)
 		{
-			ll.Push(bl[i])
+			ll[j] := bl[i] 
 			i++
+			j++
 		}
 		;i := ll.Length()
 		i := Anslen
 		iShiftAdd := i + ShiftCount
 		while (i < iShiftAdd)
 		{
-			ll.push(0)
+			ll[j] := 0
 			i++
+			j++
 		}
 		ll.InsertAt(1, bl[1])
 		ans.m_Count := ll.Length()
@@ -436,7 +441,6 @@ class MfBinaryConverter extends MfObject
 				StartIndex := ans.Count - BitCount ; zero based index
 				ans := ans.SubList(StartIndex)
 			}
-			
 		}
 		else
 		{
@@ -529,27 +533,29 @@ class MfBinaryConverter extends MfObject
 		ll := ans.m_InnerList
 
 		len := (iStartIndex - ShiftCount) - 1
-		i := 0
+		i := 1
 		; insert any space from orignal bits list
-		while (i < len)
+		while (i <= len)
 		{	
-			ll.Push(0)
+			ll[i] := 0
 			i++
 		}
-
+		j := i
 		i := iStartIndex
 		While (i <= iEndIndex)
 		{
-			ll.Push(bl[i])
+			ll[j] := bl[i] 
 			i++
+			j++
 		}
 
 		i := Anslen
 		iShiftAdd := i + ShiftCount
 		while (i < iShiftAdd)
 		{
-			ll.push(0)
+			ll[j] := 0
 			i++
+			j++
 		}
 		ans.m_Count := ll.Length()
 		
@@ -1351,8 +1357,7 @@ class MfBinaryConverter extends MfObject
 		}
 		return MfBigMathInt.BigInt2str(bitx, 10)
 	}
-
-	Trim(bits, n=0) {
+	Trim(bits, n=0, UseMsb=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -1367,23 +1372,39 @@ class MfBinaryConverter extends MfObject
 			throw ex
 		}
 		n := MfInteger.GetValue(n, 0)
+		UseMsb := MfBool.GetValue(UseMsb, true)
 		if (n < 0)
 		{
 			n = -n
 		}
-		nl := bits.m_InnerList
-		i := 1
-		iMax := 0
-		; ignore leading zeros
-		while ((i < bits.Count) && !nl[i])
+		MSB := 0
+		if (UseMsb)
 		{
-			iMax++
-			i++
+			MSB := bits.Item[0]
 		}
-				
-		y := bits.SubList(iMax + n)
+		i := 0
+		j := bits.Count
+		while (i >= 0 && bits.m_InnerList[i + 1] = MSB)
+		{
+			i++
+			j--
+		}
+		y := new MfBinaryList(j + n, MSB)
+		if (j = 0)
+		{
+			; if j = the we have all leading bits of 0 or all leading bits or 1
+			; make sure to return at least n + 1 bits for a min of one bit
+			y.Add(MSB)
+			return y
+		}
+		
+		; use MfNibConverter._copy as it is the same byte order for BinaryConverter and NibbleConveter
+		MfNibConverter._copy(y, bits, MSB)
 		return y
+
+
 	}
+	
 ;{ 	Methods
 
 ;{ Internal Methods

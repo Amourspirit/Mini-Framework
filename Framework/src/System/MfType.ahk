@@ -46,7 +46,7 @@ class MfType extends MfObject
 					,"MfByte"
 					,"MfInt64"
 					,"MfTimeSpan"
-					,"MfEnum.EnumItem",
+					,"MfEnum.EnumItem"
 					,"MfInt16"
 					,"MfUInt64"
 					,"MfBigInt")

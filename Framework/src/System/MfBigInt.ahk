@@ -395,52 +395,138 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if(this._IsZero())
-		{
-			return
-		}
-		
+				
 		this._ClearCache()
-		x := ""
-		try
+		r := new MfBigInt()
+		q := MfBigInt.DivRem(this, value, r)
+		this.m_bi := q.m_bi
+		this.IsNegative := q.IsNegative
+		return r
+
+	}
+; 	End:Divide ;}
+	DivRem(dividend, divisor, byref remainder) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(dividend))
 		{
-			x := MfBigInt._FromAny(value)
-		}
-		Catch e
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+			ex := new MfArgumentNullException("dividend")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (MfBigMathInt.isZero(x.m_bi))
+		if (MfNull.IsNull(divisor))
+		{
+			ex := new MfArgumentNullException("divisor")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		x := ""
+		y := ""
+		try
+		{
+			x := MfBigInt._FromAny(dividend)
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToBigInt"), "dividend")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		try
+		{
+			y := MfBigInt._FromAny(divisor)
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToBigInt"), "divisor")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfBigMathInt.IsZero(y.m_bi))
 		{
 			ex := new MfDivideByZeroException()
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		;q and r must be arrays that are exactly the same Count as x. (Or q can have more).
-		q := new MfListVar(this.m_bi.Count)
-		r := new MfListVar(q.Count)
-
-		; divide_(ByRef x, ByRef y, ByRef q, ByRef r)
-		MfBigMathInt.divide_(this.m_bi, x.m_bi, q, r)
-		q := MfBigMathInt.trim(q, 1)
-		this.m_bi := q
-		if (this.IsNegative || x.IsNegative)
+		IsObj := false
+		If (IsObject(remainder))
 		{
-			this.IsNegative := true
+			If (MfObject.IsObjInstance(remainder, MfBigInt) = false)
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType_Generic"), "remainder")
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			IsObj := true
+		}
+		
+		q := new MfBigInt()
+		r := new MfBigInt()
+
+
+		if (MfBigMathInt.IsZero(x.m_bi))
+		{
+			; all return value will be zero
+			if (IsObj)
+			{
+				remainder.m_bi := r.m_bi
+				remainder.IsNegative := false
+			}
+			else
+			{
+				remiander := r.Value
+			}
+			return q ; return 0 value
+		}
+
+		; q and r must have arrays that are exactly the same Count as x. (Or q can have more).
+		r.m_bi := new MfListVar(x.m_bi.Count, 0)
+		q.m_bi := r.m_bi.Clone()
+		; m_bi will always be positive so negative values have to be re-assigned
+		MfBigMathInt.divide_(x.m_bi, y.m_bi, q.m_bi, r.m_bi)
+		q.m_bi := MfBigMathInt.Trim(q.m_bi , 1)
+		r.m_bi := MfBigMathInt.Trim(r.m_bi , 1)
+		
+		rNeg := false
+		qNeg := false
+		if (x.IsNegative && !y.IsNegative)
+		{
+			rNeg := true
+			qNeg := true
+		}
+		else if (!x.IsNegative && y.IsNegative)
+		{
+			rNeg := false
+			qNeg := true
+		}
+		else if (x.IsNegative || y.IsNegative)
+		{
+			rNeg := true
+			qNeg := false
+		}
+		
+		if (qNeg && MfBigMathInt.IsZero(q.m_bi))
+		{
+			qNeg := false
+		}
+		if (rNeg && MfBigMathInt.IsZero(r.m_bi))
+		{
+			rNeg := false
+		}
+				
+		
+		if (IsObj)
+		{
+			remainder.m_bi := r.m_bi.Clone()
+			remainder.IsNegative := rNeg
 		}
 		else
 		{
-			this.IsNegative := false
+			r.IsNegative := rNeg
+			remiander := r.Value
 		}
-		if (this.IsNegative && MfBigMathInt.IsZero(this.m_bi))
-		{
-			this.IsNegative := false
-		}
-		MfBigMathInt.BigInt2str(r, 10)
+		q.IsNegative := qNeg
+		return q
 	}
-; 	End:Divide ;}
 ;{ 	Equals
 	Equals(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)

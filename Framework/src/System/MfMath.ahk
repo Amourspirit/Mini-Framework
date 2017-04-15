@@ -165,6 +165,49 @@ class MfMath extends MfObject
 		throw ex
 	}
 ; 	End:Abs ;}
+	Acos(obj) {
+		wf := A_FormatFloat
+		frmt := ws
+		IsObj := false
+		value := obj
+		if (IsObject(obj))
+		{
+			if (MfObject.IsObjInstance(obj, MfFloat))
+			{
+				frmt := obj.Format
+				SetFormat, Floatfast, %frmt%
+				isObj := true
+				value := obj.Value
+			}
+			else
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_FloatVar", "obj"), "obj")
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		try
+		{
+			
+			result := ACos(value)
+			if (IsObj)
+			{
+				retval := new MfFloat(result,,,frmt)
+				return retval
+			}
+			return result
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		Finally
+		{
+			SetFormat, Floatfast, %wf%
+		}
+	}
 ;{ 	Ceiling
 	Ceiling(obj, ReturnAsObject = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -213,6 +256,8 @@ class MfMath extends MfObject
 		throw ex
 	}
 ; 	End:Ceiling ;}
+;{ 	DivRem
+	; if a and b are big ints then returns big int
 	DivRem(a, b, byref result) {
 		if (MfNull.IsNull(a))
 		{
@@ -226,37 +271,91 @@ class MfMath extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		
-		;~ If (MfMath._IsValidInt64Range(a . "", true))
-		;~ {
-			;~ Dividend := MfInt64.GetValue(a)
-		;~ }
-		;~ else
-		;~ {
-			;~ Dividend := "NaN"
-		;~ }
-		;~ If (MfMath._IsValidInt64Range(b . "", true))
-		;~ {
-			;~ Divisor := MfInt64.GetValue(b)
-		;~ }
-		;~ else
-		;~ {
-			;~ Divisor := "NaN"
-		;~ }
+		IsObj := IsObject(result)
+		IsInAhkRange := false
+		r := ""
+		q := ""
+		if (MfObject.IsObjInstance(a, MfInt64) && MfObject.IsObjInstance(b, MfInt64))
+		{
+			IsInAhkRange := true
+			if (IsObj)
+			{
+				if (MfObject.IsObjInstance(result, MfInt64) = False)
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "result", "MfInt64"), "result")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			r := new MfInt64()
+			q := new MfInt64()
+		}
+		else if (MfObject.IsObjInstance(a, MfInteger) && MfObject.IsObjInstance(b, MfInteger))
+		{
+			IsInAhkRange := true
+			if (IsObj)
+			{
+				if (MfObject.IsObjInstance(result, MfInteger) = False)
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "result", "MfInteger"), "result")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			r := new MfInteger()
+			q := new MfInteger()
+		}
+		else if (MfObject.IsObjInstance(a, MfInt16) && MfObject.IsObjInstance(b, MfInt16))
+		{
+			IsInAhkRange := true
+			if (IsObj)
+			{
+				if (MfObject.IsObjInstance(result, MfInt16) = False)
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "result", "MfInteger"), "MfInt16")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			r := new MfInt16()
+			q := new MfInt16()
+		}
+		else if (MfObject.IsObjInstance(a, MfBigInt) && MfObject.IsObjInstance(b, MfBigInt))
+		{
+			return MfBigInt.DivRem(a, b, result)
+		}
+		else if (MfObject.IsObjInstance(a, MfUInt64) && MfObject.IsObjInstance(b, MfUInt64))
+		{
+			if (IsObj)
+			{
+				if (MfObject.IsObjInstance(result, MfUInt64) = False)
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "result", "MfUInt64"), "result")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			BigIntA := a.m_bigx
+			bigIntB := b.m_bigx
+			q := new MfBigInt()
+			r := new MfBigInt()
+			q := MfBigInt.DivRem(BigIntA, bigIntB , r)
+			uQ := new MfUInt64()
+			uQ.m_bigx := q
+			if (IsObj)
+			{
+				result.m_bigx := r
+			}
+			else
+			{
+				result := r.Value
+			}
+			return uQ
+			
+		}
 		Dividend := MfInt64.GetValue(a, "NaN", true)
 		Divisor := MfInt64.GetValue(b, "NaN", true)
-		IsObj := false
-
-		If (IsObject(result))
-		{
-			If (MfObject.IsObjInstance(result, MfPrimitive) = false)
-			{
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType_Generic"), "result")
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			IsObj := true
-		}
+		
 		wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
 		try
 		{
@@ -271,13 +370,7 @@ class MfMath extends MfObject
 					{
 						a := a.Value
 					}
-					if (MfMath._IsStringInt(a, NegDividend) = false)
-					{
-						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger_Param", "a"))
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
-					}
-					Dividend := a
+					Dividend := MfBigInt._FromAny(a)
 				}
 				If (Divisor == "NaN")
 				{
@@ -285,41 +378,10 @@ class MfMath extends MfObject
 					{
 						b := b.Value
 					}
-					If (MfMath._IsStringInt(b, NegDivisor) = false)
-					{
-						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger_Param", "b"))
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
-					}
-					Divisor := b
+					Divisor := MfBigInt._FromAny(a)
 				}
 
-				if (Divisor = 0 || Divisor == "0")
-				{
-					ex := new MfDivideByZeroException(MfEnvironment.Instance.GetResourceString("Arg_DivideByZero"))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				strRemainder := ""
-				retval := MfMath._LongIntStringDivide(Dividend, Divisor, strRemainder)
-				if (IsObj)
-				{
-					try
-					{
-						result.Value := strRemainder
-					}
-					catch e
-					{
-						ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToString_Param", remainder), e)
-						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-						throw ex
-					}
-				}
-				else
-				{
-					result := strRemainder
-				}
-				return retval
+				return MfBigInt.DivRem(a, b, result)
 			}
 			; proceed as normal math ( not string math )
 			if (Divisor = 0)
@@ -328,12 +390,22 @@ class MfMath extends MfObject
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			retval := Dividend // Divisor
+			divResult := Dividend // Divisor
+			if (IsInAhkRange)
+			{
+				r.Value := divResult
+				q.Value := Mod(Dividend, Divisor)
+			}
+			else
+			{
+				r := divResult
+				q := Mod(Dividend, Divisor)
+			}
 			if (IsObj)
 			{
 				try
 				{
-					result.Value := Mod(Dividend, Divisor)
+					result.Value := q.Value
 				}
 				catch e
 				{
@@ -344,12 +416,17 @@ class MfMath extends MfObject
 			}
 			else
 			{
-				result := Mod(Dividend, Divisor)
+				result := q
 			}
-			return retval
+			return r
 		}
 		catch e
 		{
+			if (MfObject.IsObjInstance(e, MfDivideByZeroException))
+			{
+				e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+
+			}
 			throw e
 		}
 		finally
@@ -357,23 +434,9 @@ class MfMath extends MfObject
 			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
 		}
 	}
-	FindPrimes(obj) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		max := MfInteger.GetValue(obj)
-		If (max < 0)
-		{
-			max := Abs(max)
-		}
-		; gets primes for cached values 30,000 or less
-		pCache := MfMath._GetPrimesFromCache(max)
-		if (pCache)
-		{
-			return pCache
-		}
-
-		Primes := MfBigMathInt.findPrimes(max)
-		return Primes
-	}
+; 	End:DivRem ;}
+;{ 	_GetPrimesFromCache
+	; Gets Prime Numbers from internal cache for values up to 30,010
 	_GetPrimesFromCache(value) {
 		; next prime past 30,000 is 30,011
 		; MfBigMathInt caches all prime numbers
@@ -399,7 +462,7 @@ class MfMath extends MfObject
 			x := ll[i]
 			if (x <= value)
 			{
-				al.push(x)
+				al[i] := x
 			}
 			else
 			{
@@ -411,189 +474,20 @@ class MfMath extends MfObject
 		return ans
 
 	}
-	FindPrimesSieve(max) {
-		max := MfInteger.GetValue(max) + 1
-		isPrimes := MfMath.MakeSieve(max)
-		Primes := new MfBigIntHelper.DList()
-		i := 2
-		while (i < max)
-		{
-			if(isPrimes.Item[i])
-			{
-				Primes.Add(i)
-			}
-			i++
-		}
-		
-		return Primes
-	}
-	_FindPrimesSieve(max) {
-		max := MfInteger.GetValue(max) + 1
-		isPrimes := []
-		Primes := new MfBigIntHelper.DList()
-		i := 2
-
-		while (i < max)
-		{
-			if(isPrimes[i + 1])
-			{
-				Primes.Add(i)
-			}
-			i++
-		}
-		
-		return Primes
-	}
-	FindPrimesSieve2(max) {
-		max := MfInteger.GetValue(max) + 1
-		isPrimes := MfMath._MakeSieve(max)
-		Primes := []
-		i := 2
-		iCount := 0
-		while (i < max)
-		{
-			if(isPrimes[i + 1])
-			{
-				Primes.Push(i)
-				iCount ++
-			}
-			i++
-		}
-		lst := new MfBigIntHelper.DList()
-		lst.m_InnerList := Primes
-		lst.m_Count := iCount
-		return lst
-	}
-	_MakeSieve(max) {
+; 	End:_GetPrimesFromCache ;}
+;{ 	FindPrimes
+	; return  MfListVar of all primes less than integer max
+	FindPrimes(max) {
 		max := MfInteger.GetValue(max)
-	    ;Make an array indicating whether numbers are prime.
-	    ;is_prime := new MfBinaryList(max + 1, 1)
-	    is_prime := []
-	    is_prime.Push(0)
-	    i := 1
-	    while (i <= max)
-	    {
-	    	is_prime[i + 1] := 1
-	    	i++
-	    }
-
-	    i := 2
-	    
-	    ;Cross out multiples.
-	    While ( i <= max)
-	    {
-	    	; See if i is prime.
-	    	if (is_prime[i + 1])
-	    	{
-	    		j := i * 2
-	    		; Knock out multiples of i.
-	    		while (j <= max)
-	    		{
-	    			is_prime[j + 1] := 0
-	    			j += i
-	    		}
-	    	}
-	    	i++
-	    }
-	    return is_prime
-	}
-	MakeSieve(max) {
-		max := MfInteger.GetValue(max)
-	    ;Make an array indicating whether numbers are prime.
-	    ;is_prime := new MfBinaryList(max + 1, 1)
-	    is_prime := new MfBigIntHelper.DList(max +1, 1)
-	    i := 2
-	    
-	    ;Cross out multiples.
-	    While ( i <= max)
-	    {
-	    	; See if i is prime.
-	    	if (is_prime.Item[i])
-	    	{
-	    		j := i * 2
-	    		; Knock out multiples of i.
-	    		while (j <= max)
-	    		{
-	    			is_prime.Item[j] := 0
-	    			j += i
-	    		}
-	    	}
-	    	i++
-	    }
-	    return is_prime
-	}
-	GetPrimesHash(MaxInt) {
-		noPrimes := {}
-		x := 2
-		n := MaxInt
-		sum := 0
-		while (x < n)
+		pCache := MfMath._GetPrimesFromCache(max)
+		if (pCache)
 		{
-			y := x * 2
-			while (y < n)
-			{
-				if(!noPrimes.HasKey(y))
-				{
-					noPrimes[y] := ""
-				}
-				y := y + x
-			}
-			x++
+			return pCache
 		}
-		primes := new MfBigIntHelper.DList()
-		z := 2
-		While (z < n)
-		{
-			if(!noPrimes.HasKey(z))
-			{
-				primes.Add(z)
-				;sum += z
-			}
-			z++
-		}
-		return primes
+		return MfBigMathInt.findPrimes(max)
 	}
-	GetPrimes(MaxInt) {
-		primes := new MfBigIntHelper.DList()
+; 	End:FindPrimes ;}
 
-		if (MaxInt > 0) primes.Add(2)
-
-		curTest := 3
-		while (primes.Count < MaxInt)
-		{
-
-			_sqrt := Floor(Sqrt(curTest))
-
-			isPrime := true
-			i := 0
-			pCount := primes.Count
-			While (i < pCount)
-			{
-				num := primes.Item[i]
-				if (num > _sqrt)
-				{
-					break
-				}
-				if (Mod(curTest, num) = 0)
-				{
-					isPrime := false
-					break
-				}
-				i++
-			}
-			
-			if (isPrime)
-			{
-				if (curTest >= MaxInt)
-				{
-					break
-				}
-				primes.Add(curTest)
-			}
-			curTest += 2
-		}
-		return primes
-	}
 ;{ 	Floor
 	Floor(obj, ReturnAsObject = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)

@@ -47,13 +47,13 @@ class MfNibbleList extends MfListBase
 
 		if (Size > 0)
 		{
-			i := 0
-			while (i < size)
+			i := 1
+			while (i <= size)
 			{
-				this.m_InnerList.Push(default)
+				this.m_InnerList[i] := default
 				i++
 			}
-			this.m_Count := i
+			this.m_Count := i - 1
 		}
 	}
 ; End:Constructor ;}
@@ -94,8 +94,8 @@ class MfNibbleList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		this.m_InnerList.Push(_value)
 		this.m_Count++
+		this.m_InnerList[this.m_Count] := _value
 		return this.m_Count
 	}
 ;	End:Add(value) ;}
@@ -122,10 +122,12 @@ class MfNibbleList extends MfListBase
 			LSB := Mod(_Value, 16)
 		}
 		
-		this.m_InnerList.Push(MSB)
 		this.m_Count++
-		this.m_InnerList.Push(LSB)
+		this.m_InnerList[this.m_Count]  := MSB
+		
 		this.m_Count++
+		this.m_InnerList[this.m_Count] := LSB
+		
 		return this.m_Count
 	}
 
@@ -462,6 +464,7 @@ class MfNibbleList extends MfListBase
 			{
 				iCount++
 			}
+			iCount := this.m_Count - iCount
 		}
 			
 		
@@ -563,19 +566,18 @@ class MfNibbleList extends MfListBase
 		}
 		If (this.Count < 1)
 		{
-			this.m_InnerList.Push(0)
 			this.m_Count++
+			this.m_InnerList[this.m_Count] := 0
 			return
 		}
 		NewCount := this.Count * 2
-		iCount := this.Count
 		ll := this.m_InnerList
-		while iCount < NewCount
+		while this.m_Count < NewCount
 		{
-			ll.Push(0)
-			iCount++
+			this.m_Count++
+			ll[this.m_Count] := 0
 		}
-		this.m_Count := iCount
+
 	}
 ; End:Methods ;}
 ;{ Properties

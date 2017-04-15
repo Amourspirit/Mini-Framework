@@ -774,6 +774,50 @@ Class MfException extends MfObject
 	}
 ;	End:Source ;}
 ; End:Properties;}
+	; internal class
+	class ExceptionMessageKind extends MfEnum
+	{
+		static m_Instance := ""
+
+		__New(args*) {
+			; Throws MfNotSupportedException if MfUnicodeCategory Sealed class is extended
+			if (this.__Class != "MfException.ExceptionMessageKind") {
+				throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfException.ExceptionMessageKind"))
+			}
+			base.__New(args*)
+			this.m_isInherited := false
+		}
+	; End:Constructor ;}
+
+		AddEnums() {
+			this.AddEnumValue("ThreadAbort", 1)
+			this.AddEnumValue("ThreadInterrupted", 2)
+			this.AddEnumValue("OutOfMemory", 3)
+		}
+
+		DestroyInstance() {
+			MfException.ExceptionMessageKind.m_Instance := Null
+		}
+
+
+		GetInstance() {
+			if (MfNull.IsNull(MfException.ExceptionMessageKind.m_Instance)) {
+				MfException.ExceptionMessageKind.m_Instance := new MfException.ExceptionMessageKind(1)
+			}
+			return MfException.ExceptionMessageKind.m_Instance
+		}
+
+		Is(ObjType) {
+			typeName := MfType.TypeOfName(ObjType)
+			if (typeName = "MfException.ExceptionMessageKind")
+			{
+				return true
+			}
+			return base.Is(ObjType)
+		}
+
+	; End:Methods ;}
+	}
 }
 /*!
 	End of class

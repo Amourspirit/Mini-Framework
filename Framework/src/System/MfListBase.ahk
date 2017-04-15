@@ -88,8 +88,9 @@ class MfListBase extends MfEnumerableBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		this.m_InnerList.Push(obj)
 		this.m_Count++
+		this.m_InnerList[this.m_Count] := obj
+		
 		return this.m_Count
 	}
 ;	End:Add(value) ;}
@@ -489,7 +490,7 @@ class MfListBase extends MfEnumerableBase
 	}
 	; intended to be used internally by framework only
 	; set the this.m_InnerList to aray objArray
-	_SetInnerList(objArray, SetCount=False) {
+	_SetInnerList(objArray, SetCount=true) {
 		try
 		{
 			if (IsObject(objArray))
@@ -637,11 +638,11 @@ class MfListBase extends MfEnumerableBase
 ;{ 		internal class Enumerator
     class Enumerator
 	{
-		m_Parent := Null
-		m_KeyEnum := Null
+		m_Parent := ""
+		m_KeyEnum := ""
 		m_index := 0
 		m_count := 0
-		m_InnerList
+		m_InnerList := ""
         __new(ByRef ParentClass) {
             this.m_Parent := ParentClass
 			this.m_count := this.m_Parent.Count

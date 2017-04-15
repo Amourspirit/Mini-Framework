@@ -47,13 +47,13 @@ class MfBinaryList extends MfListBase
 
 		if (Size > 0)
 		{
-			i := 0
-			while (i < size)
+			i := 1
+			while (i <= size)
 			{
-				this.m_InnerList.Push(default)
+				this.m_InnerList[i] := default
 				i++
 			}
-			this.m_Count := i
+			this.m_Count := i - 1
 		}
 	}
 ; End:Constructor ;}
@@ -85,8 +85,9 @@ class MfBinaryList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		this.m_InnerList.Push(_value)
 		this.m_Count++
+		this.m_InnerList[this.m_Count] := _value
+		
 		return this.m_Count
 	}
 ;	End:Add(value) ;}
@@ -110,14 +111,15 @@ class MfBinaryList extends MfListBase
 			strBin := MsbInfo.Bin
 			Loop, Parse, strBin
 			{
-				this.m_InnerList.Push(A_LoopField)
 				this.m_Count++
+				this.m_InnerList[this.m_Count] := A_LoopField
+				
 			}
 			strBin := LsbInfo.Bin
 			Loop, Parse, strBin
 			{
-				this.m_InnerList.Push(A_LoopField)
 				this.m_Count++
+				this.m_InnerList[this.m_Count] := A_LoopField
 			}
 		}
 		else
@@ -125,8 +127,8 @@ class MfBinaryList extends MfListBase
 			i := 0
 			while i < 8
 			{
-				this.m_InnerList.Push(0)
 				this.m_Count++
+				this.m_InnerList[this.m_Count] := 0
 				i++
 			}
 		}
@@ -156,8 +158,8 @@ class MfBinaryList extends MfListBase
 			strBin := Info.Bin
 			Loop, Parse, strBin
 			{
-				this.m_InnerList.Push(A_LoopField)
 				this.m_Count++
+				this.m_InnerList[this.m_Count] := A_LoopField
 			}
 		}
 		else
@@ -165,8 +167,8 @@ class MfBinaryList extends MfListBase
 			i := 0
 			while i < 4
 			{
-				this.m_InnerList.Push(0)
 				this.m_Count++
+				this.m_InnerList[this.m_Count] := 0
 				i++
 			}
 		}
@@ -208,13 +210,14 @@ class MfBinaryList extends MfListBase
 		{
 			If (A_LoopField = "0")
 			{
-				ll.Push(0)
 				iCount++
+				ll[iCount] := 0
+				
 			}
 			else if (A_LoopField = "1")
 			{
-				ll.Push(1)
 				iCount++
+				ll[iCount] := 1
 			}
 		}
 		lst.m_Count := iCount
@@ -497,15 +500,16 @@ class MfBinaryList extends MfListBase
 		}
 		If (this.Count < 1)
 		{
-			this.m_InnerList.Push(0)
 			this.m_Count++
+			this.m_InnerList[this.m_Count] := 0
+			
 			return
 		}
 		NewCount := this.Count * 2
-		while this.Count < NewCount
+		while this.m_Count < NewCount
 		{
-			this.m_InnerList.Push(0)
 			this.m_Count++
+			this.m_InnerList[this.m_Count] := 0
 		}
 	}
 ; End:Methods ;}

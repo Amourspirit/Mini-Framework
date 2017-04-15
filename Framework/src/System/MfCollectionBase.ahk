@@ -22,7 +22,7 @@
 */
 class MfCollectionBase extends MfEnumerableBase
 {
-	m_list := null
+	m_list := ""
 ;{ Constructor
 	/*!
 		Constructor: ()

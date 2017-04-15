@@ -90,7 +90,7 @@ class MfNibConverter extends MfObject
 			
 			else if (MfObject.IsObjInstance(obj, MfFloat))
 			{
-				int := MfBitConverter._FloatToInt64(obj.Value)
+				int := MfByteConverter._FloatToInt64(obj.Value)
 				return MfNibConverter._GetBytesInt(int, 64)
 			}
 		}
@@ -148,14 +148,17 @@ class MfNibConverter extends MfObject
 		i := 1
 		While (i <= diff)
 		{
-			nl.Push(MSB)
+			nl[i] := MSB
 			i++
 		}
+		j := i
 		i := 1
+
 		While (i <= nibbles.Count)
 		{
-			nl.Push(ll[i])
+			nl[j] := ll[i]
 			i++
+			j++
 		}
 
 		lst.m_Count := nl.Length()
@@ -197,11 +200,12 @@ class MfNibConverter extends MfObject
 			MfNibConverter.multInt_(nibbles, 2 ** r)
 		}
 		ll := nibbles.m_InnerList
+		iLastIndex := nibbles.Count ; one based index
 		i := 0
 		while (i < shiftAmt)
 		{
 			ll.RemoveAt(1)
-			ll.Push(0)
+			ll[iLastIndex] := 0
 			;bits.Add(0)
 			i++
 		}
@@ -346,10 +350,10 @@ class MfNibConverter extends MfObject
 		{
 			return 1
 		}
-		HexA := MfBitConverter._GetHexValue(objA.Item[0])
+		HexA := MfByteConverter._GetHexValue(objA.Item[0])
 		MostSigbitInfoA :=  MfNibConverter.HexBitTable[HexA]
 		
-		HexB := MfBitConverter._GetHexValue(objA.Item[0])
+		HexB := MfByteConverter._GetHexValue(objA.Item[0])
 		MostSigbitInfoB :=  MfNibConverter.HexBitTable[HexB]
 		if ((MostSigbitInfoA.IsNeg = true) && (MostSigbitInfoB.IsNeg = false))
 		{
@@ -365,11 +369,11 @@ class MfNibConverter extends MfObject
 		}
 		if (MostSigbitInfoA.IsNeg = true)
 		{
-			ObjA := MfBitConverter._FlipNibbles(ObjA)
+			ObjA := MfByteConverter._FlipNibbles(ObjA)
 		}
 		if (MostSigbitInfoB.IsNeg = true)
 		{
-			ObjB := MfBitConverter._FlipNibbles(ObjB)
+			ObjB := MfByteConverter._FlipNibbles(ObjB)
 		}
 		result := MfNibConverter._CompareUnSignedIntegerArraysBe(objA, objB)
 		if (result > 0)
@@ -1043,8 +1047,8 @@ class MfNibConverter extends MfObject
 		; if (nList.Count & 1) ; if uneven count
 		; {
 		; 	MSB := nList.Item[0]
-		; 	HexChar := MfBitConverter._GetHexValue(MSB)
-		; 	mInfo := MfBitConverter.HexBitTable[HexChar]
+		; 	HexChar := MfByteConverter._GetHexValue(MSB)
+		; 	mInfo := MfByteConverter.HexBitTable[HexChar]
 		; 	if (mInfo.IsNeg)
 		; 	{
 		; 		value := 255 ; MSB in return Byte List will be FF
@@ -1107,6 +1111,51 @@ class MfNibConverter extends MfObject
 		return MfNibConverter._HexToDecimal(nibbles, _startIndex)
 	}
 ; 	End:ToIntegerString ;}
+	; return a copy of nibbles with exactly n leading elements
+	; if UseMsb is true then MSB is the leading element. Otherwise  0 is leading element
+	Trim(nibbles, n=0, UseMsb=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		n := MfInteger.GetValue(n, 0)
+		UseMsb := MfBool.GetValue(UseMsb, true)
+		if (n < 0)
+		{
+			n = -n
+		}
+		MSB := 0
+		if (UseMsb)
+		{
+			MSB := nibbles.Item[0]
+		}
+		i := 0
+		j := nibbles.Count
+		while (i >= 0 && nibbles.m_InnerList[i + 1] = MSB)
+		{
+			i++
+			j--
+		}
+		y := new MfNibbleList(j + n, MSB)
+		if (j = 0)
+		{
+			; if j = the we have all leading bits of 0 or all leading bits or 1
+			; make sure to return at least n + 1 bits for a min of one bit
+			y.Add(MSB)
+			return y
+		}
+		MfNibConverter._copy(y, nibbles, MSB)
+		return y
+	}
 ;{ 	ToString
 	ToString(nibbles, returnAsObj = false, startIndex = 0, length="") {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1235,6 +1284,71 @@ class MfNibConverter extends MfObject
 	}
 ;{ 	ToComplement16
 ; End:Methods ;}
+;{ 	_copy
+	; do x=y on list x and y.
+	; x at least as big as y (not counting the MSB Values in y).
+	_copy(ByRef x, y, MSB=0) {
+		if (y.Count = 0)
+		{
+			x.Clear()
+			x.Add(MSB)
+			return
+		}
+		xl := x.m_InnerList
+		yl := y.m_InnerList
+		i := 1
+		yIndex := 0
+		while (i <= y.Count && yl[i] = MSB)
+		{
+			yIndex++
+			i++
+		}
+		yCount := y.Count - yIndex
+
+		if (yCount > x.Count)
+		{
+			; set all elemets of x to MSB
+			i := 1
+			while (i <= yCount)
+			{
+				xl[i] := yl[i + yIndex]
+				i++
+			}
+			; x and y should not be the same length
+
+			
+		}
+		else
+		{
+			; x.Count is greater then yCount
+			; assign the last items of y to the last items of x
+			
+			i := y.Count
+			j := x.Count
+			iCount := 0
+			k := yCount
+			while (k >= 1)
+			{
+				xl[j] := yl[i]
+				i--
+				j--
+				k--
+				iCount++
+			}
+			; not x last values are equal to y last values
+			; now assign MSB to all other x values
+			
+			; set remainding elemets of x to MSB
+			while (j >= 1 && iCount < x.Count)
+			{
+				xl[j] := MSB
+				j--
+				iCount++
+			}
+		}
+		x.m_Count := xl.Length()
+	}
+; 	End:_copy ;}
 ;{ 	divInt_
 	divInt_(byRef x, n) {
 		r := 0

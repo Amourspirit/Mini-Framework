@@ -47,13 +47,13 @@ class MfByteList extends MfListBase
 
 		if (Size > 0)
 		{
-			i := 0
-			while (i < size)
+			i := 1
+			while (i <= size)
 			{
-				this.m_InnerList.Push(default)
+				this.m_InnerList[i] := default
 				i++
 			}
-			this.m_Count := i
+			this.m_Count := i - 1
 		}
 	}
 ; End:Constructor ;}
@@ -86,8 +86,8 @@ class MfByteList extends MfListBase
 			throw ex
 		}
 		_value := MfByte.GetValue(obj)
-		this.m_InnerList.Push(_value)
 		this.m_Count++
+		this.m_InnerList[this.m_Count] := _value
 		return this.m_Count
 	}
 ;	End:Add(value) ;}
@@ -104,7 +104,7 @@ class MfByteList extends MfListBase
 			bl[i] := ll[i]
 			i++
 		}
-		cLst.m_Count := cLst.m_Count
+		cLst.m_Count := this.m_Count
 		return cLst
 	}
 ; 	End:Clone ;}
@@ -351,15 +351,16 @@ class MfByteList extends MfListBase
 		}
 		If (this.Count < 1)
 		{
-			this.m_InnerList.Push(0)
 			this.m_Count++
+			this.m_InnerList[this.m_Count] := 0
+			
 			return
 		}
 		NewCount := this.Count * 2
-		while this.Count < NewCount
+		while this.m_Count < NewCount
 		{
-			this.m_InnerList.Push(0)
 			this.m_Count++
+			this.m_InnerList[this.m_Count] := 0
 		}
 	}
 ; End:Methods ;}

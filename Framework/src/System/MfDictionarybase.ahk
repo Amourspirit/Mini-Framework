@@ -22,7 +22,7 @@
 */
 class MfDictionaryBase extends MfEnumerableBase
 {
-	m_Hashtable		:= Null
+	m_Hashtable		:= ""
 	m_count			:= 0
 	m_IsReadOnly	:= false
 	m_IsFixedSize	:= false

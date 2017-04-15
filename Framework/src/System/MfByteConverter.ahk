@@ -15,7 +15,7 @@
  */
 ; End:License ;}
 
-class MfBitConverter extends MfObject
+class MfByteConverter extends MfObject
 {
 	static bpe := 8
 	static mask := 255
@@ -37,7 +37,7 @@ class MfBitConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		return MfBitConverter._CompareUnSignedIntegerArraysLe(objA, objB)
+		return MfByteConverter._CompareUnSignedIntegerArraysLe(objA, objB)
 	}
 ; 	End:CompareUnsignedByteList ;}
 ;{ 	CompareSignedByteList
@@ -63,10 +63,10 @@ class MfBitConverter extends MfObject
 		{
 			return 1
 		}
-		MostSigbitA := MfBitConverter._GetFirstHexNumber(objA.Item[objA.Count -1])
+		MostSigbitA := MfByteConverter._GetFirstHexNumber(objA.Item[objA.Count -1])
 		MostSigbitInfoA := MfNibConverter.HexBitTable[MostSigbitA]
 		
-		MostSigbitB := MfBitConverter._GetFirstHexNumber(objB.Item[objB.Count -1])
+		MostSigbitB := MfByteConverter._GetFirstHexNumber(objB.Item[objB.Count -1])
 		MostSigbitInfoB := MfNibConverter.HexBitTable[MostSigbitB]
 		if ((MostSigbitInfoA.IsNeg = true) && (MostSigbitInfoB.IsNeg = false))
 		{
@@ -78,17 +78,17 @@ class MfBitConverter extends MfObject
 		}
 		if ((MostSigbitInfoA.IsNeg = false) && (MostSigbitInfoB.IsNeg = false))
 		{
-			return MfBitConverter._CompareUnSignedIntegerArraysLe(objA, objB)
+			return MfByteConverter._CompareUnSignedIntegerArraysLe(objA, objB)
 		}
 		if (MostSigbitInfoA.IsNeg = true)
 		{
-			ObjA := MfBitConverter._FlipBytes(ObjA)
+			ObjA := MfByteConverter._FlipBytes(ObjA)
 		}
 		if (MostSigbitInfoB.IsNeg = true)
 		{
-			ObjB := MfBitConverter._FlipBytes(ObjB)
+			ObjB := MfByteConverter._FlipBytes(ObjB)
 		}
-		result := MfBitConverter._CompareUnSignedIntegerArraysLe(objA, objB)
+		result := MfByteConverter._CompareUnSignedIntegerArraysLe(objA, objB)
 		if (result > 0)
 		{
 			return -1
@@ -121,9 +121,9 @@ class MfBitConverter extends MfObject
 		if (UseMsb = true && bytes.Count > 0)
 		{
 			b := bytes.Item[bytes.Count - 1]
-			bHigh := MfBitConverter.GetNibbleHigh(b)
+			bHigh := MfByteConverter.GetNibbleHigh(b)
 
-			Hex := MfBitConverter._GetFirstHexNumber(b)
+			Hex := MfByteConverter._GetFirstHexNumber(b)
 			bInfo := MfNibConverter.HexBitTable[Hex]
 			if (bInfo.IsNeg)
 			{
@@ -147,15 +147,16 @@ class MfBitConverter extends MfObject
 		i := 1
 		while (i <= bytes.Count)
 		{
-			bl.Push(ll[i])
+			bl[i] := ll[i]
 			i++
 		}
-		
+		j := i
 		i := 1
 		While (i <= diff)
 		{
-			bl.Push(MSB)
+			bl[j] := MSB
 			i++
+			j++
 		}
 		retval.m_Count := bl.Length()
 		return retval
@@ -177,25 +178,25 @@ class MfBitConverter extends MfObject
 			{
 				if (obj.Value = true)
 				{
-					return MfBitConverter._GetBytesInt(1, 8, true)
+					return MfByteConverter._GetBytesInt(1, 8, true)
 				}
-				return MfBitConverter._GetBytesInt(0, 8, true)
+				return MfByteConverter._GetBytesInt(0, 8, true)
 			}
 			else if (MfObject.IsObjInstance(obj, MfChar))
 			{
-				return MfBitConverter._GetBytesInt(obj.CharCode, 16)
+				return MfByteConverter._GetBytesInt(obj.CharCode, 16)
 			}
 			else if (MfObject.IsObjInstance(obj, MfInt16))
 			{
-				return MfBitConverter._GetBytesInt(obj.Value, 16)
+				return MfByteConverter._GetBytesInt(obj.Value, 16)
 			}
 			else if (MfObject.IsObjInstance(obj, MfInteger))
 			{
-				return MfBitConverter._GetBytesInt(obj.Value, 32)
+				return MfByteConverter._GetBytesInt(obj.Value, 32)
 			}
 			else if (MfObject.IsObjInstance(obj, MfInt64))
 			{
-				return MfBitConverter._GetBytesInt(obj.Value, 64)
+				return MfByteConverter._GetBytesInt(obj.Value, 64)
 			}
 			else if (MfObject.IsObjInstance(obj, MfUInt64))
 			{
@@ -204,8 +205,8 @@ class MfBitConverter extends MfObject
 			}
 			else if (MfObject.IsObjInstance(obj, MfFloat))
 			{
-				int := MfBitConverter._FloatToInt64(obj.Value)
-				return MfBitConverter._GetBytesInt(int, 64)
+				int := MfByteConverter._FloatToInt64(obj.Value)
+				return MfByteConverter._GetBytesInt(int, 64)
 			}
 			else if (MfObject.IsObjInstance(obj, MfBigInt))
 			{
@@ -235,14 +236,14 @@ class MfBitConverter extends MfObject
 	GetNibbleHigh(byte) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		_byte := MfByte.GetValue(byte)
-		return MfBitConverter._GetFirstHexNumber(_byte)
+		return MfByteConverter._GetFirstHexNumber(_byte)
 	}
 ; End:GetNibbleHigh ;}
 ;{ GetNibbleLow
 	GetNibbleLow(Byte) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		_byte := MfByte.GetValue(byte)
-		return MfBitConverter._GetSecondHexNumber(_byte)
+		return MfByteConverter._GetSecondHexNumber(_byte)
 	}
 ; End:GetNibbleLow ;}
 ;{ 	BytesAdd
@@ -374,8 +375,8 @@ class MfBitConverter extends MfObject
 		}
 		retval := "0x"
 		b := bytes.Item[_startIndex]
-		HexChar1 := MfBitConverter._GetFirstHexNumber(b)
-		HexChar2 := MfBitConverter._GetSecondHexNumber(b)
+		HexChar1 := MfByteConverter._GetFirstHexNumber(b)
+		HexChar2 := MfByteConverter._GetSecondHexNumber(b)
 		retval .= HexChar1 . HexChar2
 		retval := retval + 0x0
 
@@ -396,7 +397,7 @@ class MfBitConverter extends MfObject
 ;{ ToChar
 	ToChar(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		result := MfBitConverter.ToInt16(bytes, startIndex, false)
+		result := MfByteConverter.ToInt16(bytes, startIndex, false)
 		if (result < 0)
 		{
 			result := Abs(result)
@@ -449,12 +450,12 @@ class MfBitConverter extends MfObject
 			bArray.Add(itm)
 			i++
 		}
-		if (MfBitConverter.IsLittleEndian)
+		if (MfByteConverter.IsLittleEndian)
 		{
-			bArray := MfBitConverter._SwapBytes(bArray)
+			bArray := MfByteConverter._SwapBytes(bArray)
 		}
 		retval := "0x"
-		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
+		HexKey := MfByteConverter._GetFirstHexNumber(bArray.Item[0])
 		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
@@ -462,8 +463,8 @@ class MfBitConverter extends MfObject
 			retval := "-" . retval
 			for i, b in bArray
 			{
-				Hex1 := MfBitConverter._GetFirstHexNumber(b)
-				Hex2 := MfBitConverter._GetSecondHexNumber(b)
+				Hex1 := MfByteConverter._GetFirstHexNumber(b)
+				Hex2 := MfByteConverter._GetSecondHexNumber(b)
 				bInfo1 := MfNibConverter.HexBitTable[Hex1]
 				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
@@ -475,8 +476,8 @@ class MfBitConverter extends MfObject
 		for i , b in bArray
 		{
 
-			HexChar1 := MfBitConverter._GetFirstHexNumber(b)
-			HexChar2 := MfBitConverter._GetSecondHexNumber(b)
+			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
+			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
 
 			retval .= HexChar1 . HexChar2
 		}
@@ -536,12 +537,12 @@ class MfBitConverter extends MfObject
 			bArray.Add(itm)
 			i++
 		}
-		if (MfBitConverter.IsLittleEndian)
+		if (MfByteConverter.IsLittleEndian)
 		{
-			bArray := MfBitConverter._SwapBytes(bArray)
+			bArray := MfByteConverter._SwapBytes(bArray)
 		}
 		retval := "0x"
-		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
+		HexKey := MfByteConverter._GetFirstHexNumber(bArray.Item[0])
 		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
@@ -549,8 +550,8 @@ class MfBitConverter extends MfObject
 			retval := "-" . retval
 			for i, b in bArray
 			{
-				Hex1 := MfBitConverter._GetFirstHexNumber(b)
-				Hex2 := MfBitConverter._GetSecondHexNumber(b)
+				Hex1 := MfByteConverter._GetFirstHexNumber(b)
+				Hex2 := MfByteConverter._GetSecondHexNumber(b)
 				bInfo1 := MfNibConverter.HexBitTable[Hex1]
 				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
@@ -562,8 +563,8 @@ class MfBitConverter extends MfObject
 		for i , b in bArray
 		{
 
-			HexChar1 := MfBitConverter._GetFirstHexNumber(b)
-			HexChar2 := MfBitConverter._GetSecondHexNumber(b)
+			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
+			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
 
 			retval .= HexChar1 . HexChar2
 		}
@@ -623,12 +624,12 @@ class MfBitConverter extends MfObject
 			bArray.Add(itm)
 			i++
 		}
-		if (MfBitConverter.IsLittleEndian)
+		if (MfByteConverter.IsLittleEndian)
 		{
-			bArray := MfBitConverter._SwapBytes(bArray)
+			bArray := MfByteConverter._SwapBytes(bArray)
 		}
 		retval := "0x"
-		HexKey := MfBitConverter._GetFirstHexNumber(bArray.Item[0])
+		HexKey := MfByteConverter._GetFirstHexNumber(bArray.Item[0])
 		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
@@ -636,8 +637,8 @@ class MfBitConverter extends MfObject
 			retval := "-" . retval
 			for i, b in bArray
 			{
-				Hex1 := MfBitConverter._GetFirstHexNumber(b)
-				Hex2 := MfBitConverter._GetSecondHexNumber(b)
+				Hex1 := MfByteConverter._GetFirstHexNumber(b)
+				Hex2 := MfByteConverter._GetSecondHexNumber(b)
 				bInfo1 := MfNibConverter.HexBitTable[Hex1]
 				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
@@ -649,8 +650,8 @@ class MfBitConverter extends MfObject
 		for i , b in bArray
 		{
 
-			HexChar1 := MfBitConverter._GetFirstHexNumber(b)
-			HexChar2 := MfBitConverter._GetSecondHexNumber(b)
+			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
+			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
 
 			retval .= HexChar1 . HexChar2
 		}
@@ -713,8 +714,8 @@ class MfBitConverter extends MfObject
 ;{ ToFloat
 	ToFloat(bytes, startIndex = 0, ReturnAsObj = false) {
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		int := MfBitConverter.ToInt64(bytes, startIndex, false)
-		retval := MfBitConverter._Int64ToFloat(int)
+		int := MfByteConverter.ToInt64(bytes, startIndex, false)
+		retval := MfByteConverter._Int64ToFloat(int)
 		retval += 0.0
 		if (_ReturnAsObj)
 		{
@@ -762,11 +763,11 @@ class MfBitConverter extends MfObject
 			bArray.Add(itm)
 			i++
 		}
-		if (MfBitConverter.IsLittleEndian)
+		if (MfByteConverter.IsLittleEndian)
 		{
-			;bArray := MfBitConverter._SwapBytes(bArray)
+			;bArray := MfByteConverter._SwapBytes(bArray)
 		}
-		retval := MfBitConverter._LongHexArrayToLongInt(bArray)
+		retval := MfByteConverter._LongHexArrayToLongInt(bArray)
 		
 		if (_ReturnAsObj)
 		{
@@ -847,8 +848,8 @@ class MfBitConverter extends MfObject
 			b := bytes.Item[i]
 			bit1 := b // 16
 			bit2 := Mod(b, 16)
-			bitChar1 := MfBitConverter._GetHexValue(bit1)
-			bitChar2 := MfBitConverter._GetHexValue(bit2)
+			bitChar1 := MfByteConverter._GetHexValue(bit1)
+			bitChar2 := MfByteConverter._GetHexValue(bit2)
 
 			if (iCount > 0)
 			{
@@ -865,15 +866,82 @@ class MfBitConverter extends MfObject
 		return _returnAsObj = true?new MfString(retval):retval
 	}
 ; End:ToString ;}
+	Trim(bytes, n=0, UseMsb=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		n := MfInteger.GetValue(n, 0)
+		UseMsb := MfBool.GetValue(UseMsb, true)
+		if (n < 0)
+		{
+			n = -n
+		}
+		MSB := 0
+		if (UseMsb)
+		{
+			MostSigbit := MfByteConverter._GetFirstHexNumber(bytes.Item[bytes.Count -1])
+			Info := MfNibConverter.HexBitTable[MostSigbit]
+			if (Info.IsNeg)
+			{
+				MSB := 255
+			}
+		}
+		i := bytes.Count
+		while (i >= 1 && bytes.m_InnerList[i] = MSB)
+		{
+			i--
+		}
+		y := new MfByteList(i + n, MSB)
+		if (i = 0)
+		{
+			; if j = the we have all leading bits of 0 or all leading bits or 1
+			; make sure to return at least n + 1 bits for a min of one bit
+			y.Add(MSB)
+			return y
+		}
+		MfByteConverter._copy(y, bytes, MSB)
+		return y
+	}
 ;{ 	Methods
 ;{ Internal Methods
+	;{ 	_copy
+	; do x=y on x and y.  x must be an list
+	; at least as big as y (not counting the leading zeros in y).
+	_copy(ByRef x, y, MSB=0) {
+		k := x.m_Count < y.m_Count ? x.m_Count : y.m_Count
+		xl := x.m_InnerList
+		yl := y.m_InnerList
+		i := 1
+		while (i <= k)
+		{
+			xl[i] := yl[i]
+			i++
+		}
+		i := k
+		while (i < x.m_Count)
+		{
+			xl[i] := MSB
+			i++
+		}
+	}
+; 	End:_copy ;}
 	divInt_(byRef x, n) {
 		r := 0
 		i := 1
 		ll := x.m_InnerList
 		while (i < x.Count)
 		{
-			s := r * MfBitConverter.radix + ll[i]
+			s := r * MfByteConverter.radix + ll[i]
 			ll[i] := s // n
 			r := Mod(s , n)
 			i++
@@ -895,11 +963,11 @@ class MfBitConverter extends MfObject
 			b := 0
 			if (c < 0)
 			{
-				b := -(c >> MfBitConverter.bpe)
-				c += b * MfBitConverter.radix
+				b := -(c >> MfByteConverter.bpe)
+				c += b * MfByteConverter.radix
 			}
-			xl[i] := c & MfBitConverter.mask
-			c := (c >> MfBitConverter.bpe) - b
+			xl[i] := c & MfByteConverter.mask
+			c := (c >> MfByteConverter.bpe) - b
 			i--
 		}
 		x.m_Count := xl.Length()
@@ -988,14 +1056,14 @@ class MfBitConverter extends MfObject
 ;{ _GetFirstHexNumber
 	_GetFirstHexNumber(byte) {
 		Hex1 := byte // 16
-		Hex := MfBitConverter._GetHexValue(Hex1)
+		Hex := MfByteConverter._GetHexValue(Hex1)
 		return Hex
 	}
 ; End:_GetFirstHexNumber ;}
 ;{ _GetSecondHexNumber
 	_GetSecondHexNumber(byte) {
 		Hex1 := Mod(byte, 16)
-		Hex := MfBitConverter._GetHexValue(Hex1)
+		Hex := MfByteConverter._GetHexValue(Hex1)
 		return Hex
 	}
 ; End:_GetSecondHexNumber ;}
@@ -1028,9 +1096,9 @@ class MfBitConverter extends MfObject
 		if (bitCount > 64)
 		{
 			; will handle negative and positive and convert to Little Endian
-			return MfBitConverter._LongIntStringToHexArray(value, bitCount)
+			return MfByteConverter._LongIntStringToHexArray(value, bitCount)
 		}
-		return MfBitConverter._IntToHexArray(value, bitCount)
+		return MfByteConverter._IntToHexArray(value, bitCount)
 
 	}
 ; 	End:_GetBytesInt ;}
@@ -1067,9 +1135,9 @@ class MfBitConverter extends MfObject
 				throw ex
 			}
 			; will handle negative and positive and convert to Little Endian
-			return MfBitConverter._LongIntStringToHexArray(value, bitCount)
+			return MfByteConverter._LongIntStringToHexArray(value, bitCount)
 		}
-		return MfBitConverter._IntToHexArray(Abs(value), bitCount)
+		return MfByteConverter._IntToHexArray(Abs(value), bitCount)
 
 	}
 ; 	End:_GetBytesUInt ;}
@@ -1091,8 +1159,8 @@ class MfBitConverter extends MfObject
 				Continue
 			}
 
-			Hex1 := MfBitConverter._GetFirstHexNumber(b)
-			Hex2 := MfBitConverter._GetSecondHexNumber(b)
+			Hex1 := MfByteConverter._GetFirstHexNumber(b)
+			Hex2 := MfByteConverter._GetSecondHexNumber(b)
 			bInfo1 := MfNibConverter.HexBitTable[Hex1]
 			bInfo2 := MfNibConverter.HexBitTable[Hex2]
 			IsleadZero = False
@@ -1138,13 +1206,13 @@ class MfBitConverter extends MfObject
 		b := lst.Item[iMaxIndex]
 		;lst.Item[iMaxIndex] := b >> 1
 
-		bArray := MfBitConverter._FlipBytes(lst)
+		bArray := MfByteConverter._FlipBytes(lst)
 
 		;~ ; when negative Add 1
-		IsAdded := MfBitConverter._AddOneToByteList(bArray, false)
+		IsAdded := MfByteConverter._AddOneToByteList(bArray, false)
 		
 		sResult := "-"
-		sResult .= MfBitConverter._LongHexArrayToLongInt(bArray)
+		sResult .= MfByteConverter._LongHexArrayToLongInt(bArray)
 		return sResult
 	}
 ;{ _IntToHexArray
@@ -1252,16 +1320,16 @@ class MfBitConverter extends MfObject
 			{
 				bArray.Add(0)
 			}
-			;bArray := MfBitConverter._ReverseList(bArray)
+			;bArray := MfByteConverter._ReverseList(bArray)
 			; flip all the bits
-			bArray := MfBitConverter._FlipBytes(bArray)
+			bArray := MfByteConverter._FlipBytes(bArray)
 
 			if (MaxMinValuCorrect = False)
 			{
 				;~ ; when negative Add 1
-				IsAdded := MfBitConverter._AddOneToByteList(bArray)
+				IsAdded := MfByteConverter._AddOneToByteList(bArray)
 			}
-			;bArray := MfBitConverter._SwapBytes(bArray)
+			;bArray := MfByteConverter._SwapBytes(bArray)
 		}
 		else ; if (IsNegative)
 		{
@@ -1270,8 +1338,8 @@ class MfBitConverter extends MfObject
 			{
 				bArray.Add(0)
 			}
-			;bArray := MfBitConverter._ReverseList(bArray)
-			;bArray := MfBitConverter._SwapBytes(bArray)
+			;bArray := MfByteConverter._ReverseList(bArray)
+			;bArray := MfByteConverter._SwapBytes(bArray)
 			
 		}
 		return bArray
@@ -1284,8 +1352,8 @@ class MfBitConverter extends MfObject
 		for i, b in lst
 		{
 
-			Hex1 := MfBitConverter._GetFirstHexNumber(b)
-			Hex2 := MfBitConverter._GetSecondHexNumber(b)
+			Hex1 := MfByteConverter._GetFirstHexNumber(b)
+			Hex2 := MfByteConverter._GetSecondHexNumber(b)
 
 			bInfo1 := MfNibConverter.HexBitTable[Hex1]
 			bInfo2 := MfNibConverter.HexBitTable[Hex2]

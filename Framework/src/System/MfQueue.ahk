@@ -167,19 +167,21 @@ class MfQueue extends MfEnumerableBase
 		m_KeyEnum := Null
 		m_index := 0
 		m_count := 0
+		m_InnerList := ""
         __new(ParentClass) {
             this.m_Parent := ParentClass
 			this.m_count := this.m_Parent.m_list.Count
+			this.m_InnerList := this.m_Parent.m_list.m_InnerList
         }
         
        Next(ByRef key, ByRef value) {
 		
 			if (this.m_index < this.m_count) {
 				key := this.m_index
-				value := this.m_Parent.m_list.Item[key]
+				value := this.m_InnerList[key + 1]
 			}
 			this.m_index++
-			if (this.m_index > (this.m_count)) {
+			if (this.m_index > this.m_count) {
 				return 0
 			} else {
 				return true
