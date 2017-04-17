@@ -26,7 +26,7 @@ class MfMemoryString extends MfObject
 	m_MemView := ""
 	m_CharCount := 0
 	m_BytesPerChar := ""
-	m_FillBytes := ""
+	m_FillBytess := ""
 	m_Size := ""
 	m_nl := ""
 ;{ 	Constructor
@@ -50,11 +50,36 @@ class MfMemoryString extends MfObject
 		StringReplace, _Encoding, Encoding, -, , ALL
 		this.m_Encoding := Encoding
 		this.m_EncodingName := _Encoding
-		this.m_FillBytes := FillByte
+		this.m_FillBytess := FillByte
 		this.m_Size := Size
 		this.m_MemView := new MfMemStrView(size, FillByte, this.m_Encoding)
 	}
 ; 	End:Constructor ;}
+	FromBase64(obj, encoding="UTF-8") {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(obj))
+		{
+			ex := new MfArgumentNullException("obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		mStr := MfMemoryString._FromAnyStatic(obj, encoding)
+		mv := MfMemStrView.FromBase64(mStr.m_MemView,0, mStr.m_MemView.Pos - mStr.m_BytesPerChar, encoding)
+		
+
+		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytess, mv.m_Encoding)
+		objMemRW.m_MemView := ""
+		objMemRW.m_MemView := mv
+		objMemRW.m_CharCount := mv.GetCharCount()
+		objMemRW.m_Size := mv.Size
+		return objMemRW
+	}
+	ToBase64() {
+		result := ""
+		mv := MfMemStrView.ToBase64(this.m_MemView, 0, this.m_CharCount)
+		result := mv.ToString()
+		return result
+	}
 ;{ 	Append
 /*
 	Method: Append()
@@ -64,7 +89,7 @@ class MfMemoryString extends MfObject
 	Parameters:
 		obj
 			The value to append to the instance
-			Can be instance of MfMemoryString or MfMemStrView or any object derived from MfObject
+			Can be instance of MfMemoryString or any object derived from MfObject
 	Returns:
 		Returns this instance
 	Throws:
@@ -101,41 +126,143 @@ class MfMemoryString extends MfObject
 		return this
 	}
 ; 	End:Append ;}
+;{ 	AppendLine
+/*
+	Method: AppendLine()
 
+	AppendLine()
+		Appends a new line value into the stream
+	Returns:
+		Returns this instance after new line is appended
+*/
 	AppendLine() {
 		chars := this.m_MemView.AppendString(this.m_nl)
 		this.m_CharCount += chars
 		return this
 	}
+; 	End:AppendLine ;}
+/*
+	Method: Clear()
 
+	Clear()
+		Clears the contents of the buffer removing all text
+	Returns:
+		Returns this instance after has taken place
+*/
+;{ 	Clear
 	Clear() {
 		this.m_CharCount := 0
 		this.m_MemView := ""
-		this.m_MemView := new MfMemStrView(this.m_Size, this.m_FillBytes, this.m_Encoding)
+		this.m_MemView := new MfMemStrView(this.m_Size, this.m_FillBytess, this.m_Encoding)
 		return this
 	}
-	
-	
-	
+; 	End:Clear ;}
+;{ 	Clone
+/*
+	Method: Clone()
+
+	Clone()
+		Clones the current instanece into a new stream
+	Returns:
+		Returns an new instance with itentical contentents
+	Remarks:
+		Returns result contents are in a new new memory stream
+*/
 	Clone() {
-		objMemRW := new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+		objMemRW := new MfMemoryString(this.m_BytesPerChar, this.m_FillBytess, this.m_Encoding)
 		objMemRW.m_MemView := ""
 		objMemRW.m_MemView := this.m_MemView.Clone()
 		objMemRW.m_CharCount := this.m_CharCount
 		objMemRW.m_Size := objMemRW.m_MemView.Size
 		return objMemRW
 	}
-	
-	CompareOrdinal(str) {
-		if (str == "")
+; 	End:Clone ;}
+;{ 	CompareOrdinal
+/*
+	Method: CompareOrdinal()
+
+	CompareOrdinal()
+		Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
+	Parameters:
+		obj
+			The value to append to the instance
+			Can be instance of MfMemoryString or MfMemStrView or any object derived from MfObject
+		IgnoreCase
+			If true comparison must ignore case, then perform an ordinal comparison.
+			This technique is equivalent to converting the string to uppercase using the invariant culture
+			and then performing an ordinal comparison on the result.
+			Default value is false
+	Returns:
+		An integer that indicates the lexical relationship between the two comparands.
+			Less than zero this instance is less than strB.
+			Zero this instance and strB are equal.
+			Greater than zero this instance is greater than strB.
+	Throws:
+		Throws MfException if
+	Remarks:
+		When IgnoreCase is true this method performs a case-sensitive comparison using ordinal sort rules.
+		Indicates that the string comparison must use successive Unicode UTF-8 or UTF-16 encoded values of the string
+		(code unit by code unit comparison), leading to a fast comparison but one that is culture-insensitive. 
+*/
+	CompareOrdinal(obj, ignoreCase=false) {
+		if (MfNull.IsNull(obj))
 		{
 			return 1
 		}
-		mStr := this._FromAny(str)
-		result := MfMemStrView.CompareOrdinal(this.m_MemView, mStr.m_MemView)
+		mStr := this._FromAny(obj)
+		ignoreCase := MfBool.GetValue(ignoreCase, false)
+		If (ignoreCase)
+		{
+			result := MfMemStrView.CompareOrdinalIgnoreCase(this.m_MemView, mStr.m_MemView)
+		}
+		else
+		{
+			result := MfMemStrView.CompareOrdinal(this.m_MemView, mStr.m_MemView)
+		}
 		return result
 		
 	}
+; 	End:CompareOrdinal ;}
+;{ 	CompareOrdinalSubString
+/*
+	Method: CompareOrdinalSubString()
+
+	CompareOrdinalSubString()
+		Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
+	Parameters:
+		obj
+			The value to append to the instance
+			Can be instance of MfMemoryString or MfMemStrView or any object derived from MfObject
+		objIndex
+			The index in obj to start comparing to this instance
+		index
+			The index of the current instance to start comparing
+		IgnoreCase
+			If true comparison must ignore case, then perform an ordinal comparison.
+			This technique is equivalent to converting the string to uppercase using the invariant culture
+			and then performing an ordinal comparison on the result.
+			Default value is false
+	Returns:
+		Returns 
+	Throws:
+		Throws MfException if
+	Remarks:
+		If CompareOrdinalSubString
+*/
+	CompareOrdinalSubString(obj, objIndex,  index, length=-1, ignoreCase=false) {
+		if (MfNull.IsNull(obj))
+		{
+			return 1
+		}
+		objIndex := MfInteger.GetValue(objIndex)
+		index := MfInteger.GetValue(index)
+		length := MfInteger.GetValue(length)
+		ignoreCase := MfBool.GetValue(ignoreCase, false)
+		mStr := this._FromAny(obj)
+		result := MfMemStrView.CompareOrdinalSub(this.m_MemView, index, mStr.m_MemView, objIndex, length, ignoreCase)
+		return result
+	}
+; 	End:CompareOrdinalSubString ;}
 ;{ 	Difference
 	/*
 	Method: Difference(objA, maxDistance)
@@ -160,7 +287,7 @@ class MfMemoryString extends MfObject
 		{
 			maxOffset := Abs(MfInteger.GetValue(maxOffset, 5))
 			mStr := this._FromAny(obj)
-			result := MfMemStrView.Diff(this.m_MemView, mStr.m_MemView, this.m_Encoding, maxOffset)
+			result := MfMemStrView.Diff(this.m_MemView, mStr.m_MemView, maxOffset)
 			return result
 		}
 		catch e
@@ -421,7 +548,7 @@ class MfMemoryString extends MfObject
 
 	Reverse(LimitBytes=false) {
 		LimitBytes := MfBool.GetValue(LimitBytes, false)
-		objRev := new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+		objRev := new MfMemoryString(this.m_BytesPerChar, this.m_FillBytess, this.m_Encoding)
 		objRev.m_MemView := ""
 		objRev.m_MemView := this.m_MemView.Reverse(LimitBytes)
 		objRev.m_CharCount := this.m_CharCount
@@ -524,6 +651,60 @@ class MfMemoryString extends MfObject
 		this.TrimEnd(trimChars, IgnoreCase)
 	}
 
+	_FromAnyStatic(x, encoding) {
+
+		BytesPerChar := (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
+		if (IsObject(x))
+		{
+			if(MfObject.IsObjInstance(x, MfMemoryString))
+			{
+				if (!(x.m_Encoding = encoding))
+				{
+					return MfMemoryString._FromAnyStatic(x.ToString(), encoding)
+				}
+				return x
+			}
+
+			else if (MfObject.IsObjInstance(x, MfString))
+			{
+				len := (x.Length + 1) * BytesPerChar
+				retval := new MfMemoryString(len, , encoding)
+				retval.Append(x.Value)
+				return retval
+			}
+			else if (MfObject.IsObjInstance(x, MfObject))
+			{
+				str := x.ToString()
+				len := (StrLen(str) + 1) * BytesPerChar
+				retval := new MfMemoryString(len, , encoding)
+				retval.Append(str)
+				return retval
+			}
+			else if (x.__Class = "MfMemStrView")
+			{
+				retval := new MfMemoryString(x.m_BytesPerChar, x.m_FillBytes, x.m_Encoding)
+				retval.m_MemView := ""
+				retval.m_MemView := x
+				retval.m_CharCount := (x.Pos - 1) // x.m_BytesPerChar
+				retval.m_Size := x.Size
+				return this._FromAnyStatic(retval, x.m_Encoding) ; do another _FromAny in case encoding is different
+			}
+			else
+			{
+				return new MfMemoryString(BytesPerChar, , encoding)
+			}
+		}
+		if (x = "")
+		{
+			return new MfMemoryString(BytesPerChar, , encoding)
+		}
+
+		len := (StrLen(x) + 1) * BytesPerChar
+		retval := new MfMemoryString(len, , encoding)
+		retval.Append(x)
+		return retval
+	}
+
 	_FromAny(x) {
 		if (IsObject(x))
 		{
@@ -539,7 +720,7 @@ class MfMemoryString extends MfObject
 			else if (MfObject.IsObjInstance(x, MfString))
 			{
 				len := (x.Length + 1) * this.m_BytesPerChar
-				retval := new MfMemoryString(len, this.m_FillBytes, this.m_Encoding)
+				retval := new MfMemoryString(len, this.m_FillBytess, this.m_Encoding)
 				retval.Append(x.Value)
 				return retval
 			}
@@ -547,13 +728,13 @@ class MfMemoryString extends MfObject
 			{
 				str := x.ToString()
 				len := (StrLen(str) + 1) * this.m_BytesPerChar
-				retval := new MfMemoryString(len, this.m_FillBytes, this.m_Encoding)
+				retval := new MfMemoryString(len, this.m_FillBytess, this.m_Encoding)
 				retval.Append(str)
 				return retval
 			}
 			else if (x.__Class = "MfMemStrView")
 			{
-				retval := new MfMemoryString(this.m_BytesPerChar, x.m_FillByte, x.m_Encoding)
+				retval := new MfMemoryString(x.m_BytesPerChar, x.m_FillBytes, x.m_Encoding)
 				retval.m_MemView := ""
 				retval.m_MemView := x
 				retval.m_CharCount := (x.Pos - 1) // x.m_BytesPerChar
@@ -562,16 +743,16 @@ class MfMemoryString extends MfObject
 			}
 			else
 			{
-				return new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+				return new MfMemoryString(this.m_BytesPerChar, this.m_FillBytess, this.m_Encoding)
 			}
 		}
 		if (x = "")
 		{
-			return new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+			return new MfMemoryString(this.m_BytesPerChar, this.m_FillBytess, this.m_Encoding)
 		}
 
 		len := (StrLen(x) + 1) * this.m_BytesPerChar
-		retval := new MfMemoryString(len, this.m_FillBytes, this.m_Encoding)
+		retval := new MfMemoryString(len, this.m_FillBytess, this.m_Encoding)
 		retval.Append(x)
 		return retval
 	}
@@ -606,7 +787,7 @@ class MfMemoryString extends MfObject
  */
 class MfMemStrView extends MfMemBlkView
 {
-	m_FillByte := ""
+	m_FillBytes := ""
 	m_Encoding := ""
 	m_EncodingName := ""
 	m_BytesPerChar := ""
@@ -623,7 +804,7 @@ class MfMemStrView extends MfMemBlkView
 		StringReplace, _Encoding, Encoding, -, , ALL
 		this.m_Encoding := Encoding
 		this.m_EncodingName := _Encoding
-		this.m_FillByte := FillByte
+		this.m_FillBytes := FillByte
 		ObjSetCapacity(this, "_Buffer", size)
 		this.m_BytesPerChar := (this.m_Encoding = "UTF-16" || this.m_Encoding = "CP1600") ? 2 : 1
 		base.__New(ObjGetAddress(this, "_Buffer"),, size)
@@ -763,6 +944,419 @@ class MfMemStrView extends MfMemBlkView
 		return chars
 	}
 ; End:AppendString ;}
+	FromBase64Dll(ByRef InData, encoding="UTF-16") {
+		if (InData.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "InData", "MfMemStrView"), "InData")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BytesPerChar := (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
+		;BytesPerChar := InData.m_BytesPerChar
+		ptr := InData[]
+		InDataLen := (InData.pos - InData.m_BytesPerChar) // InData.m_BytesPerChar
+		OutData := ""
+		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt, ptr + 0
+			, UInt,InDataLen, UInt,1, UInt,0, UIntP,Bytes, Int,0, Int,0, "CDECL Int" )
+		VarSetCapacity( OutData, Req := Bytes * ( A_IsUnicode ? 2 : 1 ) )
+		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt, ptr + 0
+			, UInt,InDataLen, UInt,1, Str,OutData, UIntP,Req, Int,0, Int,0, "CDECL Int" )
+		;Return Bytes
+		retval := new MfMemStrView(StrPut(OutData,encoding) * BytesPerChar,,encoding)
+		retval.AppendString(OutData)
+		retval.Pos := Bytes + BytesPerChar
+		VarSetCapacity(OutData, 0)
+		Return retval
+	}
+	_FromBase64(ByRef InData, encoding="UTF-16") {
+		BytesPerChar := (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		OutData := ""
+		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
+			, UInt,StrLen(InData), UInt,1, UInt,0, UIntP,Bytes, Int,0, Int,0, "CDECL Int" )
+		VarSetCapacity( OutData, Req := Bytes * ( A_IsUnicode ? 2 : 1 ) )
+		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
+			, UInt,StrLen(InData), UInt,1, Str,OutData, UIntP,Req, Int,0, Int,0, "CDECL Int" )
+		;Return Bytes
+		retval := new MfMemStrView(Bytes,,encoding)
+		retval.AppendString(OutData)
+		VarSetCapacity(OutData, 0)
+		Return retval
+	}
+	__FromBase64(ByRef InData) {
+		OutData := ""
+		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
+			, UInt,StrLen(InData), UInt,1, UInt,0, UIntP,Bytes, Int,0, Int,0, "CDECL Int" )
+		VarSetCapacity( OutData, Req := Bytes * ( A_IsUnicode ? 2 : 1 ) )
+		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
+			, UInt,StrLen(InData), UInt,1, Str,OutData, UIntP,Req, Int,0, Int,0, "CDECL Int" )
+		Return Bytes
+	}
+	
+	; http://stackoverflow.com/questions/28902455/convert-base64-string-to-byte-array-like-c-sharp-method-convert-frombase64string
+	FromBase64Ojb(base64Data) {
+		strMIME64 := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+		MIME64 := new MfMemStrView(65,,"UTF-8")
+		MIME64.AppendString(strMIME64)
+
+		sType := base64Data.m_BytesPerChar = 1? "UChar":"UShort"
+		addLineBreaks := false
+		mask8 := 0xff
+		i := 3
+		byte24 := 0
+		size := (base64Data.Pos - base64Data.m_BytesPerChar) * base64Data.m_BytesPerChar
+		requiredSize := (((size) * 3) / 4)
+		if (addLineBreaks)
+		{
+			requiredSize += requiredSize - (requiredSize / 38)
+		}
+		buffer := new MfMemStrView(ceil(requiredSize),,"UTF-8")
+
+		ptrData := base64Data[]
+		ptrMime := MIME64[]
+		ptrBuffer := buffer[]
+		j := 0
+		while (j >= size)
+		{
+			numA := NumGet(ptrData + 0, j, sType)
+			if (numA = 61)
+			{
+				break ; = sign
+			}
+			a := chr(numA)
+			aInt := MfMemStrView.InBuf(ptrMime, &a, 64, 1)
+			if (aInt = -1)
+			{
+				ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			shiftAmount := 6 * Mod(i, 4)
+			byte24 |= aInt << shiftAmount
+			if (i > 0)
+			{
+				i--
+			}
+			else
+			{
+				i := 3
+				bytes := [(byte24 & (mask8 << 16)) >> 16
+					, (byte24 & (mask8 << 8)) >> 8
+					, byte24 & mask8]
+				NumPut(Number, VarOrAddress [, Offset = 0, Type = "UInt"])
+				;buff.append(UInt8(bytes[0]))
+			}
+			j++
+		}
+
+	}
+
+	FromBase64(ByRef InData, offset, length, encoding="UTF-8") {
+		if (InData.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "InData", "MfMemStrView"), "InData")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BytesPerChar := (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
+		;BytesPerChar := InData.m_BytesPerChar
+		
+		InDataLen := (InData.pos - InData.m_BytesPerChar) // InData.m_BytesPerChar
+
+		inputPtr := InData[] + offset
+		inputLength := length
+		while (inputLength > 0)
+		{
+			num := NumGet(inputPtr + 0, inputLength - 1, "UInt")
+			if (num != 32 && num != 10 && num != 13 && num != 9)
+			{
+				break
+			}
+			inputLength--
+		}
+		ResultSize := MfMemStrView._FromBase64_ComputeResultLength(inputPtr, inputLength, BytesPerChar)
+		if (ResultSize < 1)
+		{
+			return new MfMemStrView(BytesPerChar,,encoding)
+		}
+		retval := new MfMemStrView(ResultSize * BytesPerChar,,encoding)
+		ptr := retval[]
+				
+		MfMemStrView._FromBase64_Decode(inputPtr, inputLength, ptr, ResultSize, BytesPerChar)
+		retval.Pos := ResultSize * BytesPerChar
+		return retval
+	}
+
+	_FromBase64_ComputeResultLength(inputPtr, inputLength, BytesPerChar) {
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		ptr := inputPtr + inputLength
+		num := inputLength
+		num2 := 0
+		while (inputPtr < ptr)
+		{
+			num3 := NumGet(inputPtr + 0, 0, sType)
+			inputPtr++
+			if (num3 <= 32)
+			{
+				num--
+			}
+			else if (num3 = 61)
+			{
+				num--
+				num2++
+			}
+		}
+		if (num2 != 0)
+		{
+			if (num2 = 1)
+			{
+				num2 := 2
+			}
+			else
+			{
+				if (num2 != 2)
+				{
+					ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				num2 = 1
+			}
+		}
+		return Floor(num / 4 * 3 + num2)
+	}
+	_FromBase64_Decode(startInputPtr, inputLength, startDestPtr, destLength, BytesPerChar=1) {
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		ptr := startInputPtr
+		ptr2 := startDestPtr
+		ptr3 := ptr + inputLength
+		ptr4 := ptr2 + destLength
+		num := 255
+		while (ptr < ptr3)
+		{
+			num2 := NumGet(ptr + 0, 0, sType)
+			ptr++
+			if (num2 - 65 <= 25)
+			{
+				num2 -= 65
+			}
+			else if (num2 - 97 <= 25)
+			{
+				num2 -= 71
+			}
+			else
+			{
+				if (num2 - 48 > 9)
+				{
+					if (num2 <= 32)
+					{
+						if (num2 = 9 || num2 = 10 || num2 = 13 || num2 = 32)
+						{
+							Continue
+						}
+						break
+					}
+					else
+					{
+						if (num2 = 43)
+						{
+							num2 := 62
+							if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4, BytesPerChar))
+							{
+								return -1
+							}
+						}
+						else if (num2 = 47)
+						{
+							num2 := 63
+							if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4, BytesPerChar))
+							{
+								return -1
+							}
+						}
+						else if (num2 = 61)
+						{
+							if (ptr = ptr3)
+							{
+								num <<= 6
+								if ((num & 2147483648u) = 0)
+								{
+									ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64CharArrayLength"))
+									ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+									throw ex
+								}
+								if ((ptr4 - ptr2) < 2)
+								{
+									return -1
+								}
+								NumPut(num >> 16, ptr2++, 0, sType)
+								NumPut(num >> 8, ptr2++, 0, sType)
+								num := 255
+								break
+							}
+							else
+							{
+								while (ptr < ptr3 - 1)
+								{
+									num3 := NumGet(ptr + 0, 0, "Int")
+									if (num3 != 32 && num3 != 10 && num3 != 13 && num3 != 9)
+									{
+										break
+									}
+									ptr++
+								}
+							}
+							; 61 is char '='
+							if (ptr != ptr3 - 1 || NumGet(ptr + 0, 0, sType) != 61)
+							{
+								ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
+								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+								throw ex
+							}
+							num <<= 12
+							if ((num & 2147483648) = 0)
+							{
+								ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64CharArrayLength"))
+								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+								throw ex
+							}
+							if ((ptr4 - ptr2) < 1)
+							{
+								return -1
+							}
+							NumPut(num >> 16, ptr2++, 0, sType)
+							num := 255
+							break
+						}
+					}
+				}
+				ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			num2 -= 4294967292
+		}
+		if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4, BytesPerChar))
+		{
+			return -1
+		}
+		return ptr2 - startDestPtr
+	}
+
+	FromBase64_DecodeHelper(ByRef num, ByRef num2, ByRef ptr2, ptr4, BytesPerChar=1) {
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		num := (num << 6 | num2)
+		if ((num & 2147483648) != 0)
+		{
+			if ((ptr4 - ptr2) < 3)
+			{
+				return true
+			}
+			NumPut(num >> 16, ptr2 + 0, 0, sType)
+			NumPut(num >> 8, ptr2 + 0, BytePerChar * 1, sType)
+			NumPut(num, ptr2 + 0, BytePerChar * 2, sType)
+			ptr2 += 3
+			num = 255
+		}
+		return false
+	}
+	; http://stackoverflow.com/questions/12178495/an-efficient-way-to-base64-encode-a-byte-array
+	ToBase64(ByRef data, offset, size, addLineBreaks=false) {
+
+		strEnc := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+		base64EncodingTable := new MfMemStrView(StrPut(strEnc,"UTF-8"),,"UTF-8")
+		base64EncodingTable.AppendString(strEnc)
+
+		dataBPC := data.m_BytesPerChar
+		requiredSize := (4 * ((size + 2) / 3))
+		if (addLineBreaks)
+		{
+			requiredSize += requiredSize + (requiredSize / 38)
+		}
+		requiredSize := requiredSize * dataBPC
+		
+
+		buffer := new MfMemStrView(ceil(requiredSize),,"UTF-8") ; base64 out only makes sense to output as utf-8
+		offset := offset * dataBPC
+		size := size * dataBPC
+		octet_a := ""
+		octet_b = ""
+		octet_c = ""
+		triple = ""
+		lineCount := 0
+		sizeMod := size - mod(size , 3)
+		ptr := data[]
+		ptrBuff := buffer[]
+		ptr64 := base64EncodingTable[]
+		mBufferPos := 0
+		while (offset < sizeMod)
+		{
+			octet_a := NumGet(ptr + 0, Offset++, "UChar")
+			octet_b := NumGet(ptr + 0, Offset++, "UChar")
+			octet_c := NumGet(ptr + 0, Offset++, "UChar")
+
+			triple := (octet_a << 0x10) + (octet_b << 0x08) + octet_c
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 3 * 6) & 0x3F, "UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 2 * 6) & 0x3F, "UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 1 * 6) & 0x3F, "UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 0 * 6) & 0x3F, "UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			 if (addLineBreaks)
+			 {
+			 	if (++lineCount == 19)
+			 	{
+			 		NumPut(13, ptrBuff + 0 , mBufferPos++, "UChar")
+			 		
+			 		NumPut(10, ptrBuff + 0 , mBufferPos++, "UChar")
+			 		lineCount := 0
+			 	}
+			 }
+        }
+        ; last bytes
+		if (sizeMod < size)
+    	 {
+    	 	octet_a := offset < size ? NumGet(ptr + 0, Offset++, "UChar") : 0
+    	 	octet_b := offset < size ? NumGet(ptr + 0, Offset++, "UChar") : 0
+    	 	octet_c := 0 ; last character is definitely padded
+
+    	 	triple := (octet_a << 0x10) + (octet_b << 0x08) + octet_c
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 3 * 6) & 0x3F,"UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 2 * 6) & 0x3F,"UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 1 * 6) & 0x3F,"UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			numb64 := NumGet(ptr64 + 0, (triple >> 0 * 6) & 0x3F,"UChar")
+			NumPut(numb64, ptrBuff + 0 , mBufferPos++, "UChar")
+
+			; add padding '='
+			sizeMod := Mod(size , 3)
+			; last character is definitely padded
+			; for some unknow reason it is needed to set the byte postition at - 2 before -1
+			; the last postiion set seems to somehow stop the output from reading anyafter the 
+			; last NumPut position
+			if (sizeMod = 1)
+			{
+				NumPut(61, ptrBuff + 0 , mBufferPos - 2, "UChar")
+
+			}
+			NumPut(61, ptrBuff + 0 , mBufferPos - 1, "UChar") ; put = sign byte
+		}
+		buffer.Pos := mBufferPos + buffer.m_BytesPerChar
+		return buffer
+	}
 ;{ 	ToString
 /*
 	Method: ToString()
@@ -773,12 +1367,14 @@ class MfMemStrView extends MfMemBlkView
 		Returns string var
 */
 	ToString() {
-		PI := this.Pos
+		;PI := this.Pos
 		methodName := "Read" . this.m_EncodingName
 		len := (this.Pos - this.m_BytesPerChar)
-		this.Seek(0, 0)
-		retval := this.__Call(methodName, len)
-		this.Pos := PI
+		;this.Seek(0, 0)
+		ptr := this[]
+		retval := StrGet(ptr, len, this.m_Encoding)
+		;retval := this.__Call(methodName, len)
+		;this.Pos := PI
 		return retval
 	}
 ; 	End:ToString ;}
@@ -862,7 +1458,7 @@ class MfMemStrView extends MfMemBlkView
 	Remarks:
 		Static Method
 */
-	CompareOrdinalIgnoreCase(objA, objB) {
+	CompareOrdinalIgnoreCase(ByRef objA, ByRef objB) {
 		if (ObjA.__Class != "MfMemStrView")
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "ObjA", "MfMemStrView"), "ObjA")
@@ -1025,6 +1621,285 @@ class MfMemStrView extends MfMemBlkView
 		}
 	}
 ; 	End:CompareIgnoreCase ;}
+;{ 	CompareOrdinalSub
+/*
+	Method: CompareOrdinalSub()
+
+	CompareOrdinalSub()
+		Compares two sub values of instances of MfMemStrView as Ordinal, optionally ignoring case.
+	Parameters:
+		objA
+			The first instance of MfMemStrView to compare
+		indexA
+			The zero based index location within objA to start comparing.
+			Index location is base upon the char count
+		objB
+			The Second instance of MfMemStrView to compare
+		indexB
+			The zero based index location within objB to start comparing.
+			Index location is base upon the char count
+		len
+			The length of the string to compare, this is the length of number of characters
+			Default value is -1. If default then len is converted to the length of the shortest value after index of objA and objB.
+		ignoreCase
+			If true case is considered when comparing; Otherwise case is ignored.
+			The default is false
+	Returns:
+		Returns integer of 0 if equal, if objA is greater then objB the positive number is returned; Otherwise negative number
+	Throws:
+		Throws MfArgumentException
+		Throws MfIndexOutOfRangeException
+		Throw MfFormatException is encodings are not the same
+	Remarks:
+		Static Method
+*/
+	CompareOrdinalSub(byref objA, indexA, byRef objB, indexB, len=-1, ignoreCase=false) {
+		if (ObjA.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "ObjA", "MfMemStrView"), "ObjA")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (ObjB.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "ObjB", "MfMemStrView"), "ObjB")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (!(objA.m_Encoding = objB.m_Encoding))
+		{
+			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_Encoding_MisMatch"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BytesPerChar := objA.m_BytesPerChar
+		sType := BytesPerChar = 1? "UChar":"UShort"
+
+		PIA := objA.Pos
+		PIB := objB.Pos
+		if (indexA < 0 || indexA > PIA || len > PIA)
+		{
+			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_ArrayListInsert"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (indexB < 0 || indexB > PIB || len > PIB)
+		{
+			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_ArrayListInsert"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		objA.Seek(indexA * BytesPerChar)
+		objB.Seek(indexB * BytesPerChar)
+		
+		HasLen := true
+		if (len = -1)
+		{
+			aEnd := PIA - BytesPerChar
+			bEnd := PIB - BytesPerChar
+			aLen := aEnd - objA.Pos ; aLen may be 1 or two bytes per char
+			bLen := bEnd - objB.Pos ; bLen may be 1 or two bytes per char
+			HasLen := false
+			len := aLen > bLen ? bLen : aLen
+		}
+
+		i := len
+		;i -= BytesPerChar
+		num := -1
+		AddressA := objA[] + objA.Pos
+		AddressB := objB[] + objB.Pos
+		ptrA := AddressA ; first char address
+		ptrB := AddressB ; frist char address
+
+		; reset object positions
+		objA.Pos := PIA
+		objB.Pos := PIB
+
+		While (i >= 5 * BytesPerChar)
+		{
+			numA := NumGet(ptrA + 0, 0, sType)
+			numB := NumGet(ptrB + 0, 0, sType)
+			if (numA != numB)
+			{
+				If (!ignoreCase)
+				{
+					num := 0
+					break
+				}
+				char1 := Chr(numA)
+				char2 := Chr(numB)
+				if (!(char1 = char2))
+				{
+					num := 0
+					break
+				}
+				
+			}
+			numA := NumGet(ptrA + BytesPerChar, 0, sType)
+			numB := NumGet(ptrB + BytesPerChar, 0, sType)
+			if (numA != numB)
+			{
+				If (!ignoreCase)
+				{
+					num := BytesPerChar
+					break
+				}
+				char1 := Chr(numA)
+				char2 := Chr(numB)
+				if (!(char1 = char2))
+				{
+					num := BytesPerChar
+					break
+				}
+			}
+			numA := NumGet(ptrA + (BytesPerChar * 2), 0, sType)
+			numB := NumGet(ptrB + (BytesPerChar * 2), 0, sType)
+			if (numA != numB)
+			{
+				If (!ignoreCase)
+				{
+					num := BytesPerChar * 2
+					break
+				}
+				char1 := Chr(numA)
+				char2 := Chr(numB)
+				if (!(char1 = char2))
+				{
+					num := BytesPerChar * 2
+					break
+				}
+			}
+			numA := NumGet(ptrA + (BytesPerChar * 3), 0, sType)
+			numB := NumGet(ptrB + (BytesPerChar * 3), 0, sType)
+			if (numA != numB)
+			{
+				If (!ignoreCase)
+				{
+					num := BytesPerChar * 3
+					break
+				}
+				char1 := Chr(numA)
+				char2 := Chr(numB)
+				if (!(char1 = char2))
+				{
+					num := BytesPerChar * 3
+					break
+				}
+			}
+			numA := NumGet(ptrA + (BytesPerChar * 4), 0, sType)
+			numB := NumGet(ptrB + (BytesPerChar * 4), 0, sType)
+			if (numA != numB)
+			{
+				If (!ignoreCase)
+				{
+					num := BytesPerChar * 4
+					break
+				}
+				char1 := Chr(numA)
+				char2 := Chr(numB)
+				if (!(char1 = char2))
+				{
+					num := BytesPerChar * 4
+					break
+				}
+			}
+			ptrA += BytesPerChar * 5
+			ptrB += BytesPerChar * 5
+			i -= BytesPerChar * 5
+		}
+		if (num != -1)
+		{
+			ptrA += num
+			ptrB += num
+			numA := NumGet(ptrA + 0, 0, sType)
+			numB := NumGet(ptrB + 0, 0, sType)
+			result := numA - numB
+			if (result != 0)
+			{
+				return result
+			}
+			numA := NumGet(ptrA + BytesPerChar, 0, sType)
+			numB := NumGet(ptrB + BytesPerChar, 0, sType)
+			return numA - numB
+		}
+		else
+		{
+			while (i > 0)
+			{
+				numA := NumGet(ptrA + 0, 0, sType)
+				numB := NumGet(ptrB + 0, 0, sType)
+				if (numA != numB)
+				{
+					If (!ignoreCase)
+					{
+						break
+					}
+					char1 := Chr(numA)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						break
+					}
+				}
+				ptrA += BytesPerChar
+				ptrB += BytesPerChar
+				i -= BytesPerChar
+			}
+			if (i <= 0)
+			{
+				if (!HasLen)
+				{
+					return aLen - bLen
+				}
+				return i
+			}
+			numA := NumGet(ptrA + 0, 0, sType)
+			numB := NumGet(ptrB + 0, 0, sType)
+			result := 0
+			if (NumA != numB)
+			{
+				If (!ignoreCase)
+				{
+					result := numA - numB
+				}
+				else
+				{
+					char1 := Chr(numA)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						result := numA - numB
+					}
+				}
+			}
+			if (result != 0)
+			{
+				return result
+			}
+			numA := NumGet(ptrA + BytesPerChar, 0, sType)
+			numB := NumGet(ptrB + BytesPerChar, 0, sType)
+			result := 0
+			if (NumA != numB)
+			{
+				If (!ignoreCase)
+				{
+					result := numA - numB
+				}
+				else
+				{
+					char1 := Chr(num1)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						result := numA - numB
+					}
+				}
+			}
+			return result
+		}
+	}
+; 	End:CompareOrdinalSub ;}
 ;{ 	GetCharCount
 /*
 	Method: GetCharCount()
@@ -1064,7 +1939,7 @@ class MfMemStrView extends MfMemBlkView
 		the order and char for new line are read from MfEnviroment.Instance.NewLine
 */
 	Reverse(LimitBytes=false) {
-		rev := new MfMemStrView(LimitBytes?this.Pos + this.m_BytesPerChar: this.Size, this.m_FillByte, this.m_Encoding)
+		rev := new MfMemStrView(LimitBytes?this.Pos + this.m_BytesPerChar: this.Size, this.m_FillBytes, this.m_Encoding)
 		If (this.Pos < 1)
 		{
 			return rev
@@ -1147,6 +2022,7 @@ class MfMemStrView extends MfMemBlkView
 		return rev
 	}
 ; 	End:Reverse ;}
+
 ;{ 	_CompareOrdinalHelper
 	; compare two instances of MfMemStrView and returns ordinal value comparsion
 	_CompareOrdinalHelper(objA, objB) {
@@ -1254,7 +2130,7 @@ class MfMemStrView extends MfMemBlkView
 		Returns copy of current instance
 */
 	Clone() {
-		objMemBlk := new MfMemStrView(this.Size, this.m_FillByte, this.m_Encoding)
+		objMemBlk := new MfMemStrView(this.Size, this.m_FillBytes, this.m_Encoding)
 		newAddress := objMemBlk[]
 		Address := this[]
 		DllCall("RtlMoveMemory", UInt,newAddress + 0, UInt,Address + 0, Uint, this.Size)
@@ -1276,7 +2152,7 @@ class MfMemStrView extends MfMemBlkView
 		Returns returns the difference between the strings as a float between 0 and 1.
 		0 means strings are identical. 1 means they have nothing in common.
 */
-	Diff(objA, objB, encoding, maxOffset=5) {
+	Diff(objA, objB, maxOffset=5) {
 		if (ObjA.__Class != "MfMemStrView")
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "ObjA", "MfMemStrView"), "ObjA")
@@ -1579,7 +2455,7 @@ class MfMemStrView extends MfMemBlkView
 */
 	EqualsString(str, IgnoreCase=true) {
 		len := StrLen(str)
-		objMemBlk := new MfMemStrView((len + 1) * this.m_BytesPerChar, this.m_FillByte, this.m_Encoding)
+		objMemBlk := new MfMemStrView((len + 1) * this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
 		methodName := "Write" . this.m_EncodingName
 		chars := objMemBlk.__Call(methodName, str)
 		if (objMemBlk.Pos <> this.Pos)
@@ -2035,7 +2911,7 @@ class MfMemStrView extends MfMemBlkView
 		methodPut := "Put" . strType
 		while (this.Pos < PI)
 		{
-			this.__Call(methodPut,this.m_FillByte)
+			this.__Call(methodPut,this.m_FillBytes)
 		}
 		this.Seek(NewPos)
 		
