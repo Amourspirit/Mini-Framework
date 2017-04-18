@@ -63,8 +63,8 @@ class MfMemoryString extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		mStr := MfMemoryString._FromAnyStatic(obj, encoding)
-		mv := MfMemStrView.FromBase64(mStr.m_MemView,0, mStr.m_MemView.Pos - mStr.m_BytesPerChar, encoding)
+		mStr := MfMemoryString._FromAnyStatic(obj, "UTF-8") ; base64 string, Use UTF-8
+		mv := MfMemStrView.FromBase64(mStr.m_MemView,0, mStr.m_CharCount, encoding)
 		
 
 		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytess, mv.m_Encoding)
@@ -944,113 +944,6 @@ class MfMemStrView extends MfMemBlkView
 		return chars
 	}
 ; End:AppendString ;}
-	FromBase64Dll(ByRef InData, encoding="UTF-16") {
-		if (InData.__Class != "MfMemStrView")
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "InData", "MfMemStrView"), "InData")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		BytesPerChar := (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
-		;BytesPerChar := InData.m_BytesPerChar
-		ptr := InData[]
-		InDataLen := (InData.pos - InData.m_BytesPerChar) // InData.m_BytesPerChar
-		OutData := ""
-		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt, ptr + 0
-			, UInt,InDataLen, UInt,1, UInt,0, UIntP,Bytes, Int,0, Int,0, "CDECL Int" )
-		VarSetCapacity( OutData, Req := Bytes * ( A_IsUnicode ? 2 : 1 ) )
-		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt, ptr + 0
-			, UInt,InDataLen, UInt,1, Str,OutData, UIntP,Req, Int,0, Int,0, "CDECL Int" )
-		;Return Bytes
-		retval := new MfMemStrView(StrPut(OutData,encoding) * BytesPerChar,,encoding)
-		retval.AppendString(OutData)
-		retval.Pos := Bytes + BytesPerChar
-		VarSetCapacity(OutData, 0)
-		Return retval
-	}
-	_FromBase64(ByRef InData, encoding="UTF-16") {
-		BytesPerChar := (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
-		sType := BytesPerChar = 1? "UChar":"UShort"
-		OutData := ""
-		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
-			, UInt,StrLen(InData), UInt,1, UInt,0, UIntP,Bytes, Int,0, Int,0, "CDECL Int" )
-		VarSetCapacity( OutData, Req := Bytes * ( A_IsUnicode ? 2 : 1 ) )
-		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
-			, UInt,StrLen(InData), UInt,1, Str,OutData, UIntP,Req, Int,0, Int,0, "CDECL Int" )
-		;Return Bytes
-		retval := new MfMemStrView(Bytes,,encoding)
-		retval.AppendString(OutData)
-		VarSetCapacity(OutData, 0)
-		Return retval
-	}
-	__FromBase64(ByRef InData) {
-		OutData := ""
-		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
-			, UInt,StrLen(InData), UInt,1, UInt,0, UIntP,Bytes, Int,0, Int,0, "CDECL Int" )
-		VarSetCapacity( OutData, Req := Bytes * ( A_IsUnicode ? 2 : 1 ) )
-		DllCall( "Crypt32.dll\CryptStringToBinary" ( A_IsUnicode ? "W" : "A" ), UInt,&InData
-			, UInt,StrLen(InData), UInt,1, Str,OutData, UIntP,Req, Int,0, Int,0, "CDECL Int" )
-		Return Bytes
-	}
-	
-	; http://stackoverflow.com/questions/28902455/convert-base64-string-to-byte-array-like-c-sharp-method-convert-frombase64string
-	FromBase64Ojb(base64Data) {
-		strMIME64 := "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-		MIME64 := new MfMemStrView(65,,"UTF-8")
-		MIME64.AppendString(strMIME64)
-
-		sType := base64Data.m_BytesPerChar = 1? "UChar":"UShort"
-		addLineBreaks := false
-		mask8 := 0xff
-		i := 3
-		byte24 := 0
-		size := (base64Data.Pos - base64Data.m_BytesPerChar) * base64Data.m_BytesPerChar
-		requiredSize := (((size) * 3) / 4)
-		if (addLineBreaks)
-		{
-			requiredSize += requiredSize - (requiredSize / 38)
-		}
-		buffer := new MfMemStrView(ceil(requiredSize),,"UTF-8")
-
-		ptrData := base64Data[]
-		ptrMime := MIME64[]
-		ptrBuffer := buffer[]
-		j := 0
-		while (j >= size)
-		{
-			numA := NumGet(ptrData + 0, j, sType)
-			if (numA = 61)
-			{
-				break ; = sign
-			}
-			a := chr(numA)
-			aInt := MfMemStrView.InBuf(ptrMime, &a, 64, 1)
-			if (aInt = -1)
-			{
-				ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			shiftAmount := 6 * Mod(i, 4)
-			byte24 |= aInt << shiftAmount
-			if (i > 0)
-			{
-				i--
-			}
-			else
-			{
-				i := 3
-				bytes := [(byte24 & (mask8 << 16)) >> 16
-					, (byte24 & (mask8 << 8)) >> 8
-					, byte24 & mask8]
-				NumPut(Number, VarOrAddress [, Offset = 0, Type = "UInt"])
-				;buff.append(UInt8(bytes[0]))
-			}
-			j++
-		}
-
-	}
-
 	FromBase64(ByRef InData, offset, length, encoding="UTF-8") {
 		if (InData.__Class != "MfMemStrView")
 		{
@@ -1059,36 +952,34 @@ class MfMemStrView extends MfMemBlkView
 			throw ex
 		}
 		BytesPerChar := (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
-		;BytesPerChar := InData.m_BytesPerChar
 		
-		InDataLen := (InData.pos - InData.m_BytesPerChar) // InData.m_BytesPerChar
-
 		inputPtr := InData[] + offset
 		inputLength := length
 		while (inputLength > 0)
 		{
-			num := NumGet(inputPtr + 0, inputLength - 1, "UInt")
+			num := NumGet(inputPtr + 0, inputLength - 1, "UChar")
 			if (num != 32 && num != 10 && num != 13 && num != 9)
 			{
 				break
 			}
 			inputLength--
 		}
-		ResultSize := MfMemStrView._FromBase64_ComputeResultLength(inputPtr, inputLength, BytesPerChar)
+		ResultSize := MfMemStrView._FromBase64_ComputeResultLength(inputPtr, inputLength)
 		if (ResultSize < 1)
 		{
 			return new MfMemStrView(BytesPerChar,,encoding)
 		}
-		retval := new MfMemStrView(ResultSize * BytesPerChar,,encoding)
+		
+		retval := new MfMemStrView(ResultSize + BytesPerChar,,encoding)
 		ptr := retval[]
 				
-		MfMemStrView._FromBase64_Decode(inputPtr, inputLength, ptr, ResultSize, BytesPerChar)
-		retval.Pos := ResultSize * BytesPerChar
+		MfMemStrView._FromBase64_Decode(inputPtr, inputLength, ptr, ResultSize)
+		retval.Pos := ResultSize + BytesPerChar
 		return retval
 	}
 
-	_FromBase64_ComputeResultLength(inputPtr, inputLength, BytesPerChar) {
-		sType := BytesPerChar = 1? "UChar":"UShort"
+	_FromBase64_ComputeResultLength(inputPtr, inputLength) {
+		sType := "UChar"
 		ptr := inputPtr + inputLength
 		num := inputLength
 		num2 := 0
@@ -1120,33 +1011,38 @@ class MfMemStrView extends MfMemBlkView
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				num2 = 1
+				num2 := 1
 			}
 		}
-		return Floor(num / 4 * 3 + num2)
+		return num // 4 * 3 + num2
 	}
-	_FromBase64_Decode(startInputPtr, inputLength, startDestPtr, destLength, BytesPerChar=1) {
-		sType := BytesPerChar = 1? "UChar":"UShort"
+	_FromBase64_Decode(startInputPtr, inputLength, startDestPtr, destLength) {
+		sType := "UChar"
+		sInType := "UChar"
 		ptr := startInputPtr
 		ptr2 := startDestPtr
 		ptr3 := ptr + inputLength
 		ptr4 := ptr2 + destLength
 		num := 255
+		;strDebug := ""
 		while (ptr < ptr3)
 		{
-			num2 := NumGet(ptr + 0, 0, sType)
+			num2 := NumGet(ptr + 0, 0, sInType)
+			;OutputDebug % "_FromBase64_Decode: num2 :" . num2
+			
 			ptr++
-			if (num2 - 65 <= 25)
+			if (num2 >= 65 && num2 - 65 <= 25)
 			{
 				num2 -= 65
 			}
-			else if (num2 - 97 <= 25)
+			else if (num2 >= 97 && num2 - 97 <= 25)
 			{
 				num2 -= 71
 			}
 			else
 			{
-				if (num2 - 48 > 9)
+				;OutputDebug % "_FromBase64_Decode: Else: num2 :" . num2
+				if (num2 >= 48 && num2 - 48 > 9)
 				{
 					if (num2 <= 32)
 					{
@@ -1161,25 +1057,29 @@ class MfMemStrView extends MfMemBlkView
 						if (num2 = 43)
 						{
 							num2 := 62
-							if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4, BytesPerChar))
+							if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4))
 							{
+								;OutputDebug % strDebug
 								return -1
 							}
+							continue
 						}
 						else if (num2 = 47)
 						{
 							num2 := 63
-							if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4, BytesPerChar))
+							if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4))
 							{
+								;OutputDebug % strDebug
 								return -1
 							}
+							continue
 						}
 						else if (num2 = 61)
 						{
 							if (ptr = ptr3)
 							{
 								num <<= 6
-								if ((num & 2147483648u) = 0)
+								if ((num & 2147483648) = 0)
 								{
 									ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64CharArrayLength"))
 									ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1189,8 +1089,10 @@ class MfMemStrView extends MfMemBlkView
 								{
 									return -1
 								}
-								NumPut(num >> 16, ptr2++, 0, sType)
-								NumPut(num >> 8, ptr2++, 0, sType)
+								NumPut(num >> 16, ptr2 + 0, 0, sType)
+								ptr2++
+								NumPut(num >> 8, ptr2 + 0, 0, sType)
+								ptr2++
 								num := 255
 								break
 							}
@@ -1198,53 +1100,56 @@ class MfMemStrView extends MfMemBlkView
 							{
 								while (ptr < ptr3 - 1)
 								{
-									num3 := NumGet(ptr + 0, 0, "Int")
+									num3 := NumGet(ptr + 0, 0, sInType)
 									if (num3 != 32 && num3 != 10 && num3 != 13 && num3 != 9)
 									{
 										break
 									}
 									ptr++
 								}
+								; 61 is char '='
+								if (ptr != ptr3 - 1 || NumGet(ptr + 0, 0, sInType) != 61)
+								{
+									ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
+									ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+									throw ex
+								}
+								num <<= 12
+								if ((num & 2147483648) = 0)
+								{
+									ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64CharArrayLength"))
+									ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+									throw ex
+								}
+								if ((ptr4 - ptr2) < 1)
+								{
+									return -1
+								}
+								NumPut(num >> 16, ptr2 + 0, 0, sType)
+								ptr2++
+								num := 255
+								break
 							}
-							; 61 is char '='
-							if (ptr != ptr3 - 1 || NumGet(ptr + 0, 0, sType) != 61)
-							{
-								ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
-								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-								throw ex
-							}
-							num <<= 12
-							if ((num & 2147483648) = 0)
-							{
-								ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64CharArrayLength"))
-								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-								throw ex
-							}
-							if ((ptr4 - ptr2) < 1)
-							{
-								return -1
-							}
-							NumPut(num >> 16, ptr2++, 0, sType)
-							num := 255
-							break
 						}
 					}
+					ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
 				}
-				ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadBase64Char"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
+				num2 -= 4294967292
 			}
-			num2 -= 4294967292
+			if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4))
+			{
+				;OutputDebug % strDebug
+				return -1
+			}
 		}
-		if (MfMemStrView.FromBase64_DecodeHelper(num, num2, ptr2, ptr4, BytesPerChar))
-		{
-			return -1
-		}
+		;OutputDebug % strDebug
 		return ptr2 - startDestPtr
 	}
 
-	FromBase64_DecodeHelper(ByRef num, ByRef num2, ByRef ptr2, ptr4, BytesPerChar=1) {
-		sType := BytesPerChar = 1? "UChar":"UShort"
+	FromBase64_DecodeHelper(ByRef num, ByRef num2, ByRef ptr2, ptr4) {
+		sType :="UChar"
 		num := (num << 6 | num2)
 		if ((num & 2147483648) != 0)
 		{
@@ -1252,9 +1157,10 @@ class MfMemStrView extends MfMemBlkView
 			{
 				return true
 			}
+			
 			NumPut(num >> 16, ptr2 + 0, 0, sType)
-			NumPut(num >> 8, ptr2 + 0, BytePerChar * 1, sType)
-			NumPut(num, ptr2 + 0, BytePerChar * 2, sType)
+			NumPut(num >> 8, ptr2 + 0, 1, sType)
+			NumPut(num, ptr2 + 0, 2, sType)
 			ptr2 += 3
 			num = 255
 		}
@@ -1378,6 +1284,38 @@ class MfMemStrView extends MfMemBlkView
 		return retval
 	}
 ; 	End:ToString ;}
+;{ 	ToArray
+	ToArray(startIndex=0, length=-1) {
+		if ((StartIndex < 0) || (StartIndex >= this.pos))
+		{
+			return []
+		}
+		if (Length = 0)
+		{
+			return []
+		}
+		if (Length < 0)
+		{
+			length := this.Pos - startIndex
+		}
+		if (Length + startIndex > this.Pos)
+		{
+			return []
+		}
+	
+		
+		ptr := this[]
+		a := []
+		sType := "UChar"
+		i := startIndex
+		While (i < length)
+		{
+			a[i + 1] := NumGet(ptr + 0, i, sType)
+			i++
+		}
+		return a
+	}
+; 	End:ToArray ;}
 ;{ 	CompareOrdinal
 /*
 	Method: CompareOrdinal()
