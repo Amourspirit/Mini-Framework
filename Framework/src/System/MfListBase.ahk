@@ -414,7 +414,7 @@ class MfListBase extends MfEnumerableBase
 		vRemoved := this.m_InnerList.RemoveAt(i)
 		iLen := this.m_InnerList.Length()
 		; if vremoved is an empty string or vRemoved is 0 then, If (vRemoved ) would computed to false
-		if (iLen = _index) {
+		if (iLen != this.m_Count) {
 			this.m_Count--
 		} else {
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_FailedToRemove"))

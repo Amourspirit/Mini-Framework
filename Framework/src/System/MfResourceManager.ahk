@@ -150,7 +150,7 @@ class MfResourceManager extends MfObject
 	*/
 	SetResDir(lang) {
 		if (MfNull.IsNull(this.m_CoreRes)) {
-			sFile := MfString.Format("MfResource_Core_{0}.dll", lang) ;*[SetResDir]
+			sFile := MfString.Format("MfResource_Core_{0}.dll", lang)
 			
 			strVersion := MfString.Format("{0:i}.{1:i}", MfInfo.Version.Major, MfInfo.Version.Minor)
 			
