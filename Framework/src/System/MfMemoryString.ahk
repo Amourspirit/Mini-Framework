@@ -16,8 +16,43 @@
 ; End:License ;}
 
 /*
-	Class MfMemoryString
-	Internal class for working dircetly with memory strings
+ *	Class MfMemoryString
+ *
+ *	Methods
+ *	Append() Appends a new value to the current instance
+ *	AppendLine() Appends a new line value into the current instance
+ *	Clear() Clears the contents of the buffer removing all text
+ *	Clone()	Clones the current instanece into a new stream
+ *	CompareOrdinal() Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
+ *	CompareOrdinalSubString() Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
+ *	Difference() Gets the Difference between argument obj and argument this instance with an included Max Distance.
+ *	EndsWith() Gets a boolean value true or false if this instance ends with obj
+ *	Equals() Checks to see if obj is equals this instance
+  *	Expand() Expands the current instance of MfMemoryString by AddBytes ammount
+ *	FromBase64() Encodes Obj to base64 instance of MfMemoryString
+ *	FromByteList() Converts MfByteList into MfMemoryString instance
+ *	IndexOf() Gets the zero based position of obj within the currrent instance from start
+ *	Insert() Inserts obj into current instance
+ *	LastIndexOf() Gets the zero based position of obj within the currrent instance from end
+ *	Replace() Replaces instances of oldValue with Instances of newValue
+ *	Remove() Removes a number of chars from currrent instance
+ *	Reverse() Reverses the contentes of the currrent instance and returne it as a new instance
+ *	StartsWith() Gets if current instance starts with obj
+ *	SubString() Gets a new instance of MfMemoryString that represents a subset of the current instance chars
+ *	ToArray() Gets Byte array of current chars
+ *	ToBase64() Reads current instance and returns a new MfMemoryString instance endoced as UTF-8 base64
+ *	ToByteList() Creates an MfByteList of bytes from current instance of MfMemoryString
+ *	ToString() Retunrs the contents of the current instance as a string var
+ *	Trim() Trims TrimChars or whitespace from this instance start and end
+ *	TrimBuffer() Trims the internal buffer to the size of the current chars
+ *	TrimStart() Trims TrimChars or whitespace from this instance start
+ *	TrimStart() Trims TrimChars or whitespace from this instance end
+ *	
+ *	Properties
+ *	Length - Gets the length of the current instance chars
+ *	Size - Gets the Size of the current instance in bytes
+ * 
+ *	Internal class for working dircetly with memory strings
 */
 class MfMemoryString extends MfObject
 {
@@ -106,7 +141,7 @@ class MfMemoryString extends MfObject
 	Method: AppendLine()
 
 	AppendLine()
-		Appends a new line value into the stream
+		Appends a new line value into the current instance
 	Returns:
 		Returns this instance after new line is appended
 */
@@ -240,7 +275,7 @@ class MfMemoryString extends MfObject
 ; 	End:CompareOrdinalSubString ;}
 ;{ 	Difference
 	/*
-	Method: Difference(objA, maxDistance)
+	Method: Difference()
 		Gets the Difference between argument obj and argument this instance with an included Max Distance.
 		obj
 			the obj to compare.
@@ -278,6 +313,40 @@ class MfMemoryString extends MfObject
 		
 	}
 ; 	End:Difference ;}
+;{ 	EndsWith
+/*
+	Method: EndsWith()
+
+	EndsWith()
+		Gets a boolean value true or false if this instance ends with obj
+	Parameters:
+		obj
+			Can be string var or instance of MfMemoryString
+		IgnoreCase
+			Boolean value. If true case is ignored; Otherwise case is case is not ignored
+	Returns:
+		Returns true if current instance ends with obj; Otherwise false
+*/
+	EndsWith(obj, IgnoreCase=true) {
+		if (MfNull.IsNull(obj))
+		{
+			return false
+		}
+		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
+		mStr := this._FromAny(obj)
+		if (mStr.m_MemView.Pos = 0)
+		{
+			return false
+		}
+		if (mStr.m_MemView.Pos > this.m_MemView.Pos)
+		{
+			return false
+		}
+		result := this.m_MemView.EndsWithFromPos(mStr.m_MemView, IgnoreCase)
+		
+		return result
+	}
+;{ 	EndsWith
 ;{ 	Equals
 	/*
 	Method: Equals()
@@ -305,7 +374,7 @@ class MfMemoryString extends MfObject
 	Method: Expand()
 
 	Expand()
-		Expands the current instance of MfMemoryString by AddBytes amount
+		Expands the current instance of MfMemoryString by AddBytes ammount
 	Parameters:
 		AddBytes
 			The number of bytes to add to the current instance
@@ -480,6 +549,57 @@ class MfMemoryString extends MfObject
 		return this.m_MemView.IndexOf(mStr.m_MemView, startIndex, Count, IgnoreCase)
 	}
 ; 	End:IndexOf ;}
+;{ 	Insert
+/*
+	Method: Insert()
+
+	Insert()
+		Inserts obj into current instance
+	Parameters:
+		index
+			The zero base index to insert obj into current instance
+		obj
+			Can be string var or instance of MfMemoryString
+	Returns:
+		Returns 
+	Throws:
+		Throws MfArgumentNullException, MfArgumentException, MfIndexOutOfRangeException
+	Remarks:
+		If index greater then or equal to current character count then obj is appended to end of this instance
+*/
+	Insert(index, obj) {
+		if (MfNull.IsNull(obj))
+		{
+			ex := new MfArgumentNullException("obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		index := MfInteger.GetValue(index)
+		if ((index < 0) || (index > this.m_CharCount))
+		{
+			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (index = this.m_CharCount)
+		{
+			return this.Append(obj)
+		}
+		mStr := this._FromAny(obj)
+		try
+		{
+			cc := this.m_MemView.Insert(index, mStr.m_MemView)
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw e
+		}
+		
+		this.m_CharCount := cc
+		return this
+	}
+; 	End:Insert ;}
 ;{ 	LastIndexOf
 /*
 	Method: LastIndexOf()
@@ -535,91 +655,7 @@ class MfMemoryString extends MfObject
 		return this.m_MemView.LastIndexOf(mStr.m_MemView, startIndex, Count, IgnoreCase)
 	}
 ; 	End:LastIndexOf ;}
-;{ 	EndsWith
-/*
-	Method: EndsWith()
 
-	EndsWith()
-		Gets a boolean value true or false if this instance ends with obj
-	Parameters:
-		obj
-			Can be string var or instance of MfMemoryString
-		IgnoreCase
-			Boolean value. If true case is ignored; Otherwise case is case is not ignored
-	Returns:
-		Returns true if current instance ends with obj; Otherwise false
-*/
-	EndsWith(obj, IgnoreCase=true) {
-		if (MfNull.IsNull(obj))
-		{
-			return false
-		}
-		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
-		mStr := this._FromAny(obj)
-		if (mStr.m_MemView.Pos = 0)
-		{
-			return false
-		}
-		if (mStr.m_MemView.Pos > this.m_MemView.Pos)
-		{
-			return false
-		}
-		result := this.m_MemView.EndsWithFromPos(mStr.m_MemView, IgnoreCase)
-		
-		return result
-	}
-;{ 	EndsWith
-;{ 	Insert
-/*
-	Method: Insert()
-
-	Insert()
-		Inserts obj into current instance
-	Parameters:
-		index
-			The zero base index to insert obj into current instance
-		obj
-			Can be string var or instance of MfMemoryString
-	Returns:
-		Returns 
-	Throws:
-		Throws MfArgumentNullException, MfArgumentException, MfIndexOutOfRangeException
-	Remarks:
-		If index greater then or equal to current character count then obj is appended to end of this instance
-*/
-	Insert(index, obj) {
-		if (MfNull.IsNull(obj))
-		{
-			ex := new MfArgumentNullException("obj")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		index := MfInteger.GetValue(index)
-		if ((index < 0) || (index > this.m_CharCount))
-		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (index = this.m_CharCount)
-		{
-			return this.Append(obj)
-		}
-		mStr := this._FromAny(obj)
-		try
-		{
-			cc := this.m_MemView.Insert(index, mStr.m_MemView)
-		}
-		catch e
-		{
-			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw e
-		}
-		
-		this.m_CharCount := cc
-		return this
-	}
-; 	End:Insert ;}
 ;{ 	Replace
 /*
 	Method: Replace()
@@ -817,43 +853,12 @@ class MfMemoryString extends MfObject
 		i := (this.m_CharCount + 1) * this.m_BytesPerChar
 		this.m_MemView.Pos := i
 	}
-	;{ 	ToBase64
-/*
-	Method: ToBase64()
-
-	ToBase64()
-		Reads current instance and returns a new MfMemoryString instance endoced as UTF-8 base64
-	Parameters:
-		addLineBreaks
-			Boolean Value, If True a line break will be added to the output every 76 chars;
-			Otherwise no line breaks will be added.
-	Returns:
-		Returns instance of MfMemoryString
-	Throws:
-		Throws MfException if
-	Remarks:
-		Return MfMemoryString instance is always encoded as UTF-8
-*/
-	ToBase64(addLineBreaks=false) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		addLineBreaks := MfBool.GetValue(addLineBreaks, false)
-		result := ""
-		mv := MfMemStrView.ToBase64(this.m_MemView, 0, this.m_CharCount, addLineBreaks)
-		
-		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytes, mv.m_Encoding)
-		objMemRW.m_MemView := ""
-		objMemRW.m_MemView := mv
-		objMemRW.m_CharCount := mv.GetCharCount()
-		objMemRW.m_Size := mv.Size
-		return objMemRW
-	}
-; 	End:ToBase64 ;}
 ;{ 	StartsWith
 /*
 	Method: StartsWith()
 
 	StartsWith()
-		StartsWith description
+		Gets if current instance starts with obj
 	Parameters:
 		obj
 			The value to see if current instance starts with
@@ -932,38 +937,6 @@ class MfMemoryString extends MfObject
 		return objMemRW
 	}
 ; 	End:SubString ;}
-;{ 	_SubString
-	; gets substring as string var of current instance
-	; see ToString()
-	_SubString(StartIndex, Length) {
-		if (Length = 0)
-		{
-			return ""
-		}
-		if ((StartIndex < 0) || (StartIndex >= this.m_CharCount))
-		{
-			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if ((Length < 0) || ((Length + StartIndex) > this.m_CharCount))
-		{
-			ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-				
-		_StartIndex := StartIndex * this.m_BytesPerChar
-		PI := this.m_MemView.Pos
-		this.m_MemView.Seek(_StartIndex)
-		methodName := "Read" . this.m_EncodingName
-		; Read method will read the proper length no matter the encoding
-		len := Length
-		retval := this.m_MemView.__Call(methodName, len)
-		this.m_MemView.Pos := PI
-		return retval
-	}
-; 	End:_SubString ;}
 ;{ 	ToArray
 /*
 	Method: ToArray()
@@ -1007,6 +980,37 @@ class MfMemoryString extends MfObject
 		return this.m_MemView.ToArray(startIndex, length, "UChar")
 	}
 ; 	End:ToArray ;}
+	;{ 	ToBase64
+/*
+	Method: ToBase64()
+
+	ToBase64()
+		Reads current instance and returns a new MfMemoryString instance endoced as UTF-8 base64
+	Parameters:
+		addLineBreaks
+			Boolean Value, If True a line break will be added to the output every 76 chars;
+			Otherwise no line breaks will be added.
+	Returns:
+		Returns instance of MfMemoryString
+	Throws:
+		Throws MfException if
+	Remarks:
+		Return MfMemoryString instance is always encoded as UTF-8
+*/
+	ToBase64(addLineBreaks=false) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		addLineBreaks := MfBool.GetValue(addLineBreaks, false)
+		result := ""
+		mv := MfMemStrView.ToBase64(this.m_MemView, 0, this.m_CharCount, addLineBreaks)
+		
+		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytes, mv.m_Encoding)
+		objMemRW.m_MemView := ""
+		objMemRW.m_MemView := mv
+		objMemRW.m_CharCount := mv.GetCharCount()
+		objMemRW.m_Size := mv.Size
+		return objMemRW
+	}
+; 	End:ToBase64 ;}
 ;{ 	ToByteList
 /*
 	Method: ToByteList()
@@ -1053,6 +1057,40 @@ class MfMemoryString extends MfObject
 		return this.m_MemView.ToByteList(startIndex, length, littleEndian)
 	}
 ; 	End:ToByteList ;}
+
+;{ 	_SubString
+	; gets substring as string var of current instance
+	; see ToString()
+	_SubString(StartIndex, Length) {
+		if (Length = 0)
+		{
+			return ""
+		}
+		if ((StartIndex < 0) || (StartIndex >= this.m_CharCount))
+		{
+			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if ((Length < 0) || ((Length + StartIndex) > this.m_CharCount))
+		{
+			ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+				
+		_StartIndex := StartIndex * this.m_BytesPerChar
+		PI := this.m_MemView.Pos
+		this.m_MemView.Seek(_StartIndex)
+		methodName := "Read" . this.m_EncodingName
+		; Read method will read the proper length no matter the encoding
+		len := Length
+		retval := this.m_MemView.__Call(methodName, len)
+		this.m_MemView.Pos := PI
+		return retval
+	}
+; 	End:_SubString ;}
+
 ;{ 	ToString
 /*
 	Method: ToString()
@@ -1337,10 +1375,74 @@ class MfMemoryString extends MfObject
 			Throw ex
 		}
 	}
+	;
 ; End:Length ;}
+	;{ Size
+		/*!
+			Property: Size [get]
+				Gets the Size of the current instance in bytes
+			Value:
+				Var integer
+			Remarks:
+				Readonly Property
+		*/
+		Size[]
+		{
+			get {
+				return this.m_MemView.Size
+			}
+			set {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+				ex.SetProp(A_LineFile, A_LineNumber, "Size")
+				Throw ex
+			}
+		}
+	; End:Size ;}
 }
 
 /* Class: MfMemStrView
+ *	Methods
+ *	Append() Appends obj instance to this instance
+ *	AppendString() Appends a string var to current instance
+ *	Clone() Clones the current instance and returns a copy
+ *	CompareOrdinal() Compares two instance of MfMemStrView as Ordinal
+ *	CompareOrdinalIgnoreCase() Compares two instance of MfMemStrView as Ordinal ignoring case
+ *	CompareOrdinalSub()	Compares two sub values of instances of MfMemStrView as Ordinal, optionally ignoring case.
+ *	Diff() Gets the Difference between argument objA and argument objB argument with an included Max Distance.
+ *	EndsWithFromPos() Checks to see if obj ends with the same char as this instance
+ *	EqualsSubString() Compares two MfMemStrView objects to see if their subPositions are equal
+ *	Equals() Check to see if current instance is equal string as Obj
+ *	EqualsString() Check to see if current instance is equal with str
+ *	Expand() Expands the current buffer Adding new bytes
+ *	FromArray() Creates new isntance of MfMemBlkView from AutoHotkey one based byte array
+ *	FromByteList() Converts MfByteList into MfMemStrView instance
+ *	FromBase64() Reads buffer and returns UTF-8 or UTF-16 buffer from base64
+ *	FromVarAddress() Creates an new instance of MfMemStrView from var or address
+ *	GetCharCount() Gets the number of chars currently in this buffer instance
+ *	InBuffer() Searches current instance for the first instance of NeedleObj from StartOffset
+ *	InBufferRev() Searches current instance for the last instance of NeedleObj from EndOffset
+ *	InBuf()	Blazing fast machine-code CASE-SENSITIVE searching in a (binary) buffer for a sequence of bytes,
+ *		that may include NULL characters.
+ *	InBufRev() Blazing fast machine-code CASE-SENSITIVE searching in a (binary) buffer for a sequence of bytes, 
+ *		that may include NULL characters. Reverse look for binary Needle in binary Buffer
+ *	IndexOf() Gets the First index of NeedleObj in current instance
+ *	Insert() Inserts the contents of obj into current instance
+ *	InsertStr()	Inserts the contents of str into current instance
+ *	IsWhiteSpace() Check to see if a char number is considered to be whitespace
+ *	LastIndexOf() Gets the last index of NeedleObj in current instance
+ *	MoveBytesLeft() Moves bytes to the left in the current instance.
+ *	Reverse() Reverses the contentes of the currrent instance and returne it as a new instance
+ *	ToBase64() Reads instanceof MfMemStrView and returns a new MfMemStrView as base64 equal UTF-8 Encoded
+ *	ToString() Gets the value of this instance as string var
+ *	TrimBufferToPos() Trims the current size to the current Pos
+ *	TrimStart() Trims all whitespace char from start of current instance
+ *	TrimStartChars() Trims char(s) from the start of a string
+ *	TrimEnd() Trims all whitespace char from end of current instance
+ *	TrimStartChars() Trims char(s) from the end of a string
+ *	TrimMemoryRight() Overwrites memory bytes with fillbytes for the end of a string, Erases end of a string
+ *	StringsAreEqual() Binary comparsion of string in memory
+ *	SubSet() Gets a sub set (sub string) of the currrent instance chars
+ *	
  *	Internal Class
  *     A MfMemStrView object is used to represent a raw binary data buffer. This class
  *     extends from MfMemBlkView allowing you to directly manipulate its contents.
@@ -1872,14 +1974,24 @@ class MfMemStrView extends MfMemBlkView
 					num := 0
 					break
 				}
-				char1 := Chr(numA)
-				char2 := Chr(numB)
-				if (!(char1 = char2))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := 0
-					break
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+					{
+						num := 0
+						break
+					}
 				}
-				
+				else
+				{
+					char1 := Chr(numA)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						num := 0
+						break
+					}
+				}
 			}
 			numA := NumGet(ptrA + BytesPerChar, 0, sType)
 			numB := NumGet(ptrB + BytesPerChar, 0, sType)
@@ -1890,12 +2002,23 @@ class MfMemStrView extends MfMemBlkView
 					num := BytesPerChar
 					break
 				}
-				char1 := Chr(numA)
-				char2 := Chr(numB)
-				if (!(char1 = char2))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar
-					break
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+					{
+						num := BytesPerChar
+						break
+					}
+				}
+				else
+				{
+					char1 := Chr(numA)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						num := BytesPerChar
+						break
+					}
 				}
 			}
 			numA := NumGet(ptrA + (BytesPerChar * 2), 0, sType)
@@ -1907,12 +2030,23 @@ class MfMemStrView extends MfMemBlkView
 					num := BytesPerChar * 2
 					break
 				}
-				char1 := Chr(numA)
-				char2 := Chr(numB)
-				if (!(char1 = char2))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar * 2
-					break
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+					{
+						num := BytesPerChar * 2
+						break
+					}
+				}
+				else
+				{
+					char1 := Chr(numA)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						num := BytesPerChar * 2
+						break
+					}
 				}
 			}
 			numA := NumGet(ptrA + (BytesPerChar * 3), 0, sType)
@@ -1924,12 +2058,23 @@ class MfMemStrView extends MfMemBlkView
 					num := BytesPerChar * 3
 					break
 				}
-				char1 := Chr(numA)
-				char2 := Chr(numB)
-				if (!(char1 = char2))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar * 3
-					break
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+					{
+						num := BytesPerChar * 3
+						break
+					}
+				}
+				else
+				{
+					char1 := Chr(numA)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						num := BytesPerChar * 3
+						break
+					}
 				}
 			}
 			numA := NumGet(ptrA + (BytesPerChar * 4), 0, sType)
@@ -1941,12 +2086,23 @@ class MfMemStrView extends MfMemBlkView
 					num := BytesPerChar * 4
 					break
 				}
-				char1 := Chr(numA)
-				char2 := Chr(numB)
-				if (!(char1 = char2))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar * 4
-					break
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+					{
+						num := BytesPerChar * 4
+						break
+					}
+				}
+				else
+				{
+					char1 := Chr(numA)
+					char2 := Chr(numB)
+					if (!(char1 = char2))
+					{
+						num := BytesPerChar * 4
+						break
+					}
 				}
 			}
 			ptrA += BytesPerChar * 5
@@ -1980,11 +2136,21 @@ class MfMemStrView extends MfMemBlkView
 					{
 						break
 					}
-					char1 := Chr(numA)
-					char2 := Chr(numB)
-					if (!(char1 = char2))
+					If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 					{
-						break
+						if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+						{
+							break
+						}
+					}
+					else
+					{
+						char1 := Chr(numA)
+						char2 := Chr(numB)
+						if (!(char1 = char2))
+						{
+							break
+						}
 					}
 				}
 				ptrA += BytesPerChar
@@ -2008,6 +2174,13 @@ class MfMemStrView extends MfMemBlkView
 				{
 					result := numA - numB
 				}
+				else If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
+				{
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+					{
+						result := numA - numB
+					}
+				}
 				else
 				{
 					char1 := Chr(numA)
@@ -2025,11 +2198,18 @@ class MfMemStrView extends MfMemBlkView
 			numA := NumGet(ptrA + BytesPerChar, 0, sType)
 			numB := NumGet(ptrB + BytesPerChar, 0, sType)
 			result := 0
-			if (NumA != numB)
+			if (numA != numB)
 			{
 				If (!ignoreCase)
 				{
 					result := numA - numB
+				}
+				else If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
+				{
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB) = False)
+					{
+						result := numA - numB
+					}
 				}
 				else
 				{
@@ -2047,7 +2227,7 @@ class MfMemStrView extends MfMemBlkView
 ; 	End:CompareOrdinalSub ;}
 ;{ 	Diff
 /*
-	Method: Diff(objA, objA, maxDistance)
+	Method: Diff()
 		Gets the Difference between argument objA and argument objB argument with an included Max Distance.
 		objA
 			the frist MfMemStrView to compare.
@@ -2117,6 +2297,16 @@ class MfMemStrView extends MfMemBlkView
 				mi += 1
 				continue
 			}
+			else If (MfMemStrView._IsLatin1(num1) && MfMemStrView._IsLatin1(num2))
+			{
+				if (MfMemStrView._IsEqualLatin1IgnoreCase(num1, num2))
+				{
+					lcs += 0.8
+					ni += 1
+					mi += 1
+					continue
+				}
+			}
 			else
 			{
 				char1 := Chr(num1)
@@ -2140,6 +2330,14 @@ class MfMemStrView extends MfMemBlkView
 					ni := oi, lcs += 1
 					break
 				}
+				else If (num1 > 0 && MfMemStrView._IsLatin1(num1) && MfMemStrView._IsLatin1(num2))
+				{
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(num1, num2))
+					{
+						ni := oi, lcs += 0.8
+						break
+					}
+				}
 				else if (num1 > 0)
 				{
 					char1 := Chr(num1)
@@ -2158,6 +2356,14 @@ class MfMemStrView extends MfMemBlkView
 				{
 					mi := pi, lcs += 1
 					break
+				}
+				else If (num2 > 0 && MfMemStrView._IsLatin1(num1) && MfMemStrView._IsLatin1(num2))
+				{
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(num1, num2))
+					{
+						mi := pi, lcs += 0.8
+						break
+					}
 				}
 				else if (num2 > 0)
 				{
@@ -2378,7 +2584,7 @@ class MfMemStrView extends MfMemBlkView
 	Method: Expand()
 
 	Expand()
-		Expands the current buffer
+		Expands the current buffer Adding new bytes
 	Parameters:
 		AddBytes
 			The number of bytes to add the buffer
@@ -2966,7 +3172,7 @@ class MfMemStrView extends MfMemBlkView
 ; 	End:FromVarAddress ;}
 ;{ 	GetBytesPerChar
 	GetBytesPerChar(encoding) {
-		return (encoding = "UTF-16" || encoding = "CP1600") ? 2 : 1
+		return (encoding = "UTF-16" || encoding = "CP1200") ? 2 : 1
 	}
 ; 	End:GetBytesPerChar ;}
 
@@ -3202,6 +3408,337 @@ class MfMemStrView extends MfMemBlkView
 			, "uint",StartOffsetOfLastNeedleByte)
 	}
 ; 	End:InBufRev ;}
+;{ 	IndexOf
+/*
+	Method: IndexOf()
+
+	IndexOf()
+		Gets the First index of NeedleObj in current instance
+	Parameters:
+		NeedleObj
+			Instance of MfMemStrView that represents the needle byte(s) to search for
+		StartIndex
+			The index to start the searh for needleObj. Search is preformed from
+			StartIndex to the start of the string bytes
+			Default value is -1 which search from end of current instance
+		Count
+			The number of chars to examine from StartIndex location
+		IgnoreCase
+			If True Case will not be considered; Otherwise case will be considered.
+			Default value is true
+	Returns:
+		Returns the zero based index of NeedleObj if found within current instance; Othwrwise -1
+	Throws:
+		Throws MfArgumentException
+	Remarks:
+		Return index is the index with the char count and may not be the same as the byte position
+*/
+	IndexOf(ByRef NeedleObj, StartIndex=0, Count=-1, IgnoreCase=false) {
+		if (NeedleObj.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "obj", "MfMemStrView"), "obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Count = 0)
+		{
+			return -1
+		}
+		BytesPerChar := this.m_BytesPerChar
+		
+		if ((StartIndex + 1) * BytesPerChar >= this.Pos - BytesPerChar) ; adjust for zero based index
+		{
+			Return -1
+		}
+		maxIndex := (this.Pos - (BytesPerChar * 2)) // BytesPerChar ; adjust for zero base index
+		if (Count > maxIndex + 1)
+		{
+			return -1
+		}
+		if (Count < 0)
+		{
+			count := maxIndex + 1
+		}
+		needleSize := (NeedleObj.Pos - BytesPerChar) // BytesPerChar
+		if (needleSize > maxIndex)
+		{
+			return -1
+		}
+
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		ptr := this[]
+		ptrNeedle := NeedleObj[]
+		NeedleFirstNum := NumGet(ptrNeedle + 0, 0, sType)
+		if (NeedleFirstNum = 0)
+		{
+			return -1
+		}
+		NeedleFirtChar := Chr(NeedleFirstNum)
+		
+		i := StartIndex
+		MatchCount := 0
+		iCount = 0
+		while ( i < maxIndex)
+		{
+			iCount++
+			if (iCount > Count)
+			{
+				return -1
+			}
+			Num1 := NumGet(ptr + 0, i * BytesPerChar, sType)
+			if (MatchCount = 0)
+			{
+				if (Num1 = NeedleFirstNum)
+				{
+					MatchCount++
+					if (MatchCount = needleSize)
+					{
+						break
+					}
+					i++
+					continue
+				}
+				if (!IgnoreCase)
+				{
+					If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(NeedleFirstNum))
+					{
+						if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, NeedleFirstNum))
+						{
+							MatchCount++
+							if (MatchCount = needleSize)
+							{
+								break
+							}
+							i++
+							Continue
+						}
+					}
+					Else
+					{
+						Char1 := Chr(Num1)
+						if (Char1 = NeedleFirtChar)
+						{
+							MatchCount++
+							if (MatchCount = needleSize)
+							{
+								break
+							}
+							i++
+							continue
+						}
+					}
+				}
+				MatchCount := 0
+				i++
+				continue
+			}
+			; matchcount is greater then 0
+			Num2 := NumGet(ptrNeedle + 0, MatchCount * BytesPerChar, sType)
+			if (Num1 = Num2)
+			{
+				MatchCount++
+				if (MatchCount = needleSize)
+				{
+					break
+				}
+				i++
+				continue
+			}
+			if (!IgnoreCase)
+			{
+				If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(Num2))
+				{
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, Num2))
+					{
+						MatchCount++
+						if (MatchCount = needleSize)
+						{
+							break
+						}
+						i++
+						Continue
+					}
+				}
+				else
+				{
+					Char1 := Chr(Num1)
+					Char2 := Chr(Num2)
+					if (Char1 = Char2)
+					{
+						MatchCount++
+						if (MatchCount = needleSize)
+						{
+							break
+						}
+						i++
+						Continue
+					}
+				}
+			}
+			MatchCount := 0
+			i++
+		}
+		if (MatchCount > 0)
+		{
+			return ++i - MatchCount
+		}
+		Return -1
+	}
+; 	End:IndexOf ;}
+;{ 	Insert
+/*
+	Method: Insert()
+		
+	Insert()
+		Inserts the contents of obj into current instance
+	Parameters:
+		startPos
+			The zero based index to start the insertion
+		obj
+			The MfMemStrView instance to insert into this instance
+	Returns:
+		Returns the number of char of this instance after insert
+	Throws:
+		Throws MfArgumentException
+	Remarks:
+		see InsertStr to insert as string var
+*/
+	Insert(startPos, ByRef obj) {
+		; StartPos is the Position to start inserting text
+		if (obj.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "obj", "MfMemStrView"), "obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BytesPerChar := this.m_BytesPerChar
+		If (obj.Pos <= BytesPerChar)
+		{
+			return this.GetCharCount()
+		}
+		If (!(this.m_Encoding = obj.m_Encoding))
+		{
+			return this.InsertStr(startPos, obj.ToString())
+		}
+
+		PI := this.Pos ; this will be the end the current chars
+		
+		startPos := startPos * BytesPerChar
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		;this.Seek(StrPut(str, enc) * BytesPerChar, 1)
+		iLen := obj.Pos - BytesPerChar
+
+		if ( (PI + ILen) > this.Size)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Capacity"), "obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		; copy the remainder of the string to a new address and then append it back later
+		this.Seek(startPos) ; Move to the start Pos
+
+		sourcePtr := this[] + this.Pos ; get the start pos Address
+		ChunkLen := PI - this.Pos
+
+		; copy the from the insertion point to the end into a temp memory address
+		tmp := ""
+		VarSetCapacity(tmp,ChunkLen + 10)
+		DllCall("RtlMoveMemory", sType, &tmp, sType, sourcePtr + 0, sType, ChunkLen)
+		result := ErrorLevel
+		tmpC := VarSetCapacity(tmp, -1)
+
+		objAddress := obj[]
+		; copy the obj bytes into the current location of this address
+		DllCall("RtlMoveMemory", sType, sourcePtr + 0, sType, objAddress + 0, sType, iLen)
+		; move this position to the location the insert ended Plus one position
+		this.Pos += iLen ; + BytesPerChar
+						
+		; copy the temp memory values back to the end of this memory space
+		; Move the Position back one char to overwrite line end from write method
+		;this.Pos -= BytesPerChar
+		sourcePtr := this[] + this.Pos ; get the start pos Address
+		; Write the tmp memory into this
+		DllCall("RtlMoveMemory", sType, sourcePtr + 0, sType, &tmp, sType, ChunkLen)
+		this.Pos += ChunkLen
+		;this.Pos += BytesPerChar ; move forward to end again
+
+		; clear tmp memory
+		VarSetCapacity(tmp, 0)
+		tmp := ""
+		return this.GetCharCount()
+	}
+; 	End:Insert ;}
+;{ 	InsertStr
+/*
+	Method: InsertStr()
+		
+	InsertStr()
+		Inserts the contents of str into current instance
+	Parameters:
+		startPos
+			The zero based index to start the insertion
+		obj
+			The string var to insert into this instance
+	Returns:
+		Returns the number of char of this instance after insert
+	Remarks:
+		see Insert to insert as MfMemStrView instance
+*/
+	InsertStr(startPos, str) {
+		; StartPos is the Position to start inserting text
+		
+		strLength := StrLen(str)
+		If (strLength = 0)
+		{
+			return this.GetCharCount()
+		}
+		
+		iLen := strLength * BytesPerChar
+		
+		PI := this.Pos ; this will be the end the current chars
+		BytesPerChar := this.m_BytesPerChar
+		encodingN := this.m_EncodingName
+		startPos := startPos * BytesPerChar
+		
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		;this.Seek(StrPut(str, enc) * BytesPerChar, 1)
+		iLen := StrLen(str) * BytesPerChar
+		if ( (PI + ILen) > this.Size)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Capacity"), "str")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		; copy the remainder of the string to a new address and then append it back later
+		this.Seek(startPos) ; Move to the start Pos
+		sourcePtr := this[] + this.Pos ; get the start pos Address
+		ChunkLen := PI - this.Pos
+		tmp := ""
+		VarSetCapacity(tmp,ChunkLen + 10)
+		DllCall("RtlMoveMemory", sType, &tmp, sType,sourcePtr + 0, sType,ChunkLen)
+		result := ErrorLevel
+		tmpC := VarSetCapacity(tmp,-1)
+		
+		methodName := "Write" . encodingN
+		; Write the new strign into memory at current Pos
+		chars := this.__Call(methodName,str)
+		
+		; Move the Position back one char to overwrite line end from write method
+		this.Pos -= BytesPerChar
+		sourcePtr := this[] + this.Pos ; get the start pos Address
+		; Write the tmp memory into this
+		DllCall("RtlMoveMemory", sType ,sourcePtr + 0, sType, &tmp, sType, ChunkLen)
+		this.Pos += ChunkLen
+		;this.Pos += BytesPerChar ; move forward to end again
+				
+		; clear tmp memory
+		VarSetCapacity(tmp, 0)
+		tmp := ""
+		return this.GetCharCount()
+	}
+; 	End:InsertStr ;}
 ;{ 	IsWhiteSpace
 /*
 	Method: IsWhiteSpace()
@@ -3223,6 +3760,221 @@ class MfMemStrView extends MfMemBlkView
 		return retval
 	}
 ; 	End:IsWhiteSpace ;}
+;{ 	LastIndexOf
+/*
+	Method: LastIndexOf()
+
+	LastIndexOf()
+		Gets the last index of NeedleObj in current instance
+	Parameters:
+		NeedleObj
+			Instance of MfMemStrView that represents the needle byte(s) to search for
+		EndIndex
+			The index to start the searh for needleObj. Search is preformed from
+			EndIndex to the start of the string bytes
+			Default value is -1 which search from end of current instance
+		Count
+			The number of chars to examine from EndIndex location
+		IgnoreCase
+			If True Case will not be considered; Otherwise case will be considered.
+			Default value is true
+	Returns:
+		Returns the zero based index of NeedleObj if found within current instance; Othwrwise -1
+	Throws:
+		Throws MfArgumentException
+	Remarks:
+		Return index is the index with the char count and may not be the same as the byte position
+*/
+	LastIndexOf(ByRef NeedleObj, EndIndex=-1, Count=-1, IgnoreCase=true) {
+		if (NeedleObj.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "obj", "MfMemStrView"), "obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Count = 0)
+		{
+			return -1
+		}
+		BytesPerChar := this.m_BytesPerChar
+		if (EndIndex < 0)
+		{
+			EndIndex := this.Pos - (BytesPerChar * 2) ; adjust for zero base index
+		}
+		Else
+		{
+			EndIndex := EndIndex * BytesPerChar
+		}
+		if (EndIndex > (this.Pos - (BytesPerChar * 2))) ; adjust for zero base index
+		{
+			Return -1
+		}
+
+		maxIndex := EndIndex // BytesPerChar
+		if (Count > maxIndex + 1)
+		{
+			return -1
+		}
+		needleSize := (NeedleObj.Pos - BytesPerChar) // BytesPerChar
+		if (needleSize > maxIndex)
+		{
+			return -1
+		}
+		if (Count < 0)
+		{
+			count := maxIndex + 1
+		}
+
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		ptr := this[]
+		ptrNeedle := NeedleObj[]
+		NeedleLastPos := NeedleObj.Pos - BytesPerChar
+		NeedleLastNum := NumGet(ptrNeedle + 0, NeedleLastPos - BytesPerChar, sType)
+		if (NeedleLastNum = 0)
+		{
+			return -1
+		}
+		NeedleLastChar := Chr(NeedleLastNum)
+		
+		i := maxIndex
+		minIndex := 0
+		MatchCount := 0
+		iCount = 0
+		while ( i > minIndex)
+		{
+			iCount++
+			if (iCount > Count)
+			{
+				return -1
+			}
+			Num1 := NumGet(ptr + 0, i * BytesPerChar, sType)
+			if (MatchCount = 0)
+			{
+				if (Num1 = NeedleLastNum)
+				{
+					MatchCount++
+					if (MatchCount = needleSize)
+					{
+						break
+					}
+					i--
+					continue
+				}
+				if (!IgnoreCase)
+				{
+					If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(NeedleLastNum))
+					{
+						if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, NeedleLastNum))
+						{
+							MatchCount++
+							if (MatchCount = needleSize)
+							{
+								break
+							}
+							i--
+							Continue
+						}
+					}
+					Else
+					{
+						Char1 := Chr(Num1)
+						if (Char1 = NeedleLastChar)
+						{
+							MatchCount++
+							if (MatchCount = needleSize)
+							{
+								break
+							}
+							i--
+							continue
+						}
+					}
+				}
+				MatchCount := 0
+				i--
+				continue
+			}
+			; matchcount is greater then 0
+			Num2 := NumGet(ptrNeedle + 0, ((needleSize - 1) - MatchCount) * BytesPerChar, sType)
+			if (Num1 = Num2)
+			{
+				MatchCount++
+				if (MatchCount = needleSize)
+				{
+					break
+				}
+				i--
+				continue
+			}
+			if (!IgnoreCase)
+			{
+				If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(Num2))
+				{
+					if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, Num2))
+					{
+						MatchCount++
+						if (MatchCount = needleSize)
+						{
+							break
+						}
+						i--
+						Continue
+					}
+				}
+				else
+				{
+					Char1 := Chr(Num1)
+					Char2 := Chr(Num2)
+					if (Char1 = Char2)
+					{
+						MatchCount++
+						if (MatchCount = needleSize)
+						{
+							break
+						}
+						i--
+						Continue
+					}
+				}
+			}
+			MatchCount := 0
+			i--
+		}
+		if (MatchCount > 0)
+		{
+			return i
+		}
+		Return -1
+	}
+; 	End:LastIndexOf ;}
+;{ 	MoveBytesLeft
+/*
+	Method: MoveBytesLeft()
+
+	MoveBytesLeft()
+		Moves bytes to the left in the current instance.
+	Parameters:
+		startPos
+			the Position to start moving left
+		Length
+			The number of position to move left
+*/
+	MoveBytesLeft(startPos, Length) {
+		; will be moving chunk start position to end to Dest Position which is left of start
+		
+		PI := this.Pos ; this will be the end the current chars
+		this.Seek(startPos) ; Move to the start Pos
+		sourcePtr := this[] + this.Pos ; get the start pos Address
+		ChunkLen := PI - this.Pos
+		destPtr := sourcePtr + Length
+		BytesPerChar := this.m_BytesPerChar
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		
+		;DllCall("RtlMoveMemory","UInt",sourcePtr + 0,"UInt",destPtr + 0,"UInt",ChunkLen)
+		DllCall("RtlMoveMemory", sType, sourcePtr + 0, sType, destPtr + 0, sType ,ChunkLen)
+		this.Seek(PI - Length)
+	}
+; 	End:MoveBytesLeft ;}
 ;{ 	Reverse
 /*
 	Method: Reverse()
@@ -3428,7 +4180,7 @@ class MfMemStrView extends MfMemBlkView
 	Method: ToBase64()
 
 	ToBase64()
-		Reads instanceof MfMemStrView and returns a new MfMemStrView as base64 equal
+		Reads instanceof MfMemStrView and returns a new MfMemStrView as base64 equal UTF-8 Encoded
 	Parameters:
 		data
 			The MfMemStrView instance to create base64 from
@@ -3600,161 +4352,6 @@ class MfMemStrView extends MfMemBlkView
 		return this.GetCharCount()
 	}
 ; 	End:TrimBufferToPos ;}
-
-;{ StringsAreEqual
-/*
-	Method: StringsAreEqual()
-
-	StringsAreEqual()
-		Binary comparsion of string in memory
-	Parameters:
-		FirstStrAddr
-			The memory address of the frist string to compare
-		FirstStrLen
-			The length of the frist string to compare
-		SecondStrAddr
-			The memory address of the secnod string to compare
-		SecondStrLen
-			The length of the frist string to compare
-		encoding
-			The encoding of the string in memory
-		IgnoreCase
-			Boolean value indicating if case should be ignored
-	Returns:
-		Boolean true if string are equal, Otherwise False 
-	Remarks:
-		Because Memory addresses and length are being compared this method could alus be used to to compare
-		substring of memory strings. See EqualsSubString as an example
-		Static Method
-*/
-	StringsAreEqual(FirstStrAddr, FirstStrLen, SecondStrAddr,SecondStrLen, encoding, IgnoreCase=true) {
-		if (FirstStrAddr = SecondStrAddr)
-		{
-			return true
-		}
-		If (FirstStrLen <> SecondStrLen)
-		{
-			Return false
-		}
-		retval := true
-		BytesPerChar := MfMemStrView.GetBytesPerChar(encoding)
-		sType := BytesPerChar = 1? "UChar":"UShort"
-		i := 0
-		len := FirstStrLen * BytesPerChar
-		if (IgnoreCase)
-		{
-			while (i < len)
-			{
-				num1 := NumGet(FirstStrAddr + 0, i, sType)
-				num2:= NumGet(SecondStrAddr + 0, i, sType)
-				if (num1 != num2)
-				{
-					retval := false
-					break
-				}
-				i += BytesPerChar
-			}
-		}
-		else
-		{
-			while (i < len)
-			{
-				num1 := NumGet(FirstStrAddr + 0, i, sType)
-				num2:= NumGet(SecondStrAddr + 0, i, sType)
-				if (num1 != num2)
-				{
-					char1 := Chr(num1)
-					char2 := Chr(num2)
-					; compare as case in-sensitive
-					if (char1 = Char2)
-					{
-						i += BytesPerChar
-						continue
-					}
-					retval := false
-					break
-				}
-				i += BytesPerChar
-			}
-
-		}
-		Return retval
-	}
-; End:StringsAreEqual ;}
-;{ 	SubSet
-/*
-	Method: SubSet()
-
-	SubSet()
-		Gets a sub set (sub string) of the currrent instance chars
-	Parameters:
-		StartIndex
-			The start index in chars
-		Length
-			The length of the subset in chars
-	Returns:
-		Returns new instance of MfMemStrView
-	Throws:
-		Throws MfArgumentOutOfRangeException if startIndex or Length is out or range
-		Throws MfArgumentException
-*/
-	SubSet(StartIndex, Length=-1) {
-		if (StartIndex < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (StartIndex > 0)
-		{
-			StartIndex := StartIndex * this.m_BytesPerChar
-		}
-		if (Length < 0)
-		{
-			Length := ((this.Pos - this.m_BytesPerChar) - StartIndex)
-		}
-		else
-		{
-			Length := Length * this.m_BytesPerChar
-		}
-		if (Length <= 0)
-		{
-			ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if ((Length < 0) || (StartIndex + Length) > (this.Pos - this.m_BytesPerChar))
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		PI := this.Pos
-		try
-		{
-			this.seek(StartIndex)
-			;size := (Length - StartIndex) + (this.m_BytesPerChar * 2)
-
-			objMemBlk := new MfMemStrView(Length + this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
-			newAddress := objMemBlk[]
-			Address := this[] + this.Pos
-			DllCall("RtlMoveMemory", UInt, newAddress + 0, UInt, Address + 0, Uint, Length)
-			objMemBlk.Size := ObjGetCapacity(objMemBlk, "_Buffer")
-			objMemBlk.Pos := Length + this.m_BytesPerChar
-			return objMemBlk
-		}
-		catch e
-		{
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		finally
-		{
-			this.Pos := PI
-		}
-	}
-; 	End:SubSet ;}
 ;{ 	TrimStart
 /*
 	Method: TrimStart()
@@ -3952,6 +4549,173 @@ class MfMemStrView extends MfMemBlkView
 		
 	}
 ; 	End:TrimMemoryRight ;}
+;{ StringsAreEqual
+/*
+	Method: StringsAreEqual()
+
+	StringsAreEqual()
+		Binary comparsion of string in memory
+	Parameters:
+		FirstStrAddr
+			The memory address of the frist string to compare
+		FirstStrLen
+			The length of the frist string to compare
+		SecondStrAddr
+			The memory address of the secnod string to compare
+		SecondStrLen
+			The length of the frist string to compare
+		encoding
+			The encoding of the string in memory
+		IgnoreCase
+			Boolean value indicating if case should be ignored
+	Returns:
+		Boolean true if string are equal, Otherwise False 
+	Remarks:
+		Because Memory addresses and length are being compared this method could alus be used to to compare
+		substring of memory strings. See EqualsSubString as an example
+		Static Method
+*/
+	StringsAreEqual(FirstStrAddr, FirstStrLen, SecondStrAddr,SecondStrLen, encoding, IgnoreCase=true) {
+		if (FirstStrAddr = SecondStrAddr)
+		{
+			return true
+		}
+		If (FirstStrLen <> SecondStrLen)
+		{
+			Return false
+		}
+		retval := true
+		BytesPerChar := MfMemStrView.GetBytesPerChar(encoding)
+		sType := BytesPerChar = 1? "UChar":"UShort"
+		i := 0
+		len := FirstStrLen * BytesPerChar
+		if (IgnoreCase)
+		{
+			while (i < len)
+			{
+				num1 := NumGet(FirstStrAddr + 0, i, sType)
+				num2:= NumGet(SecondStrAddr + 0, i, sType)
+				if (num1 != num2)
+				{
+					retval := false
+					break
+				}
+				i += BytesPerChar
+			}
+		}
+		else
+		{
+			while (i < len)
+			{
+				num1 := NumGet(FirstStrAddr + 0, i, sType)
+				num2:= NumGet(SecondStrAddr + 0, i, sType)
+				if (num1 != num2)
+				{
+					If (MfMemStrView._IsLatin1(num1) && MfMemStrView._IsLatin1(num2))
+					{
+						if (MfMemStrView._IsEqualLatin1IgnoreCase(num1, num2))
+						{
+							i += BytesPerChar
+							continue
+						}
+					}
+					else
+					{
+						char1 := Chr(num1)
+						char2 := Chr(num2)
+						; compare as case in-sensitive
+						if (char1 = Char2)
+						{
+							i += BytesPerChar
+							continue
+						}
+					}
+						
+					retval := false
+					break
+				}
+				i += BytesPerChar
+			}
+
+		}
+		Return retval
+	}
+; End:StringsAreEqual ;}
+;{ 	SubSet
+/*
+	Method: SubSet()
+
+	SubSet()
+		Gets a sub set (sub string) of the currrent instance chars
+	Parameters:
+		StartIndex
+			The start index in chars
+		Length
+			The length of the subset in chars
+	Returns:
+		Returns new instance of MfMemStrView
+	Throws:
+		Throws MfArgumentOutOfRangeException if startIndex or Length is out or range
+		Throws MfArgumentException
+*/
+	SubSet(StartIndex, Length=-1) {
+		if (StartIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (StartIndex > 0)
+		{
+			StartIndex := StartIndex * this.m_BytesPerChar
+		}
+		if (Length < 0)
+		{
+			Length := ((this.Pos - this.m_BytesPerChar) - StartIndex)
+		}
+		else
+		{
+			Length := Length * this.m_BytesPerChar
+		}
+		if (Length <= 0)
+		{
+			ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if ((Length < 0) || (StartIndex + Length) > (this.Pos - this.m_BytesPerChar))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		PI := this.Pos
+		try
+		{
+			this.seek(StartIndex)
+			;size := (Length - StartIndex) + (this.m_BytesPerChar * 2)
+
+			objMemBlk := new MfMemStrView(Length + this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+			newAddress := objMemBlk[]
+			Address := this[] + this.Pos
+			DllCall("RtlMoveMemory", UInt, newAddress + 0, UInt, Address + 0, Uint, Length)
+			objMemBlk.Size := ObjGetCapacity(objMemBlk, "_Buffer")
+			objMemBlk.Pos := Length + this.m_BytesPerChar
+			return objMemBlk
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		finally
+		{
+			this.Pos := PI
+		}
+	}
+; 	End:SubSet ;}
+
 ;{ 	_GetCharArray
 /*
 	Method: _GetCharArray()
@@ -4035,510 +4799,11 @@ class MfMemStrView extends MfMemBlkView
 		return false
 	}
 ; 	End:_indexOfArr ;}
-;{ 	Insert
-/*
-	Method: Insert()
-		
-	Insert()
-		Inserts the contents of obj into current instance
-	Parameters:
-		startPos
-			The zero based index to start the insertion
-		obj
-			The MfMemStrView instance to insert into this instance
-	Returns:
-		Returns the number of char of this instance after insert
-	Throws:
-		Throws MfArgumentException
-	Remarks:
-		see InsertStr to insert as string var
-*/
-	Insert(startPos, ByRef obj) {
-		; StartPos is the Position to start inserting text
-		if (obj.__Class != "MfMemStrView")
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "obj", "MfMemStrView"), "obj")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		BytesPerChar := this.m_BytesPerChar
-		If (obj.Pos <= BytesPerChar)
-		{
-			return this.GetCharCount()
-		}
-		If (!(this.m_Encoding = obj.m_Encoding))
-		{
-			return this.InsertStr(startPos, obj.ToString())
-		}
 
-		PI := this.Pos ; this will be the end the current chars
-		
-		startPos := startPos * BytesPerChar
-		sType := BytesPerChar = 1? "UChar":"UShort"
-		;this.Seek(StrPut(str, enc) * BytesPerChar, 1)
-		iLen := obj.Pos - BytesPerChar
-
-		if ( (PI + ILen) > this.Size)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Capacity"), "obj")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		
-		; copy the remainder of the string to a new address and then append it back later
-		this.Seek(startPos) ; Move to the start Pos
-
-		sourcePtr := this[] + this.Pos ; get the start pos Address
-		ChunkLen := PI - this.Pos
-
-		; copy the from the insertion point to the end into a temp memory address
-		tmp := ""
-		VarSetCapacity(tmp,ChunkLen + 10)
-		DllCall("RtlMoveMemory", sType, &tmp, sType, sourcePtr + 0, sType, ChunkLen)
-		result := ErrorLevel
-		tmpC := VarSetCapacity(tmp, -1)
-
-		objAddress := obj[]
-		; copy the obj bytes into the current location of this address
-		DllCall("RtlMoveMemory", sType, sourcePtr + 0, sType, objAddress + 0, sType, iLen)
-		; move this position to the location the insert ended Plus one position
-		this.Pos += iLen ; + BytesPerChar
-						
-		; copy the temp memory values back to the end of this memory space
-		; Move the Position back one char to overwrite line end from write method
-		;this.Pos -= BytesPerChar
-		sourcePtr := this[] + this.Pos ; get the start pos Address
-		; Write the tmp memory into this
-		DllCall("RtlMoveMemory", sType, sourcePtr + 0, sType, &tmp, sType, ChunkLen)
-		this.Pos += ChunkLen
-		;this.Pos += BytesPerChar ; move forward to end again
-
-		; clear tmp memory
-		VarSetCapacity(tmp, 0)
-		tmp := ""
-		return this.GetCharCount()
-	}
-; 	End:Insert ;}
-;{ 	InsertStr
-/*
-	Method: Insert()
-		
-	Insert()
-		Inserts the contents of str into current instance
-	Parameters:
-		startPos
-			The zero based index to start the insertion
-		obj
-			The string var to insert into this instance
-	Returns:
-		Returns the number of char of this instance after insert
-	Remarks:
-		see Insert to insert as MfMemStrView instance
-*/
-	InsertStr(startPos, str) {
-		; StartPos is the Position to start inserting text
-		
-		strLength := StrLen(str)
-		If (strLength = 0)
-		{
-			return this.GetCharCount()
-		}
-		
-		iLen := strLength * BytesPerChar
-		
-		PI := this.Pos ; this will be the end the current chars
-		BytesPerChar := this.m_BytesPerChar
-		encodingN := this.m_EncodingName
-		startPos := startPos * BytesPerChar
-		
-		sType := BytesPerChar = 1? "UChar":"UShort"
-		;this.Seek(StrPut(str, enc) * BytesPerChar, 1)
-		iLen := StrLen(str) * BytesPerChar
-		if ( (PI + ILen) > this.Size)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Capacity"), "str")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		
-		; copy the remainder of the string to a new address and then append it back later
-		this.Seek(startPos) ; Move to the start Pos
-		sourcePtr := this[] + this.Pos ; get the start pos Address
-		ChunkLen := PI - this.Pos
-		tmp := ""
-		VarSetCapacity(tmp,ChunkLen + 10)
-		DllCall("RtlMoveMemory", sType, &tmp, sType,sourcePtr + 0, sType,ChunkLen)
-		result := ErrorLevel
-		tmpC := VarSetCapacity(tmp,-1)
-		
-		methodName := "Write" . encodingN
-		; Write the new strign into memory at current Pos
-		chars := this.__Call(methodName,str)
-		
-		; Move the Position back one char to overwrite line end from write method
-		this.Pos -= BytesPerChar
-		sourcePtr := this[] + this.Pos ; get the start pos Address
-		; Write the tmp memory into this
-		DllCall("RtlMoveMemory", sType ,sourcePtr + 0, sType, &tmp, sType, ChunkLen)
-		this.Pos += ChunkLen
-		;this.Pos += BytesPerChar ; move forward to end again
-				
-		; clear tmp memory
-		VarSetCapacity(tmp, 0)
-		tmp := ""
-		return this.GetCharCount()
-	}
-; 	End:InsertStr ;}
-;{ 	MoveBytesLeft
-/*
-	Method: MoveBytesLeft()
-
-	MoveBytesLeft()
-		Moves bytes to the left
-	Parameters:
-		startPos
-			the Position to start moving left
-		Length
-			The number of position to move left
-	Returns:
-		Returns 
-	Throws:
-		Throws MfException if
-	Remarks:
-		If MoveBytesLeft
-*/
-	MoveBytesLeft(startPos, Length) {
-		; will be moving chunk start position to end to Dest Position which is left of start
-		
-		PI := this.Pos ; this will be the end the current chars
-		this.Seek(startPos) ; Move to the start Pos
-		sourcePtr := this[] + this.Pos ; get the start pos Address
-		ChunkLen := PI - this.Pos
-		destPtr := sourcePtr + Length
-		BytesPerChar := this.m_BytesPerChar
-		sType := BytesPerChar = 1? "UChar":"UShort"
-		
-		;DllCall("RtlMoveMemory","UInt",sourcePtr + 0,"UInt",destPtr + 0,"UInt",ChunkLen)
-		DllCall("RtlMoveMemory", sType, sourcePtr + 0, sType, destPtr + 0, sType ,ChunkLen)
-		this.Seek(PI - Length)
-	}
-; 	End:MoveBytesLeft ;}
-	IndexOf(ByRef NeedleObj, StartingPos=0, Count=-1, IgnoreCase=false) {
-		if (NeedleObj.__Class != "MfMemStrView")
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "obj", "MfMemStrView"), "obj")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (Count = 0)
-		{
-			return -1
-		}
-		BytesPerChar := this.m_BytesPerChar
-		
-		if ((StartingPos + 1) * BytesPerChar >= this.Pos - BytesPerChar) ; adjust for zero based index
-		{
-			Return -1
-		}
-		maxIndex := (this.Pos - (BytesPerChar * 2)) // BytesPerChar ; adjust for zero base index
-		if (Count > maxIndex + 1)
-		{
-			return -1
-		}
-		if (Count < 0)
-		{
-			count := maxIndex + 1
-		}
-		needleSize := (NeedleObj.Pos - BytesPerChar) // BytesPerChar
-		if (needleSize > maxIndex)
-		{
-			return -1
-		}
-
-		sType := BytesPerChar = 1? "UChar":"UShort"
-		ptr := this[]
-		ptrNeedle := NeedleObj[]
-		NeedleFirstNum := NumGet(ptrNeedle + 0, 0, sType)
-		if (NeedleFirstNum = 0)
-		{
-			return -1
-		}
-		NeedleFirtChar := Chr(NeedleFirstNum)
-		
-		i := StartingPos
-		MatchCount := 0
-		iCount = 0
-		while ( i < maxIndex)
-		{
-			iCount++
-			if (iCount > Count)
-			{
-				return -1
-			}
-			Num1 := NumGet(ptr + 0, i * BytesPerChar, sType)
-			if (MatchCount = 0)
-			{
-				if (Num1 = NeedleFirstNum)
-				{
-					MatchCount++
-					if (MatchCount = needleSize)
-					{
-						break
-					}
-					i++
-					continue
-				}
-				if (!IgnoreCase)
-				{
-					If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(NeedleFirstNum))
-					{
-						if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, NeedleFirstNum))
-						{
-							MatchCount++
-							if (MatchCount = needleSize)
-							{
-								break
-							}
-							i++
-							Continue
-						}
-					}
-					Else
-					{
-						Char1 := Chr(Num1)
-						if (Char1 = NeedleFirtChar)
-						{
-							MatchCount++
-							if (MatchCount = needleSize)
-							{
-								break
-							}
-							i++
-							continue
-						}
-					}
-				}
-				MatchCount := 0
-				i++
-				continue
-			}
-			; matchcount is greater then 0
-			Num2 := NumGet(ptrNeedle + 0, MatchCount * BytesPerChar, sType)
-			if (Num1 = Num2)
-			{
-				MatchCount++
-				if (MatchCount = needleSize)
-				{
-					break
-				}
-				i++
-				continue
-			}
-			if (!IgnoreCase)
-			{
-				If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(Num2))
-				{
-					if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, Num2))
-					{
-						MatchCount++
-						if (MatchCount = needleSize)
-						{
-							break
-						}
-						i++
-						Continue
-					}
-				}
-				else
-				{
-					Char1 := Chr(Num1)
-					Char2 := Chr(Num2)
-					if (Char1 = Char2)
-					{
-						MatchCount++
-						if (MatchCount = needleSize)
-						{
-							break
-						}
-						i++
-						Continue
-					}
-				}
-			}
-
-			MatchCount := 0
-			i++
-		}
-		if (MatchCount > 0)
-		{
-			return ++i - MatchCount
-		}
-		Return -1
-	}
-
-	LastIndexOf(ByRef NeedleObj, EndIndex=-1, Count=-1, IgnoreCase=false) {
-		if (NeedleObj.__Class != "MfMemStrView")
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "obj", "MfMemStrView"), "obj")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (Count = 0)
-		{
-			return -1
-		}
-		BytesPerChar := this.m_BytesPerChar
-		if (EndIndex < 0)
-		{
-			EndIndex := this.Pos - (BytesPerChar * 2) ; adjust for zero base index
-		}
-		Else
-		{
-			EndIndex := EndIndex * BytesPerChar
-		}
-		if (EndIndex > (this.Pos - (BytesPerChar * 2))) ; adjust for zero base index
-		{
-			Return -1
-		}
-
-		maxIndex := EndIndex // BytesPerChar
-		if (Count > maxIndex + 1)
-		{
-			return -1
-		}
-		needleSize := (NeedleObj.Pos - BytesPerChar) // BytesPerChar
-		if (needleSize > maxIndex)
-		{
-			return -1
-		}
-		if (Count < 0)
-		{
-			count := maxIndex + 1
-		}
-
-		sType := BytesPerChar = 1? "UChar":"UShort"
-		ptr := this[]
-		ptrNeedle := NeedleObj[]
-		NeedleLastPos := NeedleObj.Pos - BytesPerChar
-		NeedleLastNum := NumGet(ptrNeedle + 0, NeedleLastPos - BytesPerChar, sType)
-		if (NeedleLastNum = 0)
-		{
-			return -1
-		}
-		NeedleLastChar := Chr(NeedleLastNum)
-		
-		i := maxIndex
-		minIndex := 0
-		MatchCount := 0
-		iCount = 0
-		while ( i > minIndex)
-		{
-			iCount++
-			if (iCount > Count)
-			{
-				return -1
-			}
-			Num1 := NumGet(ptr + 0, i * BytesPerChar, sType)
-			if (MatchCount = 0)
-			{
-				if (Num1 = NeedleLastNum)
-				{
-					MatchCount++
-					if (MatchCount = needleSize)
-					{
-						break
-					}
-					i--
-					continue
-				}
-				if (!IgnoreCase)
-				{
-					If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(NeedleLastNum))
-					{
-						if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, NeedleLastNum))
-						{
-							MatchCount++
-							if (MatchCount = needleSize)
-							{
-								break
-							}
-							i--
-							Continue
-						}
-					}
-					Else
-					{
-						Char1 := Chr(Num1)
-						if (Char1 = NeedleLastChar)
-						{
-							MatchCount++
-							if (MatchCount = needleSize)
-							{
-								break
-							}
-							i--
-							continue
-						}
-					}
-				}
-				MatchCount := 0
-				i--
-				continue
-			}
-			; matchcount is greater then 0
-			Num2 := NumGet(ptrNeedle + 0, ((needleSize - 1) - MatchCount) * BytesPerChar, sType)
-			if (Num1 = Num2)
-			{
-				MatchCount++
-				if (MatchCount = needleSize)
-				{
-					break
-				}
-				i--
-				continue
-			}
-			if (!IgnoreCase)
-			{
-				If (MfMemStrView._IsLatin1(Num1) && MfMemStrView._IsLatin1(Num2))
-				{
-					if (MfMemStrView._IsEqualLatin1IgnoreCase(Num1, Num2))
-					{
-						MatchCount++
-						if (MatchCount = needleSize)
-						{
-							break
-						}
-						i--
-						Continue
-					}
-				}
-				else
-				{
-					Char1 := Chr(Num1)
-					Char2 := Chr(Num2)
-					if (Char1 = Char2)
-					{
-						MatchCount++
-						if (MatchCount = needleSize)
-						{
-							break
-						}
-						i--
-						Continue
-					}
-				}
-			}
-
-			MatchCount := 0
-			i--
-		}
-		if (MatchCount > 0)
-		{
-			return i
-		}
-		Return -1
-	}
-
+;{ 	_IsEqualLatin1IgnoreCase
+	; static method
+	; Checkes if char1 and Char2 are equal when case is ignored
+	; applies only to Lattin1 chars
 	_IsEqualLatin1IgnoreCase(char1, char2) {
 		If (Char1 = Char2)
 		{
@@ -4552,6 +4817,10 @@ class MfMemStrView extends MfMemBlkView
 		}
 		Return false
 	}
+; 	End:_IsEqualLatin1IgnoreCase ;}
+;{ 	_AsciiToUpper
+	; statice method
+	; Converts ascii lower case char to upper case char
 	_AsciiToUpper(cc) {
 		if (MfMemStrView._IsAsciiLower(cc))
 		{
@@ -4559,6 +4828,10 @@ class MfMemStrView extends MfMemBlkView
 		}
 		return cc
 	}
+; 	End:_AsciiToUpper ;}
+;{ 	_AsciiToLower
+	; statice method
+	; Converts ascii Upper case char to lower case char
 	_AsciiToLower(cc) {
 		if (MfMemStrView._IsAsciiUpper(cc))
 		{
@@ -4566,6 +4839,10 @@ class MfMemStrView extends MfMemBlkView
 		}
 		return cc
 	}
+; 	End:_AsciiToLower ;}
+;{ 	_IsAsciiLetter
+	; static method
+	; check if cc is a ascii letter
 	_IsAsciiLetter(cc) {
 		IsUpper := MfMemStrView._IsAsciiUpper(cc)
 		If (IsUpper)
@@ -4575,28 +4852,56 @@ class MfMemStrView extends MfMemBlkView
 		IsLower := MfMemStrView._IsAsciiLower(cc)
 		return IsLower
 	}
+; 	End:_IsAsciiLetter ;}
+;{ 	_IsAsciiLower
+	; static metohd
+	; check to see if cc is a valid ascii lowercase char
 	_IsAsciiLower(cc) {
 		return ((cc >= 97) && (cc <= 122))
 	}
+; 	End:_IsAsciiLower ;}
+;{ 	_IsAsciiUpper
+	; static metohd
+	; check to see if cc is a valid ascii uppercase char
 	_IsAsciiUpper(cc) {
 		return ((cc >= 65) && (cc <= 90))
 	}
+; 	End:_IsAsciiUpper ;}
+;{ 	_IsAscII
+	; Static method
+	; checks to see if cc is a valid ascii char
 	_IsAscII(cc) {
 		return cc >=0 && c <= 127
 	}
+; 	End:_IsAscII ;}
+;{ 	_IsLatin1
+	; static method
+	; checks to see if cc is a valid Latin1 char
 	_IsLatin1(cc) {
 		return cc >=0 && c <= 255
 	}
+; 	End:_IsLatin1 ;}
+;{ 	_IsSeparatorLatin1
+	; static method
+	; checks ot see if cc is a Latin1 separator char
 	_IsSeparatorLatin1(cc) {
 		return ((cc = 32 ) || (cc = 160))
 	}
+; 	End:_IsSeparatorLatin1 ;}
+;{ 	_IsDigitLatin1
+	; static method
+	; checks ot see if cc is a valid Latin1 digit
 	_IsDigitLatin1(cc) {
 		retur ((cc >= 48 ) && (cc <= 57))
 	}
+; 	End:_IsDigitLatin1 ;}
+
+;{ 	__Delete
+	; clean up when instance is destroyed
 	__Delete() {
 		ObjSetCapacity(this, "_Buffer", 0)
 	}
-	
+; 	End:__Delete ;}	
 }
 
 /* Class: MfMemBlkView
