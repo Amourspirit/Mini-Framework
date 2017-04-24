@@ -25,20 +25,21 @@ Class MfText
 class MfStringBuilder extends MfObject
 {
 	static CapacityField := "Capacity"
-	static DefaultCapacity = 16
+	static DefaultCapacity := 16
 	m_ChunkChars := 0
 	m_ChunkLength := 0
 	m_ChunkOffset := 0
 	m_ChunkPrevious := ""
 	m_MaxCapacity := 0
 	static MaxCapacityField := "m_MaxCapacity"
-	MaxChunkSize := 16000
+	MaxChunkSize := 8000
 	static StringValueField := "m_StringValue"
 	static m_BytesPerChar := A_IsUnicode ? 2 : 1
 	m_Encoding := ""
 	m_Nl := ""
-	m_a := ""
+	m_HasNullChar := false
 ;{ 	Constructor
+	; Capacity is the length in chars
 	__new(args*) {
 		if (this.__Class != "MfStringBuilder")
 		{
@@ -53,34 +54,39 @@ class MfStringBuilder extends MfObject
 		
 		
 		pArgs := this._ConstructorParams(A_ThisFunc, args*)
+		strP := ""
 		IsInit := false
 		if (pArgs.Count = 0)
 		{
 			this._new()
 			IsInit := true
 		}
-		strP := pArgs.ToString()
-		if (IsInit = false && strP = "MfInteger")
+		else
+		{
+			strP := pArgs.ToString()
+		}
+		
+		if (IsInit = false && strP = "MfInteger") ; Capacity
 		{
 			this._newInt(pArgs.Item[0])
 			IsInit := true
 		}
-		else if (IsInit = false && strP = "MfString")
+		else if (IsInit = false && strP = "MfString") ; string
 		{
 			this._newStr(pArgs.Item[0])
 			IsInit := true
 		}
-		else if (IsInit = false && strP = "MfString,MfInteger")
+		else if (IsInit = false && strP = "MfString,MfInteger") ; string, Capacity
 		{
 			this._newStrInt(pArgs.Item[0], pArgs.Item[1])
 			IsInit := true
 		}
-		else if (IsInit = false && strP = "MfInteger,MfInteger")
+		else if (IsInit = false && strP = "MfInteger,MfInteger") ; Capacity, Max Capacity
 		{
 			this._newIntInt(pArgs.Item[0], pArgs.Item[1])
 			IsInit := true
 		}
-		else if (IsInit = false && strP = "MfString,MfInteger,MfInteger,MfInteger")
+		else if (IsInit = false && strP = "MfString,MfInteger,MfInteger,MfInteger") ; string, index, length, capacity
 		{
 			this._newStrIntIntInt(pArgs.Item[0], pArgs.Item[1], pArgs.Item[2], pArgs.Item[3])
 			IsInit := true
@@ -94,18 +100,21 @@ class MfStringBuilder extends MfObject
 		}
 		else if (IsInit = false && strP = "MfStringBuilder")
 		{
+			; internal constructor base
 			this._newSB(pArgs.Item[0])
 			IsInit := true
 		}
 	}
+
 	_new() {
-		this._newInt(32)
+		this._newInt(MfStringBuilder.DefaultCapacity)
 	}
 	_newInt(capacity) {
+		
 		this._newStrInt("",capacity)
 	}
 	_newStr(value) {
-		this._newStrInt(value, 32)
+		this._newStrInt(value, MfStringBuilder.DefaultCapacity)
 	}
 	_newStrInt(value, capacity) {
 		if (MfObject.IsObjInstance(value, MfString) = false)
@@ -137,8 +146,9 @@ class MfStringBuilder extends MfObject
 		}
 		if (capacity = 0)
 		{
-			capacity := MfMath.Min(32, maxCapacity)
+			capacity := MfMath.Min(MfStringBuilder.DefaultCapacity, maxCapacity)
 		}
+		capacity := MfStringBuilder._GetCapacity(capacity)
 		this.m_MaxCapacity := maxCapacity
 		this.m_ChunkChars := new MfMemoryString(capacity,,this.m_Encoding)
 	}
@@ -165,32 +175,33 @@ class MfStringBuilder extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (MfString.IsNullOrEmpty(value))
-		{
-			value := new MfString("")
-		}
-		if (startIndex > value.Length - length)
+		ms := MfMemoryString.FromAny(value, this.m_Encoding)
+		
+		if (startIndex > ms.Length - length)
 		{
 			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.m_MaxCapacity := 2147483647
+		BytesPerChar := MfStringBuilder.m_BytesPerChar
 		if (capacity <= 0)
 		{
-			capacity := 32
+			capacity :=  MfStringBuilder.DefaultCapacity
 		}
-		if (capacity < (length * this.m_BytesPerChar))
+		if (capacity < length)
 		{
-			capacity := (length + 1) * this.m_BytesPerChar
+			capacity := length
 		}
+		capacity := MfStringBuilder._GetCapacity(capacity)
 		;BytesPerChar :=  MfStringBuilder.m_BytesPerChar
 		this.m_ChunkChars := new MfMemoryString(capacity,,this.m_Encoding)
 		if (length > 0)
 		{
-			this.m_ChunkChars.Append(MfString.Substring(value, startIndex , length))
+			this.m_ChunkChars.Append(ms.Substring(startIndex, length))
 		}
 		this.m_ChunkLength := length
+		ms := ""
 
 	}
 	_newSB(from) {
@@ -199,17 +210,19 @@ class MfStringBuilder extends MfObject
 		this.m_ChunkChars := from.m_ChunkChars
 		this.m_ChunkPrevious := from.m_ChunkPrevious
 		this.m_MaxCapacity := from.m_MaxCapacity
+		this.m_HasNullChar := from.m_HasNullChar
 	}
 	_newIntIntSb(size, maxCapacity, previousBlock) {
 		size := MfInteger.GetValue(size)
 		maxCapacity := MfInteger.GetValue(maxCapacity)
 		this.m_ChunkChars := ""
-		this.m_ChunkChars := new MfMemoryString(size,,this.m_Encoding)
+		this.m_ChunkChars := new MfMemoryString(MfStringBuilder._GetCapacity(size),,this.m_Encoding)
 		this.m_MaxCapacity := maxCapacity
 		this.m_ChunkPrevious := previousBlock
 		if (MfNull.IsNull(previousBlock) = false)
 		{
 			this.m_ChunkOffset := previousBlock.m_ChunkOffset + previousBlock.m_ChunkLength
+			this.m_HasNullChar := previousBlock.m_HasNullChar
 		}
 	}
 ; 	End:Constructor ;}
@@ -217,23 +230,27 @@ class MfStringBuilder extends MfObject
 	Append(obj) {
 		return this._AppendString(obj)
 	}
-	AppendLine(value = "") {
-		if (MfString.IsNullOrEmpty(value) = false)
+
+	AppendFormatted(str, args*) {
+		_str := MfString.GetValue(str)
+		fStr := MfString.Format(_str, args*)
+		this._AppendString(fStr)
+	}
+
+	AppendLine(obj = "") {
+		if (MfNull.IsNull(obj) = false)
 		{
-			this._AppendString(value)
+			this._AppendString(obj)
 		}
 		return this._AppendString(this.m_Nl)
 	}
-	_AppendString(value) {
-		sLen := 0
-		if (MfObject.IsObjInstance(value, MfString))
-		{
-			sLen := value.Length
-		}
-		else
-		{
-			sLen := StrLen(value)
-		}
+	Clear() {
+		this.Length := 0
+		return this
+	}
+	_AppendString(obj) {
+		ms := MfMemoryString.FromAny(obj, this.m_Encoding)
+		sLen := ms.m_CharCount
 		if (sLen = 0)
 		{
 			return this
@@ -243,55 +260,82 @@ class MfStringBuilder extends MfObject
 		num := chunkLength + sLen
 		if (sLen <= chunkChars.FreeCharCapacity)
 		{
-			chunkChars.Append(value)
+			chunkChars.Append(ms)
 			this.m_ChunkLength := num
 		}
 		else
 		{
-			return this._AppendHelper(value, sLen)
+			return this._AppendHelper(ms, sLen)
 		}
 		return this
 	}
-
-	_AppendHelper(strObj, valueCount) {
+;{ 	_AppendHelper
+	; msObj is MfMemoryString instance
+	_AppendHelper(msObj, valueCount) {
 		
 		num := valueCount + this.m_ChunkLength
 		if (num <= this.m_ChunkChars.FreeCharCapacity)
 		{
-			chunkChars.Append(value)
+			chunkChars.Append(msObj)
 			this.m_ChunkLength := num
 		}
 		else
 		{
-			ms := new MfMemoryString((valueCount + 1) * this.m_BytesPerChar,, this.m_Encoding)
-			ms.Append(strObj)
 			num2 := this.m_ChunkChars.CharCapacity - this.m_ChunkLength
 			if (num2 > 0)
 			{
-				msSub := ms.SubString(0, num2)
-				this.m_ChunkChars.Append(msSub)
-				this.m_ChunkLength := this.m_ChunkChars.Length
-				msSub := ""
+				if (msObj.m_CharCount > num2)
+				{
+					msSub := msObj.SubString(0, num2)
+					this.m_ChunkChars.Append(msSub)
+					msSub := ""
+				}
+				else
+				{
+					this.m_ChunkChars.Append(msObj)
+				}
+				this.m_ChunkLength := this.m_ChunkChars.m_CharCount
 			}
 			num3 := valueCount - num2
 			this._ExpandByABlock(num3)
-			if (num2 > 0)
+			if (num3 > 0)
 			{
-				msSub := ms.SubString(num2)
-				this.m_ChunkChars.Append(msSub)
-				msSub := ""
+				if (num2 <= 0)
+				{
+					this.m_ChunkChars.Append(msObj)
+				}
+				else
+				{
+					msSub := msObj.SubString(num2)
+					this.m_ChunkChars.Append(msSub)
+					msSub := ""
+				}
 			}
 			else
 			{
-				this.m_ChunkChars.Append(ms)
+				this.m_ChunkChars.Append(msObj)
 			}
-			this.m_ChunkLength := num3
+			this.m_ChunkLength := this.m_ChunkChars.m_CharCount
 		}
 		return this
 	}
+; 	End:_AppendHelper ;}
 	_GetAddress(ByRef Obj) {
 		return &Obj
 	}
+;{ 	_getCapacity
+	; get the size needed for a MfMemoryString from Capacity
+	; Capacity is considered to be the Char Count
+	; MfMemoryString needs to be the size of the string + 1
+	_GetCapacity(Capacity) {
+		BytesPerChar := MfStringBuilder.m_BytesPerChar
+		;retval := (Capacity + BytesPerChar) * BytesPerChar
+		retval := (Capacity + 1) * BytesPerChar
+		;retval := (Capacity) * BytesPerChar
+		return retval
+	}
+; 	End:_getCapacity ;}
+;{ 	_AppendChar
 	_AppendChar(value, repeatCount=1)	{
 		if (repeatCount < 0)
 		{
@@ -313,7 +357,30 @@ class MfStringBuilder extends MfObject
 		{
 			charCode := Asc(value . "")
 		}
+		return this._AppendCharCode(charCode, repeatCount)
+	}
+
+; 	End:_AppendChar ;}
+	_AppendCharCode(charCode, repeatCount=1)	{
+		if (repeatCount < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("repeatCount", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeCount"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (repeatCount = 0)
+		{
+			return this
+		}
+		num := this.m_ChunkLength
 		
+		If (MfMemStrView.IsIgnoreCharLatin1(charCode))
+		{
+			; set a flag to note that this instance may have one or more null chars
+			; this will be checked in the ToString() method to allow displaying of
+			; text ignoring null chars (unicode 0)
+			this.m_HasNullChar := true
+		}
 		while (repeatCount > 0)
 		{
 			if (num < this.m_ChunkChars.FreeCharCapacity)
@@ -333,6 +400,68 @@ class MfStringBuilder extends MfObject
 		this.m_ChunkLength := num
 		return this
 	}
+;{ 	_InsertStrInt
+	; Inserts one or more copies of a specified string into this instance at the specified character position.
+	_InsertStrInt(index, obj, count) {
+		value := MfMemoryString.FromAny(obj, this.m_Encoding)
+		if (count < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("count", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NeedNonNegNum"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		length := this.Length
+		if (index > length)
+		{
+			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (value.Length = 0 || count = 0)
+		{
+			return this
+		}
+		num := value.Length * count
+		if (num > (long)(this.MaxCapacity - this.Length))
+		{
+			ex := new MfOutOfMemoryException()
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		stringBuilder := ""
+		num2 := 0
+		this._MakeRoom(index, num, stringBuilder, num2, false)
+
+	}
+; 	End:_InsertStrInt ;}
+;{ 	_ReplaceInPlaceAtChunk
+	; chunk StringBuilder
+	; indexInChunk Integer
+	; value MfMemoryString
+	; count integer
+	_ReplaceInPlaceAtChunk(ByRef chunk, ByRef indexInChunk, value, count) {
+		if (count != 0)
+		{
+			loop
+			{
+				num := MfMath.Min(chunk.m_ChunkLength - indexInChunk, count)
+				StringBuilder.ThreadSafeCopy(value, chunk.m_ChunkChars, indexInChunk, num)
+				indexInChunk += num
+				if (indexInChunk >= chunk.m_ChunkLength)
+				{
+					chunk = this.Next(chunk);
+					indexInChunk := 0
+				}
+				count -= num
+				if (count = 0)
+				{
+					break
+				}
+				value += num
+			}
+		}
+	}
+; 	End:_ReplaceInPlaceAtChunk ;}
 ;{ 	Equals
 	Equals(sb) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -490,48 +619,114 @@ class MfStringBuilder extends MfObject
 		
 		ms.m_MemView.Pos := iLen
 		ms.m_CharCount := this.Length
+		; if flag has been set that this instance contains null char ( unicode 0 ) values
+		; in the string then we will get a new MfMemoryString that ignores all null chars
+		; to output the text
+		; If we did not get this new MfMemoryString instance then the text output would stop
+		; at the first null char encountered in the string.
+		; Null value can be added into the current instance by extending the length or by adding 0 value char to
+		; add char method such as this._AppendCharCode(0, 1)
+		if (this.m_HasNullChar = true)
+		{
+			ms2 := ms.GetStringIgnoreNull()
+			return ms2.ToString()
+		}
 		return ms.ToString()
 	}
+;{ 	_MakeRoom
+/*
+	_MakeRoom()
+		Makes room insde of string builder
+	Parameters:
+		index
+			Integer Index
+		count
+			Integer Count
+		chunk
+			MfString Builder Instance ( out )
+		indexInChunk
+			Integer ( out )
+		doneMoveFollowingChars
+			Boolean value
+*/
+	_MakeRoom(index, count, byRef chunk, ByRef indexInChunk, doneMoveFollowingChars) {
+		if (count + this.Length > this.m_MaxCapacity)
+		{
+			ex := new MfArgumentOutOfRangeException("requiredLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		chunk := this
+		while (chunk.m_ChunkOffset > index)
+		{
+			chunk.m_ChunkOffset += count
+			chunk := chunk.m_ChunkPrevious
+		}
+		indexInChunk := index - chunk.m_ChunkOffset
+		if (!doneMoveFollowingChars && chunk.m_ChunkLength <= (MfStringBuilder.DefaultCapacity * 2) && chunk.m_ChunkChars.CharCapacity - chunk.m_ChunkLength >= count)
+		{
+			i := chunk.m_ChunkLength
+			while (i > indexInChunk)
+			{
+				; move bytes to the right by count amount
+				i--
+				chunk.m_ChunkChars.Byte[i + count] := chunk.m_ChunkChars.Byte[i]
+			}
+			chunk.m_ChunkLength += count
+			; advance the pos to match the number count moved
+			chunk.m_ChunkChars.Pos += count
+			return
+		}
+		stringBuilder := new MfStringBuilder(MfMath.Max(count, MfStringBuilder.DefaultCapacity), chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
+		stringBuilder.m_ChunkLength := count
+		num := MfMath.Min(count, indexInChunk)
+		BytesPerChar := MfStringBuilder.m_BytesPerChar
+		if (num > 0)
+		{
+			stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars.SubString(0, num))
+			num2 := indexInChunk - num
+			if (num2 >= 0)
+			{
+				; move any remaining bytes not copied int stringBuilder left
+				len := num2
+				chunk.m_ChunkChars.MoveCharsLeft(0, len)
+				
+				if (chunk.m_ChunkChars.FreeCapacity > 0)
+				{
+					; set the next char past m_MemView.Pos to 0 for good measure
+					i := 1
+					While (i <= BytesPerChar)
+					{
+						chunk.m_ChunkChars.Byte[chunk.m_ChunkChars.m_MemView.Pos - i] := 0
+						i++
+					}
+				}
+				indexInChunk := num2
+			}
+		}
+		chunk.m_ChunkPrevious := stringBuilder
+		chunk.m_ChunkOffset += count
+		if (num < count)
+		{
+			chunk := stringBuilder
+			indexInChunk := num
+		}
+	}
+; 	End:_MakeRoom ;}
 	_sg(ByRef str, length="", encoding="") {
 		strA := &str
 		result := StrGet(&%strA%, , encoding) . ""
 		return result
 	}
-;{ 	_ckNumToString2
-	; Gets the string value of stringBuilder current chunk
-	_ckNumToString2(byRef sb) {
-		return sb.m_ChunkChars.ToString()
-	}
-; 	End:_ckNumToString2 ;}
-	_ckNumToString(Chunk, length) {
-		i := 0
-		length := length * MfStringBuilder.m_BytesPerChar
-		step := MfStringBuilder.m_BytesPerChar
-		strType := "UChar"
-		if (A_IsUnicode)
-		{
-			strType := "UShort"
-		}
-		ChunkA := &Chunk
-		retval := ""
-		While i < length
-		{
-			num := NumGet(&Chunk,i, strType)
-			retval .= chr(num)
-			i += step
-		}
-		return retval
-	}
 ;{ 	__Delete
 	__Delete() {
 		this.m_ChunkPrevious := ""
-		this.this.m_ChunkChars := ""
+		this.m_ChunkChars := ""
 	}
 ; 	End:__Delete ;}
 ; End:Methods ;}
 ;{ 	Properties
 	;{ Capacity
-		m_Capacity := 0
 		/*!
 			Property: Capacity [get/set]
 				Gets or sets the maximum number of characters that can be contained in the memory allocated by the current instance.
@@ -543,7 +738,7 @@ class MfStringBuilder extends MfObject
 		Capacity[]
 		{
 			get {
-				return this.m_Capacity + this.m_ChunkOffset
+				return this.m_ChunkChars.CharCapacity + this.m_ChunkOffset
 			}
 			set {
 				_value := MfInteger.GetValue(value)
@@ -553,7 +748,7 @@ class MfStringBuilder extends MfObject
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				if (_value > this.MaxCapacity)
+				if (_value > this.m_MaxCapacity)
 				{
 					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Capacity"))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -567,7 +762,11 @@ class MfStringBuilder extends MfObject
 				}
 				if (this.Capacity != _value)
 				{
-					ms := new MfMemoryString(_value - this.m_ChunkOffset,, this.m_Encoding)
+					; this will expand the current chunk to add the new expanded Capacity
+					v := _value - this.m_ChunkOffset
+					v := MfStringBuilder._GetCapacity(v)
+					
+					ms := new MfMemoryString(v,, this.m_Encoding)
 					ms.Append(this.m_ChunkChars)
 					this.m_ChunkChars := ""
 					this.m_ChunkChars := ms
@@ -575,6 +774,27 @@ class MfStringBuilder extends MfObject
 			}
 		}
 	; End:Capacity ;}
+	;{ MaxCapacity
+		/*!
+			Property: MaxCapacity [get]
+				Gets the MaxCapacity value associated with the this instance
+			Value:
+				Var representing the MaxCapacity property of the instance
+			Remarks:
+				Readonly Property
+		*/
+		MaxCapacity[]
+		{
+			get {
+				return this.m_MaxCapacity
+			}
+			set {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+				ex.SetProp(A_LineFile, A_LineNumber, "MaxCapacity")
+				Throw ex
+			}
+		}
+	; End:MaxCapacity ;}
 	;{ Item
 		/*!
 			Property: Item [get/set]
@@ -609,8 +829,8 @@ class MfStringBuilder extends MfObject
 						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 						throw ex
 					}
-					return this._GetCharFromChunk(stringBuilder.m_ChunkChars, i)
 				}
+				return this._GetCharFromChunk(stringBuilder.m_ChunkChars, i)
 			}
 			set {
 				;this.m_Item := value
@@ -639,8 +859,8 @@ class MfStringBuilder extends MfObject
 						throw ex
 					}
 					;this._SetCharFromChunk(stringBuilder.m_ChunkChars, i, value)
-					this._SetChar(stringBuilder, i, value)
 				}
+				this._SetChar(stringBuilder, i, value)
 			}
 		}
 	; End:Item ;}
@@ -664,7 +884,7 @@ class MfStringBuilder extends MfObject
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				if (_value > this.MaxCapacity)
+				if (_value > this.m_MaxCapacity)
 				{
 					ex := new MfArgumentOutOfRangeException("value", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -680,20 +900,44 @@ class MfStringBuilder extends MfObject
 				i := _value - this.Length
 				if (i > 0)
 				{
-					this._AppendChar(chr(0), i)
+					this._AppendCharCode(0, i)
 					return
 				}
+				BytesPerChar := MfStringBuilder.m_BytesPerChar
 				stringBuilder := this._FindChunkForIndex(_value)
 				if (this.Equals(stringBuilder) = false)
 				{
-					ms := new MfMemoryString(capacity - stringBuilder.m_ChunkOffset,, this.m_Encoding)
+					ms := new MfMemoryString(MfStringBuilder._GetCapacity(capacity - stringBuilder.m_ChunkOffset),, this.m_Encoding)
 					ms.Append(stringBuilder.m_ChunkChars)
 					this.m_ChunkChars := ""
 					this.m_ChunkChars := ms
+					this.m_ChunkPrevious := ""
 					this.m_ChunkPrevious := stringBuilder.m_ChunkPrevious
 					this.m_ChunkOffset := stringBuilder.m_ChunkOffset
 				}
+				
 				this.m_ChunkLength := value - stringBuilder.m_ChunkOffset
+				if (this.m_ChunkChars.m_MemView.Size > (this.m_ChunkLength * BytesPerChar))
+				{
+					this.m_ChunkChars.m_MemView.Pos := (this.m_ChunkLength + 1) * BytesPerChar
+					this.m_ChunkChars.m_CharCount := this.m_ChunkLength
+				}
+				else
+				{
+					this.m_ChunkChars.m_MemView.Pos := this.m_ChunkChars.m_MemView.Size
+					this.m_ChunkLength := this.m_ChunkChars.m_MemView.Size // BytesPerChar
+					this.m_ChunkChars.m_CharCount := this.m_ChunkLength
+				}
+				if (this.m_ChunkChars.FreeCapacity > 0)
+				{
+					; set the next char past m_MemView.Pos to 0 for good measure
+					i := 1
+					While (i <= BytesPerChar)
+					{
+						this.m_ChunkChars.Byte[this.m_ChunkChars.m_MemView.Pos - i] := 0
+						i++
+					}
+				}
 			}
 		}
 	; End:Length ;}
@@ -714,50 +958,6 @@ class MfStringBuilder extends MfObject
 	_GetCharCodeFromChunk(byref chunk, index) {
 		return chunk.CharCode[index]
 	}
-;{ 	_CopyArray
-	; copies source memory array to destionation memory array
-	; Params
-	;	sourceArray - Memory address of source array
-	;	destinationArray - Memory address of dest array
-	_CopyArray(ByRef sourceArray, ByRef destinationArray, length, startIndex=0) {
-		i := 0
-		if(startIndex > 0)
-		{
-			i := startIndex
-			length := length + startIndex
-		}
-		sourceA := &sourceArray
-		destA := &destinationArray
-		OutputDebug, % "Dest  Mem: " . destA
-		while (i < length)
-		{
-			num := NumGet(&sourceArray, i, "UChar")
-			;NumPut(num, &destinationArray , i, "UChar")
-			NumPut(num, this.m_ChunkChars + 0 , i, "UChar")
-			i++
-		}
-		
-	}
-	_CopyA(ByRef sb, ByRef sourceArray, length, startIndex=0) {
-		i := 0
-		if(startIndex > 0)
-		{
-			i := startIndex
-			length := length + startIndex
-		}
-		sourceA := &sourceArray
-		destA := sb.m_a + 0
-		;OutputDebug, % "Dest  Mem: " . destA
-		while (i < length)
-		{
-			num := NumGet(&sourceArray, i, "UChar")
-			;NumPut(num, &destinationArray , i, "UChar")
-			NumPut(num, destA + 0 , i, "UChar")
-			i++
-		}
-		
-	}
-; 	End:_CopyArray ;}
 ;{ 	_ExpandByABlock
 	_ExpandByABlock(minBlockCharCount) {
 		if (minBlockCharCount + this.Length > this.m_MaxCapacity)
@@ -766,9 +966,9 @@ class MfStringBuilder extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		
 		num := MfMath.Max(minBlockCharCount, MfMath.Min(this.Length, 16000))
 		params := new MfParams()
-		
 		params.Data.Add("_internalsb", true)
 		params.Add(this)
 
@@ -782,7 +982,7 @@ class MfStringBuilder extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		this.m_ChunkChars := new MfMemoryString((num + 1) * this.m_BytesPerChar,, this.m_Encoding)
+		this.m_ChunkChars := new MfMemoryString( MfStringBuilder._GetCapacity(num),, this.m_Encoding)
 		
 		
 	}
@@ -877,8 +1077,6 @@ class MfStringBuilder extends MfObject
 									p.AddInteger(result)
 								}
 							}
-
-							
 						}
 						if (i = 2)
 						{
