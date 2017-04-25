@@ -81,11 +81,25 @@ class MfStringBuilder extends MfObject
 			this._newStrInt(pArgs.Item[0], pArgs.Item[1])
 			IsInit := true
 		}
-		else if (IsInit = false && strP = "MfInteger,MfInteger") ; Capacity, Max Capacity
+		else if (IsInit = false && strP = "MfInteger,MfInteger") ; Capacity, Max Capacity or size, maxCapacity, previousBlock
 		{
-			this._newIntInt(pArgs.Item[0], pArgs.Item[1])
+			if (pArgs.Data.Contains("_nullSb"))
+			{
+				this._newIntIntSb(pArgs.Item[0], pArgs.Item[1])
+			}
+			else
+			{
+				this._newIntInt(pArgs.Item[0], pArgs.Item[1])
+			}
+			
 			IsInit := true
 		}
+		else if (IsInit = false && strP = "MfInteger,MfInteger,MfStringBuilder") ; size, maxCapacity, previousBlock
+		{
+			this._newIntIntSb(pArgs.Item[0], pArgs.Item[1], pArgs.Item[2])
+			IsInit := true
+		}
+		
 		else if (IsInit = false && strP = "MfString,MfInteger,MfInteger,MfInteger") ; string, index, length, capacity
 		{
 			this._newStrIntIntInt(pArgs.Item[0], pArgs.Item[1], pArgs.Item[2], pArgs.Item[3])
@@ -212,7 +226,7 @@ class MfStringBuilder extends MfObject
 		this.m_MaxCapacity := from.m_MaxCapacity
 		this.m_HasNullChar := from.m_HasNullChar
 	}
-	_newIntIntSb(size, maxCapacity, previousBlock) {
+	_newIntIntSb(size, maxCapacity, previousBlock="") {
 		size := MfInteger.GetValue(size)
 		maxCapacity := MfInteger.GetValue(maxCapacity)
 		this.m_ChunkChars := ""
@@ -328,11 +342,9 @@ class MfStringBuilder extends MfObject
 	; Capacity is considered to be the Char Count
 	; MfMemoryString needs to be the size of the string + 1
 	_GetCapacity(Capacity) {
-		BytesPerChar := MfStringBuilder.m_BytesPerChar
-		;retval := (Capacity + BytesPerChar) * BytesPerChar
-		retval := (Capacity + 1) * BytesPerChar
-		;retval := (Capacity) * BytesPerChar
-		return retval
+		;BytesPerChar := MfStringBuilder.m_BytesPerChar
+		;retval := (Capacity + 1) * BytesPerChar
+		return Capacity
 	}
 ; 	End:_getCapacity ;}
 ;{ 	_AppendChar
@@ -422,7 +434,7 @@ class MfStringBuilder extends MfObject
 			return this
 		}
 		num := value.Length * count
-		if (num > (long)(this.MaxCapacity - this.Length))
+		if (num > this.MaxCapacity - this.Length)
 		{
 			ex := new MfOutOfMemoryException()
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -431,6 +443,11 @@ class MfStringBuilder extends MfObject
 		stringBuilder := ""
 		num2 := 0
 		this._MakeRoom(index, num, stringBuilder, num2, false)
+		while (count > 0)
+		{
+			this._ReplaceInPlaceAtChunk(stringBuilder, num2, value, value.Length)
+			count--
+		}
 
 	}
 ; 	End:_InsertStrInt ;}
@@ -445,11 +462,13 @@ class MfStringBuilder extends MfObject
 			loop
 			{
 				num := MfMath.Min(chunk.m_ChunkLength - indexInChunk, count)
-				StringBuilder.ThreadSafeCopy(value, chunk.m_ChunkChars, indexInChunk, num)
+
+				chunk.m_ChunkChars.OverWrite(value, indexInChunk, num)
+
 				indexInChunk += num
 				if (indexInChunk >= chunk.m_ChunkLength)
 				{
-					chunk = this.Next(chunk);
+					chunk := this._Next(chunk)
 					indexInChunk := 0
 				}
 				count -= num
@@ -457,7 +476,8 @@ class MfStringBuilder extends MfObject
 				{
 					break
 				}
-				value += num
+				;value += num
+				value := value.Substring(num)
 			}
 		}
 	}
@@ -586,7 +606,7 @@ class MfStringBuilder extends MfObject
 			;~ iLen += (sb.m_ChunkChars.Length + this.m_BytesPerChar) * this.m_BytesPerChar
 			;~ sb := sb.m_ChunkPrevious
 		;~ }
-		iLen := (this.Length + 1) * this.m_BytesPerChar
+		iLen := (this.Length + 1)
 		ms := new MfMemoryString(iLen,, this.m_Encoding)
 		stringBuilder := this
 		loop
@@ -617,15 +637,17 @@ class MfStringBuilder extends MfObject
 			throw ex
 		}
 		
-		ms.m_MemView.Pos := iLen
+		ms.m_MemView.Pos := (this.Length + 1) * this.m_BytesPerChar
 		ms.m_CharCount := this.Length
 		; if flag has been set that this instance contains null char ( unicode 0 ) values
-		; in the string then we will get a new MfMemoryString that ignores all null chars
-		; to output the text
+		; or any Latin1 (char 0 to 255 ) not printing char
+		; in the string then we will get a new MfMemoryString that ignores all non-printing
+		; chars for latin1 and output text from there.
 		; If we did not get this new MfMemoryString instance then the text output would stop
-		; at the first null char encountered in the string.
-		; Null value can be added into the current instance by extending the length or by adding 0 value char to
-		; add char method such as this._AppendCharCode(0, 1)
+		; at the first null char ( unicode 0) encountered in the string.
+		; Null value can be added into the current instance by extending the length
+		; Other non printing chars cna be added by adding not printing char value
+		; with methods such as this._AppendCharCode(8, 1)
 		if (this.m_HasNullChar = true)
 		{
 			ms2 := ms.GetStringIgnoreNull()
@@ -666,40 +688,36 @@ class MfStringBuilder extends MfObject
 		if (!doneMoveFollowingChars && chunk.m_ChunkLength <= (MfStringBuilder.DefaultCapacity * 2) && chunk.m_ChunkChars.CharCapacity - chunk.m_ChunkLength >= count)
 		{
 			i := chunk.m_ChunkLength
-			while (i > indexInChunk)
-			{
-				; move bytes to the right by count amount
-				i--
-				chunk.m_ChunkChars.Byte[i + count] := chunk.m_ChunkChars.Byte[i]
-			}
+			chunk.m_ChunkChars.MoveCharsRight(i, Count)
 			chunk.m_ChunkLength += count
 			; advance the pos to match the number count moved
-			chunk.m_ChunkChars.Pos += count
+			;chunk.m_ChunkChars.Pos += count
 			return
 		}
-		stringBuilder := new MfStringBuilder(MfMath.Max(count, MfStringBuilder.DefaultCapacity), chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
+		Capacity := MfMath.Max(count, MfStringBuilder.DefaultCapacity)
+		stringBuilder := new MfStringBuilder(Capacity, chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
 		stringBuilder.m_ChunkLength := count
 		num := MfMath.Min(count, indexInChunk)
 		BytesPerChar := MfStringBuilder.m_BytesPerChar
 		if (num > 0)
 		{
-			stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars.SubString(0, num))
+			if (chunk.m_ChunkChars.Length <= num)
+			{
+				stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars)
+			}
+			else
+			{
+				stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars.SubString(0, num))
+			}
+			
 			num2 := indexInChunk - num
 			if (num2 >= 0)
 			{
-				; move any remaining bytes not copied int stringBuilder left
-				len := num2
-				chunk.m_ChunkChars.MoveCharsLeft(0, len)
 				
-				if (chunk.m_ChunkChars.FreeCapacity > 0)
+				if (num2 > 0)
 				{
-					; set the next char past m_MemView.Pos to 0 for good measure
-					i := 1
-					While (i <= BytesPerChar)
-					{
-						chunk.m_ChunkChars.Byte[chunk.m_ChunkChars.m_MemView.Pos - i] := 0
-						i++
-					}
+					;chunk.m_ChunkChars.MoveCharsLeft(0, num, num2)
+					chunk.m_ChunkChars.OverWrite(chunk.m_ChunkChars.SubString(num), 0, num2)
 				}
 				indexInChunk := num2
 			}
@@ -713,6 +731,16 @@ class MfStringBuilder extends MfObject
 		}
 	}
 ; 	End:_MakeRoom ;}
+;{ 	_Next
+	; chunk - StringBuilder
+	 _Next(chunk) {
+		if (this.Equals(chunk))
+		{
+			return Null
+		}
+		return this._FindChunkForIndex(chunk.m_ChunkOffset + chunk.m_ChunkLength)
+	}
+; 	End:_Next ;}
 	_sg(ByRef str, length="", encoding="") {
 		strA := &str
 		result := StrGet(&%strA%, , encoding) . ""
@@ -967,7 +995,7 @@ class MfStringBuilder extends MfObject
 			throw ex
 		}
 		
-		num := MfMath.Max(minBlockCharCount, MfMath.Min(this.Length, 16000))
+		num := MfMath.Max(minBlockCharCount, MfMath.Min(this.Length, MfStringBuilder.DefaultCapacity))
 		params := new MfParams()
 		params.Data.Add("_internalsb", true)
 		params.Add(this)
@@ -1063,6 +1091,10 @@ class MfStringBuilder extends MfObject
 								p.AddInteger(result)
 							}
 						}
+						else if (cnt = 3 && i = 1)
+						{
+							p.AddInteger(arg)
+						}
 						if (cnt = 2)
 						{
 							if (i = 1)
@@ -1085,7 +1117,11 @@ class MfStringBuilder extends MfObject
 							p.Add(result)
 
 						}
-						if (i = 3)
+						if (cnt = 3 && i = 3 && MfNull.IsNull(arg))
+						{
+							p.Data.Add("_nullSb", true)
+						}
+						else if (i = 3)
 						{
 							; param 3 is always an int when not an MfObject
 							result := new MfInteger(arg)

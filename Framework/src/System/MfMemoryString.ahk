@@ -39,6 +39,7 @@
  *	Insert() Inserts obj into current instance
  *	LastIndexOf() Gets the zero based position of obj within the currrent instance from end
  *	MoveCharsLeft() Move the characters in memory to the left overwriting any characters in position before move
+ *	MoveCharsRight() Move the characters in memory to the Right inserting null (unicode 0) from StartIndex to ShiftAmt
  *	OverWrite() Overwrites the chars in this instance with the chars in obj instance
  *	Replace() Replaces instances of oldValue with Instances of newValue
  *	Remove() Removes a number of chars from currrent instance
@@ -81,13 +82,14 @@ class MfMemoryString extends MfObject
 		Construct a new instance of the class
 	Parameters:
 		Size
-			The buffer size of the instance
+			The buffer size in chars of the instance
 		FillByte
 			The byte value to write into memory. Default is 0
 		Encoding
 			The encoding for the instane.
 	Remarks:
-		Encoding of Utf-16 requires two bytes per char and needs to be considered for choosing size
+		Size is based on the number of char and encoding does not need to be considered
+		when choosing size.
 */
 	__New(Size, FillByte:=0, Encoding="UTF-16") {
 		if (MfNull.IsNull(Size))
@@ -96,6 +98,24 @@ class MfMemoryString extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		try
+		{
+			Size := MfInteger.GetValue(Size)
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "Size")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Size < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("Size", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		FillByte := MfInteger.GetValue(FillByte, 0)
+
 		base.__New()
 		this.m_nl := MfEnvironment.Instance.NewLine
 		if (Encoding = "UTF-32")
@@ -116,7 +136,8 @@ class MfMemoryString extends MfObject
 		StringReplace, _Encoding, Encoding, -, , ALL
 		this.m_Encoding := Encoding
 		this.m_EncodingName := _Encoding
-		this.m_FillBytes := FillByte
+		this.m_FillBytes := FillByte + 1 *
+		size := (size + 1) * this.m_BytesPerChar
 		this.m_MemView := new MfMemStrView(size, FillByte, this.m_Encoding)
 	}
 ; 	End:Constructor ;}
@@ -263,7 +284,7 @@ class MfMemoryString extends MfObject
 		Returns result contents are in a new new memory stream
 */
 	Clone() {
-		objMemRW := new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+		objMemRW := new MfMemoryString(0, this.m_FillBytes, this.m_Encoding)
 		objMemRW.m_MemView := ""
 		objMemRW.m_MemView := this.m_MemView.Clone()
 		objMemRW.m_CharCount := this.m_CharCount
@@ -598,7 +619,7 @@ class MfMemoryString extends MfObject
 
 		mv := MfMemStrView.FromByteList(bytes, encoding, startIndex, length, littleEndian)
 
-		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytes, mv.m_Encoding)
+		objMemRW := new MfMemoryString(0, mv.m_FillBytes, mv.m_Encoding)
 		objMemRW.m_MemView := ""
 		objMemRW.m_MemView := mv
 		objMemRW.m_CharCount := mv.GetCharCount()
@@ -618,7 +639,7 @@ class MfMemoryString extends MfObject
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		mv := this.m_MemView.GetStringIgnoreNull()
 		
-		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytes, mv.m_Encoding)
+		objMemRW := new MfMemoryString(0, mv.m_FillBytes, mv.m_Encoding)
 		objMemRW.m_MemView := ""
 		objMemRW.m_MemView := mv
 		objMemRW.m_CharCount := mv.GetCharCount()
@@ -785,92 +806,118 @@ class MfMemoryString extends MfObject
 	}
 ; 	End:LastIndexOf ;}
 ;{ 	MoveCharsLeft
-	/*
+/*
 	Method: MoveCharsLeft()
 
 	MoveCharsLeft()
 		Move the characters in memory to the left overwriting any characters in position before move
 	Parameters:
 		StartIndex
-			The zero based char index to start Moving
+			The zero based char index to start overwriting
 		ShiftAmt
-			The number of position to shift left
+			The number of characters from StartIndex to start the shift
+			The First character at ShiftAmt will be written into the Position
+			of StartIndex, the second character from shiftAmount will be written
+			into the second position from StartIndex and so on.
+		Length
+			Length Limits how many character are shifted left from ShiftAmout
+			Default Value of Length is -1.
+			When omitted or less then 0 then all characters right of ShiftAmt are shift left.
+			If Length is greater then the last Character Position then all characters right of shiftamt
+			will still be moved left
 	Returns:
 		Returns current instance
 	Throws:
-		Throws MfArgumentOutOfRangeException
+		Throws MfArgumentOutOfRangeException, MfException
+	Remarks:
+		The Pos will be adjusted to reflect then new location
+		If Length is included and is less then the number of characters past ShiftAmt to Pos
+		then all characters from Length to Previous Pos are erased
 */
-	MoveCharsLeft(StartIndex, ShiftAmt) {
-		BytesPerChar := this.m_BytesPerChar
-		startPos := MfInteger.GetValue(startPos) * BytesPerChar
-		ShiftAmt := MfInteger.GetValue(ShiftAmt) * BytesPerChar
-		if (StartIndex = 0 || ShiftAmt = 0)
+	MoveCharsLeft(StartIndex, ShiftAmt, Length=-1) {
+		try
 		{
-			; cannot move left already at the start or no shift amount to move
+			BytesPerChar := this.m_BytesPerChar
+			StartIndex := MfInteger.GetValue(StartIndex) * BytesPerChar
+			Length := MfInteger.GetValue(Length, -1)
+			ShiftAmt := MfInteger.GetValue(ShiftAmt) * BytesPerChar
+			if (Length = 0 || ShiftAmt = 0)
+			{
+				return this
+			}
+			if (Length > 0)
+			{
+				Length := Length * BytesPerChar
+			}
+		
+			this.m_MemView.MoveBytesLeft(StartIndex, ShiftAmt, Length)
+			this.m_CharCount := this.m_MemView.GetCharCount()
 			return this
 		}
-		if (StartIndex < 0)
+		catch e
 		{
-			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			if (MfObject.IsObjInstance(e, MfArgumentOutOfRangeException))
+			{
+				e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw e
+			}
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (ShiftAmt < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("ShiftAmt", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (StartIndex + ShiftAmt > this.m_MemView.Size)
-		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (StartIndex - ShiftAmt < 0)
-		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		this.m_MemView.MoveBytesLeft(StartIndex, Length)
-		this.m_CharCount := this.m_MemView.GetCharCount()
-		return this
 	}
 ; 	End:MoveCharsLeft ;}
 ;{ 	MoveCharsRight
 /*
-	Method: MoveBytesRight()
+	Method: MoveCharsRight()
 
-	MoveBytesRight()
-		Moves chars to the Right in the current instance
+	MoveCharsRight()
+		Move the characters in memory to the Right inserting null (unicode 0) from StartIndex to ShiftAmt
 	Parameters:
 		StartIndex
-			The zero based Starting index in chars to start the move
-		Length
-			The Number of Chars to Move
+			The zero based Starting index in chars to inserting null char
 		ShiftAmt
-			The Number in chars to move to the right
+			The Number of null chars to insert at the StartIndex
+		Length
+			Length Limits how many Char are moved to the end.
+			Default Value is -1.
+			If Omitted or less then zero then all chars from the StartIndex are moved to the right
 	Throws:
 		Throws MfArgumentOutOfRangeException If StartIndex, Length or ShiftAmout are out of range
 		Throws MfArgumentOutOfRangeException if Shifting to right will exceed current Size
+		Throw MfException for all other errors
 	Remarks:
-		Pos is set to the new location after the shift if Pos is less then the end location after shift
+		Pos is set to the new location after the chars have been moved.
+		This method does not increase the size of the current instance and there must be
+		room in the buffer to ensure the move is successfull. An error will be throw if there is not
+		enough room in the buffer.
+		When Chars are moved to the right the ToString() method will stop at the first null char found.
+		Use GetStringIgnoreNull().ToString() if current string value is needed.
+		The Primary usage for this method is to move characters to the right so new characters can be inserted.
+		See the OverWrite method as well.
 */
-	MoveCharsRight(StartIndex, Length, ShiftAmt) {
+	MoveCharsRight(StartIndex, ShiftAmt, Length=-1) {
 		
 		try
 		{
 			BytesPerChar := this.m_BytesPerChar
 			StartIndex := MfInteger.GetValue(StartIndex) * BytesPerChar
-			Length := MfInteger.GetValue(Length) * BytesPerChar
+			Length := MfInteger.GetValue(Length, -1)
+			if (Length = 0 || ShiftAmt = 0)
+			{
+				return this
+			}
+			if (Length > 0)
+			{
+				Length := Length * BytesPerChar
+			}
 			ShiftAmt := MfInteger.GetValue(ShiftAmt) * BytesPerChar
 			if (Length = 0 || ShiftAmt = 0)
 			{
 				; cannot move left already at the start or no shift amount to move
 				return this
 			}
-			this.m_MemView.MoveBytesRight(StartIndex, Length, ShiftAmt)
+			this.m_MemView.MoveBytesRight(StartIndex, ShiftAmt, Length)
 			this.m_CharCount := this.m_MemView.GetCharCount()
 			return this
 		}
@@ -1075,7 +1122,7 @@ class MfMemoryString extends MfObject
 	Throws:
 		Throws MfIndexOutOfRangeException, MfArgumentException
 */
-	Remove(index, length=1) {
+	Remove(index, length=-1) {
 		index := MfInteger.GetValue(index)
 		length := MfInteger.GetValue(length, 1)
 		if ((index < 0) || (index >= this.m_CharCount))
@@ -1084,16 +1131,29 @@ class MfMemoryString extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if ((length < 0) || ((length + index) > this.m_CharCount))
+		If (length = 0)
 		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			return this
+		}
+		if (((length > 0) && (length + index)) > this.m_CharCount)
+		{
+		 	ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+		 	ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		StartPos := index * this.m_BytesPerChar
-		_length := length * this.m_BytesPerChar
-		this.m_MemView.MoveBytesLeft(StartPos, _length)
-		this.m_CharCount := this.m_CharCount - length
+		if (length < 0)
+		{
+			; remove all past index by settign length to greater than pos
+			length := this.Pos + this.m_BytesPerChar
+		}
+		Else
+		{
+			length := Length * this.m_BytesPerChar
+		}
+		ShiftAmt := length
+		StartIndex := index * this.m_BytesPerChar
+		this.m_MemView.MoveBytesLeft(StartIndex, ShiftAmt)
+		this.m_CharCount := this.m_MemView.GetCharCount()
 		return this
 	}
 ; 	End:Remove ;}
@@ -1116,7 +1176,7 @@ class MfMemoryString extends MfObject
 */
 	Reverse(LimitBytes=false) {
 		LimitBytes := MfBool.GetValue(LimitBytes, false)
-		objRev := new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+		objRev := new MfMemoryString(0, this.m_FillBytes, this.m_Encoding)
 		objRev.m_MemView := ""
 		objRev.m_MemView := this.m_MemView.Reverse(LimitBytes)
 		objRev.m_CharCount := this.m_CharCount
@@ -1200,14 +1260,24 @@ class MfMemoryString extends MfObject
 */
 	SubString(StartIndex, Length=-1) {
 		BytesPerChar := this.m_BytesPerChar
-		StartIndex := MfInteger.GetValue(StartIndex, 0) * BytesPerChar
+		Try
+		{
+			StartIndex := MfInteger.GetValue(StartIndex) * BytesPerChar
+		}
+		Catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Error", "StartIndex"), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
 		Length := MfInteger.GetValue(Length, -1)
 		if (Length > 0)
 		{
 			Length := Length * BytesPerChar
 		}
 		mv := this.m_MemView.SubSet(StartIndex, Length)
-		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytes, mv.m_Encoding)
+		objMemRW := new MfMemoryString(0, mv.m_FillBytes, mv.m_Encoding)
 		objMemRW.m_MemView := ""
 		objMemRW.m_MemView := mv
 		objMemRW.m_CharCount := mv.GetCharCount()
@@ -1280,7 +1350,7 @@ class MfMemoryString extends MfObject
 		result := ""
 		mv := MfMemStrView.ToBase64(this.m_MemView, 0, this.m_CharCount, addLineBreaks)
 		
-		objMemRW := new MfMemoryString(mv.m_BytesPerChar, mv.m_FillBytes, mv.m_Encoding)
+		objMemRW := new MfMemoryString(0, mv.m_FillBytes, mv.m_Encoding)
 		objMemRW.m_MemView := ""
 		objMemRW.m_MemView := mv
 		objMemRW.m_CharCount := mv.GetCharCount()
@@ -1525,7 +1595,7 @@ class MfMemoryString extends MfObject
 	; static method for converting var or obj into MfMemoryString
 	_FromAnyStatic(x, encoding) {
 
-		BytesPerChar := MfMemStrView.GetBytesPerChar(encoding)
+		;BytesPerChar := MfMemStrView.GetBytesPerChar(encoding)
 		if (IsObject(x))
 		{
 			if(MfObject.IsObjInstance(x, MfMemoryString))
@@ -1539,43 +1609,48 @@ class MfMemoryString extends MfObject
 
 			else if (MfObject.IsObjInstance(x, MfString))
 			{
-				len := (x.Length + 1) * BytesPerChar
-				retval := new MfMemoryString(len, , encoding)
+				retval := new MfMemoryString(x.Length, , encoding)
 				if (x.Length > 0)
 				{
-					retval.Append(x.Value)
+					retval.Append(x)
 				}
 				return retval
 			}
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
 				str := x.ToString()
-				len := (StrLen(str) + 1) * BytesPerChar
+				len := StrLen(str)
 				retval := new MfMemoryString(len, , encoding)
-				retval.Append(str)
+				if (len > 0)
+				{
+					retval.Append(str)
+				}
 				return retval
 			}
 			else if (x.__Class = "MfMemStrView")
 			{
-				retval := new MfMemoryString(x.m_BytesPerChar, x.m_FillBytes, x.m_Encoding)
+				retval := new MfMemoryString(1, x.m_FillBytes, x.m_Encoding)
 				retval.m_MemView := ""
 				retval.m_MemView := x
-				retval.m_CharCount := (x.Pos - 1) // x.m_BytesPerChar
+				retval.m_CharCount := x.GetCharCount()
 				return this._FromAnyStatic(retval, x.m_Encoding) ; do another _FromAny in case encoding is different
 			}
 			else
 			{
-				return new MfMemoryString(BytesPerChar, , encoding)
+				return new MfMemoryString(0, , encoding)
 			}
 		}
 		if (x = "")
 		{
-			return new MfMemoryString(BytesPerChar, , encoding)
+			return new MfMemoryString(0, , encoding)
 		}
 
-		len := (StrLen(x) + 1) * BytesPerChar
+		len := StrLen(x)
 		retval := new MfMemoryString(len, , encoding)
-		retval.Append(x)
+		if (len > 0)
+		{
+			retval.Append(x)
+		}
 		return retval
 	}
 ; 	End:_FromAnyStatic ;}
@@ -1595,8 +1670,7 @@ class MfMemoryString extends MfObject
 
 			else if (MfObject.IsObjInstance(x, MfString))
 			{
-				len := (x.Length + 1) * this.m_BytesPerChar
-				retval := new MfMemoryString(len, this.m_FillBytes, this.m_Encoding)
+				retval := new MfMemoryString(x.Length, this.m_FillBytes, this.m_Encoding)
 				if (x.Length > 0)
 				{
 					retval.Append(x.Value)
@@ -1606,32 +1680,38 @@ class MfMemoryString extends MfObject
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
 				str := x.ToString()
-				len := (StrLen(str) + 1) * this.m_BytesPerChar
+				len := StrLen(str)
 				retval := new MfMemoryString(len, this.m_FillBytes, this.m_Encoding)
-				retval.Append(str)
+				if (len > 0)
+				{
+					retval.Append(str)
+				}
 				return retval
 			}
 			else if (x.__Class = "MfMemStrView")
 			{
-				retval := new MfMemoryString(x.m_BytesPerChar, x.m_FillBytes, x.m_Encoding)
+				retval := new MfMemoryString(0, x.m_FillBytes, x.m_Encoding)
 				retval.m_MemView := ""
 				retval.m_MemView := x
-				retval.m_CharCount := (x.Pos - 1) // x.m_BytesPerChar
+				retval.m_CharCount := x.GetCharCount()
 				return this._FromAny(retval) ; do another _FromAny in case encoding is different
 			}
 			else
 			{
-				return new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+				return new MfMemoryString(0, this.m_FillBytes, this.m_Encoding)
 			}
 		}
 		if (x = "")
 		{
-			return new MfMemoryString(this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
+			return new MfMemoryString(0, this.m_FillBytes, this.m_Encoding)
 		}
 
-		len := (StrLen(x) + 1) * this.m_BytesPerChar
+		len := StrLen(x)
 		retval := new MfMemoryString(len, this.m_FillBytes, this.m_Encoding)
-		retval.Append(x)
+		if (len > 0)
+		{
+			retval.Append(x)
+		}
 		return retval
 	}
 ; 	End:_FromAny ;}
@@ -1923,7 +2003,6 @@ class MfMemoryString extends MfObject
 		}
 	; End:Char ;}
 	;{ Pos
-		m_Pos := Null
 		/*!
 			Property: Pos [get/set]
 				Gets or sets the Pos value associated with the this instance
@@ -1978,6 +2057,7 @@ class MfMemoryString extends MfObject
  *	FromBase64() Reads buffer and returns UTF-8 or UTF-16 buffer from base64
  *	FromVarAddress() Creates an new instance of MfMemStrView from var or address
  *	GetCharCount() Gets the number of chars currently in this buffer instance
+ *	GetStringIgnoreNull() Gets an instance of MfMemStrView from current instance that has excluded all null values
  *	InBuffer() Searches current instance for the first instance of NeedleObj from StartOffset
  *	InBufferRev() Searches current instance for the last instance of NeedleObj from EndOffset
  *	InBuf()	Blazing fast machine-code CASE-SENSITIVE searching in a (binary) buffer for a sequence of bytes,
@@ -1991,7 +2071,7 @@ class MfMemoryString extends MfObject
  *	LastIndexOf() Gets the last index of NeedleObj in current instance
  *	MoveBytesLeft() Moves bytes to the left in the current instance.
  *	MoveBytesRight() Moves Bytes to the Right in the current instance
- *	OverWrite() Overwrites the chars in this instance with the chars in obj instance
+ *	OverWrite() Overwrites the bytes in this instance with the bytes in obj instance
  *	Reverse() Reverses the contentes of the currrent instance and returne it as a new instance
  *	ToBase64() Reads instanceof MfMemStrView and returns a new MfMemStrView as base64 equal UTF-8 Encoded
  *	ToString() Gets the value of this instance as string var
@@ -4738,77 +4818,29 @@ class MfMemStrView extends MfMemBlkView
 	Method: MoveBytesLeft()
 
 	MoveBytesLeft()
-		Moves bytes to the left in the current instance.
+		Move the characters in memory to the left overwriting any characters in position before move
 	Parameters:
 		StartIndex
-			the Position to start moving left
+			The zero based char index to start overwriting
 		ShiftAmt
-			The number of position to move left
-*/
-	MoveBytesLeft(StartIndex, ShiftAmt) {
-		; will be moving chunk start position to end to Dest Position which is left of start
-		if (StartIndex = 0 || ShiftAmt = 0)
-		{
-			; cannot move left already at the start or no shift amount to move
-			return this
-		}
-		if (StartIndex < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (ShiftAmt < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("ShiftAmt", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (StartIndex + ShiftAmt > this.m_MemView.Size)
-		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (StartIndex - ShiftAmt < 0)
-		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		PI := this.Pos ; this will be the end the current chars
-		this.Seek(StartIndex) ; Move to the start Pos
-		sourcePtr := this[] + this.Pos ; get the start pos Address
-		ChunkLen := PI - this.Pos
-		destPtr := sourcePtr + ShiftAmt
-		BytesPerChar := this.m_BytesPerChar
-		sType := this.m_sType
-		
-		;DllCall("RtlMoveMemory","UInt",sourcePtr + 0,"UInt",destPtr + 0,"UInt",ChunkLen)
-		DllCall("RtlMoveMemory", "Ptr", sourcePtr + 0, "Ptr", destPtr + 0, sType ,ChunkLen)
-		this.Seek(PI - Length)
-	}
-; 	End:MoveBytesLeft ;}
-;{ 	MoveBytesRight
-/*
-	Method: MoveBytesRight()
-
-	MoveBytesRight()
-		Moves Bytes to the Right in the current instance
-	Parameters:
-		StartIndex
-			The Starting index in Bytes to start the move
+			The number of bytes from StartIndex to start the shift
+			The First character at ShiftAmt will be written into the Position
+			of StartIndex, the second character from shiftAmount will be written
+			into the second position from StartIndex and so on.
 		Length
-			The Number of Bytes to Move
-		ShiftAmt
-			The Number in bytes to move to the right
+			Length Limits how many bytes are shifted left from ShiftAmout
+			Default Value of Length is -1.
+			When omitted or less then 0 then all characters right of ShiftAmt are shift left.
+			If Length is greater then the last byte Position then all bytes right of shiftamt
+			will still be moved left
 	Throws:
-		Throws MfArgumentOutOfRangeException If StartIndex, Length or ShiftAmout are out of range
-		Throws MfArgumentOutOfRangeException if Shifting to right will exceed current Size
+		Throws MfArgumentOutOfRangeException,
 	Remarks:
-		Pos is set to the new location after the shift
+		The Pos will be adjusted to reflect then new location
+		If Length is included and is less then the number of bytes past ShiftAmt to Pos
+		then all bytes from Length to Previous Pos are overwritten with current Fillbytes
 */
-	MoveBytesRight(StartIndex, Length, ShiftAmt) {
+	MoveBytesLeft(StartIndex, ShiftAmt, Length=-1) {
 		if (Length = 0 || ShiftAmt = 0)
 		{
 			; cannot move left already at the start or no shift amount to move
@@ -4820,12 +4852,7 @@ class MfMemStrView extends MfMemBlkView
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (Length < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+
 		if (ShiftAmt < 0)
 		{
 			ex := new MfArgumentOutOfRangeException("ShiftAmt", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
@@ -4833,30 +4860,60 @@ class MfMemStrView extends MfMemBlkView
 			throw ex
 		}
 		BytesPerChar := this.m_BytesPerChar
-		PI := this.Pos ; this will be the end the current chars
-		InsertEnd := PI + ShiftAmt
-		if (InsertEnd > this.Size)
-		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
 		sType := this.m_sType
 		FillByte := this.m_FillBytes
 		
-		sourcePtr := this[] + StartIndex ; get the start pos Address
-		destPtr := sourcePtr + (ShiftAmt - BytesPerChar)
-		len := PI - StartIndex
-		;FreeCapacity := this.Size - PI
+		PI := this.Pos ; this will be the end the current chars
+		if (Length < 0)
+		{
+			if (StartIndex + ShiftAmt > PI)
+			{
+				Length := ShiftAmt
+			}
+			else
+			{
+				Length := PI - StartIndex - ShiftAmt - BytesPerChar
+			}
+			
+		}
+		if (StartIndex + ShiftAmt + BytesPerChar >= PI)
+		{
+			if (StartIndex + ShiftAmt > this.Size)
+			{
+				ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			; Shift Amount is  beyond PI so delete all chars past index
+			length := PI - StartIndex
+			sourcePtr := this[] + StartIndex
+			this._FillByte(length, FillByte, BytesPerChar, sourcePtr)
+			this.Pos := StartIndex + BytesPerChar
+			return
 
+		}
+		Else
+		{
+			if (StartIndex + ShiftAmt + length > this.Size)
+			{
+				ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+			
+		sourcePtr := this[] + StartIndex + ShiftAmt
+		destPtr := this[] + StartIndex
+		lengthRemainder := (PI - BytesPerChar) - StartIndex - ShiftAmt - Length
+		len := Length
 		; copy the bytes to move into a temp memory address
 		tmp := ""
 		VarSetCapacity(tmp, len)
 		DllCall("RtlMoveMemory", "Ptr", &tmp, "Ptr", sourcePtr + 0, "UChar", len)
 		
-		; overwrite the section just copied with fill bytes
-		this._FillByte(len, FillByte, BytesPerChar, sourcePtr)
-
+		; overwrite the remaining section with fillbytes
+		this._FillByte(ShiftAmt, FillByte, BytesPerChar, sourcePtr)
+		
 		; Copy the tmp value to the new location
 		; Write the tmp memory into this
 		DllCall("RtlMoveMemory", "Ptr", destPtr + 0, "Ptr", &tmp, "UChar", len)
@@ -4864,11 +4921,125 @@ class MfMemStrView extends MfMemBlkView
 		; clear tmp memory
 		VarSetCapacity(tmp, 0)
 		tmp := ""
-
-		; Move the Pos to then end of the moved bytes if needed
-		if (InsertEnd < this.Size)
+		
+		if (lengthRemainder > 0 )
 		{
-			this.Pos := InsertEnd 
+			sourcePtr := this[] + StartIndex + ShiftAmt + Length + BytesPerChar
+			this._FillByte(lengthRemainder, FillByte, BytesPerChar, sourcePtr)
+			this.Pos := StartIndex + Length + BytesPerChar
+		}
+		else
+		{
+			this.Pos -= ShiftAmt
+		}
+	
+	}
+; 	End:MoveBytesLeft ;}
+;{ 	MoveBytesRight
+/*
+	Method: MoveBytesRight()
+
+	MoveBytesRight()
+		Move the Bytes in memory to the Right inserting null 0 from StartIndex to ShiftAmt
+	Parameters:
+		StartIndex
+			The zero based Starting index in bytes to inserting 0 values
+		ShiftAmt
+			The Number of 0 bytes to insert at the StartIndex
+		Length
+			Length Limits how many bytes are moved to the end.
+			Default Value is -1.
+			If Omitted or less then zero then all bytes from the StartIndex are moved to the right
+	Throws:
+		Throws MfArgumentOutOfRangeException
+	Remarks:
+		Pos is set to the new location after the chars have been moved.
+		This method does not increase the size of the current instance and there must be
+		room in the buffer to ensure the move is successfull. An error will be throw if there is not
+		enough room in the buffer.
+		When bytes are moved to the right the ToString() method will stop at the first null char found.
+		Use GetStringIgnoreNull().ToString() if current string value is needed.
+		The Primary usage for this method is to move characters to the right so new characters can be inserted.
+		See the OverWrite method as well.
+*/
+	MoveBytesRight(StartIndex, ShiftAmt, Length=-1) {
+		if (Length = 0 || ShiftAmt = 0)
+		{
+			; cannot move left already at the start or no shift amount to move
+			return
+		}
+		if (StartIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BytesPerChar := this.m_BytesPerChar
+		sType := this.m_sType
+		FillByte := this.m_FillBytes
+		
+		PI := this.Pos ; this will be the end the current chars
+		If (PI = 0)
+		{
+			return this
+		}
+		if (Length < 0)
+		{
+			Length := PI - BytesPerChar - StartIndex
+			
+		}
+		; if (Length < 0)
+		; {
+		; 	ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+		; 	ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		; 	throw ex
+		; }
+
+		if (ShiftAmt < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("ShiftAmt", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		InsertEnd := StartIndex + ShiftAmt + Length
+
+			
+		if (InsertEnd > this.Size)
+		{
+			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+				
+		sourcePtr := this[] + StartIndex ; get the start pos Address
+		destPtr := sourcePtr + ShiftAmt
+		lengthRemainder :=  (PI - BytesPerChar) - InsertEnd
+
+		; copy the bytes to move into a temp memory address
+		tmp := ""
+		VarSetCapacity(tmp, Length)
+		DllCall("RtlMoveMemory", "Ptr", &tmp, "Ptr", sourcePtr + 0, "UChar", Length)
+		
+		; overwrite the section just copied with fill bytes
+		this._FillByte(ShiftAmt, FillByte, BytesPerChar, sourcePtr)
+
+		; Copy the tmp value to the new location
+		; Write the tmp memory into this
+		DllCall("RtlMoveMemory", "Ptr", destPtr + 0, "Ptr", &tmp, "UChar", Length)
+
+		; clear tmp memory
+		VarSetCapacity(tmp, 0)
+		tmp := ""
+
+		if (lengthRemainder > 0 )
+		{
+			sourcePtr := this[] + StartIndex + ShiftAmt + Length ; + BytesPerChar
+			this._FillByte(lengthRemainder, FillByte, BytesPerChar, sourcePtr)
+			this.Pos := InsertEnd + BytesPerChar
+		}
+		else if (InsertEnd < this.Size)
+		{
+			this.Pos := InsertEnd + BytesPerChar
 		}
 		else
 		{
@@ -4881,7 +5052,7 @@ class MfMemStrView extends MfMemBlkView
 	Method: OverWrite()
 
 	OverWrite()
-		Overwrites the chars in this instance with the chars in obj instance
+		Overwrites the Bytes in this instance with the bytes in obj instance
 	Parameters:
 		obj
 			The instance of MfMemStrView that contains the bytes to overwrite in this instance
@@ -5410,9 +5581,9 @@ class MfMemStrView extends MfMemBlkView
 		{
 			return 0
 		}
-		length := this.Pos - i
+
+		this.MoveBytesLeft(0,i)
 		
-		this.MoveBytesLeft(0, i)
 		result := i // BytesPerChar
 		return result
 	}
@@ -5456,8 +5627,6 @@ class MfMemStrView extends MfMemBlkView
 		{
 			return 0
 		}
-		length := this.Pos - i
-		
 		this.MoveBytesLeft(0, i)
 		result := i // BytesPerChar
 		return result
