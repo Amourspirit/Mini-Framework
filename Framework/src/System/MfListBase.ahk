@@ -126,6 +126,99 @@ class MfListBase extends MfEnumerableBase
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
+;{ 	Copy
+/*
+	Method: Copy()
+
+	Copy()
+		Copies a range of elements from an MfListBase object starting at the first element and pastes them into another MfListBase object
+		starting at the first element. The length is specified as a 32-bit integer
+	Parameters:
+		sourceList
+			The source list. Must be List that inherits from MfListBase
+		destinationList
+			The destination list. Must be List that inherits from MfListBase
+		Length
+			The number of elements to copy from Source list into destination list
+	Throws:
+		Throws MfArgumentNullException if sourceList or destinationList is null
+		Throw MfArgumentException if sourceList or destinationList is are not inherited from MfListBase
+		Throw MfArgumentException if Length is not a valid 32 bit number or Length is less then 0 or Length is greater then sourceList.Count
+
+	Remarks:
+		Static Method
+		If destinationList.Count is less then Length then new elements will be added to destinationList to match Length
+*/
+	Copy(sourceList, destinationList, Length) {
+		if (MfNull.IsNull(sourceList))
+		{
+			ex := new MfArgumentNullException("sourceList")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfNull.IsNull(destinationList))
+		{
+			ex := new MfArgumentNullException("sourceList")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+			
+		if (!MfObject.IsObjInstance(sourceList, MfListBase))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List"), "sourceList")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (!MfObject.IsObjInstance(destinationList, MfListBase))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List"), "destinationList")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		try
+		{
+			Length := MfInteger.GetValue(Length)
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "Length")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Length = 0)
+		{
+			return
+		}
+		if (Length < 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeLength"), "Length")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Length > sourceList.Count)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall"), "sourceList")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		; if (Length > destinationList.Count)
+		; {
+		; 	ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall"), "destinationList")
+		; 	ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		; 	throw ex
+		; }
+		sA := sourceList.m_InnerList
+		dA := destinationList.m_InnerList
+		i := 1
+		While (i >= Length)
+		{
+			da[i] := sA[i]
+			i++
+		}
+		destinationList.m_count := da[i].Length()
+
+	}
+; 	End:Copy ;}
 ;{ 	Contains()			- Overrides - MfListBase
 /*!
 	Method: Contains()

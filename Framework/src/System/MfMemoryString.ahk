@@ -27,10 +27,13 @@
  *	Clone()	Clones the current instanece into a new stream
  *	CompareOrdinal() Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
  *	CompareOrdinalSubString() Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
+ *	Copy() Copies the Source MfMemoryString Chars instance to destination MfMemoryString
+ *	CopyFromAddress() Copies the Source adress Chars instance to destination MfMemoryString
  *	Difference() Gets the Difference between argument obj and argument this instance with an included Max Distance.
  *	EndsWith() Gets a boolean value true or false if this instance ends with obj
  *	Equals() Checks to see if obj is equals this instance
- *	Expand() Expands the current instance of MfMemoryString by AddBytes ammount
+ *	EqualsSubString() Compares a substring of current instance with a substrign of obj instance
+ *	Expand() Expands the current instance of MfMemoryString by AddChars ammount
  *	FromAny() Creates a new instance of MfMemStrView from any source
  *	FromBase64() Encodes Obj to base64 instance of MfMemoryString
  *	FromByteList() Converts MfByteList into MfMemoryString instance
@@ -44,6 +47,7 @@
  *	Replace() Replaces instances of oldValue with Instances of newValue
  *	Remove() Removes a number of chars from currrent instance
  *	Reverse() Reverses the contentes of the currrent instance and returne it as a new instance
+ *	SetPosFromCharIndex() Moves the Location of Pos from index based upon char index
  *	StartsWith() Gets if current instance starts with obj
  *	SubString() Gets a new instance of MfMemoryString that represents a subset of the current instance chars
  *	ToArray() Gets Byte array of current chars
@@ -57,13 +61,15 @@
  *	
  *	Properties
  *	Byte - Gets the Byte value at the value of index
+ *	BufferPtr - Gets the Buffer memory addres pointer for this instance
  *	Length - Gets the length of the current instance chars
  *	Capacity - Gets the Size of the current instance in bytes
  *	CharCapacity - Gets the Capacity value in Chars for the current instance
  *	FreeCapacity - Gets the FreeCapacity of the current instance in bytes
-  *	FreeCharCapacity - Gets the number of characters that can be added to the current instance wihtout overflow
+ *	FreeCharCapacity - Gets the number of characters that can be added to the current instance wihtout overflow
  *	UsedCapacity - Gets the UsedCapacity in bytes associated with the this instance
- * 
+ *	Size - Gets the Size in bytes of the current buffer
+ *
  *	Internal class for working dircetly with memory strings
 */
 class MfMemoryString extends MfObject
@@ -351,6 +357,9 @@ class MfMemoryString extends MfObject
 			The index in obj to start comparing to this instance
 		index
 			The index of the current instance to start comparing
+		length
+			The length of the string to compare, this is the length of number of characters
+			Default value is -1. If default then length is converted to the length of the shortest value after index of this and obj.
 		IgnoreCase
 			If true comparison must ignore case, then perform an ordinal comparison.
 			This technique is equivalent to converting the string to uppercase using the invariant culture
@@ -377,6 +386,203 @@ class MfMemoryString extends MfObject
 		return result
 	}
 ; 	End:CompareOrdinalSubString ;}
+;{ 	Copy
+/*
+	Method: Copy()
+
+	Copy()
+		Copies the Source MfMemoryString Chars instance to destination MfMemoryString
+	Parameters:
+		sourceMfMemoryString
+			Source instance of MfMemoryString
+		destinationMfMemoryString
+			Destination instance of MfMemoryString
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of chars to copy
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException, MfException
+	Remarks:
+		Method does Ajuust Pos and charcount of sourceMfMemoryString or destinationMfMemoryString alhougth the new Pos is not guaranteed to be correct.
+		Caller of method should ajusct Pos and Char coumt manually
+		Static Method
+*/
+	Copy(sourceMfMemoryString, destinationMfMemoryString, destinationIndex, count) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+
+		if(!MfObject.IsObjInstance(sourceMfMemoryString, MfMemoryString))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "MfMemoryString"), "sourceMfMemoryString")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(!MfObject.IsObjInstance(destinationMfMemoryString, MfMemoryString))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "MfMemoryString"), "destinationMfMemoryString")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+		if (count <= 0)
+		{
+			return
+		}
+		if (destinationIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_MustBePositive", "destinationIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		BytesPerChar := sourceMfMemoryString.m_BytesPerChar
+		destinationIndex := destinationIndex * BytesPerChar
+		count := count * BytesPerChar
+		try
+		{
+			MfMemStrView.Copy(sourceMfMemoryString.m_MemView, destinationMfMemoryString.m_MemView, destinationIndex, count)
+			destinationMfMemoryString.m_CharCount := destinationMfMemoryString.m_MemView.GetCharCount()
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+	}
+; 	End:Copy ;}
+;{ 	CopyFromAddress
+/*
+	Method: CopyFromAddress()
+
+	CopyFromAddress()
+		Copies the Source adress Chars instance to destination MfMemoryString
+	Parameters:
+		SourceAddress
+			Source address to copy chars from
+		destinationMfMemoryString
+			Destination instance of MfMemoryString
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of chars to copy
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException, MfException
+	Remarks:
+		Method does Ajuust Pos and charcount of sourceMfMemoryString or destinationMfMemoryString alhougth the new Pos is not guaranteed to be correct.
+		Caller of method should ajusct Pos and Char coumt manually
+		Static Method
+*/
+	CopyFromAddress(SourceAddress, ByRef destinationMfMemoryString, destinationIndex, count) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+
+		if(!MfObject.IsObjInstance(destinationMfMemoryString, MfMemoryString))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "MfMemoryString"), "destinationMfMemoryString")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+		limit := MfBool.GetValue(limit, false)
+		limit := false
+		if (count <= 0)
+		{
+			return
+		}
+		if (destinationIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_MustBePositive", "destinationIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		BytesPerChar := destinationMfMemoryString.m_BytesPerChar
+		destinationIndex := destinationIndex * BytesPerChar
+		count := count * BytesPerChar
+		try
+		{
+			MfMemStrView.CopyFromAddress(SourceAddress, destinationMfMemoryString.m_MemView, destinationIndex, count)
+			destinationMfMemoryString.m_CharCount := destinationMfMemoryString.m_MemView.GetCharCount()
+						
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+	}
+; 	End:Copy ;}
+	CopyFromIndex(sourceMfMemoryString, sourceIndex, destinationMfMemoryString, destinationIndex, count) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		count := MfInteger.GetValue(count)
+		if (count <= 0)
+		{
+			return
+		}
+		if(!MfObject.IsObjInstance(sourceMfMemoryString, MfMemoryString))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "MfMemoryString"), "sourceMfMemoryString")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(!MfObject.IsObjInstance(destinationMfMemoryString, MfMemoryString))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "MfMemoryString"), "destinationMfMemoryString")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+		
+		if (destinationIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_MustBePositive", "destinationIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		BytesPerChar := sourceMfMemoryString.m_BytesPerChar
+		
+		
+		try
+		{
+			if (sourceIndex <= sourceMfMemoryString.m_CharCount && (sourceIndex + count) <= sourceMfMemoryString.m_CharCount)
+			{
+				SourceAddress := sourceMfMemoryString.m_MemView[] + (sourceIndex * BytesPerChar)
+				count := count * BytesPerChar
+				destinationIndex := destinationIndex * BytesPerChar
+				
+				MfMemStrView.CopyFromAddress(SourceAddress, destinationMfMemoryString.m_MemView, destinationIndex, count)
+				destinationMfMemoryString.Pos += -count
+				destinationMfMemoryString.m_CharCount := destinationMfMemoryString.m_MemView.GetCharCount()
+				
+			}
+			else
+			{
+				ex :=  new MfArgumentOutOfRangeException("sourceIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		catch e
+		{
+			if (e.Source = A_ThisFunc)
+			{
+				throw e
+			}
+			else
+			{
+				ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+	}
 ;{ 	Difference
 	/*
 	Method: Difference()
@@ -478,35 +684,101 @@ class MfMemoryString extends MfObject
 		return this.m_MemView.Equals(mStr.m_MemView, IgnoreCase)
 	}
 ; 	End:Equals ;}
+;{ 	EqualsSubString
+/*
+	Method: EqualsSubString()
+
+	EqualsSubString()
+		Compares a substring of current instance with a substrign of obj instance
+	Parameters:
+		obj
+			The value to compare
+			Can be instance of MfMemoryString or MfMemStrView or any object derived from MfObject
+		objIndex
+			The starting index of obj get substring from
+		index
+			The starting index of currentinstance to get substring from
+		length
+			The length of the substring to compare.
+			Optional Value, If ommited or value is less then zero then the length of the shorotest string
+			minuse is index becomes the length.
+		IgnoreClase
+			Optional - Default value is true
+			If false then Case is considered; Otherwise case is ignored.
+	Returns:
+		Returns 
+	Throws:
+		Throws MfException if
+	Remarks:
+		If EqualsSubString
+*/
+	EqualsSubString(obj, objIndex, index, length=-1, IgnoreCase=true) {
+		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
+		objIndex := MfInteger.GetValue(objIndex)
+		index := MfInteger.GetValue(index)
+		length := MfInteger.GetValue(length, -1)
+		if (Length = 0)
+		{
+			return false
+		}
+		if ((index < 0) || (index >= this.m_CharCount))
+		{
+			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		mStr := this._FromAny(obj)
+		if (mStr.m_CharCount = 0)
+		{
+			return false
+		}
+		if ((objIndex < 0) || (objIndex >= mStr.m_CharCount))
+		{
+			ex := new MfArgumentOutOfRangeException("objIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Length < 0)
+		{
+			Length := MfMath.Min(this.m_CharCount - index, mStr.m_CharCount - objIndex)
+		}
+		If (this.m_CharCount < (index + length))
+		{
+			return false
+		}
+		If (mStr.m_CharCount < (objIndex + length))
+		{
+			return false
+		}
+		return MfMemStrView.EqualsSubString(this.m_MemView, index, mStr.m_MemView, objIndex, Length, IgnoreCase)
+	}
+; 	End:EqualsSubString ;}
 ;{ 	Expand
 /*
 	Method: Expand()
 
 	Expand()
-		Expands the current instance of MfMemoryString by AddBytes ammount
+		Expands the current instance of MfMemoryString by AddChars ammount
 	Parameters:
-		AddBytes
-			The number of bytes to add to the current instance
+		AddChars
+			The number of Chars to add to the current instance
 	Returns:
 		Returns current instance
 	Throws:
-		Throws MfArgumentNullException if Addbytes is null
-		Throws MfArgumentException if AddBytes cannot be converted into valid integer or AddBytes is less then 0
-	Remarks:
-		Caller is responsible for handling Bytes per char as this
-		method will add bytes without factoring encoding or BytesPerChar
+		Throws MfArgumentNullException if AddChars is null
+		Throws MfArgumentException if AddChars cannot be converted into valid integer or AddBytes is less then 0
 */
-	Expand(AddBytes) {
+	Expand(AddChars) {
 		if (MfNull.IsNull(AddBytes))
 		{
-			ex := new MfArgumentNullException("AddBytes")
+			ex := new MfArgumentNullException("AddChars")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		i := MfInteger.GetValue(AddBytes)
+		i := MfInteger.GetValue(AddChars)
 		if (i < 0)
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeCount"), "AddBytes")
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeCount"), "AddChars")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -514,6 +786,7 @@ class MfMemoryString extends MfObject
 		{
 			return this
 		}
+		i := i * this.m_BytesPerChar
 		this.m_MemView.Expand(i)
 		return this
 
@@ -1013,12 +1286,6 @@ class MfMemoryString extends MfObject
 		{
 			return 0
 		}
-		if (MfNull.IsNull(newValue))
-		{
-			ex := new MfArgumentNullException("newValue")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
 		if (MfNull.IsNull(oldValue))
 		{
 			ex := new MfArgumentNullException("oldValue")
@@ -1057,20 +1324,17 @@ class MfMemoryString extends MfObject
 
 		if (count < 0 || startIndex > length - count)
 		{
-			return this
+			return 0
 		}
 		if (count <= 0)
 		{
-			return this
+			return 0
 		}
 		if (Count < length && startIndex > length - count)
 		{
-			return this
+			return 0
 		}
-		if (oldValue == "")
-		{
-			return this
-		}
+	
 		NewLen := mStrNew.m_CharCount
 		OldLen := mStrOld.m_CharCount
 		fIndex := startIndex
@@ -1120,14 +1384,14 @@ class MfMemoryString extends MfObject
 	Returns:
 		Returns current instance
 	Throws:
-		Throws MfIndexOutOfRangeException, MfArgumentException
+		Throws MfIndexOutOfRangeException,MfArgumentOutOfRangeException, MfArgumentException
 */
 	Remove(index, length=-1) {
 		index := MfInteger.GetValue(index)
 		length := MfInteger.GetValue(length, 1)
 		if ((index < 0) || (index >= this.m_CharCount))
 		{
-			ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -1141,17 +1405,18 @@ class MfMemoryString extends MfObject
 		 	ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		StartIndex := index * this.m_BytesPerChar
 		if (length < 0)
 		{
 			; remove all past index by settign length to greater than pos
-			length := this.Pos + this.m_BytesPerChar
+			length := (this.Pos - this.m_BytesPerChar) - StartIndex
 		}
 		Else
 		{
 			length := Length * this.m_BytesPerChar
 		}
 		ShiftAmt := length
-		StartIndex := index * this.m_BytesPerChar
+		
 		this.m_MemView.MoveBytesLeft(StartIndex, ShiftAmt)
 		this.m_CharCount := this.m_MemView.GetCharCount()
 		return this
@@ -1183,6 +1448,47 @@ class MfMemoryString extends MfObject
 		return objRev
 	}
 ; 	End:Reverse ;}
+;{ 	SetPosFromCharIndex
+/*
+	Method: SetPosFromCharIndex()
+
+	SetPosFromCharIndex()
+		Moves the Location of Pos from index based upon char index
+	Parameters:
+		index
+			The new Char index to set the pos to
+		AdvanceByOne
+			Default value is true
+			If True then Pos in moved forward by the value of BytePerChar; Otherwise
+			the pos is set at the exact location of the of the char index ( considering encoding and BytesPerChar)
+	Returns:
+		Returns this instance
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException
+	Remarks:
+		Changing the position of Pos can affect the ToString() method
+*/
+	SetPosFromCharIndex(index, AdvanceByOne=true) {
+		index := MfInteger.GetValue(index)
+		AdvanceByOne := MfBool.GetValue(AdvanceByOne, true)
+		BytesPerChar := this.m_BytesPerChar
+		bIndex := index * BytesPerChar
+		if (index < 0 || bIndex > this.m_MemView.Size)
+		{
+			ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Pos := bIndex
+		If (AdvanceByOne && this.Pos < this.m_MemView.Size)
+		{
+			this.Pos += BytesPerChar
+		}
+		this.m_CharCount := this.m_MemView.GetCharCount()
+		
+		return this
+	}
+; 	End:SetPosFromCharIndex ;}
 	_ResetPos() {
 		; add one for line end
 		i := (this.m_CharCount + 1) * this.m_BytesPerChar
@@ -1715,6 +2021,27 @@ class MfMemoryString extends MfObject
 		return retval
 	}
 ; 	End:_FromAny ;}
+;{ BufferPtr
+	/*!
+		Property: BufferPtr [get]
+			Gets the Buffer memory addres pointer for this instance
+		Value:
+			Var integer ptr representing the address
+		Remarks:
+			Readonly Property
+	*/
+	BufferPtr[]
+	{
+		get {
+			return this.m_MemView[]
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "BufferPtr")
+			Throw ex
+		}
+	}
+; End:BufferPtr ;}
 ;{ Length
 	/*!
 		Property: Length [get]
@@ -2002,12 +2329,17 @@ class MfMemoryString extends MfObject
 			}
 		}
 	; End:Char ;}
+
 	;{ Pos
 		/*!
 			Property: Pos [get/set]
 				Gets or sets the Pos value associated with the this instance
 			Value:
-				Var representing the Pos property of the instance
+				Var  integer representing the Pos property of the instance
+			Throws:
+				Throws MfIndexOutOfRangeException
+			Remarks:
+				Changing the value Pos can affect the ToString() and other methods
 		*/
 		Pos[]
 		{
@@ -2033,6 +2365,29 @@ class MfMemoryString extends MfObject
 			}
 		}
 	; End:Pos ;}
+	;{ Size
+		/*!
+			Property: Size [get]
+				Gets the Size in bytes of the current buffer
+			Value:
+				Var representing the Size property of the instance
+			Remarks:
+				Readonly Property
+		*/
+		Size[]
+		{
+			get {
+				return this.m_MemView.Size
+			}
+			set {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+				ex.SetProp(A_LineFile, A_LineNumber, "Size")
+				Throw ex
+			}
+		}
+	; End:Size ;}
+
+
 }
 
 /* Class: MfMemStrView
@@ -2046,6 +2401,8 @@ class MfMemoryString extends MfObject
  *	CompareOrdinal() Compares two instance of MfMemStrView as Ordinal
  *	CompareOrdinalIgnoreCase() Compares two instance of MfMemStrView as Ordinal ignoring case
  *	CompareOrdinalSub()	Compares two sub values of instances of MfMemStrView as Ordinal, optionally ignoring case.
+ *	Copy() Copies the Source MfMemStrView bytes instance to destination MfMemStrView
+ *	CopyFromAddress() Copies the Source address bytes to destination MfMemStrView
  *	Diff() Gets the Difference between argument objA and argument objB argument with an included Max Distance.
  *	EndsWithFromPos() Checks to see if obj ends with the same char as this instance
  *	EqualsSubString() Compares two MfMemStrView objects to see if their subPositions are equal
@@ -4935,6 +5292,215 @@ class MfMemStrView extends MfMemBlkView
 	
 	}
 ; 	End:MoveBytesLeft ;}
+;{ 	Copy
+/*
+	Method: Copy()
+
+	Copy()
+		Copies the Source MfMemStrView bytes instance to destination MfMemStrView
+	Parameters:
+		sourceMemView
+			Source instance of MfMemStrView
+		destinationMemView
+			Destination instance of MfMemStrView
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of bytes to copy
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException, MfFormatException
+	Remarks:
+		If destinationMemView.Pos is less then destinationIndex + count it is adjusted to the position of destinationIndex + count
+		Static Method
+*/
+	Copy(sourceMemView, destinationMemView, destinationIndex, count) {
+		if (sourceMemView.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "sourceMemView", "MfMemStrView"), "sourceMemView")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (destinationMemView.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "destinationMemView", "MfMemStrView"), "destinationMemView")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+			if (count <= 0)
+		{
+			return
+		}
+		if (destinationIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_MustBePositive", "destinationIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (sourceMemView.Size = 0)
+		{
+			ex := new MfArgumentOutOfRangeException("sourceMemView", MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (!(sourceMemView.m_Encoding = destinationMemView.m_Encoding))
+		{
+			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_Encoding_MisMatch"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (sourceMemView.Size < count)
+		{
+			ex := new MfArgumentOutOfRangeException("count", MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (destinationIndex <= destinationMemView.Size && destinationIndex + count <= destinationMemView.Size)
+		{
+			SourcePtr := sourceMemView[]
+			PI := destinationMemView.Pos
+			DestPtr := destinationMemView[] + destinationIndex
+			; source and Dest may be in the same address space so use a tmp to go between
+			tmp := ""
+			VarSetCapacity(tmp, count)
+			DllCall("RtlMoveMemory", "Ptr", &tmp, "Ptr", SourcePtr + 0, "UChar", count)
+
+			DllCall("RtlMoveMemory", "Ptr", DestPtr + 0, "Ptr", &tmp, "UChar", count)
+
+			VarSetCapacity(tmp, 0)
+
+			; DllCall("RtlMoveMemory", "Ptr", SourcePtr + 0, "Ptr", DestPtr + 0, "UChar", count)
+			if (destinationIndex + count > PI)
+			{
+				destinationMemView.Pos := (destinationIndex + count)
+			}
+			return
+		}
+		ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:Copy ;}
+;{ 	CopyFromAddress
+/*
+	Method: CopyFromAddress()
+
+	CopyFromAddress()
+		Copies the Source address bytes to destination MfMemStrView
+	Parameters:
+		SourceAddress
+			Source memory address of bytes to copy
+		destinationMemView
+			Destination instance of MfMemStrView
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of bytes to copy
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException, MfFormatException
+	Remarks:
+		If destinationMemView.Pos is less then destinationIndex + count it is adjusted to the position of destinationIndex + count
+		Static Method
+*/
+	CopyFromAddress(SourceAddress, ByRef destinationMemView, destinationIndex, count, limit=false) {
+		if (MfNull.IsNull(SourceAddress) || Mfunc.IsInteger(SourceAddress) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Address", "SourceAddress"), "SourceAddress")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (destinationMemView.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "destinationMemView", "MfMemStrView"), "destinationMemView")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+		if (count <= 0)
+		{
+			return
+		}
+		if (destinationIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_MustBePositive", "destinationIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		if (destinationIndex <= destinationMemView.Size && destinationIndex + count <= destinationMemView.Size)
+		{
+			SourcePtr := SourceAddress
+			PI := destinationMemView.Pos
+			DestPtr := destinationMemView[] + destinationIndex
+
+			; source and Dest may be in the same address space so use a tmp to go between
+			tmp := ""
+			VarSetCapacity(tmp, count)
+			DllCall("RtlMoveMemory", "Ptr", &tmp, "Ptr", SourcePtr + 0, "UChar", count)
+
+			if (limit)
+			{
+
+				BytesPerChar := destinationMemView.m_BytesPerChar
+				newSize := destinationIndex + count + BytesPerChar
+				; what remains after replace
+				; iRemain := (PI - (destinationIndex + count) - count) + BytesPerChar
+				; if (iRemain > 0)
+				; {
+				; 	newSize += iRemain
+				; }
+				mv := new MfMemStrView(newSize, destinationMemView.m_FillBytes, destinationMemView.m_Encoding)
+				; copy all value uup to destinationIndex into new m_MemView
+				PtrMv := mv[]
+				tmpCount := ((destinationMemView[] + destinationIndex) - destinationMemView[]) ; - BytesPerChar
+				DllCall("RtlMoveMemory", "Ptr", PtrMv + 0, "Ptr", destinationMemView[], "UChar", tmpCount)
+				;tmpCount += BytesPerChar
+
+				; now copy tmp
+				DllCall("RtlMoveMemory", "Ptr", PtrMv + tmpCount, "Ptr", &tmp, "UChar", count)
+
+				
+				;strTest := StrGet(PtrMv + 0,  destinationMemView.m_Encoding)
+
+				; append the rest of the offset
+				
+				mv.Pos := destinationIndex + count ; + BytesPerChar
+				; if (iRemain > 0)
+				; {	
+				; 	PtrRemain := destinationMemView[] + (PI - iRemain)
+				; 	DllCall("RtlMoveMemory", "Ptr", PtrMv + tmpCount + count, "Ptr", PtrRemain + 0, "UChar", iRemain)
+				; 	mv.Pos += iRemain
+				; }
+				
+				;strTest := StrGet(PtrMv + 0,  destinationMemView.m_Encoding)
+				destinationMemView := mv
+				VarSetCapacity(tmp, 0)
+				return
+				
+			}
+			else
+			{
+				DllCall("RtlMoveMemory", "Ptr", DestPtr + 0, "Ptr", &tmp, "UChar", count)
+
+			}
+
+
+		
+
+			VarSetCapacity(tmp, 0)
+			if (destinationIndex + count > PI)
+			{
+				destinationMemView.Pos := (destinationIndex + count)
+			}
+			return
+		}
+		ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:CopyFromAddress ;}
 ;{ 	MoveBytesRight
 /*
 	Method: MoveBytesRight()
@@ -4985,7 +5551,7 @@ class MfMemStrView extends MfMemBlkView
 		}
 		if (Length < 0)
 		{
-			Length := PI - BytesPerChar - StartIndex
+			Length := PI - BytesPerChar - StartIndex - ShiftAmt
 			
 		}
 		; if (Length < 0)
@@ -5001,7 +5567,17 @@ class MfMemStrView extends MfMemBlkView
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		
 		InsertEnd := StartIndex + ShiftAmt + Length
+		lengthRemainder :=  (PI - BytesPerChar) - InsertEnd
+		;~ If (lengthRemainder > 0)
+		;~ {
+			;~ InsertEnd := StartIndex + ShiftAmt + Length
+		;~ }
+		;~ else
+		;~ {
+			;~ InsertEnd := StartIndex + ShiftAmt ; + Length
+		;~ }
 
 			
 		if (InsertEnd > this.Size)
@@ -5013,7 +5589,7 @@ class MfMemStrView extends MfMemBlkView
 				
 		sourcePtr := this[] + StartIndex ; get the start pos Address
 		destPtr := sourcePtr + ShiftAmt
-		lengthRemainder :=  (PI - BytesPerChar) - InsertEnd
+		
 
 		; copy the bytes to move into a temp memory address
 		tmp := ""

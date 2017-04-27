@@ -65,6 +65,7 @@ class MfListVar extends MfListBase
 		return cLst
 	}
 ; 	End:Clone ;}
+
 ;{ 	Contains()			- Overrides - MfListBase
 /*!
 	Method: Contains()

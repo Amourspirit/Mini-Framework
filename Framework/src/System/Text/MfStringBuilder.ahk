@@ -24,16 +24,13 @@ Class MfText
 	
 class MfStringBuilder extends MfObject
 {
-	static CapacityField := "Capacity"
 	static DefaultCapacity := 16
 	m_ChunkChars := 0
 	m_ChunkLength := 0
 	m_ChunkOffset := 0
 	m_ChunkPrevious := ""
 	m_MaxCapacity := 0
-	static MaxCapacityField := "m_MaxCapacity"
 	MaxChunkSize := 8000
-	static StringValueField := "m_StringValue"
 	static m_BytesPerChar := A_IsUnicode ? 2 : 1
 	m_Encoding := ""
 	m_Nl := ""
@@ -412,13 +409,34 @@ class MfStringBuilder extends MfObject
 		this.m_ChunkLength := num
 		return this
 	}
-;{ 	_InsertStrInt
-	; Inserts one or more copies of a specified string into this instance at the specified character position.
-	_InsertStrInt(index, obj, count) {
-		value := MfMemoryString.FromAny(obj, this.m_Encoding)
-		if (count < 0)
+;{ 	Insert
+/*
+	Method: Insert()
+
+	Insert()
+		Inserts a obj into this instance at the specified character position.
+	Parameters:
+		index
+			The position in this instance where insertion begins. 
+		obj
+			The MfObject based object or var to insert
+		Count
+			Optional value. If included the obj will be inserted at the index Count times.
+	Returns:
+		Returns A reference to this instance after the insert operation has completed. 
+	Throws:
+		Throws MfArgumentException if index is not a valid integer
+		Throws MfArgumentOutOfRangeException if index is out of range
+		Throws MfException if error compleating the insert
+*/
+	Insert(index, obj, count=1) {
+		try
 		{
-			ex := new MfArgumentOutOfRangeException("count", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NeedNonNegNum"))
+			index := MfInteger.GetValue(index)
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "index")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -429,6 +447,32 @@ class MfStringBuilder extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		count := MfInteger.GetValue(count, 1)
+		try
+		{
+			this._InsertObjInt(index, obj, count)
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return this
+	}
+; 	End:Insert ;}
+;{ 	_InsertStrInt
+	; Inserts one or more copies of a specified string into this instance at the specified character position.
+	_InsertObjInt(index, obj, count) {
+		if (count < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("count", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NeedNonNegNum"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		value := MfMemoryString.FromAny(obj, this.m_Encoding)
+		
+		
 		if (value.Length = 0 || count = 0)
 		{
 			return this
@@ -442,29 +486,542 @@ class MfStringBuilder extends MfObject
 		}
 		stringBuilder := ""
 		num2 := 0
+		; index in the insert location within the entire instance
+		; num is the length of the string to insert times the count
 		this._MakeRoom(index, num, stringBuilder, num2, false)
+	
+		
 		while (count > 0)
 		{
-			this._ReplaceInPlaceAtChunk(stringBuilder, num2, value, value.Length)
+			this._ReplaceInPlaceAtChunk(stringBuilder, num2, value, value.m_CharCount)
 			count--
 		}
-
+		
 	}
 ; 	End:_InsertStrInt ;}
+	Replace(oldValue, newValue, startIndex=0, count=-1) {
+		startIndex := MfInteger.GetValue(startIndex, 1)
+		count := MfInteger.GetValue(count, -1)
+		currentLength := this.Length
+		
+		
+		if ((startIndex < 0) || (startIndex > currentLength))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (count < 0)
+		{
+			count := currentLength
+		}
+		
+		if (count < 0 || startIndex > currentLength - count)
+		{
+			ex := new MfArgumentOutOfRangeException("count", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfNull.IsNull(oldValue))
+		{
+			ex := new MfArgumentNullException("oldValue")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		MsOldVal := MfMemoryString.FromAny(oldValue, this.m_Encoding)
+		if (MsOldVal.Length = 0)
+		{
+			ex := new  MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_EmptyName"), "oldValue")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		MsNewVal := MfMemoryString.FromAny(newValue, this.m_Encoding)
+		deltaLength := MsNewVal.Length -  MsOldVal.Length
+
+		
+
+		if (this.m_ChunkOffset > 0 && this.Length < this.MaxChunkSize)
+		{
+			if (deltaLength > 0)
+			{
+				this._Merge(this.Length - this.MaxChunkSize - 1)
+			}
+			else
+			{
+				this._Merge()
+			}
+			
+		}
+		
+		if (this.m_ChunkOffset = 0)
+		{
+			this.m_ChunkChars.Replace(oldValue, newValue, startIndex, count)
+			this.m_ChunkLength := this.m_ChunkChars.Length
+			return
+		}
+			
+
+		replacements := "" ; A list of replacement positions in a chunk to apply
+		replacementsCount := 0
+		; Find the chunk, indexInChunk for the starting point
+		chunk := this._FindChunkForIndex(startIndex)
+		indexInChunk := startIndex - chunk.m_ChunkOffset
+		while (count > 0)
+		{
+			; Look for a match in the chunk,indexInChunk pointer 
+			if (this._StartsWith(chunk, indexInChunk, count, MsOldVal))
+			{
+				; Push it on my replacements array (with growth), we will do all replacements in a
+				; given chunk in one operation below (see ReplaceAllInChunk) so we don't have to slide
+				; many times.
+				if (MfNull.IsNull(replacements))
+				{
+					replacements := new MfListVar(5)
+				}
+				else if (replacementsCount >= replacements.Count)
+				{
+					newArray := new MfListVar(replacements.Length * 3 / 2 + 4) ; grow by 1.5X but more in the begining
+					MfListbase.Copy(replacements, newArray, replacements.Count)
+					replacements := newArray
+				}
+				replacements.Item[replacementsCount++] := indexInChunk
+				indexInChunk += MsOldVal.m_CharCount
+				count -= MsOldVal.m_CharCount
+			}
+			else
+			{
+				indexInChunk++
+				--count
+			}
+			if (indexInChunk >= chunk.m_ChunkLength || count = 0) ; Have we moved out of the current chunk
+			{
+				; Replacing mutates the blocks, so we need to convert to logical index and back afterward. 
+				index := indexInChunk + chunk.m_ChunkOffset
+				indexBeforeAdjustment := index
+
+				; See if we accumulated any replacements, if so apply them 
+				if (replacements != "")
+				{
+					this._ReplaceAllInChunk(replacements, replacementsCount, chunk, MsOldVal.m_CharCount, MsNewVal)
+				}
+				; The replacement has affected the logical index.  Adjust it.  
+				index += ((MsNewVal.m_CharCount - MsOldVal.m_CharCount) * replacementsCount)
+				replacementsCount := 0
+
+				chunk := this._FindChunkForIndex(index)
+				indexInChunk := index - chunk.m_ChunkOffset
+			}
+		}
+		return this
+	}
+;{ 	_ReplaceAllInChunk
+/*
+ *	'replacements' is a MfListVar list of index (relative to the begining of the 'chunk' to remove
+ *	'removeCount' characters and replace them with 'value'.   This routine does all those 
+ *	replacements in bulk (and therefore very efficiently. 
+ *	with the string 'value'.
+ *	'sourceChunk' is instance of MfStringBuilder
+ *	'Value' is instance of MfMemoryString
+*/
+	_ReplaceAllInChunk(replacements, replacementsCount, sourceChunk, removeCount, value) {
+		if (replacementsCount <= 0)
+		{
+			return
+		}
+
+		delta := (value.m_CharCount - removeCount) * replacementsCount
+		targetChunk := sourceChunk ; the target as we copy chars down
+		targetIndexInChunk := replacements.Item[0]
+
+		; Make the room needed for all the new characters if needed. 
+		if (delta > 0)
+		{
+			this._MakeRoom(targetChunk.m_ChunkOffset + targetIndexInChunk, delta, targetChunk, targetIndexInChunk, true)
+		}
+		i := 0
+		Loop
+		{
+			; Copy in the new string for the ith replacement
+			this._ReplaceInPlaceAtChunk(targetChunk, targetIndexInChunk, value, value.m_CharCount)
+			gapStart := replacements.Item[i] + removeCount
+			i++
+			if (i >= replacementsCount)
+			{
+				;targetChunk.m_ChunkChars.SetPosFromCharIndex(targetChunk.m_ChunkLength)
+				break
+			}
+			gapEnd := replacements.Item[i]
+			if (delta != 0) ; can skip the sliding of gaps if source an target string are the same size.
+			{
+				subValue := value.SubString(gapStart)
+				this._ReplaceInPlaceAtChunk(targetChunk, targetIndexInChunk, subValue, gapEnd - gapStart)
+			}
+			else
+			{
+				targetIndexInChunk += gapEnd - gapStart
+			}
+		}
+		if (delta < 0)
+		{
+			; flip delta to remove
+			this._Remove(targetChunk.m_ChunkOffset + targetIndexInChunk, Abs(delta), targetChunk, targetIndexInChunk)
+		}
+	}
+; 	End:_ReplaceAllInChunk ;}
+;{ 	_StartsWith
+	; Returns true if the string that is starts at 'chunk' and 'indexInChunk, and has a logical
+	; length of 'count' starts with the string 'value'. 
+	_StartsWith(chunk, indexInChunk, count, MsValue) {
+		if (count = 0)
+		{
+			return false
+		}
+		PtrA := chunk.m_ChunkChars.BufferPtr
+		PtrB := MsValue.BufferPtr
+		BytesPerChar := chunk.m_ChunkChars.m_BytesPerChar
+		sType := chunk.m_ChunkChars.m_sType
+		len := MsValue.Length ; * BytesPerChar
+		indexInChunk := indexInChunk ; * BytesPerChar
+		i := 0
+		While (i < len)
+		{
+			if (count = 0)
+			{
+				return false
+			}
+			if (indexInChunk >= chunk.m_ChunkLength) 
+			{
+				chunk := this._Next(chunk)
+				if (MfNull.IsNull(chunk))
+				{
+					return false
+				}
+				indexInChunk := 0
+				PtrA := chunk.m_ChunkChars.BufferPtr
+			}
+
+			; See if there no match, break out of the inner for loop
+			numA := NumGet(ptrA + 0, indexInChunk * BytesPerChar, sType)
+			numB := NumGet(ptrB + 0, i * BytesPerChar, sType)
+			
+			if (numA != numB)
+			{
+				return false
+			}
+			indexInChunk++
+			--count
+			i++
+		}
+		return true
+	}
+; 	End:_StartsWith ;}
+	Remove(startIndex, length) {
+		try
+		{
+			startIndex := MfInteger.GetValue(startIndex)
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		try
+		{
+			length := MfInteger.GetValue(length)
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "length")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (length < 0)
+		{
+			ex := new MFArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (startIndex < 0)
+		{
+			ex := new MFArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (length > this.Length - startIndex)
+		{
+			ex := new MFArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.Length = length && startIndex = 0)
+		{
+			this.Length := 0
+			return this
+		}
+		if (length > 0)
+		{
+			stringBuilder := ""
+			num := 0
+			this._Remove(startIndex, length, stringBuilder, num)
+		}
+		return this
+	}
+
+;{ 	_Remove
+	; removes from an instance of MfStringBuilder
+	; startIndex - int
+	; count - int
+	; chunk - MfStringBuilder
+	; indexInChunk - int
+	_Remove(startIndex, count, ByRef chunk, ByRef indexInChunk) {
+		endIndex := startIndex + count
+		; Find the chunks for the start and end of the block to delete. 
+		chunk := this
+		endChunk := ""
+		endIndexInChunk := 0
+
+		loop
+		{
+			if (endIndex - chunk.m_ChunkOffset >= 0)
+			{
+				if (endChunk == "")
+				{
+					endChunk := chunk
+					endIndexInChunk := endIndex - endChunk.m_ChunkOffset
+				}
+				if (startIndex - chunk.m_ChunkOffset >= 0)
+				{
+					break
+				}
+			}
+			else
+			{
+				chunk.m_ChunkOffset -= count
+			}
+			chunk := chunk.m_ChunkPrevious
+		}
+		indexInChunk := startIndex - chunk.m_ChunkOffset
+		copyTargetIndexInChunk := indexInChunk
+		copyCount := endChunk.m_ChunkLength - endIndexInChunk
+		if (endChunk.Equals(chunk) = false)
+		{
+			copyTargetIndexInChunk := 0
+			;  Remove the characters after startIndex to end of the chunk
+			chunk.m_ChunkLength := indexInChunk
+			; set pos in MemoryString to reflect m_ChunkLength
+			chunk.m_ChunkChars.SetPosFromCharIndex(chunk.m_ChunkLength)
+			
+			endChunk.m_ChunkPrevious := chunk
+			endChunk.m_ChunkOffset := chunk.m_ChunkOffset + chunk.m_ChunkLength
+			;  If the start is 0 then we can throw away the whole start chunk
+			if (indexInChunk = 0)
+			{
+				endChunk.m_ChunkPrevious := chunk.m_ChunkPrevious
+				chunk := endChunk
+			}
+		}
+		endChunk.m_ChunkLength -= endIndexInChunk - copyTargetIndexInChunk
+		
+		
+		; remove any characters in the end chunk, by sliding the characters down. 
+		if (copyTargetIndexInChunk != endIndexInChunk) ; sometimes no move is necessary
+		{
+			MfMemoryString.CopyFromIndex(endChunk.m_ChunkChars, endIndexInChunk, endChunk.m_ChunkChars, copyTargetIndexInChunk, copyCount)
+			;endChunk.m_ChunkChars.MoveCharsLeft(copyTargetIndexInChunk, endIndexInChunk, copyCount)
+		}
+		endChunk.m_ChunkChars.SetPosFromCharIndex(endChunk.m_ChunkLength)
+		
+	}
+; 	End:_Remove ;}
+/*
+	_MakeRoom()
+		Makes room insde of string builder
+	Parameters:
+		index
+			Integer Index
+		count
+			Integer Count
+		chunk
+			MfString Builder Instance ( out )
+		indexInChunk
+			Integer ( out )
+		doneMoveFollowingChars
+			Boolean value
+*/
+	_MakeRoom(index, count, byRef chunk, ByRef indexInChunk, doneMoveFollowingChars) {
+		; index in the insert location within the entire instance
+		; num is the length of the string to insert times the count
+		if (count + this.Length > this.m_MaxCapacity)
+		{
+			ex := new MfArgumentOutOfRangeException("requiredLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		chunk := this
+		while (chunk.m_ChunkOffset > index)
+		{
+			chunk.m_ChunkOffset += count
+			chunk := chunk.m_ChunkPrevious
+		}
+		BytesPerChar := MfStringBuilder.m_BytesPerChar
+		indexInChunk := index - chunk.m_ChunkOffset ; grab the index within the current chunck
+		if (!doneMoveFollowingChars && chunk.m_ChunkLength <= (MfStringBuilder.DefaultCapacity * 2) && chunk.m_ChunkChars.CharCapacity - chunk.m_ChunkLength >= count)
+		{
+			; Advance Position before calling MoveCharsRight
+			chunk.m_ChunkChars.SetPosFromCharIndex(chunk.m_ChunkLength)
+			chunk.m_ChunkChars.MoveCharsRight(indexInChunk, Count, Count)
+			
+	
+			chunk.m_ChunkLength += count
+			return
+		}
+		Capacity := MfMath.Max(count, MfStringBuilder.DefaultCapacity)
+		stringBuilder := new MfStringBuilder(Capacity, chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
+		; the new stringbuilder will at least the capacity of the string to insert times then number of number of repeats to insert
+		stringBuilder.m_ChunkLength := count
+		num := MfMath.Min(count, indexInChunk)
+		
+		if (num > 0)
+		{
+			ptr := chunk.m_ChunkChars.BufferPtr
+			BytesPerChar := MfStringBuilder.m_BytesPerChar
+			MfMemoryString.CopyFromAddress(ptr, stringBuilder.m_ChunkChars, 0, num)
+			num2 := indexInChunk - num
+			if (num2 >= 0)
+			{	
+				;ptr := chunk.m_ChunkChars.BufferPtr
+				MfMemoryString.CopyFromAddress(ptr + (num * BytesPerChar), chunk.m_ChunkChars, 0, num2)
+				;chunk.m_ChunkLength := chunk.m_ChunkChars.Length
+				indexInChunk := num2
+			}
+		}
+		stringBuilder.m_ChunkChars.SetPosFromCharIndex(stringBuilder.m_ChunkLength)
+		;stringBuilder.m_ChunkLength := stringBuilder.m_ChunkChars.Length
+		; chunk previous string builder will now become the current stringBuilder
+		chunk.m_ChunkPrevious := stringBuilder
+		chunk.m_ChunkOffset += count
+		if (num < count)
+		{
+			chunk := stringBuilder
+			indexInChunk := num
+		}
+	}
+	;{ 	_MakeRoom
+	__MakeRoom(index, count, byRef chunk, ByRef indexInChunk, doneMoveFollowingChars) {
+		; index in the insert location within the entire instance
+		; num is the length of the string to insert times the count
+		if (count + this.Length > this.m_MaxCapacity)
+		{
+			ex := new MfArgumentOutOfRangeException("requiredLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		chunk := this
+		while (chunk.m_ChunkOffset > index)
+		{
+			chunk.m_ChunkOffset += count
+			chunk := chunk.m_ChunkPrevious
+		}
+		BytesPerChar := MfStringBuilder.m_BytesPerChar
+		indexInChunk := index - chunk.m_ChunkOffset ; grab the index within the current chunck
+		if (!doneMoveFollowingChars && chunk.m_ChunkLength <= (MfStringBuilder.DefaultCapacity * 2) && chunk.m_ChunkChars.CharCapacity - chunk.m_ChunkLength >= count)
+		{
+			; Advance Position before calling MoveCharsRight
+			chunk.m_ChunkChars.SetPosFromCharIndex(chunk.m_ChunkLength)
+			chunk.m_ChunkChars.MoveCharsRight(indexInChunk, Count, Count)
+			
+			; this could be used instad of the two line above but the above faster.
+			;~ j := i * BytesPerChar
+			;~ k := indexInChunk * BytesPerChar
+			;~ l := count * BytesPerChar
+			;~ while (j > k)
+			;~ {
+				;~ j--
+				;~ chunk.m_ChunkChars.Byte[j + l] := chunk.m_ChunkChars.Byte[j]
+			;~ }
+			
+			chunk.m_ChunkLength += count
+			return
+		}
+		Capacity := MfMath.Max(count, MfStringBuilder.DefaultCapacity)
+		stringBuilder := new MfStringBuilder(Capacity, chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
+		; the new stringbuilder will at least the capacity of the string to insert times then number of number of repeats to insert
+		stringBuilder.m_ChunkLength := count
+		num := MfMath.Min(count, indexInChunk)
+		
+		if (num > 0)
+		{
+			; insert the chunk values from 0 to index into the current stringBuilder
+			if (chunk.m_ChunkChars.Length <= num)
+			{
+				stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars)
+			}
+			else
+			{
+				stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars.SubString(0, num))
+			}
+			
+			
+			num2 := indexInChunk - num
+			if (num2 >= 0)
+			{
+				
+				if (num2 > 0)
+				{
+					; Move the char left in the current chunck that have already been inserted into stringBuilder
+					chunk.m_ChunkChars.MoveCharsLeft(0, num, num2)
+					;chunk.m_ChunkLength := chunk.m_ChunkChars.Length
+					;chunk.m_ChunkChars.OverWrite(chunk.m_ChunkChars.SubString(num), 0, num2)
+					
+				}
+				else
+				{
+					;chunk.m_ChunkChars.MoveCharsLeft(0, num)
+					;chunk.m_ChunkChars.Remove(0,num)
+				}
+				indexInChunk := num2
+			}
+		}
+		stringBuilder.m_ChunkChars.SetPosFromCharIndex(stringBuilder.m_ChunkLength)
+		; chunk previous string builder will now become the current stringBuilder
+		chunk.m_ChunkPrevious := stringBuilder
+		chunk.m_ChunkOffset += count
+		if (num < count)
+		{
+			chunk := stringBuilder
+			indexInChunk := num
+		}
+	}
+; 	End:_MakeRoom ;}
 ;{ 	_ReplaceInPlaceAtChunk
 	; chunk StringBuilder
 	; indexInChunk Integer
 	; value MfMemoryString
 	; count integer
-	_ReplaceInPlaceAtChunk(ByRef chunk, ByRef indexInChunk, value, count) {
+	___ReplaceInPlaceAtChunk(ByRef chunk, ByRef indexInChunk, value, count) {
+		; first pass chunk.m_ChunkChars inserts at index 3 the first 8 chars of value
 		if (count != 0)
 		{
 			loop
 			{
 				num := MfMath.Min(chunk.m_ChunkLength - indexInChunk, count)
-
-				chunk.m_ChunkChars.OverWrite(value, indexInChunk, num)
-
+				
+				;OutputDebug % A_ThisFunc . " - " value.SubString(0, num).ToString()
+				;chunk.m_ChunkChars.OverWrite(value, indexInChunk, num)
+				if (value.Length > num)
+				{
+					;chunk.m_ChunkChars.Append(value.SubString(0, num))
+					chunk.m_ChunkChars.OverWrite(value.SubString(0, num), indexInChunk, num)
+				}
+				else
+				{
+					;chunk.m_ChunkChars.Append(value)
+					chunk.m_ChunkChars.OverWrite(value, indexInChunk, num)
+				}
+				;chunk.m_ChunkLength := chunk.m_ChunkChars.Length
+				
+				LastIndex := indexInChunk
 				indexInChunk += num
 				if (indexInChunk >= chunk.m_ChunkLength)
 				{
@@ -478,10 +1035,79 @@ class MfStringBuilder extends MfObject
 				}
 				;value += num
 				value := value.Substring(num)
+				
 			}
 		}
 	}
+/*
+ *	ReplaceInPlaceAtChunk is the logical equivalent of 'memcpy'.  Given a chunk and an index in
+ *	that chunk, it copies in 'count' characters from 'value' and updates 'chunk, and indexInChunk to 
+ *	point at the end of the characters just copyied (thus you can splice in strings from multiple 
+ *	places by calling this mulitple times.  
+*/
+	_ReplaceInPlaceAtChunk(ByRef chunk, ByRef indexInChunk, value, count) {
+		; first pass chunk.m_ChunkChars inserts at index 3 the first 8 chars of value
+		
+		if (count != 0)
+		{
+			ptr := Value.BufferPtr
+			BytesPerChar := MfStringBuilder.m_BytesPerChar
+			loop
+			{
+				lengthInChunk := chunk.m_ChunkLength - indexInChunk
+				lengthToCopy := MfMath.Min(lengthInChunk, count)
+				
+				MfMemoryString.CopyFromAddress(ptr, chunk.m_ChunkChars, indexInChunk, lengthToCopy)
+				
+				; Advance the index.
+				indexInChunk += lengthToCopy
+				if (indexInChunk >= chunk.m_ChunkLength)
+				{
+					chunk := this._Next(chunk)
+					indexInChunk := 0
+				}
+				count -= lengthToCopy
+				if (count = 0)
+				{
+					break
+				}
+				;value += lengthToCopy
+				ptr += (lengthToCopy * BytesPerChar)
+				
+			}
+		}
+	}
+	
 ; 	End:_ReplaceInPlaceAtChunk ;}
+	_ReplaceInPlaceAtChunkNewOld(ByRef chunk, ByRef indexInChunk, oldValue, newValue, count) {
+		; first pass chunk.m_ChunkChars inserts at index 3 the first 8 chars of value
+		_index := 0
+
+		BytesPerChar := MfStringBuilder.m_BytesPerChar
+		if (count != 0)
+		{
+			loop
+			{
+				num := MfMath.Min(chunk.m_ChunkLength - indexInChunk, count)
+				chunk.m_ChunkChars.Replace(oldValue, newValue, num, -2)
+				LastIndex := indexInChunk
+				indexInChunk += num
+				if (indexInChunk >= chunk.m_ChunkLength)
+				{
+					chunk := this._Next(chunk)
+					indexInChunk := 0
+				}
+				count -= num
+				if (count = 0)
+				{
+					break
+				}
+				_index += num
+				
+				
+			}
+		}
+	}
 ;{ 	Equals
 	Equals(sb) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -616,6 +1242,7 @@ class MfStringBuilder extends MfObject
 				chunkChars := stringBuilder.m_ChunkChars
 				chunkOffset := stringBuilder.m_ChunkOffset
 				chunkLength := stringBuilder.m_ChunkLength
+				;OutputDebug % chunkChars.ToString()
 				if (chunkLength + chunkOffset > ms.CharCapacity || chunkLength > chunkChars.Length)
 				{
 					break
@@ -648,6 +1275,16 @@ class MfStringBuilder extends MfObject
 		; Null value can be added into the current instance by extending the length
 		; Other non printing chars cna be added by adding not printing char value
 		; with methods such as this._AppendCharCode(8, 1)
+
+		; a := ms.ToArray()
+		; i := 1
+		; While (i < a.Length())
+		; {
+		; 	OutputDebug % a[i]
+		; 	i += 2
+		; }
+			
+
 		if (this.m_HasNullChar = true)
 		{
 			ms2 := ms.GetStringIgnoreNull()
@@ -655,82 +1292,56 @@ class MfStringBuilder extends MfObject
 		}
 		return ms.ToString()
 	}
-;{ 	_MakeRoom
-/*
-	_MakeRoom()
-		Makes room insde of string builder
-	Parameters:
-		index
-			Integer Index
-		count
-			Integer Count
-		chunk
-			MfString Builder Instance ( out )
-		indexInChunk
-			Integer ( out )
-		doneMoveFollowingChars
-			Boolean value
-*/
-	_MakeRoom(index, count, byRef chunk, ByRef indexInChunk, doneMoveFollowingChars) {
-		if (count + this.Length > this.m_MaxCapacity)
+	_Merge(ExtraCharCount=0) {
+		if (this.Length = 0)
 		{
-			ex := new MfArgumentOutOfRangeException("requiredLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
+			return ""
+		}
+		stringBuilder := this
+		OutOfRange := true
+		
+		iLen := (this.Length + 1)
+		ExtraCharCount := ExtraCharCount * MfStringBuilder.m_BytesPerChar
+		ms := new MfMemoryString(iLen + ExtraCharCount,, this.m_Encoding)
+		stringBuilder := this
+		loop
+		{
+			if (stringBuilder.m_ChunkLength > 0)
+			{
+				chunkChars := stringBuilder.m_ChunkChars
+				chunkOffset := stringBuilder.m_ChunkOffset
+				chunkLength := stringBuilder.m_ChunkLength
+				if (chunkLength + chunkOffset > ms.CharCapacity || chunkLength > chunkChars.Length)
+				{
+					break
+				}
+				ms.OverWrite(stringBuilder.m_ChunkChars, chunkOffset, chunkLength)
+			}
+			stringBuilder := stringBuilder.m_ChunkPrevious
+			if (MfNull.IsNull(stringBuilder))
+			{
+				OutOfRange := false
+				break
+			}
+		}
+		if (OutOfRange)
+		{
+			ms := ""
+			ex := new MfArgumentOutOfRangeException("chunkLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		chunk := this
-		while (chunk.m_ChunkOffset > index)
-		{
-			chunk.m_ChunkOffset += count
-			chunk := chunk.m_ChunkPrevious
-		}
-		indexInChunk := index - chunk.m_ChunkOffset
-		if (!doneMoveFollowingChars && chunk.m_ChunkLength <= (MfStringBuilder.DefaultCapacity * 2) && chunk.m_ChunkChars.CharCapacity - chunk.m_ChunkLength >= count)
-		{
-			i := chunk.m_ChunkLength
-			chunk.m_ChunkChars.MoveCharsRight(i, Count)
-			chunk.m_ChunkLength += count
-			; advance the pos to match the number count moved
-			;chunk.m_ChunkChars.Pos += count
-			return
-		}
-		Capacity := MfMath.Max(count, MfStringBuilder.DefaultCapacity)
-		stringBuilder := new MfStringBuilder(Capacity, chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
-		stringBuilder.m_ChunkLength := count
-		num := MfMath.Min(count, indexInChunk)
-		BytesPerChar := MfStringBuilder.m_BytesPerChar
-		if (num > 0)
-		{
-			if (chunk.m_ChunkChars.Length <= num)
-			{
-				stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars)
-			}
-			else
-			{
-				stringBuilder.m_ChunkChars.Append(chunk.m_ChunkChars.SubString(0, num))
-			}
-			
-			num2 := indexInChunk - num
-			if (num2 >= 0)
-			{
-				
-				if (num2 > 0)
-				{
-					;chunk.m_ChunkChars.MoveCharsLeft(0, num, num2)
-					chunk.m_ChunkChars.OverWrite(chunk.m_ChunkChars.SubString(num), 0, num2)
-				}
-				indexInChunk := num2
-			}
-		}
-		chunk.m_ChunkPrevious := stringBuilder
-		chunk.m_ChunkOffset += count
-		if (num < count)
-		{
-			chunk := stringBuilder
-			indexInChunk := num
-		}
+		
+		ms.m_MemView.Pos := (this.Length + 1) * this.m_BytesPerChar
+		ms.m_CharCount := this.Length
+		this.m_ChunkLength := ms.m_CharCount
+		this.m_ChunkOffset := 0
+		this.m_ChunkPrevious := ""
+		this.m_ChunkChars := ""
+		this.m_ChunkChars := ms
 	}
-; 	End:_MakeRoom ;}
+
+
 ;{ 	_Next
 	; chunk - StringBuilder
 	 _Next(chunk) {
