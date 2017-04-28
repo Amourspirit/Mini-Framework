@@ -536,57 +536,232 @@ class MfStringBuilder extends MfObject
 			throw ex
 		}
 		MsNewVal := MfMemoryString.FromAny(newValue, this.m_Encoding)
-		deltaLength := MsNewVal.Length -  MsOldVal.Length
+		deltaLength := MsNewVal.Length - MsOldVal.Length
 
-		
+		; this._Replace(MsOldVal, MsNewVal, startIndex, Count)
+		; return this
 
+		; uainf the method of of mergin and replacing was 30 time faster
+		; on a string with 4200 chars with a initial buffer of 3000 chars.
+		; the MsMemoryString is much faster with find and replace
+		; mostly because it does not have to work on multible chunks
+		; and consider peices here and there.
+		; Also the case insenstive MfMemoryString method uses a special
+		; fast machine code method to find the index of the old value.
+		; When the newValue and oldValue length are the same the replacements
+		; are even faster as the replacement is done by just overwriting the bytes
+		; and not mem copy method are used to move and copy bytes to rebuild the string.
+		; Due to the speed advantages it is worth merging the smaller chunks together
+		; into one chunk and then using MfMemoryString to replace.
 		if (this.m_ChunkOffset > 0 && this.Length < this.MaxChunkSize)
 		{
-			if (deltaLength > 0)
-			{
-				this._Merge(this.Length - this.MaxChunkSize - 1)
-			}
-			else
+			if (deltaLength = 0)
 			{
 				this._Merge()
 			}
+			else
+			{
+				this._Merge(MfMath.Min(this.Length + MfStringBuilder.DefaultCapacity, this.MaxChunkSize - this.Length))
+			}
 			
 		}
-		
+
+		sIndex := startIndex
 		if (this.m_ChunkOffset = 0)
 		{
-			this.m_ChunkChars.Replace(oldValue, newValue, startIndex, count)
-			this.m_ChunkLength := this.m_ChunkChars.Length
-			return
-		}
+			Indexes := this._GetReplaceIndexsForChunk(this, MsOldVal, sIndex, count)
+			ReplacedAll := false
+			iCount := count
+			i := Indexes.Count
+			ilst := Indexes.m_InnerList
+			iLen := MsOldVal.Length
+			while (i >= 1)
+			{
+				indexValue := lst[i]
+				If (indexValue > count)
+				{
+					i--
+					Continue
+				}
+				if (this.m_ChunkChars.FreeCharCapacity > deltaLength)
+				{
+					this.m_ChunkChars.ReplaceAtIndex(ilst[i], iLen, MsNewVal)
+					this.m_ChunkLength := this.m_ChunkChars.Length
+				}
+				else
+				{
+					ReplacedAll := false
+					break
+				}
+				iCount := indexValue
+				i--
+			}
+			if (i = 0)
+			{
+				ReplacedAll = true
+			}
 			
+			; if all the space avaailable in this chunk is used and we
+			; are not yet at the max chunk size then add an chunk and
+			; call this method again recursivly to mearge chunks and 
+			; start replacing again
+			; The reason to call recursion here is that the MsMemoryString
+			; operates much faster then the MfStringBuilder replace does
+			; so for string under the length of MaxChunkSize we can
+			; use MsMemoryString repalce method
+			if (ReplacedAll = false && this.Length < this.MaxChunkSize)
+			{
+				this._ExpandByABlock(MfStringBuilder.DefaultCapacity)
+				this.Replace(MsOldVal, MsNewVal, sIndex, iCount)
+			}
+			if (ReplacedAll = false && iCount > 0)
+			{
+				this._Replace(MsOldVal, MsNewVal, sIndex,  iCount)
+			}
+		}
+		else
+		{
+			this._Replace(MsOldVal, MsNewVal, sIndex, Count)
+		}
 
-		replacements := "" ; A list of replacement positions in a chunk to apply
+		return this
+	}
+;{ 	_GetReplaceIndexsForChunk
+/*
+	_GetReplaceIndexsForChunk()
+		Gets a MfListVar containing the index of all the replacements from
+		smalet index to biggest index in a MfStringBuilder chunk
+	Parameters:
+		Chunk
+			MfStringBuilder Chunk
+		MsVal
+			MfMemoryString instance that is the needle
+		startIndex
+			The index in the haystack to starch searhing in
+		count
+			Then number of chars to search
+	Returns:
+		Returns MfListVar instance containing all the found index values
+	Remarks:
+		Internal method
+*/
+	_GetReplaceIndexsForChunk(Chunk, MsVal, startIndex, count) {
+		; _startsWithMs(chunk, indexInChunk, count, MsValue) {
+		replacements := new MfListVar()
+		searchLen := MsVal.Length
+		if (searchLen = 0)
+		{
+			return replacements
+		}
+		i := startIndex
+		iCount := count
+		while (i < iCount)
+		{
+			ix := this._startsWithMs(chunk, i, count, MsVal)
+			if (ix >= 0)
+			{
+				replacements.Add(ix)
+				i := ix + searchLen
+			}
+			Else
+			{
+				break
+			}
+		}
+		return replacements
+			
+	}
+; 	End:_GetReplaceIndexsForChunk ;}
+	_Replace(byref MsOldVal, byref MsNewVal, startIndex, count) {
+		replacements := new MfListVar() ; A list of replacement positions in a chunk to apply
 		replacementsCount := 0
 		; Find the chunk, indexInChunk for the starting point
 		chunk := this._FindChunkForIndex(startIndex)
 		indexInChunk := startIndex - chunk.m_ChunkOffset
+		iPrev := -1
+		searchLen := MsOldVal.m_CharCount
+		iPrevIndexChunk := 0
 		while (count > 0)
 		{
-			; Look for a match in the chunk,indexInChunk pointer 
-			if (this._StartsWith(chunk, indexInChunk, count, MsOldVal))
+			;if (iPrev != chunk.m_ChunkOffset && iPrev < -2)
+			if (iPrev != chunk.m_ChunkOffset)
+			{
+				if (chunk.m_ChunkLength < searchLen)
+				{
+					iPrev := chunk.m_ChunkOffset
+					count++
+					indexInChunk--
+				}
+				else
+				{
+					; only check once per chunk once all index are found
+					; this section will search the entire chunk up to the
+					; end minus the length of (MsOldVal - 1)
+					; usint this _startsWithMs method seem to be about 20 percent faster than _StartsWith
+					; _startsWithMs will not searc from the end of one chunk into the beginning of the next
+					; this is why _startsWith is still included to pick up the oldvalues that cross chuncks
+					ix := this._startsWithMs(chunk, indexInChunk, count, MsOldVal)
+					if (ix >= 0)
+					{
+						if (MfNull.IsNull(replacements) || replacements.Count = 0)
+						{
+							replacements := new MfListVar(5)
+						}
+						else if (replacementsCount >= replacements.Count)
+						{
+							newArray := new MfListVar(replacements.Count * 3 // 2 + 4) ; grow by 1.5X but more in the begining
+							MfListbase.Copy(replacements, newArray, replacements.Count)
+							replacements := newArray
+						}
+						replacements.Item[replacementsCount++] := ix
+						indexInChunk += ix + searchLen
+						
+						cntAdjust := iPrevIndexChunk > 0 ? iPrevIndexChunk + (ix - searchLen):  (ix + searchLen)
+						if (iPrevIndexChunk > 0)
+						{
+							count += iPrevIndexChunk - (ix + searchLen)
+						}
+						Else
+						{
+							count -=  (ix + searchLen)
+						}
+						
+						iPrevIndexChunk := indexInChunk
+					}
+					else
+					{
+						; if there is not match or out of matches for chunk then
+						; set value to one less then the chunk length to search the rest of the chars
+						; posssibly into the next chunk
+						iPrev := chunk.m_ChunkOffset
+						count -= (chunk.m_ChunkLength - (searchLen - 1))
+						indexInChunk :=  (chunk.m_ChunkLength - (searchLen - 1))
+					}
+
+				}
+			}
+			else if (this._StartsWith(chunk, indexInChunk, count, MsOldVal)) ; Look for a match in the chunk,indexInChunk pointer
 			{
 				; Push it on my replacements array (with growth), we will do all replacements in a
 				; given chunk in one operation below (see ReplaceAllInChunk) so we don't have to slide
 				; many times.
-				if (MfNull.IsNull(replacements))
+				if (MfNull.IsNull(replacements) || replacements.Count = 0)
 				{
 					replacements := new MfListVar(5)
 				}
 				else if (replacementsCount >= replacements.Count)
 				{
-					newArray := new MfListVar(replacements.Length * 3 / 2 + 4) ; grow by 1.5X but more in the begining
+					newArray := new MfListVar(replacements.Count * 3 // 2 + 4) ; grow by 1.5X but more in the begining
 					MfListbase.Copy(replacements, newArray, replacements.Count)
 					replacements := newArray
 				}
 				replacements.Item[replacementsCount++] := indexInChunk
-				indexInChunk += MsOldVal.m_CharCount
-				count -= MsOldVal.m_CharCount
+				;OutputDebug % "Replacement Count: " . replacementsCount . " Index: " . indexInChunk
+				OutputDebug % "2: Before count:" . count . " indexInChunk: " . indexInChunk
+				indexInChunk += searchLen
+				count -= searchLen
+				OutputDebug % "2: After  count:" . count . " indexInChunk: " . indexInChunk
+
 			}
 			else
 			{
@@ -600,10 +775,7 @@ class MfStringBuilder extends MfObject
 				indexBeforeAdjustment := index
 
 				; See if we accumulated any replacements, if so apply them 
-				if (replacements != "")
-				{
-					this._ReplaceAllInChunk(replacements, replacementsCount, chunk, MsOldVal.m_CharCount, MsNewVal)
-				}
+				this._ReplaceAllInChunk(replacements, replacementsCount, chunk, MsOldVal.m_CharCount, MsNewVal)
 				; The replacement has affected the logical index.  Adjust it.  
 				index += ((MsNewVal.m_CharCount - MsOldVal.m_CharCount) * replacementsCount)
 				replacementsCount := 0
@@ -612,63 +784,16 @@ class MfStringBuilder extends MfObject
 				indexInChunk := index - chunk.m_ChunkOffset
 			}
 		}
-		return this
 	}
-;{ 	_ReplaceAllInChunk
-/*
- *	'replacements' is a MfListVar list of index (relative to the begining of the 'chunk' to remove
- *	'removeCount' characters and replace them with 'value'.   This routine does all those 
- *	replacements in bulk (and therefore very efficiently. 
- *	with the string 'value'.
- *	'sourceChunk' is instance of MfStringBuilder
- *	'Value' is instance of MfMemoryString
-*/
-	_ReplaceAllInChunk(replacements, replacementsCount, sourceChunk, removeCount, value) {
-		if (replacementsCount <= 0)
-		{
-			return
-		}
-
-		delta := (value.m_CharCount - removeCount) * replacementsCount
-		targetChunk := sourceChunk ; the target as we copy chars down
-		targetIndexInChunk := replacements.Item[0]
-
-		; Make the room needed for all the new characters if needed. 
-		if (delta > 0)
-		{
-			this._MakeRoom(targetChunk.m_ChunkOffset + targetIndexInChunk, delta, targetChunk, targetIndexInChunk, true)
-		}
-		i := 0
-		Loop
-		{
-			; Copy in the new string for the ith replacement
-			this._ReplaceInPlaceAtChunk(targetChunk, targetIndexInChunk, value, value.m_CharCount)
-			gapStart := replacements.Item[i] + removeCount
-			i++
-			if (i >= replacementsCount)
-			{
-				;targetChunk.m_ChunkChars.SetPosFromCharIndex(targetChunk.m_ChunkLength)
-				break
-			}
-			gapEnd := replacements.Item[i]
-			if (delta != 0) ; can skip the sliding of gaps if source an target string are the same size.
-			{
-				subValue := value.SubString(gapStart)
-				this._ReplaceInPlaceAtChunk(targetChunk, targetIndexInChunk, subValue, gapEnd - gapStart)
-			}
-			else
-			{
-				targetIndexInChunk += gapEnd - gapStart
-			}
-		}
-		if (delta < 0)
-		{
-			; flip delta to remove
-			this._Remove(targetChunk.m_ChunkOffset + targetIndexInChunk, Abs(delta), targetChunk, targetIndexInChunk)
-		}
-	}
-; 	End:_ReplaceAllInChunk ;}
 ;{ 	_StartsWith
+	_startsWithMs(chunk, indexInChunk, count, MsValue) {
+		if (count = 0)
+		{
+			return -1
+		}
+		index := chunk.m_ChunkChars.IndexOf(MsValue,indexInChunk)
+		return index
+	}
 	; Returns true if the string that is starts at 'chunk' and 'indexInChunk, and has a logical
 	; length of 'count' starts with the string 'value'. 
 	_StartsWith(chunk, indexInChunk, count, MsValue) {
@@ -715,6 +840,61 @@ class MfStringBuilder extends MfObject
 		return true
 	}
 ; 	End:_StartsWith ;}
+;{ 	_ReplaceAllInChunk
+/*
+ *	'replacements' is a MfListVar list of index (relative to the begining of the 'chunk' to remove
+ *	'removeCount' characters and replace them with 'value'.   This routine does all those 
+ *	replacements in bulk (and therefore very efficiently. 
+ *	with the string 'value'.
+ *	'sourceChunk' is instance of MfStringBuilder
+ *	'Value' is instance of MfMemoryString
+*/
+	_ReplaceAllInChunk(replacements, replacementsCount, sourceChunk, removeCount, value) {
+		if (replacementsCount <= 0)
+		{
+			return
+		}
+
+		delta := (value.m_CharCount - removeCount) * replacementsCount
+		targetChunk := sourceChunk ; the target as we copy chars down
+		targetIndexInChunk := replacements.Item[0]
+
+		; Make the room needed for all the new characters if needed. 
+		if (delta > 0)
+		{
+			this._MakeRoom(targetChunk.m_ChunkOffset + targetIndexInChunk, delta, targetChunk, targetIndexInChunk, true)
+		}
+		i := 0
+		Loop
+		{
+			; Copy in the new string for the ith replacement
+			this._ReplaceInPlaceAtChunk(targetChunk, targetIndexInChunk, value, value.m_CharCount)
+			gapStart := replacements.Item[i] + removeCount
+			i++
+			if (i >= replacementsCount)
+			{
+				;targetChunk.m_ChunkChars.SetPosFromCharIndex(targetChunk.m_ChunkLength)
+				break
+			}
+			gapEnd := replacements.Item[i]
+			if (delta != 0) ; can skip the sliding of gaps if source an target string are the same size.
+			{
+				subValue := sourceChunk.m_ChunkChars.SubString(gapStart)
+				this._ReplaceInPlaceAtChunk(targetChunk, targetIndexInChunk, subValue, gapEnd - gapStart)
+			}
+			else
+			{
+				targetIndexInChunk += gapEnd - gapStart
+			}
+		}
+		if (delta < 0)
+		{
+			; flip delta to remove
+			this._Remove(targetChunk.m_ChunkOffset + targetIndexInChunk, Abs(delta), targetChunk, targetIndexInChunk)
+		}
+	}
+; 	End:_ReplaceAllInChunk ;}
+
 	Remove(startIndex, length) {
 		try
 		{
@@ -1103,8 +1283,6 @@ class MfStringBuilder extends MfObject
 					break
 				}
 				_index += num
-				
-				
 			}
 		}
 	}

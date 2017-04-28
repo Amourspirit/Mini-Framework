@@ -210,12 +210,12 @@ class MfListBase extends MfEnumerableBase
 		sA := sourceList.m_InnerList
 		dA := destinationList.m_InnerList
 		i := 1
-		While (i >= Length)
+		While (i <= Length)
 		{
 			da[i] := sA[i]
 			i++
 		}
-		destinationList.m_count := da[i].Length()
+		destinationList.m_count := da.Length()
 
 	}
 ; 	End:Copy ;}
