@@ -28,7 +28,11 @@
  *	CompareOrdinal() Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
  *	CompareOrdinalSubString() Compares obj objects by evaluating the numeric values of the corresponding Char objects in obj.
  *	Copy() Copies the Source MfMemoryString Chars instance to destination MfMemoryString
+ *	CopyFromIndex() Copies the Source MfMemoryString Chars to destination MfMemoryString
+ *	CopyToCharList() Copies the Source MfMemoryString Chars to destination MfCharList instance
+ *	CopyFromAddressToCharList() Copies the Source address Chars to destination MfCharList instance
  *	CopyFromAddress() Copies the Source adress Chars instance to destination MfMemoryString
+ *	CopyAddressToCharList() Copies the Source address bytes to destination MfCharList
  *	Difference() Gets the Difference between argument obj and argument this instance with an included Max Distance.
  *	EndsWith() Gets a boolean value true or false if this instance ends with obj
  *	Equals() Checks to see if obj is equals this instance
@@ -54,6 +58,7 @@
  *	ToArray() Gets Byte array of current chars
  *	ToBase64() Reads current instance and returns a new MfMemoryString instance endoced as UTF-8 base64
  *	ToByteList() Creates an MfByteList of bytes from current instance of MfMemoryString
+ *	ToCharList() Gets a copy of the current instance as MfCharList
  *	ToString() Retunrs the contents of the current instance as a string var
  *	Trim() Trims TrimChars or whitespace from this instance start and end
  *	TrimBuffer() Trims the internal buffer to the size of the current chars
@@ -487,8 +492,7 @@ class MfMemoryString extends MfObject
 		}
 		destinationIndex := MfInteger.GetValue(destinationIndex)
 		count := MfInteger.GetValue(count)
-		limit := MfBool.GetValue(limit, false)
-		limit := false
+		
 		if (count <= 0)
 		{
 			return
@@ -518,6 +522,154 @@ class MfMemoryString extends MfObject
 		
 	}
 ; 	End:Copy ;}
+;{ CopyFromAddressToCharList
+/*
+	Method: CopyFromAddressToCharList()
+
+	CopyFromAddressToCharList()
+		Copies the Source address Chars to destination MfCharList instance
+	Parameters:
+		SourceAddress
+			Source address to copy chars from
+		CharList
+			Destination instance of MfCharList
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of Chars to copy
+	Throws:
+		Throws MfArgumentOutOfRangeException, MfException
+	Remarks:
+		Static method
+*/
+	CopyFromAddressToCharList(SourceAddress, CharList, destinationIndex, count) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+		
+		if (count <= 0)
+		{
+			return
+		}
+		if (destinationIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_MustBePositive", "destinationIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		try
+		{
+			MfMemStrView.CopyFromAddressToCharList(SourceAddress, CharList, destinationIndex, count)
+						
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+	}
+; End:CopyFromAddressToCharList ;}
+;{ 	CopyToCharList
+/*
+	Method: CopyToCharList()
+
+	CopyToCharList()
+		Copies the Source MfMemoryString Chars to destination MfCharList instance
+	Parameters:
+		sourceMfMemoryString
+			Source MfMemoryString instance of chars to copy
+		sourceIndex
+			The Start index withn the source to start the copy from
+		CharList
+			Destination instance of MfCharList
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of Chars to copy
+	Throws:
+		Throws MfArgumentOutOfRangeException, MfException, MfFormatException
+	Remarks:
+		Static method
+*/
+	CopyToCharList(sourceMfMemoryString, sourceIndex, CharList, destinationIndex, count) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+
+		if (count <= 0)
+		{
+			return
+		}
+		if(!MfObject.IsObjInstance(sourceMfMemoryString, MfMemoryString))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "MfMemoryString"), "sourceMfMemoryString")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (!(sourceMfMemoryString.m_Encoding = CharList.m_Encoding))
+		{
+			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_Encoding_MisMatch"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (destinationIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_MustBePositive", "destinationIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BytesPerChar := sourceMfMemoryString.m_BytesPerChar
+		try
+		{
+			if (sourceIndex <= sourceMfMemoryString.m_CharCount && (sourceIndex + count) <= sourceMfMemoryString.m_CharCount)
+			{
+				SourceAddress := sourceMfMemoryString.m_MemView[] + (sourceIndex * BytesPerChar)
+				MfMemStrView.CopyFromAddressToCharList(SourceAddress, CharList, destinationIndex, count)
+			}
+			else
+			{
+				ex :=  new MfArgumentOutOfRangeException("sourceIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		catch e
+		{
+			if (e.Source = A_ThisFunc)
+			{
+				throw e
+			}
+			else
+			{
+				ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+	}
+; 	End:CopyToCharList ;}
+;{ 	CopyFromIndex
+/*
+	Method: CopyFromIndex()
+
+	CopyFromIndex()
+		Copies the Source MfMemoryString Chars to destination MfMemoryString
+	Parameters:
+		sourceMfMemoryString
+			Source MfMemoryString instance of chars to copy
+		destinationMemView
+			Destination instance of MfMemoryString
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of chars to copy
+	Throws:
+		Throws MfArgumentOutOfRangeException, MfException
+	Remarks:
+		If destinationMemView.Pos is less then destinationIndex + count it is adjusted to the position of destinationIndex + count
+		Static Method
+*/
 	CopyFromIndex(sourceMfMemoryString, sourceIndex, destinationMfMemoryString, destinationIndex, count) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		count := MfInteger.GetValue(count)
@@ -584,6 +736,7 @@ class MfMemoryString extends MfObject
 			}
 		}
 	}
+; 	End:CopyFromIndex ;}
 ;{ 	Difference
 	/*
 	Method: Difference()
@@ -964,7 +1117,7 @@ class MfMemoryString extends MfObject
 		}
 
 		mStr := this._FromAny(obj)
-		if (IgnoreCase && Count <= -1)
+		if (IgnoreCase && Count < 0)
 		{
 			return this.m_MemView.InBuffer(mStr.m_MemView, startIndex)
 		}
@@ -1813,7 +1966,46 @@ class MfMemoryString extends MfObject
 		return this.m_MemView.ToByteList(startIndex, length, littleEndian)
 	}
 ; 	End:ToByteList ;}
+;{ 	ToCharList
+/*
+	Method: ToCharList()
 
+	ToCharList()
+		Gets a copy of the current instance as MfCharList
+	Parameters:
+		startIndex
+			Optional: The Char Index to start filling the return list with
+		length
+			Optional: The length of the retrun list
+		littleEndian
+			Optinal, Default is False.
+			If true then list is returned as Little Endian; Othrwise the list is returned as Big Endian
+	Returns:
+		Returns instance of MfCharList containing Numer Char valus
+	Throws:
+		Throws MfArgumentOutOfRangeException
+*/
+	ToCharList(startIndex=0, length=-1, littleEndian=false) {
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		length := MfInteger.GetValue(length, -1)
+		if ((StartIndex < 0) || (StartIndex >= this.m_CharCount))
+		{
+			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		If (length > 0)
+		{
+			If (length - startIndex > this.m_CharCount)
+			{
+				ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		return this.m_MemView.ToCharList(startIndex, length, littleEndian)
+	}
+; 	End:ToCharList ;}
 ;{ 	_SubString
 	; gets substring as string var of current instance
 	; see ToString()
@@ -2025,6 +2217,14 @@ class MfMemoryString extends MfObject
 				}
 				return retval
 			}
+			else if (MfObject.IsObjInstance(x, MfCharList))
+			{
+				retval := new MfMemoryString(0, 0, x.m_Encoding)
+				retval.m_MemView := ""
+				retval.m_MemView := MfMemStrView.FromCharList(x,,,x.m_LittleEndian)
+				retval.m_CharCount := x.GetCharCount()
+				return this._FromAnyStatic(retval, x.m_Encoding) ; do another _FromAny in case encoding is different
+			}
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
 				str := x.ToString()
@@ -2038,7 +2238,7 @@ class MfMemoryString extends MfObject
 			}
 			else if (x.__Class = "MfMemStrView")
 			{
-				retval := new MfMemoryString(1, x.m_FillBytes, x.m_Encoding)
+				retval := new MfMemoryString(0, x.m_FillBytes, x.m_Encoding)
 				retval.m_MemView := ""
 				retval.m_MemView := x
 				retval.m_CharCount := x.GetCharCount()
@@ -2076,7 +2276,6 @@ class MfMemoryString extends MfObject
 				}
 				return x
 			}
-
 			else if (MfObject.IsObjInstance(x, MfString))
 			{
 				retval := new MfMemoryString(x.Length, this.m_FillBytes, this.m_Encoding)
@@ -2085,6 +2284,14 @@ class MfMemoryString extends MfObject
 					retval.Append(x.Value)
 				}
 				return retval
+			}
+			else if (MfObject.IsObjInstance(x, MfCharList))
+			{
+				retval := new MfMemoryString(0, x.m_FillBytes, x.m_Encoding)
+				retval.m_MemView := ""
+				retval.m_MemView := MfMemStrView.FromCharList(x,,,x.m_LittleEndian)
+				retval.m_CharCount := x.GetCharCount()
+				return this._FromAny(retval) ; do another _FromAny in case encoding is different
 			}
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
@@ -2506,6 +2713,7 @@ class MfMemoryString extends MfObject
  *	CompareOrdinalSub()	Compares two sub values of instances of MfMemStrView as Ordinal, optionally ignoring case.
  *	Copy() Copies the Source MfMemStrView bytes instance to destination MfMemStrView
  *	CopyFromAddress() Copies the Source address bytes to destination MfMemStrView
+ *	CopyFromAddressToCharList() Copies the Source address bytes to destination MfCharList
  *	Diff() Gets the Difference between argument objA and argument objB argument with an included Max Distance.
  *	EndsWithFromPos() Checks to see if obj ends with the same char as this instance
  *	EqualsSubString() Compares two MfMemStrView objects to see if their subPositions are equal
@@ -2534,6 +2742,7 @@ class MfMemoryString extends MfObject
  *	OverWrite() Overwrites the bytes in this instance with the bytes in obj instance
  *	Reverse() Reverses the contentes of the currrent instance and returne it as a new instance
  *	ToBase64() Reads instanceof MfMemStrView and returns a new MfMemStrView as base64 equal UTF-8 Encoded
+ *	ToCharList() Gets a copy of the current instance as MfCharList
  *	ToString() Gets the value of this instance as string var
  *	TrimBufferToPos() Trims the current size to the current Pos
  *	TrimStart() Trims all whitespace char from start of current instance
@@ -2986,60 +3195,116 @@ class MfMemStrView extends MfMemBlkView
 			numB := NumGet(ptrB + 0, 0, sType)
 			if (numA != numB)
 			{
-				chrA := Chr(NumA)
-				chrB := Chr(NumB)
-				if (!(chrA = chrB))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := 0
-					break
+					if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+					{
+						num := 0
+						break
+					}
 				}
+				Else
+				{
+					chrA := Chr(NumA)
+					chrB := Chr(NumB)
+					if (!(chrA = chrB))
+					{
+						num := 0
+						break
+					}
+				}
+					
 			}
 			numA := NumGet(ptrA + BytesPerChar, 0, sType)
 			numB := NumGet(ptrB + BytesPerChar, 0, sType)
 			if (numA != numB)
 			{
-				chrA := Chr(NumA)
-				chrB := Chr(NumB)
-				if (!(chrA = chrB))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar
-					break
+					if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+					{
+						num := BytesPerChar
+						break
+					}
+				}
+				Else
+				{
+					chrA := Chr(NumA)
+					chrB := Chr(NumB)
+					if (!(chrA = chrB))
+					{
+						num := BytesPerChar
+						break
+					}
 				}
 			}
 			numA := NumGet(ptrA + (BytesPerChar * 2), 0, sType)
 			numB := NumGet(ptrB + (BytesPerChar * 2), 0, sType)
 			if (numA != numB)
 			{
-				chrA := Chr(NumA)
-				chrB := Chr(NumB)
-				if (!(chrA = chrB))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar * 2
-					break
+					if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+					{
+						num :=  BytesPerChar * 2
+						break
+					}
+				}
+				Else
+				{
+					chrA := Chr(NumA)
+					chrB := Chr(NumB)
+					if (!(chrA = chrB))
+					{
+						num :=  BytesPerChar * 2
+						break
+					}
 				}
 			}
 			numA := NumGet(ptrA + (BytesPerChar * 3), 0, sType)
 			numB := NumGet(ptrB + (BytesPerChar * 3), 0, sType)
 			if (numA != numB)
 			{
-				chrA := Chr(NumA)
-				chrB := Chr(NumB)
-				if (!(chrA = chrB))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar * 2
-					break
+					if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+					{
+						num :=  BytesPerChar * 3
+						break
+					}
+				}
+				Else
+				{
+					chrA := Chr(NumA)
+					chrB := Chr(NumB)
+					if (!(chrA = chrB))
+					{
+						num :=  BytesPerChar * 3
+						break
+					}
 				}
 			}
 			numA := NumGet(ptrA + (BytesPerChar * 4), 0, sType)
 			numB := NumGet(ptrB + (BytesPerChar * 4), 0, sType)
 			if (numA != numB)
 			{
-				chrA := Chr(NumA)
-				chrB := Chr(NumB)
-				if (!(chrA = chrB))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					num := BytesPerChar * 4
-					break
+					if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+					{
+						num :=  BytesPerChar * 4
+						break
+					}
+				}
+				Else
+				{
+					chrA := Chr(NumA)
+					chrB := Chr(NumB)
+					if (!(chrA = chrB))
+					{
+						num :=  BytesPerChar * 4
+						break
+					}
 				}
 			}
 			ptrA += BytesPerChar * 5
@@ -3052,14 +3317,61 @@ class MfMemStrView extends MfMemBlkView
 			ptrB += num
 			numA := NumGet(ptrA + 0, 0, sType)
 			numB := NumGet(ptrB + 0, 0, sType)
-			result := numA - numB
+			If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
+			{
+				if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+				{
+					result := 0
+				}
+				Else
+				{
+					result := numA - numB
+				}
+			}
+			else
+			{
+				chrA := Chr(NumA)
+				chrB := Chr(NumB)
+				if (chrA = chrB)
+				{
+					result := 0
+				}
+				else
+				{
+					result := numA - numB
+				}
+			}
 			if (result != 0)
 			{
 				return result
 			}
 			numA := NumGet(ptrA + BytesPerChar, 0, sType)
 			numB := NumGet(ptrB + BytesPerChar, 0, sType)
-			return numA - numB
+			If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
+			{
+				if (MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+				{
+					result := 0
+				}
+				Else
+				{
+					result := numA - numB
+				}
+			}
+			else
+			{
+				chrA := Chr(NumA)
+				chrB := Chr(NumB)
+				if (chrA = chrB)
+				{
+					result := 0
+				}
+				else
+				{
+					result := numA - numB
+				}
+			}
+			return result
 		}
 		else
 		{
@@ -3069,11 +3381,21 @@ class MfMemStrView extends MfMemBlkView
 				numB := NumGet(ptrB + 0, 0, sType)
 				if (numA != numB)
 				{
-					chrA := Chr(NumA)
-					chrB := Chr(NumB)
-					if (!(chrA = chrB))
+					If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 					{
-						break
+						if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+						{
+							break
+						}
+					}
+					else
+					{
+						chrA := Chr(NumA)
+						chrB := Chr(NumB)
+						if (!(chrA = chrB))
+						{
+							break
+						}
 					}
 				}
 				ptrA += BytesPerChar
@@ -3089,11 +3411,21 @@ class MfMemStrView extends MfMemBlkView
 			result := 0
 			if (numA != numB)
 			{
-				chrA := Chr(NumA)
-				chrB := Chr(NumB)
-				if (!(chrA = chrB))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					result := numA - numB
+					if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+					{
+						result := numA - numB
+					}
+				}
+				else
+				{
+					chrA := Chr(NumA)
+					chrB := Chr(NumB)
+					if (!(chrA = chrB))
+					{
+						result := numA - numB
+					}
 				}
 			}
 			if (result != 0)
@@ -3104,11 +3436,21 @@ class MfMemStrView extends MfMemBlkView
 			numB := NumGet(ptrB + BytesPerChar, 0, sType)
 			if (numA != numB)
 			{
-				chrA := Chr(NumA)
-				chrB := Chr(NumB)
-				if (!(chrA = chrB))
+				If (MfMemStrView._IsLatin1(numA) && MfMemStrView._IsLatin1(numB))
 				{
-					result := numA - numB
+					if (!MfMemStrView._IsEqualLatin1IgnoreCase(numA, numB))
+					{
+						result := numA - numB
+					}
+				}
+				else
+				{
+					chrA := Chr(NumA)
+					chrB := Chr(NumB)
+					if (!(chrA = chrB))
+					{
+						result := numA - numB
+					}
 				}
 			}
 			return result
@@ -4083,6 +4425,142 @@ class MfMemStrView extends MfMemBlkView
 		return mv
 	}
 ; 	End:FromByteList ;}
+;{ 	FromCharList
+/*
+	Method: FromCharList()
+
+	FromCharList()
+		Converts MfCharList into MfMemStrView instance
+	Parameters:
+		chars
+			instance of MfCharList containing byte values to convert
+		startIndex
+			The starting index in the MfCharList to start the conversion
+			Default value is 0
+		length
+			the length in bytes to convert.
+			Default value is -1
+			When length is less then 0 then all chars past startIndex are included
+		littleEndian
+			Default value is false.
+			If true then byte order is considered to be reversed and the chars are written into
+			memory from last byte to first after considering startIndex and length; Oterwise chars
+			are written from start to end.
+	Returns:
+		Returns instance of MfMemStrView
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException
+	Remarks:
+		Both startIndex and length operate the same no mater the state of littleEndian.
+		Static Method
+*/
+	FromCharList(chars, startIndex=0, length=-1, littleEndian=false) {
+		if(MfObject.IsObjInstance(chars, MfCharList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "chars"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(chars.m_Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "chars"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (length = 0)
+		{
+			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		aLength := chars.m_Count
+		
+		if (length < 0)
+		{
+			length := (aLength - startIndex) + 1
+		}
+		if ((startIndex + length) - 1 > aLength)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		BytesPerChar := chars.m_BytesPerChar
+		encoding := chars.m_Encoding
+		sType := chars.m_sType
+		
+		mv := new MfMemStrView((length + BytesPerChar) * BytesPerChar, 0, encoding)
+		addr := mv[]
+		objArray := chars.m_InnerList
+		if (littleEndian)
+		{
+			i := 1
+			j := chars.m_Count
+			LastZeroPos := 0
+			FouncChar := false
+			while (i <= length)
+			{
+				num := objArray[j]
+				idx := (i - 1) * BytesPerChar
+				NumPut(num, addr + 0, idx, sType)
+				if (num = 0)
+				{
+					if (!FouncChar)
+					{
+						LastZeroPos := i - 1
+					}
+				}
+				else
+				{
+					FouncChar := true
+				}
+				i++
+				j--
+			}
+			LastZeroPos := LastZeroPos * BytesPerChar
+			if (LastZeroPos < mv.Size)
+			{
+				mv.Pos := LastZeroPos
+			}
+			else
+			{
+				mv.Pos := mv.Size
+			}
+		}
+		else
+		{
+			i := 1
+			LastCharPos := 0
+			while (i <= length)
+			{
+				num := objArray[i]
+				idx := (i - 1) * BytesPerChar
+				NumPut(num, addr + 0, idx , sType)
+				if (num > 0)
+				{
+					LastCharPos := i
+				}
+				i++
+			}
+			LastCharPos := LastCharPos * BytesPerChar
+			if (LastCharPos < mv.Size)
+			{
+				mv.Pos := LastCharPos + BytesPerChar
+			}
+			else
+			{
+				mv.Pos := mv.Size
+			}
+		}
+		return mv
+	}
+; 	End:FromCharList ;}
 ;{ 	FromBase64
 /*
 	Method: FromBase64()
@@ -4802,14 +5280,10 @@ class MfMemStrView extends MfMemBlkView
 		
 		i := StartIndex
 		MatchCount := 0
-		iCount = 0
-		while ( i < maxIndex)
+		maxCount := MfMath.Min(StartIndex + Count, maxIndex + 1)
+		while ( i < maxCount)
 		{
-			iCount++
-			if (iCount > Count)
-			{
-				return -1
-			}
+		
 			Num1 := NumGet(ptr + 0, i * BytesPerChar, sType)
 			if (MatchCount = 0)
 			{
@@ -4903,7 +5377,7 @@ class MfMemStrView extends MfMemBlkView
 			MatchCount := 0
 			i++
 		}
-		if (MatchCount > 0)
+		if (MatchCount = needleSize)
 		{
 			return ++i - MatchCount
 		}
@@ -5496,6 +5970,80 @@ class MfMemStrView extends MfMemBlkView
 		throw ex
 	}
 ; 	End:CopyFromAddress ;}
+;{ 	CopyFromAddressToCharList
+/*
+	Method: CopyFromAddressToCharList()
+
+	CopyFromAddressToCharList()
+		Copies the Source address bytes to destination MfCharList
+	Parameters:
+		SourceAddress
+			Source memory address of bytes to copy
+		CharList
+			Destination instance of MfCharList
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of bytes to copy
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException, MfFormatException
+	Remarks:
+		If CharList.Count is less then destinationIndex + count it is zero filled before copying from memory to the position of destinationIndex + count
+		Static Method
+*/
+	CopyFromAddressToCharList(SourceAddress, CharList, destinationIndex, count) {
+		if (MfNull.IsNull(SourceAddress) || Mfunc.IsInteger(SourceAddress) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Address", "SourceAddress"), "SourceAddress")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (!MfObject.IsObjInstance(CharList, MfCharList))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "CharList"), "CharList")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		destinationIndex := MfInteger.GetValue(destinationIndex)
+		count := MfInteger.GetValue(count)
+		if (count <= 0)
+		{
+			return
+		}
+		BytesPerChar := CharList.m_BytesPerChar
+		sType := CharList.m_sType
+		NewSize := destinationIndex + count
+		
+		if (CharList.m_Count < NewSize)
+		{
+			
+			while (CharList.m_Count < NewSize)
+			{
+				CharList._Add(0)
+				i++
+			}
+		}
+		
+		if (destinationIndex <= CharList.m_Count && destinationIndex + count <= CharList.m_Count)
+		{
+			Ptr := SourceAddress
+			a := CharList.m_InnerList
+			i := 0
+			destinationIndex++ ; move to one base array
+			While (i < count)
+			{
+				num := NumGet(Ptr + 0, i * BytesPerChar, sType)
+				a[destinationIndex + i] := num
+				i++
+			}
+			
+			return
+		}
+		ex := new MfArgumentOutOfRangeException("destinationIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:CopyFromAddressToCharList ;}
 ;{ 	MoveBytesRight
 /*
 	Method: MoveBytesRight()
@@ -6053,6 +6601,82 @@ class MfMemStrView extends MfMemBlkView
 		return buffer
 	}
 ; 	End:ToBase64 ;}
+;{ 	ToCharList
+/*
+	Method: ToCharList()
+
+	ToCharList()
+		Gets a copy of the current instance as MfCharList
+	Parameters:
+		startIndex
+			Optional: The Char Index to start filling the return list with
+		length
+			Optional: The length of the retrun list
+		littleEndian
+			Optinal, Default is False.
+			If true then list is returned as Little Endian; Othrwise the list is returned as Big Endian
+	Returns:
+		Returns instance of MfCharList containing Numer Char valus
+	Throws:
+		Throws MfArgumentOutOfRangeException
+*/
+	ToCharList(startIndex=0, length=-1, littleEndian=false)	{
+		BytesPerChar := this.m_BytesPerChar
+		startIndex := MfInteger.GetValue(startIndex, 0) * BytesPerChar
+		length := MfInteger.GetValue(length, -1)
+		littleEndian := mfbool.GetValue(littleEndian, false)
+		lst := new MfCharList(, this.m_Encoding)
+		if (this.Size = 0)
+		{
+			return lst
+		}
+
+		if ((StartIndex < 0) || (StartIndex >= this.Size))
+		{
+			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Length = 0)
+		{
+			return lst
+		}
+		if (Length < 0)
+		{
+			length := (this.Pos - BytesPerChar  - startIndex) // BytesPerChar
+		}
+		length := length * BytesPerChar
+		if (((length) + startIndex) >= this.Size)
+		{
+		 	ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexCount"))
+		 	ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ptr := this[]
+		sType := lst.m_sType
+		if (littleEndian)
+		{
+			i := startIndex + ((length - BytesPerChar) * BytesPerChar)
+			j := 1
+			While (j <= length)
+			{
+				lst._Add(NumGet(ptr + 0, i, sType))
+				i -= BytesPerChar
+				j += BytesPerChar
+			}
+		}
+		else
+		{
+			i := startIndex
+			While (i < length)
+			{
+				lst._Add(NumGet(ptr + 0, i, sType))
+				i += BytesPerChar
+			}
+		}
+		return lst
+	}
+; 	End:ToCharList ;}
 ;{ 	ToString
 /*
 	Method: ToString()

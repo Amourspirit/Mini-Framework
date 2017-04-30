@@ -331,7 +331,7 @@ Class MfException extends MfObject
 		
 		
 		if ((!A_IsCompiled) && (Mfunc.IsNumeric(this.m_Line)) && (this.m_Line > 0)) {
-			str .= MfString.Format("{0}{1}Line:{2}",MfEnvironment.Instance.NewLine, InDent, this.m_Line)
+			str .= MfString.Format("{0}{1}Line:{2:i}",MfEnvironment.Instance.NewLine, InDent, this.m_Line)
 		}
 		if ((!A_IsCompiled) && (!MfString.IsNullOrEmpty(this.m_File))) {
 			str .= MfString.Format("{0}{1}File:{2}", MfEnvironment.Instance.NewLine, InDent, this.m_File)
