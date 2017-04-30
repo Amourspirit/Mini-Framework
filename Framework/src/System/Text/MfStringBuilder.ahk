@@ -77,7 +77,7 @@ class MfStringBuilder extends MfObject
 		{
 			if (pArgs.Data.Contains("_nullSb"))
 			{
-				if (pArgs.Data.Contains("_InternalOnly") && pArgs.Data["_InternalOnly"] = true)
+				if (pArgs.Data.Contains("_InternalOnly") && pArgs.Data.Item["_InternalOnly"] = true)
 				{
 					this._newIntIntSb(pArgs.Item[0], pArgs.Item[1])
 					IsInit := true
@@ -680,10 +680,20 @@ class MfStringBuilder extends MfObject
 		Throws MfArgumentOutOfRangeException if index is out of range
 		Throws MfException if error compleating the insert
 */
-	Insert(index, obj, count=1) {
+	Insert(args*) {
+		pArgs := this._InsertParams(A_ThisFunc, args*)
+		pList := pArgs.ToStringList()
+		cnt := pArgs.Count
+		if (pArgs.Count < 2)
+		{
+			e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw e
+		}
+		index := 0
 		try
 		{
-			index := MfInteger.GetValue(index)
+			index := MfInteger.GetValue(pArgs.Item[0])
 		}
 		catch e
 		{
@@ -698,18 +708,125 @@ class MfStringBuilder extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		count := MfInteger.GetValue(count, 1)
-		try
+		if (cnt = 2)
 		{
-			this._InsertObjInt(index, obj, count)
+			; only valid choice is MfChar and Repeat count
+			if (pList.Item[1].Value = "MfCharList")
+			{
+				try
+				{
+					this._InsertObjInt(index, pArgs.Item[1].ToString(), 1)
+					return this
+				}
+				catch e
+				{
+					ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			else
+			{
+				try
+				{
+					this._InsertObjInt(index, pArgs.Item[1], 1)
+					return this
+				}
+				catch e
+				{
+					ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
 		}
-		catch e
+		if (cnt = 3)
 		{
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			count := 0
+			try
+			{
+				count := MfInteger.GetValue(pArgs.Item[2])
+				return this
+			}
+			catch e
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "count")
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			
+			try
+			{
+				this._InsertObjInt(index, pArgs.Item[1], count)
+				return this
+			}
+			catch e
+			{
+				ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
 		}
-		return this
+		else if (cnt = 4)
+		{
+			; index, MfCharList, startIndex, CharCount
+			if (pList.Item[1].Value = "MfCharList")
+			{
+				lst := pArgs.Item[1]
+				startIndex := 0
+				try
+				{
+					startIndex := MfInteger.GetValue(pArgs.Item[2])
+				}
+				catch e
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "startIndex")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				CharCount := 0
+				try
+				{
+					CharCount := MfInteger.GetValue(pArgs.Item[3])
+				}
+				catch e
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "CharCount")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				if (lst.Count = 0)
+				{
+					if (startIndex = 0 && charCount = 0)
+					{
+						return this
+					}
+					ex := new MfArgumentNullException("value"fEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				if (startIndex < 0)
+				{
+					ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndex"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				if (startIndex > lst.Count - charCount)
+				{
+					ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndex"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				if (charCount > 0)
+				{
+					this._InsertObjInt(index, lst.ToString(false, startIndex, charCount), 1)
+				}
+				return this
+			}
+		}
+		e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw e
 	}
 ; 	End:Insert ;}
 ;{ 	_InsertStrInt
@@ -721,33 +838,31 @@ class MfStringBuilder extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		value := MfMemoryString.FromAny(obj, this.m_Encoding)
+		mStr := MfMemoryString.FromAny(obj, this.m_Encoding)
 		
 		
-		if (value.Length = 0 || count = 0)
+		if (mStr.Length = 0 || count = 0)
 		{
 			return this
 		}
-		num := value.Length * count
-		if (num > this.MaxCapacity - this.Length)
+		insertingChars := mStr.Length * count
+		if (insertingChars > this.MaxCapacity - this.Length)
 		{
 			ex := new MfOutOfMemoryException()
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		stringBuilder := ""
-		num2 := 0
+		chunk := ""
+		indexInChunk := 0
 		; index in the insert location within the entire instance
-		; num is the length of the string to insert times the count
-		this._MakeRoom(index, num, stringBuilder, num2, false)
-	
+		; insertingChars is the length of the string to insert times the count
+		this._MakeRoom(index, insertingChars, chunk, indexInChunk, false)
 		
 		while (count > 0)
 		{
-			this._ReplaceInPlaceAtChunk(stringBuilder, num2, value, value.m_CharCount)
+			this._ReplaceInPlaceAtChunk(chunk, indexInChunk, mStr, mStr.m_CharCount)
 			count--
 		}
-		
 	}
 ; 	End:_InsertStrInt ;}
 	Replace(oldValue, newValue, startIndex=0, count=-1) {
@@ -1290,7 +1405,7 @@ class MfStringBuilder extends MfObject
 */
 	_MakeRoom(index, count, byRef chunk, ByRef indexInChunk, doneMoveFollowingChars) {
 		; index in the insert location within the entire instance
-		; num is the length of the string to insert times the count
+		; copyCount1 is the length of the string to insert times the count
 		if (count + this.Length > this.m_MaxCapacity)
 		{
 			ex := new MfArgumentOutOfRangeException("requiredLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
@@ -1313,6 +1428,7 @@ class MfStringBuilder extends MfObject
 			
 	
 			chunk.m_ChunkLength += count
+			chunk.m_ChunkChars.SetPosFromCharIndex(chunk.m_ChunkLength)
 			return
 		}
 		Capacity := MfMath.Max(count, MfStringBuilder.DefaultCapacity)
@@ -1328,35 +1444,38 @@ class MfStringBuilder extends MfObject
 			Params.Add(chunk.m_ChunkPrevious)
 		}
 		params.Data.Add("_InternalOnly", true)
-		;stringBuilder := new MfStringBuilder(Capacity, chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
-		stringBuilder := new MfStringBuilder(Params)
-		; the new stringbuilder will at least the capacity of the string to insert times then number of number of repeats to insert
-		stringBuilder.m_ChunkLength := count
-		num := MfMath.Min(count, indexInChunk)
+		;newChunk := new MfStringBuilder(Capacity, chunk.m_MaxCapacity, chunk.m_ChunkPrevious)
+		newChunk := new MfStringBuilder(Params)
+		; the new newChunk will at least the capacity of the string to insert times then number of number of repeats to insert
+		newChunk.m_ChunkLength := count
+		; Copy the head of the buffer to the  new buffer. 
+		copyCount1 := MfMath.Min(count, indexInChunk)
 		
-		if (num > 0)
+		if (copyCount1 > 0)
 		{
 			ptr := chunk.m_ChunkChars.BufferPtr
 			BytesPerChar := MfStringBuilder.m_BytesPerChar
-			MfMemoryString.CopyFromAddress(ptr, stringBuilder.m_ChunkChars, 0, num)
-			num2 := indexInChunk - num
-			if (num2 >= 0)
+			MfMemoryString.CopyFromAddress(ptr, newChunk.m_ChunkChars, 0, copyCount1)
+			
+			;Slide characters in the current buffer over to make room. 
+			copyCount2 := indexInChunk - copyCount1
+			if (copyCount2 >= 0)
 			{	
 				;ptr := chunk.m_ChunkChars.BufferPtr
-				MfMemoryString.CopyFromAddress(ptr + (num * BytesPerChar), chunk.m_ChunkChars, 0, num2)
+				MfMemoryString.CopyFromAddress(ptr + (copyCount1 * BytesPerChar), chunk.m_ChunkChars, 0, copyCount2)
 				;chunk.m_ChunkLength := chunk.m_ChunkChars.Length
-				indexInChunk := num2
+				indexInChunk := copyCount2
 			}
 		}
-		stringBuilder.m_ChunkChars.SetPosFromCharIndex(stringBuilder.m_ChunkLength)
-		;stringBuilder.m_ChunkLength := stringBuilder.m_ChunkChars.Length
-		; chunk previous string builder will now become the current stringBuilder
-		chunk.m_ChunkPrevious := stringBuilder
+		newChunk.m_ChunkChars.SetPosFromCharIndex(newChunk.m_ChunkLength)
+		;newChunk.m_ChunkLength := newChunk.m_ChunkChars.Length
+		; chunk previous string builder will now become the current newChunk
+		chunk.m_ChunkPrevious := newChunk
 		chunk.m_ChunkOffset += count
-		if (num < count)
+		if (copyCount1 < count)
 		{
-			chunk := stringBuilder
-			indexInChunk := num
+			chunk := newChunk
+			indexInChunk := copyCount1
 		}
 	}
 ; 	End:_MakeRoom ;}
@@ -1437,9 +1556,7 @@ class MfStringBuilder extends MfObject
 				{
 					break
 				}
-				;value += lengthToCopy
 				ptr += (lengthToCopy * BytesPerChar)
-				
 			}
 		}
 	}
@@ -1591,10 +1708,41 @@ class MfStringBuilder extends MfObject
 		return base.Is(ObjType)
 	}
 ; 	End:Is ;}
-	ToString() {
-		if (this.Length = 0)
+	ToString(startIndex=0, length=-1) {
+		currentLength := this.Length
+		if (currentLength = 0)
 		{
 			return ""
+		}
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		length := MfInteger.GetValue(length, -1)
+		
+		if (length < 0)
+		{
+			length := currentLength
+		}
+		if (startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (startIndex > currentLength)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndexLargerThanLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (startIndex > (currentLength - length))
+		{
+			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		DoSub := false
+		if (startIndex > 0 || length < currentLength)
+		{
+			DoSub := true
 		}
 		stringBuilder := this
 		OutOfRange := true
@@ -1605,40 +1753,55 @@ class MfStringBuilder extends MfObject
 			;~ iLen += (sb.m_ChunkChars.Length + this.m_BytesPerChar) * this.m_BytesPerChar
 			;~ sb := sb.m_ChunkPrevious
 		;~ }
-		iLen := (this.Length + 1)
-		ms := new MfMemoryString(iLen,, this.m_Encoding)
-		stringBuilder := this
-		loop
+		ms := ""
+
+		HasOtherchunk := false
+		if (MfNull.IsNull(this.m_ChunkPrevious))
 		{
-			if (stringBuilder.m_ChunkLength > 0)
+			ms := this.m_ChunkChars
+		}
+		else
+		{
+			HasOtherchunk := true
+			iLen := (currentLength + 1)
+			ms := new MfMemoryString(iLen,, this.m_Encoding)
+		}
+		if (HasOtherchunk)
+		{
+			stringBuilder := this
+			loop
 			{
-				chunkChars := stringBuilder.m_ChunkChars
-				chunkOffset := stringBuilder.m_ChunkOffset
-				chunkLength := stringBuilder.m_ChunkLength
-				;OutputDebug % chunkChars.ToString()
-				if (chunkLength + chunkOffset > ms.CharCapacity || chunkLength > chunkChars.Length)
+				if (stringBuilder.m_ChunkLength > 0)
 				{
+					chunkChars := stringBuilder.m_ChunkChars
+					chunkOffset := stringBuilder.m_ChunkOffset
+					chunkLength := stringBuilder.m_ChunkLength
+					;OutputDebug % chunkChars.ToString()
+					if (chunkLength + chunkOffset > ms.CharCapacity || chunkLength > chunkChars.Length)
+					{
+						break
+					}
+					ms.OverWrite(stringBuilder.m_ChunkChars, chunkOffset, chunkLength)
+				}
+				stringBuilder := stringBuilder.m_ChunkPrevious
+				if (MfNull.IsNull(stringBuilder))
+				{
+					OutOfRange := false
 					break
 				}
-				ms.OverWrite(stringBuilder.m_ChunkChars, chunkOffset, chunkLength)
 			}
-			stringBuilder := stringBuilder.m_ChunkPrevious
-			if (MfNull.IsNull(stringBuilder))
+			if (OutOfRange)
 			{
-				OutOfRange := false
-				break
+				ms := ""
+				ex := new MfArgumentOutOfRangeException("chunkLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-		}
-		if (OutOfRange)
-		{
-			ms := ""
-			ex := new MfArgumentOutOfRangeException("chunkLength", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			ms.m_MemView.Pos := (currentLength + 1) * this.m_BytesPerChar
+			ms.m_CharCount := currentLength
 		}
 		
-		ms.m_MemView.Pos := (this.Length + 1) * this.m_BytesPerChar
-		ms.m_CharCount := this.Length
+
 		; if flag has been set that this instance contains null char ( unicode 0 ) values
 		; or any Latin1 (char 0 to 255 ) not printing char
 		; in the string then we will get a new MfMemoryString that ignores all non-printing
@@ -1660,8 +1823,20 @@ class MfStringBuilder extends MfObject
 
 		if (this.m_HasNullChar = true)
 		{
-			ms2 := ms.GetStringIgnoreNull()
+			
+			if (DoSub)
+			{
+				ms2 := ms.SubString(startIndex, Length).GetStringIgnoreNull()
+			}
+			else
+			{
+				ms2 := ms.GetStringIgnoreNull()
+			}
 			return ms2.ToString()
+		}
+		if (DoSub)
+		{
+			return ms.ToString(startIndex, Length)
 		}
 		return ms.ToString()
 	}
@@ -2133,6 +2308,7 @@ class MfStringBuilder extends MfObject
 		return p
 	}
 ; End:_ConstructorParams ;}
+;{ 	_AppendParams
 	_AppendParams(MethodName, args*) {
 
 		p := Null
@@ -2203,6 +2379,74 @@ class MfStringBuilder extends MfObject
 
 						}
 						if (i = 3)
+						{
+							p.AddInteger(arg)
+						}
+					}
+				}
+				catch e
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				i++
+			}
+			
+		}
+		;return new MfParams()
+		return p
+	}
+; 	End:_AppendParams ;}
+	_InsertParams(MethodName, args*) {
+
+		p := Null
+		cnt := MfParams.GetArgCount(args*)
+
+	
+		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
+		{
+			p := args[1] ; arg 1 is a MfParams object so we will use it
+			; can be up to five parameters
+			; Two parameters is not a possibility
+			if (p.Count > 4)
+			{
+				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
+				e.SetProp(A_LineFile, A_LineNumber, MethodName)
+				throw e
+			}
+		}
+		else
+		{
+
+			p := new MfParams()
+			p.AllowEmptyString := false ; no strings for parameters in this case
+			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
+			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
+			if (cnt > 4)
+			{
+				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
+				e.SetProp(A_LineFile, A_LineNumber, MethodName)
+				throw e
+			}
+			
+			i := 1
+			while i <= cnt
+			{
+				arg := args[i]
+				try
+				{
+					if (IsObject(arg))
+					{
+						p.Add(arg)
+					} 
+					else
+					{
+						if (i = 2)
+						{
+							p.AddString(arg)			
+						}
+						else 
 						{
 							p.AddInteger(arg)
 						}

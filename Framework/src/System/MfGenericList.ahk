@@ -25,8 +25,6 @@
 class MfGenericList extends MfListBase
 {
 ;{ Class Members
-	m_InnerList			:= Null
-	m_Enum				:= Null
 	m_Type				:= Null
 ; End:Class Members ;}
 ;{ Constructor
@@ -64,10 +62,7 @@ class MfGenericList extends MfListBase
 		} else {
 			this.m_Type := genericType.GetType()
 		}
-		
-		this.m_InnerList := []
-		this.m_InnerList.Count := 0
-		this.m_Enum := Null
+	
 	}
 ; End:Constructor ;}
 ;{ Methods
@@ -91,58 +86,14 @@ class MfGenericList extends MfListBase
 		Throws MfNotSupportedException if obj is not correct type for this instance.
 */
 	Add(obj) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
 		if (!MfObject.IsObjInstance(obj, this.m_Type)) {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_NonAhkType", this.m_Type.TypeName))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		_newCount := this.m_InnerList.Count + 1
-
-		this.m_InnerList[_newCount] := obj
-		this.m_InnerList.Count := _newCount
-		retval := _newCount - 1
-		return retval
+		return base.Add(obj)
 	}
 ;	End:Add(value) ;}
-;{ 	Clear()				- Overrides - MfListBase
-/*!
-	Method: Clear()
-		Overrides MfListBase.Clear()
-	Clear()
-		Removes all objects from the MfGenericList instance.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-		Throws MfNotSupportedException if MfList is read-only or Fixed size
-*/
-	Clear() {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		this.m_InnerList := Null
-		this.m_InnerList := []
-		this.m_InnerList.Count := 0
-		this.m_Enum := Null
-	}
-;	End:Clear() ;}
 ;{ 	Contains()			- Overrides - MfListBase
 /*!
 	Method: Contains()
@@ -187,49 +138,6 @@ class MfGenericList extends MfListBase
 	}
 ;	End:Contains(obj) ;}
 ; insert this snipit inside the body of a list based class
-;{ 		_NewEnum
-/*
-	Method: _NewEnum()
-		Overrides MfEnumerableBase._NewEnum()
-	_NewEnum()
-		Returns a new enumerator to enumerate this object's key-value pairs.
-		This method is usually not called directly, but by the for-loop or by GetEnumerator()
-*/
-	_NewEnum() {
-        return new MfGenericList.Enumerator(this)
-    }
-; 		End:_NewEnum ;}
-;{ 		class Enumerator
-	; internal class
-    class Enumerator
-	{
-		m_Parent := Null
-		m_KeyEnum := Null
-		m_index := 0
-		m_count := 0
-        __new(ParentClass) {
-            this.m_Parent := ParentClass
-			this.m_count := this.m_Parent.Count
-        }
-        
-       Next(ByRef key, ByRef value)
-	   {
-		
-			if (this.m_index < this.m_count) {
-				key := this.m_index
-				value := this.m_Parent.Item[key]
-			}
-			this.m_index++
-			if (this.m_index > (this.m_count)) {
-				return 0
-			} else {
-				return true
-			}
-        }
-		
-		
-    }
-; 		End:class Enumerator ;}
 ;{ 	IndexOf()			- Overrides - MfListBase
 /*
 	Method: IndexOf()
@@ -307,37 +215,13 @@ class MfGenericList extends MfListBase
 */
 	Insert(index, obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
 		if (!MfObject.IsObjInstance(obj, this.m_Type)) {
 			msg := MfString.Format(MfEnvironment.Instance.GetResourceString("NotSupportedException_NonAhkType"), this.m_Type.TypeName)
 			ex := new MfNotSupportedException(msg)
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		_index := MfInteger.GetValue(index)
-		if ((_index < 0) || (_index > this.m_InnerList.Count))
-		{
-			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		If (_index = this.m_InnerList.Count)
-		{
-			this.Add(obj)
-			return
-		}
-		i := _index + 1 ; step up to one based index for AutoHotkey array
-		this.m_InnerList.InsertAt(i, obj)
-		this.m_InnerList.Count ++
+		base.Insert(index, obj)
 	}
 ;	End:Insert(index, obj) ;}
 ;{ 	Remove()			- Overrides - MfListBase
@@ -392,86 +276,9 @@ class MfGenericList extends MfListBase
 		return this.RemoveAt(index)
 	}
 ; 	End:Remove(obj) ;}
-;{ 	RemoveAt()			- Overrides - MfListBase
-/*!
-	Method: RemoveAt()
-		Overrides MfListBase.RemoveAt()
-	RemoveAt(index)
-		Removes the MfGenericList item at the specified index.
-	Parameters
-		index
-			The zero-based index of the item to remove.
-			Can be instance of MfInteger or var integer.
-	Returns
-		On Success returns the Object or var that was removed at index; Otherwise returns null.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-		Throws MfNotSupportedException if MfGenericList is read-only or Fixed size
-		Throws MfNotSupportedException if obj is not correct type for this instance.
-		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is equal to or greater than Count
-		Throws MfArgumentException if index is not a valid MfInteger instance or valid var Integer
-	Remarks
-		This method is not overridable.
-		In MfGenericList the elements that follow the removed element move up to occupy the vacated spot.
-		This method is an O(n) operation, where n is Count.
-*/
-	RemoveAt(index) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		
-		_index := MfInteger.GetValue(index)
-		if ((_index < 0) || (_index >= this.m_InnerList.Count)) {
-			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		i := _index + 1 ; step up to one based index for AutoHotkey array
-		vRemoved := this.m_InnerList.RemoveAt(i)
-		if (vRemoved) {
-			this.m_InnerList.Count --
-		} else {
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_FailedToRemove"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		return vRemoved
-	}
-;	End:RemoveAt(int) ;}
+
 ; End:Methods ;}
 ;{ Properties
-;{	Count
-/*
-	Property: Count [get]
-		Overrides MfListBase.Count
-		Gets a value indicating count of objects in the current MfGenericList as an Integer
-	Value:
-		Var Integer
-	Gets:
-		Gets the count of elements in the MfGenericList as var integer.
-	Remarks:
-		Read-only property.
-*/
-	Count[]
-	{
-		get {
-			return this.m_InnerList.Count
-		}
-		set {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			Throw ex
-		}
-	}
-;	End:Count ;}
 
 ;{	ListType
 /*
@@ -516,14 +323,7 @@ class MfGenericList extends MfListBase
 	Item[index]
 	{
 		get {
-			_index := MfInteger.GetValue(Index)
-			if (_index < 0 || _index >= this.Count) {
-				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			_index ++ ; increase value for one based array
-			return this.m_InnerList[_index]
+			return base.Item[index]
 		}
 		set {
 			if (!MfObject.IsObjInstance(value, this.m_Type)) {
@@ -531,15 +331,7 @@ class MfGenericList extends MfListBase
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			_index := MfInteger.GetValue(Index)
-			if (_index < 0 || _index >= this.Count) {
-				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			_index ++ ; increase value for one based array
-			this.m_InnerList[_index] := value
-			return this.m_InnerList[_index]
+			base.Item[Index] := value
 		}
 	}
 ;	End:Item ;}

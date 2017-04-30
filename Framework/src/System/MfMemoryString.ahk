@@ -1977,15 +1977,12 @@ class MfMemoryString extends MfObject
 			Optional: The Char Index to start filling the return list with
 		length
 			Optional: The length of the retrun list
-		littleEndian
-			Optinal, Default is False.
-			If true then list is returned as Little Endian; Othrwise the list is returned as Big Endian
 	Returns:
 		Returns instance of MfCharList containing Numer Char valus
 	Throws:
 		Throws MfArgumentOutOfRangeException
 */
-	ToCharList(startIndex=0, length=-1, littleEndian=false) {
+	ToCharList(startIndex=0, length=-1) {
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		length := MfInteger.GetValue(length, -1)
 		if ((StartIndex < 0) || (StartIndex >= this.m_CharCount))
@@ -2003,7 +2000,7 @@ class MfMemoryString extends MfObject
 				throw ex
 			}
 		}
-		return this.m_MemView.ToCharList(startIndex, length, littleEndian)
+		return this.m_MemView.ToCharList(startIndex, length)
 	}
 ; 	End:ToCharList ;}
 ;{ 	_SubString
@@ -2221,7 +2218,7 @@ class MfMemoryString extends MfObject
 			{
 				retval := new MfMemoryString(0, 0, x.m_Encoding)
 				retval.m_MemView := ""
-				retval.m_MemView := MfMemStrView.FromCharList(x,,,x.m_LittleEndian)
+				retval.m_MemView := MfMemStrView.FromCharList(x)
 				retval.m_CharCount := x.GetCharCount()
 				return this._FromAnyStatic(retval, x.m_Encoding) ; do another _FromAny in case encoding is different
 			}
@@ -2289,7 +2286,7 @@ class MfMemoryString extends MfObject
 			{
 				retval := new MfMemoryString(0, x.m_FillBytes, x.m_Encoding)
 				retval.m_MemView := ""
-				retval.m_MemView := MfMemStrView.FromCharList(x,,,x.m_LittleEndian)
+				retval.m_MemView := MfMemStrView.FromCharList(x)
 				retval.m_CharCount := x.GetCharCount()
 				return this._FromAny(retval) ; do another _FromAny in case encoding is different
 			}
@@ -4441,20 +4438,14 @@ class MfMemStrView extends MfMemBlkView
 			the length in bytes to convert.
 			Default value is -1
 			When length is less then 0 then all chars past startIndex are included
-		littleEndian
-			Default value is false.
-			If true then byte order is considered to be reversed and the chars are written into
-			memory from last byte to first after considering startIndex and length; Oterwise chars
-			are written from start to end.
 	Returns:
 		Returns instance of MfMemStrView
 	Throws:
 		Throws MfArgumentException, MfArgumentOutOfRangeException
 	Remarks:
-		Both startIndex and length operate the same no mater the state of littleEndian.
 		Static Method
 */
-	FromCharList(chars, startIndex=0, length=-1, littleEndian=false) {
+	FromCharList(chars, startIndex=0, length=-1) {
 		if(MfObject.IsObjInstance(chars, MfCharList) = false)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "chars"))
@@ -4498,65 +4489,30 @@ class MfMemStrView extends MfMemBlkView
 		mv := new MfMemStrView((length + BytesPerChar) * BytesPerChar, 0, encoding)
 		addr := mv[]
 		objArray := chars.m_InnerList
-		if (littleEndian)
+		i := 0
+		j := startIndex + 1
+		LastCharPos := 0
+		
+		while (i < length)
 		{
-			i := 1
-			j := chars.m_Count
-			LastZeroPos := 0
-			FouncChar := false
-			while (i <= length)
+			num := objArray[j]
+			idx := i * BytesPerChar
+			NumPut(num, addr + 0, idx , sType)
+			if (num > 0)
 			{
-				num := objArray[j]
-				idx := (i - 1) * BytesPerChar
-				NumPut(num, addr + 0, idx, sType)
-				if (num = 0)
-				{
-					if (!FouncChar)
-					{
-						LastZeroPos := i - 1
-					}
-				}
-				else
-				{
-					FouncChar := true
-				}
-				i++
-				j--
+				LastCharPos := i + 1
 			}
-			LastZeroPos := LastZeroPos * BytesPerChar
-			if (LastZeroPos < mv.Size)
-			{
-				mv.Pos := LastZeroPos
-			}
-			else
-			{
-				mv.Pos := mv.Size
-			}
+			i++
+			j++
+		}
+		LastCharPos := LastCharPos * BytesPerChar
+		if (LastCharPos < mv.Size)
+		{
+			mv.Pos := LastCharPos + BytesPerChar
 		}
 		else
 		{
-			i := 1
-			LastCharPos := 0
-			while (i <= length)
-			{
-				num := objArray[i]
-				idx := (i - 1) * BytesPerChar
-				NumPut(num, addr + 0, idx , sType)
-				if (num > 0)
-				{
-					LastCharPos := i
-				}
-				i++
-			}
-			LastCharPos := LastCharPos * BytesPerChar
-			if (LastCharPos < mv.Size)
-			{
-				mv.Pos := LastCharPos + BytesPerChar
-			}
-			else
-			{
-				mv.Pos := mv.Size
-			}
+			mv.Pos := mv.Size
 		}
 		return mv
 	}
@@ -5957,6 +5913,7 @@ class MfMemStrView extends MfMemBlkView
 
 			;~ str := StrGet(&tmp, ,destinationMemView.m_Encoding)
 			;~ str2 := StrGet(destinationMemView[], ,destinationMemView.m_Encoding)
+			;~ str3 := StrGet(DestPtr + 0, ,destinationMemView.m_Encoding)
 			
 			VarSetCapacity(tmp, 0)
 			if (destinationIndex + count > PI)
@@ -6612,15 +6569,12 @@ class MfMemStrView extends MfMemBlkView
 			Optional: The Char Index to start filling the return list with
 		length
 			Optional: The length of the retrun list
-		littleEndian
-			Optinal, Default is False.
-			If true then list is returned as Little Endian; Othrwise the list is returned as Big Endian
 	Returns:
 		Returns instance of MfCharList containing Numer Char valus
 	Throws:
 		Throws MfArgumentOutOfRangeException
 */
-	ToCharList(startIndex=0, length=-1, littleEndian=false)	{
+	ToCharList(startIndex=0, length=-1)	{
 		BytesPerChar := this.m_BytesPerChar
 		startIndex := MfInteger.GetValue(startIndex, 0) * BytesPerChar
 		length := MfInteger.GetValue(length, -1)
@@ -6654,25 +6608,11 @@ class MfMemStrView extends MfMemBlkView
 		}
 		ptr := this[]
 		sType := lst.m_sType
-		if (littleEndian)
+		i := startIndex
+		While (i < length)
 		{
-			i := startIndex + ((length - BytesPerChar) * BytesPerChar)
-			j := 1
-			While (j <= length)
-			{
-				lst._Add(NumGet(ptr + 0, i, sType))
-				i -= BytesPerChar
-				j += BytesPerChar
-			}
-		}
-		else
-		{
-			i := startIndex
-			While (i < length)
-			{
-				lst._Add(NumGet(ptr + 0, i, sType))
-				i += BytesPerChar
-			}
+			lst._Add(NumGet(ptr + 0, i, sType))
+			i += BytesPerChar
 		}
 		return lst
 	}
