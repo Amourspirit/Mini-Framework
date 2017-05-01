@@ -90,20 +90,62 @@ class MfMemoryString extends MfObject
 	m_sType := ""
 ;{ 	Constructor
 /*
-	Constructor()
-		Construct a new instance of the class
+	Constructor(Size, FillByte:=0, Encoding="")
+		Construct a new instance of the memory buffer Optionally setting Fillbytes and Encoding
+	Example:
+		mStr := new MfMemoryString(100,0,"UTF-16")
+		mstr..Append("The Quick Brown fox jumped over the lazy Dog.")
+		MsgBox % mStr.Char[7]
+
+	Constructor(Size, CharPos:="", Encoding="", Ptr)
+		Construct a new instance of the memory buffer Optionally setting CharPos and Encoding and set the buffer
+		the the address of external var or string represented by Ptr
+		This method is mostly to work with existing string quicly by read then in memory but has other uses as well.
+	Example:
+		MyStr := "Hello World"
+		mStr := new MfMemoryString(strlen(MyStr),,,&MyStr)
+		MsgBox % mStr.Char[7]
+
 	Parameters:
 		Size
-			The buffer size in chars of the instance
+			The buffer size in chars of the instance or Address
+			Size has no real limits unless Address is included.
+			If Address is included then the size must match the addres in chars
 		FillByte
 			The byte value to write into memory. Default is 0
+			Fillbyte is ignored when Ptr is included
+		CharPos
+			Optional: The Positions to see the Char locatoin of the pointer
+			applies only when Ptr is included
+			If Omitted then Char Pos will default to the size of the buffer
+			If included then Encoding become a factor nad the encoding parameter should be set
 		Encoding
-			The encoding for the instane.
-	Remarks:
-		Size is based on the number of char and encoding does not need to be considered
-		when choosing size.
+			Optional - The encoding for the instane.
+			If Omitted then encoding will be UTF-16 with two bytes per char 0xFFFF for unicode versions of AutoHotkey;
+			Otherwise will be cp1252 aand One Byte per char 0xFF
+		Ptr
+			Optional Memory Address to existing var.
+			If Omitted then intrenal var is created that can hold the value of Size in chars.
+			If Included then it is Important that the size match the address properly.
+			If Address is to an existing string then size must match the len of the string
+			When included Fillbyte is ignored
+	Example:
+		mStr := new MfMemoryString(strlen(MyStr),,,&MyStr)
+
+	
 */
-	__New(Size, FillByte:=0, Encoding="UTF-16") {
+	__New(args*) {
+		base.__New()
+		;Size, FillByte:=0, Encoding=""
+		;Size, Pos:=-1, Encoding="", Ptr=0
+		cnt := MfParams.GetArgCount(args*)
+		if (cnt = 0 || cnt > 4)
+		{
+			e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+			e.SetProp(A_LineFile, A_LineNumber, MethodName)
+			throw e
+		}
+		Size := args[1]
 		if (MfNull.IsNull(Size))
 		{
 			ex := new MfArgumentNullException("Size")
@@ -126,10 +168,25 @@ class MfMemoryString extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		FillByte := MfInteger.GetValue(FillByte, 0)
 
-		base.__New()
-		this.m_nl := MfEnvironment.Instance.NewLine
+		Encoding := ""
+		if (cnt > 2)
+		{
+			Encoding := args[3]
+		}
+	
+		if (MfString.IsNullOrEmpty(Encoding))
+		{
+			If (A_IsUnicode)
+			{
+				Encoding := "UTF-16"
+			}
+			else
+			{
+				Encoding := "cp1252"
+			}
+		}
+		; UTF-32 not really supported but here and partially working
 		if (Encoding = "UTF-32")
 		{
 			this.m_BytesPerChar := 4
@@ -145,12 +202,55 @@ class MfMemoryString extends MfObject
 			this.m_BytesPerChar := 1
 			this.m_sType := "UChar"
 		}
+
+		this.m_nl := MfEnvironment.Instance.NewLine
 		StringReplace, _Encoding, Encoding, -, , ALL
 		this.m_Encoding := Encoding
 		this.m_EncodingName := _Encoding
-		this.m_FillBytes := FillByte + 1 *
-		size := (size + 1) * this.m_BytesPerChar
-		this.m_MemView := new MfMemStrView(size, FillByte, this.m_Encoding)
+
+		if (cnt > 3)
+		{
+			this.m_FillBytes := 0
+			
+			try
+			{
+				Ptr := MfInt64.GetValue(args[4])
+			}
+			catch e
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), "Ptr")
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				Throw ex
+			}
+
+			size := (size + 1) * this.m_BytesPerChar
+			CharPos := MfInteger.GetValue(args[2], -1)
+
+			this.m_MemView := new MfMemStrView(size, FillByte, this.m_Encoding, Ptr)
+
+			if (CharPos < 0)
+			{
+				this.m_MemView.Pos := this.m_MemView.Size
+			}
+			Else
+			{
+				this.m_MemView.Pos := MfMath.Min(((CharPos + this.m_BytesPerChar) * this.m_BytesPerChar), this.m_MemView.Size)
+			}
+			this.m_CharCount := this.m_MemView.GetCharCount()
+		}
+		Else
+		{
+			if (cnt > 1)
+			{
+				this.m_FillBytes := MfInteger.GetValue(args[2], 0)
+			}
+			else
+			{
+				this.m_FillBytes := 0
+			}
+			size := (size + 1) * this.m_BytesPerChar
+			this.m_MemView := new MfMemStrView(size, FillByte, this.m_Encoding)
+		}
 	}
 ; 	End:Constructor ;}
 ;{ 		_NewEnum
@@ -2720,7 +2820,6 @@ class MfMemoryString extends MfObject
  *	FromArray() Creates new isntance of MfMemBlkView from AutoHotkey one based byte array
  *	FromByteList() Converts MfByteList into MfMemStrView instance
  *	FromBase64() Reads buffer and returns UTF-8 or UTF-16 buffer from base64
- *	FromVarAddress() Creates an new instance of MfMemStrView from var or address
  *	GetCharCount() Gets the number of chars currently in this buffer instance
  *	GetStringIgnoreNull() Gets an instance of MfMemStrView from current instance that has excluded all null values
  *	InBuffer() Searches current instance for the first instance of NeedleObj from StartOffset
@@ -2761,6 +2860,7 @@ class MfMemStrView extends MfMemBlkView
 	m_EncodingName := ""
 	m_BytesPerChar := ""
 	m_sType := ""
+	m_isAddr := False
 	/* Constructor: __New
 	 *     Instantiates an object that represents a memory-block array
 	 * Syntax:
@@ -2770,7 +2870,18 @@ class MfMemStrView extends MfMemBlkView
 	 *     size           [in] - size of the buffer in bytes
 	 *     FillByte  [in, opt] - similar to VarSetCapacity's 'FillByte' parameter
 	 */
-	__New(size, FillByte:=0, encoding="UTF-16") {
+	__New(size, FillByte:=0, encoding="", address=0) {
+		if (MfString.IsNullOrEmpty(Encoding))
+		{
+			If (A_IsUnicode)
+			{
+				Encoding := "UTF-16"
+			}
+			else
+			{
+				Encoding := "cp1252"
+			}
+		}
 		StringReplace, _Encoding, Encoding, -, , ALL
 		this.m_Encoding := Encoding
 		if (Encoding = "UTF-32")
@@ -2788,13 +2899,25 @@ class MfMemStrView extends MfMemBlkView
 			this.m_BytesPerChar := 1
 			this.m_sType := "UChar"
 		}
+		address := MfInt64.GetValue(address, 0)
+
 		this.m_EncodingName := _Encoding
 		this.m_FillBytes := FillByte
-		ObjSetCapacity(this, "_Buffer", size)
-		
-		base.__New(ObjGetAddress(this, "_Buffer"),, size)
-		this._FillByte(size, Fillbyte, this.m_BytesPerChar)
+
+		if (Address > 0)
+		{
+			base.__New(Address + 0,, size)
+			this.m_isAddr := true
+		}
+		else
+		{
+			ObjSetCapacity(this, "_Buffer", size)
+			base.__New(ObjGetAddress(this, "_Buffer"),, size)
+			this._FillByte(size, Fillbyte, this.m_BytesPerChar)
+		}
+
 	}
+	
 ;{ 	_FillByte
 	; Fill the memory space with fillbyte considering BytesPerChar
 	_FillByte(Size, FillByte, BytesPerChar, Address="") {
@@ -4188,8 +4311,13 @@ class MfMemStrView extends MfMemBlkView
 		sType := "UChar"
 		VarSetCapacity(nV, R , FB)
 		DllCall("RtlMoveMemory", "Ptr", &nV, "Ptr", this[], sType, Size)
-		ObjSetCapacity(this, "_Buffer", 64)
-		ObjSetCapacity(this, "_Buffer", 0)
+		if (this.m_isAddr = false)
+		{
+			ObjSetCapacity(this, "_Buffer", 64)
+			ObjSetCapacity(this, "_Buffer", 0)
+		}
+		this.m_isAddr := false
+		
 		ObjSetCapacity(this, "_Buffer", R)
 		this.__Ptr := ObjGetAddress(this, "_Buffer")
 		DllCall("RtlFillMemory", "Ptr", this[], "UPtr", size, "UChar", FB)
@@ -4789,70 +4917,6 @@ class MfMemStrView extends MfMemBlkView
 		return false
 	}
 ; 	End:_FromBase64_DecodeHelper ;}
-;{ 	FromVarAddress
-/*
-	Method: FromVarAddress()
-
-	FromVarAddress()
-		Creates an new instance of MfMemStrView from var or address
-	Parameters:
-		VarOrAddr
-			The memory address of var pointing to memory or instance of MfMemStrView or instance of MfMemBlkView
-		offset
-			The memory zero based offset in bytes.
-			Default is 0
-		length
-			The length in bytes
-			Default value is "" which will include all the bytes from offset
-	Returns:
-		Returns MfMemStrView instance
-	Throws:
-		Throws MfException if
-	Remarks:
-		If VarOrAddr is MfMemStrView instance both offset and length are still considered. Alos encoding is
-		considered to be that smae as VarOrAddr MfMemStrView instance.
-		If VarOrAddr is NOT MfMemStrView instance then encoding will be UTF-16 if A_IsUnicode; Otherwise UTF-8
-*/
-	FromVarAddress(byRef VarOrAddr, offset:=0, length:="") {
-		enc := A_IsUnicode ? "UTF-16":"UTF-8"
-		FB := 0
-		if (IsObject(VarOrAddr) && (VarOrAddr.__Class = "MfMemBlkView" || VarOrAddr.__Class = "MfMemStrView"))
-		{
-			if (VarOrAddr.__Class = "MfMemStrView")
-			{
-				if (offset=0 && (length == "" || length = -1))
-				{
-					return VarOrAddr.Clone()
-				}
-				if (length == "")
-				{
-					length := -1
-				}
-				return VarOrAddr.SubSet(offset, length)
-				
-			}
-			
-			objMemBlk := new MfMemStrView(VarOrAddr.Size, FB, enc)
-			newAddress := objMemBlk[]
-			Address := VarOrAddr[]
-			Length := VarOrAddr.Pos
-			DllCall("RtlMoveMemory", "Ptr", newAddress + 0, "Ptr", Address + 0, UInt, Length)
-			objMemBlk.Size := ObjGetCapacity(objMemBlk, "_Buffer")
-			objMemBlk.Pos := VarOrAddr.Pos
-			return objMemBlk
-		}
-
-			bk := new MfMemBlkView(VarOrAddr, offset, length)
-			objMemBlk := new MfMemStrView(bk.Size, FB, enc)
-			newAddress := objMemBlk[]
-			Address := bk[]
-			Length := bk.Pos
-			DllCall("RtlMoveMemory", "Ptr", newAddress + 0, "Ptr", Address + 0, UInt, Length)
-			objMemBlk.Size := ObjGetCapacity(objMemBlk, "_Buffer")
-			objMemBlk.Pos := bk.Pos
-			return objMemBlk
-	}
-; 	End:FromVarAddress ;}
 ;{ 	GetBytesPerChar
 	GetBytesPerChar(Encoding) {
 		if (Encoding = "UTF-32")
@@ -6662,8 +6726,12 @@ class MfMemStrView extends MfMemBlkView
 		sType := "UChar"
 		VarSetCapacity(nV, size , FB)
 		DllCall("RtlMoveMemory", "Ptr", &nV, "Ptr", this[], sType, size)
-		ObjSetCapacity(this, "_Buffer", 64)
-		ObjSetCapacity(this, "_Buffer", 0)
+		if (this.m_isAddr = false)
+		{
+			ObjSetCapacity(this, "_Buffer", 64)
+			ObjSetCapacity(this, "_Buffer", 0)
+		}
+		this.m_isAddr := false
 		ObjSetCapacity(this, "_Buffer", size)
 		this.__Ptr := ObjGetAddress(this, "_Buffer")
 		DllCall("RtlFillMemory", "Ptr", this[], "UPtr", size, "UChar", FB)
@@ -7215,7 +7283,8 @@ class MfMemStrView extends MfMemBlkView
 ;{ 	__Delete
 	; clean up when instance is destroyed
 	__Delete() {
-		ObjSetCapacity(this, "_Buffer", 0)
+		if (!this.m_isAddr)
+			ObjSetCapacity(this, "_Buffer", 0)
 	}
 ; 	End:__Delete ;}	
 
