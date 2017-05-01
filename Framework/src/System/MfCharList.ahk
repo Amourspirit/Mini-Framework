@@ -26,7 +26,6 @@ class MfCharList extends MfListBase
 	m_sType := ""
 	m_MaxCharSize := ""
 	m_BytesPerChar := ""
-	m_LittleEndian := false
 	m_FirstNullChar := -1
 ;{ Constructor
 	/*!
@@ -122,7 +121,7 @@ class MfCharList extends MfListBase
 		return
 		try
 		{
-			lst := ms.ToCharList(startIndex,length, this.m_LittleEndian)
+			lst := ms.ToCharList(startIndex,length)
 			mlst := lst.m_InnerList
 			i := 1
 			cnt := lst.m_Count
@@ -1625,7 +1624,7 @@ class MfCharList extends MfListBase
 		}
 		
 		retval := ""
-		mv := MfMemStrView.FromCharList(this,_startIndex, _length, this.m_LittleEndian)
+		mv := MfMemStrView.FromCharList(this,_startIndex, _length)
 		if (this.m_FirstNullChar >= 0 && this.m_FirstNullChar < this.m_Count - 1)
 		{
 			retval := mv.GetStringIgnoreNull().ToString()

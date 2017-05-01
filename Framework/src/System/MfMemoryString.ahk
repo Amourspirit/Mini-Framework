@@ -226,7 +226,7 @@ class MfMemoryString extends MfObject
 			size := (size + 1) * this.m_BytesPerChar
 			CharPos := MfInteger.GetValue(args[2], -1)
 
-			this.m_MemView := new MfMemStrView(size, FillByte, this.m_Encoding, Ptr)
+			this.m_MemView := new MfMemStrView(size, this.m_FillBytes, this.m_Encoding, Ptr)
 
 			if (CharPos < 0)
 			{
@@ -249,7 +249,7 @@ class MfMemoryString extends MfObject
 				this.m_FillBytes := 0
 			}
 			size := (size + 1) * this.m_BytesPerChar
-			this.m_MemView := new MfMemStrView(size, FillByte, this.m_Encoding)
+			this.m_MemView := new MfMemStrView(size, this.m_FillBytes, this.m_Encoding)
 		}
 	}
 ; 	End:Constructor ;}
@@ -1023,7 +1023,7 @@ class MfMemoryString extends MfObject
 		Throws MfArgumentException if AddChars cannot be converted into valid integer or AddBytes is less then 0
 */
 	Expand(AddChars) {
-		if (MfNull.IsNull(AddBytes))
+		if (MfNull.IsNull(AddChars))
 		{
 			ex := new MfArgumentNullException("AddChars")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1690,9 +1690,9 @@ class MfMemoryString extends MfObject
 			ptr := this.m_MemView[] + (Index * BytesPerChar)
 			sourcePtr := mStr.m_MemView[]
 			Length := (Length * BytesPerChar)
-			DllCall("RtlMoveMemory", "Ptr", ptr + 0, "Ptr", sourcePtr + 0, "UChar", Length)
+			DllCall("RtlMoveMemory", "PTR", ptr + 0, "PTR", sourcePtr + 0, "UCHAR", Length)
 			;DllCall("RtlMoveMemory", "Ptr", sourcePtr + 0, "Ptr", ptr + 0, "UChar", Length)
-			str := StrGet(ptr,Length, this.m_Encoding)
+			;str := StrGet(ptr,Length, this.m_Encoding)
 			return this
 		}
 		if (delta > this.FreeCharCapacity)
@@ -2594,7 +2594,7 @@ class MfMemoryString extends MfObject
 		{
 			get {
 				_index := MfInteger.GetValue(index)
-				if (_index < 0 || _index > this.m_MemView.Size)
+				if (_index < 0 || _index >= this.m_MemView.Size)
 				{
 					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -2632,7 +2632,8 @@ class MfMemoryString extends MfObject
 			Value:
 				Var integer
 			Remarks:
-				If Bytes per char is 2 then value can be from 0x0 to 0xFFFF; Otherwise
+				If Bytes per char is 2 then value can be from 0x0 to 0xFFFF,
+				bytes per char 4 then value can be from 0x0 to 0xFFFFFFFF; Otherwise
 				value will be between 0x0 and 0xFF
 		*/
 		CharCode[index]
@@ -2870,7 +2871,7 @@ class MfMemStrView extends MfMemBlkView
 	 *     size           [in] - size of the buffer in bytes
 	 *     FillByte  [in, opt] - similar to VarSetCapacity's 'FillByte' parameter
 	 */
-	__New(size, FillByte:=0, encoding="", address=0) {
+	__New(size, FillByte:=0, encoding:="", address:=0) {
 		if (MfString.IsNullOrEmpty(Encoding))
 		{
 			If (A_IsUnicode)
@@ -2927,7 +2928,7 @@ class MfMemStrView extends MfMemBlkView
 		}
 		if (FillByte = 0x0 || BytesPerChar = 1)
 		{
-			DllCall("RtlFillMemory", "Ptr", Address + 0, "UPtr", size, "UChar", FillByte)
+			DllCall("RtlFillMemory", "PTR", Address + 0, "PTR", size, "UCHAR", FillByte)
 			return
 		}
 		if (BytesPerChar = 2 && FillByte >= 0x0 && FillByte <= 0xFFFF)
@@ -3033,7 +3034,7 @@ class MfMemStrView extends MfMemBlkView
 		ptr := this[] + this.Pos
 		sourcePtr := obj[]
 		Length := obj.Pos - BytesPerChar
-		DllCall("RtlMoveMemory", "Ptr", ptr + 0, "Ptr", sourcePtr + 0, "UChar", Length)
+		DllCall("RtlMoveMemory", "PTR", ptr + 0, "PTR", sourcePtr + 0, "UCHAR", Length)
 		;this.Pos := PI + Length
 		if (PI + Length + BytesPerChar <= this.Size)
 		{
@@ -3196,7 +3197,7 @@ class MfMemStrView extends MfMemBlkView
 		objMemBlk := new MfMemStrView(this.Size, this.m_FillBytes, this.m_Encoding)
 		newAddress := objMemBlk[]
 		Address := this[]
-		DllCall("RtlMoveMemory", "Ptr", newAddress + 0, "Ptr", Address + 0, Uint, this.Size)
+		DllCall("RtlMoveMemory", "PTR", newAddress + 0, "PTR", Address + 0, "UCHAR", this.Size)
 		objMemBlk.Pos := this.Pos
 		return objMemBlk
 	}
@@ -4301,30 +4302,54 @@ class MfMemStrView extends MfMemBlkView
 		this[] will be a new addresss after expansion
 		Caller is responsible for handling Bytes per char as this
 		method will add bytes without factoring encoding or BytesPerChar
+
+		According to https://autohotkey.com/docs/objects/Object.htm#SetCapacity
+		Adding bytes all data is perserved so no need to copy memory
 */
 	Expand(AddBytes) {
-		
-		R := AddBytes + this.Size
+		if (AddBytes = "" || AddBytes <= 0)
+		{
+			return this.Size
+		}
 		FB := this.m_FillBytes
-		nv := 0
-		size := this.Size
-		sType := "UChar"
-		VarSetCapacity(nV, R , FB)
-		DllCall("RtlMoveMemory", "Ptr", &nV, "Ptr", this[], sType, Size)
+		R := AddBytes + this.Size
+		if (FB < 0 || FB > 255)
+		{
+			FB := 0
+		}
+		
 		if (this.m_isAddr = false)
 		{
-			ObjSetCapacity(this, "_Buffer", 64)
-			ObjSetCapacity(this, "_Buffer", 0)
+			oldSize := this.Size
+			; add bytes to current _Buffer
+			this.Size := ObjSetCapacity(this, "_Buffer", R)
+			; test show address gets changed
+			this.__Ptr := ObjGetAddress(this, "_Buffer")
+			; fill the bytes for the expanded memory only. Do no overwrite existing data
+			DllCall("RtlFillMemory", "PTR", this[] + oldSize + 1, "PTR", AddBytes - 1, "UCHAR", FB)
+			return this.Size
 		}
+		; if we are currently using an address then wil copy address contents
+		; into tmp var and copy back to expanded _buffer
+
+		
+		tmp := 0
+		size := this.Size
+		sType := "UChar"
+		VarSetCapacity(tmp, size, FB)
+		DllCall("RtlMoveMemory", "PTR", &tmp, "PTR", this[], sType, Size)
+		
 		this.m_isAddr := false
 		
-		ObjSetCapacity(this, "_Buffer", R)
+		this.Size := ObjSetCapacity(this, "_Buffer", R)
 		this.__Ptr := ObjGetAddress(this, "_Buffer")
-		DllCall("RtlFillMemory", "Ptr", this[], "UPtr", size, "UChar", FB)
-		this.Size := this.GetCapacity("_Buffer")
+		; only call fill byte if not greater then 0 and less then or equal 255
+		; default fill should be zero so no need to call unless FB is greater then 0
+		DllCall("RtlFillMemory", "PTR", this[], "PTR", size, "UCHAR", FB)
+		;this.Size := this.GetCapacity("_Buffer")
 		
-		DllCall( "RtlMoveMemory", "Ptr", this[], "Ptr", &nV, sType, Size )
-		VarSetCapacity(nV, 0)
+		DllCall( "RtlMoveMemory", "PTR", this[], "PTR", &tmp, sType, Size )
+		VarSetCapacity(tmp, 0)
 		return this.Size
 	}
 ; 	End:Expand ;}
@@ -5897,9 +5922,9 @@ class MfMemStrView extends MfMemBlkView
 			; source and Dest may be in the same address space so use a tmp to go between
 			tmp := ""
 			VarSetCapacity(tmp, count)
-			DllCall("RtlMoveMemory", "Ptr", &tmp, "Ptr", SourcePtr + 0, "UChar", count)
+			DllCall("RtlMoveMemory", "PTR", &tmp, "PTR", SourcePtr + 0, "UCHAR", count)
 
-			DllCall("RtlMoveMemory", "Ptr", DestPtr + 0, "Ptr", &tmp, "UChar", count)
+			DllCall("RtlMoveMemory", "PTR", DestPtr + 0, "PTR", &tmp, "UCHAR", count)
 
 			VarSetCapacity(tmp, 0)
 
@@ -6720,23 +6745,33 @@ class MfMemStrView extends MfMemBlkView
 		This[] address will be changed
 */
 	TrimBufferToPos() {
-		FB := this.m_FillBytes
+		if (this.Size = this.Pos)
+		{
+			return this.GetCharCount()
+		}
+		
 		size := this.Pos
+		if (this.m_isAddr = false)
+		{
+			; If ByteSize is less than the current size, excess data is truncated;
+			; otherwise all existing data is preserved.
+			this.Size := ObjSetCapacity(this, "_Buffer", size)
+			this.__Ptr := ObjGetAddress(this, "_Buffer")
+			return this.GetCharCount()
+		}
+		this.m_isAddr := false
+		FB := this.m_FillBytes
 		nv := 0
 		sType := "UChar"
 		VarSetCapacity(nV, size , FB)
-		DllCall("RtlMoveMemory", "Ptr", &nV, "Ptr", this[], sType, size)
-		if (this.m_isAddr = false)
-		{
-			ObjSetCapacity(this, "_Buffer", 64)
-			ObjSetCapacity(this, "_Buffer", 0)
-		}
+		DllCall("RtlMoveMemory", "PTR", &nV, "PTR", this[], sType, size)
+		
 		this.m_isAddr := false
 		ObjSetCapacity(this, "_Buffer", size)
 		this.__Ptr := ObjGetAddress(this, "_Buffer")
-		DllCall("RtlFillMemory", "Ptr", this[], "UPtr", size, "UChar", FB)
+		DllCall("RtlFillMemory", "PTR", this[], "PTR", size, "UCHAR", FB)
 		this.Size := this.GetCapacity("_Buffer")
-		DllCall("RtlMoveMemory", "Ptr", this[], "Ptr", &nV, sType, size)
+		DllCall("RtlMoveMemory", "PTR", this[], "PTR", &nV, sType, size)
 		VarSetCapacity(nV, 0)
 		return this.GetCharCount()
 	}
@@ -7073,6 +7108,7 @@ class MfMemStrView extends MfMemBlkView
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+
 		PI := this.Pos
 		try
 		{
@@ -7082,7 +7118,7 @@ class MfMemStrView extends MfMemBlkView
 			objMemBlk := new MfMemStrView(Length + this.m_BytesPerChar, this.m_FillBytes, this.m_Encoding)
 			newAddress := objMemBlk[]
 			Address := this[] + this.Pos
-			DllCall("RtlMoveMemory", "Ptr", newAddress + 0, "Ptr", Address + 0, Uint, Length)
+			DllCall("RtlMoveMemory", "PTR", newAddress + 0, "PTR", Address + 0, "UCHAR", Length)
 			objMemBlk.Size := ObjGetCapacity(objMemBlk, "_Buffer")
 			objMemBlk.Pos := Length + this.m_BytesPerChar
 			return objMemBlk
@@ -7577,7 +7613,7 @@ class MfMemBlkView
 				VarSetCapacity(dest, 128), VarSetCapacity(dest, 0) ; force ALLOC_MALLOC method
 			VarSetCapacity(dest, bytes, 0) ; initialize or adjust if capacity is 0 or < bytes
 		}
-		DllCall("RtlMoveMemory", "Ptr", IsByRef(dest) ? &dest : dest, "Ptr", this[] + this.Pos, "UPtr", bytes)
+		DllCall("RtlMoveMemory", "PTR", IsByRef(dest) ? &dest : dest, "PTR", this[] + this.Pos, "UPtr", bytes)
 		return bytes
 	}
 	/* Method: RawWrite
@@ -7594,7 +7630,7 @@ class MfMemBlkView
 	RawWrite(ByRef src, bytes) {
 		if ((this.Pos + bytes) > this.Size)
 			bytes := this.Size - this.Pos
-		DllCall("RtlMoveMemory", "Ptr", this[] + this.Pos, "Ptr", IsByRef(src) ? &src : src, "UPtr", bytes)
+		DllCall("RtlMoveMemory", "PTR", this[] + this.Pos, "PTR", IsByRef(src) ? &src : src, "UPtr", bytes)
 		return bytes
 	}
 	/* Method: Seek
