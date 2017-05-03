@@ -17,18 +17,18 @@
 
 ;{ Class Comments
 /*
-	Class: MfInt16
-		Represents MfInt16 object
+	Class: MfUInt32
+		Represents MfUInt32 object
 	Inherits: MfPrimitive
 */
 ; End:Class Comments ;}
-Class MfInt16 extends MfPrimitive
+Class MfUInt32 extends MfPrimitive
 {
 ;{ Static Properties
 	TypeCode[]
 	{
 		get {
-			return 25
+			return 29
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -41,25 +41,25 @@ Class MfInt16 extends MfPrimitive
 ;{ Constructor
 /*
 	Constructor()
-		Initializes a new instance of the MfInt16 class.
+		Initializes a new instance of the MfUInt32 class.
 	
-	OutputVar := new MfInt16([int, returnAsObj, readonly])
+	OutputVar := new MfUInt32([int, returnAsObj, readonly])
 	
 	Constructor([int, retunAsObj, readonly])
-		Initializes a new instance of the MfInt16 class optionally setting the Value property, ReturnAsObject property and the Readonly property.
+		Initializes a new instance of the MfUInt32 class optionally setting the Value property, ReturnAsObject property and the Readonly property.
 	Parameters
 		int
-			The MfInt16 object or var containing integer to create a new instance with.
+			The MfUInt32 object or var containing integer to create a new instance with.
 		returnAsObj
-			Determines if the current instance of MfInt16 class will return MfInt16 instances from functions or vars containing integer.
+			Determines if the current instance of MfUInt32 class will return MfUInt32 instances from functions or vars containing integer.
 			If omitted value is false
 		readonly
-			Determines if the current instance of MfInt16 class will allow its Value to be altered after it is constructed.
+			Determines if the current instance of MfUInt32 class will allow its Value to be altered after it is constructed.
 			The Readonly propery will reflect this value after the classe is constructed.
 			If omitted value is false
 	Remarks
 		Sealed Class.
-		This constructor initializes the MfInt16 with the integer value of int.
+		This constructor initializes the MfUInt32 with the integer value of int.
 		Value property to the value of int.
 		ReturnAsObject will have a value of returnAsObj
 		Readonly will have a value of readonly.
@@ -73,10 +73,10 @@ Class MfInt16 extends MfPrimitive
 */
 	__New(args*) {
 		; int = 0, returnAsObj = false, ReadOnly = false
-		; Throws MfNotSupportedException if MfInt16 Sealed class is extended
-		if (this.__Class != "MfInt16")
+		; Throws MfNotSupportedException if MfUInt32 Sealed class is extended
+		if (this.__Class != "MfUInt32")
 		{
-			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfInt16"))
+			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfUInt32"))
 		}
 
 		_int := 0
@@ -93,7 +93,9 @@ Class MfInt16 extends MfPrimitive
 			s := pList.Item[pIndex].Value
 			if ((s = "MfInteger") 
 				|| (s = "MfInt64")
-				|| (s = "MfInt16")
+				|| (s = "MfInt32")
+				|| (s = "MfUInt32")
+				|| (s = "MfUInt16")
 				|| (s = "MfByte"))
 			{
 				_int := pArgs.Item[pIndex].Value
@@ -147,7 +149,7 @@ Class MfInt16 extends MfPrimitive
 		}
 	
 		base.__New(_int, _returnAsObject, _readonly)
-		this.m_isInherited := this.__Class != "MfInt16"
+		this.m_isInherited := false
 	}
 
 	_ConstructorParams(MethodName, args*) {
@@ -225,12 +227,12 @@ Class MfInt16 extends MfPrimitive
 						else if (i = 1) ; int
 						{
 
-							; cannot construct an instacne of MfInt16 here with parameters
+							; cannot construct an instacne of MfUInt32 here with parameters
 							; we are already calling from the constructor
 							; create a new instance without parameters and set the properties
 							if Mfunc.IsInteger(arg)
 							{
-								_val := new MfInt16()
+								_val := new MfUInt32()
 								_val.ReturnAsObject := false
 								_val.Value := arg
 								pIndex := p.Add(_val)
@@ -271,18 +273,18 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.Add(value)
 	
 	Add(value)
-		Adds MfInt16 value to current instance of MfInt16.
+		Adds MfUInt32 value to current instance of MfUInt32.
 	Parameters
 		value
 			The value to add to the current instance.
 			Can be any type that matches IsNumber or var integer.
 	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated value; Otherwise returns var containing integer.
+		If ReturnAsObject is true then returns current instance of MfUInt32 with an updated value; Otherwise returns var containing integer.
 	Throws
 		Throws MfNotSupportedException if Readonly is true.
 		Throws MfNullReferenceException if called as a static method
 		Throws MfArgumentNullException if value is null.
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfUInt32 and can not be converted into integer value.
 		Throws MfArgumentOutOfRangeException if adding value is less then Minvalue and greater than MaxValue
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
@@ -310,15 +312,15 @@ Class MfInt16 extends MfPrimitive
 			throw ex
 		}
 		_newVal := this.Value + _value
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
+		if ((_newVal < MfUInt32.MinValue) || (_newVal > MfUInt32.MaxValue)) {
 			ex := new MfArgumentOutOfRangeException("obj"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
+				, MfUInt32.MinValue, MfUInt32.MaxValue))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.Value := _newVal
-		return this._ReturnInt16(this)
+		return this._ReturnUInt32(this)
 	}
 ; End:Add() ;}
 ;{ 	CompareTo()			- Overrides	- MfObject
@@ -329,27 +331,27 @@ Class MfInt16 extends MfPrimitive
 	instance.CompareTo()
 	
 	CompareTo(obj)
-		Compares this instance to a specified MfInt16 instance.
+		Compares this instance to a specified MfUInt32 instance.
 	Parameters
 		obj
-		A MfInt16 object to compare to current instance.
+		A MfUInt32 object to compare to current instance.
 	Returns
 		Returns a var containing integer indicating the position of this instance in the sort order in relation to the value parameter. 
 		eturn Value Description Less than zero This instance precedes obj value.
 		Zero This instance has the same position in the sort order as value. Greater than zero This instance follows
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16.
+		Throws MfArgumentException if value is not an instance of MfUInt32.
 	Remarks
-		Compares this instance to a specified MfInt16 instance and indicates whether this instance precedes, follows,
-		or appears in the same position in the sort order as the specified MfInt16 instance.
+		Compares this instance to a specified MfUInt32 instance and indicates whether this instance precedes, follows,
+		or appears in the same position in the sort order as the specified MfUInt32 instance.
 */
 	CompareTo(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(value)) {
 			return 1
 		}
-		if (!MfObject.IsObjInstance(obj, MfInt16)) {
+		if (!MfObject.IsObjInstance(obj, MfUInt32)) {
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Object_Equals"),"obj")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
@@ -370,19 +372,19 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.Divide(value)
 	
 	Divide(value)
-		Divides the current instance of MfInt16 by the divisor value.
+		Divides the current instance of MfUInt32 by the divisor value.
 	Parameters
 		value
 			The Divisor value to divide the current instance Value by.
 			Can be any type that matches IsNumber. or var number.
 	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated Value; Otherwise returns Value as var.
+		If ReturnAsObject is true then returns current instance of MfUInt32 with an updated Value; Otherwise returns Value as var.
 	Throws
 		Throws MfNotSupportedException if Readonly is true.
 		Throws MfNullReferenceException if called as a static method
 		Throws MfArgumentNullException if value is null.
 		Throws MfDivideByZeroException if value is zero.
-		Throws MfArithmeticException if the operation fails or value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArithmeticException if the operation fails or value is not an instance of MfUInt32 and can not be converted into integer value.
 		Throws MfArgumentOutOfRangeException if dividing result is less then MinValue and greater than MaxValue
 	Remarks
 		If the result of the operation is not a whole number such as 4/2 but rather a float number such as 8/3 (8/3 = 2.6666...) then
@@ -399,7 +401,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (this.Equals(0))
 		{
-			return this._ReturnInt16(this)
+			return this._ReturnUInt32(this)
 		}
 		_value := 0
 		try
@@ -420,15 +422,15 @@ Class MfInt16 extends MfPrimitive
 		}
 		; with floor divide  any result less then 1 will be zero
 		_newVal := Round(this.Value // _value) + 0 ; floor divide and set back to integer
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
+		if ((_newVal < MfUInt32.MinValue) || (_newVal > MfUInt32.MaxValue)) {
 			ex := new MfArgumentOutOfRangeException("obj"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
+				, MfUInt32.MinValue, MfUInt32.MaxValue))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.Value := _newVal
-		return this._ReturnInt16(this)
+		return this._ReturnUInt32(this)
 
 	}
 ; 	End:Divide ;}
@@ -464,7 +466,7 @@ Class MfInt16 extends MfPrimitive
 		_value := 0
 		try
 		{
-			_value :=  MfInt16.GetValue(value)
+			_value :=  MfUInt32.GetValue(value)
 			retval := this.Value = _value
 		}
 		catch 
@@ -482,7 +484,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.GetHashCode()
 	
 	GetHashCode()
-		Gets A hash code for the MfInt16 instance.
+		Gets A hash code for the MfUInt32 instance.
 	Returns
 		A 32-bit signed integer hash code as var.
 	Throws
@@ -497,12 +499,12 @@ Class MfInt16 extends MfPrimitive
 ;{ 	GetTypeCode()
 /*
 	Method: GetTypeCode()
-		Get an enumeration value of MfTypeCode the represents MfInt16 Type Code.
+		Get an enumeration value of MfTypeCode the represents MfUInt32 Type Code.
 	Returns
-		And instance of MfEnum.EnumItem with a constant value that represents the type of MfInt16.
+		And instance of MfEnum.EnumItem with a constant value that represents the type of MfUInt32.
 */
 	GetTypeCode() {
-		return MfTypeCode.Instance.Int16
+		return MfTypeCode.Instance.UInt32
 	}
 ; End:GetTypeCode() ;}
 ;{ 	GetValue()			- Overrides	- MfPrimitive
@@ -510,11 +512,11 @@ Class MfInt16 extends MfPrimitive
 	Method: GetValue()
 		Overrides MfPrimitive.GetValue().
 	
-	OutputVar := MfInt16.GetValue(Obj)
-	OutputVar := MfInt16.GetValue(Obj, Default)
-	OutputVar := MfInt16.GetValue(Obj, Default, AllowAny)
+	OutputVar := MfUInt32.GetValue(Obj)
+	OutputVar := MfUInt32.GetValue(Obj, Default)
+	OutputVar := MfUInt32.GetValue(Obj, Default, AllowAny)
 	
-	MfInt16.GetValue(Obj)
+	MfUInt32.GetValue(Obj)
 		Gets the integer number from Object or var containing integer.
 	Parameters
 		Obj
@@ -530,7 +532,7 @@ Class MfInt16 extends MfPrimitive
 		Throws MfArgumentOutOfRangeException if Obj is less then MinValue or Greater then MaxValue.
 		Throws MfArgumentException if argument Obj is can not be converted to integer value.
 	
-	MfInt16.GetValue(Obj, Default)
+	MfUInt32.GetValue(Obj, Default)
 		Gets a integer number from Obj or returns Default value if Obj is unable to be converted to integer.
 		Default must be a value that can be converted to integer or it will be ignored if Obj can not be converted to integer and an error will be thrown.
 	Parameters
@@ -544,12 +546,12 @@ Class MfInt16 extends MfPrimitive
 		Returns a var containing a integer or Default value if Obj is unable to be converted to integer.
 	Remarks
 		Static Method
-		If Default is not a valid integer or MfInt16 instance then GetValue will throw an error if Obj can not be converted to integer. 
-		If Default can not be converted to a integer then this would method will yield the same results as calling MfInt16.GetValue(Obj).
+		If Default is not a valid integer or MfUInt32 instance then GetValue will throw an error if Obj can not be converted to integer. 
+		If Default can not be converted to a integer then this would method will yield the same results as calling MfUInt32.GetValue(Obj).
 	Throws
 		Throws MfInvalidOperationException if not called as a static method.
 	
-	MfInt16.GetValue(Obj, Default, AllowAny)
+	MfUInt32.GetValue(Obj, Default, AllowAny)
 		Gets a integer number from Obj or returns Default value if Obj is unable to be converted to integer.
 	Parameters
 		Obj
@@ -563,14 +565,14 @@ Class MfInt16 extends MfPrimitive
 	Remarks
 		Static Method.
 		If AllowAny is true then Default can be any value including var, object or null.
-		However if AllowAny is false then this method will yield the same result as calling MfInt16.GetValue(Obj, Default).
+		However if AllowAny is false then this method will yield the same result as calling MfUInt32.GetValue(Obj, Default).
 	Throws
 		Throws MfInvalidOperationException if not called as a static method.
 		Throws MfArgumentException if AllowAny is not a valid boolean.
 		
 	General Remarks
 		If Obj is a float or MfFloat instance then GetValue() will alway round down for positive number and round up for negative numbers.
-		For instance MfInt16.GetValue(2.8) will be 2 and MfInt16.GetValue(-2.8) will be -2.
+		For instance MfUInt32.GetValue(2.8) will be 2 and MfUInt32.GetValue(-2.8) will be -2.
 		Throws MfNotSupportedException if incorrect number of parameters are passed in.
 */
 	GetValue(args*) {
@@ -600,7 +602,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		else if (i = 2)
 		{
-			_default := MfInt16._GetValue(args[2], false)
+			_default := MfUInt32._GetValue(args[2], false)
 			If (_default == "NaN")
 			{
 				CanThrow := true
@@ -633,7 +635,7 @@ Class MfInt16 extends MfPrimitive
 			}
 			else
 			{
-				_default := MfInt16._GetValue(args[2], false)
+				_default := MfUInt32._GetValue(args[2], false)
 				if (_default == "NaN")
 				{
 					CanThrow := true
@@ -649,7 +651,7 @@ Class MfInt16 extends MfPrimitive
 		{
 			try
 			{
-				retval := MfInt16._GetValue(obj)
+				retval := MfUInt32._GetValue(obj)
 			}
 			catch e
 			{
@@ -660,7 +662,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		else
 		{
-			retval := MfInt16._GetValue(obj, false)
+			retval := MfUInt32._GetValue(obj, false)
 			if (retval == "NaN")
 			{
 				return _default
@@ -679,7 +681,7 @@ Class MfInt16 extends MfPrimitive
 			if (T.IsIntegerNumber)
 			{
 				retval := obj.Value
-				if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue))
+				if ((retval < MfUInt32.MinValue) || (retval > MfUInt32.MaxValue))
 				{
 					if (!CanThrow)
 					{
@@ -687,7 +689,7 @@ Class MfInt16 extends MfPrimitive
 					}
 					ex := new MfArgumentOutOfRangeException("obj"
 						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt16.MinValue, MfInt16.MaxValue))
+						,MfUInt32.MinValue, MfUInt32.MaxValue))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
@@ -701,14 +703,14 @@ Class MfInt16 extends MfPrimitive
 					varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
 				}
 				retval := varInt + 0 ; force conversion from any hex values
-				if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
+				if ((retval < MfUInt32.MinValue) || (retval > MfUInt32.MaxValue)) {
 				if (!CanThrow)
 				{
 					return "NaN"
 				}
 					ex := new MfArgumentOutOfRangeException("varInt"
 						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt16.MinValue, MfInt16.MaxValue))
+						,MfUInt32.MinValue, MfUInt32.MaxValue))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
@@ -724,7 +726,7 @@ Class MfInt16 extends MfPrimitive
 				throw ex
 			}
 		} else {
-			retval := MfInt16._GetValueFromVar(obj, CanThrow)
+			retval := MfUInt32._GetValueFromVar(obj, CanThrow)
 		}
 		return retval
 	}
@@ -735,14 +737,14 @@ Class MfInt16 extends MfPrimitive
 		strVarInt := varInt . ""
 		if (Mfunc.IsInteger(varInt)) {
 			retval := varInt + 0 ; force conversion from any hex values
-			if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
+			if ((retval < MfUInt32.MinValue) || (retval > MfUInt32.MaxValue)) {
 				if (!CanThrow)
 				{
 					return "NaN"
 				}
 				ex := new MfArgumentOutOfRangeException("varInt"
 					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-					,MfInt16.MinValue, MfInt16.MaxValue))
+					,MfUInt32.MinValue, MfUInt32.MaxValue))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -753,14 +755,14 @@ Class MfInt16 extends MfPrimitive
 				varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
 			}
 			retval := varInt + 0 ; force conversion from any hex values
-			if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
+			if ((retval < MfUInt32.MinValue) || (retval > MfUInt32.MaxValue)) {
 				if (!CanThrow)
 				{
 					return "NaN"
 				}
 				ex := new MfArgumentOutOfRangeException("varInt"
 					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-					,MfInt16.MinValue, MfInt16.MaxValue))
+					,MfUInt32.MinValue, MfUInt32.MaxValue))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -784,7 +786,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.GreaterThen(value)
 	
 	GreaterThan(value)
-		Compares the current MfInt16 object to a specified MfInt16 instance and returns an indication of their relative values.
+		Compares the current MfUInt32 object to a specified MfUInt32 instance and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -793,7 +795,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has greater value then the value instance; Otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfUInt32 and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -804,12 +806,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfUInt32)) {
 			return this.Value > value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfUInt32.GetValue(value)
 			retval := this.Value > val
 		}
 		Catch e
@@ -828,7 +830,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.GreaterThenOrEqual(value)
 	
 	GreaterThenOrEqual(value)
-		Compares the current MfInt16 object to a specified MfInt16 object and returns an indication of their relative values.
+		Compares the current MfUInt32 object to a specified MfUInt32 object and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -837,7 +839,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has greater or equal value then the value instance; otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfUInt32 and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -848,12 +850,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfUInt32)) {
 			return this.Value >= value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfUInt32.GetValue(value)
 			retval := this.Value >= val
 		}
 		Catch e
@@ -872,7 +874,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.LessThen(value)
 	
 	LessThen(value)
-		Compares the current MfInt16 object to a specified MfInt16 object and returns an indication of their relative values.
+		Compares the current MfUInt32 object to a specified MfUInt32 object and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -881,7 +883,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has less value then the value instance; otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfUInt32 and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -892,12 +894,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfUInt32)) {
 			return this.Value < value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfUInt32.GetValue(value)
 			retval := this.Value < val
 		}
 		Catch e
@@ -916,7 +918,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.LessThenOrEqual(value)
 	
 	LessThenOrEqual(value)
-		Compares the current MfInt16 object to a specified MfInt16 object and returns an indication of their relative values.
+		Compares the current MfUInt32 object to a specified MfUInt32 object and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -925,7 +927,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has less or equal value then the value instance; Otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfUInt32 and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -936,12 +938,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfUInt32)) {
 			return this.Value <= value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfUInt32.GetValue(value)
 			retval := this.Value <= val
 		}
 		Catch e
@@ -960,19 +962,19 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.Multiply(value)
 	
 	Multiply(value)
-		Multiplies the current instance of MfInt16 by the value.
+		Multiplies the current instance of MfUInt32 by the value.
 	Parameters
 		value
 			The value to multiply the current instance Value by.
 			Can be any type that matches IsNumber. or var number.
 	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated Value; Otherwise returns Value as var.
+		If ReturnAsObject is true then returns current instance of MfUInt32 with an updated Value; Otherwise returns Value as var.
 	Throws
 		Throws MfNotSupportedException if Readonly is true.
 		Throws MfNullReferenceException if called as a static method
 		Throws MfArgumentNullException if value is null.
 		Throws MfDivideByZeroException if value is zero.
-		Throws MfArithmeticException if the operation fails or value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArithmeticException if the operation fails or value is not an instance of MfUInt32 and can not be converted into integer value.
 		Throws MfArgumentOutOfRangeException if dividing result is less then MinValue and greater than MaxValue
 	Remarks
 		If the result of the operation is not a whole number such as 4*3 but rather a float number such as 4*3.3 (4 * 3.2 = 13.2) then the
@@ -990,7 +992,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (this.Equals(0))
 		{
-			return this._ReturnInt16(this)
+			return this._ReturnUInt32(this)
 		}
 		_value := 0
 		try
@@ -1005,19 +1007,19 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (_value = 0)
 		{
-			return this._ReturnInt16(this)
+			return this._ReturnUInt32(this)
 		}
 		_newVal := this.Value * _value
 		_newVal := _newVal > 0?Floor(_newVal):Ceil(_newVal)
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
+		if ((_newVal < MfUInt32.MinValue) || (_newVal > MfUInt32.MaxValue)) {
 			ex := new MfArgumentOutOfRangeException("obj"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
+				, MfUInt32.MinValue, MfUInt32.MaxValue))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.Value := _newVal
-		return this._ReturnInt16(this)
+		return this._ReturnUInt32(this)
 
 	}
 ; 	End:Multiply ;}
@@ -1025,10 +1027,10 @@ Class MfInt16 extends MfPrimitive
 /*
 	Method: Parse()
 	
-	OutputVar := MfInt16.Parse(obj)
+	OutputVar := MfUInt32.Parse(obj)
 	
 	Parse(obj)
-		Converts the obj representation of a number to its MfInt16 equivalent
+		Converts the obj representation of a number to its MfUInt32 equivalent
 	Parameters
 		obj
 			An object convert.
@@ -1036,14 +1038,14 @@ Class MfInt16 extends MfPrimitive
 			Can be var containing string, integer
 			Can also be instance of MfParams.
 	Returns
-		Converts the obj representation of a number to its MfInt16 equivalent.
-		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfInt16;
+		Converts the obj representation of a number to its MfUInt32 equivalent.
+		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfUInt32;
 		Otherwise a var integer will be returned.
 	Remarks
 		Static Method
-		Converts the obj representation of a number to its MfInt16 equivalent.
+		Converts the obj representation of a number to its MfUInt32 equivalent.
 		If obj parameter is an Object then it must be instance from MfObject or be an instance of MfParams.
-		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfInt16;
+		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfUInt32;
 		otherwise a var integer will be returned.
 	Throws
 		Throws MfInvalidOperationException if not called as static method.
@@ -1067,22 +1069,22 @@ Class MfInt16 extends MfPrimitive
 			if (strP = "MfChar") {
 				c := objParams.Item[0]
 				if (MfChar.IsDigit(c)) {
-					retval := MfInt16.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
+					retval := MfUInt32.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
 				}
 			} else if (strP = "MfString") {
 				strV := objParams.Item[0].Value
 				if (RegExMatch(strV, "^\s*([-+]?\d{1,19})\s*$", match)) {
-					iVal := MfInt16.GetValue(match1)
-					if ((iVal >= MfInt16.MinValue) && (iVal <= MfInt16.MaxValue)) {
+					iVal := MfUInt32.GetValue(match1)
+					if ((iVal >= MfUInt32.MinValue) && (iVal <= MfUInt32.MaxValue)) {
 						retval := iVal
 					}
 				} else if (RegExMatch(strV, "i)^\s*(-?0x[0-9A-F]{1,16})\s*$", match)) {
-					iVal := MfInt16.GetValue(match1)
-					if ((iVal >= MfInt16.MinValue) && (iVal <= MfInt16.MaxValue)) {
+					iVal := MfUInt32.GetValue(match1)
+					if ((iVal >= MfUInt32.MinValue) && (iVal <= MfUInt32.MaxValue)) {
 						retval := iVal
 					}
 				}
-			} else if (strP = "MfInt16") {
+			} else if (strP = "MfUInt32") {
 				retval := objParams.Item[0].Value
 			}
 		} catch e {
@@ -1092,7 +1094,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (!MfNull.IsNull(retval)) {
 			if (objParams.Data.Contains("ReturnAsObject") && (objParams.Data.Item["ReturnAsObject"] = true)) {
-				return new MfInt16(retval, true)
+				return new MfUInt32(retval, true)
 			} else {
 				return retval
 			}
@@ -1110,18 +1112,18 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.Subtract(value)
 	
 	Subtract(value)
-		Subtracts MfInt16 value to current instance of MfInt16.
+		Subtracts MfUInt32 value to current instance of MfUInt32.
 	Parameters
 		value
 			The value to subtract from the current instance.
 			Can be any type that matches IsNumber or var integer.
 	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated value; Otherwise returns var containing integer.
+		If ReturnAsObject is true then returns current instance of MfUInt32 with an updated value; Otherwise returns var containing integer.
 	Throws
 		Throws MfNotSupportedException if Readonly is true.
 		Throws MfNullReferenceException if called as a static method
 		Throws MfArgumentNullException if value is null.
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfUInt32 and can not be converted into integer value.
 		Throws MfArgumentOutOfRangeException if adding value is less then Minvalue and greater than MaxValue
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
@@ -1147,15 +1149,15 @@ Class MfInt16 extends MfPrimitive
 			throw ex
 		}
 		_newVal := this.Value - _value
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
+		if ((_newVal < MfUInt32.MinValue) || (_newVal > MfUInt32.MaxValue)) {
 			ex := new MfArgumentOutOfRangeException("obj"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
+				, MfUInt32.MinValue, MfUInt32.MaxValue))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.Value := _newVal
-		return this._ReturnInt16(this)
+		return this._ReturnUInt32(this)
 	}
 ; End:Add() ;}
 ;{ 	ToString()			- Overrides	- MfPrimitive
@@ -1166,7 +1168,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.ToString()
 
 	ToString()
-		Gets a string representation of the MfInt16 instance.
+		Gets a string representation of the MfUInt32 instance.
 	Returns
 		Returns string var representing current instance Value.
 	Throws
@@ -1185,7 +1187,7 @@ Class MfInt16 extends MfPrimitive
 /*
 	Method: TryParse()
 	
-	OutputVar := MfInt16.TryParse(int, obj)
+	OutputVar := MfUInt32.TryParse(int, obj)
 	
 	TryParse(byref int, obj)
 		Converts the obj representation of a number to its Integer equivalent. A return value indicates whether the conversion succeeded.
@@ -1201,7 +1203,7 @@ Class MfInt16 extends MfPrimitive
 	Returns
 		Returns true if parse is a success; Otherwise false
 	Remarks
-		If parameter int is passed in as an object it must in initialized as an instance of MfInt16 first. Eg: myInt := new MfInt16(0)
+		If parameter int is passed in as an object it must in initialized as an instance of MfUInt32 first. Eg: myInt := new MfUInt32(0)
 		If parameter int is passed in as var it must in initialized as integer first. Eg: myInt := 0
 		White spaces are allowed at the beginning or end of the string to parse.
 		When parsing a MfChar instance the MfChar instance must be Numeric to parse successfully.
@@ -1216,11 +1218,11 @@ Class MfInt16 extends MfPrimitive
 		;~ }
 		_isObj := false
 		if (IsObject(Int)) {
-			if (MfObject.IsObjInstance(int, "MfInt16")) {
+			if (MfObject.IsObjInstance(int, "MfUInt32")) {
 				_isObj := true
 			} else {
-				; Int is an object but not an MfInt16 instance
-				; only MfInt16 is allowed as object
+				; Int is an object but not an MfUInt32 instance
+				; only MfUInt32 is allowed as object
 				return false
 			}
 			
@@ -1243,9 +1245,9 @@ Class MfInt16 extends MfPrimitive
 				c := objParams.Item[0]
 				if (MfChar.IsDigit(c)) {
 					if (_isObj = true) {
-						int.Value := MfInt16.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
+						int.Value := MfUInt32.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
 					} else {
-						int := MfInt16.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
+						int := MfUInt32.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
 					}
 					retval := true
 				}
@@ -1255,8 +1257,8 @@ Class MfInt16 extends MfPrimitive
 				strV := objParams.Item[0].Value
 				if (RegExMatch(strV, "^\s*([-+]?\d{1,19})\s*$", match))
 				{
-					iVal := MfInt16.GetValue(match1)
-					if ((iVal >= MfInt16.MinValue) && (iVal <= MfInt16.MaxValue))
+					iVal := MfUInt32.GetValue(match1)
+					if ((iVal >= MfUInt32.MinValue) && (iVal <= MfUInt32.MaxValue))
 					{
 						if (_isObj = true)
 						{
@@ -1269,8 +1271,8 @@ Class MfInt16 extends MfPrimitive
 				}
 				else if (RegExMatch(strV, "i)^\s*(-?0x[0-9A-F]{1,16})\s*$", match))
 				{
-					iVal := MfInt16.GetValue(match1)
-					if ((iVal >= MfInt16.MinValue) && (iVal <= MfInt16.MaxValue))
+					iVal := MfUInt32.GetValue(match1)
+					if ((iVal >= MfUInt32.MinValue) && (iVal <= MfUInt32.MaxValue))
 					{
 						if (_isObj = true)
 						{
@@ -1356,39 +1358,39 @@ Class MfInt16 extends MfPrimitive
 		return retval
 	}
 ; End:_uIntToInt(uInt) ;}
-;{ _ReturnInt16()
-; return MfInt16 intance if ReturnAsObject is true otherwise var containing Integer
-	_ReturnInt16(obj) {
-		if (MfObject.IsObjInstance(obj, MfInt16)) {
+;{ _ReturnUInt32()
+; return MfUInt32 intance if ReturnAsObject is true otherwise var containing Integer
+	_ReturnUInt32(obj) {
+		if (MfObject.IsObjInstance(obj, MfUInt32)) {
 			if (obj.ReturnAsObject) {
 				return obj
 			} else {
 				return obj.Value
 			}
 		}
-		retval := this.ReturnAsObject? new MfInt16(obj, true):obj
+		retval := this.ReturnAsObject? new MfUInt32(obj, true):obj
 		return retval
 	}
-; End:_ReturnInt16() ;}
+; End:_ReturnUInt32() ;}
 ; End:Methods ;}
 ;{ Properties
 ;{ 	MaxValue
 /*
 	Property: MaxValue [get]
-		Represents the largest possible value of an MfInt16. This field is constant.
+		Represents the largest possible value of an MfUInt32. This field is constant.
 	Value:
 		Var integer
 	Gets:
-		Gets the largest possible value of an MfInt16.
+		Gets the largest possible value of an MfUInt32.
 	Remarks:
 		Constant Property
-		Can be accessed using MfInt16.MaxValue
-		Value = 32767 (0x7FFF) hex
+		Can be accessed using MfUInt32.MaxValue
+		Value = 4294967295 (0xFFFFFFFF) hex
 */
 	MaxValue[]
 	{
 		get {
-			return 32767   ;  0x7FFF
+			return 4294967295   ;  0xFFFFFFFF
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -1400,19 +1402,19 @@ Class MfInt16 extends MfPrimitive
 ;{ 	MinValue
 /*
 	Property: MinValue [get]
-		Represents the smallest possible value of an MfInt16. This field is constant.
+		Represents the smallest possible value of an MfUInt32. This field is constant.
 	Value:
 		Var integer
 	Gets:
-		Gets the smallest possible value of an MfInt16.
+		Gets the smallest possible value of an MfUInt32.
 	Remarks:
-		Can be accessed using MfInt16.MinValue
-		Value = -32768 (0xFFFFFFFFFFFF8000) hex
+		Can be accessed using MfUInt32.MinValue
+		Value = 0 (0x0) hex
 */
 	MinValue[]
 	{
 		get {
-			return -32768 ; 0xFFFFFFFFFFFF8000
+			return 0 ; 0x0
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -1425,7 +1427,7 @@ Class MfInt16 extends MfPrimitive
 /*
 	Property: Value [get/set]
 		Overrides MfPrimitive.Value
-		Gets or sets the value associated with the this instance of MfInt16
+		Gets or sets the value associated with the this instance of MfUInt32
 	Value:
 		Value is a integer and can be var or any type that matches MfType.IsIntegerNumber.
 	Sets:
@@ -1444,7 +1446,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		set {
 			this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
-			Base.Value := MfInt16._GetValue(value)
+			Base.Value := MfUInt32._GetValue(value)
 			return Base.Value
 		}
 	}

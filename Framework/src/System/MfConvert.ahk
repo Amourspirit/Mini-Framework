@@ -641,6 +641,11 @@ class MfConvert extends MfObject
 		{
 			return obj.ToString()
 		}
+		If (IsObject(obj))
+		{
+			return ""
+		}
+		return obj
 		
 	}
 ; End:Methods ;}

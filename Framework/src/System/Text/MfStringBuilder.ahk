@@ -207,6 +207,29 @@ class MfStringBuilder extends MfObject
 		return this
 	}
 ; 	End:Clear ;}
+;{ 	CompareTo - Overrides MfObject CompareTo
+	; Compares current instance to obj instance
+	CompareTo(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(obj))
+		{
+			return 1
+		}
+		if(MfObject.IsObjInstance(obj, MfStringBuilder) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "obj", "StringBuilder"), "obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfObject.ReferenceEquals(this, obj))
+		{
+			return 0
+		}
+		thisMs := this._ToMemoryString()
+		ObjMs := obj._ToMemoryString()
+		return thisMs.CompareOrdinal(objMs, false)
+	}
+; 	End:CompareTo ;}
 ;{ 	CopyTo
 	; Copy chars of current instance to destination
 	; destination is instance of MfCharList
@@ -2385,6 +2408,25 @@ class MfStringBuilder extends MfObject
 		mStr.Char[index] := value
 	}
 ; 	End:_SetCharFromChunk ;}
+;{ 	_ToMemoryString
+	; gets a MfMemoryString Instance representing the current string value
+	; If current length is less then MaxChunkSize then merge will be called
+	; if only one chunk then that chunk MfMemoryString instance is returned
+	; otherwise a new MfMemoryString intance is returned from ToString() method
+	_ToMemoryString() {
+		if (this.m_ChunkOffset > 0 && this.Length < this.MaxChunkSize)
+		{
+			this._Merge()
+		}
+		if (this.m_ChunkOffset > 0)
+		{
+			str := this.ToString()
+			ms := new MfMemoryString(str, , this.m_Encoding)
+			return ms
+		}
+		return this.m_ChunkChars
+	}
+; 	End:_ToMemoryString ;}
 ;{ 	Constructor Helpers
 	_new() {
 		this._newInt(MfStringBuilder.DefaultCapacity)

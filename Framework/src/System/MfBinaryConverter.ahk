@@ -264,6 +264,91 @@ class MfBinaryConverter extends MfObject
 		throw ex
 	}
 ;{ GetBytes
+	;{ 	NumberComplement
+	; Gets Number Complement 1. Same as C# ~10 (equals -11) or ~60 (equals -61)
+	; If object is passed in then object is same type is passsed out
+	NumberComplement(obj) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (!IsObject(obj))
+		{
+			len := strLen(obj)
+			if (len = 0)
+			{
+				return ""
+			}
+			mStr := new MFMemoryString(len,,,&obj)
+			cc := mStr.CharCode[0]
+			IsNeg := false
+			if (cc = 45)
+			{
+				IsNeg := true
+			}
+			Nibbles := MfNibConverter.GetNibbles(obj)
+			bLst := MfNibConverter.ToBinaryList(Nibbles)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			bigx := MfBinaryConverter.ToBigInt(bLstFlipped, 0, true)
+			bigx.IsNegative := !IsNeg
+			return bigx.ToString()
+
+		}
+		; byte and bool are not support but byte could be converted to integer first
+		if (MfObject.IsObjInstance(obj, MfInt16))
+		{
+			blst := MfBinaryConverter._GetBytesInt(obj.Value, 16)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			newObj := MfBinaryConverter.ToInt16(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		else if (MfObject.IsObjInstance(obj, MfInteger))
+		{
+			bLst := MfBinaryConverter._GetBytesInt(obj.Value, 32)
+			; MSB := blst.Item[0]
+			; blst.RemoveAt(0)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			; bLstFlipped.Insert(0, !MSB)
+			newObj := MfBinaryConverter.ToInt32(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		else if (MfObject.IsObjInstance(obj, MfInt64))
+		{
+			bLst := MfBinaryConverter._GetBytesInt(obj.Value, 64)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			newObj := MfBinaryConverter.ToInt64(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		else if (MfObject.IsObjInstance(obj, MfUInt64))
+		{
+			bigx := obj.m_bigx
+			bLst := MfBinaryConverter._GetBytesBinary(bigx.ToString(2), 64)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			newObj := MfBinaryConverter.ToUInt64(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		else if (MfObject.IsObjInstance(obj, MfBigInt))
+		{
+			byteCount :=  obj.BitSize + 1 ; pad to allow for MSB
+			objNeg := obj.IsNegative
+			
+			while (mod(byteCount, 4))
+			{
+				byteCount++
+			}
+			bytes := MfBinaryConverter._GetBytesBinary(obj.ToString(2), byteCount)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bytes)
+			newObj := MfBinaryConverter.ToBigInt(bLstFlipped,,true)
+			newobj.IsNegative := !objNeg
+			return newObj
+		}
+
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:NumberComplement ;}
 ;{ 	Expand
 	; return a copy of x with at least n elements, adding leading zeros if needed
 	Expand(bits, n, UseMsb=true) {
@@ -1355,7 +1440,7 @@ class MfBinaryConverter extends MfObject
 			
 			return retval
 		}
-		return MfBigMathInt.BigInt2str(bitx, 10)
+		return MfBigMathInt.BigInt2str(bigx, 10)
 	}
 	Trim(bits, n=0, UseMsb=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)

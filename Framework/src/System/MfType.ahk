@@ -49,7 +49,9 @@ class MfType extends MfObject
 					,"MfEnum.EnumItem"
 					,"MfInt16"
 					,"MfUInt64"
-					,"MfBigInt")
+					,"MfBigInt"
+					,"MfUInt16"
+					,"MfUInt32")
 ;{ internal members	
 	m_TypeName	:= Null
 	m_TypeCode	:= Null
@@ -470,9 +472,24 @@ class MfType extends MfObject
 			this.m_TypeCode := MfType.TypeCodes[23]
 			return
 		}
-		if (obj.Is(MfType.TypeCodes[27])) {
+		if (obj.Is(MfType.TypeCodes[26])) {
 			this.m_TypeName := "MfUInt64"
 			this.m_TypeCode := MfType.TypeCodes[26]
+			return
+		}
+		if (obj.Is(MfType.TypeCodes[27])) {
+			this.m_TypeName := "MfBigInt"
+			this.m_TypeCode := MfType.TypeCodes[27]
+			return
+		}
+		if (obj.Is(MfType.TypeCodes[28])) {
+			this.m_TypeName := "MfUInt16"
+			this.m_TypeCode := MfType.TypeCodes[28]
+			return
+		}
+		if (obj.Is(MfType.TypeCodes[29])) {
+			this.m_TypeName := "MfUInt32"
+			this.m_TypeCode := MfType.TypeCodes[29]
 			return
 		}
 		; check for EnumItem before MfEnum
@@ -840,6 +857,7 @@ class MfType extends MfObject
 		}
 	}
 ;	End:IsInt32 ;}
+
 ;{	IsInt64
 	/*
 		Property: IsInt64 [get]
@@ -881,6 +899,46 @@ class MfType extends MfObject
 		}
 	}
 ;	End:IsInteger ;}
+;{	IsUInt16
+	/*
+		Property: IsUInt16 [get]
+			 Gets if the type is IsUInt16.
+		Remarks:
+			Read-only Property
+			Returns true if Type is IsUInt16; Otherwise false.
+	*/
+	IsUInt16[]
+	{
+		get {
+			return (this.m_TypeCode = MfType.TypeCodes[28])
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+;	End:IsUInt16 ;}
+;{	IsUInt32
+	/*
+		Property: IsUInt32 [get]
+			Gets if the type is IsUInt32.
+		Remarks:
+			Read-only Property
+			Returns true if Type is IsUInt32; Otherwise false.
+	*/
+	IsUInt32[]
+	{
+		get {
+			return (this.m_TypeCode = MfType.TypeCodes[29])
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+;	End:IsInt32 ;}
 ;{	IsUInt64
 	/*
 		Property: IsUInt64 [get]
@@ -940,6 +998,8 @@ class MfType extends MfObject
 					|| (this.m_TypeCode = MfType.TypeCodes[25]) ; MfInt16
 					|| (this.m_TypeCode = MfType.TypeCodes[22]) ; MfInt64
 					|| (this.m_TypeCode = MfType.TypeCodes[19]) ; MfEnum
+					|| (this.m_TypeCode = MfType.TypeCodes[28]) ; MfUInt16
+					|| (this.m_TypeCode = MfType.TypeCodes[29]) ; MfUInt32
 					|| (this.m_TypeCode = MfType.TypeCodes[24])) ; EnumItem
 				{
 					this.m_IsIntegerNumber := true

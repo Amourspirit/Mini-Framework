@@ -66,7 +66,11 @@
  *	TrimStart() Trims TrimChars or whitespace from this instance end
  *	
  *	Properties
- *	Byte - Gets the Byte value at the value of index
+ *	Byte[index] - Gets/sets the Byte value at the value of index / limited to size and not char count
+ *	Char[index] - Gets/Sets the Char at the value of index / limited to size and not char count
+ *	CharPos - Gets or sets the CharPos value associated with the this instance
+ *	CharCode[index] - Gets/Sets the CharCode at the value of index / limited to size and not char count
+ *	BytesPerChar - Gets the Bytes Per Char value associated with the this instance
  *	BufferPtr - Gets the Buffer memory addres pointer for this instance
  *	Length - Gets the length of the current instance chars
  *	Capacity - Gets the Size of the current instance in bytes
@@ -2640,20 +2644,21 @@ class MfMemoryString extends MfObject
 		{
 			get {
 				_index := MfInteger.GetValue(index)
-				if (_index < 0 || _index >= this.m_CharCount)
+				_index := _index * this.m_BytesPerChar
+				if (_index < 0 || _index > this.m_MemView.Size)
 				{
 					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				_index := _index * this.m_BytesPerChar
 				ptr :=  this.m_MemView[] + _index
 				num := NumGet(ptr + 0, 0, this.m_sType)
 				return num
 			}
 			set {
 				_index := MfInteger.GetValue(index)
-				if (_index < 0 || _index >= this.m_CharCount)
+				_index := _index * this.m_BytesPerChar
+				if (_index < 0 || _index > this.m_MemView.Size)
 				{
 					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -2689,7 +2694,6 @@ class MfMemoryString extends MfObject
 						throw ex
 					}
 				}
-				_index := _index * this.m_BytesPerChar
 				ptr :=  this.m_MemView[] + _index
 				NumPut(_value, ptr+0, 0, this.m_sType)
 			}
@@ -2708,13 +2712,14 @@ class MfMemoryString extends MfObject
 		{
 			get {
 				_index := MfInteger.GetValue(index)
-				if (_index < 0 || _index >= this.m_CharCount)
+				_index := _index * this.m_BytesPerChar
+				if (_index < 0 || _index > this.m_MemView.Size)
 				{
 					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				_index := _index * this.m_BytesPerChar
+				
 				ptr :=  this.m_MemView[] + _index
 				num := NumGet(ptr + 0, 0, this.m_sType)
 				if (num = 0)
@@ -2725,19 +2730,39 @@ class MfMemoryString extends MfObject
 			}
 			set {
 				_index := MfInteger.GetValue(index)
-				if (_index < 0 || _index >= this.m_CharCount)
+				_index := _index * this.m_BytesPerChar
+				if (_index < 0 || _index > this.m_MemView.Size)
 				{
 					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				_index := _index * this.m_BytesPerChar
 				ptr :=  this.m_MemView[] + _index
 				NumPut(Asc(value), ptr + 0, 0, this.m_sType)
 			}
 		}
 	; End:Char ;}
-
+	;{ BytesPerChar
+		/*!
+			Property: BytesPerChar [get]
+				Gets the Bytes Per Char value associated with the this instance
+			Value:
+				Var integer
+			Remarks:
+				Readonly Property
+		*/
+		BytesPerChar[]
+		{
+			get {
+				return this.m_MemView.m_BytesPerChar
+			}
+			set {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+				ex.SetProp(A_LineFile, A_LineNumber, "BytesPerChar")
+				Throw ex
+			}
+		}
+	; End:BytesPerChar ;}
 	;{ Pos
 		/*!
 			Property: Pos [get/set]
@@ -2745,9 +2770,13 @@ class MfMemoryString extends MfObject
 			Value:
 				Var  integer representing the Pos property of the instance
 			Throws:
-				Throws MfIndexOutOfRangeException
+				Set Throws MfIndexOutOfRangeException
 			Remarks:
-				Changing the value Pos can affect the ToString() and other methods
+				Changing the value Pos can affect the ToString() and other methods.
+				Changing the pos will also affect the length reported by the length Property
+				For utf-8 Pos will be usually be one greater than the length of the string to include
+				null terminator.
+				For utf-16 however there are two bytes per char and then pos will be (this.length + 1) * 2 by default
 		*/
 		Pos[]
 		{
@@ -2769,10 +2798,65 @@ class MfMemoryString extends MfObject
 					throw ex
 				}
 				this.m_MemView.Pos := pos
+				this.m_CharCount := this.m_MemView.GetCharCount()
 				
 			}
 		}
 	; End:Pos ;}
+	;{ CharPos
+		/*!
+			Property: CharPos [get/set]
+				Gets or sets the CharPos value associated with the this instance
+			Value:
+				Var integer representing the Char Positions property of the instance
+			Throws:
+				Set Throws MfIndexOutOfRangeException
+			Remarks:
+				Changing the value Pos can affect the ToString() and other methods
+				Char Positions is similar to Pos except CharPos will be the actual end location of the string,
+				usually including null char terminator as well. In Most all cases and by default CharPos will
+				be 1 greater then the length
+				Changing the char pos will also affect the length reported by the length Property
+				Setting the CharPos to a smaller number is similar to substring(0, newLength).
+				It is possible to set the CharPos to a lesser value without loosing data if the MfMemoryString instance
+				is not otherwise modified.
+			Example:
+				mStr := new MfMemoryString(25)
+				mStr.Append("Hello World")
+				MsgBox % mStr.ToString() ; displays: Hello World
+				iPos := mStr.CharPos
+				mStr.CharPos -= 6
+				MsgBox % mStr.ToString() ; displays: Hello
+				mStr.CharPos := iPos
+				MsgBox % mStr.ToString() ; displays: Hello World
+		*/
+		CharPos[]
+		{
+			get {
+				BytesPerChar := this.m_MemView.m_BytesPerChar
+				return this.m_MemView.Pos // BytesPerChar
+			}
+			set {
+				BytesPerChar := this.m_MemView.m_BytesPerChar
+				pos := MfInteger.GetValue(Value)
+				if (pos < 0)
+				{
+					ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NeedNonNegNum"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				pos := pos * BytesPerChar
+				if (Pos > this.m_MemView.Size)
+				{
+					ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_ArrayListInsert"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				this.m_MemView.Pos := pos
+				this.m_CharCount := this.m_MemView.GetCharCount()
+			}
+		}
+	; End:CharPos ;}
 	;{ Size
 		/*!
 			Property: Size [get]
@@ -6509,7 +6593,7 @@ class MfMemStrView extends MfMemBlkView
 			}
 			if (i <= 0)
 			{
-				return objA.Pos - objB.Pos
+				return (objA.Pos - objB.Pos) // BytesPerChar
 			}
 			result := NumGet(ptrA + 0, 0, sType) - NumGet(ptrB + 0, 0, sType)
 			if (result != 0)
