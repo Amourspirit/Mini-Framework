@@ -190,7 +190,15 @@ class MfByteConverter extends MfObject
 			{
 				return MfByteConverter._GetBytesInt(obj.Value, 16)
 			}
+			else if (MfObject.IsObjInstance(obj, MfUInt16))
+			{
+				return MfByteConverter._GetBytesInt(obj.Value, 16)
+			}
 			else if (MfObject.IsObjInstance(obj, MfInteger))
+			{
+				return MfByteConverter._GetBytesInt(obj.Value, 32)
+			}
+			else if (MfObject.IsObjInstance(obj, MfUInt32))
 			{
 				return MfByteConverter._GetBytesInt(obj.Value, 32)
 			}
@@ -442,26 +450,29 @@ class MfByteConverter extends MfObject
 		}
 
 		bArray := new MfByteList()
+		bya := bytes.m_InnerList
 		i := 0
 		while i < 2
 		{
-			index := i + _startIndex
-			itm := bytes.Item[index]
-			bArray.Add(itm)
+			index := i + _startIndex + 1
+			itm := bya[index]
+			bArray._Add(itm)
 			i++
 		}
 		if (MfByteConverter.IsLittleEndian)
 		{
 			bArray := MfByteConverter._SwapBytes(bArray)
 		}
-		retval := "0x"
+		sb := new MfText.StringBuilder()
+		
 		HexKey := MfByteConverter._GetFirstHexNumber(bArray.Item[0])
 		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
 		{
-			retval := "-" . retval
-			for i, b in bArray
+			ba := bArray.m_InnerList
+			sb.Append("-")
+			for i, b in ba
 			{
 				Hex1 := MfByteConverter._GetFirstHexNumber(b)
 				Hex2 := MfByteConverter._GetSecondHexNumber(b)
@@ -469,19 +480,20 @@ class MfByteConverter extends MfObject
 				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
 				FlipHex := FlipHex + 0x0
-				bArray.Item[i] := FlipHex
+				ba[i] := FlipHex
 			}
 		}
-
+		sb.Append("0x")
 		for i , b in bArray
 		{
 
 			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
 			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
-
-			retval .= HexChar1 . HexChar2
+			sb.Append(HexChar1)
+			sb.Append(HexChar2)
 		}
-		retval := retval + 0x0
+		retval := sb.ToString() + 0x0
+		sb := ""
 		if (IsNeg)
 		{
 			retval := retval - 0x1
@@ -498,6 +510,7 @@ class MfByteConverter extends MfObject
 		return retval
 	}
 ; End:ToInt16 ;}
+
 ;{ ToInt32
 	ToInt32(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -529,26 +542,28 @@ class MfByteConverter extends MfObject
 			throw ex
 		}
 		bArray := new MfByteList()
+		bInLst := bytes.m_InnerList
 		i := 0
 		while i < 4
 		{
-			index := i + _startIndex
-			itm := bytes.Item[index]
-			bArray.Add(itm)
+			index := i + _startIndex + 1
+			itm := bInLst[index]
+			bArray._Add(itm)
 			i++
 		}
 		if (MfByteConverter.IsLittleEndian)
 		{
 			bArray := MfByteConverter._SwapBytes(bArray)
 		}
-		retval := "0x"
+		sb := new MfText.StringBuilder()
 		HexKey := MfByteConverter._GetFirstHexNumber(bArray.Item[0])
 		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
 		{
-			retval := "-" . retval
-			for i, b in bArray
+			ba := bArray.m_InnerList
+			sb.Append("-")
+			for i, b in ba
 			{
 				Hex1 := MfByteConverter._GetFirstHexNumber(b)
 				Hex2 := MfByteConverter._GetSecondHexNumber(b)
@@ -556,19 +571,20 @@ class MfByteConverter extends MfObject
 				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
 				FlipHex := FlipHex + 0x0
-				bArray.Item[i] := FlipHex
+				ba[i] := FlipHex
 			}
 		}
-
+		sb.Append("0x")
 		for i , b in bArray
 		{
 
 			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
 			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
-
-			retval .= HexChar1 . HexChar2
+			sb.Append(HexChar1)
+			sb.Append(HexChar2)
 		}
-		retval := retval + 0x0
+		retval := sb.ToString() + 0x0
+		sb := ""
 		if (IsNeg)
 		{
 			retval := retval - 0x1
@@ -616,26 +632,28 @@ class MfByteConverter extends MfObject
 			throw ex
 		}
 		bArray := new MfByteList()
+		bInLst := bytes.m_InnerList
 		i := 0
 		while i < 8
 		{
-			index := i + _startIndex
-			itm := bytes.Item[index]
-			bArray.Add(itm)
+			index := i + _startIndex + 1
+			itm := bInLst[index]
+			bArray._Add(itm)
 			i++
 		}
 		if (MfByteConverter.IsLittleEndian)
 		{
 			bArray := MfByteConverter._SwapBytes(bArray)
 		}
-		retval := "0x"
+		sb := new MfText.StringBuilder(20)
 		HexKey := MfByteConverter._GetFirstHexNumber(bArray.Item[0])
 		bInfo := MfNibConverter.HexBitTable[HexKey]
 		IsNeg := bInfo.IsNeg
 		if (IsNeg)
 		{
-			retval := "-" . retval
-			for i, b in bArray
+			sb.Append("-")
+			ba := bArray.m_InnerList
+			for i, b in ba
 			{
 				Hex1 := MfByteConverter._GetFirstHexNumber(b)
 				Hex2 := MfByteConverter._GetSecondHexNumber(b)
@@ -643,19 +661,20 @@ class MfByteConverter extends MfObject
 				bInfo2 := MfNibConverter.HexBitTable[Hex2]
 				FlipHex := "0x" . bInfo1.HexFlip . bInfo2.HexFlip
 				FlipHex := FlipHex + 0x0
-				bArray.Item[i] := FlipHex
+				ba[i] := FlipHex
 			}
 		}
-
+		sb.Append("0x")
 		for i , b in bArray
 		{
 
 			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
 			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
-
-			retval .= HexChar1 . HexChar2
+			sb.Append(HexChar1)
+			sb.Append(HexChar2)
 		}
-		retval := retval + 0x0
+		retval := sb.ToString() + 0x0
+		sb := ""
 		if (IsNeg)
 		{
 			retval := retval - 0x1
@@ -667,6 +686,201 @@ class MfByteConverter extends MfObject
 		return retval
 	}
 ; End:ToInt64 ;}
+;{ 	ToUInt16
+	ToUInt16(bytes, startIndex = 0, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_startIndex := MfInt64.GetValue(startIndex, 0)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		if (_startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_startIndex >= (bytes.Count - 1))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		bArray := new MfByteList()
+		i := 0
+		while i < 2
+		{
+			index := i + _startIndex
+			itm := bytes.Item[index]
+			bArray.Add(itm)
+			i++
+		}
+		if (MfByteConverter.IsLittleEndian)
+		{
+			bArray := MfByteConverter._SwapBytes(bArray)
+		}
+
+		sb := new MfText.StringBuilder()
+		sb.Append("0x")
+		
+		for i , b in bArray
+		{
+
+			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
+			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
+			sb.Append(HexChar1)
+			sb.Append(HexChar2)
+		}
+		retval := sb.ToString() + 0x0
+		
+		if ((retval < MfUInt16.MinValue) || (retval > MfUInt16.MaxValue)) {
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt16"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_ReturnAsObj)
+		{
+			return new MfUInt16(retval)
+		}
+		return retval
+	}
+; 	End:ToUInt16 ;}
+;{ 	ToUInt32
+	ToUInt32(bytes, startIndex = 0, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_startIndex := MfInt64.GetValue(startIndex, 0)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		iMaxIndex := bytes.Count - 1
+		if (_startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_startIndex >= (bytes.Count - 3))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		bArray := new MfByteList()
+		ba := bytes.m_InnerList
+		i := 0
+		while i < 4
+		{
+			index := i + _startIndex + 1
+			itm := ba[index]
+			bArray._Add(itm)
+			i++
+		}
+		if (MfByteConverter.IsLittleEndian)
+		{
+			bArray := MfByteConverter._SwapBytes(bArray)
+		}
+		sb := new MfText.StringBuilder(16)
+		sb.Append("0x")
+		
+
+		for i , b in bArray
+		{
+
+			HexChar1 := MfByteConverter._GetFirstHexNumber(b)
+			HexChar2 := MfByteConverter._GetSecondHexNumber(b)
+			sb.Append(HexChar1)
+			sb.Append(HexChar2)
+
+		}
+		retval := sb.ToString() + 0x0
+		sb := ""
+		
+		if ((retval < MfUInt32.MinValue) || (retval > MfUInt32.MaxValue)) {
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_ReturnAsObj)
+		{
+			return new MfUInt32(retval)
+		}
+		return retval
+	}
+; 	End:ToUInt32 ;}
+;{ ToUInt64
+	ToUInt64(bytes, startIndex = 0, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(bytes.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_startIndex := MfInt64.GetValue(startIndex, 0)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		iMaxIndex := bytes.Count - 1
+		if (_startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_startIndex >= (bytes.Count - 7))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		bArray := new MfByteList()
+		ba := bytes.m_InnerList
+		i := 0
+		while i < 8
+		{
+			index := i + _startIndex + 1
+			itm := ba[index]
+			bArray._Add(itm)
+			i++
+		}
+		if (MfByteConverter.IsLittleEndian)
+		{
+			;bArray := MfByteConverter._SwapBytes(bArray)
+		}
+		retval := MfByteConverter._LongHexArrayToLongInt(bArray)
+		
+		if (_ReturnAsObj)
+		{
+			return new MfUInt64(retval)
+		}
+		return retval
+	}
+; End:ToUInt64 ;}
+;{ 	ToBigInt
 	ToBigInt(bytes, startIndex=0 , Length=-1, ReturnAsObj=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
@@ -711,6 +925,7 @@ class MfByteConverter extends MfObject
 
 
 	}
+; 	End:ToBigInt ;}
 ;{ ToFloat
 	ToFloat(bytes, startIndex = 0, ReturnAsObj = false) {
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
@@ -724,58 +939,7 @@ class MfByteConverter extends MfObject
 		return retval
 	}
 ; End:ToFloat ;}
-;{ ToUInt64
-	ToUInt64(bytes, startIndex = 0, ReturnAsObj = false) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if(MfObject.IsObjInstance(bytes, MfByteList) = false)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "bytes"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if(bytes.Count = 0)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bytes"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		_startIndex := MfInt64.GetValue(startIndex, 0)
-		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		iMaxIndex := bytes.Count - 1
-		if (_startIndex < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("startIndex")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (_startIndex >= (bytes.Count - 7))
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		bArray := new MfByteList()
-		i := 0
-		while i < 8
-		{
-			index := i + _startIndex
-			itm := bytes.Item[index]
-			bArray.Add(itm)
-			i++
-		}
-		if (MfByteConverter.IsLittleEndian)
-		{
-			;bArray := MfByteConverter._SwapBytes(bArray)
-		}
-		retval := MfByteConverter._LongHexArrayToLongInt(bArray)
-		
-		if (_ReturnAsObj)
-		{
-			return new MfUInt64(retval)
-		}
-		return retval
-	}
-; End:ToUInt64 ;}
+
 ;{ 	ToIntegerString
 	ToIntegerString(bytes, startIndex=0) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -839,13 +1003,13 @@ class MfByteConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		
-		retval := ""
-		i := _startIndex
+		sb := new MfText.StringBuilder((_length * 2) + 1)
+		i := _startIndex + 1
 		iCount := 0
-		while i < _length
+		bInLst := bytes.m_InnerList
+		while i <= _length
 		{
-			b := bytes.Item[i]
+			b := bInLst[i]
 			bit1 := b // 16
 			bit2 := Mod(b, 16)
 			bitChar1 := MfByteConverter._GetHexValue(bit1)
@@ -853,17 +1017,19 @@ class MfByteConverter extends MfObject
 
 			if (iCount > 0)
 			{
-				retval .= "-" . bitChar1 . bitChar2
+				sb.Append("-")
+				sb.Append(bitChar1)
+				sb.Append(bitChar2)
 			}
 			Else
 			{
-				retval .= bitChar1 . bitChar2
+				sb.Append(bitChar1)
+				sb.Append(bitChar2)
 			}
 			i++
 			iCount++
 		}
-		
-		return _returnAsObj = true?new MfString(retval):retval
+		return _returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
 ; End:ToString ;}
 	Trim(bytes, n=0, UseMsb=true) {

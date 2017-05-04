@@ -352,19 +352,19 @@ class MfNibbleList extends MfListBase
 		{
 			return this._ToByteArrayString(_returnAsObj, _startIndex, _length)
 		}
-		retval := ""
+		sb := new MfText.StringBuilder(_length)
 		i := _startIndex
 		iMaxIndex := _length - 1
 		ll := this.m_InnerList
 		while i <= iMaxIndex
 		{
 			n := ll[i + 1]
-			hexChar := MfBitConverter._GetHexValue(n)
-			retval .= hexChar
+			hexChar := MfByteConverter._GetHexValue(n)
+			sb.Append(hexChar)
 			i++
 		}
 		
-		return _returnAsObj = true?new MfString(retval):retval
+		return _returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
 ; 	End:ToString ;}
 ;{ 	SubList
@@ -378,10 +378,10 @@ class MfNibbleList extends MfListBase
 	;		The position where to start the extraction. First element is at index 0
 	;	endIndex
 	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
-	SubList(startIndex=0, endIndex="", leftToRight=false) {
+	SubList(startIndex=0, endIndex="", leftToRight=true) {
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
-		leftToRight := MfBool.GetValue(leftToRight, false)
+		leftToRight := MfBool.GetValue(leftToRight, true)
 		maxIndex := this.Count - 1
 		
 		IsEndIndex := true
@@ -422,15 +422,16 @@ class MfNibbleList extends MfListBase
 		}
 		if (IsEndIndex = true)
 		{
-			len :=  endIndex - startIndex
-			if ((len + 1) >= this.Count)
+			len := ((endIndex + 1) - startIndex)
+			len := len > 0 ? len: 0
+			if (len >= this.m_Count)
 			{
 				return this.Clone()
 			}
 		}
 		else
 		{
-			len := maxIndex
+			len := maxIndex + 1
 		}
 		rLst := new MfNibbleList()
 		rl := rLst.m_InnerList
@@ -448,40 +449,21 @@ class MfNibbleList extends MfListBase
 			return rLst
 		}
 		
-
-		i := 1
-		iCount := 0
-		if (IsEndIndex = true)
+		i := startIndex
+		cnt := this.m_Count
+		j := 1
+		While (j <= len)
 		{
-			While ((iCount + len) < (this.Count - 1))
-			{
-				iCount++
-			}
-		}
-		else
-		{
-			While ((iCount + (len - startIndex)) < (this.Count - 1))
-			{
-				iCount++
-			}
-			iCount := this.m_Count - iCount
-		}
-			
-		
-		while iCount < this.m_Count
-		{
-			iCount++
-			rl[i] := ll[iCount]
+			rl[j++] := ll[cnt - i]
 			i++
-			
 		}
-		rLst.m_Count := i - 1
+		rLst.m_Count := len
 		return rLst
-
+		
 	}
 ; 	End:SubList ;}
 	_ToByteArrayString(returnAsObj, startIndex, length) {
-		retval := ""
+		sb := new MfText.StringBuilder(length * 3)
 		i := startIndex
 		iMaxIndex := length -1
 		len := iMaxIndex - startIndex
@@ -490,30 +472,30 @@ class MfNibbleList extends MfListBase
 		If ((length & 1) && (iMaxIndex >= 0))
 		{
 			MSB := ll[1]
-			HexChar := MfNibConverter._GetHexValue(MSB)
+			HexChar := MfByteConverter._GetHexValue(MSB)
 			mInfo := MfNibConverter.HexBitTable[HexChar]
 			if (mInfo.IsNeg)
 			{
-				retval .= "FF-"
+				sb.Append("FF-")
 			}
 			else
 			{
-				retval .= "0"
-				retval .= HexChar
-				retval .= "-"
+				sb.Append("0")
+				sb.Append(HexChar)
+				sb.Append("-")
 			}
 			i++
 		}
 		while i <= iMaxIndex
 		{
 			bit1 := ll[i + 1]
-			bitChar1 := MfBitConverter._GetHexValue(bit1)
+			bitChar1 := MfByteConverter._GetHexValue(bit1)
 			bit2 := -1
 			j := i + 1
 			if ( i < iMaxIndex)
 			{
 				bit2 := ll[j + 1]
-				bitChar2 := MfBitConverter._GetHexValue(bit2)
+				bitChar2 := MfByteConverter._GetHexValue(bit2)
 			}
 			
 			if (bit2 > -1)
@@ -523,34 +505,34 @@ class MfNibbleList extends MfListBase
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
 					iChunk := 0
-					retval .= "-"
+					sb.Append("-")
 				}
 				retval .= bitChar2
 				iChunk++
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
 					iChunk := 0
-					retval .= "-"
+					sb.Append("-")
 				}
 			}
 			else
 			{
 				if (j >= iMaxIndex)
 				{
-					retval .= "0"
+					sb.Append("0")
 				}
 				retval .= bitChar1
 				iChunk++
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
 					iChunk := 0
-					retval .= "-"
+					sb.Append("-")
 				}
 			}
 			i += 2
 		}
 		
-		return returnAsObj = true?new MfString(retval):retval
+		return returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
 	_AutoIncrease()
 	{

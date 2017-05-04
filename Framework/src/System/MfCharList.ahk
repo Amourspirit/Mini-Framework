@@ -113,7 +113,7 @@ class MfCharList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		return this._add(_value)
+		return this._Add(_value)
 	}
 	AddString(str, startIndex=0, length=-1) {
 		ms := MfMemoryString.FromAny(str, this.m_Encoding)
@@ -142,8 +142,7 @@ class MfCharList extends MfListBase
 ;{ 	_Add
 	_Add(int) {
 		
-		this.m_Count++
-		this.m_InnerList[this.m_Count] := int
+		base._Add(int)
 		If (this.m_FirstNullChar = -1 && MfMemStrView.IsIgnoreCharLatin1(int))
 		{
 			this.m_FirstNullChar := this.m_Count - 1

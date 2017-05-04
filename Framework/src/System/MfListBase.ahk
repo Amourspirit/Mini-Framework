@@ -88,12 +88,18 @@ class MfListBase extends MfEnumerableBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		return this._Add(obj)
+	}
+;	End:Add(value) ;}
+;{ 	_Add
+	; internal method
+	_Add(obj) {
 		this.m_Count++
 		this.m_InnerList[this.m_Count] := obj
 		
 		return this.m_Count
 	}
-;	End:Add(value) ;}
+; 	End:_Add ;}
 ;{ 	Clear()				- Overrides - MfListBase
 /*
 	Method: Clear()

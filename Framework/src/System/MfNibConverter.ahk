@@ -60,7 +60,15 @@ class MfNibConverter extends MfObject
 			{
 				return MfNibConverter._GetBytesInt(obj.Value, 16)
 			}
+			else if (MfObject.IsObjInstance(obj, MfUInt16))
+			{
+				return MfNibConverter._GetBytesInt(obj.Value, 16)
+			}
 			else if (MfObject.IsObjInstance(obj, MfInteger))
+			{
+				return MfNibConverter._GetBytesInt(obj.Value, 32)
+			}
+			else if (MfObject.IsObjInstance(obj, MfUInt32))
 			{
 				return MfNibConverter._GetBytesInt(obj.Value, 32)
 			}
@@ -472,6 +480,92 @@ class MfNibConverter extends MfObject
 		return bInfo.IsNeg
 	}
 ; 	End:IsNegative ;}
+	NumberComplement(obj) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (!IsObject(obj))
+		{
+			len := strLen(obj)
+			if (len = 0)
+			{
+				return ""
+			}
+			mStr := new MFMemoryString(len,,,&obj)
+			cc := mStr.CharCode[0]
+			IsNeg := false
+			if (cc = 45)
+			{
+				IsNeg := true
+			}
+			Nibbles := MfNibConverter.GetNibbles(obj)
+			bLst := MfNibConverter.ToBinaryList(Nibbles)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			bigx := MfBinaryConverter.ToBigInt(bLstFlipped, 0, true)
+			bigx.IsNegative := !IsNeg
+			return bigx.ToString()
+
+		}
+		; byte and bool are not support but byte could be converted to integer first
+		if (MfObject.IsObjInstance(obj, MfInt16))
+		{
+			Nibbles := MfNibConverter.GetNibbles(obj)
+			bLstFlipped := MfNibConverter.ToComplement15(Nibbles)
+			newObj := MfNibConverter.ToInt16(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		if (MfObject.IsObjInstance(obj, MfUInt16))
+		{
+			Nibbles := MfNibConverter.GetNibbles(obj)
+			bLstFlipped := MfNibConverter.ToComplement15(Nibbles)
+			newObj := MfNibConverter.ToUInt16(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		if (MfObject.IsObjInstance(obj, MfInteger))
+		{
+			Nibbles :=  MfNibConverter.GetNibbles(obj)
+			bLstFlipped := MfNibConverter.ToComplement15(Nibbles)
+			newObj := MfNibConverter.ToInt32(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		if (MfObject.IsObjInstance(obj, MfUInt32))
+		{
+			Nibbles :=  MfNibConverter.GetNibbles(obj)
+			bLstFlipped := MfNibConverter.ToComplement15(Nibbles)
+			newObj := MfNibConverter.ToUInt32(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		if (MfObject.IsObjInstance(obj, MfInt64))
+		{
+			Nibbles :=  MfNibConverter.GetNibbles(obj)
+			bLstFlipped := MfNibConverter.ToComplement15(Nibbles)
+			newObj := MfNibConverter.ToInt64(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		if (MfObject.IsObjInstance(obj, MfUInt64))
+		{
+			Nibbles :=  MfNibConverter.GetNibbles(obj)
+			bLstFlipped := MfNibConverter.ToComplement15(Nibbles)
+			newObj := MfNibConverter.ToUInt64(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		if (MfObject.IsObjInstance(obj, MfBigInt))
+		{
+			Nibbles :=  MfNibConverter.GetNibbles(obj)
+			bLstFlipped := MfNibConverter.ToComplement15(Nibbles)
+			newObj := MfNibConverter.ToBigInt(bLstFlipped,,,true)
+			newobj.IsNegative := !obj.IsNegative
+			return newObj
+		}
+
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
 ;{ 	ToBool
 	ToBool(nibbles, startIndex = -1, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -615,17 +709,18 @@ class MfNibConverter extends MfObject
 		}
 		retval := ""
 		iCount := 0
-		i := _startIndex
+		i := _startIndex + 1
 		IsNeg := false
-		while iCount < nCount
+		inLst := nibbles.m_InnerList
+		while iCount <= nCount
 		{
-			HexKey := MfNibConverter._GetHexValue(nibbles.Item[i])
+			HexKey := MfNibConverter._GetHexValue(inLst[i])
 			if (iCount = 0)
 			{
 				bInfo := MfNibConverter.HexBitTable[HexKey]
 				IsNeg := bInfo.IsNeg
 			}
-			retval .= MfNibConverter._GetHexValue(nibbles.Item[i])
+			retval .= MfNibConverter._GetHexValue(inLst[i])
 			iCount++
 			i++
 		}
@@ -694,17 +789,18 @@ class MfNibConverter extends MfObject
 		}
 		retval := ""
 		iCount := 0
-		i := _startIndex
+		i := _startIndex + 1
 		IsNeg := false
-		while iCount < nCount
+		inLst := nibbles.m_InnerList
+		while iCount <= nCount
 		{
-			HexKey := MfNibConverter._GetHexValue(nibbles.Item[i])
+			HexKey := MfNibConverter._GetHexValue(inLst[i])
 			if (iCount = 0)
 			{
 				bInfo := MfNibConverter.HexBitTable[HexKey]
 				IsNeg := bInfo.IsNeg
 			}
-			retval .= MfNibConverter._GetHexValue(nibbles.Item[i])
+			retval .= MfNibConverter._GetHexValue(inLst[i])
 			iCount++
 			i++
 		}
@@ -828,6 +924,128 @@ class MfNibConverter extends MfObject
 		return retval
 	}
 ; 	End:ToInt64 ;}
+;{ 	ToUInt16
+	ToUInt16(nibbles, startIndex = -1, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nCount := 4 ; Number of nibbles needed for conversion
+		if (nibbles.Count < nCount)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		MaxStartIndex := nibbles.Count - nCount
+		_startIndex := MfInteger.GetValue(startIndex, -1)
+		if (_startIndex < 0)
+		{
+			_startIndex := MaxStartIndex
+		}
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		sb := new MfText.StringBuilder()
+		sb.Append("0x")
+		iCount := 0
+		i := _startIndex + 1
+		inLst := nibbles.m_InnerList
+		while iCount <= nCount
+		{
+			HexKey := MfNibConverter._GetHexValue(inLst[i])
+			sb.Append(HexKey)
+			iCount++
+			i++
+		}
+		retval := sb.Tostring() + 0x0
+		sb := ""
+		if ((retval < MfUInt16.MinValue) || (retval > MfUInt16.MaxValue)) {
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt16"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_ReturnAsObj)
+		{
+			return new MfUInt16(retval)
+		}
+		return retval
+	}
+; 	End:ToUInt16 ;}
+;{ 	ToUInt32
+	ToUInt32(nibbles, startIndex = -1, ReturnAsObj = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(nibbles.Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		nCount := 8 ; Number of nibbles needed for conversion
+		if (nibbles.Count < nCount)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		MaxStartIndex := nibbles.Count - nCount
+		_startIndex := MfInteger.GetValue(startIndex, -1)
+		if (_startIndex < 0)
+		{
+			_startIndex := MaxStartIndex
+		}
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		sb := new MfText.StringBuilder()
+		sb.Append("0x")
+		iCount := 0
+		i := _startIndex + 1
+		inLst := nibbles.m_InnerList
+		while iCount <= nCount
+		{
+			HexKey := MfNibConverter._GetHexValue(inLst[i])
+			sb.Append(HexKey)
+			iCount++
+			i++
+		}
+		retval := sb.ToString() + 0x0
+		if ((retval < MfUInt32.MinValue) || (retval > MfUInt32.MaxValue)) {
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_ReturnAsObj)
+		{
+			return new MfUInt32(retval)
+		}
+		return retval
+	}
+; 	End:ToUInt32 ;}
+;{ 	ToUInt64
 	ToUInt64(nibbles, startIndex = -1, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
@@ -879,6 +1097,8 @@ class MfNibConverter extends MfObject
 		}
 		return bigInt.Value
 	}
+; 	End:ToUInt64 ;}
+;{ 	ToBigInt
 	ToBigInt(nibbles, startIndex=0 , Length=-1, ReturnAsObj=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
@@ -905,17 +1125,17 @@ class MfNibConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		
-		if (_startIndex < ((nibbles.Count - _startIndex ) - Length))
+		;~ if (_startIndex < ((nibbles.Count - _startIndex ) - Length))
+		if ((nibbles.Count - Length ) < _startIndex)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 
-		if (_startIndex > 0 && Length != nibbles.Count)
+		if (_startIndex > 0 || Length != nibbles.m_Count)
 		{
-			nibbles := nibbles.SubList(startIndex, Length - 1)
+			nibbles := nibbles.SubList(startIndex, startIndex + Length)
 		}
 		
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
@@ -937,6 +1157,7 @@ class MfNibConverter extends MfObject
 		}
 		Return retval.Value
 	}
+; 	End:ToBigInt ;}
 ;{ 	ToBinaryList
 	ToBinaryList(nList) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)

@@ -1629,7 +1629,7 @@ class MfBigMathInt extends MfObject
 	; convert a bigInt into a string in a given base, from base 2 up to base 95.
 	;Base -1 prints the contents of the array representing the number.
 	BigInt2str(x, base) {
-		s := ""
+		sb := new MfText.StringBuilder(64)
 		xl := x.m_InnerList
 		if (MfBigMathInt.s6.m_Count != x.m_Count)
 		{
@@ -1644,24 +1644,36 @@ class MfBigMathInt extends MfObject
 			i := x.m_Count
 			while (i > 1)
 			{
-				s .= xl[i] . ","
+				sb.Append(xl[i])
+				sb.Append(",")
+				;s .= xl[i] . ","
 				i--
 			}
-			s .= xl[1]
+			sb.Append(xl[1])
+			;s .= xl[1]
 		}
 		else ; return the given base
 		{
+			sb2 := new MfText.StringBuilder(64)
 			while (!MfBigMathInt.IsZero(MfBigMathInt.s6))
 			{
 				t := MfBigMathInt.divInt_(MfBigMathInt.s6, base)
-				s := MfBigMathInt.digitStr.Item[t] . s
+				;s := MfBigMathInt.digitStr.Item[t] . s
+				sb2.Append(MfBigMathInt.digitStr.Item[t])
 			}
+			mStr := new MfMemoryString(sb2.Length)
+			mStr.Append(sb2)
+
+			sb.Append(mStr.Reverse())
+			mStr := ""
+			sb2 := ""
 		}
-		if (s = "")
+		if (sb.Length = 0)
 		{
 			s := "0"
 		}
-		return s
+
+		return sb.ToString()
 	}
 ; 	End:BigInt2str ;}
 ;{ 	Dup

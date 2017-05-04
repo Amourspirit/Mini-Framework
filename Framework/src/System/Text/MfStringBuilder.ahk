@@ -1896,7 +1896,8 @@ class MfStringBuilder extends MfObject
 		{
 			; Advance Position before calling MoveCharsRight
 			chunk.m_ChunkChars.SetPosFromCharIndex(chunk.m_ChunkLength)
-			chunk.m_ChunkChars.MoveCharsRight(indexInChunk, Count, Count)
+			;chunk.m_ChunkChars.MoveCharsRight(indexInChunk, Count, Count)
+			chunk.m_ChunkChars.MoveCharsRight(indexInChunk, Count)
 			
 	
 			chunk.m_ChunkLength += count

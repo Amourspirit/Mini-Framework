@@ -1198,6 +1198,10 @@ Class MfBigInt extends MfObject
 				this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
 				this.m_IsNegative := false
 			}
+			else if (MfObject.IsObjInstance(x, "StringBuilder"))
+			{
+				return this._FromAnyConstructor(x.ToString())
+			}
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
 				x := MfBigInt.Parse(x)

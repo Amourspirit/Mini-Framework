@@ -14,25 +14,31 @@
  * along with Mini-Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
 ; End:License ;}
+
 class MfNumber extends MfObject
 {
+	static Int32Precision := 10
+	static Int64Precision := 19
+	static NumberMaxDigits := 50
+	static UInt32Precision := 10
+	static UInt64Precision := 20
+
 ;{ 	MfNumber.NumberBuffer Class
 	class NumberBuffer
 	{
 		static NumberBufferBytes := 12 + ((MfNumber.NumberMaxDigits + 1) * A_IsUnicode ? 2 : 1) + A_PtrSize
+		
 		digits := "" ; instance of MfMemoryString
 		precision := 0
 		scale := 0
 		sign := false
 		baseAddress := ""
+		m_mstr := ""
 
 		__new(BufferLen) {
 			; stackBuffer is the memory addres to array of bytes created via VarSetCapacity
-			BytesPerChar := A_IsUnicode ? 2 : 1
-			
-			
-			BufferLen := BufferLen * BytesPerChar
-			this.digits := new MfMemoryString(BufferLen)
+			this.m_mstr := new MfMemoryString(BufferLen)
+			this.digits := new MfNumber._CharIndex(this.m_mstr)
 			this.baseAddress := this.digits.BufferPtr
 			this.precision := 0
 			this.scale := 0
@@ -41,12 +47,35 @@ class MfNumber extends MfObject
 		
 	}
 ; 	End:MfNumber.NumberBuffer Class ;}
+	class _CharIndex
+	{
+		m_class := ""
+		;~ m_init := false
+		__New(ByRef ObjClass) {
+			this.m_Class := ObjClass
+		}
 
-	static Int32Precision := 10
-	static Int64Precision := 19
-	static NumberMaxDigits := 50
-	static UInt32Precision := 10
-	static UInt64Precision := 20
+		__Get(key:="", args*) {
+			if (Mfunc.IsInteger(key))
+			{	
+				return this.m_Class.CharCode[key]
+			}
+					
+		}
+		__Set(key, Value) {
+			
+			if (Mfunc.IsInteger(key))
+			{
+				this.m_Class.CharCode[key] := Value
+				If (this.m_Class.CharPos -1 < key)
+				{
+					this.m_Class.CharPos := key + 1
+				}
+			}
+			
+		}
+	}
+
 
 	IsWhite(ch) {
 		return ch = 32 || (ch >= 9 && ch <= 13)
@@ -80,28 +109,33 @@ class MfNumber extends MfObject
 		{
 			ch := mStr.CharCode[j]
 			ch2 := ms.CharCode[i]
-			if (ch != ch2 && (ch2 != 160 || ch != 32))
+			if (ch != ch2)
 			{
+				if (ch2 = 160 && ch = 32)
+				{
+					; This fix is for French or Kazakh cultures
+					i++
+					Continue
+				}
 				return ""
 			}
 			i++
 			j++
-			; ptr += mStrBpc
-			; ptrStr += msBpc
 		}
 		return j
 	}
 ; 	End:MatchChars ;}
 ; 	End:ParseInt32 ;}
 	ParseInt32(s, style, info) {
-		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		i := 0
-		MfNumber.StringToNumber(s, style, ByRef number, info, false)
+		MfNumber.StringToNumber(s, style, number, info, false)
 		if ((style & 512) != 0)
 		{
 			; style & MfNumberStyles.AllowHexSpecifier
-			if (!MfNumber.HexNumberToInt32(ByRef number, ByRef i))
+			if (!MfNumber.HexNumberToInt32(number, i))
 			{
 				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -110,25 +144,116 @@ class MfNumber extends MfObject
 		}
 		else
 		{
-			if (!MfNumber.NumberToInt32(ByRef number, ByRef i))
+			if (!MfNumber.NumberToInt32(number, i))
 			{
 				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
 		}
+		return i
 	}
 ; 	End:ParseInt32 ;}
+;{ 	ParseUInt32
+	ParseUInt32(s, style, info) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		i := 0
+		MfNumber.StringToNumber(s, style, number, info, false)
+		if ((style & 512) != 0)
+		{
+			; style & MfNumberStyles.AllowHexSpecifier
+			if (!MfNumber.HexNumberToUInt32(number, i))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}	
+		}
+		else
+		{
+			if (!MfNumber.NumberToUInt32(number, i))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		return i
+	}
+; 	End:ParseUInt32 ;}
+;{ 	ParseInt64
+	ParseInt64(s, style, info) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		i := 0
+		MfNumber.StringToNumber(s, style, number, info, false)
+		if ((style & 512) != 0)
+		{
+			; style & MfNumberStyles.AllowHexSpecifier
+			if (!MfNumber.HexNumberToInt64(number, i))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}	
+		}
+		else
+		{
+			if (!MfNumber.NumberToInt64(number, i))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		return i
+	}
+; 	End:ParseInt64 ;}
+;{ 	ParseUInt64
+	; will return a string representing the number if parsed successfully
+	ParseUInt64(s, style, info) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		i := ""
+		MfNumber.StringToNumber(s, style, number, info, false)
+		if ((style & 512) != 0)
+		{
+			; style & MfNumberStyles.AllowHexSpecifier
+			if (!MfNumber.HexNumberToUInt64(number, i))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}	
+		}
+		else
+		{
+			if (!MfNumber.NumberToUInt64(number, i))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		return i
+	}
+; 	End:ParseUInt64 ;}
+;{ 	HexNumberToInt32
 	HexNumberToInt32(ByRef number, ByRef value) {
 		passedValue := 0
 		returnValue := MfNumber.HexNumberToUInt32(number, passedValue)
 		; passedValue need to convert this value to int32. it is now Uint32
 		VarSetCapacity( Var, 16, 0) ; Variable to hold integer
 		NumPut(passedValue , Var, 0, "UInt") ; Input as 'Unsigned Integer'
-		value := NumGet(Var, 0,"Int")	; Retrieve it as 'Signed Integer'
+		value := NumGet(Var, 0, "Int")	; Retrieve it as 'Signed Integer'
 		VarSetCapacity( Var, 0) 
 		return value
 	}
+; 	End:HexNumberToInt32 ;}
 ;{ 	HexNumberToUInt32
 	HexNumberToUInt32(ByRef number, ByRef value) {
 		i := number.scale
@@ -138,11 +263,11 @@ class MfNumber extends MfObject
 		}
 		nd := number.digits
 		p := 0
-		ch := nd.CharCode[0]
+		ch := nd[p]
 		n := 0
 		while (--i >= 0)
 		{
-			if (n > (0xFFFFFFFF // 16))
+			if (n > 268435455) ; (0xFFFFFFFF / 16)
 			{
 				return False
 			}
@@ -168,6 +293,7 @@ class MfNumber extends MfObject
 						}
 					}
 					p++
+					ch := nd[p]
 				}
 				; Detect an overflow here...
 				 if (newN < n)
@@ -181,6 +307,102 @@ class MfNumber extends MfObject
 		 return true
 	}
 ; 	End:HexNumberToUInt32 ;}
+;{ 	HexNumberToInt64
+	HexNumberToInt64(ByRef number, ByRef value) {
+		i := number.scale
+		if (i > MfNumber.UInt64Precision || i < number.precision)
+		{
+			 return false
+		}
+		nd := number.digits
+		p := 0
+		ch := nd[p]
+		n := 0
+		sb := new MfText.StringBuilder(MfNumber.UInt64Precision)
+		sb.Append("0x")
+		while (--i >= 0)
+		{
+			if (ch != 0)
+			{
+				if (ch != 0)
+				{
+					if (ch >= 48 && ch <= 57)
+					{
+						sb._AppendCharCode(ch)
+					}
+					else
+					{
+						if (ch >= 65 && ch <= 70)
+						{
+							sb._AppendCharCode(ch)
+						}
+						else if (ch >= 97 && ch <= 102)
+						{
+							sb._AppendCharCode(ch)
+						}
+					}
+					ch := nd[++p]
+				}
+			}
+		}
+		str := sb.ToString()
+		result := MfInt64.GetValue(str,"NaN", true)
+		if (result == "NaN")
+		{
+			return false
+		}
+		Value := str + 0x0
+	}
+; 	End:HexNumberToInt64 ;}
+;{ 	HexNumberToUInt64
+	; value will be a hex string with no leading format if result is true
+	HexNumberToUInt64(ByRef number, ByRef value) {
+		i := number.scale
+		if (i > MfNumber.UInt64Precision || i < number.precision)
+		{
+			 return false
+		}
+		nd := number.digits
+		p := 0
+		ch := nd[p]
+		n := 0
+		sb := new MfText.StringBuilder(MfNumber.UInt64Precision)
+		while (--i >= 0)
+		{
+			if (ch != 0)
+			{
+				if (ch != 0)
+				{
+					if (ch >= 48 && ch <= 57)
+					{
+						sb._AppendCharCode(ch)
+					}
+					else
+					{
+						if (ch >= 65 && ch <= 70)
+						{
+							sb._AppendCharCode(ch)
+						}
+						else if (ch >= 97 && ch <= 102)
+						{
+							sb._AppendCharCode(ch)
+						}
+					}
+					ch := nd[++p]
+				}
+			}
+		}
+		str := sb.ToString()
+		sb := ""
+		bigInt := MfBigInt.Parse(str, 16)
+		If (bigInt.GreaterThen(MfUInt64.MaxValue))
+		{
+			return false
+		}
+		Value := str
+		return true
+	}
+; 	End:HexNumberToUInt64 ;}
 ;{ 	NumberToInt32
 	NumberToInt32(ByRef number, ByRef value) {
 		i := number.scale
@@ -190,18 +412,19 @@ class MfNumber extends MfObject
 		}
 		p := 0
 		nd := number.digits
-		ch := nd.CharCode[p]
+		ch := nd[p]
 		n := 0
 		while (--i >= 0)
 		{
-			if (n > (0x7FFFFFFF / 10))
+			if (n > (214748364)) ; (0x7FFFFFFF / 10
 			{
 				return false
 			}
 			n *= 10
 			if (ch != 0)
 			{
-				n += nd.CharCode[p++] - 48
+				n += ch - 48
+				ch := nd[++p]
 			}
 		}
 		if (number.sign)
@@ -223,6 +446,118 @@ class MfNumber extends MfObject
 		return true
 	}
 ; 	End:NumberToInt32 ;}
+;{ 	NumberUToInt32
+	NumberToUInt32(ByRef number, ByRef value) {
+		i := number.scale
+		if (i > MfNumber.UInt32Precision || i < number.precision || number.sign)
+		{
+			return false
+		}
+		p := 0
+		nd := number.digits
+		ch := nd[p]
+		n := 0
+		while (--i >= 0)
+		{
+			if (n > 429496729) ; 0xFFFFFFFF / 10
+			{
+				return false
+			}
+			n *= 10
+			if (ch != 0)
+			{
+				newN := n + ch - 48
+				if (newN < n)
+				{
+					return false
+				}
+				n := newN
+				ch := nd[++p]
+			}
+		}
+		value := n
+		return true
+	}
+; 	End:NumberUToInt32 ;}
+;{ 	NumberToInt64
+	NumberToInt64(ByRef number, ByRef value) {
+		i := number.scale
+		if (i > MfNumber.Int64Precision || i < number.precision)
+		{
+			return false
+		}
+		p := 0
+		nd := number.digits
+		ch := nd[p]
+		n := 0
+		while (--i >= 0)
+		{
+			result := MfInt64.GetValue(n,"NaN", true)
+			if (result == "NaN")
+			{
+				return false
+			}
+			if (n > (922337203685477580)) ; 0x7FFFFFFFFFFFFFFF / 10
+			{
+				return false
+			}
+			n *= 10
+			if (ch != 0)
+			{
+				n += ch - 48
+				ch := nd[++p]
+			}
+		}
+		if (number.sign)
+		{
+			n := -n
+			if (n > 0)
+			{
+				return false
+			}
+		}
+		else
+		{
+			if (n < 0)
+			{
+				return false
+			}
+		}
+		value := n
+		return true
+	}
+; 	End:NumberToInt64 ;}
+	NumberToUInt64(ByRef number, ByRef value) {
+		i := number.scale
+		if (i > MfNumber.UInt64Precision || i < number.precision || number.sign)
+		{
+			return false
+		}
+		p := 0
+		nd := number.digits
+		ch := nd[p]
+		n := 0
+		sb := new MfText.StringBuilder(MfNumber.UInt64Precision)
+		;sb._AppendCharCode(ch)
+
+		while (--i >= 0)
+		{
+			if (ch != 0)
+			{
+				sb._AppendCharCode(ch)
+				ch := nd[++p]
+			}
+		}
+		str := sb.ToString()
+		sb := ""
+		bigInt := MfBigInt.Parse(str, 10)
+		If (bigInt.GreaterThen(MfUInt64.MaxValue))
+		{
+			return false
+		}
+		Value := str
+		return true
+	}
 ;{ 	StringToNumber
 	StringToNumber(str, options, ByRef number, info, parseDecimal) {
 		if (MfString.IsNullOrEmpty(str))
@@ -233,8 +568,9 @@ class MfNumber extends MfObject
 		}
 		mStr := MfMemoryString.FromAny(str)
 		len := mStr.Length
-		if (!MfNumber.ParseNumber(mStr, len, options, number, "", info , parseDecimal) 
-			|| (len < str.Length && !MfNumber.TrailingZeros(mStr, (p - stringPointer))))
+		ParsecChars := 0
+		if (!MfNumber.ParseNumber(mStr, ParsecChars, options, number, "", info , parseDecimal) 
+			|| (ParsecChars <len && !MfNumber.TrailingZeros(mStr, (len - ParsecChars))))
 		{
 			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -261,7 +597,7 @@ class MfNumber extends MfObject
 	}
 ; 	End:TrailingZeros ;}
 ;{ 	ParseNumber
-	ParseNumber(mStr, ByRef strLen, options, ByRef number, sb, numfmt, parseDecimal) {
+	ParseNumber(mStr, ByRef ParsedChars, options, ByRef number, sb, numfmt, parseDecimal) {
 		static StateSign := 0x0001
 		static StateParens := 0x0002
 		static StateDigits := 0x0004
@@ -312,7 +648,7 @@ class MfNumber extends MfObject
 		maxParseDigits := bigNumber ? MfInteger.MaxValue : MfNumber.NumberMaxDigits
 
 		p := 0
-		ch := ch := mStr.CharCode[0]
+		ch := mStr.CharCode[0]
 		next := ""
 		len := mStr.Length + 1 ; add one to allow for null terminator
 		i := 0
@@ -359,6 +695,7 @@ class MfNumber extends MfObject
 				break
 			}
 			i++
+			p++
 			ch := mStr.CharCode[p]
 		}
 		digCount := 0
@@ -379,7 +716,7 @@ class MfNumber extends MfObject
 						}
 						else
 						{
-							number.digits.CharCode[digCount++] := ch
+							number.digits[digCount++] := ch
 
 						}
 						if (ch != 48 || parseDecimal)
@@ -415,7 +752,8 @@ class MfNumber extends MfObject
 				break
 			}
 			i++
-			ch := mStr.CharCode[i]
+			p++
+			ch := mStr.CharCode[p]
 		}
 		negExp := false
 		number.precision := digEnd
@@ -425,7 +763,7 @@ class MfNumber extends MfObject
 		}
 		else
 		{
-			number.digits.CharCode[digEnd] := 0
+			number.digits[digEnd] := 0
 		}
 		if ((state & StateDigits) != 0)
 		{
@@ -529,12 +867,154 @@ class MfNumber extends MfObject
 						number.sign := false
 					}
 				}
-				strLen := p
+				ParsedChars := p
 				return true
 			}
 		}
-		strLen := p
+		ParsedChars := p
 		return false
 	}
 ; 	End:ParseNumber ;}
+;{ 	TryStringToNumber
+	TryStringToNumber(str, options, ByRef number, args*) {
+		aCnt := MfParams.GetArgCount(args*)
+		; if acount = 2 MfNumberFormatInfo numfmt, Bool parseDecimal
+		; if acount = 3 StringBuilder sb, MfNumberFormatInfo numfmt, Bool parseDecimal
+		if (aCnt = 2)
+		{
+			return MfNumber._TryStringToNumber(str, options, number, "", args[1], args[2])
+		}
+		return return MfNumber._TryStringToNumber(str, options, number, args[1], args[2], args[3])
+	}
+; 	End:TryStringToNumber ;}
+;{ 	_TryStringToNumber
+	_TryStringToNumber(str, options, ByRef number, sb, numfmt, parseDecimal) {
+		len := StrLen(str)
+		if (len = 0)
+		{
+			return false
+		}
+		ms := new MfMemoryString(len,,,&str)
+		ParsecChars := 0
+		if (!MfNumber.ParseNumber(mStr, ParsecChars, options, number, sb, numfmt , parseDecimal) 
+			|| (ParsecChars <len && !MfNumber.TrailingZeros(mStr, (len - ParsecChars))))
+		{
+			return false
+		}
+		return true
+	}
+; 	End:_TryStringToNumber ;}
+;{ 	TryParseInt32
+	TryParseInt32(s, style, info, ByRef result) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		result := 0
+		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		{
+			return false
+		}
+		if ((style & 512) != 0)
+		{
+			; style & MfNumberStyles.AllowHexSpecifier
+			if (!MfNumber.HexNumberToInt32(number, result))
+			{
+				return false
+			}	
+		}
+		else
+		{
+			if (!MfNumber.NumberToInt32(number, result))
+			{
+				return false
+			}
+		}
+		return true
+	}
+; 	End:TryParseInt32 ;}
+;{ 	TryParseUInt32
+	TryParseUInt32(s, style, info, ByRef result) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		result := 0
+		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		{
+			return false
+		}
+		if ((style & 512) != 0)
+		{
+			; style & MfNumberStyles.AllowHexSpecifier
+			if (!MfNumber.HexNumberToUInt32(number, result))
+			{
+				return false
+			}	
+		}
+		else
+		{
+			if (!MfNumber.NumberToUInt32(number, result))
+			{
+				return false
+			}
+		}
+		return true
+	}
+; 	End:TryParseUInt32 ;}
+;{ 	TryParseInt64
+	TryParseInt64(s, style, info, ByRef result) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		result := 0
+		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		{
+			return false
+		}
+		if ((style & 512) != 0)
+		{
+			; style & MfNumberStyles.AllowHexSpecifier
+			if (!MfNumber.HexNumberToInt64(number, result))
+			{
+				return false
+			}	
+		}
+		else
+		{
+			if (!MfNumber.NumberToInt64(number, result))
+			{
+				return false
+			}
+		}
+		return true
+	}
+; 	End:TryParseInt64 ;}
+;{ 	TryParseUInt64
+	; result will be a string representing the number if parsed successfully
+	TryParseUInt64(s, style, info, ByRef result) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		result := "0"
+		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		{
+			return false
+		}
+		if ((style & 512) != 0)
+		{
+			; style & MfNumberStyles.AllowHexSpecifier
+			if (!MfNumber.HexNumberToUInt64(number, result))
+			{
+				return false
+			}	
+		}
+		else
+		{
+			if (!MfNumber.NumberToUInt64(number, result))
+			{
+				return false
+			}
+		}
+		return true
+	}
+; 	End:TryParseUInt64 ;}
 }

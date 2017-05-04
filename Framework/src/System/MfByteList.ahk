@@ -196,7 +196,7 @@ class MfByteList extends MfListBase
 			throw ex
 		}
 		
-		retval := ""
+		sb := new MfText.StringBuilder(length 3)
 		i := _startIndex
 		iMaxIndex := _length - 1
 		iCount := 0
@@ -206,22 +206,20 @@ class MfByteList extends MfListBase
 			b := ll[i + 1]
 			bit1 := b // 16
 			bit2 := Mod(b, 16)
-			bitChar1 := MfBitConverter._GetHexValue(bit1)
-			bitChar2 := MfBitConverter._GetHexValue(bit2)
+			bitChar1 := MfByteConverter._GetHexValue(bit1)
+			bitChar2 := MfByteConverter._GetHexValue(bit2)
 
 			if (iCount > 0)
 			{
-				retval .= "-" . bitChar1 . bitChar2
+				sb.Append("-")
 			}
-			Else
-			{
-				retval .= bitChar1 . bitChar2
-			}
+			sb.Append(bitChar1)
+			sb.Append(bitChar2)
 			i++
 			iCount++
 		}
 		
-		return _returnAsObj = true?new MfString(retval):retval
+		return _returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
 ; 	End:ToString ;}
 ;{ 	SubList
@@ -279,15 +277,16 @@ class MfByteList extends MfListBase
 		}
 		if (IsEndIndex = true)
 		{
-			len :=  endIndex - startIndex
-			if ((len + 1) >= this.Count)
+			len := ((endIndex + 1) - startIndex)
+			len := len > 0 ? len: 0
+			if (len >= this.m_Count)
 			{
 				return this.Clone()
 			}
 		}
 		else
 		{
-			len := maxIndex
+			len := maxIndex + 1
 		}
 		rLst := new MfByteList()
 		rl := rLst.m_InnerList
@@ -305,34 +304,15 @@ class MfByteList extends MfListBase
 			return rLst
 		}
 		
-
-		i := 1
-		iCount := 0
-		if (IsEndIndex = true)
+		i := startIndex
+		cnt := this.m_Count
+		j := 1
+		While (j <= len)
 		{
-			While ((iCount + len) < (this.Count - 1))
-			{
-				iCount++
-			}
-		}
-		else
-		{
-			While ((iCount + (len - startIndex)) < (this.Count - 1))
-			{
-				iCount++
-			}
-		}
-			
-		
-		while iCount < this.m_Count
-		{
-			iCount++
-			rl[i] := ll[iCount]
+			rl[j++] := ll[cnt - i]
 			i++
-			
 		}
-		
-		rLst.m_Count := i - 1
+		rLst.m_Count := len
 		return rLst
 
 	}

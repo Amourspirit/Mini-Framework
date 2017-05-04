@@ -195,10 +195,12 @@ class MfBinaryList extends MfListBase
 
 	FromString(str) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		str := MfString.GetValue(str)
+		mStr := MfMemoryString.FromAny(str)
+		len := mStr.Length
 
 		lst := new MfBinaryList()
-		if (MfString.IsNullOrEmpty(str))
+
+		if (len = 0)
 		{
 			lst.Add(0)
 			lst.Add(0)
@@ -206,20 +208,22 @@ class MfBinaryList extends MfListBase
 		}
 		ll := lst.m_InnerList
 		iCount := 0
-		Loop, Parse, str
+		i := 0
+		While (i < len)
 		{
-			If (A_LoopField = "0")
+			ch := mStr.CharCode[i++]
+			if (ch = 48)
 			{
 				iCount++
 				ll[iCount] := 0
-				
 			}
-			else if (A_LoopField = "1")
+			else if (ch = 49)
 			{
 				iCount++
 				ll[iCount] := 1
 			}
 		}
+		
 		lst.m_Count := iCount
 		return lst
 
@@ -273,15 +277,8 @@ class MfBinaryList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		If (_index = this.Count)
-		{
-			this.Add(_value)
-			return
-		}
-		i := _index + 1 ; step up to one based index for AutoHotkey array
+		base.Insert(i, _value)
 		
-		this.m_InnerList.InsertAt(i, _value)
-		this.m_Count++
 	}
 ;	End:Insert(index, obj) ;}
 ;{ 	ToString
@@ -316,19 +313,18 @@ class MfBinaryList extends MfListBase
 		{
 			return this._ToByteArrayString(_returnAsObj, _startIndex, _length)
 		}
-		retval := ""
+		sb := new MfText.StringBuilder(_length)
 		i := _startIndex
 		iMaxIndex := _length - 1
 		ll := this.m_InnerList
 		while i <= iMaxIndex
 		{
 			n := ll[i + 1]
-			hexChar := MfBitConverter._GetHexValue(n)
-			retval .= hexChar
+			sb.Append(n)
 			i++
 		}
 		
-		return _returnAsObj = true?new MfString(retval):retval
+		return _returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
 ; 	End:ToString ;}
 ;{ 		SubList
@@ -386,15 +382,16 @@ class MfBinaryList extends MfListBase
 		}
 		if (IsEndIndex = true)
 		{
-			len :=  endIndex - startIndex
-			if ((len + 1) >= this.Count)
+			len := ((endIndex + 1) - startIndex)
+			len := len > 0 ? len: 0
+			if (len >= this.m_Count)
 			{
 				return this.Clone()
 			}
 		}
 		else
 		{
-			len := maxIndex
+			len := maxIndex + 1
 		}
 		rLst := new MfBinaryList()
 		rl := rLst.m_InnerList
@@ -411,40 +408,25 @@ class MfBinaryList extends MfListBase
 			rLst.m_Count := i - 1
 			return rLst
 		}
-		i := 1
-		iCount := 0
-		if (IsEndIndex = true)
+		
+		i := startIndex
+		cnt := this.m_Count
+		j := 1
+		While (j <= len)
 		{
-			While ((iCount + len) < (this.Count - 1))
-			{
-				iCount++
-			}
-		}
-		else
-		{
-			While ((iCount + (len - startIndex)) < (this.Count - 1))
-			{
-				iCount++
-			}
-		}
-		while iCount < this.m_Count
-		{
-			iCount++
-			;lst.Add(this.Item[i])
-			rl[i] := ll[iCount]
+			rl[j++] := ll[cnt - i]
 			i++
 		}
-		
-		rLst.m_Count := i - 1
+		rLst.m_Count := len
 		return rLst
 
 	}
 ; 		End:SubList ;}
 	_ToByteArrayString(returnAsObj, startIndex, length) {
-		retval := ""
 		i := startIndex
 		iMaxIndex := length -1
 		len := iMaxIndex - startIndex
+		sb := new MfText.StringBuilder(len * 2)
 		iChunk := 0
 		rem := Mod(this.Count, 4)
 		iCount := 0
@@ -454,7 +436,7 @@ class MfBinaryList extends MfListBase
 			k := 0
 			While k <= offset
 			{
-				retval .= "0"
+				sb.Append("0")
 				k++
 			}
 			iCount := offset
@@ -466,7 +448,7 @@ class MfBinaryList extends MfListBase
 		{
 			if (iLoopCount > 0)
 			{
-				retval .= "-"
+				sb.Append("-")
 			}
 			while iCount < 4
 			{
@@ -474,17 +456,14 @@ class MfBinaryList extends MfListBase
 				{
 					break
 				}
-				retval .= ll[i + 1]
+				sb.Append(ll[i + 1])
 				iCount++
 				i++
 			}
-			
 			iLoopCount++
 			iCount := 0
-			
 		}
-		
-		return returnAsObj = true?new MfString(retval):retval
+		return returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
 	_AutoIncrease()
 	{

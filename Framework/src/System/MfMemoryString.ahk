@@ -303,6 +303,21 @@ class MfMemoryString extends MfObject
 				}
 				chars := this.m_MemView.AppendString(obj)
 			}
+			else if (MfObject.IsObjInstance(obj, "StringBuilder"))
+			{
+				if (obj.Length = 0)
+				{
+					return this
+				}
+				if (!(obj.m_Encoding = this.m_Encoding))
+				{
+					chars := this.m_MemView.AppendString(obj.ToString())
+				}
+				else
+				{
+					chars := this.m_MemView.Append(obj._ToMemoryString().m_MemView)
+				}
+			}
 			else if (MfObject.IsObjInstance(obj, MfObject))
 			{
 				chars := this.m_MemView.Append(obj)
@@ -1062,7 +1077,18 @@ class MfMemoryString extends MfObject
 	Returns:
 		Returns new instance of MfMemoryString containing the value of x
 */
-	FromAny(x, encoding="UTF-16") {
+	FromAny(x, encoding="") {
+		if(MfString.IsNullOrEmpty(encoding))
+		{
+			If (A_IsUnicode)
+			{
+				encoding := "UTF-16"
+			}
+			else
+			{
+				encoding := "cp1252"
+			}
+		}
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		return MfMemoryString._FromAnyStatic(x, encoding)
 	}
@@ -2308,7 +2334,14 @@ class MfMemoryString extends MfObject
 				}
 				return x
 			}
-
+			else if (MfObject.IsObjInstance(x, "StringBuilder"))
+			{
+				if (!(x.m_Encoding = encoding))
+				{
+					return MfMemoryString._FromAnyStatic(x.ToString(), encoding)
+				}
+				return x._ToMemoryString()
+			}
 			else if (MfObject.IsObjInstance(x, MfString))
 			{
 				retval := new MfMemoryString(x.Length, , encoding)
@@ -2393,6 +2426,22 @@ class MfMemoryString extends MfObject
 				retval.m_MemView := MfMemStrView.FromCharList(x)
 				retval.m_CharCount := x.GetCharCount()
 				return this._FromAny(retval) ; do another _FromAny in case encoding is different
+			}
+			else if (MfObject.IsObjInstance(x, "StringBuilder"))
+			{
+				if (!(x.m_Encoding = encoding))
+				{
+					retval := new MfMemoryString(x.Length, , encoding)
+					if (x.Length > 0)
+					{
+						retval.Append(x.ToString())
+					}
+					return retval
+				}
+				Else
+				{
+					return x._ToMemoryString()
+				}
 			}
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
@@ -6084,9 +6133,9 @@ class MfMemStrView extends MfMemBlkView
 
 			DllCall("RtlMoveMemory", "Ptr", DestPtr + 0, "Ptr", &tmp, "UChar", count)
 
-			;~ str := StrGet(&tmp, ,destinationMemView.m_Encoding)
-			;~ str2 := StrGet(destinationMemView[], ,destinationMemView.m_Encoding)
-			;~ str3 := StrGet(DestPtr + 0, ,destinationMemView.m_Encoding)
+			; str := StrGet(&tmp, ,destinationMemView.m_Encoding)
+			; str2 := StrGet(destinationMemView[], ,destinationMemView.m_Encoding)
+			; str3 := StrGet(DestPtr + 0, ,destinationMemView.m_Encoding)
 			
 			VarSetCapacity(tmp, 0)
 			if (destinationIndex + count > PI)
@@ -6228,7 +6277,9 @@ class MfMemStrView extends MfMemBlkView
 		}
 		if (Length < 0)
 		{
-			Length := PI - BytesPerChar - StartIndex - ShiftAmt
+			;Length := PI - BytesPerChar - StartIndex - ShiftAmt
+			Length := PI - StartIndex
+			Length -=  ShiftAmt
 		}
 		
 		if (ShiftAmt < 0)
