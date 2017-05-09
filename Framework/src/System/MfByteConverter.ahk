@@ -633,14 +633,14 @@ class MfByteConverter extends MfObject
 				Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, OutFloat.Format)
 				flt := MfByteConverter._Int64ToFloat(value.Value)
 				;flt := MfByteConverter._HexToDouble(value.Value)
-				strF := new MfString(flt)
-				strF.IgnoreCase := false
-				if (strF.Length = 0 || strF.IndexOf("NAN") >= 0)
-				{
-					ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToFloat"))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
+				;~ strF := new MfString(flt)
+				;~ strF.IgnoreCase := false
+				;~ if (strF.Length = 0 || strF.IndexOf("NAN") >= 0)
+				;~ {
+					;~ ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToFloat"))
+					;~ ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					;~ throw ex
+				;~ }
 				
 				OutFloat.Value := flt
 				return

@@ -39,6 +39,10 @@ Class MfFloat extends MfPrimitive
 		}
 	}
 ; 	End:Static Properties ;}
+	static m_NegativeInfinity := "-Infinity"
+	static m_PositiveInfinity := "Infinity"
+	static m_NaN := "NaN"
+
 ;{ Constructor
 /*!
 	Constructor()
@@ -168,10 +172,11 @@ Class MfFloat extends MfPrimitive
 		
 		wasformat := A_FormatFloat
 		try {
-			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, _format)
-			_f += 0.0
-			base.__New(_f, _returnAsObject)
-			this._SetFormat(_format)
+			;Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, _format)
+			;_f += 0.0
+			base.__New(0.0, _returnAsObject)
+			this.Value := _f
+			;this._SetFormat(_format)
 			; value is already set in base.__New()
 			;this.m_Value := _f ; set the value to apply the formating
 			; set the base readonly property late instead of in base constructor.
@@ -365,6 +370,16 @@ Class MfFloat extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return this._ReturnFloat(this)
+		}
+		if (MfObject.IsObjInstance(value, MfFloat) && (MfFloat._isValidNumber(value) = false))
+		{
+			; this value becomes the state of the added value if not valid
+			this.m_Value := value.m_Value
+			return this._ReturnFloat(this)
+		}
 		wasformat := A_FormatFloat
 		try
 		{
@@ -372,7 +387,7 @@ Class MfFloat extends MfPrimitive
 			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 			_val := MfFloat.GetValue(value)
 			_newVal := this.m_Value + _val
-			this.m_Value := _newVal ; MfFloat._GetFmtValue(_newVal, this.Format)
+			this.Value := _newVal ; MfFloat._GetFmtValue(_newVal, this.Format)
 		}
 		catch e
 		{
@@ -423,6 +438,15 @@ Class MfFloat extends MfPrimitive
 			ex.Line := A_LineNumber
 			throw ex
 		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return -1
+		}
+		if (MfFloat._isValidNumber(obj) = false)
+		{
+			; this value becomes the state of the added value if not valid
+			return 1
+		}
 		retval := -1
 		fmt := this.Format
 		wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
@@ -458,6 +482,10 @@ Class MfFloat extends MfPrimitive
 		retval := false
 		if (MfNull.IsNull(value)) {
 			return retval
+		}
+		if (MfObject.IsObjInstance(value, MfFloat) && (MfFloat._isValidNumber(value) = false))
+		{
+			return this.m_Value == this.m_Value
 		}
 		wasformat := A_FormatFloat
 		try
@@ -515,10 +543,20 @@ Class MfFloat extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (this.Equals(0.0))
+		If (MfFloat._isValidNumber(this) = false)
 		{
 			return this._ReturnFloat(this)
 		}
+		if (MfObject.IsObjInstance(value, MfFloat) && (MfFloat._isValidNumber(value) = false))
+		{
+			; this value becomes the state of the added value if not valid
+			this.m_Value := value.m_Value
+			return this._ReturnFloat(this)
+		}
+		; if (this.Equals(0.0))
+		; {
+		; 	return this._ReturnFloat(this)
+		; }
 	
 		wasformat := A_FormatFloat
 		try
@@ -528,13 +566,11 @@ Class MfFloat extends MfPrimitive
 			_value := 0.0
 			try
 			{
-				if (MfObject.IsObjInstance(value, MfFloat))
+				_value :=  MfFloat.GetValue(value)
+				if (this.Equals(0.0) && _value = 0.0)
 				{
-					_value := value.Value
-				}
-				else
-				{
-					_value :=  MfFloat.GetValue(value)
+					this.m_Value := MfFloat.m_NaN
+					return this._ReturnFloat(this)
 				}
 			}
 			catch e
@@ -545,9 +581,13 @@ Class MfFloat extends MfPrimitive
 			}
 			if (_value = 0.0)
 			{
-				ex := new MfDivideByZeroException()
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
+				if (this.Value < 0.0)
+				{
+					this.m_Value := MfFloat.m_NegativeInfinity
+					return this._ReturnFloat(this)
+				}
+				this.m_Value := MfFloat.m_PositiveInfinity
+				return this._ReturnFloat(this)
 			}
 			; with floor divide  any result less then 1 will be zero
 			_newVal := (this.Value / _value) + 0.0
@@ -595,6 +635,19 @@ Class MfFloat extends MfPrimitive
 */
 	GetHashCode() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfFloat._IsNaN(this))
+		{
+			return -524288
+		}
+		if (MfFloat._IsPositiveInfinity(this))
+		{
+			return 2146435072
+		}
+		if (MfFloat._IsNegativeInfinity(this))
+		{
+			return -1048576
+		}
+		
 		wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
 		try
 		{
@@ -866,6 +919,15 @@ Class MfFloat extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
+
+		if (MfObject.IsObjInstance(value, MfFloat) && (MfFloat._isValidNumber(value) = false))
+		{
+			return false
+		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return true
+		}
 		wasformat := A_FormatFloat
 		try
 		{
@@ -914,6 +976,17 @@ Class MfFloat extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
+		if (MfObject.IsObjInstance(value, MfFloat))
+		{
+			if ((MfFloat._isValidNumber(value) = false) && MfFloat._isValidNumber(this) = false)
+			{
+				return value.Value == this.Value
+			}
+		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return true
+		}
 		wasformat := A_FormatFloat
 		try
 		{
@@ -958,6 +1031,10 @@ Class MfFloat extends MfPrimitive
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		wasformat := A_FormatFloat
 		retval := Null
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return this.Value
+		}
 		try
 		{
 			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
@@ -1044,6 +1121,51 @@ Class MfFloat extends MfPrimitive
 		return retval
 	}
 ; 	End:GetTrimmed ;}
+;{ 	IsNegativeInfinity
+	IsNegativeInfinity(obj) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ex := MfObject.IsNotObjInstance(obj, MfFloat,,A_ThisFunc)
+		if(ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return MfFloat._IsNegativeInfinity(obj)
+	}
+	_IsNegativeInfinity(obj) {
+		return obj.m_value == MfFloat.m_NegativeInfinity
+	}
+; 	End:IsNegativeInfinity ;}
+;{ IsPositiveInfinity
+	IsPositiveInfinity(obj) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ex := MfObject.IsNotObjInstance(obj, MfFloat,,A_ThisFunc)
+		if(ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return MfFloat._IsPositiveInfinity(obj)
+	}
+	_IsPositiveInfinity(obj) {
+		return obj.m_value == MfFloat.m_PositiveInfinity
+	}
+; End:IsPositiveInfinity ;}
+; End:IsNaN ;}
+	IsNaN(obj) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ex := MfObject.IsNotObjInstance(obj, MfFloat,,A_ThisFunc)
+		if(ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return MfFloat._IsNaN(obj)
+	}
+	_IsNaN(obj) {
+		return obj.m_value == MfFloat.m_NaN
+	}
+; End:IsNaN ;}
 ;{ 	LessThen
 /*!
 	Method: LessThen()
@@ -1067,6 +1189,14 @@ Class MfFloat extends MfPrimitive
 		retval := false
 		if (MfNull.IsNull(value)) {
 			return retval
+		}
+		if (MfObject.IsObjInstance(value, MfFloat) && (MfFloat._isValidNumber(value) = false))
+		{
+			return false
+		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return true
 		}
 		wasformat := A_FormatFloat
 		try
@@ -1114,6 +1244,17 @@ Class MfFloat extends MfPrimitive
 		retval := false
 		if (MfNull.IsNull(value)) {
 			return retval
+		}
+		if (MfObject.IsObjInstance(value, MfFloat))
+		{
+			if ((MfFloat._isValidNumber(value) = false) && MfFloat._isValidNumber(this) = false)
+			{
+				return value.Value == this.Value
+			}
+		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return false
 		}
 		wasformat := A_FormatFloat
 		try
@@ -1170,6 +1311,17 @@ Class MfFloat extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return this._ReturnFloat(this)
+		}
+		if (MfObject.IsObjInstance(value, MfFloat) && (MfFloat._isValidNumber(value) = false))
+		{
+			; this value becomes the state of the added value if not valid
+			this.m_Value := value.m_Value
+			return this._ReturnFloat(this)
+		}
+
 		if (this.Equals(0.0))
 		{
 			return this._ReturnFloat(this)
@@ -1344,6 +1496,16 @@ Class MfFloat extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return this._ReturnFloat(this)
+		}
+		if (MfObject.IsObjInstance(value, MfFloat) && (MfFloat._isValidNumber(value) = false))
+		{
+			; this value becomes the state of the added value if not valid
+			this.m_Value := value.m_Value
+			return this._ReturnFloat(this)
+		}
 		wasformat := A_FormatFloat
 		try
 		{
@@ -1393,6 +1555,11 @@ Class MfFloat extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return new new MfInteger()
+		}
+		
 		wasformat := A_FormatFloat
 		try
 		{
@@ -1442,6 +1609,10 @@ Class MfFloat extends MfPrimitive
 */
 	ToString() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		If (MfFloat._isValidNumber(this) = false)
+		{
+			return this.Value
+		}
 		retval := MfFloat._GetFmtObjValue(this)
 		return retval . ""
 	}
@@ -1580,6 +1751,16 @@ Class MfFloat extends MfPrimitive
 ; End:TryParse() ;}
 ; End:Methods ;}
 ;{ Internal Methods
+;{ 	_isValidNumber
+	; returns true if number if float represented by obj is valie; Otherwise false
+	_isValidNumber(obj) {
+		if (MfFloat._IsNaN(obj) || MfFloat._IsPositiveInfinity(obj) || MfFloat._IsNegativeInfinity(obj))
+		{
+			return false
+		}
+		return true
+	}
+; 	End:_isValidNumber ;}
 	;{ _cDoubleToInt64()
 /*
 	Method: _cDoubleToInt64()
@@ -1593,7 +1774,7 @@ Class MfFloat extends MfPrimitive
 		Internal Method
 */
 	_cDoubleToInt64(input) {
-	    VarSetCapacity(Var, 4, 0)       ; Variable to hold integer
+	    VarSetCapacity(Var, 8, 0)       ; Variable to hold integer
 	    NumPut(input, Var, 0, "Double" ) ; Input as Integer 64
 	    retval := NumGet(Var, 0, "Int64") ; Retrieve it as 'Signed Integer 32'
 	    return retval
@@ -1618,7 +1799,7 @@ Class MfFloat extends MfPrimitive
 		Convert.ToInt32(int64) does not do a circular shift.
 */
 	_cInt64ToInt(input) {
-	    VarSetCapacity(Var, 4, 0)       ; Variable to hold integer
+	    VarSetCapacity(Var, 8, 0)       ; Variable to hold integer
 	    NumPut(input, Var, 0, "Int64" ) ; Input as Integer 64
 	    retval := NumGet(Var, 0, "Int") ; Retrieve it as 'Signed Integer 32'
 	    return retval
@@ -1890,6 +2071,69 @@ Class MfFloat extends MfPrimitive
 		}
 	}
 ; 	End:MinValue ;}
+;{ NaN
+/*!
+	Property: NaN [get]
+		Gets the NaN value associated with the this instance
+	Value:
+		Var representing the NaN property of the instance
+	Remarks:
+		Readonly Property
+*/
+	NaN[]
+	{
+		get {
+			return MfFloat.m_NaN
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "NaN")
+			Throw ex
+		}
+	}
+; End:NaN ;}
+	;{ NegativeInfinity
+/*!
+	Property: NegativeInfinity [get]
+		Gets the NegativeInfinity value associated with the this instance
+	Value:
+		Var representing the NegativeInfinity property of the instance
+	Remarks:
+		Readonly Property
+*/
+	NegativeInfinity[]
+	{
+		get {
+			return MfFloat.m_NegativeInfinity
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "NegativeInfinity")
+			Throw ex
+		}
+	}
+; End:NegativeInfinity ;}
+;{ PositiveInfinity
+/*!
+	Property: PositiveInfinity [get]
+		Gets the PositiveInfinity value associated with the this instance
+	Value:
+		Var representing the PositiveInfinity property of the instance
+	Remarks:
+		Readonly Property
+*/
+	PositiveInfinity[]
+	{
+		get {
+			return MfFloat.m_PositiveInfinity
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "PositiveInfinity")
+			Throw ex
+		}
+	}
+; End:PositiveInfinity ;}
 ;{	Value
 /*
 	Property Value [get\set]
@@ -1918,27 +2162,103 @@ Class MfFloat extends MfPrimitive
 		}
 		set {
 			this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
-			wasformat := A_FormatFloat
+			wasformat := ""
 			try
 			{
-				fmt := this.Format
-				wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
-				
-				_val := MfFloat._GetValue(value)
-				_val += 0.0
-				this.m_Value := _val
-				;Base.Value := MfFloat._GetFmtValue(_val, this.Format)
-				;return this.m_Value
+				mStr := ""
+				if (IsObject(value))
+				{
+					; will throw an error if not instance of MfFloat and is Object
+					ex := MfObject.IsNotObjInstance(value, MfFloat,,A_ThisFunc)
+					if(ex)
+					{
+						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+						throw ex
+					}
+					else if (MfFloat._IsNaN(value))
+					{
+						this.m_value := value.m_value
+					}
+					else if (MfFloat._IsNegativeInfinity(value))
+					{
+						this.m_value := value.m_value
+					}
+					else if (MfFloat._IsPositiveInfinity(value))
+					{
+						this.m_value := value.m_value
+					}
+					else
+					{
+						wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
+						this.m_value := value.Value
+					}
+				}
+				else
+				{
+					_value := value ; MfFloat._DoubleToDouble(value) ; round trip to system to validated
+					if (_Value == MfFloat.m_NaN)
+					{
+						this.m_value := MfFloat.m_NaN
+					}
+					else if (_Value == MfFloat.m_NegativeInfinity)
+					{
+						this.m_value := MfFloat.m_NegativeInfinity
+					}
+					else if (_Value == MfFloat.m_PositiveInfinity)
+					{
+						this.m_value := MfFloat.m_PositiveInfinity
+					}
+					else
+					{
+						mStr := MfMemoryString.FromAny(_value)
+						if (mStr.Length = 0)
+						{
+							this.m_Value := MfFloat.m_NaN
+						}
+						else if (mStr.IndexOf("#INF") >= 0)
+						{
+							if (mStr.CharCode[0] = 45) ; - symbol
+							{
+								this.m_Value := MfFloat.m_NegativeInfinity
+								return
+							}
+							this.m_Value := MfFloat.m_PositiveInfinity
+							return
+						}
+						else if (mStr.IndexOf("NAN") >= 0)
+						{
+							this.m_Value := MfFloat.m_NaN
+							return
+						}
+						else
+						{
+							fmt := this.Format
+							wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
+							_value += 0.0
+							this.m_Value := _value
+						}
+					}
+				}
 			}
 			catch e
 			{
+				if (MfObject.IsObjInstance(e, MfException))
+				{
+					if (e.Source == A_ThisFunc)
+					{
+						throw e
+					}
+				}
 				ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToFloat"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
 			Finally
 			{
-				Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
+				if (wasformat != "")
+				{
+					Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)	
+				}
 			}
 			
 			
