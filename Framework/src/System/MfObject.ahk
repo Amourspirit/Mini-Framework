@@ -308,23 +308,17 @@ Class MfObject
 		  To test for equality, call the MfObject.ReferenceEquals() or MfObject.Equals() method.
 */
 	GetHashCode() {
-		wasformat := A_FormatInteger
 		try
 		{
-			SetFormat IntegerFast, D
 			retval := &this
+			retval := Format("{:i}", retval)
 		}
 		catch e
 		{
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Unknown"), e)
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		finally
-		{
-			SetFormat, IntegerFast, %wasformat%
-		}
-		
 		return retval
 	}
 ; End:GetHashCode() ;}

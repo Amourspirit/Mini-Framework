@@ -249,7 +249,8 @@ class MfBinaryConverter extends MfObject
 			try
 			{
 				fmt := obj.Format
-				SetFormat, FloatFast,%fmt%
+				Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
+				
 				int := MfByteConverter._FloatToInt64(obj.Value)
 				return MfBinaryConverter._GetBytesInt(int, 64)
 			}
@@ -261,7 +262,7 @@ class MfBinaryConverter extends MfObject
 			}
 			finally
 			{
-				SetFormat, FloatFast,%wf%
+				Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wf)
 			}
 			
 		}

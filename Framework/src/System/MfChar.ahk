@@ -1854,8 +1854,7 @@ class MfChar extends MfPrimitive
 			throw ex
 		}
 		
-		WasFormat := A_FormatInteger
-		SetFormat, IntegerFast, D
+		WasFormat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
 		retval := Null
 		try {
 			strP := objParams.ToString()
@@ -1910,7 +1909,7 @@ class MfChar extends MfPrimitive
 		} catch e {
 			throw e
 		} finally {
-			SetFormat, IntegerFast, %WasFormat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, WasFormat)
 		}
 		return retval
 	}
@@ -1937,7 +1936,7 @@ class MfChar extends MfPrimitive
 		}
 
 
-		f := A_FormatInteger
+		;WasFormat := A_FormatInteger
 		try
 		{
 			if (IsObject(c))
@@ -1945,11 +1944,11 @@ class MfChar extends MfPrimitive
 				cType := new MfType(c)
 				if (cType.IsIntegerNumber)
 				{
-					SetFormat, Integer, H
+					;Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "H")
 					_rValue := c.Value
 					
 					if ((_rValue >= 0x0000) && (_rValue <= 0xFFFF)) {
-						SetFormat, Integer, H
+						;SetFormat, Integer, H
 						val := Chr(c.Value)
 					} else {
 						ex := new MfException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_CharCode"))
@@ -1990,8 +1989,8 @@ class MfChar extends MfPrimitive
 				else if ((str.Length = 6) && (str.Value ~= "i)^0x[0-9A-F]{4}$"))
 				{
 					; hex value convert to char	
-					SetFormat, IntegerFast, H
-					iChar := MfInteger.GetValue(str.Value) + 0x0
+					;SetFormat, IntegerFast, H
+					iChar := MfInteger.GetValue(str.Value) + 0
 					if ((iChar < MfChar.MinValue) || (iChar > MfChar.MaxValue))
 					{
 						ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Range"
@@ -2025,7 +2024,7 @@ class MfChar extends MfPrimitive
 		}
 		finally
 		{
-			SetFormat, Integer, %f%
+			;Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, WasFormat)
 		}
 		
 		return val
@@ -2110,8 +2109,8 @@ class MfChar extends MfPrimitive
 ;{	GetLatin1UnicodeCategory()
 	;private static MfUnicodeCategory GetLatin1UnicodeCategory(MfChar ch)
 	GetLatin1UnicodeCategory(c)	{
-		wasformat := A_FormatInteger
-		SetFormat, Integer, D
+		;wasformat := A_FormatInteger
+		;SetFormat, Integer, D
 		index := 0
 		try {
 			if (MfObject.IsObjInstance(c, MfChar)) {
@@ -2130,7 +2129,7 @@ class MfChar extends MfPrimitive
 		} catch e {
 			throw e
 		} finally {
-			SetFormat, Integer, %wasformat%
+			;SetFormat, Integer, %wasformat%
 		}
 		
 		return retvar
@@ -2138,8 +2137,8 @@ class MfChar extends MfPrimitive
 ; End:GetLatin1UnicodeCategory() ;}
 ;{ 	IsAscii()
 	IsAscii(c) {
-		f := A_FormatInteger
-		SetFormat, IntegerFast, D
+		;f := A_FormatInteger
+		;SetFormat, IntegerFast, D
 		try {
 			if (MfObject.IsObjInstance(c, MfChar)) {
 				return c.CharCode <= 127
@@ -2153,7 +2152,7 @@ class MfChar extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		} finally {
-			SetFormat, IntegerFast, %f%
+			;SetFormat, IntegerFast, %f%
 		}
 	}
 ; 	End:IsAscii() ;}
@@ -2167,8 +2166,8 @@ class MfChar extends MfPrimitive
 ; End:_isCharInstance(ByRef c) ;}
 ;{ 	_IsDigit internal method
 	_IsDigit(c) {
-		WasFormat := A_FormatInteger
-		SetFormat, IntegerFast, D
+		;WasFormat := A_FormatInteger
+		;SetFormat, IntegerFast, D
 		retval := false
 		try {
 			if (IsObject(c)) {
@@ -2198,15 +2197,15 @@ class MfChar extends MfPrimitive
 		} catch e {
 			throw e
 		} finally {
-			SetFormat, IntegerFast, %WasFormat%
+			;SetFormat, IntegerFast, %WasFormat%
 		}
 		return retval
 	}
 ; 	End:_IsDigit internal method ;}
 ;{	IsLatin1()
 	IsLatin1(c)	{
-		WasFormat := A_FormatInteger
-		SetFormat, IntegerFast, D
+		;WasFormat := A_FormatInteger
+		;SetFormat, IntegerFast, D
 		retval := false
 		try {
 			if (MfObject.IsObjInstance(c,MfChar)) {
@@ -2222,7 +2221,7 @@ class MfChar extends MfPrimitive
 		} catch e {
 			throw e
 		} finally {
-			SetFormat, IntegerFast, %WasFormat%
+			;SetFormat, IntegerFast, %WasFormat%
 		}
 		return retval
 	}
@@ -2405,23 +2404,20 @@ class MfChar extends MfPrimitive
 	_Text2Hex(String) {
 		VarSetCapacity(Hex, len*(A_IsUnicode ? 2:1))
 		len := MfChar._StrPutVar(String, Var, "UTF-16")
-		pointer:=&var
-		f := A_FormatInteger
-		SetFormat IntegerFast, H
+		pointer := &var
+		f := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "H")
 		Hex := ""
 		Loop % len*2
 		{		
 			Hex := SubStr(0x100 + NumGet(pointer + A_Index - 0x1, 0x0, "uchar"), -0x1) . Hex
 		}
-			
-		SetFormat IntegerFast, %f%
+		Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, f)
 		Return Hex
 	}
 ; 	End:Text2Hex ;}
 ;{ 	Hex2Text
 	_Hex2Text(Hex) {
-		f := A_FormatInteger
-		SetFormat IntegerFast, D
+		f := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
 		startpos:=1
 		n := ""
 		Loop % StrLen(Hex)/2
@@ -2433,7 +2429,7 @@ class MfChar extends MfPrimitive
 			n .= chr(strHex)
 			startpos +=4
 		}
-		SetFormat IntegerFast, %f%
+		Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, f)
 		Return n
 	}
 ; 	End:Hex2Text ;}

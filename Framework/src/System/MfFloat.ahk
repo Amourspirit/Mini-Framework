@@ -168,7 +168,7 @@ Class MfFloat extends MfPrimitive
 		
 		wasformat := A_FormatFloat
 		try {
-			SetFormat, FloatFast, %_format%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, _format)
 			_f += 0.0
 			base.__New(_f, _returnAsObject)
 			this._SetFormat(_format)
@@ -184,7 +184,7 @@ Class MfFloat extends MfPrimitive
 		}
 		finally
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		this.m_isInherited := this.__Class != "MfFloat"
 	}
@@ -369,7 +369,7 @@ Class MfFloat extends MfPrimitive
 		try
 		{
 			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 			_val := MfFloat.GetValue(value)
 			_newVal := this.m_Value + _val
 			this.m_Value := _newVal ; MfFloat._GetFmtValue(_newVal, this.Format)
@@ -382,7 +382,7 @@ Class MfFloat extends MfPrimitive
 		}
 		finally
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		
 		return this._ReturnFloat(this)
@@ -424,15 +424,14 @@ Class MfFloat extends MfPrimitive
 			throw ex
 		}
 		retval := -1
-		wasformat := A_FormatFloat
 		fmt := this.Format
-		SetFormat, FloatFast, %fmt%
+		wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 		if (this.Value = obj.Value) {
 			retval := 0
 		} else if (this.Value > obj.Value) {
 			retval := 1
 		}
-		SetFormat, FloatFast, %wasformat%
+		Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		return retval
 	}
 ; End:CompareTo() ;}
@@ -465,7 +464,7 @@ Class MfFloat extends MfPrimitive
 		{
 			
 			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 			_val := MfFloat._GetValue(value)
 			if (this.Value = _val) {
 				retval := true
@@ -479,7 +478,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally 
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return retval
 	}
@@ -525,7 +524,7 @@ Class MfFloat extends MfPrimitive
 		try
 		{
 			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 			_value := 0.0
 			try
 			{
@@ -560,7 +559,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 				
 		return this._ReturnFloat(this)
@@ -872,7 +871,7 @@ Class MfFloat extends MfPrimitive
 		{
 			
 			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 			_val := MfFloat._GetValue(value)
 			if (this.Value > _val) {
 				retval := true
@@ -886,7 +885,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally 
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return retval
 	}
@@ -920,7 +919,7 @@ Class MfFloat extends MfPrimitive
 		{
 			
 			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 			_val := MfFloat._GetValue(value)
 			if (this.Value >= _val) {
 				retval := true
@@ -934,7 +933,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally 
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return retval
 	}
@@ -961,7 +960,7 @@ Class MfFloat extends MfPrimitive
 		retval := Null
 		try
 		{
-			SetFormat, FloatFast, %fmt%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
 			_neg := false
 			if (this.Value < 0.0) {
 				_neg := true
@@ -1040,7 +1039,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return retval
 	}
@@ -1073,8 +1072,7 @@ Class MfFloat extends MfPrimitive
 		try
 		{
 			
-			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
 			_val := MfFloat._GetValue(value)
 			if (this.Value < _val) {
 				retval := true
@@ -1088,7 +1086,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally 
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return retval
 	}
@@ -1121,8 +1119,7 @@ Class MfFloat extends MfPrimitive
 		try
 		{
 			
-			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
 			_val := MfFloat._GetValue(value)
 			if (this.Value <= _val) {
 				retval := true
@@ -1136,7 +1133,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally 
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return retval
 	}
@@ -1183,8 +1180,7 @@ Class MfFloat extends MfPrimitive
 		{
 			try
 			{
-				fmt := this.Format
-				SetFormat, FloatFast, %fmt%
+				wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
 				if (MfObject.IsObjInstance(value, MfFloat))
 				{
 					_value := value.Value
@@ -1209,7 +1205,7 @@ Class MfFloat extends MfPrimitive
 		}
 		finally
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return this._ReturnFloat(this)
 	}
@@ -1351,8 +1347,7 @@ Class MfFloat extends MfPrimitive
 		wasformat := A_FormatFloat
 		try
 		{
-			fmt := this.Format
-			SetFormat, FloatFast, %fmt%
+			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
 			_val := MfFloat.GetValue(value)
 			_newVal := this.m_Value - _val
 			this.m_Value := _newVal ; MfFloat._GetFmtValue(_newVal, this.Format)
@@ -1365,7 +1360,7 @@ Class MfFloat extends MfPrimitive
 		}
 		finally
 		{
-			SetFormat, FloatFast, %wasformat%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 		return this._ReturnFloat(this)
 	}
@@ -1398,12 +1393,12 @@ Class MfFloat extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		wf := A_FormatFloat
+		wasformat := A_FormatFloat
 		try
 		{
 			if (MfObject.IsObjInstance(flt, "MfFloat")) {
 				fmt := flt.Format
-				SetFormat, FloatFast, %fmt%
+				wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 				_int := new MfInteger(MfInteger.GetValue(flt))
 				return _int
 			} else if (Mfunc.IsFloat(flt)) {
@@ -1425,7 +1420,7 @@ Class MfFloat extends MfPrimitive
 		}
 		Finally
 		{
-			SetFormat, FloatFast, %wf%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		}
 			
 		ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjTypeOr"
@@ -1643,9 +1638,8 @@ Class MfFloat extends MfPrimitive
 	; returns a var float formated to fObj format property
 	; fObj - MfFloat instance.
 	_GetFmtObjValue(fObj) {
-		wasformat := A_FormatFloat
 		fmt := fObj.Format
-		SetFormat, FloatFast, %fmt%
+		wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 		retval := fObj.Value
 		fObj.Value := fObj.Value + 0.0
 		
@@ -1653,7 +1647,7 @@ Class MfFloat extends MfPrimitive
 		; {
 		; 	fObj.Value := fObj.Value + 0.0
 		; }
-		SetFormat, FloatFast, %wasformat%
+		wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		return retval
 	}
 ; 	End:_GetFmtObjValue ;}
@@ -1663,15 +1657,14 @@ Class MfFloat extends MfPrimitive
 	; f - the var float to format
 	; fmt - the format to use
 	_GetFmtValue(f, fmt) {
-		wasformat := A_FormatFloat
-		SetFormat, FloatFast, %fmt%
+		wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 		retval := f
 		if (Mfunc.IsFloat(f) = false)
 		{
 			retval := retval + 0.0
 		}
 		
-		SetFormat, FloatFast, %wasformat%
+		Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 		return retval
 	}
 ; End:_GetFmtValue ;}
@@ -1929,7 +1922,7 @@ Class MfFloat extends MfPrimitive
 			try
 			{
 				fmt := this.Format
-				SetFormat, FloatFast, %fmt%
+				wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 				
 				_val := MfFloat._GetValue(value)
 				_val += 0.0
@@ -1945,7 +1938,7 @@ Class MfFloat extends MfPrimitive
 			}
 			Finally
 			{
-				SetFormat, FloatFast, %wasformat%
+				Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
 			}
 			
 			

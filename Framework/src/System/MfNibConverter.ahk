@@ -39,7 +39,7 @@ class MfNibConverter extends MfObject
 		wf := A_FormatInteger
 		Try
 		{
-			SetFormat, IntegerFast, d
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "d")
 			if (MfObject.IsObjInstance(obj, MfBool))
 			{
 				if (obj.Value = true)
@@ -110,7 +110,7 @@ class MfNibConverter extends MfObject
 		}
 		finally
 		{
-			SetFormat, IntegerFast, %ws%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, ws)
 		}
 			
 

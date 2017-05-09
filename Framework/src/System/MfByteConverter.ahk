@@ -170,10 +170,10 @@ class MfByteConverter extends MfObject
 			return MfNibConverter.ToByteList(Nibbles)
 		}
 		
-		wf := A_FormatInteger
+		wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "d")
 		Try
 		{
-			SetFormat, IntegerFast, d
+
 			if (MfObject.IsObjInstance(obj, MfBool))
 			{
 				if (obj.Value = true)
@@ -215,7 +215,7 @@ class MfByteConverter extends MfObject
 			}
 			else if (MfObject.IsObjInstance(obj, MfFloat))
 			{
-				wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
+				wg := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
 				try
 				{
 					int := MfByteConverter._FloatToInt64(obj.Value)
@@ -232,7 +232,7 @@ class MfByteConverter extends MfObject
 				}
 				finally
 				{
-					Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wf)
+					Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wg)
 				}
 					
 			}
@@ -251,7 +251,7 @@ class MfByteConverter extends MfObject
 		}
 		finally
 		{
-			SetFormat, IntegerFast, %ws%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
 		}
 			
 
@@ -261,20 +261,18 @@ class MfByteConverter extends MfObject
 	}
 ; End:GetBytes ;}
 	_DoubleToHex(d) {
-		form := A_FormatInteger
-		SetFormat IntegerFast, HEX
+		form := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "H")
 		v := DllCall("ntdll.dll\RtlLargeIntegerShiftLeft",Double,d, UChar,0, Int64)
-		SetFormat IntegerFast, %form%
+		Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, form)
 		Return v
 	}
 
 	_HexToDouble(x) { ; may be wrong at extreme values
-		wf := A_FormatInteger
-		SetFormat, IntegerFast, HEX
+		form := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "H")
 		x += 0
 		x .= ""
 		result := (2*(x>0)-1) * (2**((x>>52 & 0x7FF)-1075)) * (0x10000000000000 | x & 0xFFFFFFFFFFFFF)
-		SetFormat, IntegerFast, %wf%
+		Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, form)
 		return result
 	}
 	_GetBytesLong(d) {
