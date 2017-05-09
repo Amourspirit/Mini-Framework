@@ -628,15 +628,18 @@ Class MfBool extends MfPrimitive
 ; End:GetValue() ;}	
 ;{ 	_GetValue
 	_GetValue(obj) {
-		WasFormat := A_FormatInteger
+		
 		try
 		{
-			SetFormat, IntegerFast, D
-			retval := 0
+			retval := false
 			retval .= "" ; necessary for integer fast
 
 			if (IsObject(obj))
 			{
+				if (MfObject.IsObjInstance(obj, MfBool))
+				{
+					return obj.Value
+				}
 				T := new MfType(obj)
 				if (T.IsNumber)
 				{
@@ -742,10 +745,7 @@ Class MfBool extends MfPrimitive
 		{
 			throw e
 		}
-		Finally
-		{
-			SetFormat, IntegerFast, %WasFormat%
-		}
+		
 		return retval > 0? MfBool.True:MfBool.False
 	}
 ; 	End:_GetValue ;}

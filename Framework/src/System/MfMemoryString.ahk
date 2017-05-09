@@ -2894,13 +2894,7 @@ class MfMemoryString extends MfObject
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				pos := pos * BytesPerChar
-				if (Pos > this.m_MemView.Size)
-				{
-					ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_ArrayListInsert"))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
+				pos := MfMath.Min((pos + 1) * BytesPerChar, this.m_MemView.Size)
 				this.m_MemView.Pos := pos
 				this.m_CharCount := this.m_MemView.GetCharCount()
 			}
@@ -5281,7 +5275,7 @@ class MfMemStrView extends MfMemBlkView
 		
 		needleAddr := NeedleObj[]
 		needleSize := (NeedleObj.Pos - BytesPerChar)
-		haystackSize := this.Pos - BytesPerChar
+		haystackSize := this.Pos ; size needs to be at the pos in order to search the last char
 		result := MfMemStrView.InBufRev(haystackAddr, needleAddr, haystackSize, needleSize, EndOffset)
 		if (result > 0)
 		{

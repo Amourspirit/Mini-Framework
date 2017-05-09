@@ -97,7 +97,7 @@ class MfListBase extends MfEnumerableBase
 		this.m_Count++
 		this.m_InnerList[this.m_Count] := obj
 		
-		return this.m_Count
+		return this.m_Count - 1
 	}
 ; 	End:_Add ;}
 ;{ 	Clear()				- Overrides - MfListBase

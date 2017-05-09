@@ -241,6 +241,30 @@ class MfBinaryConverter extends MfObject
 		{
 			return MfBinaryConverter._GetBytesInt(obj.Value, 64)
 		}
+		else if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			
+			wf := A_FormatFloat
+			
+			try
+			{
+				fmt := obj.Format
+				SetFormat, FloatFast,%fmt%
+				int := MfByteConverter._FloatToInt64(obj.Value)
+				return MfBinaryConverter._GetBytesInt(int, 64)
+			}
+			catch e
+			{
+				ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			finally
+			{
+				SetFormat, FloatFast,%wf%
+			}
+			
+		}
 		else if (MfObject.IsObjInstance(obj, MfUInt64))
 		{
 			bigx := obj.m_bigx

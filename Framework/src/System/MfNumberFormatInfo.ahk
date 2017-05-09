@@ -168,53 +168,74 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	}
 ;	End:VerifyDigitSubstitution() ;}
 ;{	VerifyNativeDigits()
-	VerifyNativeDigits(nativeDig, propertyName)
-	{
+	VerifyNativeDigits(nativeDig, propertyName) {
 		; http://en.wikipedia.org/wiki/DBCS
 		; http://msdn.microsoft.com/en-us/library/613dxh46%28v=vs.90%29.aspx
 		; mk:@MSITStore:C:\Program%20Files\AutoHotkey\AutoHotkey.chm::/docs/Scripts.htm#cp
 		; http://l.autohotkey.net/docs/commands/StrPutGet.htm
-		
-		if (MfNull.IsNull(nativeDig)) {
-			ex := new MfArgumentNullException(propertyName,MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
+		if (MfNull.IsNull(nativeDig))
+		{
+			ex := new MfArgumentNullException("nativeDig")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if ((!MfObject.IsObjInstance(nativeDig,MfGenericList)) || (!nativeDig.ListType.Equals(MfString.GetType()))) {
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_GenericListType","MfString"),propertyName)
+		if(MfString.IsNullOrEmpty(propertyName))
+		{
+			ex := new MfArgumentNullException("propertyName")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+
+		if (!MfObject.IsObjInstance(nativeDig, MfListBase))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List"), "nativeDig")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+				
 		if (nativeDig.Count != 10)
 		{
-			throw new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidNativeDigitCount"), propertyName)
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidNativeDigitCount"), propertyName)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
-		i := 0
-		iCount := nativeDig.Count
-		Loop, %iCount%
+		nd := nativeDig.m_InnerList
+		ndLen := nativeDig.Count
+		mStr := new MfMemoryString(ndLen)
+		i := 1
+		while (i <= ndLen)
 		{
-			nd := nativeDig.Item[i] 
-			if (MfNull.IsNullOrEmpty(nd)) {
-				throw new MfArgumentNullException(propertyName, MfEnvironment.GetResourceString("ArgumentNull_ListValue"))
+			sVal := nd[i]
+			sLen := StrLen(sVal)
+			if (sLen = 0)
+			{
+				mStr := ""
+				ex := new MfArgumentNullException(propertyName, MfEnvironment.Instance.GetResourceString("ArgumentNull_ListValue"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-			
+			mStr.Append(sVal)
 			i++
 		}
+
+		
 		
 		i := 0
-		while, i < nativeDig.Length
+		while, i < ndLen
 		{
-			i++
-			if (nativeDig[i] == null)
+			
+		
+			nunLen := strlen(mStr.char[i])
+			if (nunLen != 1)
 			{
-				throw new ArgumentNullException(propertyName, MfEnvironment.GetResourceString("ArgumentNull_ArrayValue"))
-			}
-			if (nativeDig[i].Length != 1)
-			{
-				if (nativeDig[i].Length != 2)
+				if (nunLen != 2)
 				{
-					throw new ArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
+					ex := new MfArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
 				}
+				;isHightSorrogate := ((cHex >= 0xD800) && (cHex <= 0xDBFF))
+				;isLowSorrogate := ((cHex >= 0xDC00) && (cHex <= 0xDFFF))
 				if (!MfChar.IsSurrogatePair(nativeDig[i][0], nativeDig[i][1]))
 				{
 					throw new ArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
@@ -225,7 +246,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			{
 				throw new ArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
 			}
-			
+			i++
 		}
 	}
 ;{ VerifyNativeDigits()

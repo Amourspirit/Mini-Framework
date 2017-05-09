@@ -638,6 +638,24 @@ class MfMath extends MfObject
 			}
 			return obj2
 		}
+		if((IsObj1 = true && IsObj2 = false) || (IsObj1 = false && IsObj2 = true))
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("Arg_VarOrObj"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ex := MfObject.IsNotObjInstance(obj1,,,A_ThisFunc)
+		if (ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ex := MfObject.IsNotObjInstance(obj2,,,A_ThisFunc)
+		if (ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		if (MfObject.IsObjInstance(obj1, MfFloat) && MfObject.IsObjInstance(obj2, MfFloat))
 		{
 			If (obj1.GreaterThen(obj2))
@@ -697,6 +715,25 @@ class MfMath extends MfObject
 			}
 			return obj1
 		}
+		if((IsObj1 = true && IsObj2 = false) || (IsObj1 = false && IsObj2 = true))
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("Arg_VarOrObj"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ex := MfObject.IsNotObjInstance(obj1,,,A_ThisFunc)
+		if (ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ex := MfObject.IsNotObjInstance(obj2,,,A_ThisFunc)
+		if (ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
 		if (MfObject.IsObjInstance(obj1, MfFloat) && MfObject.IsObjInstance(obj2, MfFloat))
 		{
 			If (obj1.GreaterThen(obj2))

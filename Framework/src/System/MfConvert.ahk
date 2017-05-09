@@ -404,7 +404,7 @@ class MfConvert extends MfObject
 			}
 			if (_ReturnAsObject)
 			{
-				return new MfInteger(i)
+				return new MfInteger(i, true)
 			}
 			return i
 		}
@@ -476,8 +476,11 @@ class MfConvert extends MfObject
 			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
 			try
 			{
-				i := Round(obj.Value)
-				return MfConvert._RetrunAsObjInt64(i, _ReturnAsObject)
+				int := MfConvert._FloatToInt64(obj.Value)
+				if (_ReturnAsObject)
+				{
+					return new new MfInt64(int, true)
+				}
 			}
 			catch e
 			{
@@ -635,6 +638,7 @@ class MfConvert extends MfObject
 		throw ex
 	}
 ;{ 	ToUInt64
+
 	ToString(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfObject.IsObjInstance(obj, MfBool))

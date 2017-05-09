@@ -313,18 +313,26 @@ class MfBinaryList extends MfListBase
 		{
 			return this._ToByteArrayString(_returnAsObj, _startIndex, _length)
 		}
-		sb := new MfText.StringBuilder(_length)
+		mStr := new MfMemoryString(_length,,"UTF-8")
 		i := _startIndex
 		iMaxIndex := _length - 1
 		ll := this.m_InnerList
 		while i <= iMaxIndex
 		{
 			n := ll[i + 1]
-			sb.Append(n)
+			if (n = 1)
+			{
+				mStr.AppendCharCode(49)
+			}
+			else
+			{
+				mStr.AppendCharCode(48)
+			}
+			
 			i++
 		}
 		
-		return _returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
+		return _returnAsObj = true?new MfString(mStr.ToString()):mStr.ToString()
 	}
 ; 	End:ToString ;}
 ;{ 		SubList
@@ -426,7 +434,7 @@ class MfBinaryList extends MfListBase
 		i := startIndex
 		iMaxIndex := length -1
 		len := iMaxIndex - startIndex
-		sb := new MfText.StringBuilder(len * 2)
+		mStr := new MfMemoryString(len * 2,, "UTF-8")
 		iChunk := 0
 		rem := Mod(this.Count, 4)
 		iCount := 0
@@ -436,7 +444,7 @@ class MfBinaryList extends MfListBase
 			k := 0
 			While k <= offset
 			{
-				sb.Append("0")
+				mStr.Append("0")
 				k++
 			}
 			iCount := offset
@@ -448,7 +456,7 @@ class MfBinaryList extends MfListBase
 		{
 			if (iLoopCount > 0)
 			{
-				sb.Append("-")
+				mStr.Append("-")
 			}
 			while iCount < 4
 			{
@@ -456,14 +464,23 @@ class MfBinaryList extends MfListBase
 				{
 					break
 				}
-				sb.Append(ll[i + 1])
+				n := ll[i + 1]
+				if (n = 1)
+				{
+					mStr.AppendCharCode(49)
+				}
+				else
+				{
+					mStr.AppendCharCode(48)
+				}
+				;mStr.Append(ll[i + 1])
 				iCount++
 				i++
 			}
 			iLoopCount++
 			iCount := 0
 		}
-		return returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
+		return returnAsObj = true?new MfString(mStr.ToString()):mStr.ToString()
 	}
 	_AutoIncrease()
 	{

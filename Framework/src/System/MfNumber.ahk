@@ -76,7 +76,6 @@ class MfNumber extends MfObject
 		}
 	}
 
-
 	IsWhite(ch) {
 		return ch = 32 || (ch >= 9 && ch <= 13)
 	}

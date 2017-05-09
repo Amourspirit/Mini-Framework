@@ -557,8 +557,10 @@ Class MfObject
 	Remarks:
 		Static functions.
 		Only objects that inherit from MfObject are valid object to check. If objType param is ignored then object is checked as MfObject
+		See Also: IsNotObjInstance()
 */
 	IsObjInstance(obj, objType = "") {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		ot := ""
 		if (MfObject._IsNull(objType)) {
 			ot := "MfObject"
@@ -580,7 +582,100 @@ Class MfObject
 		return obj.IsInstance()
 	}
 ; End:IsObjInstance(obj, objType = "") ;}
+;{ 	IsNotObjInstance
+/*
+	Method: IsNotObjInstance()
 
+	IsNotObjInstance()
+		Gets if Obj Parameter is of the expenced type and instance
+	Parameters:
+		obj
+			The Object to check
+		objType
+			String name of type; or MfObject or dervived classs; or instance of MfType class.
+		returnErrors
+			Optional, default is True, boolean var, If True then if Obj is not of the correct type and instance then an Excption derived from MfExcptions is returned;
+			Otherwise true is returned if there is an error
+
+	Returns:
+		Returns false if there are no errors and obj is and instance of objType.
+		Returns true if returnErrors is set to false and there is an error
+		Return an MfException based exception if returnErrors is set to true and there is an error
+		Returns MfArgumentNullException if obj parameter is null if returnErrors is true
+		Returns MfNonMfObjectException if returnErrors is true and obj is not set to an instance
+		Returns MfArgumentException if returnErrors is true and obj is not if type matching or deriving form objType
+
+	Remarks:
+		See Also: IsObjInstance()
+*/
+	IsNotObjInstance(obj, objType:="", returnErrors:=true, ParamName:="obj") {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(obj))
+		{
+			if (returnErrors = true)
+			{
+				ex := new MfArgumentNullException(ParamName)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				return ex
+			}
+			else
+			{
+				return true
+			}
+		}
+		ot := ""
+		if (MfObject._IsNull(objType)) {
+			ot := "MfObject"
+		}
+		if (MfObject._IsNull(ot)) {
+			ot := objType
+		}
+		if(IsObject(obj))
+		{
+			if(!MfObject.IsMfObject(obj))
+			{
+				if (returnErrors = true)
+				{
+					ex := new MfNonMfObjectException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", ParamName))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					return ex
+				}
+				return true
+					
+			}
+			if (!obj.Is(ot))
+			{
+				if (returnErrors = true)
+				{
+					oType := IsObject(ot)?ot.GetType().ToString():ot
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_TypeNotExpected", obj.GetType().ToString(), oType), ParamName)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					return ex
+				}
+				return true
+			}
+			if (obj.IsInstance() = false)
+			{
+				if (returnErrors = true)
+				{
+					ex := new MfArgumentNullException(ParamName, MfEnvironment.Instance.GetResourceString("Arg_NullReferenceException"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					return ex
+				}
+				return true
+			}
+			return false
+		}
+		if (returnErrors = true)
+		{
+			ex := new MfArgumentNullException(ParamName, MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", ParamName))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			return ex
+		}
+		return true
+
+	}
+; 	End:IsNotObjInstance ;}
 ;{	MemberwiseClone()
 /*
 	Method: MemberwiseClone()

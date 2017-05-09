@@ -169,9 +169,11 @@ class MfByteList extends MfListBase
 ;	End:Insert(index, obj) ;}
 
 ;{ 	ToString
-	ToString(returnAsObj = false, startIndex = 0, length="") {
+	; Format is a Flag Value 1 is include hyphen, 2 is reverse, 3 is hyphen and reverse
+	; fromat 4 is as AutoHotkey Hex format of 0x00FA, Format 4 is only applied if 1 in not include
+	ToString(returnAsObj = false, startIndex = 0, length="", Format=1) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		
+		Format := MfInteger.GetValue(Format, 1)
 		_returnAsObj := MfBool.GetValue(returnAsObj, false)
 		_startIndex := MfInt64.GetValue(startIndex, 0)
 		if (_startIndex < 0)
@@ -195,32 +197,96 @@ class MfByteList extends MfListBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		
-		sb := new MfText.StringBuilder(length 3)
+		Reverse := (Format & 2) != 0
+		if (Reverse)
+		{
+			return this._ToStringRev(_returnAsObj, _startIndex, _length, Format)
+		}
+		IncludeHyphen := (Format & 1) != 0
+		FormatAHk := (Format & 4) != 0 & !IncludeHyphen
+		sb := new MfMemoryString(_length * 3,,"UTF-8")
+		if (FormatAHk)
+		{
+			sb.Append("0x")
+		}
 		i := _startIndex
 		iMaxIndex := _length - 1
 		iCount := 0
 		ll := this.m_InnerList
 		while i <= iMaxIndex
 		{
-			b := ll[i + 1]
-			bit1 := b // 16
-			bit2 := Mod(b, 16)
-			bitChar1 := MfByteConverter._GetHexValue(bit1)
-			bitChar2 := MfByteConverter._GetHexValue(bit2)
-
-			if (iCount > 0)
+			if (iCount > 0 && IncludeHyphen)
 			{
 				sb.Append("-")
 			}
-			sb.Append(bitChar1)
-			sb.Append(bitChar2)
+			b := ll[i + 1]
+			if (b = 0)
+			{
+				sb.AppendCharCode(48, 2) ; append 00
+			}
+			else if (b = 255)
+			{
+				sb.AppendCharCode(70, 2) ; append FF
+			}
+			Else
+			{
+				bit1 := b // 16
+				bit2 := Mod(b, 16)
+				bitChar1 := MfByteConverter._GetHexValue(bit1)
+				bitChar2 := MfByteConverter._GetHexValue(bit2)
+				sb.Append(bitChar1)
+				sb.Append(bitChar2)
+			}
 			i++
 			iCount++
 		}
 		
 		return _returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
+	_ToStringRev(returnAsObj, startIndex, length, Format) {
+		IncludeHyphen := (Format & 1) != 0
+		FormatAHk := (Format & 4) != 0 & !IncludeHyphen
+		sb := new MfMemoryString(length * 3,,"UTF-8")
+		if (FormatAHk)
+		{
+			sb.Append("0x")
+		}
+		iMaxIndex := length - 1
+		i := iMaxIndex
+		iCount := 0
+		ll := this.m_InnerList
+		while i >= startIndex
+		{
+			if (iCount > 0 && IncludeHyphen)
+			{
+				sb.Append("-")
+			}
+			b := ll[i + 1]
+			if (b = 0)
+			{
+				sb.AppendCharCode(48, 2) ; append 00
+			}
+			else if (b = 255)
+			{
+				sb.AppendCharCode(70, 2) ; append FF
+			}
+			Else
+			{
+				bit1 := b // 16
+				bit2 := Mod(b, 16)
+				bitChar1 := MfByteConverter._GetHexValue(bit1)
+				bitChar2 := MfByteConverter._GetHexValue(bit2)
+				sb.Append(bitChar1)
+				sb.Append(bitChar2)
+			}
+				
+			i--
+			iCount++
+		}
+		
+		return returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
+	}
+	
 ; 	End:ToString ;}
 ;{ 	SubList
 	; The SubList() method extracts the elements from list, between two specified indices, and returns the a new list.

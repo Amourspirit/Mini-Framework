@@ -1890,7 +1890,7 @@ class MfChar extends MfPrimitive
 				sObj := objParams.Item[0]
 				wasReturn := str.ReturnAsObject
 				sObj.ReturnAsObject := true
-				iObj := new MfInteger(objParams.Item[1].Value)
+				iObj := MfInteger.Parse(objParams.Item[1].Value)
 				index := iObj.Value
 				
 				if ((index < 0) || (index >= sObj.Length))
@@ -1933,9 +1933,10 @@ class MfChar extends MfPrimitive
 	_GetCharValue(c) {
 		val := Null
 		if (MfNull.IsNull(c)) {
-			val := chr(0)
-			return val
+			return chr(0)
 		}
+
+
 		f := A_FormatInteger
 		try
 		{
@@ -1962,12 +1963,13 @@ class MfChar extends MfPrimitive
 				}
 				else if (cType.IsString)
 				{
-					if (c.Length > 0)
+					mStr := MfMemoryString.FromAny(c.Length,,, ObjGetAddress(c, "m_value"))
+					if (mStr.Length = 0)
 					{
-						val := c.ReturnAsObject = true? c.Index[0].Value:c.Index[0]
-					} else {
-						val := Chr(0)
+						Return chr(0)
 					}
+					val := mStr.Charcode[0]
+					mStr := ""
 				}
 				else
 				{
@@ -2226,86 +2228,158 @@ class MfChar extends MfPrimitive
 	}
 ;	End:IsLatin1() ;}
 ;{ 	_IsSeparatorLatin1 - static
+	; Gets is c is a Latin1 Seperator
+	; c - instance of MfChar
 	_IsSeparatorLatin1(c) {
-		if (!MfObject.IsObjInstance(c, "MfChar")) {
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "c","MfChar"),"c")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		retval := ((c.CharCode = 32 ) || (c.CharCode = 160))
+		return MfChar._IsSeparatorCharNumLatin1(c.CharCode)
+	}
+	
+; 	End:_IsSeparatorLatin1 ;}
+;{ 	_IsSeparatorCharNumLatin1 - static
+	; Gets is cNum is a Latin1 Seperator
+	; cNum - integer number of char
+	_IsSeparatorCharNumLatin1(cNum) {
+		retval := ((cNum = 32 ) || (cNum = 160))
 		return retval
 	}
-; 	End:_IsSeparatorLatin1 ;}
+; 	End:_IsSeparatorCharNumLatin1 ;}
 ;{ 	IsSurrogate - static
-	_IsSurrogateSI(s, index, methodName = "") {
-		if (MfNull.IsNull(s))
+;{ 	_IsSurrogateSI
+	; gets if char at index of s is Surrogate
+	; s can be MfString instance or string var
+	; index can be MfInteger or var integer
+	; Source string Var or object that is throw in errors. Defatult to current Method Name
+	_IsSurrogateSI(s, index, Source:="") {
+	
+		if (MfNull.IsNull(index))
+		{
+			if (Source == "")
+			{
+				Source := A_ThisFunc
+			}
+			ex := new MfArgumentNullException("index")
+			ex.SetProp(A_LineFile, A_LineNumber, Source)
+			throw ex
+		}
+		_s := MfString.GetValue(s)
+		_index := MfInteger.GetValue(index)
+		slen := StrLen(_s)
+		if (slen = 0)
 		{
 			ex := new MfArgumentNullException("s")
 			ex.SetProp(A_LineFile, A_LineNumber, methodName)
 			throw ex
 		}
-		if (MfNull.IsNull(index))
+		if ((_index < 0) || (_index >= sLen))
 		{
-			ex := new MfArgumentNullException("index")
-			ex.SetProp(A_LineFile, A_LineNumber, methodName)
-			throw ex
-		}
-		if ((index.Value < 0) || (index.value >= s.Length))
-		{
+			if (Source == "")
+			{
+				Source := A_ThisFunc
+			}
 			ex := new MfArgumentOutOfRangeException("index")
-			ex.SetProp(A_LineFile, A_LineNumber, methodName)
+			ex.SetProp(A_LineFile, A_LineNumber, Source)
 			throw ex
 		}
-		return MfChar.IsSurrogate(s.Index[index])
+		mStr := new MfMemoryString(slen,,,&_s)
+		c := mStr.CharCode[_index]
+		mStr := ""
+		return MfChar._IsSurrogateCharCode(c)
 	}
+; 	End:_IsSurrogateSI ;}
+;{ 	_IsSurrogateC
 	_IsSurrogateC(c) {
-		retval :=  ((c.CharCode >= 0xd800) && (c.CharCode <= 0xdfff))
+		return MfChar._IsSurrogateCharCode(c.CharCode)
+	}
+; 	End:_IsSurrogateC ;}
+;{ 	_IsSurrogateCharCode
+	_IsSurrogateCharCode(cNum) {
+		retval :=  ((cNum >= 0xd800) && (cNum <= 0xdfff))
 		return retval
 	}
+; 	End:_IsSurrogateCharCode ;}
 ; 	End:IsSurrogate() ;}
 ;{	IsSurrogatePair - Static
+;{ 	_IsSurrogatePairCC
+	; static method
+	; highSurrogate - MfChar instance
+	; lowSurrogate - MfChar instance
 	_IsSurrogatePairCC(highSurrogate, lowSurrogate) {
-		WasFormat := A_FormatInteger
-		SetFormat, IntegerFast, H
-		hc := highSurrogate.CharCode + 0x0
-		lc := lowSurrogate.CharCode + 0x0
+		hc := highSurrogate.CharCode
+		lc := lowSurrogate.CharCode
+		return MfChar._IsSurrogatePairByteHiLoNums(hc,lc)
+	}
+; 	End:_IsSurrogatePairCC ;}
+;{ 	_IsSurrogatePairByteHiLoNums
+	; Static Method
+	; highSurrogate - integer Number Byte value High
+	; lowSurrogate - integer Number Byte value Low
+	_IsSurrogatePairByteHiLoNums(highSurrogate, lowSurrogate) {
+		
+		hc := highSurrogate + 0x0
+		lc := lowSurrogate + 0x0
 		retval :=  ((hc >= 0xd800) && (hc <= 0xDBFF)) && ((lc >= 0xDC00) && (lc <= 0xDFFF))
-		SetFormat, IntegerFast, %WasFormat%
 		return retval
 	}
-	_IsSurrogatePairSI(s, index, methodName = "") {
-		wasformat := A_FormatInteger
-		SetFormat, IntegerFast, D
-		try {
-			if (MfNull.IsNull(s))
+; 	End:_IsSurrogatePairByteHiLoNums ;}
+	_IsSurrogatePairSI(s, index, Source:="") {
+		if(!A_IsUnicode)
+		{
+			return false
+		}
+		if (MfNull.IsNull(index))
+		{
+			if (Source == "")
 			{
-				ex := new MfArgumentNullException("s")
-				ex.SetProp(A_LineFile, A_LineNumber, methodName)
-				throw ex
+				Source := A_ThisFunc
 			}
-			if (MfNull.IsNull(index))
-			{
-				ex := new MfArgumentNullException("index")
-				ex.SetProp(A_LineFile, A_LineNumber, methodName)
-				throw ex
-			}
-			
-			if ((index.Value < 0) || (index.value >= s.Length))
-			{
-				ex := new MfArgumentOutOfRangeException("index")
-				ex.SetProp(A_LineFile, A_LineNumber, methodName)
-				throw ex
-			}
-			c1 := new MfChar(s.Index[index.Value])
-			c2 := new MfChar(s.Index[index.Value + 1])
-			
-			return (((index.Value + 1) < s.Length) && (MfChar.IsSurrogatePairCC(c1, c2)))
-		} catch e {
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			ex := new MfArgumentNullException("index")
+			ex.SetProp(A_LineFile, A_LineNumber, Source)
 			throw ex
-		} finally {
-			SetFormat, IntegerFast, %wasformat%
+		}
+		_s := MfString.GetValue(s)
+		_index := MfInteger.GetValue(index)
+		slen := StrLen(_s)
+		
+		if ((_index < 0) || (_index >= sLen))
+		{
+			if (Source == "")
+			{
+				Source := A_ThisFunc
+			}
+			ex := new MfArgumentOutOfRangeException("index")
+			ex.SetProp(A_LineFile, A_LineNumber, Source)
+			throw ex
+		}
+		mStr := new MfMemoryString(slen,,,&_s)
+		if (mStr.Length < 0)
+		{
+			ex := new MfArgumentNullException("s")
+			ex.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw ex
+		}
+		len := _index + 1 ; add 1 to offset zero based
+		if (mStr.Length < len)
+		{
+			ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_OffsetOut"))
+			ex.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw ex
+		}
+		
+		try
+		{
+			_index := _index * 2 ; 2 bytes per char for unicode 16
+			b1 := mStr.Byte[_index]
+			b2 := mStr.Byte[_index + 1]
+			retval := MfChar._IsSurrogatePairByteHiLoNums(b1, b2)
+			return retval
+		} catch e {
+			if (Source == "")
+			{
+				Source := A_ThisFunc
+			}
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, Source)
+			throw ex
 		}
 		
 	}

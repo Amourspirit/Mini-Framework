@@ -147,7 +147,7 @@ class MfCharList extends MfListBase
 		{
 			this.m_FirstNullChar := this.m_Count - 1
 		}
-		return this.m_Count
+		return this.m_Count - 1
 	}
 ; 	End:_Add ;}
 ;	End:Add(value) ;}

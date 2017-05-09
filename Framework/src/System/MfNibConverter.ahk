@@ -79,7 +79,7 @@ class MfNibConverter extends MfObject
 			else if (MfObject.IsObjInstance(obj, MfUInt64))
 			{
 				bigx := obj.m_bigx
-				nibs := MfNibConverter._HexStringToNibList("+" . bigx.ToString(16))
+				nibs := MfNibConverter._HexStringToNibList("+" . bigx.ToString(16), 16)
 				return nibs
 			}
 			else if (MfObject.IsObjInstance(obj, MfBigInt))
@@ -2901,130 +2901,131 @@ class MfNibConverter extends MfObject
 		return nArray
 	}
 ; 	End:_IntToHexArray ;}
-	_HexStringToNibList(value, BitCount=64) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		If (bitCount < 2 )
+;{ 	_CharCodeToInt
+	; gets integer value from charCode for hex values
+	_CharCodeToInt(cc) {
+		if (cc >= 48 && cc <= 57) ; 0 - 9
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Under", "2"), "bitCount")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			return cc - 48
 		}
-		if (Mod(bitCount, 2))
+		if (cc >= 65 && cc <= 70) ; A - F
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Not_Divisable_By", "2"), "bitCount")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			return cc - 55
 		}
-		ActualBitCount := bitCount // 2
-		Signed := False
+		if (cc >= 97 && cc <= 102) ; a - f
+		{
+			return cc - 87
+		}
+	}
+; 	End:_CharCodeToInt ;}
+;{ 	_IsValidHexChar
+	; gets if a charCode is a valid hex charcode
+	_IsValidHexChar(cc) {
+		if ((cc >= 48 && cc <= 57) || (cc >= 65 && cc <= 70) || (cc >= 97 && cc <= 102))
+		{
+			return true
+		}
+		return false
+	}
+; 	End:_IsValidHexChar ;}
+	_HexStringToNibList(value, NibbleCountMin:=0,NibbleCountMax:=0) {
 		IsNeg := False
-		_value := MfInt64.GetValue(value, "NaN", true)
-		if (_Value != "NaN")
+		hStr := new MfString(value)
+		IsSigned := false
+		if (hStr.StartsWith("-"))
 		{
-			Signed := true
-			value := Format("{:x}", _value)
+			IsNeg := true
+			IsSigned := true
+			hstr.Remove(0,1)
 		}
-
-		strLength := StrLen(value)
-		
-		if (strLength <= 3)
+		else if (hStr.StartsWith("+"))
 		{
-			if (value ~= "^0x[0-9a-fA-F]+$")
+			IsSigned := true
+			hStr.Remove(0,1)
+		}
+		if (hStr.StartsWith("0x"))
+		{
+			IsSigned := true
+			hStr.Remove(0,2)
+		}
+		mStr := MfMemoryString.FromAny(hStr)
+		if (mStr.Length = 0)
+		{
+			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadHex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+		If (Signed = false)
+		{
+			; if hex value is not sigend then get the signed value from the first nibble
+			For i, c in mStr
 			{
-				strX := SubStr(value, 3)
-				Signed := true 
-				IsNeg := false
+				if (MfNibConverter._IsValidHexChar(c))
+				{
+					info := MfNibConverter.CharHexBitTable[c]
+					IsNeg := info.IsNeg
+					break
+				}
 			}
-			else if (value ~= "^[0-9a-fA-F]+$")
+		}
+		result := new MfMemoryString(mStr.Length,, "UTF-8")
+
+		iCount := 0
+		if (IsNeg = true ) {
+			For i, c in mStr
 			{
-				strX := value
-			}
-			else
-			{
-				ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadHex"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				Throw ex
+				if (NibbleCountMax > 0 && iCount > NibbleCountMax)
+				{
+					break
+				}
+				info := MfNibConverter.CharHexBitTable[c]
+				result.AppendCharCode(info.HexFlip)
+				iCount++
 			}
 		}
 		else
 		{
-			strLead := SubStr(value, 1, 4)
-			if (strLead ~= "^0x[0-9a-fA-F]+$")
+			For i, c in mStr
 			{
-				strX := SubStr(value, 3)
-				Signed := true
-				IsNeg := false
-			}
-			else if (strLead ~= "^-0x[0-9a-fA-F]+$")
-			{
-				strX := SubStr(value, 4)
-				Signed := true
-				IsNeg := true
-			}
-			else if (strLead ~= "^\+0x[0-9a-fA-F]+$")
-			{
-				strX := SubStr(value, 4)
-				Signed := true
-				IsNeg := false
-			}
-			else if (strLead ~= "^-[0-9a-fA-F]+$")
-			{
-				strX := SubStr(value, 2)
-				Signed := true
-				IsNeg := true
-			}
-			else if (strLead ~= "^\+[0-9a-fA-F]+$")
-			{
-				strX := SubStr(value, 2)
-				Signed := true
-				IsNeg := false
-			}
-			else
-			{
-				strX := Value
+				if (NibbleCountMax > 0 && iCount > NibbleCountMax)
+				{
+					break
+				}
+				result.AppendCharCode(c)
+				iCount++
 			}
 		}
-		lst := new MfNibbleList()
-		;strX := MfString.Reverse(strX)
-		iCount := 0
-		Loop, Parse, strX
+		if (result.Length = 0)
 		{
-			If (A_LoopField ~= "[0-9a-zA-Z]")
-			{
-				HexInfo := MfNibConverter.HexBitTable[A_LoopField]
-				If (Signed = false && iCount = 0)
-				{
-					IsNeg := HexInfo.IsNeg
-				}
-				If (IsNeg = true && Signed = true)
-				{
-					HexFlipInfo := MfNibConverter.HexBitTable[HexInfo.HexFlip]
-					lst.Add(HexFlipInfo.IntValue)
-				}
-				Else
-				{
-					lst.Add(HexInfo.IntValue)
-				}
-			}
-			iCount++
+			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_BadHex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
 		}
-		if (Signed = true)
+		listLength := result.Length
+		Offset := 0
+		if (listLength < NibbleCountMin)
 		{
-			if ((lst.Count * 2) >= ActualBitCount )
-			{
-				lst.insert(0,IsNeg?15:0)
-			}
-			else 
-			{
-				while (lst.Count * 2) < ActualBitCount
-				{
-					lst.insert(0,IsNeg?15:0)
-				}
-			}
+			Offset := NibbleCountMin - listLength
+		}
+		lst := new MfNibbleList(listLength + Offset, IsNeg?15:0)
+		;inLst := lst.m_InnerList
+		
+		i := 0
+		inLst := lst.m_InnerList
+		Offset++ ; move to one base index
+		While (i < listLength)
+		{
+			inLst[i + offset] := MfNibConverter._CharCodeToInt(result.CharCode[i])
+			i++
+		}
+		if (IsNeg)
+		{
+			MfNibConverter._AddOneToNibListValue(lst) ; make complements16
 		}
 		
 		return lst
 	}
+	
 ;{ _ReverseList
 	_ReverseList(lst) {
 		iCount := lst.Count
@@ -3062,6 +3063,70 @@ class MfNibConverter extends MfObject
 			}
 		}
 	; End:IsLittleEndian ;}
+	
+	;{ CharHexBitTable
+		static m_CharHexBitTable := ""
+		/*!
+			Property: CharHexBitTable [get]
+				Gets the CharHexBitTable value associated with the this instance
+			Value:
+				Var representing the CharHexBitTable property of the instance
+			Remarks:
+				Readonly Property
+		*/
+		CharHexBitTable[charIndex]
+		{
+			get {
+				if (MfNibConverter.m_CharHexBitTable = "")
+				{
+					MfNibConverter.m_CharHexBitTable := New MfList()
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(48, 70, "0"))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(49, 69, "1"))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(50, 68, "2"))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(51, 67, "3"))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(52, 66, "4"))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(53, 65, "5"))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(54, 57, "6"))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(55, 56, "7"))
+
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(56, 55, "8", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(57, 54, "9", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(65, 53, "A", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(66, 52, "B", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(67, 51, "C", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(68, 50, "D", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(69, 49, "1", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(70, 48, "0", true))
+				}
+				index := -1
+				if (charIndex >= 48 && charIndex <= 57)
+				{
+					index := charIndex - 48
+				}
+				else if (charIndex >= 65 && charIndex <= 70)
+				{
+					index := charIndex - 55
+				}
+				else if (charIndex >= 97 && charIndex <= 102)
+				{
+					index := charIndex - 87
+				}
+				if (index < 0 || index > 15)
+				{
+					ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("Arg_IndexOutOfRangeException"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				index++ ; move to one base
+				return MfNibConverter.m_CharHexBitTable.m_InnerList[index]
+			}
+			set {
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+				ex.SetProp(A_LineFile, A_LineNumber, "CharHexBitTable")
+				Throw ex
+			}
+		}
+	; End:CharHexBitTable ;}
 	;{ HexBitTable
 		static m_HexBitTable := ""
 		/*!
@@ -3122,7 +3187,21 @@ class MfNibConverter extends MfObject
 		Bin := ""
 		BinFlip := ""
 		IsNeg := False
-		IntValue := 0
+		IntValue := ""
 	}
+	class CharHexBitInfo
+	{
+		__new(hv, hf, c,Neg = false) {
+			this.HexValue := hv
+			this.HexFlip := hf
+			this.Char := c
+			this.IsNeg := Neg
+		}
+		HexValue := ""
+		HexFlip := ""
+		IsNeg := False
+		Char := ""
+	}
+	
 ; End:Internal Class HexBitInfo ;}
 }

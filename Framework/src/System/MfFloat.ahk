@@ -1848,6 +1848,55 @@ Class MfFloat extends MfPrimitive
 		}
 	}
 ; 	End:TotalWidth ;}
+;{ 	MaxValue
+/*
+	Property: MaxValue [get]
+		Represents the largest possible value of an MfInt64. This field is constant.
+	Value:
+		Var integer
+	Gets:
+		Gets the largest possible value of an MfInt64.
+	Remarks:
+		Constant Property
+		Can be accessed using MfInt64.MaxValue
+		Value = 1.7976931348623157E+308
+*/
+	MaxValue[]
+	{
+		get {
+			return 1.7976931348623157E+308
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+; 	End:MaxValue ;}
+;{ 	MinValue
+/*
+	Property: MinValue [get]
+		Represents the smallest possible value of an MfInt64. This field is constant.
+	Value:
+		Var integer
+	Gets:
+		Gets the smallest possible value of an MfInt64.
+	Remarks:
+		Can be accessed using MfInt64.MinValue
+		Value = -1.7976931348623157E+308
+*/
+	MinValue[]
+	{
+		get {
+			return -1.7976931348623157E+308
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+; 	End:MinValue ;}
 ;{	Value
 /*
 	Property Value [get\set]
