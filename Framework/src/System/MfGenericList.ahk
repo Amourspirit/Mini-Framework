@@ -120,7 +120,7 @@ class MfGenericList extends MfListBase
 			throw ex
 		}
 		retval := false
-		if (this.m_InnerList.Count <= 0) {
+		if (this.m_count <= 0) {
 			return retval
 		}
 		for k, v in this.m_InnerList
@@ -168,7 +168,7 @@ class MfGenericList extends MfListBase
 		i := 0
 		bFound := false
 		int := -1
-		if (this.m_InnerList.Count <= 0) {
+		if (this.m_Count <= 0) {
 			return int
 		}
 		for k, v in this.m_InnerList

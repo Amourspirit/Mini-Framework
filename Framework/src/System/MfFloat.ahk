@@ -2175,17 +2175,20 @@ Class MfFloat extends MfPrimitive
 						ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 						throw ex
 					}
-					else if (MfFloat._IsNaN(value))
+					if (MfFloat._IsNaN(value))
 					{
 						this.m_value := value.m_value
+						return
 					}
-					else if (MfFloat._IsNegativeInfinity(value))
+					if (MfFloat._IsNegativeInfinity(value))
 					{
 						this.m_value := value.m_value
+						return
 					}
-					else if (MfFloat._IsPositiveInfinity(value))
+					if (MfFloat._IsPositiveInfinity(value))
 					{
 						this.m_value := value.m_value
+						return
 					}
 					else
 					{
@@ -2199,14 +2202,17 @@ Class MfFloat extends MfPrimitive
 					if (_Value == MfFloat.m_NaN)
 					{
 						this.m_value := MfFloat.m_NaN
+						return
 					}
-					else if (_Value == MfFloat.m_NegativeInfinity)
+					if (_Value == MfFloat.m_NegativeInfinity)
 					{
 						this.m_value := MfFloat.m_NegativeInfinity
+						return
 					}
-					else if (_Value == MfFloat.m_PositiveInfinity)
+					if (_Value == MfFloat.m_PositiveInfinity)
 					{
 						this.m_value := MfFloat.m_PositiveInfinity
+						return
 					}
 					else
 					{
@@ -2214,8 +2220,9 @@ Class MfFloat extends MfPrimitive
 						if (mStr.Length = 0)
 						{
 							this.m_Value := MfFloat.m_NaN
+							return
 						}
-						else if (mStr.IndexOf("#INF") >= 0)
+						if (mStr.IndexOf("#INF") >= 0)
 						{
 							if (mStr.CharCode[0] = 45) ; - symbol
 							{
@@ -2225,7 +2232,7 @@ Class MfFloat extends MfPrimitive
 							this.m_Value := MfFloat.m_PositiveInfinity
 							return
 						}
-						else if (mStr.IndexOf("NAN") >= 0)
+						if (mStr.IndexOf("NAN") >= 0)
 						{
 							this.m_Value := MfFloat.m_NaN
 							return
@@ -2260,8 +2267,6 @@ Class MfFloat extends MfPrimitive
 					Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)	
 				}
 			}
-			
-			
 		}
 	}
 ;	End:Value ;}

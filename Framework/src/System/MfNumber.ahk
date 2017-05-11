@@ -33,12 +33,12 @@ class MfNumber extends MfObject
 		scale := 0
 		sign := false
 		baseAddress := ""
-		m_mstr := ""
+		;m_mstr := ""
 
 		__new(BufferLen) {
 			; stackBuffer is the memory addres to array of bytes created via VarSetCapacity
-			this.m_mstr := new MfMemoryString(BufferLen)
-			this.digits := new MfNumber._CharIndex(this.m_mstr)
+			;this.m_mstr := new MfMemoryString(BufferLen)
+			this.digits := new MfMemoryString(BufferLen)
 			this.baseAddress := this.digits.BufferPtr
 			this.precision := 0
 			this.scale := 0
@@ -87,6 +87,7 @@ class MfNumber extends MfObject
 		{
 			return ""
 		}
+		mLen := mStr.Length
 		ms := new MfMemoryString(len,,,&str)
 		
 		ch2 := ms.CharCode[0]
@@ -94,7 +95,7 @@ class MfNumber extends MfObject
 		{
 			return ""
 		}
-		if (len > mStr.Length)
+		if (len > mLen)
 		{
 			return ""
 		}
@@ -124,6 +125,44 @@ class MfNumber extends MfObject
 		return j
 	}
 ; 	End:MatchChars ;}
+	ParseDouble(value, options, numfmt) {
+		If (MfString.IsNullOrEmpty(value))
+		{
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		d := 0.0
+		if (!MfNumber.TryStringToNumber(value, options, number, numfmt, false))
+		{
+			; If we failed TryStringToNumber, it may be from one of our special strings.
+			; Check the three with which we're concerned and rethrow if it's not one of
+			; those strings.
+			sTrim := trim(value)
+			if (sTrim = numfmt.PositiveInfinitySymbol)
+			{
+				return MfFloat.PositiveInfinity
+			}
+			if (sTrim = numfmt.NegativeInfinitySymbol)
+			{
+				return MfFloat.NegativeInfinity
+			}
+			If (sTrim = numfmt.NaNSymbol)
+			{
+				return MfFloat.NaN
+			}
+			
+
+			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		;number.digits.CharPos := number.precision
+		MfNumber.NumberToDouble(number, d)
+		return d
+	}
 ; 	End:ParseInt32 ;}
 	ParseInt32(s, style, info) {
 		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
@@ -260,9 +299,8 @@ class MfNumber extends MfObject
 		{
 			 return false
 		}
-		nd := number.digits
 		p := 0
-		ch := nd[p]
+		ch := number.digits.CharCode[p]
 		n := 0
 		while (--i >= 0)
 		{
@@ -292,7 +330,7 @@ class MfNumber extends MfObject
 						}
 					}
 					p++
-					ch := nd[p]
+					ch := number.digits.CharCode[p]
 				}
 				; Detect an overflow here...
 				 if (newN < n)
@@ -313,9 +351,8 @@ class MfNumber extends MfObject
 		{
 			 return false
 		}
-		nd := number.digits
 		p := 0
-		ch := nd[p]
+		ch := number.digits.CharCode[p]
 		n := 0
 		sb := new MfText.StringBuilder(MfNumber.UInt64Precision)
 		sb.Append("0x")
@@ -340,7 +377,7 @@ class MfNumber extends MfObject
 							sb._AppendCharCode(ch)
 						}
 					}
-					ch := nd[++p]
+					ch := number.digits.CharCode[++p]
 				}
 			}
 		}
@@ -361,9 +398,8 @@ class MfNumber extends MfObject
 		{
 			 return false
 		}
-		nd := number.digits
 		p := 0
-		ch := nd[p]
+		ch := number.digits.CharCode[p]
 		n := 0
 		sb := new MfText.StringBuilder(MfNumber.UInt64Precision)
 		while (--i >= 0)
@@ -387,7 +423,7 @@ class MfNumber extends MfObject
 							sb._AppendCharCode(ch)
 						}
 					}
-					ch := nd[++p]
+					ch := number.digits.CharCode[++p]
 				}
 			}
 		}
@@ -402,6 +438,364 @@ class MfNumber extends MfObject
 		return true
 	}
 ; 	End:HexNumberToUInt64 ;}
+	NumberToDouble(byRef number, ByRef value) {
+		mStr := new MfMemoryString(56,,"UTF-8")
+		;mStr := new MfMemoryString(56)
+		; precision will always be number count parsed ignore decimal and sign up to but not including e
+		; if Percision is greater then or equal to 15 then anything after that Percision should be droped and exp added
+; eg 1 "1177100000000001e8" 	will become 1.1771E+23 				percision of 16, Scale 24	Delta 8		chars "1177100000000001"
+; eg 2 "1177100000000001e-8"	will become 11771000 				percision of 16, Scale 8 	Delta -8	chars "1177100000000001"
+; eg 3 "1177100000000001e-3" 	will become 1177100000000 			percision of 16, Scale 13	Delta -3	chars "1177100000000001"
+; eg 4 "123456789123456789e-3" 	will become 123456789123457 		percision of 18, Scale 15	Delta -3	chars "123456789123456789"
+; eg 5 "123456789123456789" 	will become 1.23456789123457E+17 	percision of 18, Scale 18	Delta 0		chars "123456789123456789"
+; eg 6 "123456789e-10" 			will become 0.0123456789 			percision of 9, Scale -1	Delta -10	chars "123456789"
+; eg 7 "123456789e-43" 			will become 1.23456789E-35 			percision of 9, Scale -34	Delta -43	chars "123456789"
+
+; eg 8 "0.1177100000000001e-25" 			will becomes 1.1771E-26 	percision of 16, Scale -25 Delta -41
+; eg 9 "0.3177100000000001e-25" 			will becomes 3.1771E-26  	percision of 16, Scale -25 Delta -41	chars "3177100000000001"
+; eg 10 "000000000.1177100000000001e-25" 	will becomes 1.1771E-26 	percision of 16, Scale -25 Delta -41 leading 0's are ignored same as eg 8
+; eg 11 "000000000.11771000000000010000e-25"will becomes 1.1771E-26 	percision of 16, Scale -25,Delta -41 leading 0's are ignored same as eg 8
+; 	chars "1177100000000001" same as eg 8
+
+; eg 12 "0.00000000000000000000000000000000000000000000001177100000000001"
+;	becomes 1.1771E-47 percision of 17, Scale -46
+;	Delta -63, ; string 17 chars, "1177100000000001"
+; eg 13 "1177100e-8"			will become 0.011771			precision of 5, scale of -1	chars "11771"
+; eg 14	"123456789123456789e-4" will become 12345678912345.7	precision of 18, scale of 14				chars "123456789123456789"
+; eg 15 "117.7100000001e8"		will become 11771000000.01		precision of 13, scale of 11 				chars "1177100000001"
+; eg 16 "117.7100000001e-8"		will become 1.177100000001E-06	precision of 13, scale of -5 				chars "1177100000001"
+; eg 17 "123456789e-9"			will become 0.123456789			precision of 9, scale of 0		delta -9	chars "123456789"
+; eg 18 "123456789e-10"			will become 0.0123456789		precision of 9, scale of -1		delta -10	chars "123456789"
+; eg 19 "123456789e-6"			will become 123.456789			precision of 9, scale of 3		delta -6	chars "123456789"
+
+		; ONLY DIGTST UP TO A MAX OF 50 DIGITS WILL BE PARSED (after leading and trailing 0's are removed)
+		; All leading 0's before and after decimal point are droped when parsed. This is a rule!
+		; number.digits will include all 0-9 chars after dropping leading and trailing 0's no matter where the decimal point is
+		; output will only have leading zero if percision + scale is less then 15
+		; When precision > 15 then rounding will occur, Rounding occurs before Trimming of any zeros from end of number.digits
+		; If percision is greater then 15 then drop anything after 15, if exp is positive then add droped as exp as in eg 1
+		; 	if the exp is neg then drop futher removing drop from exp and then drop any remainding exp as in eg 2
+		;	However if Drop + remaining exp exceeds length of output pad the left with zeros after the decimal point ( to a max of 15 then do exp see)
+		; If there are trailing zeros then and exp is pos then drop them and add the number dropped to exp as show in eg 1
+		; If Scale is Negative then add 0's to left of number after dec as shown in eg 6 up to 15 places
+		; after 15 places see eg 7
+
+		precision := number.precision 
+		scale := number.scale
+		sign := number.sign
+		delta := scale - precision
+		; str := number.digits.ToString()
+		; Clipboard := str
+		pMax := 15
+		If (sign)
+		{
+			mStr.AppendCharCode(45)
+		}
+
+		if (precision > pMax) ; precision will be at least 16
+		{
+			exp := 0
+
+			expSign := ""
+			If (delta >= 0)
+			{
+				expSign := 43 ; +
+				exp := scale - 1
+
+				; using 16 digits, 15 to return but 16th to do rounding
+				digits := number.digits.SubString(0, pMax + 1)
+				LastDigit := digits.CharCode[pMax] - 48
+				LastDigit += 0
+				if (LastDigit >= 5)
+				{
+					i := digits.ToString(0, pMax)
+					i++
+					digits := ""
+					digits := new MfMemoryString(StrLen(i),,,&i)
+				}
+				digits.CharPos := pMax ; need to set this to allow any trailing 0's to be trimmed
+				;MfNumber.MStrCutAtCharPos(number.digits, pMax)
+				mstr.AppendCharCode(digits.CharCode[0])
+				mstr.AppendCharCode(46) ; .
+				MfNumber.MStrTrimTrailingZero(digits)
+				if (digits.Length > 0)
+				{
+					if (digits.Length > pMax - 1)
+					{
+						mstr.Append(digits.SubString(1, pMax - 1))
+					}
+					else
+					{
+						mstr.Append(digits)
+					}
+				}
+				else
+				{
+					mstr.AppendCharCode(48) ; 0
+					exp--
+				}
+			}
+			else ; delta < 0 at this point
+			{
+				expSign := 45 ; -
+				exp := 0
+				if (scale >= 0)
+				{
+					digits := number.digits.SubString(0, scale + 1)
+					LastDigit := digits.CharCode[scale] - 48
+					LastDigit += 0
+					if (LastDigit >= 5)
+					{
+						i := digits.ToString(0, pMax)
+						i++
+						digits := ""
+						digits := new MfMemoryString(StrLen(i),,,&i)
+					}
+					if (digits.Length > scale)
+					{
+						if (scale > 0)
+						{
+							mstr.Append(digits.SubString(0, scale))	
+						}
+						else
+						{
+							mstr.AppendCharCode(48) ; 0
+						}
+					}
+					else
+					{
+						mstr.Append(digits)
+					}
+					mstr.AppendCharCode(46) ; .
+					if (scale = 0)
+					{
+						mstr.Append(number.digits)
+					}
+					else
+					{
+						mstr.AppendCharCode(48) ; 0
+					}
+					
+				}
+				else ; scale is < 0 at this point
+				{
+					exp := abs(scale) + 1
+					; using 16 digits, 15 to return but 16th to do rounding
+					digits := number.digits.SubString(0, pMax + 1)
+					LastDigit := digits.CharCode[pMax] - 48
+					LastDigit += 0
+					if (LastDigit >= 5)
+					{
+						i := digits.ToString(0, pMax)
+						i++
+						digits := ""
+						digits := new MfMemoryString(StrLen(i),,,&i)
+					}
+					digits.CharPos := pMax ; need to set this to allow any trailing 0's to be trimmed
+
+					;MfNumber.MStrCutAtCharPos(number.digits, pMax)
+					mstr.AppendCharCode(digits.CharCode[0])
+					mstr.AppendCharCode(46) ; .
+					MfNumber.MStrTrimTrailingZero(digits)
+
+					if (digits.Length > 0)
+					{
+						if (digits.Length > pMax - 1)
+						{
+							mstr.Append(digits.SubString(1, pMax - 1))
+						}
+						else
+						{
+							mstr.Append(digits)
+						}
+					}
+					else
+					{
+						mstr.AppendCharCode(48) ; 0
+						exp++
+					}
+				}
+			}
+			
+			if (exp != 0)
+			{
+				mstr.AppendCharCode(69) ; E
+				mstr.AppendCharCode(expSign)
+				mstr.Append(exp)
+			}
+				
+			value := mstr.ToString()
+			return
+
+		}
+		else ; if (precision > pMax)
+		{
+			exp := 0
+
+			expSign := ""
+			If (delta >= 0)
+			{
+				if (scale < pMax -1)
+				{
+					exp := 0
+					mstr.Append(number.digits)
+					if (delta > 0)
+					{
+						mstr.AppendCharCode(48, delta) ; 0
+					}
+				}
+				else
+				{
+					expSign := 43 ; +
+					exp := scale - 1
+
+					; using 16 digits, 15 to return but 16th to do rounding
+					digits := number.digits
+					;MfNumber.MStrCutAtCharPos(number.digits, pMax)
+					mstr.AppendCharCode(digits.CharCode[0])
+					mstr.AppendCharCode(46) ; .
+					if (digits.Length > 0)
+					{
+						mstr.Append(digits.SubString(1))
+					}
+					else
+					{
+						mstr.AppendCharCode(48) ; 0
+						exp--
+					}
+				}
+					
+			}
+			else ; delta < 0 at this point
+			{
+				expSign := 45 ; -
+				exp := 0
+				if (scale > 0)
+				{
+					exp := 0
+					digits := number.digits
+					i := 0
+					theta := Abs(delta)
+					diff := precision - theta
+					While (i < diff)
+					{
+						ch := digits.CharCode[i]
+						mstr.AppendCharCode(ch)
+						i++
+					}
+					mstr.AppendCharCode(46) ; .
+					mstr.Append(digits.SubString(i))
+				}
+				else ; scale is < or = 0 at this point
+				{
+					exp := abs(scale) + 1
+					; using 16 digits, 15 to return but 16th to do rounding
+					digits := number.digits
+					
+					theta := Abs(delta)
+					; theta is the number of positions to shift decimal from right to left
+					; if theta is greater then precision then 0 must be added
+					; creating a format such as 0.001234 from 1234e-6
+					; However if theta exceeds 7 then format will change
+					; creating a format such as 1.234E-5 from 1234e-8
+					;MfNumber.MStrCutAtCharPos(number.digits, pMax)
+					if (theta < pMax - 1)
+					{
+						
+						diff := theta - precision
+						if (diff >= 0)
+						{
+							exp := 0
+							mstr.AppendCharCode(48) ; 0
+							mstr.AppendCharCode(46) ; .
+							if (diff > 0)
+							{
+								mstr.AppendCharCode(48, diff) ; 0	
+							}
+							mstr.Append(digits)
+						}
+						else
+						{
+							i := 0
+							diff := precision - theta
+							While (i < diff)
+							{
+								ch := digits.CharCode[i]
+								mstr.AppendCharCode(ch)
+								i++
+							}
+							mstr.AppendCharCode(46) ; .
+							mstr.Append(digits.SubString(i))
+						}
+
+
+					}
+					else
+					{
+						exp := Abs(scale - 1)
+
+						; using 16 digits, 15 to return but 16th to do rounding
+						digits := number.digits
+						mstr.AppendCharCode(digits.CharCode[0])
+						mstr.AppendCharCode(46) ; .
+						MfNumber.MStrTrimTrailingZero(digits)
+						if (digits.Length > 0)
+						{
+							mstr.Append(digits.SubString(1))
+						}
+						else
+						{
+							mstr.AppendCharCode(48) ; 0
+							exp--
+						}
+					}
+					
+				}
+			}
+			
+			if (exp != 0)
+			{
+				mstr.AppendCharCode(69) ; E
+				mstr.AppendCharCode(expSign)
+				mstr.Append(exp)
+			}
+				
+			value := mstr.ToString()
+			return
+		}
+	}
+;{ 	MStrTrimTrailingZero
+	; Trims zeros from right side of number and returns then number of zeros trimmed
+	; mStr instance of MfMemoryString
+	MStrTrimTrailingZero(ByRef mStr) {
+		If (mStr.Length = 0)
+		{
+			return 0
+		}
+		Oldlen := mStr.Length
+		mStr.TrimEnd("0")
+		NewLen := mStr.Length
+		return OldLen - NewLen
+	}
+; 	End:MStrTrimTrailingZero ;}
+;{ 	MStrCutAtCharPos
+	; cuts the mStr MfMemoryInstance at Pos and returns the Number of Char cut from string
+	; Pos is the new char Position or max Length of mStr in chars
+	MStrCutAtCharPos(ByRef mStr, pos) {
+		If (Pos < 1)
+		{
+			return 0
+		}
+		OldLen := mStr.Length
+		if (OldLen <= Pos)
+		{
+			return 0
+		}
+		mStr.CharPos := pos
+		NewLen := mStr.Length
+		return OldLen - NewLen
+	}
+; 	End:MStrCutAtCharPos ;}
 ;{ 	NumberToInt32
 	NumberToInt32(ByRef number, ByRef value) {
 		i := number.scale
@@ -410,8 +804,7 @@ class MfNumber extends MfObject
 			return false
 		}
 		p := 0
-		nd := number.digits
-		ch := nd[p]
+		ch := number.digits.CharCode[p]
 		n := 0
 		while (--i >= 0)
 		{
@@ -423,7 +816,7 @@ class MfNumber extends MfObject
 			if (ch != 0)
 			{
 				n += ch - 48
-				ch := nd[++p]
+				ch := number.digits.CharCode[++p]
 			}
 		}
 		if (number.sign)
@@ -453,8 +846,7 @@ class MfNumber extends MfObject
 			return false
 		}
 		p := 0
-		nd := number.digits
-		ch := nd[p]
+		ch := number.digits.CharCode[p]
 		n := 0
 		while (--i >= 0)
 		{
@@ -471,7 +863,7 @@ class MfNumber extends MfObject
 					return false
 				}
 				n := newN
-				ch := nd[++p]
+				ch := number.digits.CharCode[++p]
 			}
 		}
 		value := n
@@ -486,8 +878,7 @@ class MfNumber extends MfObject
 			return false
 		}
 		p := 0
-		nd := number.digits
-		ch := nd[p]
+		ch := number.digits.CharCode[p]
 		n := 0
 		while (--i >= 0)
 		{
@@ -504,7 +895,7 @@ class MfNumber extends MfObject
 			if (ch != 0)
 			{
 				n += ch - 48
-				ch := nd[++p]
+				ch := number.digits.CharCode[++p]
 			}
 		}
 		if (number.sign)
@@ -533,8 +924,7 @@ class MfNumber extends MfObject
 			return false
 		}
 		p := 0
-		nd := number.digits
-		ch := nd[p]
+		ch := number.digits.CharCode[p]
 		n := 0
 		sb := new MfText.StringBuilder(MfNumber.UInt64Precision)
 		;sb._AppendCharCode(ch)
@@ -544,7 +934,7 @@ class MfNumber extends MfObject
 			if (ch != 0)
 			{
 				sb._AppendCharCode(ch)
-				ch := nd[++p]
+				ch := number.digits.CharCode[++p]
 			}
 		}
 		str := sb.ToString()
@@ -715,7 +1105,7 @@ class MfNumber extends MfObject
 						}
 						else
 						{
-							number.digits[digCount++] := ch
+							number.digits.CharCode[digCount++] := ch
 
 						}
 						if (ch != 48 || parseDecimal)
@@ -735,7 +1125,7 @@ class MfNumber extends MfObject
 					number.scale--
 				}
 			}
-			else if (((options & 32) != 0) && ((state & StateDecimal) = 0) && ((next := MfNumber.MatchChars(MfStr, p, decSep)) != "" || ((parsingCurrency) && (state & StateCurrency) = 0) && (next := MfNumber.MatchChars(MfStr, p, altdecSep)) != ""))
+			else if (((options & 32) != 0) && ((state & StateDecimal) = 0) && ((next := MfNumber.MatchChars(mStr, p, decSep)) != "" || ((parsingCurrency) && (state & StateCurrency) = 0) && (next := MfNumber.MatchChars(mStr, p, altdecSep)) != ""))
 			{
 				; options & NumberStyles.AllowDecimalPoint
 				state |= StateDecimal
@@ -762,7 +1152,7 @@ class MfNumber extends MfObject
 		}
 		else
 		{
-			number.digits[digEnd] := 0
+			number.digits.CharCode[digEnd] := 0
 		}
 		if ((state & StateDigits) != 0)
 		{
@@ -770,8 +1160,8 @@ class MfNumber extends MfObject
 			{
 				; ch = E or ch = e , options & NumberStyles.AllowExponent
 				temp := p
-				i++
-				ch := mStr.CharCode[i]
+				p++
+				ch := mStr.CharCode[p]
 				if ((next := MfNumber.MatchChars(mStr, p, numfmt.positiveSign)) != "")
 				{
 					p := next
@@ -786,9 +1176,10 @@ class MfNumber extends MfObject
 				if (ch >= 48 && ch <= 57) ; ch 0 to 9
 				{
 					exp := 0
-					loop
+					while (ch >=48 && ch <= 57)
 					{
 						exp := (exp * 10) + (ch - 48) ; ch - 48 gets actual digit 0 to 9
+						
 						p++
 						ch := mStr.CharCode[p]
 						if (exp > 1000)
@@ -799,10 +1190,6 @@ class MfNumber extends MfObject
 								p++
 								ch := mStr.CharCode[p]
 							}
-						}
-						if (ch < 48 || ch > 57)
-						{
-							break
 						}
 					}
 					if (negExp)
@@ -851,7 +1238,7 @@ class MfNumber extends MfObject
 				{
 					break
 				}
-				ch := mStr.CharCode[p]
+				ch := mStr.CharCode[++p]
 			}
 			if ((state & StateParens) = 0)
 			{
@@ -867,6 +1254,7 @@ class MfNumber extends MfObject
 					}
 				}
 				ParsedChars := p
+				number.digits.CharPos := number.precision
 				return true
 			}
 		}
@@ -883,7 +1271,7 @@ class MfNumber extends MfObject
 		{
 			return MfNumber._TryStringToNumber(str, options, number, "", args[1], args[2])
 		}
-		return return MfNumber._TryStringToNumber(str, options, number, args[1], args[2], args[3])
+		return MfNumber._TryStringToNumber(str, options, number, args[1], args[2], args[3])
 	}
 ; 	End:TryStringToNumber ;}
 ;{ 	_TryStringToNumber
@@ -893,7 +1281,7 @@ class MfNumber extends MfObject
 		{
 			return false
 		}
-		ms := new MfMemoryString(len,,,&str)
+		mStr := new MfMemoryString(len,,,&str)
 		ParsecChars := 0
 		if (!MfNumber.ParseNumber(mStr, ParsecChars, options, number, sb, numfmt , parseDecimal) 
 			|| (ParsecChars <len && !MfNumber.TrailingZeros(mStr, (len - ParsecChars))))
@@ -909,7 +1297,7 @@ class MfNumber extends MfObject
 		numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := 0
-		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
 		{
 			return false
 		}
@@ -937,7 +1325,7 @@ class MfNumber extends MfObject
 		numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := 0
-		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
 		{
 			return false
 		}
@@ -965,7 +1353,7 @@ class MfNumber extends MfObject
 		numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := 0
-		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
 		{
 			return false
 		}
@@ -994,7 +1382,7 @@ class MfNumber extends MfObject
 		numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := "0"
-		if(MfNumber.TryStringToNumber(s, style, number, info, false))
+		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
 		{
 			return false
 		}

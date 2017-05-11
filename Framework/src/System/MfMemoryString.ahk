@@ -63,7 +63,7 @@
  *	Trim() Trims TrimChars or whitespace from this instance start and end
  *	TrimBuffer() Trims the internal buffer to the size of the current chars
  *	TrimStart() Trims TrimChars or whitespace from this instance start
- *	TrimStart() Trims TrimChars or whitespace from this instance end
+ *	TrimEnd() Trims TrimChars or whitespace from this instance end
  *	
  *	Properties
  *	Byte[index] - Gets/sets the Byte value at the value of index / limited to size and not char count
@@ -177,6 +177,7 @@ class MfMemoryString extends MfObject
 		if (cnt > 2)
 		{
 			Encoding := args[3]
+			
 		}
 	
 		if (MfString.IsNullOrEmpty(Encoding))

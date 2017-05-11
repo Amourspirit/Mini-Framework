@@ -69,7 +69,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	positiveSign				:= "+"			; string
 	validForParseAsCurrency 	:= true			; MfBool
 	validForParseAsNumber		:= true			; MfBool
-
+	static m_instance			:= ""
 ; End:internal members ;}
 	;{ Constructor: ()
 /*
@@ -115,6 +115,39 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	}
 
 ;	End:CheckGroupSize() ;}
+;{	GetFormat()	- overrides MfFormatProvider
+/*
+	Method: GetFormat()
+	
+	OutputVar := MfFormatProvider.GetFormat(formatType)
+	
+	GetFormat()
+		Returns an object that provides formatting services for the specified type.
+	Parameters
+		formatType
+			An object that specifies the type of format object to return.
+	Returns
+		Returns an instance of the object specified by formatType, if the MfFormatProvider implementation can supply that type of object; otherwise, null.
+*/
+	GetFormat(formatType) {
+		if (!MfType.Equals(this.GetType(),formatType))
+		{
+			return ""
+		}
+		return this
+	}
+;	End:GetFormat() ;}
+;{ 	GetInstance
+	GetInstance(formatProvider:="") {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		; formatProvider is for future expansion at this point
+		if (MfNumberFormatInfo.m_instance = "")
+		{
+			MfNumberFormatInfo.m_instance := new MfNumberFormatInfo()
+		}
+		return MfNumberFormatInfo.m_instance
+	}
+; 	End:GetInstance ;}
 ;{	ReadOnly()
 /*
 	Method: ReadOnly()
@@ -155,16 +188,46 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 ;	End:ReadOnly() ;}
 ; End:Method ;}
 ;{ Internal Methods
+	ValidateParseStyleInteger(styleObj) {
+		if (MfObject.IsObjInstance(styleObj, MfNumberStyles))
+		{
+			style := styleObj.Value
+		}
+		else
+		{
+			Style := styleObj
+		}
+		; AllowLeadingSign, AllowTrailingSign, AllowParentheses, AllowDecimalPoint, AllowThousands, AllowExponent, AllowCurrencySymbol, HexNumber = 1023 when or'ed together
+		; -1024 is the two complement of 1023
+		if ((style & -1024) != 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidNumberStyles"), "style")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		;if ((style & AllowHexSpecifier) != None && (style & ~(AllowLeadingWhite | AllowTrailingWhite | AllowHexSpecifier)) != None)
+		if ((style & 512) != 0 && (style & -516) != 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidHexStyle"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+	}
 ;{	VerifyDigitSubstitution()
-	VerifyDigitSubstitution(digitSub, propertyName)
-	{
-		if ((digitSub.Value = MfDigitShapes.Instance.Context.Value)
-			|| (digitSub.Value = MfDigitShapes.Instance.None.Value)
-			|| (digitSub.Value = MfDigitShapes.Instance.NativeNational.Value))
+	VerifyDigitSubstitution(digitSub, propertyName)	{
+		val := digitSub.Value
+
+		if ((val = 0) || (val = 2) || (val = 3))
 		{
 			return
 		}
-		throw new MfArgumentException(MfEnvironment.GetResourceString("Argument_InvalidDigitSubstitution"), propertyName)
+		ex := new MfArgumentException(MfEnvironment.GetResourceString("Argument_InvalidDigitSubstitution"), propertyName)
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+
+		; MfDigitShapes.Instance.Context.Value = 0
+		; MfDigitShapes.Instance.NativeNational.Value = 2
+		; MfDigitShapes.Instance.None.Value = 1
 	}
 ;	End:VerifyDigitSubstitution() ;}
 ;{	VerifyNativeDigits()
@@ -221,7 +284,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		
 		
 		i := 0
-		while, i < ndLen
+		while (i < ndLen)
 		{
 			
 		
