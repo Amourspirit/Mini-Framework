@@ -1123,13 +1123,7 @@ Class MfUInt16 extends MfPrimitive
 		}
 		if (!MfNull.IsNull(retval))
 		{
-			if (objParams.Data.Contains("ReturnAsObject") && (objParams.Data.Item["ReturnAsObject"] = true)) {
-				return new MfUInt16(retval, true)
-			}
-			else
-			{
-				return retval
-			}
+			return new MfUInt16(retval, true)
 		}
 		ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1207,11 +1201,8 @@ Class MfUInt16 extends MfPrimitive
 */
 	ToString() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		wasformat := A_FormatInteger
-		SetFormat, Integer, D
-		retval := this.Value + 0
-		SetFormat, Integer, %wasformat%
-		return retval . ""
+		retval := Format("{:i}",this.Value)
+		return retval
 	}
 ;  End:ToString() ;}
 ;{ 	TryParse()

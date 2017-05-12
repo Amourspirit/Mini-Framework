@@ -711,6 +711,15 @@ class MfConvert extends MfObject
 		return Value
 	}
 ; 	End:_RetrunAsObjUInt64 ;}
+;{ 	_UInt32ToInt32
+	_UInt32ToInt32(InputNum) {
+		VarSetCapacity(var, 4)
+		NumPut(InputNum,var,"UInt")
+		num := NumGet(var,,"Int")
+		VarSetCapacity(var, 0)
+		return num
+	}
+; 	End:_UInt32ToInt32 ;}
 ;{ 	_UInt16ToInt16
 	_UInt16ToInt16(InputNum) {
 		VarSetCapacity(var, 4)

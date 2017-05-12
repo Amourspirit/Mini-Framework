@@ -465,6 +465,34 @@ class MfByteConverter extends MfObject
 		return result
 	}
 ; 	End:BytesMultiply ;}
+;{ 	FromHex
+/*
+	Method: FromHex()
+
+	FromHex()
+		Converts Hex string to instance of MfNibbleList
+	Parameters:
+		value
+			The var or MfString containing the hex value to convert
+		MinCount
+			Optional, the Minimum number of items in the return list
+		MaxCount
+			Optional, the Maximum number of hex postitions to process
+	Returns:
+		Returns an instance of MfNibbleList
+	Remarks:
+		Static Method
+		Hex value can be in format of 0x00ff or -0x00ff or ffff or -ffff and is case insensitive
+		Negative hex values will be returned as Complements16
+		WhiteSpace and non hex char are ignored
+*/
+	FromHex(value, MinCount:=0,MaxCount:=0) {
+		_MinCount := MfInteger.GetValue(MinCount, 0) * 2
+		_MaxCount := MfInteger.GetValue(MaxCount, 0) * 2
+		Nibbles := MfNibConverter.FromHex(value, _MinCount, _MaxCount)
+		return MfNibConverter.ToByteList(Nibbles)
+	}
+; 	End:FromHex ;}
 ;{ 	FlipHexString
 /*
 	Method: FlipHexString()

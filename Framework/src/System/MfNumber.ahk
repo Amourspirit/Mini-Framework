@@ -381,13 +381,30 @@ class MfNumber extends MfObject
 				}
 			}
 		}
-		str := sb.ToString()
-		result := MfInt64.GetValue(str,"NaN", true)
-		if (result == "NaN")
+		len := sb.Length
+		if (len <= 16)
 		{
-			return false
+			str := sb.ToString()
+			Value := str + 0x0
+			return true
 		}
-		Value := str + 0x0
+		if (len > 18)
+		{
+			return false ; max 0xFFFFFFFFFFFFFFFF
+		}
+		str := sb.ToString()
+		lst := MfNibConverter.FromHex(str,16, 16)
+		Value := MfNibConverter.ToInt64(lst)
+		return true
+		; result := MfInt64.GetValue(str,"NaN", true)
+		; if (result == "NaN")
+		; {
+		; 	return false
+		; }
+		; AutoHotkey will automatically wrap into valid int64 if value is greater then
+		; MfInt64.MaxValue then will wrap into neg
+		; Value := str + 0x0
+		; return true
 	}
 ; 	End:HexNumberToInt64 ;}
 ;{ 	HexNumberToUInt64
@@ -401,7 +418,8 @@ class MfNumber extends MfObject
 		p := 0
 		ch := number.digits.CharCode[p]
 		n := 0
-		sb := new MfText.StringBuilder(MfNumber.UInt64Precision)
+		sb := new MfText.StringBuilder(MfNumber.UInt64Precision + 2)
+		sb.Append("0x")
 		while (--i >= 0)
 		{
 			if (ch != 0)
@@ -427,6 +445,13 @@ class MfNumber extends MfObject
 				}
 			}
 		}
+		len := sb.Length
+		if (len <= 16)
+		{
+			str := sb.ToString()
+			Value := str + 0x0
+			return true
+		}
 		str := sb.ToString()
 		sb := ""
 		bigInt := MfBigInt.Parse(str, 16)
@@ -434,7 +459,7 @@ class MfNumber extends MfObject
 		{
 			return false
 		}
-		Value := str
+		Value := bigInt.ToString()
 		return true
 	}
 ; 	End:HexNumberToUInt64 ;}
@@ -880,13 +905,17 @@ class MfNumber extends MfObject
 		p := 0
 		ch := number.digits.CharCode[p]
 		n := 0
+		; when adding to int64 it will overflow automatically when it gets to
+		; to max value so 9223372036854775807 + 1 becomes -9223372036854775808
+		; this is not the desired result for NumberToInt64 so will do an extra
+		; check using sign below
 		while (--i >= 0)
 		{
-			result := MfInt64.GetValue(n,"NaN", true)
-			if (result == "NaN")
-			{
-				return false
-			}
+			; result := MfInt64.GetValue(n,"NaN", true)
+			; if (result == "NaN")
+			; {
+			; 	return false
+			; }
 			if (n > (922337203685477580)) ; 0x7FFFFFFFFFFFFFFF / 10
 			{
 				return false
@@ -901,6 +930,8 @@ class MfNumber extends MfObject
 		if (number.sign)
 		{
 			n := -n
+			; check at this point that the number is still positive
+			; if not then overflow has occured and return false
 			if (n > 0)
 			{
 				return false

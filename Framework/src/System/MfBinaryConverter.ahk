@@ -195,6 +195,50 @@ class MfBinaryConverter extends MfObject
 		return ans
 	}
 ; 	End:BitXor ;}
+;{ 	FromHex
+/*
+	Method: FromHex()
+
+	FromHex()
+		Converts Hex string to instance of MfNibbleList
+	Parameters:
+		value
+			The var or MfString containing the hex value to convert
+		MinCount
+			Optional, the Minimum number of items in the return list
+		MaxCount
+			Optional, the Maximum number of hex postitions to process
+	Returns:
+		Returns an instance of MfNibbleList
+	Remarks:
+		Static Method
+		Hex value can be in format of 0x00ff or -0x00ff or ffff or -ffff and is case insensitive
+		Negative hex values will be returned as Complements16
+		WhiteSpace and non hex char are ignored
+*/
+	FromHex(value, MinCount:=0,MaxCount:=0) {
+		_MinCount := MfInteger.GetValue(MinCount, 0)
+		_MaxCount := MfInteger.GetValue(MaxCount, 0)
+		if (_MinCount > 0)
+		{
+			While (Mod(_MinCount, 4))
+			{
+				_MinCount++
+			}
+			_MinCount := _MinCount // 4
+		}
+		if (_MaxCount > 0)
+		{
+			While (Mod(_MaxCount, 4))
+			{
+				_MaxCount++
+			}
+			_MaxCount := _MaxCount // 4
+		}
+		Nibbles := MfNibConverter.FromHex(value, _MinCount, _MaxCount)
+		return MfNibConverter.ToBinaryList(Nibbles, true)
+	}
+; 	End:FromHex ;}
 ;{ 	GetBytes
 	GetBits(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)

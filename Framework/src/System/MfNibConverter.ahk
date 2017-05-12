@@ -436,6 +436,51 @@ class MfNibConverter extends MfObject
 	}
 
 ; 	End:FromByteList ;}
+;{ 	FromHex
+/*
+	Method: FromHex()
+
+	FromHex()
+		Converts Hex string to instance of MfNibbleList
+	Parameters:
+		value
+			The var or MfString containing the hex value to convert
+		MinCount
+			Optional, the Minimum number of items in the return list
+		MaxCount
+			Optional, the Maximum number of hex postitions to process
+	Returns:
+		Returns an instance of MfNibbleList
+	Remarks:
+		Static Method
+		Hex value can be in format of 0x00ff or -0x00ff or ffff or -ffff and is case insensitive
+		Negative hex values will be returned as Complements16
+		WhiteSpace and non hex char are ignored
+*/
+	FromHex(value, MinCount:=0,MaxCount:=0) {
+		_MinCount := MfInteger.GetValue(MinCount, 0)
+		_MaxCount := MfInteger.GetValue(MaxCount, 0)
+		if (_MinCount < 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeCount"), "MinCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (_MaxCount < 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeCount"), "MaxCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(_MaxCount < _MinCount)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_MinGreaterThenMax", "MaxCount", "MinCount"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		return MfNibConverter._HexStringToNibList(value, _MinCount, _MaxCount, true)
+	}
+; 	End:FromHex ;}
 ;{ 	IsNegative
 	IsNegative(nibbles, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1159,8 +1204,9 @@ class MfNibConverter extends MfObject
 	}
 ; 	End:ToBigInt ;}
 ;{ 	ToBinaryList
-	ToBinaryList(nList) {
+	ToBinaryList(nList, IgnoreUneven:=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		IgnoreUneven := MfBool.GetValue(IgnoreUneven, false)
 		if(MfObject.IsObjInstance(nList, MfNibbleList) = false)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nList"))
@@ -1174,7 +1220,7 @@ class MfNibConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (nList.Count & 1) ; if uneven count
+		if (IgnoreUneven = false && nList.Count & 1) ; if uneven count
 		{
 			nList := nList.Clone()
 			;SourceMaxIndex := nList.Count -1
@@ -1199,10 +1245,15 @@ class MfNibConverter extends MfObject
 			HexChar := MfNibConverter._GetHexValue(n)
 			mInfo := MfNibConverter.HexBitTable[HexChar]
 			strBin := mInfo.Bin
-			loop, Parse, strBin
+			mStr := new MfMemoryString(4,,,&strBin)
+			for i , c in mStr
 			{
-				lst.Add(A_LoopField)
+				lst._Add(c - 48)
 			}
+			;~ loop, Parse, strBin
+			;~ {
+				;~ lst.Add(A_LoopField)
+			;~ }
 		}
 		return lst
 	}
@@ -2918,6 +2969,7 @@ class MfNibConverter extends MfObject
 		}
 	}
 ; 	End:_CharCodeToInt ;}
+
 ;{ 	_IsValidHexChar
 	; gets if a charCode is a valid hex charcode
 	_IsValidHexChar(cc) {
@@ -2928,9 +2980,10 @@ class MfNibConverter extends MfObject
 		return false
 	}
 ; 	End:_IsValidHexChar ;}
-	_HexStringToNibList(value, NibbleCountMin:=0,NibbleCountMax:=0) {
+	_HexStringToNibList(value, NibbleCountMin:=0,NibbleCountMax:=0, DefaultSigned:=false) {
 		IsNeg := False
 		hStr := new MfString(value)
+		hStr.TrimStart()
 		IsSigned := false
 		if (hStr.StartsWith("-"))
 		{
@@ -2955,6 +3008,10 @@ class MfNibConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
+		If (Signed = false && DefaultSigned = false)
+		{
+			Signed := true
+		}
 		If (Signed = false)
 		{
 			; if hex value is not sigend then get the signed value from the first nibble
@@ -2974,25 +3031,31 @@ class MfNibConverter extends MfObject
 		if (IsNeg = true ) {
 			For i, c in mStr
 			{
-				if (NibbleCountMax > 0 && iCount > NibbleCountMax)
+				if (MfNibConverter._IsValidHexChar(c))
 				{
-					break
+					if (NibbleCountMax > 0 && iCount >= NibbleCountMax)
+					{
+						break
+					}
+					info := MfNibConverter.CharHexBitTable[c]
+					result.AppendCharCode(info.HexFlip)
+					iCount++
 				}
-				info := MfNibConverter.CharHexBitTable[c]
-				result.AppendCharCode(info.HexFlip)
-				iCount++
 			}
 		}
 		else
 		{
 			For i, c in mStr
 			{
-				if (NibbleCountMax > 0 && iCount > NibbleCountMax)
+				if (MfNibConverter._IsValidHexChar(c))
 				{
-					break
+					if (NibbleCountMax > 0 && iCount >= NibbleCountMax)
+					{
+						break
+					}
+					result.AppendCharCode(c)
+					iCount++
 				}
-				result.AppendCharCode(c)
-				iCount++
 			}
 		}
 		if (result.Length = 0)

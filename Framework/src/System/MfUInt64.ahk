@@ -718,256 +718,88 @@ Class MfUInt64 extends MfPrimitive
 	;	Base - the Base to convert string from, only applied if value is string
 	Parse(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-
-		pArgs := MfUInt64._ParaseParams(A_ThisFunc, args*)
-
-		pList := pArgs.ToStringList()
-
-		returnAsObject := false
-		base := -2
-		strP := ""
-		s := ""
-		pIndex := 0
-		retval := Null
-		if (pList.Count > 0)
-		{
-			strP := pList.Item[pIndex].Value
-			
-		}
-		if (pList.Count > 1)
-		{
-			pIndex++
-			s := pList.Item[pIndex].Value
-			if (s = "MfBool")
-			{
-				_returnAsObject := pArgs.Item[pIndex].Value
-			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-		}
-		if (pList.Count > 2)
-		{
-			pIndex++
-			s := pList.Item[pIndex].Value
-			if (strP = "MfInt64")
-			{
-				base := pArgs.Item[pIndex].Value
-				if (base < 1 || base > 95)
-				{
-					base := -2
-				}
-			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-		}
-
-	
+		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
+		cnt := objParams.Count
+		retval := MfNull.Null
 		try {
-			if (strP = "MfUInt64")
+			strP := objParams.ToString()
+		
+			if (strP = "MfString" || strP = "MfChar")
 			{
-				retval := pArgs.Item[0]
-				base := 10
+				strV := objParams.Item[0].Value
+				ns := 7 ; integer
+				retval := MfUInt64._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
 			}
-			else if (strP = "MfChar")
+			else if (cnt = 2)
 			{
-				c := pArgs.Item[0]
-				if (MfChar.IsDigit(c)) {
-					retval := MfInt64.GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
-
+				str := objParams.Item[0]
+				if (!MfObject.IsObjInstance(str, MfString))
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
 				}
-				base := -2
+				obj := objParams.Item[1]
+				if (MfObject.IsObjInstance(obj, MfFormatProvider))
+				{
+					ns := 7 ; integer
+					retval := MfUInt64._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
+				}
+				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+				{
+					retval := MfUInt64._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				}
+				else
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
 			}
-			else if (strP = "MfString")
+			else if (cnt = 3)
 			{
-				strV := pArgs.Item[0].Value
-				retval := MfString.GetValue(strV)
+				str := objParams.Item[0]
+				ns := objParams.Item[1]
+				fInfo := objParams.Item[2]
+				if ((!MfObject.IsObjInstance(str, MfString))
+					|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
+					|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				retval := MfUInt64._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
 			}
-			else if (strP = "MfInt64")
+			else if (strP = "MfUInt64")
 			{
-				retval := pArgs.Item[0].Value
-				base := -2
+				retval := objParams.Item[0].Value
 			}
-		}
-		catch e
-		{
+		} catch e {
+			if (MfObject.IsObjInstance(e, MfException))
+			{
+				if (e.Source = A_ThisFunc)
+				{
+					throw e
+				}
+			}
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		
 		if (!MfNull.IsNull(retval))
 		{
-			if (base > 0)
-			{
-				bigx := MfBigInt.Parse(retval, base)
-			}
-			else
-			{
-				bigx := new MfBigInt(retval)
-			}
-			
-			if (bigx.IsNegative)
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			if (bigx.GreaterThen(MfBigMathInt.Uint64Max))
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionOver"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-
-
-			if (returnAsObject)
-			{
-				
-				return new MfUInt64(bigx)
-			}
-			else
-			{
-				return MfBigMathInt.BigInt2str(bigx, 10)
-				
-			}
-			
+			x := MfBigInt.Parse(retval, 10)
+			ui := new MfUInt64(0, true)
+			ui.m_bigx := x
+			return ui
 		}
 		ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
 ; End:Parse() ;}
-;{ _ParaseParams
-	_ParaseParams(MethodName, args*) {
-		; Params - Value, .ReturnAsObject, Base,
-		p := Null
-		cnt := MfParams.GetArgCount(args*)
-
-	
-		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
-		{
-			p := args[1] ; arg 1 is a MfParams object so we will use it
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (p.Count = 0 || p.Count > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-		}
-		else
-		{
-
-			p := new MfParams()
-			p.AllowEmptyString := true ; can be strings for parameters in this case
-			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
-			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
-
-			;p.AddInteger(0)
-			;return p
-			
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (cnt = 0 || cnt > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-			
-			i := 1
-			while i <= cnt
-			{
-				arg := args[i]
-				try
-				{
-					if (IsObject(arg))
-					{
-						if (i = 2) ; ReturnAsObject
-						{
-							T := new MfType(arg)
-							if (T.IsNumber)
-							{
-								; convert all mf number object to boolean
-								b := new MfBool()
-								b.Value := arg.Value > 0
-								p.Add(b)
-							}
-							else
-							{
-								p.Add(arg)
-							}
-						}
-						else if (i = 3) ; base
-						{
-							; convert to MfInt64 for  easy parsing of parameter
-							if (MfObject.IsObjInstance(arg, MfInt64))
-							{
-								p.add(arg)
-							}
-							else
-							{
-								int := new MfInt64(MfInt64.GetValue(arg, 10))
-								p.Add(int)
-							}
-						}
-						else
-						{
-							p.Add(arg)
-						}
-					} 
-					else
-					{
-						if (i = 1) ; uint64
-						{
-							pIndex := p.AddString(arg)							
-						}
-						else if (i = 2) ; ReturnAsObject
-						{
-							if (MfNull.IsNull(arg))
-							{
-								pIndex := p.Add(new MfBool(true))
-							}
-							else
-							{
-								pIndex := p.AddBool(arg)
-							}
-						}
-						else ; all params past 2 are integer
-						{
-							int := new MfInt64(MfInt64.GetValue(arg, 10))
-							pIndex := p.Add(int)
-						}
-					}
-				}
-				catch e
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				i++
-			}
-			
-		}
-		;return new MfParams()
-		return p
-	}
-; End:_ParaseParams ;}
 ;{ BitAnd
 	BitAnd(Value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1243,137 +1075,176 @@ Class MfUInt64 extends MfPrimitive
 ;{ 	TryParse()
 	TryParse(byref int, args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		_isObj := false
-		if (IsObject(Int)) {
-			if (MfObject.IsObjInstance(int, "MfUInt64")) {
-				_isObj := true
-			} else {
-				; Int is an object but not an MfUInt64 instance
-				; only MfUInt64 is allowed as object
+		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
+		cnt := objParams.Count
+		retval := false
+		
+		strP := objParams.ToString()
+		num := 0
+		if (strP = "MfString" || strP = "MfChar")
+		{
+			strV := objParams.Item[0].Value
+			ns := 7 ; integer
+			retval := MfUInt64._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
+		}
+		else if (cnt = 2)
+		{
+			str := objParams.Item[0]
+			if (!MfObject.IsObjInstance(str, MfString))
+			{
 				return false
 			}
-		}
-		pArgs := MfUInt64._TryParaseParams(A_ThisFunc, args*)
-		; pArgs can only be 1 or 2 args
-		p := new MfParams()
-		p.Add(pArgs.Item[0])
-		p.AddBool(true) ; return as Object
-		if (pArgs.Count > 1)
-		{
-			p.Add(pArgs.Item[1]) ; base
-		}
-
-		retval := false
-		try {
-			iVal := MfUInt64.Parse(p)
-			if (_isObj = true)
+			obj := objParams.Item[1]
+			if (MfObject.IsObjInstance(obj, MfFormatProvider))
 			{
-				int.m_bigx := iVal.m_bigx
+				ns := 7 ; integer
+				retval := MfUInt64._TryParse(str.Value, ns, obj.GetInstance(Null), num)
+			}
+			else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+			{
+				retval := MfUInt64._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
 			}
 			else
 			{
-				int := iVal.Value
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-		} catch e {
-			retval := false
+		}
+		else if (cnt = 3)
+		{
+			str := objParams.Item[0]
+			ns := objParams.Item[1]
+			fInfo := objParams.Item[2]
+			if ((!MfObject.IsObjInstance(str, MfString))
+				|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
+				|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
+			{
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			retval := MfUInt64._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+		}
+		else if (strP = "MfUInt64")
+		{
+			num := objParams.Item[0].Value
+			retval := true
+		}
+		if (retval)
+		{
+			if (IsObject(int))
+			{
+				x := MfBigInt.Parse(num, 10)
+				if (!MfObject.IsObjInstance(int, MfUInt64))
+				{
+					int := new MfUInt64(0, true)
+				}
+				int.m_bigx := x
+				;int.Value := num
+			}
+			else
+			{
+				int := num
+			}
 		}
 		return retval
 	}
 ; End:TryParse() ;}
-;{ 	_TryParaseParams
-	_TryParaseParams(MethodName, args*) {
-		; Params - Value, Base
-		p := Null
-		cnt := MfParams.GetArgCount(args*)
 
-	
-		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
-		{
-			p := args[1] ; arg 1 is a MfParams object so we will use it
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (p.Count = 0 || p.Count > 2)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-		}
-		else
-		{
-
-			p := new MfParams()
-			p.AllowEmptyString := true ; can be strings for parameters in this case
-			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
-			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
-
-			;p.AddInteger(0)
-			;return p
-			
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (cnt = 0 || cnt > 2)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-			
-			i := 1
-			while i <= cnt
-			{
-				arg := args[i]
-				try
-				{
-					if (IsObject(arg))
-					{
-						if (i = 3) ; base
-						{
-							; convert to MfInt64 for  easy parsing of parameter
-							if (MfObject.IsObjInstance(arg, MfInt64))
-							{
-								p.add(arg)
-							}
-							else
-							{
-								int := new MfInt64(MfInt64.GetValue(arg, 10))
-								p.Add(int)
-							}
-						}
-						else
-						{
-							p.Add(arg)
-						}
-					} 
-					else
-					{
-						if (i = 1) ; uint64
-						{
-							pIndex := p.AddString(arg)							
-						}
-						else ; all params past 1 are integer
-						{
-							int := new MfInt64(MfInt64.GetValue(arg, 10))
-							pIndex := p.Add(int)
-						}
-					}
-				}
-				catch e
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				i++
-			}
-			
-		}
-		;return new MfParams()
-		return p
-	}
-; 	End:_TryParaseParams ;}
 ; End:Methods ;}
 ;{ Internal Methods
+;{ 	_Parse
+/*
+	Method: _Parse()
+
+	_Parse()
+		Parses s string into an integer
+	Parameters:
+		s
+			String to parse
+		style
+			MfNumberStyles number
+		info
+			instance of MfFormatProvider
+	Returns:
+		Returns var integer
+	Throws:
+		Throws MfOverflowException if return value is out of range
+	Remarks:
+		Static method
+		Private method
+*/
+	_Parse(s, style, info, methodName) {
+		try
+		{
+			MfNumberFormatInfo.ValidateParseStyleInteger(style)	
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw e
+		}
+		num := 0
+		try
+		{
+			num := MfNumber.ParseUInt64(s, style, info)
+			return num
+		}
+		catch e
+		{
+			if (MfObject.IsObjInstance(e, MfOverflowException))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"), e)
+				ex.SetProp(A_LineFile, A_LineNumber, methodName)
+				throw ex
+			}
+			throw e
+		}
+	}
+; 	End:_Parse ;}
+;{ 	_TryParse
+/*
+	Method: _Parse()
+
+	_TryParse()
+		Parses string and read value into integer
+	Parameters:
+		s
+			String to parse
+		style
+			MfNumberStyles number
+		info
+			instance of MfFormatProvider
+		Out
+			The result of the parse
+	Returns:
+		Returns boolean if true if number was parsed; Otherwise false
+	Throws:
+		Throws MfArgumentException style is not correct for integer
+	Remarks:
+		Static method
+*/
+	_TryParse(s, style, info, ByRef Out) {
+		try
+		{
+			MfNumberFormatInfo.ValidateParseStyleInteger(style)	
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw e
+		}
+		num := 0
+		result := MfNumber.TryParseUInt64(s, style, info, num)
+		if (result)
+		{
+			out := num
+			return true
+		}
+		return false
+	}
+; 	End:_TryParse ;}
 ;{ 	_GetValue
 	_IsGreaterThenMax(value) {
 		bigx := new MfBigInt(value)
