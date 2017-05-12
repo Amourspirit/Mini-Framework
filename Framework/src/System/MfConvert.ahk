@@ -738,5 +738,53 @@ class MfConvert extends MfObject
 		return num
 	}
 ; 	End:_Int16ToUInt16 ;}
+;{ _Int64ToInt32()
+/*
+	Method: _Int64ToInt32()
+		Converts int64 into Int32
+	parameters
+		input
+			The int64 var to convert to int32 var
+	Returns
+		Int32 signed var
+	Remarks
+		Internal Method
+		Static method
+		This method does a Circular shift or Wrap Around bit shift operation
+		In c# this would be the same as int myInt = (int)myInt64
+		In c# Convert.ToInt32() is different then (int)myInt64
+		The difference is Convert.ToInt32(int64) thorw overflow if int64 is greater then int.MaxValue or 
+		less then int.MinValue
+		Convert.ToInt32(int64) does not do a circular shift.
+*/
+	_Int64ToInt32(inputNum) {
+	    VarSetCapacity(Var, 8, 0)       ; Variable to hold integer
+	    NumPut(inputNum, Var, 0, "Int64" ) ; Input as Integer 64
+	    retval := NumGet(Var, 0, "Int") ; Retrieve it as 'Signed Integer 32'
+	    VarSetCapacity(Var, 0) 
+	    return retval
+	}
+; End:_Int64ToInt32() ;}
+	;{ _DoubleToInt64()
+/*
+	Method: _DoubleToInt64()
+		Converts Double into Int64
+	parameters
+		input
+			The Double var to convert to Int64 var
+	Returns
+		Int64 signed var
+	Remarks
+		Internal Method
+		Static method
+*/
+	_DoubleToInt64(inputNum) {
+	    VarSetCapacity(Var, 8, 0)       ; Variable to hold integer
+	    NumPut(inputNum, Var, 0, "Double" ) ; Input as Integer 64
+	    retval := NumGet(Var, 0, "Int64") ; Retrieve it as 'Signed Integer 64'
+	    VarSetCapacity(var, 0)
+	    return retval
+	}
+; End:_DoubleToInt64() ;}
 ; End:Internal Methods ;}
 }

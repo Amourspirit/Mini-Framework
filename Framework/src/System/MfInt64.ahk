@@ -488,9 +488,9 @@ Class MfInt64 extends MfPrimitive
 */
 	GetHashCode() {
 		;return (int)this ^ (int)(this >> 32);
-		i := this._cInt64ToInt(this.Value)
+		i := MfConvert._Int64ToInt32(this.Value)
 		iShift := this.Value >> 32
-		iShift := this._cInt64ToInt(iShift)
+		iShift := MfConvert._Int64ToInt32(iShift)
 		return i ^ iShift
 	}
 ; End:GetHashCode() ;}
@@ -1413,50 +1413,6 @@ Class MfInt64 extends MfPrimitive
 		return false
 	}
 ; 	End:_TryParse ;}
-;{ _cInt64ToInt()
-/*
-	Method: _cInt64ToInt()
-		Converts int64 into Int32
-	parameters
-		input
-			The int64 var to convert to int32 var
-	Returns
-		Int32 signed var
-	Remarks
-		Internal Method
-		This method does a Circular shift or Wrap Around bit shift operation
-		In c# this would be the same as int myInt = (int)myInt64
-		In c# Convert.ToInt32() is different then (int)myInt64
-		The difference is Convert.ToInt32(int64) thorw overflow if int64 is greater then int.MaxValue or 
-		less then int.MinValue
-		Convert.ToInt32(int64) does not do a circular shift.
-*/
-	_cInt64ToInt(input) {
-	    VarSetCapacity(Var, 4, 0)       ; Variable to hold integer
-	    NumPut(input, Var, 0, "Int64" ) ; Input as Integer 64
-	    retval := NumGet(Var, 0, "Int") ; Retrieve it as 'Signed Integer 32'
-	    return retval
-	}
-; End:_cInt64ToInt() ;}
-;{ _uIntToInt(uInt)
-/*
-	Method:_uIntToInt()
-		Converts unsigned integer to signed integer
-	Parameters
-		uInt
-			The unsigned integer to convert to signed integer
-	Returns
-		Signed integer as var
-	Remarks
-		Internal Method
-*/
-	_uIntToInt(uInt) {
-	    VarSetCapacity( Var,4,0 ) 		; Variable to hold integer
-	    NumPut( uInt , Var, 0, "UInt" ) ; Input as 'Unsigned Integer'
-	    retval := NumGet( Var,0,"Int" )	; Retrieve it as 'Signed Integer'
-	    return retval
-	}
-; End:_uIntToInt(uInt) ;}
 ; End:Methods ;}
 ;{ Properties
 ;{ 	MaxValue

@@ -668,6 +668,11 @@ class MfNumber extends MfObject
 					{
 						mstr.AppendCharCode(48, delta) ; 0
 					}
+					else
+					{
+						mstr.AppendCharCode(46) ; .
+						mstr.AppendCharCode(48) ; 0
+					}
 				}
 				else
 				{

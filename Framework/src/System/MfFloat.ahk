@@ -664,10 +664,10 @@ Class MfFloat extends MfPrimitive
 			{
 				return 0
 			}
-			i64 := this._cDoubleToInt64(flt)
-			i32 := this._cInt64ToInt(i64)
+			i64 := MfConvert._DoubleToInt64(flt)
+			i32 := MfConvert._Int64ToInt32(i64)
 			iShift := i64 >> 32
-			iShift := this._cInt64ToInt(iShift)
+			iShift := MfConvert._Int64ToInt32(iShift)
 			return i32 ^ iShift
 		}
 		catch e
@@ -1031,102 +1031,47 @@ Class MfFloat extends MfPrimitive
 		If ReturnAsObject Property for this instance is true then returns MfFloat instance; otherwise returns float var containing value.
 	Remarks
 		If Value is a whole number then a value will be returned without a decimal.
-		If ReturnAsObject Property for this instance is true then a MfFloat instance will be returned with its Format set to display a trimmed value.
+		If ReturnAsObject Property for this instance is true then a new MfFloat instance will be returned with its Format set to display a trimmed value.
 	Throws
 		Throws MfNullReferenceException if called as a static method.
 */
 	GetTrimmed() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		wasformat := A_FormatFloat
-		retval := Null
+		ReturnAsObject := this.ReturnAsObject
 		If (MfFloat._isValidNumber(this) = false)
 		{
+			if (ReturnAsObject)
+			{
+				return this
+			}
 			return this.Value
 		}
-		try
+		ns := 231 ; AllowThousands, Float
+		num := 0.0
+		retval := MfFloat._TryParse(this.Value, ns, MfNumberFormatInfo.GetInstance(Null), num)
+		if (retval)
 		{
-			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
-			_neg := false
-			if (this.Value < 0.0) {
-				_neg := true
+			if (ReturnAsObject)
+			{
+				fmt := MfFloat._GetFormatFromNumber(num)
+				flt := new MfFloat(num, true,,fmt)
+				return flt
 			}
-			_str := new MfString(this.Value, true)
-			sW := ""
-			sD := ""
-			if (_str.Length >= 2) {
-				sList := _str.Split(".")
-				if (sList.Count = 1) {
-					; assume no decimal was present and using whole number
-					sW := sList.Item[0]
-				}
-				if (sList.Count = 2) {
-					sW := sList.Item[0]
-					sD := sList.Item[1]
-				}
-			}
-			gl := new MfGenericList(MfChar)
-			gl.Add(new MfChar("0x0020")) ; hex value of space
-			gl.Add(new MfChar("-"))
-			gl.Add(new MfChar("0"))
-			
-			if (!MfNull.IsNull(sW)) {
-				sW.TrimStart(gl)
-				if (sW.Length = 0) {
-					sW.Value := "0"
-				}
-				
-			} else {
-				sW := new MfString("0",true)
-			}
-			if (!MfNull.IsNull(sD)) {
-				gl.RemoveAt(1)
-				gl.Add(new MfChar("."))
-				sD.TrimEnd(gl)
-			}  else {
-				sD := new MfString()
-				sD.ReturnAsObject := true
-			}
-			
-			_str := ""
-			_str := new MfString()
-			_str.ReturnAsObject := true
-			_str.Append(sW)
-			if (sD.Length > 0) {
-				_str.Append(".")
-				_str.Append(sD)
-			}
-			
-			_val := ""
-			if (_neg = true) {
-				_val := "-" . _str.Value
-			} else {
-				_val := _str.Value
-			}
-			
-			if (this.ReturnAsObject = true) {
-				if (sD.Length >= 1) {
-					retval := new MfFloat()
-					retval.TotalWidth := "0"
-					retval.DecimalPlaces := sD.Length
-					retval.Value := _val
-				} else {
-					retval := new MfFloat(_val, true,,"0.0")
-				}
-			} else {
-				retval := _val
-			}
+			mStr := MfMemoryString.FromAny(num)
+			mStr.TrimEnd(".0")
+			return mStr.ToString()
 		}
-		catch e
+		else
 		{
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			; failed to parse
+			if (ReturnAsObject)
+			{
+				flt := new MfFloat(0.0, true,,"0.0")
+				return flt
+			}
+			return 0
+
 		}
-		Finally
-		{
-			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
-		}
-		return retval
 	}
 ; 	End:GetTrimmed ;}
 ;{ 	IsNegativeInfinity
@@ -1746,50 +1691,34 @@ Class MfFloat extends MfPrimitive
 		return true
 	}
 ; 	End:_isValidNumber ;}
-	;{ _cDoubleToInt64()
-/*
-	Method: _cDoubleToInt64()
-		Converts Double into Int64
-	parameters
-		input
-			The Double var to convert to Int64 var
-	Returns
-		Int64 signed var
-	Remarks
-		Internal Method
-*/
-	_cDoubleToInt64(input) {
-	    VarSetCapacity(Var, 8, 0)       ; Variable to hold integer
-	    NumPut(input, Var, 0, "Double" ) ; Input as Integer 64
-	    retval := NumGet(Var, 0, "Int64") ; Retrieve it as 'Signed Integer 32'
-	    return retval
+;{ 	_GetFormatFromNumber
+	; gets the min format for a float number based upon the input double num
+	; return fromat in the for of 0.0 or 0.0e
+	; total places is ignore and alwyas returned as 0 for not padding
+	; Static Method
+	; Internal method
+	_GetFormatFromNumber(num) {
+		mStr := MfMemoryString.FromAny(num)
+		if (mStr.Length = 0)
+		{
+			return "0.0"
+		}
+		mStr.TrimEnd(".0")
+		dotIndex := mStr.IndexOf(".")
+		if (dotIndex = -1)
+		{
+			return "0.0"
+		}
+		eIndex := mStr.LastIndexOf("e",,,false)
+		if (eIndex = -1)
+		{
+			DecCount := mStr.Length - (dotIndex + 1)
+			return format("0.{:i}", DecCount)
+		}
+		DecCount := (eIndex - dotIndex) - 1
+		return format("0.{:i}e", DecCount)
 	}
-; End:_cDoubleToInt64() ;}
-;{ _cInt64ToInt()
-/*
-	Method: _cInt64ToInt()
-		Converts int64 into Int32
-	parameters
-		input
-			The int64 var to convert to int32 var
-	Returns
-		Int32 signed var
-	Remarks
-		Internal Method
-		This method does a Circular shift or Wrap Around bit shift operation
-		In c# this would be the same as int myInt = (int)myInt64
-		In c# Convert.ToInt32() is different then (int)myInt64
-		The difference is Convert.ToInt32(int64) thorw overflow if int64 is greater then int.MaxValue or 
-		less then int.MinValue
-		Convert.ToInt32(int64) does not do a circular shift.
-*/
-	_cInt64ToInt(input) {
-	    VarSetCapacity(Var, 8, 0)       ; Variable to hold integer
-	    NumPut(input, Var, 0, "Int64" ) ; Input as Integer 64
-	    retval := NumGet(Var, 0, "Int") ; Retrieve it as 'Signed Integer 32'
-	    return retval
-	}
-; End:_cInt64ToInt() ;}
+; 	End:_GetFormatFromNumber ;}
 ;{ 	_ForceFormat()
 	; sets the underlying value to match the current Format
 	; this can be destrucive. If for format was 0.9 and
@@ -1807,7 +1736,7 @@ Class MfFloat extends MfPrimitive
 		fmt := fObj.Format
 		wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 		retval := fObj.Value
-		fObj.Value := fObj.Value + 0.0
+		fObj.m_Value := fObj.Value + 0.0
 		
 		; if (Mfunc.IsFloat(fObj.Value) = false)
 		; {
