@@ -87,7 +87,7 @@ Class MfFloat extends MfPrimitive
 		}
 		_f := 0.0
 		_returnAsObject := False
-		_format := "0.6"
+		_format := ""
 		_readonly := false
 
 		pArgs := this._ConstructorParams(A_ThisFunc, args*)
@@ -175,6 +175,14 @@ Class MfFloat extends MfPrimitive
 			;Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, _format)
 			;_f += 0.0
 			base.__New(0.0, _returnAsObject)
+			if (_format = "")
+			{
+				MfFloat._SetFormatFromNmber(this, _f)
+			}
+			else
+			{
+				this.Format := _format
+			}
 			this.Value := _f
 			;this._SetFormat(_format)
 			; value is already set in base.__New()
@@ -1392,76 +1400,83 @@ Class MfFloat extends MfPrimitive
 */
 	Parse(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (MfObject.IsObjInstance(args[1], MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			for index, arg in args
-			{
-				objParams.Add(arg)
-			}
-		}
+		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
+		cnt := objParams.Count
 		retval := MfNull.Null
 		try {
 			strP := objParams.ToString()
 		
-			if (strP = "MfChar") {
-				c := objParams.Item[0]
-				if (MfChar.IsNumber(c)) {
-					retval := MfFloat.GetValue(MfCharUnicodeInfo.GetNumericValue(c))
-				}
-			} else if (strP = "MfString") {
+			if (strP = "MfString" || strP = "MfChar")
+			{
 				strV := objParams.Item[0].Value
-				if (RegExMatch(strV, "^\s*([-+]?\d{1,15})\s*$", match)) {
-					iVal := match1 + 0.0 ;convert string to float
-					if (Mfunc.IsFloat(iVal)) {
-						retval := iVal
-					}
-				} else if (RegExMatch(strV, "^\s*([-+]?\d+\.\d+)\s*$", match)) {
-					foundStr := new MfString(match1)
-					gl := foundStr.Split(".")
-					if (gl.Count = 1) {
-						if (foundStr.Length <= 15) {
-							iVal := match1 + 0.0 ;convert string to float
-							if (Mfunc.IsFloat(iVal)) {
-								retval := ival
-							}
-						}
-					} else if (gl.Count = 2) {
-						if ((gl.Item[0].Length <= 15) && (gl.Item[1].Length <= 15)) {
-							iVal := match1 + 0.0 ;convert string to float
-							if (Mfunc.IsFloat(iVal)) {
-								retval := ival
-							}
-						}
-					}
-				} else if (RegExMatch(strV, "^\s*([-+]?\d+\.\d+[eE][-+]?\d{1,3})\s*$", match)) {
-					iVal := MfFloat.GetValue(match1)
-					if (Mfunc.IsFloat(iVal)) {
-						retval := iVal
-					}
+				ns := 231 ; AllowThousands, Float
+				retval := MfFloat._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+			}
+			else if (cnt = 2)
+			{
+				str := objParams.Item[0]
+				if (!MfObject.IsObjInstance(str, MfString))
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
 				}
-			} else if (strP = "MfFloat") {
+				obj := objParams.Item[1]
+				if (MfObject.IsObjInstance(obj, MfFormatProvider))
+				{
+					ns := 231 ; AllowThousands, Float
+					retval := MfFloat._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
+				}
+				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+				{
+					retval := MfFloat._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				}
+				else
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			else if (cnt = 3)
+			{
+				str := objParams.Item[0]
+				ns := objParams.Item[1]
+				fInfo := objParams.Item[2]
+				if ((!MfObject.IsObjInstance(str, MfString))
+					|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
+					|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				retval := MfFloat._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
+			}
+			else if (strP = "MfFloat")
+			{
 				retval := objParams.Item[0].Value
 			}
 		} catch e {
+			if (MfObject.IsObjInstance(e, MfException))
+			{
+				if (e.Source = A_ThisFunc)
+				{
+					throw e
+				}
+			}
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (!MfNull.IsNull(retval)) {
-			if (objParams.Data.Contains("ReturnAsObject") && (objParams.Data.Item["ReturnAsObject"] = true)) {
-				objF := new MfFloat(retval, true)
-				if (objParams.Data.Contains("Format")) {
-					objF.Format := MfString.GetValue(objParams.Data.Item["Format"])
-				}
-				objF.Value := retval
-				objF.ReturnAsObject := true
-				return objF
-			} else {
-				return retval
-			}
-			
+		if (!MfNull.IsNull(retval))
+		{
+			flt := new MfFloat(0.0, true)
+			MfFloat._SetFormatFromNmber(flt, retval)
+			flt.m_Value := retval
+			flt.Add(0.0)
+			return flt
+
 		}
 		ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1644,107 +1659,77 @@ Class MfFloat extends MfPrimitive
 */
 	TryParse(byref flt, args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (MfNull.IsNull(flt)) {
-			return false
+		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
+		cnt := objParams.Count
+		retval := false
+		
+		strP := objParams.ToString()
+		num := 0.0
+		if (strP = "MfString" || strP = "MfChar")
+		{
+			strV := objParams.Item[0].Value
+			ns := 231 ; AllowThousands, Float
+			retval := MfFloat._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
 		}
-		_isObj := false
-		if (IsObject(flt)) {
-			if (MfObject.IsObjInstance(flt, "MfFloat")) {
-				_isObj := true
-			} else {
-				; flt is an object but not an MfFloat instance
-				; only MfInteger is allowed as object
+		else if (cnt = 2)
+		{
+			str := objParams.Item[0]
+			if (!MfObject.IsObjInstance(str, MfString))
+			{
 				return false
 			}
-			
-		}
-		if (MfObject.IsObjInstance(args[1], MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			for index, arg in args
+			obj := objParams.Item[1]
+			if (MfObject.IsObjInstance(obj, MfFormatProvider))
 			{
-				objParams.Add(arg)
+				ns := 231 ; AllowThousands, Float
+				retval := MfFloat._TryParse(str.Value, ns, obj.GetInstance(Null), num)
+			}
+			else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+			{
+				retval := MfFloat._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
+			}
+			else
+			{
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
 		}
-		retval := false
-		try {
-			strP := objParams.ToString()
-		
-			if (strP = "MfChar") {
-				c := objParams.Item[0]
-				if (MfChar.IsNumber(c)) {
-					iVal := MfFloat.GetValue(MfCharUnicodeInfo.GetNumericValue(c))
-					if (_isObj = true) {
-						flt.Value := iVal
-					} else {
-						flt := ival
-					}
-					retval := true
-				}
-			} else if (strP = "MfString") {
-				strV := objParams.Item[0].Value
-				if (RegExMatch(strV, "^\s*([-+]?\d{1,15})\s*$", match)) {
-					iVal := match1 + 0.0 ;convert string to float
-					if (Mfunc.IsFloat(iVal)) {
-						if (_isObj = true) {
-							flt.Value := iVal
-						} else {
-							flt := ival
-						}
-						retval := true
-					}
-				} else if (RegExMatch(strV, "^\s*([-+]?\d+\.\d+)\s*$", match)) {
-					foundStr := new MfString(match1)
-					gl := foundStr.Split(".")
-					if (gl.Count = 1) {
-						if (foundStr.Length <= 15) {
-							iVal := match1 + 0.0 ;convert string to float
-							if (Mfunc.IsFloat(iVal)) {
-								if (_isObj = true) {
-									flt.Value := iVal
-								} else {
-									flt := ival
-								}
-								retval := true
-							}
-						}
-					} else if (gl.Count = 2) {
-						if ((gl.Item[0].Length <= 15) && (gl.Item[1].Length <= 15)) {
-							iVal := match1 + 0.0 ;convert string to float
-							if (Mfunc.IsFloat(iVal)) {
-								if (_isObj = true) {
-									flt.Value := iVal
-								} else {
-									flt := ival
-								}
-								retval := true
-							}
-						}
-					}
-				} else if (RegExMatch(strV, "^\s*([-+]?\d+\.\d+[eE][-+]?\d{1,3})\s*$", match)) {
-					iVal := MfFloat.GetValue(match1)
-					if (Mfunc.IsFloat(iVal)) {
-						if (_isObj = true) {
-							flt.Value := iVal
-						} else {
-							flt := ival
-						}
-						retval := true
-					}
-				}
-			} else if (strP = "MfFloat") {
-				if (_isObj = true) {
-					flt.Value := objParams.Item[0].Value
-				} else {
-					flt := objParams.Item[0].Value
-				}
-				retval := true
-			} else {
-				retval := false
+		else if (cnt = 3)
+		{
+			str := objParams.Item[0]
+			ns := objParams.Item[1]
+			fInfo := objParams.Item[2]
+			if ((!MfObject.IsObjInstance(str, MfString))
+				|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
+				|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
+			{
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-		} catch e {
-			retval := false
+			retval := MfFloat._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+		}
+		else if (strP = "MfFloat")
+		{
+			num := objParams.Item[0].Value
+			retval := true
+		}
+		if (retval)
+		{
+			if (IsObject(flt))
+			{
+				if (!MfObject.IsObjInstance(flt, MfFloat))
+				{
+					flt := new MfFloat(0.0, true)
+				}
+				flt.Value := num
+				flt.Add(0.0)
+			}
+			else
+			{
+				flt := num
+			}
 		}
 		return retval
 	}
@@ -1897,6 +1882,143 @@ Class MfFloat extends MfPrimitive
 		return arg
 	}
 ; End:_GetFormatFromArg ;}
+;{ 	_Parse
+/*
+	Method: _Parse()
+
+	_Parse()
+		Parses s string into an integer
+	Parameters:
+		s
+			String to parse
+		style
+			MfNumberStyles number
+		info
+			instance of MfFormatProvider
+	Returns:
+		Returns var integer
+	Throws:
+		Throws MfOverflowException if return value is out of range
+	Remarks:
+		Static method
+		Private method
+*/
+	_Parse(s, style, info, methodName) {
+		try
+		{
+			MfNumberFormatInfo.ValidateParseStyleFloatingPoint(style)	
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw e
+		}
+		num := 0
+		try
+		{
+			num := MfNumber.ParseDouble(s, style, info)
+			return num
+		}
+		catch e
+		{
+			if (MfObject.IsObjInstance(e, MfOverflowException))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int64"), e)
+				ex.SetProp(A_LineFile, A_LineNumber, methodName)
+				throw ex
+			}
+			throw e
+		}
+	}
+; 	End:_Parse ;}
+;{ 	_TryParse
+/*
+	Method: _Parse()
+
+	_TryParse()
+		Parses string and read value into integer
+	Parameters:
+		s
+			String to parse
+		style
+			MfNumberStyles number
+		info
+			instance of MfFormatProvider
+		Out
+			The result of the parse
+	Returns:
+		Returns boolean if true if number was parsed; Otherwise false
+	Throws:
+		Throws MfArgumentException style is not correct for integer
+	Remarks:
+		Static method
+*/
+	_TryParse(s, style, info, ByRef Out) {
+		try
+		{
+			MfNumberFormatInfo.ValidateParseStyleFloatingPoint(style)	
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw e
+		}
+		num := 0
+		result := MfNumber.TryParseDouble(s, style, info, num)
+		if (result)
+		{
+			out := num
+			return true
+		}
+		return false
+	}
+; 	End:_TryParse ;}
+;{ 	_SetFormatFromNmber
+	; sets the TotalWidth and DecimalPlaces of instance of MfFloat
+	; fltObj is instance of MfFloat
+	; num is the float number in format of 0.0023e+12
+	; Helper method for Parse
+	_SetFormatFromNmber(fltObj, num) {
+		mStr := MfMemoryString.FromAny(num)
+		fltObj.TotalWidth := 0
+		if (mStr.Length = 0)
+		{
+			fltobj.DecimalPlaces := 6
+			return
+		}
+		dotIndex := mStr.IndexOf(".")
+		if (dotIndex = -1)
+		{
+			fltobj.DecimalPlaces := 6
+			return
+		}
+		eIndex := mStr.LastIndexOf("e",,,false)
+		if (eIndex = -1)
+		{
+			; not e section to float but we do have a decimal portion
+			; Figure out the decimal portation and set the flost object
+			decimalPlaces := mStr.Length - (dotIndex + 1)
+			if (decimalPlaces > 6)
+			{
+				fltobj.DecimalPlaces := decimalPlaces > 16 ? 16 : decimalPlaces
+			}
+			else
+			{
+				fltobj.DecimalPlaces := 6
+			}
+			return
+		}
+		; at this point there is a decimal place and an exponent amount
+		decimalPlaces := eIndex - (dotIndex + 1)
+		; get the exp amount
+		if (mStr.Length <= eIndex + 1)
+		{
+			fltobj.DecimalPlaces := decimalPlaces
+			return
+		}
+		fltobj.DecimalPlaces := decimalPlaces . "e"
+	}
+; 	End:_SetFormatFromNmber ;}
 ; End:Internal Methods ;}
 ;{ Properties
 ;{ 	DecimalPlaces

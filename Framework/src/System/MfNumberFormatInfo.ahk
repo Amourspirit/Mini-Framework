@@ -188,27 +188,52 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 ;	End:ReadOnly() ;}
 ; End:Method ;}
 ;{ Internal Methods
-	ValidateParseStyleInteger(styleObj) {
-		if (MfObject.IsObjInstance(styleObj, MfNumberStyles))
+	ValidateParseStyleInteger(style) {
+		if (MfObject.IsObjInstance(style, MfNumberStyles))
 		{
-			style := styleObj.Value
+			i := style.Value
 		}
 		else
 		{
-			Style := styleObj
+			i := style
 		}
 		; AllowLeadingSign, AllowTrailingSign, AllowParentheses, AllowDecimalPoint, AllowThousands, AllowExponent, AllowCurrencySymbol, HexNumber = 1023 when or'ed together
-		; -1024 is the two complement of 1023
-		if ((style & -1024) != 0)
+		; -1024 is the two's complement of 1023
+		if ((i & -1024) != 0)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidNumberStyles"), "style")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		;if ((style & AllowHexSpecifier) != None && (style & ~(AllowLeadingWhite | AllowTrailingWhite | AllowHexSpecifier)) != None)
-		if ((style & 512) != 0 && (style & -516) != 0)
+		if ((i & 512) != 0 && (i & -516) != 0)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidHexStyle"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+	}
+	ValidateParseStyleFloatingPoint(style) {
+		if (MfObject.IsObjInstance(style, MfNumberStyles))
+		{
+			i := style.Value
+		}
+		else
+		{
+			i := style
+		}
+		; AllowLeadingSign, AllowTrailingSign, AllowParentheses, AllowDecimalPoint, AllowThousands, AllowExponent, AllowCurrencySymbol, HexNumber = 1023 when or'ed together
+		; -1024 is the two's complement of 1023
+		if ((i & -1024) != 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidNumberStyles"), "style")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		;if ((style & AllowHexSpecifier) != None && (style & ~(AllowLeadingWhite | AllowTrailingWhite | AllowHexSpecifier)) != None)
+		if ((i & 512) != 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_HexStyleNotSupported"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}

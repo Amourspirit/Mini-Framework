@@ -650,7 +650,7 @@ class MfNumber extends MfObject
 			}
 				
 			value := mstr.ToString()
-			return
+			return true
 
 		}
 		else ; if (precision > pMax)
@@ -786,7 +786,7 @@ class MfNumber extends MfObject
 			}
 				
 			value := mstr.ToString()
-			return
+			return true
 		}
 	}
 ;{ 	MStrTrimTrailingZero
@@ -1305,6 +1305,21 @@ class MfNumber extends MfObject
 		return MfNumber._TryStringToNumber(str, options, number, args[1], args[2], args[3])
 	}
 ; 	End:TryStringToNumber ;}
+	TryParseDouble(s, style, info, ByRef result) {
+		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		number := new MfNumber.NumberBuffer(numberBufferBytes)
+		result := 0.0
+		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
+		{
+			return false
+		}
+		if (!MfNumber.NumberToDouble(number, result))
+		{
+			return false
+		}
+		return true
+	}
 ;{ 	_TryStringToNumber
 	_TryStringToNumber(str, options, ByRef number, sb, numfmt, parseDecimal) {
 		len := StrLen(str)
