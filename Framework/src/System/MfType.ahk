@@ -51,7 +51,8 @@ class MfType extends MfObject
 					,"MfUInt64"
 					,"MfBigInt"
 					,"MfUInt16"
-					,"MfUInt32")
+					,"MfUInt32"
+					,"MfSByte")
 ;{ internal members	
 	m_TypeName	:= Null
 	m_TypeCode	:= Null
@@ -467,6 +468,11 @@ class MfType extends MfObject
 			this.m_TypeCode := MfType.TypeCodes[21] ; MfByte
 			return
 		}
+		if (obj.Is(MfType.TypeCodes[30])) {
+			this.m_TypeName := "MfSByte" ;
+			this.m_TypeCode := MfType.TypeCodes[30] ; MfSByte
+			return
+		}
 		if (obj.Is(MfType.TypeCodes[23])) {
 			this.m_TypeName := "MfTimeSpan"
 			this.m_TypeCode := MfType.TypeCodes[23]
@@ -675,7 +681,7 @@ class MfType extends MfObject
 			Throw ex
 		}
 	}
-;	End:IsInteger ;}
+;	End:IsByte ;}
 ;{	IsChar
 	/*
 		Property: IsChar [get]
@@ -959,6 +965,26 @@ class MfType extends MfObject
 		}
 	}
 ;	End:IsUInt64 ;}
+;{	IsSByte
+	/*
+		Property: IsSByte [get]
+			 Gets if the type is MfSByte.
+		Remarks:
+			Read-only Property
+			Returns true if Type is IsSByte ; Otherwise false.
+	*/
+	IsSByte[]
+	{
+		get {
+			return (this.m_TypeCode = MfType.TypeCodes[30])
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			Throw ex
+		}
+	}
+;	End:IsInteger ;}
 ;{	IsBigInt
 	/*
 		Property: IsBigInt [get]
@@ -995,6 +1021,7 @@ class MfType extends MfObject
 			{
 				if ((this.m_TypeCode = MfType.TypeCodes[12])  ; MfInteger
 					|| (this.m_TypeCode = MfType.TypeCodes[21]) ; MfByte
+					|| (this.m_TypeCode = MfType.TypeCodes[30]) ; MfSByte
 					|| (this.m_TypeCode = MfType.TypeCodes[25]) ; MfInt16
 					|| (this.m_TypeCode = MfType.TypeCodes[22]) ; MfInt64
 					|| (this.m_TypeCode = MfType.TypeCodes[19]) ; MfEnum

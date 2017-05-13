@@ -71,7 +71,7 @@ Class MfInt64 extends MfPrimitive
 		Throws MfArgumentException if error in parameter.
 		Throws MfNotSupportedException if incorrect type of parameters or incorrect number of parameters.
 */
-	__New(args*) {
+	__New(int:=0, retunAsObj:=false, readonly:=false) {
 		; int = 0, returnAsObj = false, ReadOnly = false
 		; Throws MfNotSupportedException if MfInt64 Sealed class is extended
 		if (this.__Class != "MfInt64")
@@ -79,187 +79,22 @@ Class MfInt64 extends MfPrimitive
 			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfInt64"))
 		}
 
-		_int := 0
-		_returnAsObject := false
-		_readonly := false
-
-		pArgs := this._ConstructorParams(A_ThisFunc, args*)
-
-		pList := pArgs.ToStringList()
-		s := Null
-		pIndex := 0
-		if (pList.Count > 0)
+		_intResult := MfInt64.GetValue(int,"NaN", true)
+		if (_intResult == "NaN")
 		{
-			s := pList.Item[pIndex].Value
-			if ((s = "MfInteger") 
-				|| (s = "MfInt64")
-				|| (s = "MfInt16")
-				|| (s = "MfByte"))
-			{
-				_int := pArgs.Item[pIndex].Value
-			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
-		if (pList.Count > 1)
-		{
-			pIndex++
-			s := pList.Item[pIndex].Value
-			if (s = "MfBool")
-			{
-				_returnAsObject := pArgs.Item[pIndex].Value
-			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-		}
-		if (pList.Count > 2)
-		{
-			pIndex++
-			s := pList.Item[pIndex].Value
-			if (s = "MfBool")
-			{
-				_readonly := pArgs.Item[pIndex].Value
-			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-		}
-	
+		_int := _intResult
+			
+		_returnAsObject := MfBool.GetValue(retunAsObj,false)
+		_readonly :=  MfBool.GetValue(readonly,false)
+		
 		base.__New(_int, _returnAsObject, _readonly)
-		this.m_isInherited := this.__Class != "MfInt64"
+		this.m_isInherited := false
 	}
 
-	_ConstructorParams(MethodName, args*) {
-
-		p := Null
-		cnt := MfParams.GetArgCount(args*)
-
-	
-		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
-		{
-			p := args[1] ; arg 1 is a MfParams object so we will use it
-			if (p.Count > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-		}
-		else
-		{
-
-			p := new MfParams()
-			p.AllowEmptyString := false ; no strings for parameters in this case
-			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
-			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
-
-			;p.AddInteger(0)
-			;return p
-			
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (cnt > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-			
-			i := 1
-			while i <= cnt
-			{
-				arg := args[i]
-				try
-				{
-					if (IsObject(arg))
-					{
-						if (i > 1) ; all booleans from here
-						{
-							T := new MfType(arg)
-							if (T.IsNumber)
-							{
-								; convert all mf number object to boolean
-								b := new MfBool()
-								b.Value := arg.Value > 0
-								p.Add(b)
-							}
-							else
-							{
-								p.Add(arg)
-							}
-						}
-						else
-						{
-							p.Add(arg)
-						}
-					} 
-					else
-					{
-						if (MfNull.IsNull(arg))
-						{
-							pIndex := p.Add(arg)
-						}
-						else if (i = 1) ; int
-						{
-
-							; cannot construct an instacne of MfInt64 here with parameters
-							; we are already calling from the constructor
-							; create a new instance without parameters and set the properties
-							if Mfunc.IsInteger(arg)
-							{
-								_val := new MfInt64()
-								_val.ReturnAsObject := false
-								_val.Value := arg
-								pIndex := p.Add(_val)
-							}
-							Else
-							{
-								ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
-								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-								throw ex
-							}
-							
-						}
-						else ; all params past 1 are boolean
-						{
-							pIndex := p.AddBool(arg)
-						}
-					}
-				}
-				catch e
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				i++
-			}
-			
-		}
-		;return new MfParams()
-		return p
-	}
 ; End:Constructor ;}
 ;{ Methods
 ;{	Add()

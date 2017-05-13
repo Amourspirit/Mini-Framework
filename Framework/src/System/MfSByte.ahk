@@ -17,18 +17,18 @@
 
 ;{ Class Comments
 /*
-	Class: MfInt16
-		Represents MfInt16 object
+	Class: MfSByte
+		Represents MfSByte object
 	Inherits: MfPrimitive
 */
 ; End:Class Comments ;}
-Class MfInt16 extends MfPrimitive
+Class MfSByte extends MfPrimitive
 {
 ;{ Static Properties
 	TypeCode[]
 	{
 		get {
-			return 25
+			return 30
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -41,25 +41,25 @@ Class MfInt16 extends MfPrimitive
 ;{ Constructor
 /*
 	Constructor()
-		Initializes a new instance of the MfInt16 class.
+		Initializes a new instance of the MfSByte class.
 	
-	OutputVar := new MfInt16([int, returnAsObj, readonly])
+	OutputVar := new MfSByte([int, returnAsObj, readonly])
 	
 	Constructor([int, retunAsObj, readonly])
-		Initializes a new instance of the MfInt16 class optionally setting the Value property, ReturnAsObject property and the Readonly property.
+		Initializes a new instance of the MfSByte class optionally setting the Value property, ReturnAsObject property and the Readonly property.
 	Parameters
 		int
-			The MfInt16 object or var containing integer to create a new instance with.
+			The MfSByte object or var containing integer to create a new instance with.
 		returnAsObj
-			Determines if the current instance of MfInt16 class will return MfInt16 instances from functions or vars containing integer.
+			Determines if the current instance of MfSByte class will return MfSByte instances from functions or vars containing integer.
 			If omitted value is false
 		readonly
-			Determines if the current instance of MfInt16 class will allow its Value to be altered after it is constructed.
+			Determines if the current instance of MfSByte class will allow its Value to be altered after it is constructed.
 			The Readonly propery will reflect this value after the classe is constructed.
 			If omitted value is false
 	Remarks
 		Sealed Class.
-		This constructor initializes the MfInt16 with the integer value of int.
+		This constructor initializes the MfSByte with the integer value of int.
 		Value property to the value of int.
 		ReturnAsObject will have a value of returnAsObj
 		Readonly will have a value of readonly.
@@ -73,16 +73,16 @@ Class MfInt16 extends MfPrimitive
 */
 	__New(int:=0, retunAsObj:=false, readonly:=false) {
 		; int = 0, returnAsObj = false, ReadOnly = false
-		; Throws MfNotSupportedException if MfInt16 Sealed class is extended
-		if (this.__Class != "MfInt16")
+		; Throws MfNotSupportedException if MfSByte Sealed class is extended
+		if (this.__Class != "MfSByte")
 		{
-			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfInt16"))
+			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfSByte"))
 		}
 
-		_intResult := MfInt16.GetValue(int,"NaN", true)
+		_intResult := MfSByte.GetValue(int,"NaN", true)
 		if (_intResult == "NaN")
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt16"))
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToSByte"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -103,18 +103,18 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.Add(value)
 	
 	Add(value)
-		Adds MfInt16 value to current instance of MfInt16.
+		Adds MfSByte value to current instance of MfSByte.
 	Parameters
 		value
 			The value to add to the current instance.
 			Can be any type that matches IsNumber or var integer.
 	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated value; Otherwise returns var containing integer.
+		If ReturnAsObject is true then returns current instance of MfSByte with an updated value; Otherwise returns var containing integer.
 	Throws
 		Throws MfNotSupportedException if Readonly is true.
 		Throws MfNullReferenceException if called as a static method
 		Throws MfArgumentNullException if value is null.
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfSByte and can not be converted into integer value.
 		Throws MfArgumentOutOfRangeException if adding value is less then Minvalue and greater than MaxValue
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
@@ -142,15 +142,15 @@ Class MfInt16 extends MfPrimitive
 			throw ex
 		}
 		_newVal := this.Value + _value
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
+		if ((_newVal < MfSByte.MinValue) || (_newVal > MfSByte.MaxValue)) {
 			ex := new MfArgumentOutOfRangeException("obj"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
+				, MfSByte.MinValue, MfSByte.MaxValue))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.Value := _newVal
-		return this._ReturnInt16(this)
+		return this._ReturnSByte(this)
 	}
 ; End:Add() ;}
 ;{ 	CompareTo()			- Overrides	- MfObject
@@ -161,27 +161,27 @@ Class MfInt16 extends MfPrimitive
 	instance.CompareTo()
 	
 	CompareTo(obj)
-		Compares this instance to a specified MfInt16 instance.
+		Compares this instance to a specified MfSByte instance.
 	Parameters
 		obj
-		A MfInt16 object to compare to current instance.
+		A MfSByte object to compare to current instance.
 	Returns
 		Returns a var containing integer indicating the position of this instance in the sort order in relation to the value parameter. 
 		eturn Value Description Less than zero This instance precedes obj value.
 		Zero This instance has the same position in the sort order as value. Greater than zero This instance follows
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16.
+		Throws MfArgumentException if value is not an instance of MfSByte.
 	Remarks
-		Compares this instance to a specified MfInt16 instance and indicates whether this instance precedes, follows,
-		or appears in the same position in the sort order as the specified MfInt16 instance.
+		Compares this instance to a specified MfSByte instance and indicates whether this instance precedes, follows,
+		or appears in the same position in the sort order as the specified MfSByte instance.
 */
 	CompareTo(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(value)) {
 			return 1
 		}
-		if (!MfObject.IsObjInstance(obj, MfInt16)) {
+		if (!MfObject.IsObjInstance(obj, MfSByte)) {
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Object_Equals"),"obj")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
@@ -202,19 +202,19 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.Divide(value)
 	
 	Divide(value)
-		Divides the current instance of MfInt16 by the divisor value.
+		Divides the current instance of MfSByte by the divisor value.
 	Parameters
 		value
 			The Divisor value to divide the current instance Value by.
 			Can be any type that matches IsNumber. or var number.
 	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated Value; Otherwise returns Value as var.
+		If ReturnAsObject is true then returns current instance of MfSByte with an updated Value; Otherwise returns Value as var.
 	Throws
 		Throws MfNotSupportedException if Readonly is true.
 		Throws MfNullReferenceException if called as a static method
 		Throws MfArgumentNullException if value is null.
 		Throws MfDivideByZeroException if value is zero.
-		Throws MfArithmeticException if the operation fails or value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArithmeticException if the operation fails or value is not an instance of MfSByte and can not be converted into integer value.
 		Throws MfArgumentOutOfRangeException if dividing result is less then MinValue and greater than MaxValue
 	Remarks
 		If the result of the operation is not a whole number such as 4/2 but rather a float number such as 8/3 (8/3 = 2.6666...) then
@@ -231,7 +231,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (this.Equals(0))
 		{
-			return this._ReturnInt16(this)
+			return this._ReturnSByte(this)
 		}
 		_value := 0
 		try
@@ -252,15 +252,15 @@ Class MfInt16 extends MfPrimitive
 		}
 		; with floor divide  any result less then 1 will be zero
 		_newVal := Round(this.Value // _value) + 0 ; floor divide and set back to integer
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
+		if ((_newVal < MfSByte.MinValue) || (_newVal > MfSByte.MaxValue)) {
 			ex := new MfArgumentOutOfRangeException("obj"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
+				, MfSByte.MinValue, MfSByte.MaxValue))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.Value := _newVal
-		return this._ReturnInt16(this)
+		return this._ReturnSByte(this)
 
 	}
 ; 	End:Divide ;}
@@ -296,7 +296,7 @@ Class MfInt16 extends MfPrimitive
 		_value := 0
 		try
 		{
-			_value :=  MfInt16.GetValue(value)
+			_value :=  MfSByte.GetValue(value)
 			retval := this.Value = _value
 		}
 		catch 
@@ -314,7 +314,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.GetHashCode()
 	
 	GetHashCode()
-		Gets A hash code for the MfInt16 instance.
+		Gets A hash code for the MfSByte instance.
 	Returns
 		A 32-bit signed integer hash code as var.
 	Throws
@@ -322,19 +322,18 @@ Class MfInt16 extends MfPrimitive
 */
 	GetHashCode() {
 		i := this.Value
-		u := MfConvert._Int16ToUInt16(i)(i)
-		return u | i << 16
+		return i ^ i << 8
 	}
 ; End:GetHashCode() ;}
 ;{ 	GetTypeCode()
 /*
 	Method: GetTypeCode()
-		Get an enumeration value of MfTypeCode the represents MfInt16 Type Code.
+		Get an enumeration value of MfTypeCode the represents MfSByte Type Code.
 	Returns
-		And instance of MfEnum.EnumItem with a constant value that represents the type of MfInt16.
+		And instance of MfEnum.EnumItem with a constant value that represents the type of MfSByte.
 */
 	GetTypeCode() {
-		return MfTypeCode.Instance.Int16
+		return MfTypeCode.Instance.MfSByte
 	}
 ; End:GetTypeCode() ;}
 ;{ 	GetValue()			- Overrides	- MfPrimitive
@@ -342,11 +341,11 @@ Class MfInt16 extends MfPrimitive
 	Method: GetValue()
 		Overrides MfPrimitive.GetValue().
 	
-	OutputVar := MfInt16.GetValue(Obj)
-	OutputVar := MfInt16.GetValue(Obj, Default)
-	OutputVar := MfInt16.GetValue(Obj, Default, AllowAny)
+	OutputVar := MfSByte.GetValue(Obj)
+	OutputVar := MfSByte.GetValue(Obj, Default)
+	OutputVar := MfSByte.GetValue(Obj, Default, AllowAny)
 	
-	MfInt16.GetValue(Obj)
+	MfSByte.GetValue(Obj)
 		Gets the integer number from Object or var containing integer.
 	Parameters
 		Obj
@@ -362,7 +361,7 @@ Class MfInt16 extends MfPrimitive
 		Throws MfArgumentOutOfRangeException if Obj is less then MinValue or Greater then MaxValue.
 		Throws MfArgumentException if argument Obj is can not be converted to integer value.
 	
-	MfInt16.GetValue(Obj, Default)
+	MfSByte.GetValue(Obj, Default)
 		Gets a integer number from Obj or returns Default value if Obj is unable to be converted to integer.
 		Default must be a value that can be converted to integer or it will be ignored if Obj can not be converted to integer and an error will be thrown.
 	Parameters
@@ -376,12 +375,12 @@ Class MfInt16 extends MfPrimitive
 		Returns a var containing a integer or Default value if Obj is unable to be converted to integer.
 	Remarks
 		Static Method
-		If Default is not a valid integer or MfInt16 instance then GetValue will throw an error if Obj can not be converted to integer. 
-		If Default can not be converted to a integer then this would method will yield the same results as calling MfInt16.GetValue(Obj).
+		If Default is not a valid integer or MfSByte instance then GetValue will throw an error if Obj can not be converted to integer. 
+		If Default can not be converted to a integer then this would method will yield the same results as calling MfSByte.GetValue(Obj).
 	Throws
 		Throws MfInvalidOperationException if not called as a static method.
 	
-	MfInt16.GetValue(Obj, Default, AllowAny)
+	MfSByte.GetValue(Obj, Default, AllowAny)
 		Gets a integer number from Obj or returns Default value if Obj is unable to be converted to integer.
 	Parameters
 		Obj
@@ -395,14 +394,14 @@ Class MfInt16 extends MfPrimitive
 	Remarks
 		Static Method.
 		If AllowAny is true then Default can be any value including var, object or null.
-		However if AllowAny is false then this method will yield the same result as calling MfInt16.GetValue(Obj, Default).
+		However if AllowAny is false then this method will yield the same result as calling MfSByte.GetValue(Obj, Default).
 	Throws
 		Throws MfInvalidOperationException if not called as a static method.
 		Throws MfArgumentException if AllowAny is not a valid boolean.
 		
 	General Remarks
 		If Obj is a float or MfFloat instance then GetValue() will alway round down for positive number and round up for negative numbers.
-		For instance MfInt16.GetValue(2.8) will be 2 and MfInt16.GetValue(-2.8) will be -2.
+		For instance MfSByte.GetValue(2.8) will be 2 and MfSByte.GetValue(-2.8) will be -2.
 		Throws MfNotSupportedException if incorrect number of parameters are passed in.
 */
 	GetValue(args*) {
@@ -432,7 +431,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		else if (i = 2)
 		{
-			_default := MfInt16._GetValue(args[2], false)
+			_default := MfSByte._GetValue(args[2], false)
 			If (_default == "NaN")
 			{
 				CanThrow := true
@@ -465,7 +464,7 @@ Class MfInt16 extends MfPrimitive
 			}
 			else
 			{
-				_default := MfInt16._GetValue(args[2], false)
+				_default := MfSByte._GetValue(args[2], false)
 				if (_default == "NaN")
 				{
 					CanThrow := true
@@ -481,7 +480,7 @@ Class MfInt16 extends MfPrimitive
 		{
 			try
 			{
-				retval := MfInt16._GetValue(obj)
+				retval := MfSByte._GetValue(obj)
 			}
 			catch e
 			{
@@ -492,7 +491,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		else
 		{
-			retval := MfInt16._GetValue(obj, false)
+			retval := MfSByte._GetValue(obj, false)
 			if (retval == "NaN")
 			{
 				return _default
@@ -511,7 +510,7 @@ Class MfInt16 extends MfPrimitive
 			if (T.IsIntegerNumber)
 			{
 				retval := obj.Value
-				if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue))
+				if ((retval < MfSByte.MinValue) || (retval > MfSByte.MaxValue))
 				{
 					if (!CanThrow)
 					{
@@ -519,7 +518,7 @@ Class MfInt16 extends MfPrimitive
 					}
 					ex := new MfArgumentOutOfRangeException("obj"
 						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt16.MinValue, MfInt16.MaxValue))
+						,MfSByte.MinValue, MfSByte.MaxValue))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
@@ -533,14 +532,14 @@ Class MfInt16 extends MfPrimitive
 					varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
 				}
 				retval := varInt + 0 ; force conversion from any hex values
-				if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
+				if ((retval < MfSByte.MinValue) || (retval > MfSByte.MaxValue)) {
 				if (!CanThrow)
 				{
 					return "NaN"
 				}
 					ex := new MfArgumentOutOfRangeException("varInt"
 						, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-						,MfInt16.MinValue, MfInt16.MaxValue))
+						,MfSByte.MinValue, MfSByte.MaxValue))
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
@@ -556,7 +555,7 @@ Class MfInt16 extends MfPrimitive
 				throw ex
 			}
 		} else {
-			retval := MfInt16._GetValueFromVar(obj, CanThrow)
+			retval := MfSByte._GetValueFromVar(obj, CanThrow)
 		}
 		return retval
 	}
@@ -567,14 +566,14 @@ Class MfInt16 extends MfPrimitive
 		strVarInt := varInt . ""
 		if (Mfunc.IsInteger(varInt)) {
 			retval := varInt + 0 ; force conversion from any hex values
-			if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
+			if ((retval < MfSByte.MinValue) || (retval > MfSByte.MaxValue)) {
 				if (!CanThrow)
 				{
 					return "NaN"
 				}
 				ex := new MfArgumentOutOfRangeException("varInt"
 					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-					,MfInt16.MinValue, MfInt16.MaxValue))
+					,MfSByte.MinValue, MfSByte.MaxValue))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -585,14 +584,14 @@ Class MfInt16 extends MfPrimitive
 				varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
 			}
 			retval := varInt + 0 ; force conversion from any hex values
-			if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
+			if ((retval < MfSByte.MinValue) || (retval > MfSByte.MaxValue)) {
 				if (!CanThrow)
 				{
 					return "NaN"
 				}
 				ex := new MfArgumentOutOfRangeException("varInt"
 					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-					,MfInt16.MinValue, MfInt16.MaxValue))
+					,MfSByte.MinValue, MfSByte.MaxValue))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -616,7 +615,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.GreaterThen(value)
 	
 	GreaterThan(value)
-		Compares the current MfInt16 object to a specified MfInt16 instance and returns an indication of their relative values.
+		Compares the current MfSByte object to a specified MfSByte instance and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -625,7 +624,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has greater value then the value instance; Otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfSByte and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -636,12 +635,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfSByte)) {
 			return this.Value > value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfSByte.GetValue(value)
 			retval := this.Value > val
 		}
 		Catch e
@@ -660,7 +659,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.GreaterThenOrEqual(value)
 	
 	GreaterThenOrEqual(value)
-		Compares the current MfInt16 object to a specified MfInt16 object and returns an indication of their relative values.
+		Compares the current MfSByte object to a specified MfSByte object and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -669,7 +668,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has greater or equal value then the value instance; otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfSByte and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -680,12 +679,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfSByte)) {
 			return this.Value >= value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfSByte.GetValue(value)
 			retval := this.Value >= val
 		}
 		Catch e
@@ -704,7 +703,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.LessThen(value)
 	
 	LessThen(value)
-		Compares the current MfInt16 object to a specified MfInt16 object and returns an indication of their relative values.
+		Compares the current MfSByte object to a specified MfSByte object and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -713,7 +712,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has less value then the value instance; otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfSByte and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -724,12 +723,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfSByte)) {
 			return this.Value < value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfSByte.GetValue(value)
 			retval := this.Value < val
 		}
 		Catch e
@@ -748,7 +747,7 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.LessThenOrEqual(value)
 	
 	LessThenOrEqual(value)
-		Compares the current MfInt16 object to a specified MfInt16 object and returns an indication of their relative values.
+		Compares the current MfSByte object to a specified MfSByte object and returns an indication of their relative values.
 	Parameters
 		value
 			The Object or var containing, integer to compare to current instance.
@@ -757,7 +756,7 @@ Class MfInt16 extends MfPrimitive
 		Returns true if the current instance has less or equal value then the value instance; Otherwise false.
 	Throws
 		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArgumentException if value is not an instance of MfSByte and can not be converted into integer value.
 	Remarks
 		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
 		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
@@ -768,12 +767,12 @@ Class MfInt16 extends MfPrimitive
 		if (MfNull.IsNull(value)) {
 			return retval
 		}
-		if (MfObject.IsObjInstance(value, MfInt16)) {
+		if (MfObject.IsObjInstance(value, MfSByte)) {
 			return this.Value <= value.Value
 		}
 		try
 		{
-			val := MfInt16.GetValue(value)
+			val := MfSByte.GetValue(value)
 			retval := this.Value <= val
 		}
 		Catch e
@@ -792,19 +791,19 @@ Class MfInt16 extends MfPrimitive
 	OutputVar := instance.Multiply(value)
 	
 	Multiply(value)
-		Multiplies the current instance of MfInt16 by the value.
+		Multiplies the current instance of MfSByte by the value.
 	Parameters
 		value
 			The value to multiply the current instance Value by.
 			Can be any type that matches IsNumber. or var number.
 	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated Value; Otherwise returns Value as var.
+		If ReturnAsObject is true then returns current instance of MfSByte with an updated Value; Otherwise returns Value as var.
 	Throws
 		Throws MfNotSupportedException if Readonly is true.
 		Throws MfNullReferenceException if called as a static method
 		Throws MfArgumentNullException if value is null.
 		Throws MfDivideByZeroException if value is zero.
-		Throws MfArithmeticException if the operation fails or value is not an instance of MfInt16 and can not be converted into integer value.
+		Throws MfArithmeticException if the operation fails or value is not an instance of MfSByte and can not be converted into integer value.
 		Throws MfArgumentOutOfRangeException if dividing result is less then MinValue and greater than MaxValue
 	Remarks
 		If the result of the operation is not a whole number such as 4*3 but rather a float number such as 4*3.3 (4 * 3.2 = 13.2) then the
@@ -822,7 +821,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (this.Equals(0))
 		{
-			return this._ReturnInt16(this)
+			return this._ReturnSByte(this)
 		}
 		_value := 0
 		try
@@ -837,19 +836,19 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (_value = 0)
 		{
-			return this._ReturnInt16(this)
+			return this._ReturnSByte(this)
 		}
 		_newVal := this.Value * _value
 		_newVal := _newVal > 0?Floor(_newVal):Ceil(_newVal)
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
+		if ((_newVal < MfSByte.MinValue) || (_newVal > MfSByte.MaxValue)) {
 			ex := new MfArgumentOutOfRangeException("obj"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
+				, MfSByte.MinValue, MfSByte.MaxValue))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.Value := _newVal
-		return this._ReturnInt16(this)
+		return this._ReturnSByte(this)
 
 	}
 ; 	End:Multiply ;}
@@ -857,10 +856,10 @@ Class MfInt16 extends MfPrimitive
 /*
 	Method: Parse()
 	
-	OutputVar := MfInt16.Parse(obj)
+	OutputVar := MfSByte.Parse(obj)
 	
 	Parse(obj)
-		Converts the obj representation of a number to its MfInt16 equivalent
+		Converts the obj representation of a number to its MfSByte equivalent
 	Parameters
 		obj
 			An object convert.
@@ -868,14 +867,14 @@ Class MfInt16 extends MfPrimitive
 			Can be var containing string, integer
 			Can also be instance of MfParams.
 	Returns
-		Converts the obj representation of a number to its MfInt16 equivalent.
-		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfInt16;
+		Converts the obj representation of a number to its MfSByte equivalent.
+		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfSByte;
 		Otherwise a var integer will be returned.
 	Remarks
 		Static Method
-		Converts the obj representation of a number to its MfInt16 equivalent.
+		Converts the obj representation of a number to its MfSByte equivalent.
 		If obj parameter is an Object then it must be instance from MfObject or be an instance of MfParams.
-		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfInt16;
+		If MfParams is passed in with Data key of ReturnAsObject and value set to true then parsed result will be returned as an instance of MfSByte;
 		otherwise a var integer will be returned.
 	Throws
 		Throws MfInvalidOperationException if not called as static method.
@@ -893,7 +892,7 @@ Class MfInt16 extends MfPrimitive
 			{
 				strV := objParams.Item[0].Value
 				ns := 7 ; integer
-				retval := MfInt16._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfSByte._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
 			}
 			else if (cnt = 2)
 			{
@@ -908,11 +907,11 @@ Class MfInt16 extends MfPrimitive
 				if (MfObject.IsObjInstance(obj, MfFormatProvider))
 				{
 					ns := 7 ; integer
-					retval := MfInt16._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
+					retval := MfSByte._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
 				}
 				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
 				{
-					retval := MfInt16._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+					retval := MfSByte._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
 				}
 				else
 				{
@@ -934,9 +933,9 @@ Class MfInt16 extends MfPrimitive
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				retval := MfInt16._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfSByte._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
 			}
-			else if (strP = "MfInt16")
+			else if (strP = "MfSByte")
 			{
 				retval := objParams.Item[0].Value
 			}
@@ -954,120 +953,192 @@ Class MfInt16 extends MfPrimitive
 		}
 		if (!MfNull.IsNull(retval))
 		{
-			return new MfInt16(retval, true)
+			return new MfSByte(retval, true)
 		}
 		ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
-	_intParseParams(MethodName, args*) {
-
-		p := Null
-		cnt := MfParams.GetArgCount(args*)
-
+; End:Parse() ;}
+;{	Subtract()
+/*
+	Method: Subtract()
 	
-		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
-		{
-			p := args[1] ; arg 1 is a MfParams object so we will use it
-			if (p.Count = 0 || p.Count > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
+	OutputVar := instance.Subtract(value)
+	
+	Subtract(value)
+		Subtracts MfSByte value to current instance of MfSByte.
+	Parameters
+		value
+			The value to subtract from the current instance.
+			Can be any type that matches IsNumber or var integer.
+	Returns
+		If ReturnAsObject is true then returns current instance of MfSByte with an updated value; Otherwise returns var containing integer.
+	Throws
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfArgumentException if value is not an instance of MfSByte and can not be converted into integer value.
+		Throws MfArgumentOutOfRangeException if adding value is less then Minvalue and greater than MaxValue
+	Remarks
+		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
+		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
+*/
+	Subtract(value) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(value)) {
+			ex := new MfArgumentNullException("value")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
-		else
+		_value := 0
+		try
 		{
-
-			p := new MfParams()
-			p.AllowEmptyString := false ; no strings for parameters in this case
-			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
-			p.AllowEmptyValue := false ; all empty/null params will be added as undefined
-
-			
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (cnt = 0 || cnt > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-			
-			i := 1
-			while (i <= cnt)
-			{
-				arg := args[i]
-				try
-				{
-					if (IsObject(arg))
-					{
-						if (i = 2)
-						{
-							; second param can only ever be MfNumberStyles if it is an enumItem
-							if (MfObject.IsObjInstance(arg, MfEnum.EnumItem))
-							{
-								if (!MfObject.IsObjInstance(arg.ParentEnum, MfNumberStyles))
-								{
-									err := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_EnumIllegal"))
-									err.SetProp(A_LineFile, A_LineNumber, MethodName)
-									throw err
-								}
-								; convert to actual MfNumberStyles for easier parsing
-								ns := new MfNumberStyles(arg)
-								p.Add(ns)
-								i++
-								continue
-							}
-						}
-						p.Add(arg)
-					} 
-					else
-					{
-						if (i = 1) ; bigInt any kind, add as string
-						{
-							p.AddString(arg)
-						}
-						else if (i = 2)
-						{
-							if (cnt = 2)
-							{
-								if (!Mfunc.IsInteger(args[2]))
-								{
-									err := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_EnumIllegalVal", args[3]))
-									err.SetProp(A_LineFile, A_LineNumber, MethodName)
-									throw err
-								}
-								NumStyle := MfEnum.ToObject(MfNumberStyles.GetType(), args[2])
-								p.Add(numStyle)
-							}
-							else
-							{
-								e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-								e.SetProp(A_LineFile, A_LineNumber, MethodName)
-								throw e
-							}
-						}
-						else ; all params past 1 are boolean
-						{
-							e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-							e.SetProp(A_LineFile, A_LineNumber, MethodName)
-							throw e
-						}
-					}
-				}
-				catch e
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				i++
-			}
-			
+			_value :=  MfInteger.GetValue(value)
 		}
-		return p
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_newVal := this.Value - _value
+		if ((_newVal < MfSByte.MinValue) || (_newVal > MfSByte.MaxValue)) {
+			ex := new MfArgumentOutOfRangeException("obj"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
+				, MfSByte.MinValue, MfSByte.MaxValue))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		this.Value := _newVal
+		return this._ReturnSByte(this)
 	}
+; End:Add() ;}
+;{ 	ToString()			- Overrides	- MfPrimitive
+/*
+	Method: ToString()
+		Overrides MfPrimitive.ToString()
+
+	OutputVar := instance.ToString()
+
+	ToString()
+		Gets a string representation of the MfSByte instance.
+	Returns
+		Returns string var representing current instance Value.
+	Throws
+		Throws MfNullReferenceException if called as a static method
+*/
+	ToString() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		retval := Format("{:i}",this.Value)
+		return retval
+	}
+;  End:ToString() ;}
+;{ 	TryParse()
+/*
+	Method: TryParse()
+	
+	OutputVar := MfSByte.TryParse(int, obj)
+	
+	TryParse(byref int, obj)
+		Converts the obj representation of a number to its Integer equivalent. A return value indicates whether the conversion succeeded.
+	Parameters
+		int
+			Contains the value equivalent to the number contained in obj, if the conversion succeeded.
+			The conversion fails if the obj parameter is not of the correct format, or represents a number less than MinValue or greater than MaxValue.
+		obj
+			An object convert.
+			Can be instance of MfChar, MfString
+			Can be var containing string, integer, hex value
+			Obj can also be instance of MfParams.
+	Returns
+		Returns true if parse is a success; Otherwise false
+	Remarks
+		If parameter int is passed in as an object it must in initialized as an instance of MfSByte first. Eg: myInt := new MfSByte(0)
+		If parameter int is passed in as var it must in initialized as integer first. Eg: myInt := 0
+		White spaces are allowed at the beginning or end of the string to parse.
+		When parsing a MfChar instance the MfChar instance must be Numeric to parse successfully.
+		See MfChar.IsNumber.
+	Throws
+		Throws MfInvalidOperationException if not called as static method.
+*/
+	TryParse(byref int, args*) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		objParams := MfSByte._intParseParams(A_ThisFunc, args*)
+		cnt := objParams.Count
+		retval := false
+		
+		strP := objParams.ToString()
+		num := 0
+		if (strP = "MfString" || strP = "MfChar")
+		{
+			strV := objParams.Item[0].Value
+			ns := 7 ; integer
+			retval := MfSByte._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
+		}
+		else if (cnt = 2)
+		{
+			str := objParams.Item[0]
+			if (!MfObject.IsObjInstance(str, MfString))
+			{
+				return false
+			}
+			obj := objParams.Item[1]
+			if (MfObject.IsObjInstance(obj, MfFormatProvider))
+			{
+				ns := 7 ; integer
+				retval := MfSByte._TryParse(str.Value, ns, obj.GetInstance(Null), num)
+			}
+			else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+			{
+				retval := MfSByte._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
+			}
+			else
+			{
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		else if (cnt = 3)
+		{
+			str := objParams.Item[0]
+			ns := objParams.Item[1]
+			fInfo := objParams.Item[2]
+			if ((!MfObject.IsObjInstance(str, MfString))
+				|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
+				|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
+			{
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			retval := MfSByte._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+		}
+		else if (strP = "MfSByte")
+		{
+			num := objParams.Item[0].Value
+			retval := true
+		}
+		if (retval)
+		{
+			if (IsObject(int))
+			{
+				if (!MfObject.IsObjInstance(int, MfSByte))
+				{
+					int := new MfSByte()
+				}
+				int.Value := num
+			}
+			else
+			{
+				int := num
+			}
+		}
+		return retval
+	}
+; End:TryParse() ;}
 ;{ 	_Parse
 /*
 	Method: _Parse()
@@ -1108,7 +1179,7 @@ Class MfInt16 extends MfPrimitive
 		{
 			if (MfObject.IsObjInstance(e, MfOverflowException))
 			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"), e)
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_SByte"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, methodName)
 				throw ex
 			}
@@ -1116,19 +1187,19 @@ Class MfInt16 extends MfPrimitive
 		}
 		if ((style & 512) != 0) {
 			; MfNumberStyles.Instance.AllowHexSpecifier = 512
-			if (num < 0 || num > 65535)
+			if (num < 0 || num > 255)
 			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"), e)
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_SByte"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, methodName)
 				throw ex
 			}
-			return  MfConvert._UInt16ToInt16(num)
+			return  MfConvert._ByteToSByte(num)
 		}
 		else
 		{
-			if (num < -32768 || num > 32767)
+			if (num < MfSByte.MinValue || num > MfSByte.MaxValue)
 			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"))
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_SByte"))
 				ex.SetProp(A_LineFile, A_LineNumber, methodName)
 				throw ex
 			}
@@ -1136,186 +1207,6 @@ Class MfInt16 extends MfPrimitive
 		}
 	}
 ; 	End:_Parse ;}
-; End:Parse() ;}
-;{	Subtract()
-/*
-	Method: Subtract()
-	
-	OutputVar := instance.Subtract(value)
-	
-	Subtract(value)
-		Subtracts MfInt16 value to current instance of MfInt16.
-	Parameters
-		value
-			The value to subtract from the current instance.
-			Can be any type that matches IsNumber or var integer.
-	Returns
-		If ReturnAsObject is true then returns current instance of MfInt16 with an updated value; Otherwise returns var containing integer.
-	Throws
-		Throws MfNotSupportedException if Readonly is true.
-		Throws MfNullReferenceException if called as a static method
-		Throws MfArgumentNullException if value is null.
-		Throws MfArgumentException if value is not an instance of MfInt16 and can not be converted into integer value.
-		Throws MfArgumentOutOfRangeException if adding value is less then Minvalue and greater than MaxValue
-	Remarks
-		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
-		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
-*/
-	Subtract(value) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (MfNull.IsNull(value)) {
-			ex := new MfArgumentNullException("value")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		_value := 0
-		try
-		{
-			_value :=  MfInteger.GetValue(value)
-		}
-		catch e
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_InvalidCastException"), "value", e)
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		_newVal := this.Value - _value
-		if ((_newVal < MfInt16.MinValue) || (_newVal > MfInt16.MaxValue)) {
-			ex := new MfArgumentOutOfRangeException("obj"
-				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
-				, MfInt16.MinValue, MfInt16.MaxValue))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		this.Value := _newVal
-		return this._ReturnInt16(this)
-	}
-; End:Add() ;}
-;{ 	ToString()			- Overrides	- MfPrimitive
-/*
-	Method: ToString()
-		Overrides MfPrimitive.ToString()
-
-	OutputVar := instance.ToString()
-
-	ToString()
-		Gets a string representation of the MfInt16 instance.
-	Returns
-		Returns string var representing current instance Value.
-	Throws
-		Throws MfNullReferenceException if called as a static method
-*/
-	ToString() {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		retval := Format("{:i}",this.Value)
-		return retval
-	}
-;  End:ToString() ;}
-;{ 	TryParse()
-/*
-	Method: TryParse()
-	
-	OutputVar := MfInt16.TryParse(int, obj)
-	
-	TryParse(byref int, obj)
-		Converts the obj representation of a number to its Integer equivalent. A return value indicates whether the conversion succeeded.
-	Parameters
-		int
-			Contains the value equivalent to the number contained in obj, if the conversion succeeded.
-			The conversion fails if the obj parameter is not of the correct format, or represents a number less than MinValue or greater than MaxValue.
-		obj
-			An object convert.
-			Can be instance of MfChar, MfString
-			Can be var containing string, integer, hex value
-			Obj can also be instance of MfParams.
-	Returns
-		Returns true if parse is a success; Otherwise false
-	Remarks
-		If parameter int is passed in as an object it must in initialized as an instance of MfInt16 first. Eg: myInt := new MfInt16(0)
-		If parameter int is passed in as var it must in initialized as integer first. Eg: myInt := 0
-		White spaces are allowed at the beginning or end of the string to parse.
-		When parsing a MfChar instance the MfChar instance must be Numeric to parse successfully.
-		See MfChar.IsNumber.
-	Throws
-		Throws MfInvalidOperationException if not called as static method.
-*/
-	TryParse(byref int, args*) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
-		cnt := objParams.Count
-		retval := false
-		
-		strP := objParams.ToString()
-		num := 0
-		if (strP = "MfString" || strP = "MfChar")
-		{
-			strV := objParams.Item[0].Value
-			ns := 7 ; integer
-			retval := MfInt16._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
-		}
-		else if (cnt = 2)
-		{
-			str := objParams.Item[0]
-			if (!MfObject.IsObjInstance(str, MfString))
-			{
-				return false
-			}
-			obj := objParams.Item[1]
-			if (MfObject.IsObjInstance(obj, MfFormatProvider))
-			{
-				ns := 7 ; integer
-				retval := MfInt16._TryParse(str.Value, ns, obj.GetInstance(Null), num)
-			}
-			else if (MfObject.IsObjInstance(obj, MfNumberStyles))
-			{
-				retval := MfInt16._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
-			}
-			else
-			{
-				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-		}
-		else if (cnt = 3)
-		{
-			str := objParams.Item[0]
-			ns := objParams.Item[1]
-			fInfo := objParams.Item[2]
-			if ((!MfObject.IsObjInstance(str, MfString))
-				|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
-				|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
-			{
-				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			retval := MfInt16._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
-		}
-		else if (strP = "MfInt16")
-		{
-			num := objParams.Item[0].Value
-			retval := true
-		}
-		if (retval)
-		{
-			if (IsObject(int))
-			{
-				if (!MfObject.IsObjInstance(int, MfInt16))
-				{
-					int := new MfInt16()
-				}
-				int.Value := num
-			}
-			else
-			{
-				int := num
-			}
-		}
-		return retval
-	}
-; End:TryParse() ;}
 ;{ 	_TryParse
 /*
 	Method: _Parse()
@@ -1356,16 +1247,16 @@ Class MfInt16 extends MfPrimitive
 		}
 		if ((style & 512) != 0) {
 			; MfNumberStyles.Instance.AllowHexSpecifier = 512
-			if (num < 0 || num > 65535)
+			if (num < 0 || num > 255)
 			{
 				return false
 			}
-			Out := MfConvert._UInt16ToInt16(num)
+			Out := MfConvert._ByteToSByte(num)
 			return true
 		}
 		else
 		{
-			if (num < -32768 || num > 32767)
+			if (num < MfSByte.MinValue || num > MfSByte.MinValue)
 			{
 				return false
 			}
@@ -1374,39 +1265,39 @@ Class MfInt16 extends MfPrimitive
 		}
 	}
 ; 	End:_TryParse ;}
-;{ _ReturnInt16()
-; return MfInt16 intance if ReturnAsObject is true otherwise var containing Integer
-	_ReturnInt16(obj) {
-		if (MfObject.IsObjInstance(obj, MfInt16)) {
+;{ _ReturnSByte()
+; return MfSByte intance if ReturnAsObject is true otherwise var containing Integer
+	_ReturnSByte(obj) {
+		if (MfObject.IsObjInstance(obj, MfSByte)) {
 			if (obj.ReturnAsObject) {
 				return obj
 			} else {
 				return obj.Value
 			}
 		}
-		retval := this.ReturnAsObject? new MfInt16(obj, true):obj
+		retval := this.ReturnAsObject? new MfSByte(obj, true):obj
 		return retval
 	}
-; End:_ReturnInt16() ;}
+; End:_ReturnSByte() ;}
 ; End:Methods ;}
 ;{ Properties
 ;{ 	MaxValue
 /*
 	Property: MaxValue [get]
-		Represents the largest possible value of an MfInt16. This field is constant.
+		Represents the largest possible value of an MfSByte. This field is constant.
 	Value:
 		Var integer
 	Gets:
-		Gets the largest possible value of an MfInt16.
+		Gets the largest possible value of an MfSByte.
 	Remarks:
 		Constant Property
-		Can be accessed using MfInt16.MaxValue
-		Value = 32767 (0x7FFF) hex
+		Can be accessed using MfSByte.MaxValue
+		Value = 127 (0x7F) hex
 */
 	MaxValue[]
 	{
 		get {
-			return 32767   ;  0x7FFF
+			return 127   ;  0x7F
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -1418,19 +1309,19 @@ Class MfInt16 extends MfPrimitive
 ;{ 	MinValue
 /*
 	Property: MinValue [get]
-		Represents the smallest possible value of an MfInt16. This field is constant.
+		Represents the smallest possible value of an MfSByte. This field is constant.
 	Value:
 		Var integer
 	Gets:
-		Gets the smallest possible value of an MfInt16.
+		Gets the smallest possible value of an MfSByte.
 	Remarks:
-		Can be accessed using MfInt16.MinValue
-		Value = -32768 (0xFFFFFFFFFFFF8000) hex
+		Can be accessed using MfSByte.MinValue
+		Value = -128 (0x80) hex
 */
 	MinValue[]
 	{
 		get {
-			return -32768 ; 0xFFFFFFFFFFFF8000
+			return -128 ; 0x80
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -1443,7 +1334,7 @@ Class MfInt16 extends MfPrimitive
 /*
 	Property: Value [get/set]
 		Overrides MfPrimitive.Value
-		Gets or sets the value associated with the this instance of MfInt16
+		Gets or sets the value associated with the this instance of MfSByte
 	Value:
 		Value is a integer and can be var or any type that matches MfType.IsIntegerNumber.
 	Sets:
@@ -1462,7 +1353,7 @@ Class MfInt16 extends MfPrimitive
 		}
 		set {
 			this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
-			Base.Value := MfInt16._GetValue(value)
+			Base.Value := MfSByte._GetValue(value)
 			return Base.Value
 		}
 	}
