@@ -642,7 +642,22 @@ class MfCharList extends MfListBase
 		}
 		Return false
 	}
-
+;{ 	GetEnumerator()
+/*
+		Method: GetEnumerator()
+			GetEnumerator() Gets an enumerator
+		Remarks:
+			Returns an enumerator that iterates through a collection.  
+		Returns:
+			Returns an enumerator that iterates through a collection.
+		Throws:
+			Throws MfNotImplementedException if _NewEnum() Method has not been overridden in derived class.
+*/
+	GetCharEnumerator() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		return new MfCharList.CharEnumerator(this)
+	}
+; End:GetEnumerator() ;}
 	IndexOf(obj, StartIndex=0, Count=-1, IgnoreCase=true) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		StartIndex := MfInteger.GetValue(StartIndex, 0)
@@ -1962,6 +1977,61 @@ class MfCharList extends MfListBase
 	}
 ;	End:Item[index] ;}
 ; End:Properties ;}
+;{ 		internal class CharEnumerator
+	; can also enum itself
+	; Example:
+	;	enum := CharList.GetGetCharEnumerator()
+	; 	For i, v in enum
+	;	{
+	;		MsgBox % v
+	;	}
+	; Example:
+	;	enum := CharList.GetGetCharEnumerator()
+	;	While (enum.Next(i, v))
+	;	{
+	;		MsgBox % v
+	;	}
+	class CharEnumerator
+	{
+		m_Parent := ""
+		m_KeyEnum := ""
+		m_index := 0
+		m_count := 0
+		m_InnerList := ""
+		__new(ByRef ParentClass) {
+			this.m_Parent := ParentClass
+			this.m_count := this.m_Parent.Count
+			this.m_InnerList := this.m_Parent.m_InnerList
+		}
+
+		Next(ByRef key, ByRef value)
+		{
+		
+			if (this.m_index < this.m_count) {
+				key := this.m_index
+				value := Chr(this.m_InnerList[key + 1])
+			}
+			this.m_index++
+			if (this.m_index > (this.m_count)) {
+				return false
+			} else {
+				return true
+			}
+		}
+		;{ 		_NewEnum
+		/*
+			Method: _NewEnum()
+				Overrides MfEnumerableBase._NewEnum()
+			_NewEnum()
+				Returns a new enumerator to enumerate this object's key-value pairs.
+				This method is usually not called directly, but by the for-loop or by GetEnumerator()
+		*/
+			_NewEnum() {
+				return new MfCharList.CharEnumerator(this.m_Parent)
+			}
+		; 		End:_NewEnum ;}
+	}
+; 		End:class CharEnumerator ;}
 }
 /*!
 	End of class

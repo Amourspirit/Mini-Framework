@@ -59,8 +59,8 @@ class MfListBase extends MfEnumerableBase
 		This method is usually not called directly, but by the for-loop or by GetEnumerator()
 */
 	_NewEnum() {
-        return new MFListBase.Enumerator(this)
-    }
+		return new MFListBase.Enumerator(this)
+	}
 ; 		End:_NewEnum ;}
 ;{ 	Add()				- Overrides - MfListBase
 /*
@@ -735,21 +735,21 @@ class MfListBase extends MfEnumerableBase
 ;	End:Item[index] ;}
 ; End:Properties ;}
 ;{ 		internal class Enumerator
-    class Enumerator
+	class Enumerator
 	{
 		m_Parent := ""
 		m_KeyEnum := ""
 		m_index := 0
 		m_count := 0
 		m_InnerList := ""
-        __new(ByRef ParentClass) {
-            this.m_Parent := ParentClass
+		__new(ByRef ParentClass) {
+			this.m_Parent := ParentClass
 			this.m_count := this.m_Parent.Count
 			this.m_InnerList := this.m_Parent.m_InnerList
-        }
-        
-       Next(ByRef key, ByRef value)
-	   {
+		}
+
+		Next(ByRef key, ByRef value)
+		{
 		
 			if (this.m_index < this.m_count) {
 				key := this.m_index
@@ -761,8 +761,8 @@ class MfListBase extends MfEnumerableBase
 			} else {
 				return true
 			}
-        }
-    }
+		}
+	}
 ; 		End:class Enumerator ;}
 }
 /*!

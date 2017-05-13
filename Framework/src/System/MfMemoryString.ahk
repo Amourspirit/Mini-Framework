@@ -41,6 +41,7 @@
  *	FromAny() Creates a new instance of MfMemStrView from any source
  *	FromBase64() Encodes Obj to base64 instance of MfMemoryString
  *	FromByteList() Converts MfByteList into MfMemoryString instance
+ *	FromCharList() Converts MfCharList into MfMemStrView instance
  *	GetStringIgnoreNull() Gets an instance of MfMemoryString from current instance that has excluded all null values
  *	IndexOf() Gets the zero based position of obj within the currrent instance from start
  *	Insert() Inserts obj into current instance
@@ -4727,6 +4728,8 @@ class MfMemStrView extends MfMemBlkView
 		Static Method
 */
 	FromCharList(chars, startIndex=0, length=-1) {
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		length := MfInteger.GetValue(length, 0)
 		if(MfObject.IsObjInstance(chars, MfCharList) = false)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "chars"))

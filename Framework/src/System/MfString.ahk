@@ -3623,7 +3623,6 @@ Class MfString extends MfPrimitive
 		Otherwise each MfChar will have its MfChar.ReturnAsObject set to false.
 */
 	ToCharArray(startIndex = 0, length = "") {
-		
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		int_StartIndex := 0
 		try
@@ -3707,7 +3706,106 @@ Class MfString extends MfPrimitive
 		
 		return arr
 	}
-; End:ToCharArray(StartIndex = 0, Length = "") ;}	
+; End:ToCharArray(StartIndex = 0, Length = "") ;}
+;{ ToCharList
+/*
+	Method: ToCharList()
+
+	ToCharList()
+		Copies the Source address Chars to destination MfCharList instance
+	Parameters:
+		SourceAddress
+			Source address to copy chars from
+		CharList
+			Destination instance of MfCharList
+		destinationIndex
+			The Destination index to start copying into
+		count
+			The Number of Chars to copy
+	Throws:
+		Throws MfArgumentOutOfRangeException, MfException
+	Remarks:
+		instance method
+*/
+	ToCharList(startIndex:=0, length:=-1) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		length := MfInteger.GetValue(length, -1)
+		if ((StartIndex < 0) || (StartIndex >= this.m_Length))
+		{
+			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		If (length > 0)
+		{
+			If (length - startIndex > this.m_Length)
+			{
+				ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		mStr := this._GetMStr()
+
+		return mStr.ToCharList(startIndex, length)
+	}
+; 	End:ToCharList ;}
+;{ 	FromCharList
+/*
+	Method: FromCharList()
+
+	FromCharList()
+		Converts MfCharList into MfString instance
+	Parameters:
+		chars
+			instance of MfCharList containing byte values to convert
+		startIndex
+			The starting index in the MfCharList to start the conversion
+			Default value is 0
+		length
+			the length in bytes to convert.
+			Default value is -1
+			When length is less then 0 then all chars past startIndex are included
+	Returns:
+		Returns instance of MfString with RetunAsObject set to true
+	Throws:
+		Throws MfArgumentException, MfArgumentOutOfRangeException
+	Remarks:
+		Static Method
+*/
+	FromCharList(chars, startIndex:=0, length:=-1) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		length := MfInteger.GetValue(length, 0)
+		if(MfObject.IsObjInstance(chars, MfCharList) = false)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "chars"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if(chars.m_Count = 0)
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "chars"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (length = 0)
+		{
+			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		mV := MfMemStrView.FromCharList(chars, startIndex, length)
+		strObj := new MfString(mV.ToString(),true)
+		return strObj
+	}
 ;{	ToLower()
 /*
 	ToLower()
