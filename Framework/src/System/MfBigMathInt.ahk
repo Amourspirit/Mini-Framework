@@ -1644,12 +1644,12 @@ class MfBigMathInt extends MfObject
 			i := x.m_Count
 			while (i > 1)
 			{
-				sb.Append(xl[i])
-				sb.Append(",")
+				sb.AppendString(xl[i])
+				sb.AppendString(",")
 				;s .= xl[i] . ","
 				i--
 			}
-			sb.Append(xl[1])
+			sb.AppendString(xl[1])
 			;s .= xl[1]
 		}
 		else ; return the given base
@@ -1659,12 +1659,12 @@ class MfBigMathInt extends MfObject
 			{
 				t := MfBigMathInt.divInt_(MfBigMathInt.s6, base)
 				;s := MfBigMathInt.digitStr.Item[t] . s
-				sb2.Append(MfBigMathInt.digitStr.Item[t])
+				sb2.AppendString(MfBigMathInt.digitStr.Item[t])
 			}
 			mStr := new MfMemoryString(sb2.Length)
 			mStr.Append(sb2)
 
-			sb.Append(mStr.Reverse())
+			sb.AppendString(mStr.Reverse())
 			mStr := ""
 			sb2 := ""
 		}

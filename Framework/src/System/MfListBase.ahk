@@ -548,7 +548,7 @@ class MfListBase extends MfEnumerableBase
 	*/
 	ToString() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		str := ""
+		str := new MfText.StringBuilder()
 		maxIndex := this.m_Count - 1
 		ll := this.m_InnerList
 		i := 1
@@ -568,15 +568,18 @@ class MfListBase extends MfEnumerableBase
 			{
 				valStr := "'" v "'"
 			}
-			str .= i ": " . valStr
+			str.AppendString(i)
+			str.AppendString(": ")
+			str.AppendString(valStr)
+			;str .= i ": " . valStr
 			If (i < this.m_Count)
 			{
-				str .= nl
+				str.AppendString(nl)
 			}
 			i++
 		}
 		
-		return str
+		return str.ToString()
 	}
 ;	End:ToString() ;}
 ; End:Methods ;}

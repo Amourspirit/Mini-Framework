@@ -360,7 +360,7 @@ class MfNibbleList extends MfListBase
 		{
 			n := ll[i + 1]
 			hexChar := MfByteConverter._GetHexValue(n)
-			sb.Append(hexChar)
+			sb.AppendString(hexChar)
 			i++
 		}
 		
@@ -476,13 +476,13 @@ class MfNibbleList extends MfListBase
 			mInfo := MfNibConverter.HexBitTable[HexChar]
 			if (mInfo.IsNeg)
 			{
-				sb.Append("FF-")
+				sb.AppendString("FF-")
 			}
 			else
 			{
-				sb.Append("0")
-				sb.Append(HexChar)
-				sb.Append("-")
+				sb.AppendString("0")
+				sb.AppendString(HexChar)
+				sb.AppendString("-")
 			}
 			i++
 		}
@@ -505,28 +505,28 @@ class MfNibbleList extends MfListBase
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
 					iChunk := 0
-					sb.Append("-")
+					sb.AppendString("-")
 				}
 				retval .= bitChar2
 				iChunk++
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
 					iChunk := 0
-					sb.Append("-")
+					sb.AppendString("-")
 				}
 			}
 			else
 			{
 				if (j >= iMaxIndex)
 				{
-					sb.Append("0")
+					sb.AppendString("0")
 				}
 				retval .= bitChar1
 				iChunk++
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
 					iChunk := 0
-					sb.Append("-")
+					sb.AppendString("-")
 				}
 			}
 			i += 2

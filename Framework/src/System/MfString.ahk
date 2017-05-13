@@ -1387,7 +1387,29 @@ Class MfString extends MfPrimitive
 		}
 		return retval
 	}
-; End:Format(str, args*);}	
+; End:Format(str, args*);}
+;{ 	GetEnumerator()
+/*
+		Method: GetEnumerator()
+			Gets and enumerator for string
+		Parameters:
+			AsCharCode
+				Optional; Default is false.
+				If True then string is enumerated as CharCodes; Otherwise string is enumerated as chars
+		Remarks:
+			Returns an enumerator that iterates through a string.  
+		Returns:
+			Returns an enumerator that iterates through a string.
+*/
+	GetEnumerator(AsCharCode:=false) {
+		AsCharCode := MfBool.GetValue(AsCharCode, False)
+		if (AsCharCode)
+		{
+			return this._NewEnumCharCode()
+		}
+		return this._NewEnum()
+	}
+; End:GetEnumerator() ;}
 ;{	GetHashCode()
 /*
 	GetHashCode()
@@ -4160,6 +4182,31 @@ Class MfString extends MfPrimitive
 ; 	End:UnEscape ;}
 ; End:Methods ;}
 ;{ Internal Methods
+;{ 	_NewEnum
+/*
+	Method: _NewEnum()
+
+	_NewEnum()
+		Default enumerator
+	Returns:
+		Returns an enumerator that enumerates each char of the current MfString Instance
+*/
+	_NewEnum() {
+		mStr := this._GetMStr()
+		mView := mStr.m_MemView
+		return new MfMemStrView.Enumerator(mView, true)
+	}
+; 	End:_NewEnum ;}
+;{ 	_NewEnumCharCode
+	; private method
+	; gets an enumerator that enum string as charcodes
+	; used with GetEnumerator(AsCharCode:=false)
+	_NewEnumCharCode() {
+		mStr := this._GetMStr()
+		mView := mStr.m_MemView
+		return new MfMemStrView.Enumerator(mView, false)
+	}
+; 	End:_NewEnumCharCode ;}
 ;{ 	compare
 	_CompareSISII(strA, indexA, strB, indexB, length) {
 		bIgnoreCase := new MfBool()

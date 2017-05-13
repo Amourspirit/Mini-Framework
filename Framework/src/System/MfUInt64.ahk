@@ -242,106 +242,13 @@ Class MfUInt64 extends MfPrimitive
 		
 	}
 ; End:CompareTo(c) ;}
-;{ ConvertFromInt64
-	ConvertFromInt64(value, ReturnAsObject = false) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-
-		if (MfObject.IsObjInstance(value, MfInt64))
-		{
-			_value := value
-		}
-		Else
-		{
-			_value := new MfInt64(MfInt64.GetValue(value))
-		}
-		
-		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-
-		nibs := MfNibConverter.GetNibbles(_value)
-		uint := MfNibConverter.ToUInt64(nibs, ,true)
-		
-		if (_ReturnAsObject)
-		{
-			return uint
-		}
-		else
-		{
-			return uint.Value
-		}
-	}
-; End:ConvertFromInt64 ;}
-;{ CastToInt64
-	CastToInt64(ReturnAsObject = false) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		
-		if ((this.GreaterThenOrEqual("0")) && (this.LessThenOrEqual(MfInt64.MaxValue)))
-		{
-			_val := this.Value + 0
-			if (_ReturnAsObject)
-			{
-
-				return new MfInt64(_val)
-			}
-			else
-			{
-				return _val
-			}
-		}
-
-		nibs := MfNibConverter.GetNibbles(this)
-		int := MfNibConverter.ToInt64(nibs, ,true)
-		
-		;
-		if (_ReturnAsObject)
-		{
-			return int
-		}
-		else
-		{
-			return int.Value
-		}
-	}
-; End:CastToInt64 ;}
-;{ CastToInt32
-	CastToInt32(ReturnAsObject = false) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		
-		if ((this.GreaterThenOrEqual("0")) && (this.LessThenOrEqual(MfInteger.MaxValue)))
-		{
-			_val := this.Value + 0
-			if (_ReturnAsObject)
-			{
-
-				return new MfInteger(_val)
-			}
-			else
-			{
-				return _val
-			}
-		}
-
-		nibs := MfNibConverter.GetNibbles(this)
-		;IsNeg := (MfNibConverter.IsNegative(nibs)
-		int := MfNibConverter.ToInt32(nibs,31 ,true)
-		
-		
-		if (_ReturnAsObject)
-		{
-			return int
-		}
-		else
-		{
-			return int.Value
-		}
-	}
-; End:CastToInt32 ;}
+;{ 	Clone
 	Clone() {
 		uint := new MfUInt64(0)
 		uint.m_bigx := this.m_bigx.Clone()
 		return uint
 	}
+; 	End:Clone ;}
 ;{ 	Divide
 	Divide(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -402,10 +309,10 @@ Class MfUInt64 extends MfPrimitive
 		Throws MfNullReferenceException if object is not an instance.
 */
 	GetHashCode() {
-		i := this.CastToInt32()
+		i := MfCast.ToInt32(this, false)
 		uint := this.Clone()
 		uint.BitShiftRight(32)
-		iShift := uint.CastToInt32()
+		iShift := MfCast.ToInt32(uint, false)
 		return i ^ iShift
 	}
 ; End:GetHashCode() ;}
@@ -1281,12 +1188,12 @@ Class MfUInt64 extends MfPrimitive
 	Remarks:
 		Constant Property
 		Can be accessed using MfUInt64.MaxValue
-		Value = "18446744073709551615" (0x1999999999999999) hex
+		Value = "18446744073709551615" (0xFFFFFFFFFFFFFFFF) hex
 */
 	MaxValue[]
 	{
 		get {
-			return "18446744073709551615"   ;  0x1999999999999999
+			return "18446744073709551615"   ;  0xFFFFFFFFFFFFFFFF
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))

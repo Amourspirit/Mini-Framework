@@ -182,6 +182,14 @@ class MfByteConverter extends MfObject
 				}
 				return MfByteConverter._GetBytesInt(0, 8, true)
 			}
+			else if (MfObject.IsObjInstance(obj, MfByte))
+			{
+				return MfByteConverter._GetBytesInt(obj.CharCode, 8)
+			}
+			else if (MfObject.IsObjInstance(obj, MfSByte))
+			{
+				return MfByteConverter._GetBytesInt(obj.CharCode, 8)
+			}
 			else if (MfObject.IsObjInstance(obj, MfChar))
 			{
 				return MfByteConverter._GetBytesInt(obj.CharCode, 16)
@@ -796,7 +804,7 @@ class MfByteConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if(nibbles.Count < 1)
+		if(bytes.Count < 1)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -831,6 +839,20 @@ class MfByteConverter extends MfObject
 
 	}
 ; 	End:ToByte ;}
+;{ 	ToSByte
+	ToSByte(bytes, startIndex:=0, ReturnAsObj:=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+		byte := MfByteConverter.ToByte(bytes,startIndex,false)
+		retval := MfConvert._ByteToSByte(byte)
+		if (_ReturnAsObj)
+		{
+			return new MfSByte(retval)
+		}
+		return retval
+
+	}
+; 	End:ToSByte ;}
 ;{ ToChar
 	ToChar(bytes, startIndex = 0, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)

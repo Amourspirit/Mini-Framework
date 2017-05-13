@@ -182,6 +182,13 @@ class MfStringBuilder extends MfObject
 		throw e
 	}
 ; 	End:Append ;}
+;{ 	AppendString
+	AppendString(str) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		this._AppendString(str)
+		return this
+	}
+; 	End:AppendString ;}
 ;{ 	AppendFormatted
 	; append a formatted string See MfString.Format()
 	AppendFormatted(str, args*) {

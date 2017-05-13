@@ -7477,9 +7477,10 @@ class MfMemStrView extends MfMemBlkView
 		m_index := 0
 		m_count := 0
 		m_address := ""
-		
-        __new(ByRef ParentClass) {
+		m_ToChar := ""
+        __new(ByRef ParentClass, ToChar:=False) {
             this.m_Parent := ParentClass
+            this.m_toChar := ToChar
             if (this.m_Parent.Pos > 0)
             {
             	this.m_count := (this.m_Parent.Pos - this.m_Parent.m_BytesPerChar) // this.m_Parent.m_BytesPerChar
@@ -7496,7 +7497,15 @@ class MfMemStrView extends MfMemBlkView
 			if (this.m_index < this.m_count) {
 				key := this.m_index
 				i := key * this.m_Parent.m_BytesPerChar
-				value := NumGet(this.m_address + 0, i, this.m_Parent.m_sType)
+				_value := NumGet(this.m_address + 0, i, this.m_Parent.m_sType)
+				If (this.m_ToChar)
+				{
+					value := chr(_value)
+				}
+				else
+				{
+					value := _value
+				}
 			}
 			this.m_index++
 			if (this.m_index > (this.m_count)) {

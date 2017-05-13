@@ -265,6 +265,10 @@ class MfBinaryConverter extends MfObject
 		{
 			return MfBinaryConverter._GetBytesInt(obj.Value, 8)
 		}
+		else if (MfObject.IsObjInstance(obj, MfSByte))
+		{
+			return MfBinaryConverter._GetBytesInt(obj.Value, 8)
+		}
 		else if (MfObject.IsObjInstance(obj, MfInt16))
 		{
 			return MfBinaryConverter._GetBytesInt(obj.Value, 16)
@@ -946,7 +950,7 @@ class MfBinaryConverter extends MfObject
 	}
 ; 	End:ToBool ;}
 ;{ 	ToByte
-	ToByte(bits, startIndex=-1, ReturnAsObj=false) {
+	ToByte(bits, startIndex:=-1, ReturnAsObj:=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if(MfObject.IsObjInstance(bits, MfBinaryList) = false)
 		{
@@ -1028,6 +1032,20 @@ class MfBinaryConverter extends MfObject
 
 	}
 ; 	End:ToByte ;}
+	ToSByte(bits, startIndex:=-1, ReturnAsObj:=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		Byte := MfBinaryConverter.ToByte(bits, startIndex, false)
+		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
+
+		retval := MfConvert._ByteToSByte(byte)
+		if (_ReturnAsObj)
+		{
+			return new MfSByte(retval)
+		}
+
+		return retval
+
+	}
 ;{ ToComplement1
 	ToComplement1(bList) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
