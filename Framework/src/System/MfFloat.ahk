@@ -79,98 +79,46 @@ Class MfFloat extends MfPrimitive
 		Throws MfNotSupportedException if incorrect type of parameters or incorrect number of parameters.
 
 */
-	__New(args*) {
+	__New(flt:=0.0, retunAsObj:=false, readonly:=false, format:="") {
 		; f = 0.0, returnAsObj = false, readonly = fasle, format = "0.6"
 		; Throws MfNotSupportedException if MfFloat Sealed class is extended
 		if (this.__Class != "MfFloat") {
 			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfFloat"))
 		}
-		_f := 0.0
-		_returnAsObject := False
-		_format := ""
-		_readonly := false
-
-		pArgs := this._ConstructorParams(A_ThisFunc, args*)
-
-		pList := pArgs.ToStringList()
-		s := Null
-		pIndex := 0
-		if (pList.Count > 0)
+		if (IsObject(flt))
 		{
-			s := pList.Item[pIndex].Value
-			if (s = "MfFloat")
+			if (!MfObject.IsObjInstance(flt, MfFloat))
 			{
-				; use m_Value field of MfFloat here to avoid
-				; formating issues with SetFromat
-				_f := pArgs.Item[pIndex].m_Value
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "flt", "MfFloat"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-
+			_f := f.Value
 		}
-		if (pList.Count > 1)
+		else
 		{
-			pIndex++
-			s := pList.Item[1].Value
-			if (s = "MfBool")
+			if (flt := "")
 			{
-				_returnAsObject := pArgs.Item[1].Value
+				ex := new MfArgumentNullException(flt)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-		}
-		if (pList.Count > 2)
-		{
-			pIndex++
-			s := pList.Item[pIndex].Value
-			if (s = "MfBool")
-			{
-				_readonly := pArgs.Item[pIndex].Value
-			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
-		}
-		if (pList.Count > 3)
-		{
-			pIndex++
-			s := pList.Item[pIndex].Value
-			if (s = "MfString")
-			{
-				_format := pArgs.Item[pIndex].Value
-			}
-			else
-			{
-				tErr := this._ErrorCheckParameter(pIndex, pArgs)
-				if (tErr)
-				{
-					tErr.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					Throw tErr
-				}
-			}
+			_f := flt
 		}
 		
-		wasformat := A_FormatFloat
+		_returnAsObject := MfBool.GetValue(retunAsObj, false)
+		if (format = "")
+		{
+			_format := ""
+		}
+		else
+		{
+			_format := MfString.GetValue(format)	
+		}
+		
+		_readonly := MfBool.GetValue(readonly, false)
+	
+		;wasformat := A_FormatFloat
 		try {
 			;Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, _format)
 			;_f += 0.0
@@ -195,157 +143,11 @@ Class MfFloat extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		finally
-		{
-			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
-		}
+		; finally
+		; {
+		; 	Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wasformat)
+		; }
 		this.m_isInherited := this.__Class != "MfFloat"
-	}
-	; internale metod _ConstructorParams
-	_ConstructorParams(MethodName, args*) {
-
-		p := Null
-		cnt := MfParams.GetArgCount(args*)
-
-	
-		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
-		{
-			p := args[1] ; arg 1 is a MfParams object so we will use it
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (p.Count > 4)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-		}
-		else
-		{
-
-			p := new MfParams()
-			p.AllowEmptyString := false ; no strings for parameters in this case
-			p.AllowOnlyAhkObj := false
-			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
-
-			;p.AddInteger(0)
-			;return p
-			
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (cnt > 4)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-			
-			i := 1
-			while i <= cnt
-			{
-				arg := args[i]
-				try
-				{
-					if (IsObject(arg))
-					{
-						if (i = 2 || i = 3) ; boolean params
-						{
-							T := new MfType(arg)
-							if (T.IsNumber)
-							{
-								; convert all mf number object to boolean
-								b := new MfBool()
-								b.Value := arg.Value > 0
-								p.Add(b)
-							}
-							else
-							{
-								p.Add(arg)
-							}
-						}
-						Else
-						{
-							p.Add(arg)
-						}
-						
-					} 
-					else
-					{
-						if (MfNull.IsNull(arg))
-						{
-							pIndex := p.Add(arg)
-						}
-						else if (i = 1) ; float
-						{
-
-							; cannot construct an instacne of MfFloat here with parameters
-							; we are already calling from the constructor
-							; create a new instance without parameters and set the properties
-							if (Mfunc.IsNumeric(arg))
-							{
-								; if there is a format we need it here or have to figure another way
-								; default format of 0.6 will drop higher percision
-								
-								_val := new MfFLoat()
-								_val.ReturnAsObject := false
-
-								if (Mfunc.IsFloat(arg))
-								{
-									_val.m_Value := arg
-								}
-								else
-								{
-									
-								;_val.Value := arg + 0.0
-									if (cnt >= 4)
-									{
-										_fmt := MfFloat._GetFormatFromArg(args[4])
-										if (!MfNull.IsNull(_fmt))
-										{
-											_val.Format := _fmt
-										}
-									}
-									_val.m_Value := MfFloat._GetFmtValue(arg, _val.Format)
-								
-								}
-								pIndex := p.Add(_val)
-							}
-							Else
-							{
-								ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToNumber"), e)
-								ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-								throw ex
-							}
-							
-						}
-						else if (i = 4) ; format
-						{
-							StringFormat := new MfString()
-							StringFormat.ReturnAsObject := false
-							StringFormat.Value := arg
-							p.Add(StringFormat)
-						}
-						else ; all params past 1 are boolean
-						{
-							b := new MfBool()
-							b.ReturnAsObject := false
-							b.Value := arg > 0
-							pIndex := p.Add(b)
-						}
-					}
-				}
-				catch e
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				i++
-			}
-			
-		}
-		;return new MfParams()
-		return p
 	}
 ; End:Constructor ;}
 ;{ Methods
@@ -745,7 +547,7 @@ Class MfFloat extends MfPrimitive
 			The value to return if Obj is Cannot be converted
 			Can be any type that matches IsNumber or var of float.
 		AlowAny
-			Determines if Default can be a value other then flaot. If true Default can be any var, Object or null; Otherwise Default must be a float value.
+			Determines if Default can be a value other then float. If true Default can be any var, Object or null; Otherwise Default must be a float value.
 	Remarks
 		Static Method.
 		If AllowAny is true then Default can be any value including var, object or null.
