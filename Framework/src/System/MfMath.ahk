@@ -80,6 +80,15 @@ class MfMath extends MfObject
 			}
 		}
 		
+		if (MfObject.IsObjInstance(obj, MfSByte))
+		{
+			if (obj.Value > 0)
+			{
+				return _ReturnAsObject = true?obj:obj.Value
+			}
+			i := MfMath._AbsHelperSByte(obj.Value)
+			return _ReturnAsObject = true?new MfSByte(i, obj.ReturnAsObject):i
+		}
 		if (MfObject.IsObjInstance(obj, MfInt16))
 		{
 			if (obj.Value > 0)
@@ -175,7 +184,7 @@ class MfMath extends MfObject
 			if (MfObject.IsObjInstance(obj, MfFloat))
 			{
 				frmt := obj.Format
-				SetFormat, Floatfast, %frmt%
+				Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, frmt)
 				isObj := true
 				value := obj.Value
 			}
@@ -205,7 +214,7 @@ class MfMath extends MfObject
 		}
 		Finally
 		{
-			SetFormat, Floatfast, %wf%
+			Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wf)
 		}
 	}
 ;{ 	Ceiling
@@ -213,8 +222,11 @@ class MfMath extends MfObject
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		if (IsObject(obj) = false)
-		{
+		if (!IsObject(obj))
+			if (Mfunc.IsFloat(obj)) {
+				flt := new MfFloat(obj)
+				return MfMath.Ceiling(flt, _ReturnAsObject)
+			}
 			if(Mfunc.IsInteger(obj))
 			{
 				if (_ReturnAsObject)
@@ -223,10 +235,7 @@ class MfMath extends MfObject
 				}
 				return obj
 			}
-			if (Mfunc.IsFloat(obj)) {
-				flt := new MfFloat(obj)
-				return MfMath.Ceiling(flt, _ReturnAsObject)
-			}
+			
 		}
 		if (MfObject.IsObjInstance(obj, MfFloat))
 		{
@@ -258,6 +267,7 @@ class MfMath extends MfObject
 ; 	End:Ceiling ;}
 ;{ 	DivRem
 	; if a and b are big ints then returns big int
+	; if a and b are of integer objects then result must be the same object type
 	DivRem(a, b, byref result) {
 		if (MfNull.IsNull(a))
 		{
@@ -305,6 +315,21 @@ class MfMath extends MfObject
 			r := new MfInteger()
 			q := new MfInteger()
 		}
+		else if (MfObject.IsObjInstance(a, MfUInt32) && MfObject.IsObjInstance(b, MfUInt32))
+		{
+			IsInAhkRange := true
+			if (IsObj)
+			{
+				if (MfObject.IsObjInstance(result, MfUInt32) = False)
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "result", "MfUInt32"), "result")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			r := new MfUInt32()
+			q := new MfUInt32()
+		}
 		else if (MfObject.IsObjInstance(a, MfInt16) && MfObject.IsObjInstance(b, MfInt16))
 		{
 			IsInAhkRange := true
@@ -319,6 +344,21 @@ class MfMath extends MfObject
 			}
 			r := new MfInt16()
 			q := new MfInt16()
+		}
+		else if (MfObject.IsObjInstance(a, MfUInt16) && MfObject.IsObjInstance(b, MfUInt16))
+		{
+			IsInAhkRange := true
+			if (IsObj)
+			{
+				if (MfObject.IsObjInstance(result, MfUInt16) = False)
+				{
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "result", "MfUInt16"), "result")
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			r := new MfUInt16()
+			q := new MfUInt16()
 		}
 		else if (MfObject.IsObjInstance(a, MfBigInt) && MfObject.IsObjInstance(b, MfBigInt))
 		{
@@ -1090,9 +1130,9 @@ class MfMath extends MfObject
 		return p
 	}
 ; 	End:_RoundParams ;}
-;{ 	_AbsHelperByte
-	_AbsHelperByte(value) {
-		if (value = -128)
+;{ 	_AbsHelperSByte
+	_AbsHelperSByte(value) {
+		if (value = MfSByte.MinValue)
 		{
 			ex := new  MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_NegateTwosCompNum"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1100,7 +1140,7 @@ class MfMath extends MfObject
 		}
 		return -value
 	}
-; 	End:_AbsHelperByte ;}
+; 	End:_AbsHelperSByte ;}
 ;{ 	_AbsHelperInt16
 	_AbsHelperInt16(value) {
 		if (value = MfInt16.MinValue)

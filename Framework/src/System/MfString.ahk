@@ -53,8 +53,11 @@ Class MfString extends MfPrimitive
 				str
 					The MfString object or var containing MfFloat to create a new instance with.
 				returnAsObj
-					Determines if the current instance of MfString class will return MfString instances from functions or vars contaning strings.
+					Optional; Determines if the current instance of MfString class will return MfString instances from functions or vars contaning strings.
 					If omitted value is false
+				readonly
+					Optional. Determins if the current instance of MfString class will allow it value to be change after the instance is created.
+					If ommited value is false
 		Throws
 			Throws MfNullReferenceException if str is object but not set to an instance.
 			Throws MfNotSupportedException if str is object but not derived from MfPrimitive.
@@ -63,7 +66,7 @@ Class MfString extends MfPrimitive
 			MfString instance will contain a value of MfString.Empty if str is omitted.
 			Sealed Class
 */
-	__New(args*) {
+	__New(str:="", returnAsObj:=false, readonly:=false) {
 		; str = "", returnAsObj = false, readonly = false
 		; Throws MfNotSupportedException if MfString Sealed class is extended
 		if (this.__Class != "MfString") {
@@ -71,45 +74,47 @@ Class MfString extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		;this.TypeCode := MfString.TypeCode
-		_returnAsObject := false
-		val := MfString.Empty
-		_readonly := false
-
-		pArgs := this._ConstructorParams(A_ThisFunc, args*)
-
-		pList := pArgs.ToStringList()
-		s := Null
-		if (pList.Count > 0)
+		getLen := true
+		if (IsObject(str))
 		{
-			s := pList.Item[0].Value
-			if (s = "MfString")
+			if (MfObject.IsObjInstance(str, MfString))
 			{
-				val := pArgs.Item[0].Value
+				val := str.Value
+				this.m_length := str.m_length
+				getLen := false
 			}
-
-		}
-		if (pList.Count > 1)
-		{
-			s := pList.Item[1].Value
-			if (s = "MfBool")
+			else If (!MfObject.IsMfObject(str))
 			{
-				_returnAsObject := pArgs.Item[1].Value
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NonMfObjectException_Param", "str"), "str")
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-		}
-		if (pList.Count > 2)
-		{
-			s := pList.Item[2].Value
-			if (s = "MfBool")
+			else If (MfObject.IsObjInstance(str, "StringBuilder"))
 			{
-				_readonly := pArgs.Item[2].Value
+				val := str.ToString()
+				this.m_length := str.Length
+				getLen := false
+			}
+			else
+			{
+				val := str.ToString()	
 			}
 		}
+		else
+		{
+			val := str
+		}
+
+		_returnAsObject := MfBool.GetValue(returnAsObj, false)
+		_readonly := MfBool.GetValue(readonly, false)
+
+		
 		
 		Base.__New(val, _returnAsObject, _readonly)
-		this.m_isInherited := this.__Class != "MfString"
-		this.m_length := StrLen(this.m_value)
-
+		if (getLen)
+		{
+			this.m_length := StrLen(this.m_value)	
+		}
 		; MfGlobalOptions.StringObeyCaseSense is truned off by default and thus IngnoreCase is true by default
 		; no matter the state of A_StringCaseSense
 		if ((MfGlobalOptions._HasFlag(MfGlobalOptions.StringObeyCaseSense.Value))
@@ -117,94 +122,8 @@ Class MfString extends MfPrimitive
 		{
 			this.m_IgnoreCase := false
 		}
-		this.m_isInherited := this.base.__Class != "MfString" ; Do not override this property in derrived classes
+		this.m_isInherited := false
 		this._ResetPtr() ; set the memory address of the string value
-	}
-
-	_ConstructorParams(MethodName, args*) {
-
-		p := Null
-		cnt := MfParams.GetArgCount(args*)
-
-	
-		if ((cnt > 0) && MfObject.IsObjInstance(args[1], MfParams))
-		{
-			p := args[1] ; arg 1 is a MfParams object so we will use it
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (p.Count > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-		}
-		else
-		{
-
-			p := new MfParams()
-			p.AllowEmptyString := false ; no strings for parameters in this case
-			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
-			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
-
-			;p.AddInteger(0)
-			;return p
-			
-			; can be up to five parameters
-			; Two parameters is not a possibility
-			if (cnt > 3)
-			{
-				e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-				e.SetProp(A_LineFile, A_LineNumber, MethodName)
-				throw e
-			}
-			
-			i := 1
-			while i <= cnt
-			{
-				arg := args[i]
-				try
-				{
-					if (IsObject(arg))
-					{
-						p.Add(arg)
-					} 
-					else
-					{
-						if (MfNull.IsNull(arg))
-						{
-							pIndex := p.Add(arg)
-						}
-						else if (i = 1) ; string
-						{
-
-							; cannot construct an instacne of MfString here with parameters
-							; we are already calling from the constructor
-							; create a new instance without parameters and set the properties
-							_val := new MfString()
-							_val.ReturnAsObject := false
-							_val.Value := arg
-							pIndex := p.Add(_val)
-							
-						}
-						else ; all params past 1 are boolean
-						{
-							pIndex := p.AddBool(arg)
-						}
-					}
-				}
-				catch e
-				{
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Error_on_nth", i), e)
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				i++
-			}
-			
-		}
-		;return new MfParams()
-		return p
 	}
 ; End:Constructor ;}
 ;{ Methods

@@ -815,7 +815,9 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:Is ;}
 ;{ 	ToString - Overrides MfObject
-	ToString(startIndex=0, length=-1) {
+	ToString(AsStringObj:=false, startIndex:=0, length:=-1) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		
 		currentLength := this.Length
 		if (currentLength = 0)
 		{
@@ -823,6 +825,7 @@ class MfStringBuilder extends MfObject
 		}
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		length := MfInteger.GetValue(length, -1)
+		AsStringObj := MfBool.GetValue(AsStringObj, false)
 		
 		if (length < 0)
 		{
@@ -939,11 +942,26 @@ class MfStringBuilder extends MfObject
 			{
 				ms2 := ms.GetStringIgnoreNull()
 			}
+			if (AsStringObj)
+			{
+				str := new MfString(ms2.ToString(), true)
+				return str
+			}
 			return ms2.ToString()
 		}
 		if (DoSub)
 		{
+			if (AsStringObj)
+			{
+				str := new MfString(ms.ToString(startIndex, Length), true)
+				return str
+			}
 			return ms.ToString(startIndex, Length)
+		}
+		if (AsStringObj)
+		{
+			str := new MfString(ms.ToString(), true)
+			return str
 		}
 		return ms.ToString()
 	}
