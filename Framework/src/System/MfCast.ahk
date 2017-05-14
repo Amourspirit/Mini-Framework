@@ -386,4 +386,55 @@ class MfCast extends MfObject
 		throw ex
 	}
 ; 	End:ToUInt64 ;}
+;{ 	ToFloat
+	ToFloat(obj, ReturnAsObject:=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			flt := MfFloat.Parse(format("{:i}",_intResult))
+			if (ReturnAsObject)
+			{
+				return flt
+			}
+			return flt.Value
+		}
+		if (MfObject.IsObjInstance(obj, MfUInt64))
+		{
+
+			flt := MfFloat.Parse(obj.ToString())
+			if (ReturnAsObject)
+			{
+				return flt
+			}
+			return flt.Value
+		}
+		else
+		{
+			try
+			{
+				bigInt := MfBigInt.Parse(obj)
+				if (bigInt.LessThenOrEqual(MfUInt64.MaxValue))
+				{
+					flt := MfFloat.Parse(bigInt.ToString())
+					if (ReturnAsObject)
+					{
+						return flt
+					}
+					return flt.Value
+				}
+			}
+			catch e
+			{
+				ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToFloat"), e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+		}
+		ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToFloat"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:ToFloat ;}
 }

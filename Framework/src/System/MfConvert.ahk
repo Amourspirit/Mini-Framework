@@ -18,7 +18,7 @@ class MfConvert extends MfObject
 {
 ;{ Methods
 ;{ 	ToBoolean
-	ToBoolean(obj, ReturnAsObject = false) {
+	ToBoolean(obj, ReturnAsObject:=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		ObjCheck := MfConvert._IsNotMfObj(obj)
 		if (ObjCheck)
@@ -27,7 +27,15 @@ class MfConvert extends MfObject
 			throw ObjCheck
 		}
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_ReturnAsObject)
+			{
+				return new MfBool(_intResult > 0, true)
+			}
+			return _intResult > 0
+		}
 		
 		T := new MfType(obj)
 		if (T.IsIntegerNumber)
@@ -71,7 +79,7 @@ class MfConvert extends MfObject
 	}
 ; 	End:ToBoolean ;}
 ;{ 	ToByte
-	ToByte(obj, ReturnAsObject = false) {
+	ToByte(obj, ReturnAsObject:=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		ObjCheck := MfConvert._IsNotMfObj(obj)
 		if (ObjCheck)
@@ -80,7 +88,21 @@ class MfConvert extends MfObject
 			throw ObjCheck
 		}
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < 0 || _intResult > 255)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Byte"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfByte(_intResult > 0, true)
+			}
+			return _intResult
+		}
 		
 		T := new MfType(obj)
 		if (T.IsIntegerNumber)
@@ -141,6 +163,91 @@ class MfConvert extends MfObject
 		throw ex
 	}
 ; 	End:ToByte ;}
+;{ 	ToSByte
+	ToSByte(obj, ReturnAsObject = false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ObjCheck := MfConvert._IsNotMfObj(obj)
+		if (ObjCheck)
+		{
+			ObjCheck.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ObjCheck
+		}
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < MfSByte.MinValue || _intResult > MfSByte.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_SByte"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfSByte(_intResult > 0, true)
+			}
+			return _intResult
+		}
+		
+		T := new MfType(obj)
+		if (T.IsIntegerNumber)
+		{
+			if ((obj.Value < MfSByte.MinValue) || (obj.Value > MfSByte.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_SByte"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			return MfConvert._RetrunAsObjSByte(obj.Value, _ReturnAsObject)
+
+		}
+		else if (t.IsFloat)
+		{
+			return MfConvert.ToSByte(MfConvert.ToInt32(obj, true), _ReturnAsObject)
+		}
+		else if (t.IsBoolean)
+		{
+			if (obj.Value = true)
+			{
+				return MfConvert._RetrunAsObjSByte(1, _ReturnAsObject)
+			}
+			return MfConvert._RetrunAsObjSByte(0, _ReturnAsObject)
+		}
+		else if (t.IsUInt64)
+		{
+			if ((obj.LessThen(MfSByte.MinValue)) || (obj.GreaterThen(MfSByte.MaxValue)))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_SByte"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			return MfConvert._RetrunAsObjSByte(obj.Value + 0, _ReturnAsObject)
+		}
+		else if (t.IsBigInt)
+		{
+			if ((obj.LessThen(MfSByte.MinValue)) || (obj.GreaterThen(MfSByte.MaxValue)))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_SByte"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			return MfConvert._RetrunAsObjSByte(obj.Value + 0, _ReturnAsObject)
+		}
+		else if (t.IsString)
+		{
+			if (MfString.IsNullOrEmpty(obj))
+			{
+				return MfConvert._RetrunAsObjSByte(0, _ReturnAsObject)
+			}
+			Val := MfSByte.Parse(obj.Value)
+			return MfConvert._RetrunAsObjSByte(Val, _ReturnAsObject)
+		}
+
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:ToSByte ;}
 	ToChar(obj, ReturnAsObject = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		ObjCheck := MfConvert._IsNotMfObj(obj)
@@ -150,73 +257,6 @@ class MfConvert extends MfObject
 			throw ObjCheck
 		}
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		if (MfObject.IsObjInstance(obj, MfByte))
-		{
-			value := new MfChar()
-			value.CharCode := obj.Value
-			if (_ReturnAsObject)
-			{
-				return value
-			}
-			return value.Value
-		}
-		if (MfObject.IsObjInstance(obj, MfChar))
-		{
-			if (_ReturnAsObject)
-			{
-				return obj
-			}
-			return obj.Value
-		}
-		
-		if (MfObject.IsObjInstance(obj, MfInt16))
-		{
-			if (obj.Value < 0)
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Char"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			value := new MfChar()
-			value.CharCode := obj.Value
-			if (_ReturnAsObject)
-			{
-				return value
-			}
-			return value.Value
-		}
-		if (MfObject.IsObjInstance(obj, MfInteger) || MfObject.IsObjInstance(obj, MfInt64))
-		{
-			if (obj.Value < 0 || obj.Value > 65535)
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Char"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			value := new MfChar()
-			value.CharCode := obj.Value
-			if (_ReturnAsObject)
-			{
-				return value
-			}
-			return value.Value
-		}
-		if (MfObject.IsObjInstance(obj, MfUInt64) || MfObject.IsObjInstance(obj, MfBigInt))
-		{
-			if (obj.LessThen(0)  || obj.GreaterThen(65535))
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Char"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			value := new MfChar()
-			value.CharCode := obj.Value + 0
-			if (_ReturnAsObject)
-			{
-				return value
-			}
-			return value.Value
-		}
 		if (MfObject.IsObjInstance(obj, MfString))
 		{
 			if (obj.Length != 1)
@@ -225,13 +265,99 @@ class MfConvert extends MfObject
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			value := new MfChar(obj.Value)
+			value := new MfChar(obj.Value, true)
 			if (_ReturnAsObject)
 			{
 				return value
 			}
 			return value.Value
 		}
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < MfByte.MinValue || _intResult > MfChar.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Byte"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfChar(new MfInteger(_intResult), true)
+			}
+			return _intResult
+		}
+		if (MfObject.IsObjInstance(obj, MfByte))
+		{
+			value := new MfChar()
+			value.CharCode := obj.Value
+			if (_ReturnAsObject)
+			{
+				return new MfChar(new MfInteger(value.Value), true)
+			}
+			return value.Value
+		}
+		if (MfObject.IsObjInstance(obj, MfChar))
+		{
+			if (_ReturnAsObject)
+			{
+				return new MfChar(obj.Value, true)
+			}
+			return obj.Value
+		}
+		
+		if (MfObject.IsObjInstance(obj, MfInt16))
+		{
+			if (obj.Value < MfChar.MinValue || obj.Value > MfChar.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Char"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			value := new MfChar()
+			value.CharCode := obj.Value
+			value.ReturnAsObject := true
+			if (_ReturnAsObject)
+			{
+				return value
+			}
+			return value.Value
+		}
+		if (MfObject.IsObjInstance(obj, MfInteger) || MfObject.IsObjInstance(obj, MfInt64))
+		{
+			if (obj.Value < MfChar.MinValue || obj.Value > MfChar.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Char"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			value := new MfChar()
+			value.CharCode := obj.Value
+			value.ReturnAsObject := true
+			if (_ReturnAsObject)
+			{
+				return value
+			}
+			return value.Value
+		}
+		if (MfObject.IsObjInstance(obj, MfUInt64) || MfObject.IsObjInstance(obj, MfBigInt))
+		{
+			if (obj.LessThen(MfChar.MinValue)  || obj.GreaterThen(MfChar.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Char"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			value := new MfChar()
+			value.CharCode := obj.Value + 0
+			value.ReturnAsObject := true
+			if (_ReturnAsObject)
+			{
+				return value
+			}
+			return value.Value
+		}
+		
 		if (MfObject.IsObjInstance(obj, MfBool) = true)
 		{
 			ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_FromTo", "Boolean", "Char"))
@@ -250,7 +376,7 @@ class MfConvert extends MfObject
 
 	}
 ;{ 	ToInt16
-	ToInt16(obj, ReturnAsObject = false) {
+	ToInt16(obj, ReturnAsObject:=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		ObjCheck := MfConvert._IsNotMfObj(obj)
 		if (ObjCheck)
@@ -259,13 +385,32 @@ class MfConvert extends MfObject
 			throw ObjCheck
 		}
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			return MfConvert.ToInt16(MfConvert.ToInt32(obj, true), _ReturnAsObject)
+		}
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < MfInt16.MinValue || _intResult > MfInt16.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfInt16(_intResult, true)
+			}
+			return _intResult
+		}
 		
 		T := new MfType(obj)
 		if (T.IsIntegerNumber)
 		{
 			if ((obj.Value < MfInt16.MinValue) || (obj.Value > MfInt16.MaxValue))
 			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -273,14 +418,9 @@ class MfConvert extends MfObject
 			{
 				return obj.Value
 			}
-			return new MfInt16(obj.Value)
+			return new MfInt16(obj.Value, true)
 			
 
-		}
-		else if (t.IsFloat)
-		{
-			int32 := MfConvert.ToInt32(obj, true)
-			return MfConvert.ToInt16(int32, ReturnAsObject)
 		}
 		else if (t.IsBoolean)
 		{
@@ -291,7 +431,7 @@ class MfConvert extends MfObject
 			}
 			if (_ReturnAsObject)
 			{
-				return new MfInt16(i)
+				return new MfInt16(i, true)
 			}
 			return i
 		}
@@ -299,7 +439,7 @@ class MfConvert extends MfObject
 		{
 			if (obj.GreaterThen(MfInt16.MaxValue))
 			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -307,13 +447,13 @@ class MfConvert extends MfObject
 			{
 				return obj.Value + 0
 			}
-			return new MfInt16(obj.Value + 0)
+			return new MfInt16(obj.Value + 0, true)
 		}
 		else if (t.IsBigInt)
 		{
 			if (obj.LessThen(MfInt16.MinValue) || obj.GreaterThen(MfInt16.MaxValue))
 			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -321,7 +461,7 @@ class MfConvert extends MfObject
 			{
 				return obj.Value + 0
 			}
-			return new MfInt16(obj.Value + 0)
+			return new MfInt16(obj.Value + 0, true)
 		}
 		else if (t.IsString)
 		{
@@ -342,6 +482,113 @@ class MfConvert extends MfObject
 		throw ex
 	}
 ; 	End:ToInt16 ;}
+;{ 	ToUInt16
+	ToUInt16(obj, ReturnAsObject:=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ObjCheck := MfConvert._IsNotMfObj(obj)
+		if (ObjCheck)
+		{
+			ObjCheck.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ObjCheck
+		}
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			return MfConvert.ToUInt16(MfConvert.ToInt32(obj, true), _ReturnAsObject)
+		}
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < MfUInt16.MinValue || _intResult > MfUInt16.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt16"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfUInt16(_intResult, true)
+			}
+			return _intResult
+		}
+		
+		T := new MfType(obj)
+		if (T.IsIntegerNumber)
+		{
+			if ((obj.Value < MfUInt16.MinValue) || (obj.Value > MfUInt16.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt16"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject = false)
+			{
+				return obj.Value
+			}
+			return new MfUInt16(obj.Value, true)
+			
+
+		}
+		else if (t.IsBoolean)
+		{
+			i := 0
+			if (obj.Value = true)
+			{
+				i := 1
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfUInt16(i, true)
+			}
+			return i
+		}
+		else if (t.IsUInt64)
+		{
+			if (obj.GreaterThen(MfUInt16.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt16"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject = false)
+			{
+				return obj.Value + 0
+			}
+			return new MfUInt16(obj.Value + 0, true)
+		}
+		else if (t.IsBigInt)
+		{
+			if (obj.LessThen(MfUInt16.MinValue) || obj.GreaterThen(MfUInt16.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt16"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject = false)
+			{
+				return obj.Value + 0
+			}
+			return new MfUInt16(obj.Value + 0, true)
+		}
+		else if (t.IsString)
+		{
+			if (MfString.IsNullOrEmpty(obj))
+			{
+				return MfConvert._RetrunAsObjInt32(false, _ReturnAsObject)
+			}
+			i := MfUInt16.Parse(obj)
+			if (_ReturnAsObject = false)
+			{
+				return i.Value 
+			}
+			return i
+		}
+		
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:ToUInt16 ;}
 ;{ 	ToInt32
 	ToInt32(obj, ReturnAsObject = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -352,20 +599,7 @@ class MfConvert extends MfObject
 			throw ObjCheck
 		}
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		
-		T := new MfType(obj)
-		if (T.IsIntegerNumber)
-		{
-			if ((obj.Value < MfInteger.MinValue) || (obj.Value > MfInteger.MaxValue))
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			return MfConvert._RetrunAsObjInt32(obj.Value, _ReturnAsObject)
-
-		}
-		else if (t.IsFloat)
+		if (MfObject.IsObjInstance(obj, MfFloat))
 		{
 			tFloat := new MfFloat(obj.Value,,,obj.Format)
 			if (tFloat.GreaterThenOrEqual(0.0))
@@ -394,6 +628,34 @@ class MfConvert extends MfObject
 			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
+		}
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < MfInteger.MinValue || _intResult > MfInteger.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfInteger(_intResult, true)
+			}
+			return _intResult
+		}
+		
+		T := new MfType(obj)
+		if (T.IsIntegerNumber)
+		{
+			if ((obj.Value < MfInteger.MinValue) || (obj.Value > MfInteger.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			return MfConvert._RetrunAsObjInt32(obj.Value, _ReturnAsObject)
+
 		}
 		else if (t.IsBoolean)
 		{
@@ -448,6 +710,125 @@ class MfConvert extends MfObject
 		throw ex
 	}
 ; 	End:ToInt32 ;}
+;{ 	ToUInt32
+	ToUInt32(obj, ReturnAsObject:=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ObjCheck := MfConvert._IsNotMfObj(obj)
+		if (ObjCheck)
+		{
+			ObjCheck.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ObjCheck
+		}
+		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			tFloat := new MfFloat(obj.Value,,,obj.Format)
+			if (tFloat.GreaterThenOrEqual(0.5) && tFloat.LessThen(4294967295.5))
+			{
+				i := MfCast.ToUInt32(tFloat, false)
+				tFloat.Subtract(i)
+				if ( tFloat.GreaterThen(0.5) || ((tFloat.Equals(0.5)) && (i & 1) != 0))
+				{
+					i++
+				}
+				return MfConvert._RetrunAsObjUInt32(i, _ReturnAsObject)
+			}
+			
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < MfUInt32.MinValue || _intResult > MfUInt32.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfUInt32(_intResult, true)
+			}
+			return _intResult
+		}
+		
+		T := new MfType(obj)
+		if (T.IsIntegerNumber)
+		{
+			if ((obj.Value < MfUInt32.MinValue) || (obj.Value > MfUInt32.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject = false)
+			{
+				return obj.Value
+			}
+			return new MfUInt32(obj.Value, true)
+		}
+		else if (t.IsBoolean)
+		{
+			i := 0
+			if (obj.Value = true)
+			{
+				i := 1
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfUInt32(i)
+			}
+			return i
+		}
+		else if (t.IsUInt64)
+		{
+			if (obj.GreaterThen(MfUInt32.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject = false)
+			{
+				return obj.Value + 0
+			}
+			return new MfUInt32(obj.Value + 0)
+		}
+		else if (t.IsBigInt)
+		{
+			if (obj.LessThen(MfUInt32.MinValue) || obj.GreaterThen(MfUInt32.MaxValue))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt32"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject = false)
+			{
+				return obj.Value + 0
+			}
+			return new MfUInt32(obj.Value + 0)
+		}
+		else if (t.IsString)
+		{
+			if (MfString.IsNullOrEmpty(obj))
+			{
+				return MfConvert._RetrunAsObjInt32(false, _ReturnAsObject)
+			}
+			i := MfUInt32.Parse(obj)
+			if (_ReturnAsObject = false)
+			{
+				return i.Value 
+			}
+			return i
+		}
+		
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:ToUInt32 ;}
 ;{ ToInt64
 	ToInt64(obj, ReturnAsObject = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -458,7 +839,24 @@ class MfConvert extends MfObject
 			throw ObjCheck
 		}
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		
+		if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			i := MfCast.ToInt64(MfMath.Round(obj), false)
+			if (_ReturnAsObject)
+			{
+				return new MfInt64(i, true)
+			}
+			return i
+		}
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_ReturnAsObject)
+			{
+				return new MfInt64(_intResult, true)
+			}
+			return _intResult
+		}
 		T := new MfType(obj)
 		if (T.IsIntegerNumber)
 		{
@@ -470,29 +868,6 @@ class MfConvert extends MfObject
 			}
 			return MfConvert._RetrunAsObjInt64(obj.Value, _ReturnAsObject)
 
-		}
-		else if (t.IsFloat)
-		{
-			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, obj.Format)
-			try
-			{
-				int := MfConvert._FloatToInt64(obj.Value)
-				if (_ReturnAsObject)
-				{
-					return new new MfInt64(int, true)
-				}
-			}
-			catch e
-			{
-				throw e
-			}
-			finally
-			{
-				 Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, wf)
-			}
-			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int64"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
 		}
 		else if (t.IsBoolean)
 		{
@@ -554,7 +929,36 @@ class MfConvert extends MfObject
 			throw ObjCheck
 		}
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
-		
+		if (MfObject.IsObjInstance(obj, MfFloat))
+		{
+			i := MfCast.ToInt64(MfMath.Round(obj), false)
+			if (i < 0)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfUInt64(i, true)
+			}
+			return i
+		}
+		_intResult := MfInt64.GetValue(obj,"NaN", true)
+		if (!(_intResult = "NaN"))
+		{
+			if (_intResult < MfUInt64.MinValue || _intResult > MfUInt64.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt64"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (_ReturnAsObject)
+			{
+				return new MfUInt32(_intResult, true)
+			}
+			return _intResult
+		}
 		T := new MfType(obj)
 		if (T.IsIntegerNumber)
 		{
@@ -571,21 +975,6 @@ class MfConvert extends MfObject
 			return new MfUInt64(obj)
 
 		}
-		else if (t.IsFloat)
-		{
-			int64 := MfConvert.ToInt64(obj, true)
-			if ((int64.Value < 0))
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt64"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			if (_ReturnAsObject = false)
-			{
-				return int64.Value
-			}
-			return new MfUInt64(int64)
-		}
 		else if (t.IsBoolean)
 		{
 			i := 0
@@ -595,21 +984,17 @@ class MfConvert extends MfObject
 			}
 			if (_ReturnAsObject)
 			{
-				return new MfUInt64(i)
+				return new MfUInt64(i, true)
 			}
 			return i
 		}
 		else if (t.IsUInt64)
 		{
-			if (obj.GreaterThen(MfInt64.MaxValue))
-			{
-				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_UInt64"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
 			if (_ReturnAsObject)
 			{
-				return obj
+				retval := obj.Clone
+				retval.ReturnAsObject := true
+				return retval
 			}
 			return := obj.Value
 		}
@@ -623,7 +1008,7 @@ class MfConvert extends MfObject
 			}
 			if (_ReturnAsObject)
 			{
-				return new MfUInt64(obj)
+				return new MfUInt64(obj, true)
 			}
 			return obj.Value
 		}
@@ -670,7 +1055,7 @@ class MfConvert extends MfObject
 	_RetrunAsObjBool(Value, AsObj) {
 		if (AsObj)
 		{
-			return new MfBool(Value)
+			return new MfBool(Value, true)
 		}
 		return Value
 	}
@@ -679,16 +1064,30 @@ class MfConvert extends MfObject
 	_RetrunAsObjByte(Value, AsObj) {
 		if (AsObj)
 		{
-			return new MfByte(Value)
+			return new MfByte(Value, true)
 		}
 		return Value
 	}
 ; 	End:_RetrunAsObjByte ;}
+	_RetrunAsObjSByte(Value, AsObj) {
+		if (AsObj)
+		{
+			return new MfSByte(Value, true)
+		}
+		return Value
+	}
 ;{ 	_RetrunAsObjInt32
 	_RetrunAsObjInt32(Value, AsObj) {
 		if (AsObj)
 		{
-			return new MfInteger(Value)
+			return new MfInteger(Value, true)
+		}
+		return Value
+	}
+	_RetrunAsObjUInt32(Value, AsObj) {
+		if (AsObj)
+		{
+			return new MfUInt32(Value, true)
 		}
 		return Value
 	}
@@ -706,7 +1105,7 @@ class MfConvert extends MfObject
 	_RetrunAsObjUInt64(Value, AsObj) {
 		if (AsObj)
 		{
-			return new MfUInt64(Value)
+			return new MfUInt64(Value, true)
 		}
 		return Value
 	}
@@ -798,6 +1197,7 @@ class MfConvert extends MfObject
 		VarSetCapacity(Var, 0) 
 		return retval
 	}
+	
 	;{ _DoubleToInt64()
 /*
 	Method: _DoubleToInt64()
