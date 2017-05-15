@@ -1253,7 +1253,7 @@ Class MfString extends MfPrimitive
 						if (iIndexCount = len - 2)
 						{
 							; simple find and replace in the format of {0}
-							placeholder := "{" . sIndex . "}"
+							placeholder := "{" . format("{:i}", sIndex) . "}"
 							replacement := aLst.Item[sIndex]
 							retval := Mfunc.StringReplace(retval, placeholder, replacement, 1) ; replace all
 							searchStart := FoundPos + StrLen(replacement)
@@ -3908,6 +3908,10 @@ Class MfString extends MfPrimitive
 	TrimEnd(trimChars = "")	{
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.m_length = 0)
+		{
+			return this._ReturnString(this)
+		}
 		if (MfNull.IsNull(trimChars)) {
 			;this.Value := this._TrimHelperA(2)
 			; considerable faster then previous line 10 x faster on some test
@@ -3989,6 +3993,10 @@ Class MfString extends MfPrimitive
 	TrimStart(trimChars = "") {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.m_length = 0)
+		{
+			return this._ReturnString(this)
+		}
 		if (MfNull.IsNull(trimChars)) {
 			;this.Value := this._TrimHelperA(2)
 			; considerable faster then previous line 10 x faster on some test

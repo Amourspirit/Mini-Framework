@@ -1080,17 +1080,6 @@ class MfMemoryString extends MfObject
 		Returns new instance of MfMemoryString containing the value of x
 */
 	FromAny(x, encoding="") {
-		if(MfString.IsNullOrEmpty(encoding))
-		{
-			If (A_IsUnicode)
-			{
-				encoding := "UTF-16"
-			}
-			else
-			{
-				encoding := "cp1252"
-			}
-		}
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		return MfMemoryString._FromAnyStatic(x, encoding)
 	}
@@ -2330,6 +2319,10 @@ class MfMemoryString extends MfObject
 		{
 			if(MfObject.IsObjInstance(x, MfMemoryString))
 			{
+				if (MfString.IsNullOrEmpty(encoding))
+				{
+					return x
+				}
 				if (!(x.m_Encoding = encoding))
 				{
 					return MfMemoryString._FromAnyStatic(x.ToString(), encoding)
@@ -2338,6 +2331,21 @@ class MfMemoryString extends MfObject
 			}
 			else if (MfObject.IsObjInstance(x, "StringBuilder"))
 			{
+				if(MfString.IsNullOrEmpty(encoding))
+				{
+					If (A_IsUnicode)
+					{
+						encoding := "UTF-16"
+					}
+					else
+					{
+						encoding := "cp1252"
+					}
+				}
+				else
+				{
+					return x._ToMemoryString()
+				}
 				if (!(x.m_Encoding = encoding))
 				{
 					return MfMemoryString._FromAnyStatic(x.ToString(), encoding)
@@ -2346,6 +2354,17 @@ class MfMemoryString extends MfObject
 			}
 			else if (MfObject.IsObjInstance(x, MfString))
 			{
+				if(MfString.IsNullOrEmpty(encoding))
+				{
+					If (A_IsUnicode)
+					{
+						encoding := "UTF-16"
+					}
+					else
+					{
+						encoding := "cp1252"
+					}
+				}
 				retval := new MfMemoryString(x.Length, , encoding)
 				if (x.Length > 0)
 				{
@@ -2363,6 +2382,17 @@ class MfMemoryString extends MfObject
 			}
 			else if (MfObject.IsObjInstance(x, MfObject))
 			{
+				if(MfString.IsNullOrEmpty(encoding))
+				{
+					If (A_IsUnicode)
+					{
+						encoding := "UTF-16"
+					}
+					else
+					{
+						encoding := "cp1252"
+					}
+				}
 				str := x.ToString()
 				len := StrLen(str)
 				retval := new MfMemoryString(len, , encoding)
@@ -2382,7 +2412,29 @@ class MfMemoryString extends MfObject
 			}
 			else
 			{
+				if(MfString.IsNullOrEmpty(encoding))
+				{
+					If (A_IsUnicode)
+					{
+						encoding := "UTF-16"
+					}
+					else
+					{
+						encoding := "cp1252"
+					}
+				}
 				return new MfMemoryString(0, , encoding)
+			}
+		}
+		if(MfString.IsNullOrEmpty(encoding))
+		{
+			If (A_IsUnicode)
+			{
+				encoding := "UTF-16"
+			}
+			else
+			{
+				encoding := "cp1252"
 			}
 		}
 		if (x = "")
@@ -6131,9 +6183,9 @@ class MfMemStrView extends MfMemBlkView
 
 			DllCall("RtlMoveMemory", "Ptr", DestPtr + 0, "Ptr", &tmp, "UChar", count)
 
-			; str := StrGet(&tmp, ,destinationMemView.m_Encoding)
-			; str2 := StrGet(destinationMemView[], ,destinationMemView.m_Encoding)
-			; str3 := StrGet(DestPtr + 0, ,destinationMemView.m_Encoding)
+			;~ str := StrGet(&tmp, ,destinationMemView.m_Encoding)
+			;~ str2 := StrGet(destinationMemView[], ,destinationMemView.m_Encoding)
+			;~ str3 := StrGet(DestPtr + 0, ,destinationMemView.m_Encoding)
 			
 			VarSetCapacity(tmp, 0)
 			if (destinationIndex + count > PI)
@@ -6275,9 +6327,23 @@ class MfMemStrView extends MfMemBlkView
 		}
 		if (Length < 0)
 		{
+			; length is the number of characters that need to be copied and shifted right
+			; Get the current length of the string which is pos
+			; next subtract then start index from the length ( length = Pos - startIndex) this is the number of positions that must be moved right
+			; if length is greater then size the throw an error
 			;Length := PI - BytesPerChar - StartIndex - ShiftAmt
-			Length := PI - StartIndex
-			Length -=  ShiftAmt
+			Length := PI - StartIndex ; StartIndex gives us the insert point
+			Length -= BytesPerChar ; remove bytes per char as startIndex is zero based
+			;~ if (Length > this.Size)
+			;~ {
+				;~ Length := Length - BytesPerChar
+			;~ }
+			if (Length > this.Size)
+			{
+				ex := new MfIndexOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_SmallCapacity"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
 		}
 		
 		if (ShiftAmt < 0)
@@ -6287,7 +6353,7 @@ class MfMemStrView extends MfMemBlkView
 			throw ex
 		}
 		
-		InsertEnd := StartIndex + ShiftAmt + Length
+		InsertEnd := (PI - BytesPerChar) + ShiftAmt ; StartIndex + ShiftAmt + Length
 		lengthRemainder :=  (PI - BytesPerChar) - InsertEnd
 			
 		if (InsertEnd > this.Size)
@@ -6301,8 +6367,8 @@ class MfMemStrView extends MfMemBlkView
 		destPtr := sourcePtr + ShiftAmt
 
 		; Make Room for the new Insert
-		SourcePtr := this[] + startIndex
 		; CopyFromAddress will copy the memory from startPos and slide then right
+		; copyFromAddress(SourceAddress, DestinationMemView, DestinationIndex, Count)
 		MfMemStrView.CopyFromAddress(SourcePtr, this, startIndex + ShiftAmt, Length)
 		
 		
@@ -7684,8 +7750,9 @@ class MfMemBlkView
 			if (arg ~= "i)^UTF-?(8|16|32)|CP\d+$")
 			{
 				if InStr(enc := arg, "UTF")
-					args[i] := enc := "UTF-" . Abs(SubStr(enc, 4)) ; normalizes if it contains a dash
+					args[i] := enc := "UTF-" . format("{:i}", Abs(SubStr(enc, 4))) ; normalizes if it contains a dash Format is necessary when 'SetFormat, IntegerFast, H' is active
 				break
+				
 			}
 		}
 		static ObjRemoveAt := Func(A_AhkVersion<"2" ? "ObjRemove" : "ObjRemoveAt")

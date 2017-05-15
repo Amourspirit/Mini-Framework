@@ -268,6 +268,107 @@ class MfByteConverter extends MfObject
 		throw ex
 	}
 ; End:GetBytes ;}
+;{ 	GetHexChars
+/*
+	Method: GetHexChars()
+
+	GetHexChars()
+		Gets a string of only HexChars from input.
+		All non hex chars are ignored only 0-9 A-F are returned
+	Parameters:
+		hexInput
+			The input containing the hex string
+			Can be var or any supported MfObject including MfString, StringBuilder, MfCharList and MfByteList
+		ReturnAsObj
+			Optional. Default is false
+			If true then instance of MfString is returned otherwise false
+	Returns:
+		Returns var string of hex chars
+		Returns empty string if hexInput has no valid hex chars
+	Remarks:
+		Static Method
+		If hexInput is Instance of MfMemoryString then instance of MfMemoryString is returned,
+		even if ReturnAsObj is true
+*/
+	GetHexChars(hexInput, ReturnAsObj:=false) {
+		ReturnAsObj := MfBool.GetValue(ReturnAsObj, true)
+		returnString := true
+		if (MfObject.IsObjInstance(hexInput, MfMemoryString))
+		{
+			returnString := false
+		}
+		mStr := MfMemoryString.FromAny(hexInput)
+		if (mStr.Length = 0)
+		{
+			if (returnString)
+			{
+				return ReturnAsObj? new MfString("", true) : ""
+			}
+			return MfMemoryString.FromAny("")
+		}
+		
+		mStr.TrimStart()
+		skip := 0
+		if (mStr.StartsWith("0x", false) = true)
+		{
+			Skip := 2
+		}
+		else if (mStr.StartsWith("-0x", false) = true)
+		{
+			Skip := 3
+		}
+		else if (mStr.StartsWith("+0x", false) = true)
+		{
+			Skip := 3
+		}
+		sb := new MfText.StringBuilder()
+		; HasLeadingChar  will only be true when the first non-zero value char is added
+		; this avoids having to trim leading zero's later
+		HasLeadingChar := false
+		for i, c in mStr
+		{
+			If (i < skip)
+			{
+				Continue
+			}
+			if (c >= 97 && c <= 102)
+			{
+				HasLeadingChar := true
+				sb._AppendCharCode(c - 32) ; make uppercase
+			}
+			else if (c >= 65 && c <= 70)
+			{
+				HasLeadingChar := true
+				sb._AppendCharCode(c) ; make uppercase
+			}
+			else if (c >= 48 && c <= 57)
+			{
+				if (HasLeadingChar = true || c > 48)
+				{
+					HasLeadingChar := true
+					sb._AppendCharCode(c) ; make uppercase
+				}
+				
+			}
+		}
+		; add one zero if thre are no chars
+		if (HasLeadingChar = false)
+		{
+			if (returnString)
+			{
+				return ReturnAsObj? new MfString("", true) : ""
+			}
+			return MfMemoryString.FromAny("")
+			;sb._AppendCharCode(48)
+		}
+
+		if (returnString)
+		{
+			return sb.ToString(ReturnAsObj)
+		}
+		return MfMemoryString.FromAny(sb)
+	}
+; 	End:GetHexChars ;}
 	_DoubleToHex(d) {
 		form := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "H")
 		v := DllCall("ntdll.dll\RtlLargeIntegerShiftLeft",Double,d, UChar,0, Int64)
@@ -501,6 +602,171 @@ class MfByteConverter extends MfObject
 		return MfNibConverter.ToByteList(Nibbles)
 	}
 ; 	End:FromHex ;}
+;{ 	HexStringComplements16
+/*
+	Method: HexStringComplements16()
+
+	HexStringComplements16()
+		Gets Complements16 hex string from input str
+	Parameters:
+		str
+			string var or of MfString or hex number containing the hex value
+		ReturnPureHex
+			Optional, Default is False
+			If True then all non hex chars are dropped and leading zeros are dropped from the output including 0x
+	Returns:
+		Returns String var of hex in that represents the complements16 version of the str input
+	Remarks:
+		Static method
+*/
+	HexStringComplements16(str, ReturnPureHex:=false) {
+		_str := MfString.GetValue(str)
+		len := StrLen(_str)
+		if (len = 0)
+		{
+			return ""
+		}
+		ReturnPureHex := MfBool.GetValue(ReturnPureHex, false)
+		mStr := new MFMemoryString(len + 2,,"UTF-8")
+		mStr.Append(_str)
+		Skip := 0
+		if (mStr.StartsWith("0x", false) = true)
+		{
+			Skip := 2
+		}
+		else if (mStr.StartsWith("-0x", false) = true)
+		{
+			;mStr.CharCode[0] := 43 ; +
+			mStr.Remove(0,1)
+			len--
+			Skip := 2
+			MfByteConverter._HexToUpperCaseMStr(mstr, Skip)
+			if (ReturnPureHex)
+			{
+				mStr := MfByteConverter.GetHexChars(mStr)
+			}
+			return mStr.ToString()
+			;Skip := 2
+		}
+		else if (mStr.StartsWith("+0x", false) = true)
+		{
+			mStr.Remove(0,1)
+			Skip := 2
+			len--
+		}
+		For i, c in mStr
+		{
+			If (i < Skip)
+			{
+				continue
+			}
+			if ((c >= 48 && c <= 57) || (c >= 65 && c <= 70) || (c >= 97 && c <= 102))
+			{
+				info := MfNibConverter.CharHexBitTable[c]
+				mStr.CharCode[i] := info.HexFlip
+			}
+		}
+		mStr.CharPos := len
+		MfByteConverter._AddOneToHexString(mStr,,skip)
+		if (ReturnPureHex)
+		{
+			mStr := MfByteConverter.GetHexChars(mStr)
+		}
+		return mStr.ToString()
+
+	}
+;{ 	HexStringComplements16
+;{ 	HexStringComplements15
+/*
+	Method: HexStringComplements15()
+
+	HexStringComplements15()
+		Gets HexStringComplements15 hex string from input str
+	Parameters:
+		str
+			string var or of MfString or hex number containing the hex value
+		ReturnPureHex
+			Optional, Default is False
+			If True then all non hex chars are dropped and leading zeros are dropped from the output including 0x
+	Returns:
+		Returns String var of hex in that represents the complements16 version of the str input
+	Remarks:
+		Static method
+*/
+	HexStringComplements15(str, ReturnPureHex:=false) {
+		_str := MfString.GetValue(str)
+		len := StrLen(_str)
+		if (len = 0)
+		{
+			return ""
+		}
+		ReturnPureHex := MfBool.GetValue(ReturnPureHex, false)
+		mStr := new MFMemoryString(len + 2,,"UTF-8")
+		mStr.Append(_str)
+		Skip := 0
+		if (mStr.StartsWith("0x", false) = true)
+		{
+			Skip := 2
+		}
+		else if (mStr.StartsWith("-0x", false) = true)
+		{
+			; negative hex is already complements 16 so remove one
+			mStr.Remove(0,1)
+			len--
+			Skip := 2
+			MfByteConverter._RemovOneFromHexString(mStr,,skip)
+			if (ReturnPureHex)
+			{
+				mStr := MfByteConverter.GetHexChars(mStr)
+			}
+			return mStr.ToString()
+			
+		}
+		else if (mStr.StartsWith("+0x", false) = true)
+		{
+			mStr.Remove(0,1)
+			Skip := 2
+			len--
+		}
+		else if (mStr.StartsWith("-", false) = true)
+		{
+			; negative hex is already complements 16 so remove one
+			mStr.Remove(0,1)
+			len--
+			Skip := 0
+			MfByteConverter._RemovOneFromHexString(mStr,,skip)
+			if (ReturnPureHex)
+			{
+				mStr := MfByteConverter.GetHexChars(mStr)
+			}
+			return mStr.ToString()
+		}
+		else if (mStr.StartsWith("+", false) = true)
+		{
+			mStr.Remove(0,1)
+			Skip := 0
+			len--
+		}
+		For i, c in mStr
+		{
+			If (i < Skip)
+			{
+				continue
+			}
+			if ((c >= 48 && c <= 57) || (c >= 65 && c <= 70) || (c >= 97 && c <= 102))
+			{
+				info := MfNibConverter.CharHexBitTable[c]
+				mStr.CharCode[i] := info.HexFlip
+			}
+		}
+		mStr.CharPos := len
+		if (ReturnPureHex)
+		{
+			mStr := MfByteConverter.GetHexChars(mStr)
+		}
+		return mStr.ToString()
+	}
+; 	End:HexStringComplements15 ;}
 ;{ 	FlipHexString
 /*
 	Method: FlipHexString()
@@ -526,19 +792,27 @@ class MfByteConverter extends MfObject
 		{
 			return ""
 		}
-		mStr := new MFMemoryString(len,,"UTF-8")
+		mStr := new MFMemoryString(len + 2,,"UTF-8")
 		mStr.Append(_str)
 		Skip := 0
 		if (mStr.StartsWith("0x", false) = true)
 		{
-			Skip := 2
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.Insert(0,"-")
+			Skip := 3
 		}
 		else if (mStr.StartsWith("-0x", false) = true)
 		{
-			Skip := 3
+			;mStr.CharCode[0] := 43 ; +
+			mStr.Remove(0,1)
+			Skip := 2
 		}
 		else if (mStr.StartsWith("+0x", false) = true)
 		{
+			mStr.CharCode[0] := 45 ; -
 			Skip := 3
 		}
 		For i, c in mStr
@@ -556,6 +830,324 @@ class MfByteConverter extends MfObject
 		mStr.CharPos := len
 		return mStr.ToString()
 	}
+;{ 	_AddOneToHexString
+/*
+	Method: _AddOneToHexString()
+
+	_AddOneToHexString()
+		Adds value of 1 to a hex string no mater the length of the hex string
+	Parameters:
+		hexObj
+			The var, MfString, MfMemoryString that contains hex values
+			hex can be in most any format such as -0x00ff or 0xff0a or ffaaff or ff-aa-ff
+		AddToHex
+			Optional, Default is false.
+			If True then when adding 1 would  result in a longer string then value will be added
+			This is useful for working with specific byte lengths for instance
+				AddToHex = false
+					0x00 will become 0xFF
+				AddTohex = true
+					0x00 will become 0xFFF
+		skip
+			Optional, Defatul is -1 which will cause method to figure the value out automatically.
+			This is the number of leading chars to ignore and is generaly used to ignore 0x and -0x
+	Returns:
+		If hexObj is instance of MfMemoryString then null value is returned; Otherwise string var is returned
+
+	Remarks:
+		Static method
+		Internal Method
+		All a-f chars are converted to uppercase
+		This method if fast due to it working on a a charcode level
+*/
+	_AddOneToHexString(hexObj, AddToHex:=false, skip=-1) {
+		returnString := true
+		if (MfObject.IsObjInstance(hexObj, MfMemoryString))
+		{
+			returnString := false
+		}
+		mStr := MfMemoryString.FromAny(hexObj)
+		i := mStr.Length - 1
+		if (skip < 0)
+		{
+			Skip := 0
+			if (mStr.Length > 1)
+			{
+				if (mStr.StartsWith("0x", false) = true)
+				{
+					Skip := 2
+				}
+				else if (mStr.StartsWith("-0x", false) = true)
+				{
+					Skip := 3
+				}
+				else if (mStr.StartsWith("+0x", false) = true)
+				{
+					Skip := 3
+				}
+			}
+			
+		}
+		if (i < skip)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.AppendCharCode(49)
+			return returnString ? mStr.ToString() : ""
+		}
+
+		; convert all a-f to A-F for easiser adding of one
+		MfByteConverter._HexToUpperCaseMStr(mstr, skip)
+
+		if (i = skip) {
+			c := mStr.CharCode[i]
+			if (c = 70)
+			{
+				; can't add already F
+				; F becomes 10
+				 mStr.CharCode[i] := 49 ; 1
+				 if (mStr.FreeCharCapacity = 0)
+				 {
+				 	mStr.Expand(2)
+				 }
+				 mstr.AppendCharCode(48) ; 0
+			}
+			else if (c = 57)
+			{
+				; 9 covert to a
+				mStr.CharCode[i] := 65 ; A
+			}
+			else if (c >= 48 && c <= 56)
+			{
+				mStr.CharCode[i] := c + 1
+			}
+			else if (c >= 65 && c <= 69)
+			{
+				mStr.CharCode[i] := c + 1
+			}
+			return returnString ? mStr.ToString() : ""
+		}
+		Added := false
+		While (i >= skip)
+		{
+			c := mStr.CharCode[i]
+			if (c = 70)
+			{
+				; can't add already F
+				; F becomes 0
+				mStr.CharCode[i] := 48 ; 0
+				i--
+				continue
+			}
+			else if (c = 57)
+			{
+				; 9 covert to a
+				mStr.CharCode[i] := 65 ; A
+				Added := true
+				break
+			}
+			else if (c >= 48 && c <= 56)
+			{
+				mStr.CharCode[i] := c + 1
+				Added := true
+				break
+			}
+			else if (c >= 65 && c <= 69)
+			{
+				mStr.CharCode[i] := c + 1
+				Added := true
+				break
+			}
+			i--
+		}
+		if (AddToHex = true && Added = false)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.Insert(skip,"1")
+		}
+		return returnString ? mStr.ToString() : ""
+
+	}
+; 	End:_AddOneToHexString ;}
+;{ _HexToUpperCaseMStr
+/*
+	Method: _HexToUpperCaseMStr()
+
+	_HexToUpperCaseMStr()
+		Converts hex String chars to uppercase
+	Parameters:
+		mStr
+			instance of MfMemoryString
+		skip
+			Optional. The Number of char to skip checking
+	Remarks:
+		Static Method
+		Internal Method
+*/
+	_HexToUpperCaseMStr(mStr, skip:=0) {
+		for i, c in mStr
+		{
+			If (i < Skip)
+			{
+				continue
+			}
+			if (c >= 97 && c <= 102)
+			{
+				mStr.CharCode[i] := c - 32
+			}
+		}
+	}
+; End:_HexToUpperCaseMStr ;}
+
+;{ 	_RemovOneFromHexString
+/*
+	Method: _RemovOneFromHexString()
+
+	_RemovOneFromHexString()
+		Subtracts 1 from a hex string no matter how long the string
+	Parameters:
+		hexObj
+			The var, MfString, MfMemoryString that contains hex values
+			hex can be in most any format such as -0x00ff or 0xff0a or ffaaff or ff-aa-ff
+		AddToHex
+			Optional, Default is false.
+			If True then when subtracting 1 would  result in a longer string then value will be added
+			This is useful for working with specific byte lengths for instance
+				AddToHex = false
+					0xFF will become 0x00
+				AddTohex = true
+					0xFF will become 0x000
+		skip
+			Optional, Defatul is -1 which will cause method to figure the value out automatically.
+			This is the number of leading chars to ignore and is generaly used to ignore 0x and -0x
+	Returns:
+		If hexObj is instance of MfMemoryString then null value is returned; Otherwise string var is returned
+
+	Remarks:
+		Static method
+		Internal Method
+		All a-f chars are converted to uppercase
+		This method if fast due to it working on a a charcode level
+*/
+	_RemovOneFromHexString(hexObj, AddToHex:=false, skip=-1) {
+		returnString := true
+		if (MfObject.IsObjInstance(hexObj, MfMemoryString))
+		{
+			returnString := false
+		}
+		mStr := MfMemoryString.FromAny(hexObj)
+		i := mStr.Length - 1
+		if (skip < 0)
+		{
+			Skip := 0
+			if (mStr.Length > 1)
+			{
+				if (mStr.StartsWith("0x", false) = true)
+				{
+					Skip := 2
+				}
+				else if (mStr.StartsWith("-0x", false) = true)
+				{
+					Skip := 3
+				}
+				else if (mStr.StartsWith("+0x", false) = true)
+				{
+					Skip := 3
+				}
+			}
+			
+		}
+		if (i < skip)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.AppendCharCode(49)
+			return returnString ? mStr.ToString() : ""
+		}
+
+		; convert all a-f to A-F for easiser adding of one
+		MfByteConverter._HexToUpperCaseMStr(mstr, skip)	
+
+		if (i = skip) {
+			c := mStr.CharCode[i]
+			if (c = 48)
+			{
+				; can't remove already 0
+				; 0 becomes FF
+				 mStr.CharCode[i] := 70 ; F
+				 if (mStr.FreeCharCapacity = 0)
+				 {
+				 	mStr.Expand(2)
+				 }
+				 mstr.AppendCharCode(70) ; F
+			}
+			else if (c = 65)
+			{
+				; A covert to 9
+				mStr.CharCode[i] := 57 ; A
+			}
+			else if (c >= 49 && c <= 57)
+			{
+				mStr.CharCode[i] := c - 1
+			}
+			else if (c >= 66 && c <= 70)
+			{
+				mStr.CharCode[i] := c - 1
+			}
+			return returnString ? mStr.ToString() : ""
+		}
+		Subtracted := false
+		While (i >= skip)
+		{
+			c := mStr.CharCode[i]
+			if (c = 48)
+			{
+				; can't remove already 0
+				; 0 becomes F
+				mStr.CharCode[i] := 70 ; F
+				i--
+				continue
+			}
+			else if (c = 65)
+			{
+				; 9 covert to a
+				mStr.CharCode[i] := 57 ; A
+				Subtracted := true
+				break
+			}
+			else if (c >= 49 && c <= 57)
+			{
+				mStr.CharCode[i] := c - 1
+				Subtracted := true
+				break
+			}
+			else if (c >= 66 && c <= 70)
+			{
+				mStr.CharCode[i] := c - 1
+				Subtracted := true
+				break
+			}
+			i--
+		}
+		if (AddToHex = true && Subtracted = false)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.Insert(skip,"F")
+		}
+		return returnString ? mStr.ToString() : ""
+
+	}
+; 	End:_RemovOneFromHexString ;}
 ; 	End:FlipHexString ;}
 	DoubleBitsToInt64(value, ByRef OutInt64) {
 		if (MfNull.IsNull(value))

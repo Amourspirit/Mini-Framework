@@ -239,7 +239,7 @@ class MfBinaryConverter extends MfObject
 		return MfNibConverter.ToBinaryList(Nibbles, true)
 	}
 ; 	End:FromHex ;}
-;{ 	GetBytes
+;{ 	GetBits
 	GetBits(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (!IsObject(obj))
@@ -344,7 +344,239 @@ class MfBinaryConverter extends MfObject
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
-;{ GetBytes
+; 	End:GetBits ;}
+;{ 	GetBinaryChars
+/*
+	Method: GetBinaryChars()
+
+	GetBinaryChars()
+		Gets a string of only Binary chars from input.
+		All non binary chars are ignored only 0-1 are returned
+	Parameters:
+		binInput
+			The input containing the hex string
+			Can be var or any supported MfObject including MfString, StringBuilder, MfCharList and MfByteList
+		ReturnAsObj
+			Optional. Default is false
+			If true then instance of MfString is returned otherwise false
+	Returns:
+		Returns var string  or MfString instance of binary chars
+		Returns empty string or Empty MfString if binInput has no valid hex chars
+		If there valid binary char then will always return a multiple of 4,
+			for intance if binInput is 11 then return will be 0011, input 10001 will return 00010001
+	Remarks:
+		Static Method
+		If binInput is Instance of MfMemoryString then instance of MfMemoryString is returned,
+		even if ReturnAsObj is true
+*/
+	GetBinaryChars(binInput, ReturnAsObj:=false, GroupingCount:=4) {
+		ReturnAsObj := MfBool.GetValue(ReturnAsObj, true)
+		GroupingCount := MfInt16.GetValue(GroupingCount,4)
+		if (GroupingCount < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("GroupingCount", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_GenericPositive"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		returnString := true
+		if (MfObject.IsObjInstance(binInput, MfMemoryString))
+		{
+			returnString := false
+		}
+		mStr := MfMemoryString.FromAny(binInput)
+		if (mStr.Length = 0)
+		{
+			if (returnString)
+			{
+				return ReturnAsObj? new MfString("", true) : ""
+			}
+			return MfMemoryString.FromAny("")
+		}
+		
+		sb := new MfText.StringBuilder(mStr.Length + GroupingCount)
+		; HasLeadingChar  will only be true when the first non-zero value char is added
+		; this avoids having to trim leading zero's later
+		HasLeadingChar := false
+		for i, c in mStr
+		{
+			if (c = 48)
+			{
+				if (HasLeadingChar = true)
+				{
+					sb._AppendCharCode(c)
+				}
+			}
+			else if (c = 49)
+			{
+				HasLeadingChar := true
+				sb._AppendCharCode(c)
+			}
+		}
+		; add one zero if thre are no chars
+		if (HasLeadingChar = false)
+		{
+			;sb._AppendCharCode(48, 4)
+			if (returnString)
+			{
+				return ReturnAsObj? new MfString("", true) : ""
+			}
+			return MfMemoryString.FromAny("")
+		}
+		str := sb.ToString()
+		r := mod(sb.Length, GroupingCount)
+		if (r > 0)
+		{
+			mStr := new MfMemoryString(r)
+			mStr.AppendCharCode(48, GroupingCount - r)
+			sb._InsertObjInt(0, mstr, 1)
+			mStr := ""
+		}
+		str2 := sb.ToString()
+
+		if (returnString)
+		{
+			return sb.ToString(ReturnAsObj)
+		}
+		return MfMemoryString.FromAny(sb)
+	}
+; 	End:GetBinaryChars ;}
+;{ 	BinaryStringToHex
+/*
+	Method: BinaryStringToHex()
+
+	BinaryStringToHex()
+		Converts a binary string to hex values
+	Parameters:
+		str
+			The String to conver from hex to binary.
+			Can be string var or instance of MfString
+		RetrunAsObj
+			Optional; Default is false
+			If true then an instance of MfString is returned containing the hex;
+			Otherwise a string var is returned
+	Returns:
+		Returns If RetrunAsObj is true then instance of MfString; Otherwise string var
+	Remarks:
+		Statice Method
+*/
+	BinaryStringToHex(str, RetrunAsObj:=false) {
+		RetrunAsObj := MfBool.GetValue(RetrunAsObj, False)
+		_str := new MfString(str, true)
+		if (_str.Length = 0)
+		{
+			if (RetrunAsObj)
+			{
+				return new MfString("0", true)
+			}
+			return "0"
+		}
+		_str.Value :=  MfBinaryConverter.GetBinaryChars(_str.Value,,4)
+		if (_str.Length = 0)
+		{
+			if (RetrunAsObj)
+			{
+				return new MfString("0", true)
+			}
+			return "0"
+		}
+		sb := new MfText.StringBuilder(_str.Length // 4)
+		enum := _str.GetEnumerator()
+		iCount = 0
+		while (enum.Next(i, c))
+		{
+			if (iCount = 0)
+			{
+				strbin := ""
+			}
+			strbin .= c
+			iCount++
+			if (iCount = 4)
+			{
+				iCount = 0
+				bInfo := MfBinaryConverter.ByteTable[strBin]
+				sb.AppendString(bInfo.HexValue)
+
+			}
+		}
+		if (sb.Length = 0)
+		{
+			if (RetrunAsObj)
+			{
+				return new MfString("0", true)
+			}
+			return "0"
+		}
+		return sb.ToString(RetrunAsObj)
+	}
+; 	End:BinaryStringToHex ;}
+;{ 	HexToBinaryString
+/*
+	Method: HexToBinaryString()
+
+	HexToBinaryString()
+		Converts a string of Hex into a binary string
+	Parameters:
+		str
+			String containing hex values
+		RetrunAsObj
+			Optinal, default is false
+			If true then an instance of MfString containing the binary values are returned;
+			Otherwise a string var containing binary values are returned
+	Returns:
+		Returns string var or MfString intance containing binay values of str hex values
+	Remarks:
+		If hex value starts with - then complements16 is done before conversion to binary.
+*/
+	HexToBinaryString(str, RetrunAsObj:=false) {
+		RetrunAsObj := MfBool.GetValue(RetrunAsObj, False)
+		_str := new MfString(str, true)
+		_str.TrimStart()
+
+		if (_str.Length = 0)
+		{
+			if (RetrunAsObj)
+			{
+				return new MfString("0000", true)
+			}
+			return "0000"
+		}
+		if(_str.StartsWith("-"))
+		{
+			_str.Value := MfByteConverter.HexStringComplements16(_str, true)
+		}
+		else
+		{
+			_str.Value :=  MfByteConverter.GetHexChars(_str.Value)
+		}
+		if (_str.Length = 0)
+		{
+			if (RetrunAsObj)
+			{
+				return new MfString("0000", true)
+			}
+			return "0000"
+		}
+		sb := new MfText.StringBuilder(_str.Length * 4)
+		enum := _str.GetEnumerator(true)
+		while (enum.Next(i, c))
+		{
+			cInfo := MfNibConverter.CharHexBitTable[c]
+			hexInfo := MfNibConverter.HexBitTable[cInfo.Char]
+			sb.AppendString(hexInfo.Bin)
+		}
+		if (sb.Length = 0)
+		{
+			if (RetrunAsObj)
+			{
+				return new MfString("0000", true)
+			}
+			return "0000"
+		}
+		return sb.ToString(RetrunAsObj)
+	}
+; 	End:HexToBinaryString ;}
+
 	;{ 	NumberComplement
 	; Gets Number Complement 1. Same as C# ~10 (equals -11) or ~60 (equals -61)
 	; If object is passed in then object is same type is passsed out
@@ -430,6 +662,163 @@ class MfBinaryConverter extends MfObject
 		throw ex
 	}
 ; 	End:NumberComplement ;}
+;{ 	BinaryStringComplements1
+/*
+	Method: BinaryStringComplements1()
+
+	BinaryStringComplements1()
+		Gets Complements1 binary string from input str
+	Parameters:
+		str
+			string var or of MfString or hex number containing the hex value
+		ReturnPureHex
+			Optional, Default is False
+			If True then all non binary chars are dropped and leading zeros are dropped from the output.
+	Returns:
+		Returns String var of hex in that represents the complements1 version of the str input
+	Remarks:
+		Static method
+*/
+	BinaryStringComplements1(str, ReturnPureBin:=false) {
+		_str := MfString.GetValue(str)
+		len := StrLen(_str)
+		if (len = 0)
+		{
+			return ""
+		}
+		ReturnPureBin := MfBool.GetValue(ReturnPureBin, false)
+		mStr := new MFMemoryString(len + 2,,"UTF-8")
+		mStr.Append(_str)
+		Skip := 0
+		if (mStr.StartsWith("-", false) = true)
+		{
+			; negative hex is already complements 16 so remove one
+			mStr.Remove(0,1)
+			len--
+			Skip := 0
+			MfByteConverter._RemovOneFromBinString(mStr,,skip)
+			if (ReturnPureBin)
+			{
+				mStr := MfBinaryConverter.GetBinaryChars(mStr)
+
+			}
+			if (mStr.Length = 0)
+			{
+				return "0000"
+			}
+			return mStr.ToString()
+		}
+		else if (mStr.StartsWith("+", false) = true)
+		{
+			mStr.Remove(0,1)
+			Skip := 0
+			len--
+		}
+		For i, c in mStr
+		{
+			If (i < Skip)
+			{
+				continue
+			}
+			if (c = 48)
+			{
+				mStr.CharCode[i] := 49
+			}
+			else if (c = 49)
+			{
+				mStr.CharCode[i] := 48
+			}
+		}
+		mStr.CharPos := len
+		if (ReturnPureBin)
+		{
+			mStr := MfBinaryConverter.GetBinaryChars(mStr)
+		}
+		if (mStr.Length = 0)
+		{
+			return "0000"
+		}
+		return mStr.ToString()
+	}
+; 	End:BinaryStringComplements1 ;}
+;{ 	BinaryStringComplements2
+/*
+	Method: BinaryStringComplements2()
+
+	BinaryStringComplements2()
+		Gets Complements2 binary string from input str
+	Parameters:
+		str
+			string var or of MfString or hex number containing the hex value
+		ReturnPureHex
+			Optional, Default is False
+			If True then all non binary chars are dropped and leading zeros are dropped from the output.
+	Returns:
+		Returns String var of hex in that represents the complements1 version of the str input
+	Remarks:
+		Static method
+*/
+	BinaryStringComplements2(str, ReturnPureBin:=false) {
+		_str := MfString.GetValue(str)
+		len := StrLen(_str)
+		if (len = 0)
+		{
+			return ""
+		}
+		ReturnPureBin := MfBool.GetValue(ReturnPureBin, false)
+		mStr := new MFMemoryString(len + 2,,"UTF-8")
+		mStr.Append(_str)
+		Skip := 0
+		if (mStr.StartsWith("-", false) = true)
+		{
+			; negative hex is already complements 16 so remove one
+			mStr.Remove(0,1)
+			len--
+			Skip := 0
+			if (ReturnPureBin)
+			{
+				mStr := MfBinaryConverter.GetBinaryChars(mStr)
+			}
+			if (mStr.Length = 0)
+			{
+				return "0000"
+			}
+			return mStr.ToString()
+		}
+		else if (mStr.StartsWith("+", false) = true)
+		{
+			mStr.Remove(0,1)
+			Skip := 0
+			len--
+		}
+		For i, c in mStr
+		{
+			If (i < Skip)
+			{
+				continue
+			}
+			if (c = 48)
+			{
+				mStr.CharCode[i] := 49
+			}
+			else if (c = 49)
+			{
+				mStr.CharCode[i] := 48
+			}
+		}
+		mStr.CharPos := len
+		MfBinaryConverter._AddOneToBinString(mStr,,skip)
+		if (ReturnPureBin)
+		{
+			mStr := MfBinaryConverter.GetBinaryChars(mStr)
+		}
+		if (mStr.Length = 0)
+		{
+			return "0000"
+		}
+		return mStr.ToString()
+	}
+; 	End:BinaryStringComplements2 ;}
 ;{ 	Expand
 	; return a copy of x with at least n elements, adding leading zeros if needed
 	Expand(bits, n, UseMsb=true) {
@@ -1757,7 +2146,235 @@ class MfBinaryConverter extends MfObject
 ;{ 	Methods
 
 ;{ Internal Methods
+;{ 	_AddOneToBinString
+/*
+	Method: _AddOneToBinString()
 
+	_AddOneToBinString()
+		Adds 1 to a binary string no matter how long the string
+	Parameters:
+		binObj
+			The var, MfString, MfMemoryString that contains binary values
+			bin can be in most any format such as -0011 or +1101 or 110011 or 00-11-00
+		AddToBin
+			Optional, Default is false.
+			If True then when subtracting 1 would  result in a longer string then value will be added
+			This is useful for working with specific byte lengths for instance
+				AddToBin = false
+					11 will become 00
+				AddToBin = true
+					11 will become 100
+		skip
+			Optional, Defatul is -1 which will cause method to figure the value out automatically.
+			This is the number of leading chars to ignore and is generaly used to ignore - and +
+	Returns:
+		If binObj is instance of MfMemoryString then null value is returned; Otherwise string var is returned
+	Remarks:
+		Static method
+		Internal Method
+		This method if fast due to it working on a a charcode level
+*/
+	_AddOneToBinString(binObj, AddToBin:=false, skip=-1) {
+		returnString := true
+		if (MfObject.IsObjInstance(binObj, MfMemoryString))
+		{
+			returnString := false
+		}
+		mStr := MfMemoryString.FromAny(binObj)
+		i := mStr.Length - 1
+		if (skip < 0)
+		{
+			Skip := 0
+			if (mStr.Length > 0)
+			{
+				if (mStr.StartsWith("-", false) = true)
+				{
+					Skip := 1
+				}
+				else if (mStr.StartsWith("+", false) = true)
+				{
+					Skip := 1
+				}
+				
+			}
+		}
+		if (i < skip)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.AppendCharCode(49)
+			return returnString ? mStr.ToString() : ""
+		}
+
+		if (i = skip) {
+			c := mStr.CharCode[i]
+			if (c = 49)
+			{
+				; can't add already 1
+				; 1 becomes 10
+				 mStr.CharCode[i] := 48 ; 0
+				 if (mStr.FreeCharCapacity = 0)
+				 {
+				 	mStr.Expand(2)
+				 }
+				 mstr.AppendCharCode(48) ; 0
+			}
+			else if (c = 48)
+			{
+				; 0 covert to 1
+				mStr.CharCode[i] := 49 ; 1
+			}
+			return returnString ? mStr.ToString() : ""
+		}
+		Added := false
+		While (i >= skip)
+		{
+			c := mStr.CharCode[i]
+			if (c = 49)
+			{
+				; can't add already 1
+				; 0 becomes 1
+				mStr.CharCode[i] := 48 ; 0
+				i--
+				continue
+			}
+			else if (c = 48)
+			{
+				; 0 covert to 1
+				mStr.CharCode[i] := 49 ; 1
+				Added := true
+				break
+			}
+			i--
+		}
+		if (AddToBin = true && Added = false)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.Insert(skip,"1")
+		}
+		return returnString ? mStr.ToString() : ""
+	}
+; 	End:_AddOneToBinString ;}
+;{ 	_RemovOneFromBinString
+/*
+	Method: _RemovOneFromBinString()
+
+	_RemovOneFromBinString()
+		Subtracts 1 from a binary string no matter how long the string
+	Parameters:
+		binObj
+			The var, MfString, MfMemoryString that contains binary values
+			bin can be in most any format such as -0011 or +1101 or 110011 or 00-11-00
+		AddToBin
+			Optional, Default is false.
+			If True then when subtracting 1 would  result in a longer string then value will be added
+			This is useful for working with specific byte lengths for instance
+				AddToBin = false
+					00 will become 11
+				AddToBin = true
+					00 will become 111
+		skip
+			Optional, Defatul is -1 which will cause method to figure the value out automatically.
+			This is the number of leading chars to ignore and is generaly used to ignore ignore - and +
+	Returns:
+		If binObj is instance of MfMemoryString then null value is returned; Otherwise string var is returned
+	Remarks:
+		Static method
+		Internal Method
+		This method if fast due to it working on a a charcode level
+*/
+	_RemovOneFromBinString(binObj, AddToBin:=false, skip=-1) {
+		returnString := true
+		if (MfObject.IsObjInstance(binObj, MfMemoryString))
+		{
+			returnString := false
+		}
+		mStr := MfMemoryString.FromAny(binObj)
+		i := mStr.Length - 1
+		if (skip < 0)
+		{
+			Skip := 0
+			if (mStr.Length > 0)
+			{
+				if (mStr.StartsWith("-", false) = true)
+				{
+					Skip := 1
+				}
+				else if (mStr.StartsWith("+", false) = true)
+				{
+					Skip := 1
+				}
+				
+			}
+		}
+		if (i < skip)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.AppendCharCode(48)
+			return returnString ? mStr.ToString() : ""
+		}
+
+		if (i = skip) {
+			c := mStr.CharCode[i]
+			if (c = 48)
+			{
+				; can't remove already 0
+				; 0 becomes 11
+				 mStr.CharCode[i] := 49 ; 1
+				 if (mStr.FreeCharCapacity = 0)
+				 {
+				 	mStr.Expand(2)
+				 }
+				 mstr.AppendCharCode(49) ; 1
+			}
+			else if (c = 49)
+			{
+				; 1 covert to 0
+				mStr.CharCode[i] := 48 ; 0
+			}
+			return returnString ? mStr.ToString() : ""
+		}
+		Subtracted := false
+		While (i >= skip)
+		{
+			c := mStr.CharCode[i]
+			if (c = 48)
+			{
+				; can't remove already 0
+				; 0 becomes 1
+				mStr.CharCode[i] := 49 ; 1
+				i--
+				continue
+			}
+			else if (c = 49)
+			{
+				; 1 covert to 0
+				mStr.CharCode[i] := 48 ; 0
+				Subtracted := true
+				break
+			}
+			i--
+		}
+		if (AddToBin = true && Subtracted = false)
+		{
+			if (mStr.FreeCharCapacity = 0)
+			{
+				mStr.Expand(2)
+			}
+			mStr.Insert(skip,"1")
+		}
+		return returnString ? mStr.ToString() : ""
+
+	}
+; 	End:_RemovOneFromHexString ;}
 	_ToBinaryString(bits) {
 		sBinary := new MfText.StringBuilder(bits.Count)
 		i := 1

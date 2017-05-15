@@ -36,10 +36,8 @@ class MfNibConverter extends MfObject
 			}
 		}
 		
-		wf := A_FormatInteger
 		Try
 		{
-			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "d")
 			if (MfObject.IsObjInstance(obj, MfBool))
 			{
 				if (obj.Value = true)
@@ -112,11 +110,6 @@ class MfNibConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		finally
-		{
-			Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
-		}
-			
 
 		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -737,81 +730,28 @@ class MfNibConverter extends MfObject
 ;{ ToInt16
 	ToInt16(nibbles, startIndex = -1, ReturnAsObj = false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if(MfObject.IsObjInstance(nibbles, MfNibbleList) = false)
+		uint := 0
+		try
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List", "nibbles"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
+			uint := MfNibConverter.ToUInt16(nibbles, startIndex, false)
 		}
-		if(nibbles.Count = 0)
+		catch e
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "nibbles"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		nCount := 4 ; Number of nibbles needed for conversion
-		if (nibbles.Count < nCount)
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall", "nibbles"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		MaxStartIndex := nibbles.Count - nCount
-		_startIndex := MfInteger.GetValue(startIndex, -1)
-		if (_startIndex < 0)
-		{
-			_startIndex := MaxStartIndex
+			if (MfObject.IsObjInstance(e, MfOverflowException))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"), e)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			throw e
 		}
 		_ReturnAsObj := MfBool.GetValue(ReturnAsObj, false)
-		if ((_startIndex < 0) || (_startIndex > MaxStartIndex))
-		{
-			ex := new MfArgumentOutOfRangeException("startIndex")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		retval := ""
-		iCount := 0
-		i := _startIndex + 1
-		IsNeg := false
-		inLst := nibbles.m_InnerList
-		while iCount <= nCount
-		{
-			HexKey := MfNibConverter._GetHexValue(inLst[i])
-			if (iCount = 0)
-			{
-				bInfo := MfNibConverter.HexBitTable[HexKey]
-				IsNeg := bInfo.IsNeg
-			}
-			retval .= MfNibConverter._GetHexValue(inLst[i])
-			iCount++
-			i++
-		}
-		if (IsNeg)
-		{
-			negVal := ""
-			Loop, Parse, retval
-			{
-				bInfo := MfNibConverter.HexBitTable[A_LoopField]
-				negVal .= bInfo.HexFlip
-			}
-			retval := "-0x" . negVal
-			retval := retval - 0x1
-		}
-		else
-		{
-			retval := "0x" . retval
-			retval := retval + 0x0
-		}
-		if ((retval < MfInt16.MinValue) || (retval > MfInt16.MaxValue)) {
-			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Int16"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+		int := MfConvert._Int64ToInt16(uint)
 		if (_ReturnAsObj)
 		{
-			return new MfInt16(retval)
+			return new MfInt16(int, true)
 		}
-		return retval
+		return int
 	}
 ; End:ToInt16 ;}
 ;{ 	ToInt32
@@ -838,7 +778,7 @@ class MfNibConverter extends MfObject
 		{
 			return new MfInteger(int, true)
 		}
-		return int		
+		return int
 	}
 ; 	End:ToInt32 ;}
 ;{ 	ToInt64
@@ -1754,18 +1694,20 @@ class MfNibConverter extends MfObject
 		x := 0
 		y := 0
 		
-		While ((x < objA.Count) && (objA.Item[x] = 0))
+		While ((x < objA.m_Count) && (objA.Item[x] = 0))
 		{
 			x++
 		}
-		While ((y < objB.Count) && (objB.Item[y] = 0))
+		While ((y < objB.m_Count) && (objB.Item[y] = 0))
 		{
 			y++
 		}
+		aInLst := objA.m_InnerList
+		bInLst := objB.m_InnerList
 		if (x = 0 && y = 0)
 		{
-			NumA := objA.Item[x]
-			MumB := objB.Item[y]
+			NumA := aInLst[x + 1]
+			MumB := bInLst[y + 1]
 			if (NumA > MumB)
 			{
 				return 1
@@ -1777,8 +1719,8 @@ class MfNibConverter extends MfObject
 			return 0
 		}
 		
-		xOffset := objA.Count - x
-		yOffset := objB.Count - y
+		xOffset := objA.m_Count - x
+		yOffset := objB.m_Count - y
 		if (xOffset > yOffset)
 		{
 			return 1
@@ -1790,10 +1732,10 @@ class MfNibConverter extends MfObject
 		; array non zero index are the same length
 		xOffset := x
 		yOffset := y
-		while yOffset < objB.Count
+		while yOffset < objB.m_Count
 		{
-			NumA := objA.Item[xOffset]
-			MumB := objB.Item[yOffset]
+			NumA := aInLst[xOffset + 1]
+			MumB := bInLst[yOffset + 1]
 			if (NumA > MumB)
 			{
 				return 1
@@ -1813,24 +1755,7 @@ class MfNibConverter extends MfObject
 	; counts from left to right so startIndex it from the end
 	_GetSubList(lst, startIndex, endIndex="") {
 		return lst.SubList(startIndex, endIndex)
-		; _startIndex := MfInteger.GetValue(startIndex, -1)
-		; _endIndex := MfInteger.GetValue(endIndex, 0)
-		; if (_startIndex < 1 && _endIndex = 0)
-		; {
-		; 	return lst
-		; }
-		; if (_endIndex < _startIndex)
-		; {
-		; 	return lst
-		; }
-		; retval := new MfNibbleList()
-		; i := endIndex
-		; while i <= _startIndex
-		; {
-		; 	retval.Add(lst.Item[i])
-		; }
-
-		; return retval
+		
 	}
 ; 	End:_GetSubList ;}
 ;{ 	_FlipNibbles
@@ -1843,7 +1768,7 @@ class MfNibConverter extends MfObject
 			bInfo := MfNibConverter.HexBitTable[Hex]
 			bInfoFlipped := MfNibConverter.HexBitTable[bInfo.HexFlip]
 			
-			nArray.Add(bInfoFlipped.IntValue)
+			nArray._Add(bInfoFlipped.IntValue)
 		}
 		return nArray
 	}
@@ -1861,11 +1786,12 @@ class MfNibConverter extends MfObject
 			x++
 		}
 		dec := new MfList() ; decimal result
-		dec.Add(0)
+		dec._Add(0)
 		i := x
-		while i < nibbles.Count
+		mInLst := nibbles.m_InnerList
+		while i < nibbles.m_Count
 		{
-			n := nibbles.Item[i]
+			n := mInLst[i + 1]
 			carry := n
 			; initially holds decimal value of current hex digit;
 			; subsequently holds carry-over for multiplication
@@ -1874,24 +1800,24 @@ class MfNibConverter extends MfObject
 			{
 				val := (int * 16) + carry
 				valMod := Mod(val, 10)
-				dec.Item[j] := valMod
+				dec.m_InnerList[j + 1] := valMod
 				carry := val // 10
 			}
 			while (carry > 0)
 			{
-				dec.Add(Mod(carry, 10))
+				dec._Add(Mod(carry, 10))
 				carry := carry // 10
 			}
 			i++
 		}
 		i := dec.Count - 1
-		retval := ""
+		sb := new MfText.StringBuilder()
 		while i >= 0
 		{
-			retval .= dec.Item[i]
+			sb.AppendString(dec.m_InnerList[i + 1])
 			i--
 		}
-		return retval
+		return sb.ToString()
 	}
 ; 	End:_HexToDecimal ;}
 ;{ 	_NibListsAdd
@@ -2366,324 +2292,101 @@ class MfNibConverter extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		
 		if (bitCount > 64)
 		{
+			nib := ""
+			if (MfNibConverter._HexValueToHexArray(value, nib, bitCount))
+			{
+				; if hex value is passed in will handled in formfat of 0x or -0x
+				return nib
+			}
 			; will handle negative and positive and convert to Little Endian
 			return MfNibConverter._LongIntStringToHexArray(value, bitCount)
 		}
+		; this method is fast for hex or integer but is limited to Int64
 		return MfNibConverter._IntToHexArray(value, bitCount)
 
 	}
 ; 	End:_GetBytesInt ;}
-	_FromStringBase(str, base="") {
-		if (MfString.IsNullOrEmpty(str))
-		{
-			return "0"
-		}
-		sign := true
-		strLst := new MfList()
-		c := ""
-		len := 0
-		blen := 1
-		num := 0
-		i := 0
-		Loop, Parse, str
-		{
-			strLst.Add(A_LoopField)
-		}
-		
-		if (strLst.Item[i] = "+")
-		{
-			i++
-		}
-		else if (strLst.Item[i] = "-")
-		{
-			i++
-			sign := false
-		}
-		if (i >= strLst.Count)
-		{
-			return "0"
-		}
-		if (base = "")
-		{
-			if (strLst.Item[i] = "0")
-			{
-				c := strLst.Item[i + 1]
-				if (c = "x")
-				{
-					base := 16
-				}
-				else if (c = "b")
-				{
-					base := 2
-				}
-				else
-				{
-					base = 8
-				}
-			}
-			else
-			{
-				base := 10
-			}
-		}
-		if (base = 8)
-		{
-			while (strLst.Item[i] = "0")
-			{
-				i++
-			}
-			len := 3 * ((strLst.Count + 1) - i)
-		}
-		else
-		{
-			if (base = 16 && strLst.Item[i] = "0" && strLst.Item[i+1] = "x")
-			{
-				i += 2
-			}
-			if (base = 2 && strLst.Item[i] = "0" && strLst.Item[i+1] = "b")
-			{
-				i += 2
-			}
-			while (strLst.Item[i] = "0")
-			{
-				i++
-			}
-			if (i = strLst.Count)
-			{
-				i--
-			}
-			len := 4 * ((strLst.Count + 1) - i)
-		}
-		len := (len >> 4) + 1
-
-		digits := new MfList()
-		j := 0
-		while j < len
-		{
-			digits.Add(0)
-			j++
-		}
-		loop
-		{
-			if (i >= strLst.Count)
-			{
-				break
-			}
-			c := strLst.Item[i]
-			i++
-			if (c = "0")
-			{
-				c := 0
-			}
-			else if (c = "1")
-			{
-				c := 1
-			}
-			else if (c = "2")
-			{
-				c := 2
-			}
-			else if (c = "3")
-			{
-				c := 3
-			}
-			else if (c = "4")
-			{
-				c := 4
-			}
-			else if (c = "5")
-			{
-				c := 5
-			}
-			else if (c = "6")
-			{
-				c := 6
-			}
-			else if (c = "7")
-			{
-				c := 7
-			}
-			else if (c = "8")
-			{
-				c := 8
-			}
-			else if (c = "9")
-			{
-				c := 9
-			}
-			else if (c = "a")
-			{
-				c := 10
-			}
-			else if (c = "b")
-			{
-				c := 11
-			}
-			else if (c = "c")
-			{
-				c := 12
-			}
-			else if (c = "d")
-			{
-				c := 13
-			}
-			else if (c = "e")
-			{
-				c := 14
-			}
-			else if (c = "f")
-			{
-				c := 15
-			}
-			else
-			{
-				c := base
-			}
-			if (c >= base)
-			{
-				break
-			}
-			j := 0
-			num := c
-			loop
-			{
-				while (j < blen)
-				{
-					num += digits.Item[j] * base
-					digits.Item[j] := (num & 0xffff)
-					num >>= 16
-					j++
-				}
-				if (num)
-				{
-					blen++
-					continue
-				}
-				break
-			}
-		}
-		; big int normal
-		; i := len
-		; while (i && !digits.Item[i - 1])
-		; {
-			
-		; 	len := i + 1
-		; 	i--
-		; }
-
-		;digits contais two byte segments (0xFFFF) for each entry
-		; retval := ""
-		; i := 0
-		; for i, n in digits
-		; {
-		; 	retval .= n . ", "
-		; }
-		; return retval
-		return digits
-		; return MfNibConverter._ToStringBase(digits, 10, len, sign)
-	}
-	_ToStringBase(digits, base, len, sign) {
-		i := digits.Count
-		x := i - 1
-		While (x >= 0)
-		{
-			if (digits.Item[x] = 0)
-			{
-				i--
-			}
-			else
-			{
-				break
-			}
-			x--
-		}
-		j := 0
-		hBase := 0
-		t := ""
-		ds := ""
-		c := ""
-		if (i = 0)
-		{
-			return "0"
-		}
-		if (i = 1 && digits.Item[0] = 0)
-		{
-			return "0"
-		}
-		if (base = 16)
-		{
-			j := Floor((2 * 8 * i) / 4) + 2
-        	hbase = 0x10000
-		}
-		else if (base = 8)
-		{
-			j = (2 * 8 * i) + 2
-        	hbase = 010000
-		}
-		else if (base = 8)
-		{
-			j = (2 * 8 * i) + 2
-			hbase = 010000
-		}
-		else if (base = 2)
-		{
-			j = (2 * 8 * i) + 2
-			hbase = 020
-		}
-		else
-		{
-			j := Floor((2 * 8 * i * 241) / 800) + 2
-			hbase = 10000
-		}
-		ds := digits
-		s := ""
-		while (i && j)
-		{
-			k := i - 1
-			num := 0
-			While (k > 0)
-			{
-				num := (num << 16) + ds.Item[k]
-				If (num < 0)
-				{
-					num += 4294967296
-				}
-				tmp := num // hbase
-				ds.Item[k] := tmp
-				num := Mod(num, hbase)
-				k--
-			}
-
-			if (ds.Item[i-1] = 0)
-			{
-				i--
-			}
-			k := 4
-			while (k > 0)
-			{
-				c := Mod(num, base)
-				chrValue := MfNibConverter._GetHexValue(c)
-				s := chrValue . s
-				j--
-				num := num // base
-				if ( i = 0 && num = 0)
-				{
-					break
-				}
-				k--
-			}
-		}
-		MfMath._RemoveLeadingZeros(s)
-		if (sign)
-		{
-			s := "-" . s
-		}
-		return s
-
-	}
 ;{ 	_LongIntStringToHexArray
+	_HexValueToHexArray(value, ByRef nibs, bitCount:=64) {
+		mStr := MfMemoryString.FromAny(value)
+		IsNeg := false
+		foundHex := false
+		if (mStr.StartsWith("0x", false))
+		{
+			foundHex := true
+			mStr.Remove(0,2)
+		}
+		if (foundHex = false && mStr.StartsWith("-0x", false))
+		{
+			foundHex := true
+			IsNeg := true
+			mStr.Remove(1,2)
+		}
+		if (!foundHex)
+		{
+			return false
+		}
+		If (bitCount < 4 )
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Under", "2"), "bitCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Mod(bitCount, 4))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Not_Divisable_By", "4"), "bitCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ActualBitCount := bitCount // 4
+
+		nibs := MfNibConverter._HexStringToNibList(mStr.ToString(), ActualBitCount,ActualBitCount, false)
+		return true
+		
+	}
+	_LongIntStringToHexArrayTest(obj, bitCount = 64) {
+		If (bitCount < 4 )
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Under", "2"), "bitCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Mod(bitCount, 4))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Not_Divisable_By", "4"), "bitCount")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		ActualBitCount := bitCount // 4
+		mStr := MfMemoryString.FromAny(obj)
+		IsNeg := false
+		if (mStr.StartsWith("-"))
+		{
+			IsNeg := true
+			mStr.Remmove(0, 1)
+		}
+		bigx := MfBigMathInt.Str2bigInt(mStr.ToString(),10, 3)
+		;bigx := MfBigInt.Parse(obj) ; base 10 Parse
+		
+		strHex := MfBigMathInt.BigInt2str(bigx, 16)
+		if (IsNeg)
+		{
+			strHex := "-" . strHex
+		}
+		; if (IsNeg)
+		; {
+		; 	strHex := MfByteConverter.FlipHexString(strHex)
+		; }
+		ans := MfNibConverter._HexStringToNibList(strHex, ActualBitCount,ActualBitCount, false)
+		; if (IsNeg)
+		; {
+		; 	MfNibConverter._AddOneToNibListValue(ans)
+		; }
+		return ans
+	}
 	_LongIntStringToHexArray(obj, bitCount = 64) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		If (bitCount < 2 )
@@ -2711,7 +2414,7 @@ class MfNibConverter extends MfObject
 			}
 			if (obj.Count = 0)
 			{
-				ans.Add(0)
+				ans._Add(0)
 				return ans
 			}
 			sInt := obj.ToString()
@@ -2800,7 +2503,7 @@ class MfNibConverter extends MfObject
 		{
 			while (nArray.Count * 2) < ActualBitCount
 			{
-				nArray.Add(0)
+				nArray._Add(0)
 			}
 			return nArray
 		}
@@ -2879,14 +2582,14 @@ class MfNibConverter extends MfObject
 					MSB := byte
 					MsbInfo := MfNibConverter.HexBitTable[MSB]
 					LsbInfo := MfNibConverter.HexBitTable[LSB]
-					nArray.Add(LsbInfo.IntValue)
-					nArray.Add(MsbInfo.IntValue)
+					nArray._Add(LsbInfo.IntValue)
+					nArray._Add(MsbInfo.IntValue)
 				}
 				if ((Result = 0) && (i = 0))
 				{
 					LsbInfo := MfNibConverter.HexBitTable[LSB]
-					nArray.Add(LsbInfo.IntValue)
-					nArray.Add(0)
+					nArray._Add(LsbInfo.IntValue)
+					nArray._Add(0)
 				}
 				i++
 			}
@@ -2897,7 +2600,7 @@ class MfNibConverter extends MfObject
 		{
 			while (nArray.Count * 2) < ActualBitCount
 			{
-				nArray.Add(0)
+				nArray._Add(0)
 			}
 			nArray := MfNibConverter._ReverseList(nArray)
 			; flip all the bits
@@ -3060,14 +2763,18 @@ class MfNibConverter extends MfObject
 	
 ;{ _ReverseList
 	_ReverseList(lst) {
-		iCount := lst.Count
+		iCount := lst.m_Count
 		nArray := new MfNibbleList()
-		while iCount > 0
+		lstIn := lst.m_InnerList
+		nLst := nArray.m_InnerList
+		i := 1
+		While (iCount > 0)
 		{
-			index := iCount -1
-			nArray.Add(lst.Item[index])
-			iCount --
+			nLst[i] := lstIn[iCount]
+			i++
+			iCount--
 		}
+		nArray.m_Count := lst.m_Count
 		return nArray
 	}
 ; End:_ReverseList ;}
@@ -3127,8 +2834,8 @@ class MfNibConverter extends MfObject
 					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(66, 52, "B", true))
 					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(67, 51, "C", true))
 					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(68, 50, "D", true))
-					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(69, 49, "1", true))
-					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(70, 48, "0", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(69, 49, "E", true))
+					MfNibConverter.m_CharHexBitTable.Add(new MfNibConverter.CharHexBitInfo(70, 48, "F", true))
 				}
 				index := -1
 				if (charIndex >= 48 && charIndex <= 57)

@@ -223,7 +223,9 @@ class MfMath extends MfObject
 		
 		_ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
 		if (!IsObject(obj))
-			if (Mfunc.IsFloat(obj)) {
+		{
+			if (Mfunc.IsFloat(obj))
+			{
 				flt := new MfFloat(obj)
 				return MfMath.Ceiling(flt, _ReturnAsObject)
 			}

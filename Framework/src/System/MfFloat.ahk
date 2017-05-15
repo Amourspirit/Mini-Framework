@@ -97,7 +97,7 @@ Class MfFloat extends MfPrimitive
 		}
 		else
 		{
-			if (flt := "")
+			if (flt = "")
 			{
 				ex := new MfArgumentNullException(flt)
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1714,13 +1714,13 @@ Class MfFloat extends MfPrimitive
 		fltObj.TotalWidth := 0
 		if (mStr.Length = 0)
 		{
-			fltobj.DecimalPlaces := 6
+			fltObj.DecimalPlaces := "6"
 			return
 		}
 		dotIndex := mStr.IndexOf(".")
 		if (dotIndex = -1)
 		{
-			fltobj.DecimalPlaces := 6
+			fltObj.DecimalPlaces := "6"
 			return
 		}
 		eIndex := mStr.LastIndexOf("e",,,false)
@@ -1731,11 +1731,11 @@ Class MfFloat extends MfPrimitive
 			decimalPlaces := mStr.Length - (dotIndex + 1)
 			if (decimalPlaces > 6)
 			{
-				fltobj.DecimalPlaces := decimalPlaces > 16 ? 16 : decimalPlaces
+				fltObj.DecimalPlaces := format("{:i}", decimalPlaces > 16 ? 16 : decimalPlaces)
 			}
 			else
 			{
-				fltobj.DecimalPlaces := 6
+				fltObj.DecimalPlaces := "6" ; ensure hex format does not invalidate
 			}
 			return
 		}
@@ -1744,16 +1744,16 @@ Class MfFloat extends MfPrimitive
 		; get the exp amount
 		if (mStr.Length <= eIndex + 1)
 		{
-			fltobj.DecimalPlaces := decimalPlaces
+			fltObj.DecimalPlaces := format("{:i}", decimalPlaces)
 			return
 		}
-		fltobj.DecimalPlaces := decimalPlaces . "e"
+		fltObj.DecimalPlaces := format("{:i}e", decimalPlaces)
 	}
 ; 	End:_SetFormatFromNmber ;}
 ; End:Internal Methods ;}
 ;{ Properties
 ;{ 	DecimalPlaces
-	m_DecimalPlaces		:= 6
+	m_DecimalPlaces		:= "6" ; ensure hex format does not invalidate
 /*
 	Property: DecimalPlaces [gets/sets]
 		Gets or sets the value associated with the DecimalPlaces part of the Format
@@ -1815,7 +1815,7 @@ Class MfFloat extends MfPrimitive
 	Format[]
 	{
 		get {
-			return MfString.Format("{0}.{1}",this.m_TotalWidth, this.m_DecimalPlaces) 
+			return Format("{1:i}.{2}",this.m_TotalWidth, this.m_DecimalPlaces) 
 		}
 		set {
 			this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
