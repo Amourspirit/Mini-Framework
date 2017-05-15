@@ -40,7 +40,7 @@ Class MfInfo extends MfObject
 	{
 		get {
 			if (MfNull.IsNull(MfInfo.m_Version)) {
-				MfInfo.m_Version := new MfVersion(0, 3, 8, 1)
+				MfInfo.m_Version := new MfVersion(0, 4, 0, 0)
 			}
 			return MfInfo.m_Version
 		}
@@ -81,7 +81,7 @@ Class MfInfo extends MfObject
 		try
 		{
 			ver := MfInfo.Version
-			sRegKey := MfString.Format("SOFTWARE\Mini-Framework\{0}.{1}",ver.Major, ver.Minor)
+			sRegKey := MfString.Format("SOFTWARE\Mini-Framework\{0:i}.{1:i}",ver.Major, ver.Minor)
 			InstLocation := Mfunc.RegRead("HKEY_LOCAL_MACHINE", sRegKey, "HelpFile")
 			IfExist, %InstLocation%
 				retval := InstLocation
@@ -112,7 +112,7 @@ Class MfInfo extends MfObject
 		try
 		{
 			ver := MfInfo.Version
-			sRegKey := MfString.Format("SOFTWARE\Mini-Framework\{0}.{1}",ver.Major, ver.Minor)
+			sRegKey := MfString.Format("SOFTWARE\Mini-Framework\{0:i}.{1:i}",ver.Major, ver.Minor)
 			InstLocation := Mfunc.RegRead("HKEY_LOCAL_MACHINE", sRegKey, "ProgramDir")
 			IfExist, %InstLocation%
 				retval := InstLocation
