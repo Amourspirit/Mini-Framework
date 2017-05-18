@@ -905,12 +905,7 @@ Class MfUInt32 extends MfPrimitive
 					throw ex
 				}
 				obj := objParams.Item[1]
-				if (MfObject.IsObjInstance(obj, MfFormatProvider))
-				{
-					ns := 7 ; integer
-					retval := MfUInt32._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
-				}
-				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+				if (MfObject.IsObjInstance(obj, MfNumberStyles))
 				{
 					retval := MfUInt32._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
 				}

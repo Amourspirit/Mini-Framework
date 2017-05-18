@@ -1085,12 +1085,7 @@ Class MfUInt16 extends MfPrimitive
 				return false
 			}
 			obj := objParams.Item[1]
-			if (MfObject.IsObjInstance(obj, MfFormatProvider))
-			{
-				ns := 7 ; integer
-				retval := MfUInt16._TryParse(str.Value, ns, obj.GetInstance(Null), num)
-			}
-			else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+			if (MfObject.IsObjInstance(obj, MfNumberStyles))
 			{
 				retval := MfUInt16._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
 			}
