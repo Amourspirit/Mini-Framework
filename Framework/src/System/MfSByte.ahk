@@ -1063,9 +1063,9 @@ Class MfSByte extends MfPrimitive
 	Throws
 		Throws MfInvalidOperationException if not called as static method.
 */
-	TryParse(byref int, args*) {
+	TryParse(byref SByte, args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		objParams := MfSByte._intParseParams(A_ThisFunc, args*)
+		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
 		cnt := objParams.Count
 		retval := false
 		
@@ -1123,17 +1123,17 @@ Class MfSByte extends MfPrimitive
 		}
 		if (retval)
 		{
-			if (IsObject(int))
+			if (IsObject(SByte))
 			{
-				if (!MfObject.IsObjInstance(int, MfSByte))
+				if (!MfObject.IsObjInstance(SByte, MfSByte))
 				{
-					int := new MfSByte()
+					SByte := new MfSByte()
 				}
-				int.Value := num
+				SByte.Value := num
 			}
 			else
 			{
-				int := num
+				SByte := num
 			}
 		}
 		return retval

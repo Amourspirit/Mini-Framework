@@ -841,55 +841,78 @@ Class MfByte extends MfPrimitive
 */
 	Parse(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (MfObject.IsObjInstance(args[1], MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			for index, arg in args
-			{
-				objParams.Add(arg)
-			}
-		}
+		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
+		cnt := objParams.Count
 		retval := MfNull.Null
 		try {
 			strP := objParams.ToString()
 		
-			if (strP = "MfChar") {
-				c := objParams.Item[0]
-				if (MfChar.IsDigit(c)) {
-					iVal := MfByte._GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
-					if ((iVal >= MfByte.MinValue) && (iVal <= MfByte.MaxValue)) {
-						retval := iVal
-					}
-				}
-			} else if (strP = "MfString") {
+			if (strP = "MfString" || strP = "MfChar")
+			{
 				strV := objParams.Item[0].Value
-				if (RegExMatch(strV, "^\s*([-+]?\d{1,3})\s*$", match)) {
-					iVal := MfByte._GetValue(match1)
-					if ((iVal >= MfByte.MinValue) && (iVal <= MfByte.MaxValue)) {
-						retval := iVal
-					}
-				} else if (RegExMatch(strV, "i)^\s*(-?0x[0-9A-F]{1,8})\s*$", match)) {
-					iVal := MfByte._GetValue(match1)
-					if ((iVal >= MfByte.MinValue) && (iVal <= MfByte.MaxValue)) {
-						retval := iVal
-					}
+				ns := 7 ; integer
+				retval := MfByte._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+			}
+			else if (cnt = 2)
+			{
+				str := objParams.Item[0]
+				if (!MfObject.IsObjInstance(str, MfString))
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
 				}
-			} else if (strP = "MfByte") {
+				obj := objParams.Item[1]
+				if (MfObject.IsObjInstance(obj, MfFormatProvider))
+				{
+					ns := 7 ; integer
+					retval := MfByte._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
+				}
+				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+				{
+					retval := MfByte._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				}
+				else
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+			}
+			else if (cnt = 3)
+			{
+				str := objParams.Item[0]
+				ns := objParams.Item[1]
+				fInfo := objParams.Item[2]
+				if ((!MfObject.IsObjInstance(str, MfString))
+					|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
+					|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
+				{
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				retval := MfByte._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
+			}
+			else if (strP = "MfByte")
+			{
 				retval := objParams.Item[0].Value
 			}
 		} catch e {
+			if (MfObject.IsObjInstance(e, MfException))
+			{
+				if (e.Source = A_ThisFunc)
+				{
+					throw e
+				}
+			}
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (!MfNull.IsNull(retval)) {
-			if (objParams.Data.Contains("ReturnAsObject") && (objParams.Data.Item["ReturnAsObject"] = true)) {
-				return new MfByte(retval, true)
-			} else {
-				return retval
-			}
-			
+		if (!MfNull.IsNull(retval))
+		{
+			return new MfByte(retval, true)
 		}
 		ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1000,78 +1023,78 @@ Class MfByte extends MfPrimitive
 		When parsing a MfChar instance the MfChar instance must be Numeric to parse successfully.
 		See MfChar.IsNumber.
 */
-	TryParse(byref byte, args*) {
+	TryParse(byref Byte, args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		;~ if (MfNull.IsNull(Int)) {
-			;~ return false
-		;~ }
-		_isObj := false
-		if (IsObject(byte)) {
-			if (MfObject.IsObjInstance(byte, "MfByte")) {
-				_isObj := true
-			} else {
-				; Int is an object but not an MfByte instance
-				; only MfByte is allowed as object
+		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
+		cnt := objParams.Count
+		retval := false
+		
+		strP := objParams.ToString()
+		num := 0
+		if (strP = "MfString" || strP = "MfChar")
+		{
+			strV := objParams.Item[0].Value
+			ns := 7 ; integer
+			retval := MfByte._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
+		}
+		else if (cnt = 2)
+		{
+			str := objParams.Item[0]
+			if (!MfObject.IsObjInstance(str, MfString))
+			{
 				return false
 			}
-			
-		}
-		if (MfObject.IsObjInstance(args[1], MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			for index, arg in args
+			obj := objParams.Item[1]
+			if (MfObject.IsObjInstance(obj, MfFormatProvider))
 			{
-				objParams.Add(arg)
+				ns := 7 ; integer
+				retval := MfByte._TryParse(str.Value, ns, obj.GetInstance(Null), num)
+			}
+			else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+			{
+				retval := MfByte._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
+			}
+			else
+			{
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
 		}
-		retval := false
-		try {
-			strP := objParams.ToString()
-		
-			if (strP == "MfChar") {
-				c := objParams.Item[0]
-				if (MfChar.IsDigit(c)) {
-					iVal := MfByte._GetValue(MfCharUnicodeInfo.GetDecimalDigitValue(c))
-					if ((iVal >= MfByte.MinValue) && (iVal <= MfByte.MaxValue)) {
-						if (_isObj = true) {
-							byte.Value := iVal
-						} else {
-							byte := iVal
-						}
-						retval := true
-					}
+		else if (cnt = 3)
+		{
+			str := objParams.Item[0]
+			ns := objParams.Item[1]
+			fInfo := objParams.Item[2]
+			if ((!MfObject.IsObjInstance(str, MfString))
+				|| (!MfObject.IsObjInstance(ns, MfNumberStyles))
+				|| (!MfObject.IsObjInstance(fInfo, MfFormatProvider)))
+			{
+				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			retval := MfByte._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+		}
+		else if (strP = "MfByte")
+		{
+			num := objParams.Item[0].Value
+			retval := true
+		}
+		if (retval)
+		{
+			if (IsObject(byte))
+			{
+				if (!MfObject.IsObjInstance(byte, MfByte))
+				{
+					byte := new MfByte()
 				}
-			} else if (strP == "MfString") {
-				strV := objParams.Item[0].Value
-				; match values that are from -999 to +999
-				if (RegExMatch(strV, "^\s*([-+]?\d{1,3})\s*$", match)) {
-					iVal := MfByte._GetValue(match1)
-					if ((iVal >= MfByte.MinValue) && (iVal <= MfByte.MaxValue)) {
-						if (_isObj = true) {
-							byte.Value := iVal
-						} else {
-							byte := iVal
-						}
-						retval := true
-					}
-				} else if (RegExMatch(strV, "i)^\s*(-?0x[0-9A-F]{1,8})\s*$", match)) {
-					; matches hex value
-					iVal := MfByte._GetValue(match1)
-					if ((iVal >= MfByte.MinValue) && (iVal <= MfByte.MaxValue)) {
-						if (_isObj = true) {
-							byte.Value := iVal
-						} else {
-							byte := iVal
-						}
-						retval := true
-					}
-				} else {
-					retval := false
-				}
-			} 
-		} catch e {
-			retval := false
+				byte.Value := num
+			}
+			else
+			{
+				byte := num
+			}
 		}
 		return retval
 	}
@@ -1170,6 +1193,134 @@ Class MfByte extends MfPrimitive
 ;	End:HasAttribute() ;}
 ; End:MfObject Attribute Overrides ;}
 ; End:Methods ;}
+;{ Internal Methods
+;{ 	_Parse
+/*
+	Method: _Parse()
+
+	_Parse()
+		Parses s string into an integer
+	Parameters:
+		s
+			String to parse
+		style
+			MfNumberStyles number
+		info
+			instance of MfFormatProvider
+	Returns:
+		Returns var integer
+	Throws:
+		Throws MfOverflowException if return value is out of range
+	Remarks:
+		Static method
+		Private method
+*/
+	_Parse(s, style, info, methodName) {
+		try
+		{
+			MfNumberFormatInfo.ValidateParseStyleInteger(style)	
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw e
+		}
+		num := 0
+		try
+		{
+			num := MfNumber.ParseInt32(s, style, info)
+		}
+		catch e
+		{
+			if (MfObject.IsObjInstance(e, MfOverflowException))
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Byte"), e)
+				ex.SetProp(A_LineFile, A_LineNumber, methodName)
+				throw ex
+			}
+			throw e
+		}
+		if ((style & 512) != 0) {
+			; MfNumberStyles.Instance.AllowHexSpecifier = 512
+			if (num < MfByte.MinValue || num > MfByte.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Byte"), e)
+				ex.SetProp(A_LineFile, A_LineNumber, methodName)
+				throw ex
+			}
+			return num
+		}
+		else
+		{
+			if (num < MfByte.MinValue || num > MfByte.MaxValue)
+			{
+				ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Overflow_Byte"))
+				ex.SetProp(A_LineFile, A_LineNumber, methodName)
+				throw ex
+			}
+			return num
+		}
+	}
+; 	End:_Parse ;}
+;{ 	_TryParse
+/*
+	Method: _Parse()
+
+	_TryParse()
+		Parses string and read value into integer
+	Parameters:
+		s
+			String to parse
+		style
+			MfNumberStyles number
+		info
+			instance of MfFormatProvider
+		Out
+			The result of the parse
+	Returns:
+		Returns boolean if true if number was parsed; Otherwise false
+	Throws:
+		Throws MfArgumentException style is not correct for integer
+	Remarks:
+		Static method
+*/
+	_TryParse(s, style, info, ByRef Out) {
+		try
+		{
+			MfNumberFormatInfo.ValidateParseStyleInteger(style)	
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, methodName)
+			throw e
+		}
+		num := 0
+		result := MfNumber.TryParseInt32(s, style, info, num)
+		if (result = false)
+		{
+			return false
+		}
+		if ((style & 512) != 0) {
+			; MfNumberStyles.Instance.AllowHexSpecifier = 512
+			if (num < MfByte.MinValue || num > MfByte.MaxValue)
+			{
+				return false
+			}
+			Out := num
+			return true
+		}
+		else
+		{
+			if (num < MfByte.MinValue || num > MfByte.MaxValue)
+			{
+				return false
+			}
+			Out := num
+			return true
+		}
+	}
+; 	End:_TryParse ;}
+; End:Internal Methods ;}
 ;{ Properties
 ;{ 	MaxValue
 	

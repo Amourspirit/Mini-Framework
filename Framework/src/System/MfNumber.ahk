@@ -26,7 +26,33 @@ class MfNumber extends MfObject
 ;{ 	MfNumber.NumberBuffer Class
 	class NumberBuffer
 	{
-		static NumberBufferBytes := 12 + ((MfNumber.NumberMaxDigits + 1) * A_IsUnicode ? 2 : 1) + A_PtrSize
+		static _NumberBufferBytes := ""
+		;{ NumberBufferBytes
+			/*!
+				Property: NumberBufferBytes [get]
+					Gets the NumberBufferBytes value associated with the this instance
+				Value:
+					Var representing the NumberBufferBytes property of the instance
+				Remarks:
+					Readonly Property
+			*/
+			NumberBufferBytes[]
+			{
+				get {
+					if (MfNumber.NumberBuffer._NumberBufferBytes = "")
+					{
+						num1 := (51) * (A_IsUnicode ? 2 : 1)
+						MfNumber.NumberBuffer._NumberBufferBytes := 12 + num1 + A_PtrSize
+					}
+					return MfNumber.NumberBuffer._NumberBufferBytes
+				}
+				set {
+					ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+					ex.SetProp(A_LineFile, A_LineNumber, "NumberBufferBytes")
+					Throw ex
+				}
+			}
+		; End:NumberBufferBytes ;}
 		
 		digits := "" ; instance of MfMemoryString
 		precision := 0
@@ -132,7 +158,8 @@ class MfNumber extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		d := 0.0
 		if (!MfNumber.TryStringToNumber(value, options, number, numfmt, false))
@@ -165,8 +192,8 @@ class MfNumber extends MfObject
 	}
 ; 	End:ParseInt32 ;}
 	ParseInt32(s, style, info) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		i := 0
 		MfNumber.StringToNumber(s, style, number, info, false)
@@ -194,8 +221,8 @@ class MfNumber extends MfObject
 ; 	End:ParseInt32 ;}
 ;{ 	ParseUInt32
 	ParseUInt32(s, style, info) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		i := 0
 		MfNumber.StringToNumber(s, style, number, info, false)
@@ -223,8 +250,8 @@ class MfNumber extends MfObject
 ; 	End:ParseUInt32 ;}
 ;{ 	ParseInt64
 	ParseInt64(s, style, info) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		i := 0
 		MfNumber.StringToNumber(s, style, number, info, false)
@@ -253,8 +280,8 @@ class MfNumber extends MfObject
 ;{ 	ParseUInt64
 	; will return a string representing the number if parsed successfully
 	ParseUInt64(s, style, info) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		i := ""
 		MfNumber.StringToNumber(s, style, number, info, false)
@@ -1311,8 +1338,8 @@ class MfNumber extends MfObject
 	}
 ; 	End:TryStringToNumber ;}
 	TryParseDouble(s, style, info, ByRef result) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := 0.0
 		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
@@ -1344,8 +1371,8 @@ class MfNumber extends MfObject
 ; 	End:_TryStringToNumber ;}
 ;{ 	TryParseInt32
 	TryParseInt32(s, style, info, ByRef result) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := 0
 		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
@@ -1372,8 +1399,8 @@ class MfNumber extends MfObject
 ; 	End:TryParseInt32 ;}
 ;{ 	TryParseUInt32
 	TryParseUInt32(s, style, info, ByRef result) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := 0
 		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
@@ -1400,8 +1427,8 @@ class MfNumber extends MfObject
 ; 	End:TryParseUInt32 ;}
 ;{ 	TryParseInt64
 	TryParseInt64(s, style, info, ByRef result) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := 0
 		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
@@ -1429,8 +1456,8 @@ class MfNumber extends MfObject
 ;{ 	TryParseUInt64
 	; result will be a string representing the number if parsed successfully
 	TryParseUInt64(s, style, info, ByRef result) {
-		;numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
-		numberBufferBytes := NumberBuffer.NumberBufferBytes
+		numberBufferBytes := MfNumber.NumberBuffer.NumberBufferBytes
+		;numberBufferBytes := NumberBuffer.NumberBufferBytes
 		number := new MfNumber.NumberBuffer(numberBufferBytes)
 		result := "0"
 		if(!MfNumber.TryStringToNumber(s, style, number, info, false))
