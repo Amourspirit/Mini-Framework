@@ -79,11 +79,7 @@ Class MfObject
 		MfNumberStyles class is an example of using this method to add MfFlagsAttribute to a class.
 */
 	AddAttribute(attrib) {
-		if (!this.IsInstance()) {
-			ex := new MfNullReferenceException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param","MfObject"))
-			ex.Source := A_ThisFunc
-			throw ex
-		}
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (this.__m_Attributes = Null) {
 			this.__m_Attributes := new MfGenericList(MfAttribute)
 		}
