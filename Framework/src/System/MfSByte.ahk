@@ -484,7 +484,7 @@ Class MfSByte extends MfPrimitive
 			}
 			catch e
 			{
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt16"), e)
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToSByte"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
