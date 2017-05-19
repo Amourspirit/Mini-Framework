@@ -2990,15 +2990,18 @@ Class MfString extends MfPrimitive
 		{
 			separator := p.Item[0].Value
 			options := p.Item[1]
-			bRemoveEmpty := options.HasFlag(MfStringSplitOptions.Instance.RemoveEmptyEntries)
+			optVal := options.Value
+			; options may be instance of MfEnum.EnumItem
+			;bRemoveEmpty := options.HasFlag(MfStringSplitOptions.Instance.RemoveEmptyEntries)
+			bRemoveEmpty := ((MfStringSplitOptions.Instance.RemoveEmptyEntries.Value) & optVal > 0)
 			
-			bTrim := options.HasFlag(MfStringSplitOptions.Instance.Trim)
+			bTrim := ((MfStringSplitOptions.Instance.Trim.Value) & optVal > 0)
 			If (bTrim = false)
 			{
-				bTrimStart := options.HasFlag(MfStringSplitOptions.Instance.TrimStart)
-				bTrimEnd := options.HasFlag(MfStringSplitOptions.Instance.TrimEnd)
+				bTrimStart := ((MfStringSplitOptions.Instance.TrimStart.Value) & optVal > 0)
+				bTrimEnd := ((MfStringSplitOptions.Instance.TrimEnd.Value) & optVal > 0)
 			}
-			bTrimLineEndChars := options.HasFlag(MfStringSplitOptions.Instance.TrimLineEndChars)
+			bTrimLineEndChars := ((MfStringSplitOptions.Instance.TrimLineEndChars.Value) & optVal > 0)
 		}
 
 		retval := new MfGenericList(MfString)
@@ -3024,7 +3027,8 @@ Class MfString extends MfPrimitive
 
 			Loop, %strArray0%
 			{
-				SplitValue := new MfString(strArray%A_Index%, true)
+				i := format("{:i}",A_Index)
+				SplitValue := new MfString(strArray%i%, true)
 				if(bTrimLineEndChars)
 				{
 					SplitValue.TrimEnd(MfEnvironment.Instance.NewLine)
@@ -3827,6 +3831,10 @@ Class MfString extends MfPrimitive
 	Trim(trimChars = "") {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (this.m_Length = 0)
+		{
+			return this._ReturnString(this)
+		}
 		if (MfNull.IsNull(trimChars)) {
 			;this.Value := this._TrimHelperA(2)
 			; considerable faster then previous line 10 x faster on some test

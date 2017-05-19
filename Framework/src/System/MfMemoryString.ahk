@@ -91,8 +91,26 @@ class MfMemoryString extends MfObject
 	m_CharCount := 0
 	m_BytesPerChar := ""
 	m_FillBytes := ""
-	m_nl := ""
+	static m_nl := ""
 	m_sType := ""
+	;{ m_nl
+	NL[]
+	{
+		get {
+			if (MfMemoryString.m_nl = "")
+			{
+				MfMemoryString.m_nl := MfEnvironment.Instance.NewLine	
+			}
+			return MfMemoryString.m_nl
+			
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "m_nl")
+			Throw ex
+		}
+	}
+	; End:m_nl ;}
 ;{ 	Constructor
 /*
 	Constructor(Size, FillByte:=0, Encoding="")
@@ -209,7 +227,6 @@ class MfMemoryString extends MfObject
 			this.m_sType := "UChar"
 		}
 
-		this.m_nl := MfEnvironment.Instance.NewLine
 		StringReplace, _Encoding, Encoding, -, , ALL
 		this.m_Encoding := Encoding
 		this.m_EncodingName := _Encoding
@@ -384,7 +401,7 @@ class MfMemoryString extends MfObject
 		Returns this instance after new line is appended
 */
 	AppendLine() {
-		chars := this.m_MemView.AppendString(this.m_nl)
+		chars := this.m_MemView.AppendString(MfMemoryString.NL)
 		this.m_CharCount += chars
 		return this
 	}
