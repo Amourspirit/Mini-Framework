@@ -5508,7 +5508,7 @@ class MfMemStrView extends MfMemBlkView
 			count := maxIndex + 1
 		}
 		needleSize := (NeedleObj.Pos - BytesPerChar) // BytesPerChar
-		if (needleSize > maxIndex)
+		if (needleSize > maxIndex + 1)
 		{
 			return -1
 		}

@@ -197,7 +197,7 @@ Class MfFloat extends MfPrimitive
 			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
 			_val := MfFloat.GetValue(value)
 			_newVal := this.m_Value + _val
-			this.Value := _newVal ; MfFloat._GetFmtValue(_newVal, this.Format)
+			this.Value := _newVal
 		}
 		catch e
 		{
@@ -401,6 +401,7 @@ Class MfFloat extends MfPrimitive
 			}
 			; with floor divide  any result less then 1 will be zero
 			_newVal := (this.Value / _value) + 0.0
+
 			this.Value := _newVal
 		}
 		catch e
@@ -876,6 +877,20 @@ Class MfFloat extends MfPrimitive
 		}
 	}
 ; 	End:GetTrimmed ;}
+	IsInfinity(obj) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ex := MfObject.IsNotObjInstance(obj, MfFloat,,A_ThisFunc)
+		if(ex)
+		{
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfFloat._IsPositiveInfinity(obj) || MfFloat._IsNegativeInfinity(obj))
+		{
+			return true
+		}
+		return false
+	}
 ;{ 	IsNegativeInfinity
 	IsNegativeInfinity(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1274,7 +1289,7 @@ Class MfFloat extends MfPrimitive
 			wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, this.Format)
 			_val := MfFloat.GetValue(value)
 			_newVal := this.m_Value - _val
-			this.m_Value := _newVal ; MfFloat._GetFmtValue(_newVal, this.Format)
+			this.Value := _newVal
 		}
 		catch e
 		{
@@ -1653,6 +1668,35 @@ Class MfFloat extends MfPrimitive
 		return retval
 	}
 ; End:_GetFmtValue ;}
+;{ 	_ConfirmValue
+	; note that AutoHotkey will return "" for divide by zero of float
+	_ConfirmValue(val) {
+		sLen := StrLen(val)
+		if (sLen = 0)
+		{
+			return MfFloat.m_NaN
+		}
+		mStr := new MfMemoryString(sLen,,,&val)
+		if (mStr.IndexOf("-inf",,,false) >= 0)
+		{
+			return MfFloat.m_NegativeInfinity
+		}
+		if (mStr.IndexOf("inf",,,false) >= 0)
+		{
+			if (mStr.CharCode[0] = 45) ; - symbol
+			{
+				return MfFloat.m_NegativeInfinity
+			}
+			return MfFloat.m_PositiveInfinity
+		}
+		
+		if (mStr.IndexOf("nan",,,false) >= 0)
+		{
+			return MfFloat.m_NaN
+		}
+		return val
+	}
+; 	End:_ConfirmValue ;}
 ;{ 	_SetFormat
 	; sets the values for TotalWidth and DecimalPlaces
 	_SetFormat(Value) {
@@ -1979,7 +2023,7 @@ Class MfFloat extends MfPrimitive
 	MaxValue[]
 	{
 		get {
-			return 1.7976931348623157E+308
+			return "1.7976931348623157E+308"
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -2003,7 +2047,7 @@ Class MfFloat extends MfPrimitive
 	MinValue[]
 	{
 		get {
-			return -1.7976931348623157E+308
+			return "-1.7976931348623157E+308"
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -2157,34 +2201,10 @@ Class MfFloat extends MfPrimitive
 					}
 					else
 					{
-						mStr := MfMemoryString.FromAny(_value)
-						if (mStr.Length = 0)
-						{
-							this.m_Value := MfFloat.m_NaN
-							return
-						}
-						if (mStr.IndexOf("#INF") >= 0)
-						{
-							if (mStr.CharCode[0] = 45) ; - symbol
-							{
-								this.m_Value := MfFloat.m_NegativeInfinity
-								return
-							}
-							this.m_Value := MfFloat.m_PositiveInfinity
-							return
-						}
-						if (mStr.IndexOf("NAN") >= 0)
-						{
-							this.m_Value := MfFloat.m_NaN
-							return
-						}
-						else
-						{
-							fmt := this.Format
-							wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
-							_value += 0.0
-							this.m_Value := _value
-						}
+						fmt := this.Format
+						wasformat := Mfunc.SetFormat(MfSetFormatNumberType.Instance.FloatFast, fmt)
+						;_value += 0.0
+						this.m_Value := this._ConfirmValue(_value)
 					}
 				}
 			}
