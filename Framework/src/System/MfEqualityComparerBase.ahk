@@ -34,10 +34,10 @@ class MfEqualityComparerBase extends MfObject
 */
 	__New() {
 		if (this.base.__Class = "MfEqualityComparerBase") {
-			throw new MfNotSupportedException("MfEqualityComparerBase is a Abstarct Class and cannot be called drirectly")
+			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_AbstractClass", "MfEqualityComparerBase"))
 		}
 		base.__New()
-		this.m_isInherited := this.__Class != "MfEqualityComparerBase"
+		this.m_isInherited := true
 	}
 ; End:Constructor ;}
 ;{ Methods
@@ -70,8 +70,8 @@ class MfEqualityComparerBase extends MfObject
 		then the value returned by the GetHashCode method for x must equal the value returned for y.
 */
 	Equals(x, y) {
-		ex := new MfNotImplementedException("Equal method must be implemente in derived class")
-		ex.Source := A_ThisFunc
+		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodWithName", "Equals"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
 ; End:Equals() ;}
@@ -101,8 +101,8 @@ class MfEqualityComparerBase extends MfObject
 		then the value returned by the GetHashCode method for x must equal the value returned for y.
 */
 	GetHashCode(obj) {
-		ex := new MfNotImplementedException("Equal method must be implemente in derived class")
-		ex.Source := A_ThisFunc
+		ex := new MfNotImplementedException(MfEnvironment.Instance.GetResourceString("NotImplementedException_MethodWithName", "GetHashCode"))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
 ; End:GetHashCode() ;}
