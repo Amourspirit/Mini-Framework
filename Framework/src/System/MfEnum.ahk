@@ -701,6 +701,43 @@ class MfEnum extends MfValueType
 		return retval
 	}
 ;	End:HasFlag ;}
+;{ 	Is()				- Overrides - MfObject
+/*
+	Method: Is()
+	Overrides MfObject.Is()
+	
+		OutputVar := instance.Is(ObjType)
+
+	Is(ObjType)
+		Gets if current instance of MfEnum.EnumItem is of the same type as ObjType or derived from ObjType.
+	Parameters
+		ObjType
+			The object or type to compare to this instance Type.
+			ObjType can be an instance of MfType or an object derived from MfObject or an instance of or a string containing
+			the name of the object type such as "MfObject"
+		IncludeEnumItem
+			Optional Boolean, Default it true.
+			If true and ObjType is MfEnum.EnumItem, type, instance, string name or non-instance class then true will be returned;
+			Otherwise MfEnum.EnumItem is ignored as a possible valid ObjType
+	Returns
+		Returns true if current object instance is of the same Type as the ObjType or if current instance is derived
+		from ObjType or if ObjType = "MfEnum.EnumItem" or ObjType = "EnumItem"; Otherwise false.
+	Remarks
+		If a string is used as the Type case is ignored so "MfObject" is the same as "mfobject"
+*/
+	Is(ObjType, IncludeEnumItem:=true) {
+		_IncludeEnumItem := MfBool.GetValue(IncludeEnumItem, true)
+		if (_IncludeEnumItem)
+		{
+			typeName := MfType.TypeOfName(ObjType)
+			if ((typeName = "MfEnum.EnumItem") || (typeName = "EnumItem")) {
+				return true
+			}
+		}
+		
+		return base.Is(typeName)
+	}
+; End:Is() ;}
 ;{ Parse()
 /*
 	Method: Parse()
