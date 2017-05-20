@@ -50,12 +50,12 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	m_useUserOverride			:= false		; MfBool
 	m_NaNSymbol					:= "NaN"		; string
 	m_nativeDigits				:= ["0","1","2","3","4","5","6","7","8","9"]
-	negativeInfinitySymbol 		:= "-Infinity"	; string
-	negativeSign				:= "-"			; string
-	numberDecimalDigits			:= 2			; int
-	numberDecimalSeparator		:= "."			; string
-	numberGroupSeparator		:= ","			; string
-	numberGroupSizes			:= [3]			; int array
+	m_NegativeInfinitySymbol	:= "-Infinity"	; string
+	m_NegativeSign				:= "-"			; string
+	m_NumberDecimalDigits		:= 2			; int
+	m_NumberDecimalSeparator	:= "."			; string
+	m_NumberGroupSeparator		:= ","			; string
+	m_NumberGroupSizes			:= ""			; int list MfListVar
 	numberNegativePattern		:= 1			; int
 	percentDecimalDigits		:= 2			; int
 	percentDecimalSeparator 	:= "."			; string
@@ -65,8 +65,8 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	percentPositivePattern		:= 0			; int
 	percentSymbol				:= "%"			; string
 	perMilleSymbol				:= "�"			; string
-	positiveInfinitySymbol		:= "Infinity"	; string
-	positiveSign				:= "+"			; string
+	m_PositiveInfinitySymbol	:= "Infinity"	; string
+	m_PositiveSign				:= "+"			; string
 	validForParseAsCurrency 	:= true			; MfBool
 	validForParseAsNumber		:= true			; MfBool
 	static m_instance			:= ""
@@ -90,6 +90,8 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		base.__New()
 		this.m_isInherited := false
+		this.m_NumberGroupSizes := new MfListVar()
+		this.m_NumberGroupSizes._Add(3)
 	}
 ; End:Constructor: () ;}
 ;{ Method
@@ -335,6 +337,12 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				throw new ArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
 			}
 			i++
+		}
+	}
+	_VerifyDecimalSeparator(decSep, propertyName) {
+		if (MfString.IsNullOrEmpty(decSep)) {
+			ex :=  new MfArgumentNullException(propertyName
+			, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 		}
 	}
 ;{ VerifyNativeDigits()
@@ -763,6 +771,223 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 	}
 ; 	End:NativeDigits ;}
+	;{ NegativeInfinitySymbol
+/*!
+	Property: NegativeInfinitySymbol [get/set]
+		Gets or sets the NegativeInfinitySymbol value associated with the this instance
+	Value:
+		Var representing the NegativeInfinitySymbol property of the instance
+*/
+		NegativeInfinitySymbol[]
+		{
+			get {
+				return this.m_NegativeInfinitySymbol
+			}
+			set {
+				this.VerifyWritable()
+				if (MfString.IsNullOrEmpty(value))
+				{
+					ex := new MfArgumentNullException("NegativeInfinitySymbol"
+					, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				this.m_NegativeInfinitySymbol := value
+				return this.m_NegativeInfinitySymbol
+			}
+		}
+	; End:NegativeInfinitySymbol ;}
+;{ NumberDecimalDigits
+/*!
+	Property: NumberDecimalDigits [get/set]
+		Gets or sets the NumberDecimalDigits value associated with the this instance
+	Value:
+		Var representing the NumberDecimalDigits property of the instance
+*/
+	NumberDecimalDigits[]
+	{
+		get {
+			return this.m_NumberDecimalDigits
+		}
+		set {
+			_val := MfInteger.GetValue(value, -1)
+			if (value < 0 || value > 99)
+			{
+				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Range", 0, 99))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.m_NumberDecimalDigits := _val
+			return this.m_NumberDecimalDigits
+		}
+	}
+; End:NumberDecimalDigits ;}
+	;{ PositiveInfinitySymbol
+/*!
+	Property: PositiveInfinitySymbol [get/set]
+		Gets or sets the PositiveInfinitySymbol value associated with the this instance
+	Value:
+		Var representing the PositiveInfinitySymbol property of the instance
+*/
+		PositiveInfinitySymbol[]
+		{
+			get {
+				return this.m_PositiveInfinitySymbol
+			}
+			set {
+				this.VerifyWritable()
+				if (MfString.IsNullOrEmpty(value))
+				{
+					ex := new MfArgumentNullException("PositiveInfinitySymbol"
+					, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				this.m_PositiveInfinitySymbol := value
+				return this.m_PositiveInfinitySymbol
+			}
+		}
+	; End:PositiveInfinitySymbol ;}
+;{ PositiveSign
+	/*!
+		Property: PositiveSign [get/set]
+			Gets or sets the PositiveSign value associated with the this instance
+		Value:
+			Var representing the PositiveSign property of the instance
+	*/
+	PositiveSign[]
+	{
+		get {
+			return this.m_PositiveSign
+		}
+		set {
+			this.VerifyWritable()
+			if (MfString.IsNullOrEmpty(value))
+			{
+				ex := new MfArgumentNullException("PositiveSign"
+				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.m_PositiveSign := value
+			return this.m_PositiveSign
+		}
+	}
+; End:PositiveSign ;}
+;{ NegativeSign
+/*!
+	Property: NegativeSign [get/set]
+		Gets or sets the NegativeSign value associated with the this instance
+	Value:
+		Var representing the NegativeSign property of the instance
+*/
+	NegativeSign[]
+	{
+		get {
+			return this.m_NegativeSign
+		}
+		set {
+			this.VerifyWritable()
+			if (MfString.IsNullOrEmpty(value))
+			{
+				ex := new MfArgumentNullException("PositiveSign"
+				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.m_NegativeSign := value
+			return this.m_NegativeSign
+		}
+	}
+; End:NegativeSign ;}
+;{ NumberDecimalSeparator
+/*!
+	Property: NumberDecimalSeparator [get/set]
+		Gets or sets the NumberDecimalSeparator value associated with the this instance
+	Value:
+		Var representing the NumberDecimalSeparator property of the instance
+*/
+	NumberDecimalSeparator[]
+	{
+		get {
+			return this.m_NumberDecimalSeparator
+		}
+		set {
+			this.VerifyWritable()
+			this.VerifyDecimalSeparator(value, "NumberDecimalSeparator")
+			this.m_NumberDecimalSeparator := value
+			return this.m_NumberDecimalSeparator
+		}
+	}
+; End:NumberDecimalSeparator ;}
+;{ NumberGroupSeparator
+/*!
+	Property: NumberGroupSeparator [get/set]
+		Gets or sets the NumberGroupSeparator value associated with the this instance
+	Value:
+		Var representing the NumberGroupSeparator property of the instance
+*/
+	NumberGroupSeparator[]
+	{
+		get {
+			return this.m_NumberGroupSeparator
+		}
+		set {
+			this.VerifyWritable()
+			_value := MfString.GetValue(value)
+			MfNumberFormatInfo.VerifyGroupSeparator(_value, "NumberGroupSeparator")
+			this.m_NumberGroupSeparator := _value
+			return this.m_NumberGroupSeparator
+		}
+	}
+; End:NumberGroupSeparator ;}
+;{ NumberGroupSizes
+	m_NumberGroupSizes := Null
+	/*!
+		Property: NumberGroupSizes [get/set]
+			Gets or sets the NumberGroupSizes value associated with the this instance
+		Value:
+			Var representing the NumberGroupSizes property of the instance
+	*/
+	NumberGroupSizes[]
+	{
+		get {
+			return this.m_NumberGroupSizes.Clone()
+		}
+		set {
+			If (MfNull.IsNull(value))
+			{
+				ex := new MfArgumentNullException("NumberGroupSizes"
+					,MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (!MfObject.IsObjInstance(value, MfListBase))
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			If (Value.Count = 0)
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List_Size"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (MfObject.IsObjInstance(value, MfListVar))
+			{
+				this.m_NumberGroupSizes := value.Clone()
+				return
+			}
+			lst := new MfListVar()
+			for i, v in Value
+			{
+				lst._Add(v)
+			}
+			this.m_NumberGroupSizes := lst
+		}
+	}
+; End:NumberGroupSizes ;}
 ; End:Properties ;}	
 }
 /*!
