@@ -36,8 +36,11 @@ class MfFlagsAttribute extends MfAttribute
 		MfFlagsAttribute is Singleton, Use Instance property to access instead of Constructing a new instance.
 */
 	__New() {
+		if (this.__Class != "MfFlagsAttribute") {
+			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfFlagsAttribute"))
+		}
 		base.__New()
-		this.m_isInherited := this.__Class != "MfFlagsAttribute"
+		this.m_isInherited := false
 	}
 ; End:Constructor: () ;}
 ;{ Method
@@ -72,6 +75,99 @@ class MfFlagsAttribute extends MfAttribute
 		}
 		return MfFlagsAttribute._instance
 	}
+; Sealed Class Following methods cannot be overriden ; Do Not document for this class
+; VerifyIsInstance([ClassName, LineFile, LineNumber, Source])
+; VerifyIsNotInstance([MethodName, LineFile, LineNumber, Source])
+; Sealed Class Following methods cannot be overriden
+; VerifyReadOnly()
+;{ MfObject Attribute Overrides - methods not used from MfObject - Do Not document for this class
+;{	AddAttribute()
+/*
+	Method: AddAttribute()
+	AddAttribute(attrib)
+		Overrides MfObject.AddAttribute Sealed Class will never have attribute
+	Parameters:
+		attrib
+			The object instance derived from MfAttribute to add.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	AddAttribute(attrib) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex		
+	}
+;	End:AddAttribute() ;}
+;{	GetAttribute()
+/*
+	Method: GetAttribute()
+
+	OutputVar := instance.GetAttribute(index)
+
+	GetAttribute(index)
+		Overrides MfObject.GetAttribute Sealed Class will never have attribute
+	Parameters:
+		index
+			the zero-based index. Can be MfInteger or var containing Integer number.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	GetAttribute(index) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:GetAttribute() ;}
+;	GetAttributes ;}
+/*
+	Method: GetAttributes()
+
+	OutputVar := instance.GetAttributes()
+
+	GetAttributes()
+		Overrides MfObject.GetAttributes Sealed Class will never have attribute
+	Throws:
+		Throws MfNotSupportedException
+*/
+	GetAttributes()	{
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:GetAttributes ;}
+;{	GetIndexOfAttribute()
+/*
+	GetIndexOfAttribute(attrib)
+		Overrides MfObject.GetIndexOfAttribute. Sealed Class will never have attribute
+	Parameters:
+		attrib
+			The object instance derived from MfAttribute.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	GetIndexOfAttribute(attrib) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:GetIndexOfAttribute() ;}
+;{	HasAttribute()
+/*
+	HasAttribute(attrib)
+		Overrides MfObject.HasAttribute. Sealed Class will never have attribute
+	Parameters:
+		attrib
+			The object instance derived from MfAttribute.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	HasAttribute(attrib) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:HasAttribute() ;}
+; End:MfObject Attribute Overrides ;}
 ; End:Method ;}
 	
 }

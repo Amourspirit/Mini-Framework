@@ -77,6 +77,23 @@ class MfEqualsOptions extends MfEnum
 ; End:Constructor: () ;}
 
 ;{ Method
+;{	AddAttribute()
+/*
+	Method: AddAttribute()
+	AddAttribute(attrib)
+		Overrides MfObject.AddAttribute Sealed Class will not have any other attributes added
+	Parameters:
+		attrib
+			The object instance derived from MfAttribute to add.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	AddAttribute(attrib) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex		
+	}
+;	End:AddAttribute() ;}
 ;{ 	AddAttributes()
 /*
 	Method: AddAttributes()
@@ -88,7 +105,8 @@ class MfEqualsOptions extends MfEnum
 */
 	AddAttributes() {
 		; flags must be added before base is called
-		this.AddAttribute(MfFlagsAttribute.Instance)
+		; add attribute using base as we are overridding AddAttributes due to sealed class
+		Base.AddAttribute(MfFlagsAttribute.Instance)
 	}
 ; 	End:AddAttributes() ;}
 ;{ 	AddEnums()
@@ -156,11 +174,6 @@ class MfEqualsOptions extends MfEnum
 	}
 ; End:DestroyInstance() ;}
 ; End:Method ;}
-
-; End:Method ;}
-;{ Properties
-
-; End:Properties ;}	
 }
 /*!
 	End of class
