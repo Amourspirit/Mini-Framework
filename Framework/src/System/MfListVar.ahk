@@ -303,6 +303,8 @@ class MfListVar extends MfListBase
 		{
 			len := maxIndex + 1
 		}
+		sep := MfString.GetValue(seperator)
+		sepLen := StrLen(sep)
 		sb := new MfText.StringBuilder()
 		i := startIndex
 		iCount := 0
@@ -313,7 +315,11 @@ class MfListVar extends MfListBase
 			if (i < maxIndex)
 			{
 				sb.AppendString(v)
-				sb.AppendString(seperator)
+				if (sepLen > 0)
+				{
+					sb.AppendString(sep)
+				}
+				
 			}
 			else
 			{
