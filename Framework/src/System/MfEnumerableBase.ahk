@@ -77,6 +77,14 @@ class MfEnumerableBase extends MfObject
 		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 		throw ex
 	}
+;{ 	GetHashCode - Overrides MfObject.GetHashCode()
+	; derived classes should not need GetHashCode() but can override if needed.
+	GetHashCode() {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:GetHashCode ;}
 
 ; End:Methods ;}
 }

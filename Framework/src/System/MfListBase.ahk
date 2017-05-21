@@ -93,6 +93,7 @@ class MfListBase extends MfEnumerableBase
 ;	End:Add(value) ;}
 ;{ 	_Add
 	; internal method
+	; this method is used through out the framework and therfore should not be replace or renamed.
 	_Add(obj) {
 		this.m_Count++
 		this.m_InnerList[this.m_Count] := obj
@@ -144,7 +145,7 @@ class MfListBase extends MfEnumerableBase
 			The source list. Must be List that inherits from MfListBase
 		destinationList
 			The destination list. Must be List that inherits from MfListBase
-		Length
+		length
 			The number of elements to copy from Source list into destination list
 	Throws:
 		Throws MfArgumentNullException if sourceList or destinationList is null
@@ -155,7 +156,8 @@ class MfListBase extends MfEnumerableBase
 		Static Method
 		If destinationList.Count is less then Length then new elements will be added to destinationList to match Length
 */
-	Copy(sourceList, destinationList, Length) {
+	Copy(sourceList, destinationList, length) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(sourceList))
 		{
 			ex := new MfArgumentNullException("sourceList")
@@ -183,25 +185,25 @@ class MfListBase extends MfEnumerableBase
 		}
 		try
 		{
-			Length := MfInteger.GetValue(Length)
+			Length := MfInteger.GetValue(length)
 		}
 		catch e
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "Length")
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), "length")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (Length = 0)
+		if (length = 0)
 		{
 			return
 		}
-		if (Length < 0)
+		if (length < 0)
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeLength"), "Length")
+			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_NegativeLength"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (Length > sourceList.Count)
+		if (length > sourceList.Count)
 		{
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayTooSmall"), "sourceList")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -216,7 +218,7 @@ class MfListBase extends MfEnumerableBase
 		sA := sourceList.m_InnerList
 		dA := destinationList.m_InnerList
 		i := 1
-		While (i <= Length)
+		While (i <= length)
 		{
 			da[i] := sA[i]
 			i++
