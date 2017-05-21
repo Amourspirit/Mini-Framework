@@ -138,8 +138,8 @@ class MfEnum extends MfValueType
 				this.m_Value := MfInteger.GetValue(_value)
 				bArgs := false
 			} else {
-				t := this.GetType()
-				if (MfObject.IsObjInstance(_value, t)) {
+				;t := this.GetType()
+				if (MfObject.IsObjInstance(_value, MfEnum)) {
 					this.m_Value := _value.Value
 					bArgs := false
 				}
@@ -716,7 +716,7 @@ class MfEnum extends MfValueType
 			ObjType can be an instance of MfType or an object derived from MfObject or an instance of or a string containing
 			the name of the object type such as "MfObject"
 		IncludeEnumItem
-			Optional Boolean, Default it true.
+			Optional Boolean, Default it false.
 			If true and ObjType is MfEnum.EnumItem, type, instance, string name or non-instance class then true will be returned;
 			Otherwise MfEnum.EnumItem is ignored as a possible valid ObjType
 	Returns
@@ -725,7 +725,7 @@ class MfEnum extends MfValueType
 	Remarks
 		If a string is used as the Type case is ignored so "MfObject" is the same as "mfobject"
 */
-	Is(ObjType, IncludeEnumItem:=true) {
+	Is(ObjType, IncludeEnumItem:=false) {
 		_IncludeEnumItem := MfBool.GetValue(IncludeEnumItem, true)
 		if (_IncludeEnumItem)
 		{
@@ -734,8 +734,7 @@ class MfEnum extends MfValueType
 				return true
 			}
 		}
-		
-		return base.Is(typeName)
+		return base.Is(ObjType)
 	}
 ; End:Is() ;}
 ;{ Parse()

@@ -37,12 +37,13 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	m_CurrencySymbol			:= "$"			; string
 	static _currentInfo			:= Null			; MfNumberFormatInfo
 	m_DigitSubstitution			:= 1			; int
-	static InvalidNumberStyles := new MfNumberStyles(MfNumberStyles.Instance.AllowLeadingWhite
-								, MfNumberStyles.Instance.AllowTrailingWhite, MfNumberStyles.Instance.AllowLeadingSign
-								, MfNumberStyles.Instance.AllowTrailingSign, MfNumberStyles.Instance.AllowParentheses
-								, MfNumberStyles.Instance.AllowDecimalPoint, MfNumberStyles.Instance.AllowThousands
-								, MfNumberStyles.Instance.AllowExponent, MfNumberStyles.Instance.AllowCurrencySymbol
-								, MfNumberStyles.Instance.AllowHexSpecifier)
+	; static InvalidNumberStyles := new MfNumberStyles(MfNumberStyles.Instance.AllowLeadingWhite
+	; 							, MfNumberStyles.Instance.AllowTrailingWhite, MfNumberStyles.Instance.AllowLeadingSign
+	; 							, MfNumberStyles.Instance.AllowTrailingSign, MfNumberStyles.Instance.AllowParentheses
+	; 							, MfNumberStyles.Instance.AllowDecimalPoint, MfNumberStyles.Instance.AllowThousands
+	; 							, MfNumberStyles.Instance.AllowExponent, MfNumberStyles.Instance.AllowCurrencySymbol
+	; 							, MfNumberStyles.Instance.AllowHexSpecifier)
+	static InvalidNumberStyles := new MfNumberStyles(1023)
 	static _invariantInfo		:= Null			; MfNumberFormatInfo
 	m_IsReadOnly				:= false		; MfBool
 	m_dataItem					:= 0			; int
@@ -56,15 +57,15 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	m_NumberDecimalSeparator	:= "."			; string
 	m_NumberGroupSeparator		:= ","			; string
 	m_NumberGroupSizes			:= ""			; int list MfListVar
-	numberNegativePattern		:= 1			; int
-	percentDecimalDigits		:= 2			; int
-	percentDecimalSeparator 	:= "."			; string
-	percentGroupSeparator		:= ","			; string
-	percentGroupSizes			:= [3]			; int array
-	percentNegativePattern		:= 0			; int
-	percentPositivePattern		:= 0			; int
-	percentSymbol				:= "%"			; string
-	perMilleSymbol				:= "�"			; string
+	m_NumberNegativePattern		:= 1			; int
+	m_PercentDecimalDigits		:= 2			; int
+	m_PercentDecimalSeparator 	:= "."			; string
+	m_PercentGroupSeparator		:= ","			; string
+	m_PercentGroupSizes			:= ""			; int list MfListVar
+	m_PercentNegativePattern	:= 0			; int
+	m_PercentPositivePattern	:= 0			; int
+	m_PercentSymbol				:= "%"			; string
+	m_PerMilleSymbol			:= ""			; string
 	m_PositiveInfinitySymbol	:= "Infinity"	; string
 	m_PositiveSign				:= "+"			; string
 	validForParseAsCurrency 	:= true			; MfBool
@@ -92,27 +93,61 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		this.m_isInherited := false
 		this.m_NumberGroupSizes := new MfListVar()
 		this.m_NumberGroupSizes._Add(3)
+
+		this.m_PercentGroupSizes := new MfListVar()
+		this.m_PercentGroupSizes._Add(3)
+		if (A_IsUnicode)
+		{
+			this.m_PerMilleSymbol := Chr(0x2030) ; ‰ is Mile per char
+		}
+		else
+		{
+			; ‰ is Mile per char and is 137 in codepage 1252
+			; http://www.i18nqa.com/debug/table-iso8859-1-vs-windows-1252.html
+			var := ""
+			VarSetCapacity(var, 2, 0)
+			NumPut(137, var)
+			this.m_PerMilleSymbol := StrGet(&var, , "cp1252")
+			VarSetCapacity(var, 0)
+		}
 	}
 ; End:Constructor: () ;}
 ;{ Method
 ;{	CheckGroupSize()
+	; groupSizeis instance of MfListVar
 	CheckGroupSize(propName, groupSize) {
-		index := 0
-		iCount := groupSize.Count
-		Loop, %iCount%
+		if (MfString.IsNullOrEmpty(propName))
 		{
-			if (groupSize.Item[index].value < 1) {
-				if ((index = iCount) && (groupSize.Item[index].value = 0)) {
+			ex := new MfArgumentNullException("propName")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfNull.IsNull(groupSize))
+		{
+			ex := new MfArgumentNullException("groupSize")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		for i , v in groupSize
+		{
+			if (!Mfunc.IsInteger(v))
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidElement_IntOnly"), propName)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (v < 1)
+			{
+				if (i = groupSize.m_Count - 1 && v = 0)
+				{
 					return
 				}
 				throw new MfArgumentException(MfEnvironment.GetResourceString("Argument_InvalidGroupSize"), propName)
-			} else {
-				if (groupSize[index].Value > 9)
-				{
-					throw new MfArgumentException(MfEnvironment.GetResourceString("Argument_InvalidGroupSize"), propName)
-				}
 			}
-			index++
+			else if (v > 9)
+			{
+				throw new MfArgumentException(MfEnvironment.GetResourceString("Argument_InvalidGroupSize"), propName)
+			}
 		}
 	}
 
@@ -888,15 +923,15 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			if (MfString.IsNullOrEmpty(value))
+			_value := MfString.GetValue(Value)
+			if (MfString.IsNullOrEmpty(_value))
 			{
 				ex := new MfArgumentNullException("PositiveSign"
 				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.m_NegativeSign := value
-			return this.m_NegativeSign
+			this.m_NegativeSign := _value
 		}
 	}
 ; End:NegativeSign ;}
@@ -914,9 +949,9 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			this.VerifyDecimalSeparator(value, "NumberDecimalSeparator")
-			this.m_NumberDecimalSeparator := value
-			return this.m_NumberDecimalSeparator
+			_val := MfString.GetValue(value)
+			this.VerifyDecimalSeparator(_val, "NumberDecimalSeparator")
+			this.m_NumberDecimalSeparator := _val
 		}
 	}
 ; End:NumberDecimalSeparator ;}
@@ -937,18 +972,16 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			_value := MfString.GetValue(value)
 			MfNumberFormatInfo.VerifyGroupSeparator(_value, "NumberGroupSeparator")
 			this.m_NumberGroupSeparator := _value
-			return this.m_NumberGroupSeparator
 		}
 	}
 ; End:NumberGroupSeparator ;}
 ;{ NumberGroupSizes
-	m_NumberGroupSizes := Null
-	/*!
-		Property: NumberGroupSizes [get/set]
-			Gets or sets the NumberGroupSizes value associated with the this instance
-		Value:
-			Var representing the NumberGroupSizes property of the instance
-	*/
+/*!
+	Property: NumberGroupSizes [get/set]
+		Gets or sets the NumberGroupSizes value associated with the this instance
+	Value:
+		Var representing the NumberGroupSizes property of the instance
+*/
 	NumberGroupSizes[]
 	{
 		get {
@@ -984,10 +1017,254 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			{
 				lst._Add(v)
 			}
+			MfNumberFormatInfo.CheckGroupSize("NumberGroupSizes", lst)
 			this.m_NumberGroupSizes := lst
 		}
 	}
 ; End:NumberGroupSizes ;}
+;{ NumberNegativePattern
+/*!
+	Property: NumberNegativePattern [get/set]
+		Gets or sets the NumberNegativePattern value associated with the this instance
+	Value:
+		Var representing the NumberNegativePattern property of the instance
+*/
+	NumberNegativePattern[]
+	{
+		get {
+			return this.m_NumberNegativePattern
+		}
+		set {
+			_val := MfInteger.GetValue(value, -1)
+			if (_val < 0 || _val > 4)
+			{
+				ex := new MfArgumentOutOfRangeException("NumberNegativePattern"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Range", 0, 4))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.VerifyWritable()
+			this.m_NumberNegativePattern := _val
+		}
+	}
+; End:NumberNegativePattern ;}
+;{ PercentDecimalDigits
+/*!
+	Property: PercentDecimalDigits [get/set]
+		Gets or sets the PercentDecimalDigits value associated with the this instance
+	Value:
+		Var representing the PercentDecimalDigits property of the instance
+*/
+	PercentDecimalDigits[]
+	{
+		get {
+			return this.m_PercentDecimalDigits
+		}
+		set {
+			_val := MfInteger.GetValue(value, -1)
+			if (_val < 0 || _val > 99)
+			{
+				ex := new MfArgumentOutOfRangeException("PercentDecimalDigits"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Range", 0, 99))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.VerifyWritable()
+			this.m_PercentDecimalDigits := _val
+		}
+	}
+; End:PercentDecimalDigits ;}
+;{ PercentDecimalSeparator
+/*!
+	Property: PercentDecimalSeparator [get/set]
+		Gets or sets the PercentDecimalSeparator value associated with the this instance
+	Value:
+		Var representing the PercentDecimalSeparator property of the instance
+*/
+	PercentDecimalSeparator[]
+	{
+		get {
+			return this.m_PercentDecimalSeparator
+		}
+		set {
+			this.VerifyWritable()
+			_val := MfString.GetValue(value)
+			this.VerifyDecimalSeparator(_val, "PercentDecimalSeparator")
+			this.m_PercentDecimalSeparator := _val
+		}
+	}
+; End:PercentDecimalSeparator ;}
+;{ PercentGroupSeparator
+/*!
+	Property: PercentGroupSeparator [get/set]
+		Gets or sets the PercentGroupSeparator value associated with the this instance
+	Value:
+		Var representing the PercentGroupSeparator property of the instance
+*/
+	PercentGroupSeparator[]
+	{
+		get {
+			return this.m_PercentGroupSeparator
+		}
+		set {
+			this.VerifyWritable()
+			_value := MfString.GetValue(value)
+			MfNumberFormatInfo.VerifyGroupSeparator(_value, "PercentGroupSeparator")
+			this.m_PercentGroupSeparator := _value
+		}
+	}
+; End:PercentGroupSeparator ;}
+;{ PercentGroupSizes
+/*!
+	Property: PercentGroupSizes [get/set]
+		Gets or sets the PercentGroupSizes value associated with the this instance
+	Value:
+		Var representing the PercentGroupSizes property of the instance
+*/
+	PercentGroupSizes[]
+	{
+		get {
+			return this.m_PercentGroupSizes.Clone()
+		}
+		set {
+			If (MfNull.IsNull(value))
+			{
+				ex := new MfArgumentNullException("PercentGroupSizes"
+					,MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (!MfObject.IsObjInstance(value, MfListBase))
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			If (Value.Count = 0)
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List_Size"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (MfObject.IsObjInstance(value, MfListVar))
+			{
+				this.m_NumberGroupSizes := value.Clone()
+				return
+			}
+			lst := new MfListVar()
+			for i, v in Value
+			{
+				lst._Add(v)
+			}
+			MfNumberFormatInfo.CheckGroupSize("PercentGroupSizes", lst)
+			this.m_PercentGroupSizes := lst
+		}
+	}
+; End:PercentGroupSizes ;}
+;{ PercentNegativePattern
+/*!
+	Property: PercentNegativePattern [get/set]
+		Gets or sets the PercentNegativePattern value associated with the this instance
+	Value:
+		Var representing the PercentNegativePattern property of the instance
+*/
+	PercentNegativePattern[]
+	{
+		get {
+			return this.m_PercentNegativePattern
+		}
+		set {
+			_val := MfInteger.GetValue(value, -1)
+			if (_val < 0 || _val > 11)
+			{
+				ex := new MfArgumentOutOfRangeException("PercentNegativePattern"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Range", 0, 11))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.VerifyWritable()
+			this.m_PercentNegativePattern := _val
+		}
+	}
+; End:PercentNegativePattern ;}
+;{ PercentPositivePattern
+/*!
+	Property: PercentPositivePattern [get/set]
+		Gets or sets the PercentPositivePattern value associated with the this instance
+	Value:
+		Var representing the PercentPositivePattern property of the instance
+*/
+	PercentPositivePattern[]
+	{
+		get {
+			return this.m_PercentPositivePattern
+		}
+		set {
+			_val := MfInteger.GetValue(value, -1)
+			if (_val < 0 || _val > 3)
+			{
+				ex := new MfArgumentOutOfRangeException("PercentPositivePattern"
+					, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Range", 0, 3))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.VerifyWritable()
+			this.m_PercentPositivePattern := _val
+		}
+	}
+; End:PercentPositivePattern ;}
+;{ PercentSymbol
+/*!
+	Property: PercentSymbol [get/set]
+		Gets or sets the PercentSymbol value associated with the this instance
+	Value:
+		Var representing the PercentSymbol property of the instance
+*/
+	PercentSymbol[]
+	{
+		get {
+			return this.m_PercentSymbol
+		}
+		set {
+			this.VerifyWritable()
+			_value := MfString.GetValue(Value)
+			if (MfString.IsNullOrEmpty(_value))
+			{
+				ex := new MfArgumentNullException("PercentSymbol"
+				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.m_PercentSymbol := _value
+		}
+	}
+; End:PercentSymbol ;}
+;{ PerMilleSymbol
+/*!
+	Property: PerMilleSymbol [get/set]
+		Gets or sets the PerMilleSymbol value associated with the this instance
+	Value:
+		Var representing the PerMilleSymbol property of the instance
+*/
+	PerMilleSymbol[]
+	{
+		get {
+			return this.m_PerMilleSymbol
+		}
+		set {
+			this.VerifyWritable()
+			_value := MfString.GetValue(Value)
+			if (MfString.IsNullOrEmpty(_value))
+			{
+				ex := new MfArgumentNullException("PerMilleSymbol"
+				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			return this.m_PerMilleSymbol
+		}
+	}
+; End:PerMilleSymbol ;}
 ; End:Properties ;}	
 }
 /*!

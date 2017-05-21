@@ -69,7 +69,7 @@ class MfNumberStyles extends MfEnum
 		}
 		
 		base.__New(args*)
-		this.m_isInherited := this.base.__Class != "MfNumberStyles" ; Do not override this property in derrived classes
+		this.m_isInherited := false ; sealed class
 	}
 ; End:Constructor: () ;}
 ;{ Method
