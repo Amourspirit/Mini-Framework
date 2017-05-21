@@ -276,11 +276,11 @@ class MfListVar extends MfListBase
 	}
 ;	End:IndexOf() ;}
 	ToList() {
-		return this._ToList()
+		return this._ToList().Clone()
 	}
 	; startIndex and endIndex mimic javascript substring
 	ToString(seperator=",", startIndex=0, endIndex="") {
-		retval := ""
+		
 		maxIndex := this.Count - 1
 		IsEndIndex := true
 		if (MfString.IsNullOrEmpty(endIndex))
@@ -297,7 +297,7 @@ class MfListVar extends MfListBase
 		}
 		if ((IsEndIndex = false) && (startIndex > maxIndex))
 		{
-			Return retval
+			Return ""
 		}
 		if ((IsEndIndex = true) && (startIndex > endIndex))
 		{
@@ -308,11 +308,11 @@ class MfListVar extends MfListBase
 		}
 		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
-			return retval
+			return ""
 		}
 		if (startIndex > maxIndex)
 		{
-			return retval
+			return ""
 		}
 		if (IsEndIndex = true)
 		{
@@ -322,6 +322,7 @@ class MfListVar extends MfListBase
 		{
 			len := maxIndex + 1
 		}
+		sb := new MfText.StringBuilder()
 		i := startIndex
 		iCount := 0
 		ll := this.m_InnerList
@@ -330,16 +331,17 @@ class MfListVar extends MfListBase
 			v := ll[i + 1]
 			if (i < maxIndex)
 			{
-				retval .= v . seperator
+				sb.AppendString(v)
+				sb.AppendString(seperator)
 			}
 			else
 			{
-				retval .= v
+				sb.AppendString(v)
 			}
 			i++
 			iCount++
 		}
-		return retval
+		return sb.ToString()
 	}
 ;{ 		SubList
 	; The SubList() method extracts the elements from list, between two specified indices, and returns the a new list.

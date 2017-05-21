@@ -52,6 +52,7 @@
  *	Replace() Replaces instances of oldValue with Instances of newValue
  *	ReplaceAtIndex() Replaces as section of the string with newValue
  *	Remove() Removes a number of chars from currrent instance
+ *	RemoveWhiteSpace() Gets a new instance of MfMemoryString with all whitechars removed.
  *	Reverse() Reverses the contentes of the currrent instance and returne it as a new instance
  *	SetPosFromCharIndex() Moves the Location of Pos from index based upon char index
  *	StartsWith() Gets if current instance starts with obj
@@ -1681,6 +1682,36 @@ class MfMemoryString extends MfObject
 		return true
 	}
 ; 	End:_Replace ;}
+;{ 	RemoveWhiteSpace
+/*
+	Method: RemoveWhiteSpace()
+
+	RemoveWhiteSpace()
+		Gets a new instance of MfMemoryString with all whitechars removed.
+	Parameters:
+		obj
+			The string to remove whitechars from
+			Can be instance of MfMemoryString or MfMemStrView or any object derived from MfObject
+	Returns:
+		Returns a new instance of MfMemoryString with all whitechars removed.
+	Throws:
+		Throws MfException if
+	Remarks:
+		All unicode whitespace chars are removed
+		Static Method
+*/
+	RemoveWhiteSpace(obj, encoding="") {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+
+		mStr := MfMemoryString._FromAnyStatic(obj, encoding)
+		mv := MfMemStrView.RemoveWhiteSpace(mStr.m_MemView)
+		retval := new MfMemoryString(0, mv.m_FillBytes, mv.m_Encoding)
+		retval.m_MemView := ""
+		retval.m_MemView := mv
+		retval.m_CharCount := mv.GetCharCount()
+		return retval
+	}
+; 	End:RemoveWhiteSpace ;}
 ;{ 	ReplaceAtIndex
 /*
 	Method: ReplaceAtIndex()
@@ -3036,6 +3067,7 @@ class MfMemoryString extends MfObject
  *	MoveBytesRight() Moves Bytes to the Right in the current instance
  *	OverWrite() Overwrites the bytes in this instance with the bytes in obj instance
  *	Reverse() Reverses the contentes of the currrent instance and returne it as a new instance
+ *	RemoveWhiteSpace() Gets a new instance of MfMemStrView wiath alll unicode whitespace chars removed.
  *	ToBase64() Reads instanceof MfMemStrView and returns a new MfMemStrView as base64 equal UTF-8 Encoded
  *	ToCharList() Gets a copy of the current instance as MfCharList
  *	ToString() Gets the value of this instance as string var
@@ -6539,6 +6571,45 @@ class MfMemStrView extends MfMemBlkView
 		return this.GetCharCount()
 	}
 ; 	End:OverWrite ;}
+;{ RemoveWhiteSpace
+/*
+	Method: RemoveWhiteSpace()
+
+	RemoveWhiteSpace()
+		Gets a new MfMemStrView instance with all whitespace chars removed
+	Parameters:
+		obj
+			The instance of MfMemStrView to use as a source
+	Returns:
+		Returns a new instance of MfMemStrView with all whitesace chars removed.
+*/
+	RemoveWhiteSpace(ByRef obj) {
+		if (obj.__Class != "MfMemStrView")
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_NonMfObjectWithParamName", "obj", "MfMemStrView"), "ObjA")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		mv := new MfMemStrView(obj.Size, obj.m_FillBytes, obj.m_Encoding)
+		
+		BytesPerChar := obj.m_BytesPerChar
+		sType := obj.m_sType
+		i := 0
+		num := -1
+		ptr := obj[] ; first char address
+		p := obj.Pos
+		while (i <= p)
+		{
+			num := NumGet(ptr + i, 0, sType)
+			if (!MfMemStrView.IsWhiteSpace(num))
+			{
+				mv.AppendCharCode(num)
+			}
+			i += BytesPerChar
+		}
+		return mv
+	}
+; End:RemoveWhiteSpace ;}
 ;{ 	Reverse
 /*
 	Method: Reverse()
