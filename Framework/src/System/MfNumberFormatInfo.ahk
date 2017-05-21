@@ -100,13 +100,8 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		this.m_CurrencyGroupSizes := new MfListVar()
 		this.m_CurrencyGroupSizes._Add(3)
 
-		this.m_nativeDigits := new MfListVar()
-		i := 0
-		While (i < 10)
-		{
-			this.m_nativeDigits._Add(i++)
-
-		}
+		this.m_nativeDigits := MfListVar.FromString("0123456789")
+		
 
 		if (A_IsUnicode)
 		{
@@ -127,6 +122,8 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 ;{ Method
 ;{	CheckGroupSize()
 	; groupSizeis instance of MfListVar
+	; Every element in the groupSize array should be between 1 and 9
+	; excpet the last element could be zero.
 	CheckGroupSize(propName, groupSize) {
 		if (MfString.IsNullOrEmpty(propName))
 		{
@@ -917,7 +914,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			{
 				lst._Add(v)
 			}
-			MfNumberFormatInfo.CheckGroupSize("NativeDigits", lst)
+			MfNumberFormatInfo.VerifyNativeDigits("NativeDigits", lst)
 			this.m_CurrencyGroupSizes := lst
 		}
 	}
