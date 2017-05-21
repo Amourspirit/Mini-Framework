@@ -99,14 +99,16 @@ class MfListVar extends MfListBase
 	FromString(s, includeWhiteSpace=true, IgnoreCase=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
+		includeWhiteSpace := MfBool.GetValue(includeWhiteSpace, true)
 		str := new MfString(s, true)
 		lst := new MfListVar()
 		lstArray := []
 		iCount := 0
 		if (!includeWhiteSpace)
 		{
-			str.Trim()
+			str := MfString.RemoveWhiteSpace(str, true)
 		}
+		
 		if (str.Length = 0)
 		{
 			return lst
@@ -117,28 +119,7 @@ class MfListVar extends MfListBase
 			lstArray[++iCount] := c
 		}
 
-		; i := 1
-		; if (includeWhiteSpace)
-		; {
-		; 	Loop, Parse, s
-		; 	{
-		; 		iCount++
-		; 		lstArray[iCount] := A_LoopField
-		; 	}
-		; }
-		; else
-		; {
-		; 	Loop, Parse, s
-		; 	{
-		; 		if (A_LoopField == " " || A_LoopField = "`r" || A_LoopField = "`n")
-		; 		{
-		; 			continue
-		; 		}
-		; 		iCount++
-		; 		lstArray[iCount] := A_LoopField
-		; 	}
-		; }
-			
+		
 		lst.m_InnerList := lstArray
 		lst.m_Count := str.Length
 		lst.CaseSensitive := !IgnoreCase
