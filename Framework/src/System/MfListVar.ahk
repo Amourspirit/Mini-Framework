@@ -260,7 +260,7 @@ class MfListVar extends MfListBase
 		return this._ToList().Clone()
 	}
 	; startIndex and endIndex mimic javascript substring
-	ToString(seperator=",", startIndex=0, endIndex="") {
+	ToString(separator:=",", startIndex:=0, endIndex:="") {
 		
 		maxIndex := this.Count - 1
 		IsEndIndex := true
@@ -303,7 +303,7 @@ class MfListVar extends MfListBase
 		{
 			len := maxIndex + 1
 		}
-		sep := MfString.GetValue(seperator)
+		sep := MfString.GetValue(separator)
 		sepLen := StrLen(sep)
 		sb := new MfText.StringBuilder()
 		i := startIndex
@@ -401,45 +401,32 @@ class MfListVar extends MfListBase
 		if (leftToRight)
 		{
 			i := startIndex + 1 ; Move to one base index
-			len++ ; move for one based index
-			while (i <= len)
+			j := 1
+			;len++ ; move for one based index
+			while (j <= len)
 			{
-				rl[i] := ll[i]
+				rl[j] := ll[i]
 				i++
+				j++
 			}
-			rLst.m_Count := i - 1
+			rLst.m_Count := len
 			return rLst
-		}
-		
-
-		i := 1
-		iCount := 0
-		if (IsEndIndex = true)
-		{
-			While ((iCount + len) < (this.Count - 1))
-			{
-				iCount++
-			}
 		}
 		else
 		{
-			While ((iCount + (len - startIndex)) < (this.Count - 1))
+			i := this.m_Count - (startIndex + len)
+			i++ ; Move to one base index
+			j := len
+			;len++ ; move for one based index
+			while (j >= 1)
 			{
-				iCount++
+				rl[j] := ll[i]
+				i++
+				j--
 			}
+			rLst.m_Count := len
+			return rLst
 		}
-			
-		
-		while iCount < this.m_Count
-		{
-			iCount++
-			;lst.Add(this.Item[i])
-			rl[i] := ll[iCount]
-			i++
-		}
-		
-		rLst.m_Count := i - 1
-		return rLst
 	}
 ; 		End:SubList ;}
 ;{ 	Properties
