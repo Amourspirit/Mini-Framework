@@ -2854,6 +2854,39 @@ Class MfString extends MfPrimitive
 		return this._ReturnString(this)
 	}
 ; End:Remove() ;}
+;{ 	RemoveWhiteSpace
+/*
+	Method: RemoveWhiteSpace()
+
+	RemoveWhiteSpace()
+		Gets a string with all unicode whitespace chars removed
+	Parameters:
+		str
+			The string var or MfString instance that is the source string
+		ReturnAsObject
+			Optional. Default is false.
+			If true, then result will be returned as instance of MfString; Otherwise
+			result will be returned as string var
+	Returns:
+		Returns string var or MfString instance with all unicode chars removed
+	Remarks:
+		Static Method
+*/
+	RemoveWhiteSpace(str, ReturnAsObject=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
+		mStr := MfMemoryString.FromAny(str)
+		mStrR := MfMemoryString.RemoveWhiteSpace(mStr)
+		result := mStrR.ToString()
+		mStrR := ""
+		mStr := ""
+		if (ReturnAsObject)
+		{
+			return new MfString(result, true)
+		}
+		return result
+	}
+; 	End:RemoveWhiteSpace ;}
 ;{	Reverse()
 /*
 	Reverse()
