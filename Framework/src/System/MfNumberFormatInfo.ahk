@@ -31,7 +31,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	m_currencyDecimalDigits		:= 2			; int
 	m_CurrencyDecimalSeparator	:= "."			; string
 	m_CurrencyGroupSeparator	:= ","			; string
-	m_CurrencyGroupSizes		:= [3]			; array
+	m_CurrencyGroupSizes		:= ""			; array
 	m_CurrencyNegativePattern	:= 0			; int
 	m_CurrencyPositivePattern	:= 0			; int
 	m_CurrencySymbol			:= "$"			; string
@@ -50,7 +50,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	m_isInvariant				:= false		; MfBool
 	m_useUserOverride			:= false		; MfBool
 	m_NaNSymbol					:= "NaN"		; string
-	m_nativeDigits				:= ["0","1","2","3","4","5","6","7","8","9"]
+	m_nativeDigits				:= "" ;["0","1","2","3","4","5","6","7","8","9"] int list MfListVar
 	m_NegativeInfinitySymbol	:= "-Infinity"	; string
 	m_NegativeSign				:= "-"			; string
 	m_NumberDecimalDigits		:= 2			; int
@@ -96,6 +96,18 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 
 		this.m_PercentGroupSizes := new MfListVar()
 		this.m_PercentGroupSizes._Add(3)
+
+		this.m_CurrencyGroupSizes := new MfListVar()
+		this.m_CurrencyGroupSizes._Add(3)
+
+		this.m_nativeDigits := new MfListVar()
+		i := 0
+		While (i < 10)
+		{
+			this.m_nativeDigits._Add(i++)
+
+		}
+
 		if (A_IsUnicode)
 		{
 			this.m_PerMilleSymbol := Chr(0x2030) ; ‰ is Mile per char
@@ -494,35 +506,41 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	CurrencyGroupSizes[]
 	{
 		get {
-			intList := new MfGenericList(MfInteger)
-			for k, v in this.m_CurrencyGroupSizes
-			{
-				intList.Add(new MfInteger(v))
-			}
-			return intList
+			return this.m_CurrencyGroupSizes.Clone()
 		}
 		set {
-			if (MfNull.IsNull(value)) {
-				ex := new MfArgumentNullException("value",MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			if ((!MfObject.IsObjInstance(value,MfGenericList)) || (!value.ListType.Equals(MfInteger.GetType()))) {
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_GenericListType","MfInteger"),"value")
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
 			this.VerifyWritable()
-			MfNumberFormatInfo.CheckGroupSize("CurrencyGroupSizes", value)
-			this.m_CurrencyGroupSizes := []
-			index := 0
-			iCount := value.Count
-			Loop, %iCount%
+			If (MfNull.IsNull(value))
 			{
-				_index := index + 1 ; set for one base array
-				this.m_CurrencyGroupSizes[_index] := value.Item[index].Value
-				index++
+				ex := new MfArgumentNullException("CurrencyGroupSizes"
+					,MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
+			if (!MfObject.IsObjInstance(value, MfListBase))
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			If (Value.Count = 0)
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List_Size"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (MfObject.IsObjInstance(value, MfListVar))
+			{
+				this.m_NumberGroupSizes := value.Clone()
+				return
+			}
+			lst := new MfListVar()
+			for i, v in Value
+			{
+				lst._Add(v)
+			}
+			MfNumberFormatInfo.CheckGroupSize("CurrencyGroupSizes", lst)
+			this.m_CurrencyGroupSizes := lst
 		}
 	}
 ;	End:CurrencyGroupSizes ;}
@@ -574,6 +592,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_CurrencyNegativePattern
 		}
 		set {
+			this.VerifyWritable()
 			_value := MfInteger.GetValue(value)
 			if ((_value < 0) || (_value > 15)) {
 				ex := new MfArgumentOutOfRangeException("CurrencyNegativePattern"
@@ -581,9 +600,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.VerifyWritable()
 			this.m_CurrencyNegativePattern := _value
-			return this.m_CurrencyNegativePattern
 		}
 	}
 ;	End:CurrencyNegativePattern ;}
@@ -608,6 +625,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_CurrencyPositivePattern
 		}
 		set {
+			this.VerifyWritable()
 			_value := MfInteger.GetValue(value)
 			if ((_value < 0) || (_value > 3)) {
 				ex := new MfArgumentOutOfRangeException("CurrencyPositivePattern"
@@ -615,9 +633,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.VerifyWritable()
 			this.m_CurrencyPositivePattern := _value
-			return this.m_CurrencyPositivePattern
 		}
 	}
 ;	End:CurrencyPositivePattern ;}
@@ -641,13 +657,12 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_CurrencySymbol
 		}
 		set {
+			this.VerifyWritable()
 			if (MfString.IsNullOrEmpty(value)) {
 				ex := new MfArgumentNullException("CurrencySymbol", MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 			}
-			this.VerifyWritable()
 			_value := MfString.GetValue(value)
 			this.m_CurrencySymbol := _value
-			return this.m_CurrencySymbol
 		}
 	}
 ;	End:CurrencySymbol ;}
@@ -672,6 +687,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return new MfDigitShapes(this.m_DigitSubstitution)
 		}
 		set {
+			this.VerifyWritable()
 			if (MfNull.IsNull(value)) {
 				ex := new MfArgumentNullException("value",MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -686,10 +702,8 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				err.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw err
 			}
-			this.VerifyWritable()
 			MfNumberFormatInfo.VerifyDigitSubstitution(value, "DigitSubstitution")
 			this.m_DigitSubstitution := _value
-			return this.m_DigitSubstitution
 		}
 	}
 ;		End:DigitSubstitution() ;}
@@ -764,13 +778,12 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_NaNSymbol
 		}
 		set  {
+			this.VerifyWritable()
 			if (MfString.IsNullOrEmpty(value)) {
 				ex := new ArgumentNullException("CurrencySymbol", MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 			}
-			this.VerifyWritable()
 			_value := MfString.GetValue(value)
 			this.m_NaNSymbol := _value
-			return this.m_NaNSymbol
 		}
 	}
 ;		End:NaNSymbol ;}
@@ -778,31 +791,41 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	NativeDigits[]
 	{
 		get {
-			return this.m_NativeDigits
+			return this.m_NativeDigits.Clone()
 		}
 		set {
-			if (MfNull.IsNull(value)) {
-				ex := new MfArgumentNullException("value",MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			if ((!MfObject.IsObjInstance(value,MfGenericList)) || (!value.ListType.Equals(MfString.GetType()))) {
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_GenericListType","MfString"),"value")
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
 			this.VerifyWritable()
-			MfNumberFormatInfo.CheckGroupSize("CurrencyGroupSizes", value)
-			this.m_CurrencyGroupSizes := []
-			index := 0
-			iCount := value.Count
-			Loop, %iCount%
+			If (MfNull.IsNull(value))
 			{
-				this.m_CurrencyGroupSizes.Insert(value.Item[index].Value)
-				index++
+				ex := new MfArgumentNullException("NativeDigits"
+					,MfEnvironment.Instance.GetResourceString("ArgumentNull_Obj"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-			this.m_NativeDigits := value
-			return this.m_NativeDigits
+			if (!MfObject.IsObjInstance(value, MfListBase))
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			If (Value.Count = 0)
+			{
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Incorrect_List_Size"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			if (MfObject.IsObjInstance(value, MfListVar))
+			{
+				this.m_NumberGroupSizes := value.Clone()
+				return
+			}
+			lst := new MfListVar()
+			for i, v in Value
+			{
+				lst._Add(v)
+			}
+			MfNumberFormatInfo.CheckGroupSize("NativeDigits", lst)
+			this.m_CurrencyGroupSizes := lst
 		}
 	}
 ; 	End:NativeDigits ;}
@@ -828,7 +851,6 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 					throw ex
 				}
 				this.m_NegativeInfinitySymbol := value
-				return this.m_NegativeInfinitySymbol
 			}
 		}
 	; End:NegativeInfinitySymbol ;}
@@ -845,6 +867,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_NumberDecimalDigits
 		}
 		set {
+			this.VerifyWritable()
 			_val := MfInteger.GetValue(value, -1)
 			if (value < 0 || value > 99)
 			{
@@ -853,7 +876,6 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				throw ex
 			}
 			this.m_NumberDecimalDigits := _val
-			return this.m_NumberDecimalDigits
 		}
 	}
 ; End:NumberDecimalDigits ;}
@@ -864,24 +886,23 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	Value:
 		Var representing the PositiveInfinitySymbol property of the instance
 */
-		PositiveInfinitySymbol[]
-		{
-			get {
-				return this.m_PositiveInfinitySymbol
-			}
-			set {
-				this.VerifyWritable()
-				if (MfString.IsNullOrEmpty(value))
-				{
-					ex := new MfArgumentNullException("PositiveInfinitySymbol"
-					, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				this.m_PositiveInfinitySymbol := value
-				return this.m_PositiveInfinitySymbol
-			}
+	PositiveInfinitySymbol[]
+	{
+		get {
+			return this.m_PositiveInfinitySymbol
 		}
+		set {
+			this.VerifyWritable()
+			if (MfString.IsNullOrEmpty(value))
+			{
+				ex := new MfArgumentNullException("PositiveInfinitySymbol"
+				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.m_PositiveInfinitySymbol := value
+		}
+	}
 	; End:PositiveInfinitySymbol ;}
 ;{ PositiveSign
 	/*!
@@ -905,7 +926,6 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				throw ex
 			}
 			this.m_PositiveSign := value
-			return this.m_PositiveSign
 		}
 	}
 ; End:PositiveSign ;}
@@ -988,6 +1008,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_NumberGroupSizes.Clone()
 		}
 		set {
+			this.VerifyWritable()
 			If (MfNull.IsNull(value))
 			{
 				ex := new MfArgumentNullException("NumberGroupSizes"
@@ -1035,6 +1056,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_NumberNegativePattern
 		}
 		set {
+			this.VerifyWritable()
 			_val := MfInteger.GetValue(value, -1)
 			if (_val < 0 || _val > 4)
 			{
@@ -1043,7 +1065,6 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.VerifyWritable()
 			this.m_NumberNegativePattern := _val
 		}
 	}
@@ -1061,6 +1082,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_PercentDecimalDigits
 		}
 		set {
+			this.VerifyWritable()
 			_val := MfInteger.GetValue(value, -1)
 			if (_val < 0 || _val > 99)
 			{
@@ -1069,7 +1091,6 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.VerifyWritable()
 			this.m_PercentDecimalDigits := _val
 		}
 	}
@@ -1127,6 +1148,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_PercentGroupSizes.Clone()
 		}
 		set {
+			this.VerifyWritable()
 			If (MfNull.IsNull(value))
 			{
 				ex := new MfArgumentNullException("PercentGroupSizes"
@@ -1174,6 +1196,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_PercentNegativePattern
 		}
 		set {
+			this.VerifyWritable()
 			_val := MfInteger.GetValue(value, -1)
 			if (_val < 0 || _val > 11)
 			{
@@ -1182,7 +1205,6 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.VerifyWritable()
 			this.m_PercentNegativePattern := _val
 		}
 	}
@@ -1200,6 +1222,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			return this.m_PercentPositivePattern
 		}
 		set {
+			this.VerifyWritable()
 			_val := MfInteger.GetValue(value, -1)
 			if (_val < 0 || _val > 3)
 			{
@@ -1208,7 +1231,6 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.VerifyWritable()
 			this.m_PercentPositivePattern := _val
 		}
 	}
