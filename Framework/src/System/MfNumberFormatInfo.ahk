@@ -176,9 +176,14 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		Returns an instance of the object specified by formatType, if the MfFormatProvider implementation can supply that type of object; otherwise, null.
 */
 	GetFormat(formatType) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		If(MfNull.IsNull(formatType))
+		{
+			return null
+		}
 		if (!MfType.Equals(this.GetType(),formatType))
 		{
-			return ""
+			return null
 		}
 		return this
 	}
@@ -333,60 +338,65 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		nd := nativeDig.m_InnerList
-		ndLen := nativeDig.Count
-		mStr := new MfMemoryString(ndLen)
-		i := 1
-		while (i <= ndLen)
+		for i, sVal in nativeDig
 		{
-			sVal := nd[i]
-			sLen := StrLen(sVal)
+			str := new MfString(sVal)
+			sLen := str.Length
 			if (sLen = 0)
 			{
-				mStr := ""
 				ex := new MfArgumentNullException(propertyName, MfEnvironment.Instance.GetResourceString("ArgumentNull_ListValue"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			mStr.Append(sVal)
-			i++
-		}
-
-		
-		
-		i := 0
-		while (i < ndLen)
-		{
-			
-		
-			nunLen := strlen(mStr.char[i])
-			if (nunLen != 1)
+			if (sLen != 1)
 			{
-				if (nunLen != 2)
+				if (sLen != 2 || !A_IsUnicode)
 				{
 					ex := new MfArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				;isHightSorrogate := ((cHex >= 0xD800) && (cHex <= 0xDBFF))
-				;isLowSorrogate := ((cHex >= 0xDC00) && (cHex <= 0xDFFF))
-				if (!MfChar.IsSurrogatePair(nativeDig[i][0], nativeDig[i][1]))
+				enum := str.GetEnumerator(true) ; get enuerator that returs charcodes
+				hc := ""
+				lc := ""
+				enum.Next(j, hc)
+				enum.Next(j, lc)
+				enum := ""
+				; check and see if both chars make a SurrogatePair
+				if (!MfChar._IsSurrogatePairByteHiLoNums(hc,lc))
 				{
-					throw new ArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
 				}
 			}
-			if ((MfCharUnicodeInfo.GetDecimalDigitValue(nativeDig[i], 0) != i) 
-				&& (MfCharUnicodeInfo.GetUnicodeCategory(nativeDig[i], 0) != MfUnicodeCategory.Instance.PrivateUse.Value))
+			if (MfCharUnicodeInfo.GetDecimalDigitValue(str.Item[0]) != i && MfChar.GetUnicodeCategory(str.Item[0]) != MfUnicodeCategory.Instance.PrivateUse.Value)
 			{
-				throw new ArgumentException(MfEnvironment.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_InvalidNativeDigitValue"), propertyName)
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
 			}
-			i++
 		}
 	}
-	_VerifyDecimalSeparator(decSep, propertyName) {
+	VerifyDecimalSeparator(decSep, propertyName) {
 		if (MfString.IsNullOrEmpty(decSep)) {
 			ex :=  new MfArgumentNullException(propertyName
 			, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+		}
+	}
+
+	VerifyGroupSeparator(groupSep, propertyName) {
+		if (groupSep == "")
+		{
+			; empty string is allowed
+			return
+		}
+		if (MfNull.IsNull(groupSep))
+		{
+			ex := new MfArgumentNullException(propertyName
+				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 	}
 ;{ VerifyNativeDigits()
@@ -748,7 +758,13 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			if (MfString.IsNullOrEmpty(value)) {
+			if (Value == "")
+			{
+				; can be empty string
+				this.m_CurrencySymbol := Value
+				return
+			}
+			if (MfNull.IsNull(Value)) {
 				ex := new MfArgumentNullException("CurrencySymbol", MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 			}
 			_value := MfString.GetValue(value)
@@ -869,8 +885,14 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set  {
 			this.VerifyWritable()
-			if (MfString.IsNullOrEmpty(value)) {
-				ex := new ArgumentNullException("CurrencySymbol", MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+			if (Value == "")
+			{
+				; can be empty string
+				this.m_NaNSymbol := Value
+				return
+			}
+			if (MfNull.IsNull(Value)) {
+				ex := new ArgumentNullException("NaNSymbol", MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 			}
 			_value := MfString.GetValue(value)
 			this.m_NaNSymbol := _value
@@ -926,23 +948,29 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	Value:
 		Var representing the NegativeInfinitySymbol property of the instance
 */
-		NegativeInfinitySymbol[]
-		{
-			get {
-				return this.m_NegativeInfinitySymbol
-			}
-			set {
-				this.VerifyWritable()
-				if (MfString.IsNullOrEmpty(value))
-				{
-					ex := new MfArgumentNullException("NegativeInfinitySymbol"
-					, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				this.m_NegativeInfinitySymbol := value
-			}
+	NegativeInfinitySymbol[]
+	{
+		get {
+			return this.m_NegativeInfinitySymbol
 		}
+		set {
+			this.VerifyWritable()
+			if (Value == "")
+			{
+				; can be empty string
+				this.m_NegativeInfinitySymbol := Value
+				return
+			}
+			if (MfNull.IsNull(Value))
+			{
+				ex := new MfArgumentNullException("NegativeInfinitySymbol"
+				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			this.m_NegativeInfinitySymbol := value
+		}
+	}
 	; End:NegativeInfinitySymbol ;}
 ;{ NumberDecimalDigits
 /*!
@@ -983,14 +1011,21 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			if (MfString.IsNullOrEmpty(value))
+			if (value == "")
+			{
+				; empty string is allowed
+				this.m_PositiveInfinitySymbol := value
+				return
+			}
+			if (MfNull.IsNull(Value))
 			{
 				ex := new MfArgumentNullException("PositiveInfinitySymbol"
 				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.m_PositiveInfinitySymbol := value
+			_value := MfString.GetValue(value)
+			this.m_PositiveInfinitySymbol := _value
 		}
 	}
 	; End:PositiveInfinitySymbol ;}
@@ -1008,14 +1043,21 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			if (MfString.IsNullOrEmpty(value))
+			if (value == "")
+			{
+				; can be empty string
+				this.m_PositiveSign := value
+				return
+			}
+			if (MfNull.IsNull(Value))
 			{
 				ex := new MfArgumentNullException("PositiveSign"
 				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			this.m_PositiveSign := value
+			_value := MfString.GetValue(Value)
+			this.m_PositiveSign := _value
 		}
 	}
 ; End:PositiveSign ;}
@@ -1033,14 +1075,20 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			_value := MfString.GetValue(Value)
-			if (MfString.IsNullOrEmpty(_value))
+			if (Value == "")
 			{
-				ex := new MfArgumentNullException("PositiveSign"
+				; can be empty string
+				this.m_NegativeSign := Value
+				return
+			}
+			if (MfNull.IsNull(Value))
+			{
+				ex := new MfArgumentNullException("NegativeSign"
 				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
+			_value := MfString.GetValue(Value)
 			this.m_NegativeSign := _value
 		}
 	}
@@ -1060,7 +1108,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		set {
 			this.VerifyWritable()
 			_val := MfString.GetValue(value)
-			this.VerifyDecimalSeparator(_val, "NumberDecimalSeparator")
+			MfNumberFormatInfo.VerifyDecimalSeparator(_val, "NumberDecimalSeparator")
 			this.m_NumberDecimalSeparator := _val
 		}
 	}
@@ -1200,7 +1248,7 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		set {
 			this.VerifyWritable()
 			_val := MfString.GetValue(value)
-			this.VerifyDecimalSeparator(_val, "PercentDecimalSeparator")
+			MfNumberFormatInfo.VerifyDecimalSeparator(_val, "PercentDecimalSeparator")
 			this.m_PercentDecimalSeparator := _val
 		}
 	}
@@ -1339,14 +1387,20 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			_value := MfString.GetValue(Value)
-			if (MfString.IsNullOrEmpty(_value))
+			if (value == "")
+			{
+				; empty string is allowed
+				this.m_PercentSymbol := value
+				return
+			}
+			if (MfNull.IsNull(Value))
 			{
 				ex := new MfArgumentNullException("PercentSymbol"
 				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
+			_value := MfString.GetValue(Value)
 			this.m_PercentSymbol := _value
 		}
 	}
@@ -1365,14 +1419,20 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 		}
 		set {
 			this.VerifyWritable()
-			_value := MfString.GetValue(Value)
-			if (MfString.IsNullOrEmpty(_value))
+			if (value == "")
+			{
+				; empty string is allowed
+				this.m_PerMilleSymbol := value
+				return
+			}
+			if (MfNull.IsNull(value))
 			{
 				ex := new MfArgumentNullException("PerMilleSymbol"
 				, MfEnvironment.Instance.GetResourceString("ArgumentNull_String"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
+			_value := MfString.GetValue(Value)
 			return this.m_PerMilleSymbol
 		}
 	}
