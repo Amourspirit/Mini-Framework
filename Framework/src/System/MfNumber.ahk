@@ -538,6 +538,14 @@ class MfNumber extends MfObject
 		delta := scale - precision
 		; str := number.digits.ToString()
 		; Clipboard := str
+		if (precision = 0 && scale = 0)
+		{
+			mStr.AppendCharCode(48) ; 0
+			mstr.AppendCharCode(46) ; .
+			mStr.AppendCharCode(48) ; 0
+			value := mstr.ToString()
+			return true
+		}
 		pMax := 15
 		If (sign)
 		{

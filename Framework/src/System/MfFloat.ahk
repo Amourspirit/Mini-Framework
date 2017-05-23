@@ -93,7 +93,14 @@ Class MfFloat extends MfPrimitive
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			_f := f.Value
+			_f := flt.Value
+			; if there is no format is assigned then use MfFloat parameter instance format
+			; ignore format passed as MfString here. This will leave the option open for and
+			; empty MfString instance  to be passsed to force autoformat
+			if (format = "")
+			{
+				format := flt.Format
+			}
 		}
 		else
 		{
@@ -107,7 +114,7 @@ Class MfFloat extends MfPrimitive
 		}
 		
 		_returnAsObject := MfBool.GetValue(retunAsObj, false)
-		if (format = "")
+		if (MfString.IsNullOrEmpty(format))
 		{
 			_format := ""
 		}
@@ -849,7 +856,7 @@ Class MfFloat extends MfPrimitive
 			}
 			return this.Value
 		}
-		ns := 231 ; AllowThousands, Float
+		ns := 167 ; Float
 		num := 0.0
 		retval := MfFloat._TryParse(this.Value, ns, MfNumberFormatInfo.GetInstance(Null), num)
 		if (retval)
