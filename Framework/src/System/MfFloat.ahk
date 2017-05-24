@@ -1227,7 +1227,17 @@ Class MfFloat extends MfPrimitive
 				retval := objParams.Item[0].Value
 			}
 		} catch e {
-			if (MfObject.IsObjInstance(e, MfException))
+			if (MfObject.IsObjInstance(e, MFFormatException))
+			{
+				e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw e
+			}
+			else if (MfObject.IsObjInstance(e, MfOverflowException))
+			{
+				e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw e
+			}
+			else if (MfObject.IsObjInstance(e, MfException))
 			{
 				if (e.Source = A_ThisFunc)
 				{
