@@ -980,9 +980,9 @@ Class MfInt16 extends MfPrimitive
 		{
 
 			p := new MfParams()
-			p.AllowEmptyString := false ; no strings for parameters in this case
+			p.AllowEmptyString := true ; no strings for parameters in this case
 			p.AllowOnlyAhkObj := false ; needed to allow for undefined to be added
-			p.AllowEmptyValue := false ; all empty/null params will be added as undefined
+			p.AllowEmptyValue := true ; all empty/null params will be added as undefined
 
 			
 			; can be up to five parameters
