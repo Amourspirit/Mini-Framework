@@ -164,7 +164,7 @@ class MfGenericList extends MfListBase
 		obj
 			The object to locate in the MfGenericList
 	Returns
-		Returns var of Integer of the zero-based index of the first occurrence of obj within the entire MfList, if found;
+		Returns var of Integer of the zero-based index of the first occurrence of obj within the entire MfGenericList, if found;
 		Otherwise, Integer var with a Value of -1.
 	Throws
 		Throws MfNullReferenceException if called as a static method.
@@ -206,6 +206,7 @@ class MfGenericList extends MfListBase
 		return int
 	}
 ;	End:IndexOf() ;}
+
 ;{ 	Insert()			- Overrides - MfListBase
 /*!
 	Method: Insert()
@@ -239,6 +240,63 @@ class MfGenericList extends MfListBase
 		base.Insert(index, obj)
 	}
 ;	End:Insert(index, obj) ;}
+;{ 	LastIndexOf()
+/*
+	Method: IndexOf()
+		Overrides MfListBase.IndexOf()
+	IndexOf(obj)
+		Searches for the specified Object and returns the zero-based index of the last occurrence within the entire MfGenericList.
+		This method must be overridden in the derived class.
+	Parameters
+		obj
+			The object to locate in the MfGenericList
+	Returns
+		Returns var of Integer of the zero-based index of the last occurrence of obj within the entire MfGenericList, if found;
+		Otherwise, Integer var with a Value of -1.
+	Throws
+		Throws MfNullReferenceException if called as a static method.
+		Throws MfNotSupportedException if obj is not correct type for this instance.
+	Remarks
+		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
+		This method determines equality by calling MfObject.CompareTo().
+*/
+	LastIndexOf(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (!MfObject.IsObjInstance(obj, this.m_Type)) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_NonAhkType", this.m_Type.TypeName))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		i := 0
+		bFound := false
+		int := -1
+		if (this.m_Count <= 0) {
+			return int
+		}
+		i := this.m_Count -1
+		while (i >= 0)
+		{
+			v := ths.m_InnerList[i + 1]
+			try
+			{
+				if (v.CompareTo(obj) = 0) {
+					bFound := true
+					break
+				}
+			} catch e {
+				i--
+				continue
+			}
+			i--
+		}
+		
+		if (bFound = true) {
+			int := i
+			return int
+		}
+		return int
+	}
+;	End:LastIndexOf() ;}
 ;{ 	Remove()			- Overrides - MfListBase
 /*
 	Method: Remove()
