@@ -94,6 +94,21 @@ class MfGenericList extends MfListBase
 		return base.Add(obj)
 	}
 ;	End:Add(value) ;}
+;{ 	Clone
+	Clone() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		cLst := new MfGenericList(this.m_Type)
+		cLst.Clear()
+		cl := cLst.m_InnerList
+		ll := this.m_InnerList
+		for i, v in ll
+		{
+			cl[i] := v
+		}
+		cLst.m_Count := this.Count
+		return cLst
+	}
+; 	End:Clone ;}
 ;{ 	Contains()			- Overrides - MfListBase
 /*!
 	Method: Contains()
