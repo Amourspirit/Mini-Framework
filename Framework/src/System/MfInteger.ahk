@@ -1086,6 +1086,7 @@ Class MfInteger extends MfPrimitive
 	ToString() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := Format("{:i}",this.Value)
+		return retval
 	}
 ;  End:ToString() ;}
 ;{ 	TryParse()
