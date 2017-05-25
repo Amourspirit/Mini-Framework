@@ -192,6 +192,13 @@ class MfNumberFormatInfo extends MfNumberFormatInfoBase
 	GetInstance(formatProvider:="") {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		; formatProvider is for future expansion at this point
+		if (!MfNull.IsNull(formatProvider))
+		{
+			if (MfObject.IsObjInstance(formatProvider, MfNumberFormatInfo))
+			{
+				return formatProvider
+			}
+		}
 		if (MfNumberFormatInfo.m_instance = "")
 		{
 			MfNumberFormatInfo.m_instance := new MfNumberFormatInfo()

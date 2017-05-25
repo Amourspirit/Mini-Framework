@@ -892,7 +892,7 @@ Class MfSByte extends MfPrimitive
 			{
 				strV := objParams.Item[0].Value
 				ns := 7 ; integer
-				retval := MfSByte._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfSByte._Parse(strV, ns, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 			}
 			else if (cnt = 2)
 			{
@@ -907,11 +907,11 @@ Class MfSByte extends MfPrimitive
 				if (MfObject.IsObjInstance(obj, MfFormatProvider))
 				{
 					ns := 7 ; integer
-					retval := MfSByte._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
+					retval := MfSByte._Parse(str.Value, ns, MfNumberFormatInfo.GetInstance(obj), A_ThisFunc)
 				}
 				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
 				{
-					retval := MfSByte._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+					retval := MfSByte._Parse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 				}
 				else
 				{
@@ -933,7 +933,7 @@ Class MfSByte extends MfPrimitive
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				retval := MfSByte._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfSByte._Parse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), A_ThisFunc)
 			}
 			else if (strP = "MfSByte")
 			{
@@ -1075,7 +1075,7 @@ Class MfSByte extends MfPrimitive
 		{
 			strV := objParams.Item[0].Value
 			ns := 7 ; integer
-			retval := MfSByte._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
+			retval := MfSByte._TryParse(strV, ns, MfNumberFormatInfo.CurrentInfo, num)
 		}
 		else if (cnt = 2)
 		{
@@ -1087,7 +1087,7 @@ Class MfSByte extends MfPrimitive
 			obj := objParams.Item[1]
 			if (MfObject.IsObjInstance(obj, MfNumberStyles))
 			{
-				retval := MfSByte._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
+				retval := MfSByte._TryParse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, num)
 			}
 			else
 			{
@@ -1109,7 +1109,7 @@ Class MfSByte extends MfPrimitive
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			retval := MfSByte._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+			retval := MfSByte._TryParse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), num)
 		}
 		else if (strP = "MfSByte")
 		{

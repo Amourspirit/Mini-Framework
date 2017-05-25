@@ -893,7 +893,7 @@ Class MfInt16 extends MfPrimitive
 			{
 				strV := objParams.Item[0].Value
 				ns := 7 ; integer
-				retval := MfInt16._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfInt16._Parse(strV, ns, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 			}
 			else if (cnt = 2)
 			{
@@ -908,11 +908,11 @@ Class MfInt16 extends MfPrimitive
 				if (MfObject.IsObjInstance(obj, MfFormatProvider))
 				{
 					ns := 7 ; integer
-					retval := MfInt16._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
+					retval := MfInt16._Parse(str.Value, ns, MfNumberFormatInfo.GetInstance(obj), A_ThisFunc)
 				}
 				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
 				{
-					retval := MfInt16._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+					retval := MfInt16._Parse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 				}
 				else
 				{
@@ -934,7 +934,7 @@ Class MfInt16 extends MfPrimitive
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				retval := MfInt16._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfInt16._Parse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), A_ThisFunc)
 			}
 			else if (strP = "MfInt16")
 			{
@@ -1040,23 +1040,31 @@ Class MfInt16 extends MfPrimitive
 						}
 						else if (i = 2)
 						{
-							if (cnt = 2)
+							if (!Mfunc.IsInteger(args[2]))
 							{
-								if (!Mfunc.IsInteger(args[2]))
-								{
-									err := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_EnumIllegalVal", args[3]))
-									err.SetProp(A_LineFile, A_LineNumber, MethodName)
-									throw err
-								}
-								NumStyle := MfEnum.ToObject(MfNumberStyles.GetType(), args[2])
-								p.Add(numStyle)
+								err := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_EnumIllegalVal", args[3]))
+								err.SetProp(A_LineFile, A_LineNumber, MethodName)
+								throw err
 							}
-							else
-							{
-								e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
-								e.SetProp(A_LineFile, A_LineNumber, MethodName)
-								throw e
-							}
+							NumStyle := MfEnum.ToObject(MfNumberStyles.GetType(), args[2])
+							p.Add(numStyle)
+							;~ if (cnt = 2)
+							;~ {
+								;~ if (!Mfunc.IsInteger(args[2]))
+								;~ {
+									;~ err := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_EnumIllegalVal", args[3]))
+									;~ err.SetProp(A_LineFile, A_LineNumber, MethodName)
+									;~ throw err
+								;~ }
+								;~ NumStyle := MfEnum.ToObject(MfNumberStyles.GetType(), args[2])
+								;~ p.Add(numStyle)
+							;~ }
+							;~ else
+							;~ {
+								;~ e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", MethodName))
+								;~ e.SetProp(A_LineFile, A_LineNumber, MethodName)
+								;~ throw e
+							;~ }
 						}
 						else ; all params past 1 are boolean
 						{
@@ -1262,7 +1270,7 @@ Class MfInt16 extends MfPrimitive
 		{
 			strV := objParams.Item[0].Value
 			ns := 7 ; integer
-			retval := MfInt16._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
+			retval := MfInt16._TryParse(strV, ns, MfNumberFormatInfo.CurrentInfo, num)
 		}
 		else if (cnt = 2)
 		{
@@ -1274,7 +1282,7 @@ Class MfInt16 extends MfPrimitive
 			obj := objParams.Item[1]
 			if (MfObject.IsObjInstance(obj, MfNumberStyles))
 			{
-				retval := MfInt16._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
+				retval := MfInt16._TryParse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, num)
 			}
 			else
 			{
@@ -1296,7 +1304,7 @@ Class MfInt16 extends MfPrimitive
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			retval := MfInt16._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+			retval := MfInt16._TryParse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), num)
 		}
 		else if (strP = "MfInt16")
 		{

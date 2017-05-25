@@ -1179,7 +1179,7 @@ Class MfFloat extends MfPrimitive
 			{
 				strV := objParams.Item[0].Value
 				ns := 231 ; AllowThousands, Float
-				retval := MfFloat._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfFloat._Parse(strV, ns, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 			}
 			else if (cnt = 2)
 			{
@@ -1194,11 +1194,11 @@ Class MfFloat extends MfPrimitive
 				if (MfObject.IsObjInstance(obj, MfFormatProvider))
 				{
 					ns := 231 ; AllowThousands, Float
-					retval := MfFloat._Parse(str.Value, ns, obj.GetInstance(Null), A_ThisFunc)
+					retval := MfFloat._Parse(str.Value, ns, MfNumberFormatInfo.GetInstance(obj), A_ThisFunc)
 				}
 				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
 				{
-					retval := MfFloat._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+					retval := MfFloat._Parse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 				}
 				else
 				{
@@ -1220,7 +1220,7 @@ Class MfFloat extends MfPrimitive
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				retval := MfFloat._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfFloat._Parse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), A_ThisFunc)
 			}
 			else if (strP = "MfFloat")
 			{
@@ -1448,7 +1448,7 @@ Class MfFloat extends MfPrimitive
 		{
 			strV := objParams.Item[0].Value
 			ns := 231 ; AllowThousands, Float
-			retval := MfFloat._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
+			retval := MfFloat._TryParse(strV, ns, MfNumberFormatInfo.CurrentInfo, num)
 		}
 		else if (cnt = 2)
 		{
@@ -1460,7 +1460,7 @@ Class MfFloat extends MfPrimitive
 			obj := objParams.Item[1]
 			if (MfObject.IsObjInstance(obj, MfNumberStyles))
 			{
-				retval := MfFloat._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
+				retval := MfFloat._TryParse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, num)
 			}
 			else
 			{
@@ -1482,7 +1482,7 @@ Class MfFloat extends MfPrimitive
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			retval := MfFloat._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+			retval := MfFloat._TryParse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), num)
 		}
 		else if (strP = "MfFloat")
 		{

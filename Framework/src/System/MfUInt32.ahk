@@ -893,7 +893,7 @@ Class MfUInt32 extends MfPrimitive
 			{
 				strV := objParams.Item[0].Value
 				ns := 7 ; integer
-				retval := MfUInt32._Parse(strV, ns, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfUInt32._Parse(strV, ns, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 			}
 			else if (cnt = 2)
 			{
@@ -905,9 +905,14 @@ Class MfUInt32 extends MfPrimitive
 					throw ex
 				}
 				obj := objParams.Item[1]
-				if (MfObject.IsObjInstance(obj, MfNumberStyles))
+				if (MfObject.IsObjInstance(obj, MfFormatProvider))
 				{
-					retval := MfUInt32._Parse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), A_ThisFunc)
+					ns := 7 ; integer
+					retval := MfUInt32._Parse(str.Value, ns, MfNumberFormatInfo.GetInstance(obj), A_ThisFunc)
+				}
+				else if (MfObject.IsObjInstance(obj, MfNumberStyles))
+				{
+					retval := MfUInt32._Parse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, A_ThisFunc)
 				}
 				else
 				{
@@ -929,7 +934,7 @@ Class MfUInt32 extends MfPrimitive
 					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 					throw ex
 				}
-				retval := MfUInt32._Parse(str.Value, ns.Value, fInfo.GetInstance(Null), A_ThisFunc)
+				retval := MfUInt32._Parse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), A_ThisFunc)
 			}
 			else if (strP = "MfUInt32")
 			{
@@ -1081,7 +1086,7 @@ Class MfUInt32 extends MfPrimitive
 		{
 			strV := objParams.Item[0].Value
 			ns := 7 ; integer
-			retval := MfUInt32._TryParse(strV, ns, MfNumberFormatInfo.GetInstance(Null), num)
+			retval := MfUInt32._TryParse(strV, ns, MfNumberFormatInfo.CurrentInfo, num)
 		}
 		else if (cnt = 2)
 		{
@@ -1098,7 +1103,7 @@ Class MfUInt32 extends MfPrimitive
 			}
 			else if (MfObject.IsObjInstance(obj, MfNumberStyles))
 			{
-				retval := MfUInt32._TryParse(str.Value, obj.Value, MfNumberFormatInfo.GetInstance(Null), num)
+				retval := MfUInt32._TryParse(str.Value, obj.Value, MfNumberFormatInfo.CurrentInfo, num)
 			}
 			else
 			{
@@ -1120,7 +1125,7 @@ Class MfUInt32 extends MfPrimitive
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			retval := MfUInt32._TryParse(str.Value, ns.Value, fInfo.GetInstance(Null), num)
+			retval := MfUInt32._TryParse(str.Value, ns.Value, MfNumberFormatInfo.GetInstance(fInfo), num)
 		}
 		else if (strP = "MfUInt32")
 		{
