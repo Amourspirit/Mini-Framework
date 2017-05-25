@@ -1020,7 +1020,14 @@ class MfNumber extends MfObject
 	}
 ;{ 	StringToNumber
 	StringToNumber(str, options, ByRef number, info, parseDecimal) {
-		if (MfString.IsNullOrEmpty(str))
+		; empty string should throw MfFormatException
+		if (str == "")
+		{
+			ex := new MfFormatException(MfEnvironment.Instance.GetResourceString("Format_InvalidString"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfNull.IsNull(str))
 		{
 			ex := new MfArgumentNullException("str")
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
