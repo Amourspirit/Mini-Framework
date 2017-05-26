@@ -47,6 +47,18 @@ class MfQueue extends MfEnumerableBase
 		this.m_version++
 	}
 ; End:Clear() ;}
+;{ 	Clone
+	; since 0.4
+	Clone() {
+		q := new MfQueue()
+		if (this.Count > 0)
+		{
+			q.m_list := this.m_list.Clone()
+		}
+		q.m_version := q.m_version
+		return q
+	}
+; 	End:Clone ;}
 ;{ 	Contains(obj)
 /*
 	Method: Contains()
