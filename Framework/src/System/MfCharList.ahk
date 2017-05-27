@@ -97,17 +97,20 @@ class MfCharList extends MfListBase
 ;{ 	Add()				- Overrides - MfListBase
 /*
 	Method: Add()
+		Adds an integer char code element to the end of the current instance.
 		Overrides MfListBase.Add()
-		This method must be overridden in the derived class
+
+	OutputVar := instance.Add(obj)
+
 	Add(obj)
-		Adds an object to append at the end of the MfList
-	Parameters
+		Adds an integer char code element to the end of the current instance.
+	Parameters:
 		obj
-			The Object to locate in the MfList
-	Returns
+			The integer char code to add to the current instance.
+	Returns:
 		Var containing Integer of the zero-based index at which the obj has been added.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
+	Throws:
+		Throws MfArgumentOutOfRangeException if obj is out of range of the current Encoding.
 */
 	Add(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -122,6 +125,31 @@ class MfCharList extends MfListBase
 		}
 		return this._Add(_value)
 	}
+;	End:Add(value) ;}
+;{ 	AddString
+/*
+	Method: AddString()
+		Adds an integer char code element to the end of the current instance.
+
+	OutputVar := instance.AddString(str [, startIndex, length])
+
+	Add(str [, startIndex, length])
+		Adds an integer char code element to the end of the current instance.
+	Parameters:
+		str
+			The string to convert to integer char codes and add to the end of the current instance.
+			Can be var or instance of MfString or any object derived from MfPrmitive.
+		startIndex
+			Optional, the zero-based startIndex to start reading the string chars.
+			If omitted the the then the string is read from the start to length
+		length
+			Optional, the total length of the string to read from startIndex.
+			If omitted then string is read from startIndex to end of the string.
+	Returns:
+		Var containing Integer of the zero-based index at which the obj has been added.
+	Throws:
+		Throws MfException if any error occurs adding str to current instance.
+*/
 	AddString(str, startIndex=0, length=-1) {
 		ms := MfMemoryString.FromAny(str, this.m_Encoding)
 		if (ms.Length = 0)
@@ -146,19 +174,22 @@ class MfCharList extends MfListBase
 			throw ex
 		}
 	}
-;{ 	_Add
-	_Add(int) {
-		
-		base._Add(int)
-		If (this.m_FirstNullChar = -1 && MfMemStrView.IsIgnoreCharLatin1(int))
-		{
-			this.m_FirstNullChar := this.m_Count - 1
-		}
-		return this.m_Count - 1
-	}
-; 	End:_Add ;}
-;	End:Add(value) ;}
+; 	End:AddString ;}
 ;{ 	Clone
+/*
+	Method: Clone()
+		Clones all the elements of the current instance an return  a new instance.
+		Overrides MfListBase.Clone().
+
+	OutputVar := instance.Clone()
+
+	Clone()
+		Clones all the elements of the current instance an return  a new instance with all the elements copied.
+	Returns:
+		Returns a new instance that is a copy of the current instance.
+	Remarks:
+		This method is an O(n) operation, where n is Count.
+*/
 	Clone() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		return this._clone(false)
@@ -166,6 +197,28 @@ class MfCharList extends MfListBase
 	
 ; 	End:Clone ;}
 ;{ CompareTo
+/*
+	Method: CompareTo()
+		Overrides MfObject.CompareTo()
+
+	OutputVar := instance.CompareTo(obj [, IgnoreCase])
+
+	CompareTo(obj [, IgnoreCase])
+		Compares the current instance with another object of the same type and returns an integer that indicates whether
+		the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+	Parameters:
+		obj
+			An MfCharList instance to compare with this instance.
+		IgnoreCase
+			Optional, if true then case will be ignored when comparing; Otherwise case will be considered.
+			Default value is true.
+	Returns:
+		Returns a value that indicates the relative order of the objects being compared. The return value has these meanings:
+		Value Meaning Less than zero This instance precedes obj in the sort order. Zero This instance occurs in the same position
+		in the sort order as obj Greater than zero This instance follows obj in the sort order.
+	Throws:
+		Throws MfNullReferenceException if called as a static method.
+*/
 	CompareTo(obj, IgnoreCase=true) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
@@ -173,6 +226,32 @@ class MfCharList extends MfListBase
 	}
 ; End:CompareTo ;}
 ;{ 	Compare
+/*
+	Method: Compare()
+		Overrides MfObject.CompareTo()
+
+	OutputVar := instance.Compare(objA, objB [, IgnoreCase])
+
+	CompareTo(objA, objB [, IgnoreCase])
+		Compares the current instance with another object of the same type and returns an integer that indicates whether
+		the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+	Parameters:
+		objA
+			An MfCharList instance to compare.
+		objB
+			An MfCharList instance to compare.
+		IgnoreCase
+			Optional, if true then case will be ignored when comparing; Otherwise case will be considered.
+			Default value is true.
+	Returns:
+		Returns a value that indicates the relative order of the objects being compared.
+		The return value has these meanings: Value Meaning Less than zero objA precedes objB in the sort order.
+		Zero objA occurs in the same position in the sort order as objB Greater than zero objA follows objB in the sort order.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+	Remarks:
+		Static method
+*/
 	Compare(objA, objB, IgnoreCase=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(objA))
@@ -325,6 +404,759 @@ class MfCharList extends MfListBase
 		}
 	}
 ; 	End:Compare ;}
+;{ 	Contains
+/*
+	Method: Contains()
+		Determines whether the MfCharList contains a specific element.
+		Overrides MfListBase.Contains()
+
+	OutputVar := instance.Contains(obj [, ignoreCase])
+
+	Contains(obj [, ignoreCase])
+		Determines whether the MfCharList contains a specific var.
+	Parameters:
+		obj
+			The char code integer or instance of MfCharList or string to find matching index of within current instance of MfCharList.
+			Can be var integer or var string or instance of MfCharList or instance of MfString or any type that matches IsIntegerNumber.
+		IgnoreCase
+			Optional, if true then case will be ignored when searching; Otherwise case will be considered.
+			Default value is true.
+	Returns:
+		Returns true if the MfCharList contains the specified obj otherwise, false.
+	Remarks:
+		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
+		If obj is a string var then contains will follow ignoreCase.
+*/
+	Contains(obj, IgnoreCase=true) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
+		if (this.IndexOf(obj,,IgnoreCase) >= 0)
+		{
+			return true
+		}
+		return false
+	}
+; 	End:Contains ;}
+;{ 	GetEnumerator()
+/*
+	Method: GetCharEnumerator()
+
+	OutputVar := instance.GetCharEnumerator()
+
+	GetCharEnumerator()
+		Gets an enumerator that enumerates through the MfCharList instance as chars
+	Returns:
+		Returns an enumerator that iterates  through the list as chars.
+	Remarks:
+		Returns an enumerator that iterates through a collection.
+*/
+	GetCharEnumerator() {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		return new MfCharList.CharEnumerator(this)
+	}
+; End:GetEnumerator() ;}
+;{ 	IndexOf
+/*
+	Method: IndexOf()
+		Searches for the specified var and returns the index of the first occurrence within the entire instance.
+		Overrides MfListBase.IndexOf()
+
+	OutputVar := instance.IndexOf(obj [, StartIndex, Count, IgnoreCase])
+
+	IndexOf(obj [, StartIndex, Count, IgnoreCase])
+		Searches for the specified var and returns the index of the first occurrence within the entire instance.
+	Parameters:
+		obj
+			The char code integer or instance of MfCharList or string to find matching index of within current instance of MfCharList.
+			Can be var integer or var string or instance of MfCharList or instance of MfString or any type that matches IsIntegerNumber.
+		StartIndex
+			Optional, the zero-based startIndex to start searching within the current instance of MfCharList.
+			If omitted the the then searching begin at index zero.
+		Count
+			Optional, the number of elements from StartIndex to check for index of obj within current instance of MfCharList.
+			If omitted then search starts at StartIndex and searches all elements of the current instance until if and when index is found.
+		IgnoreCase
+			Optional, the total length of the string to read from startIndex.
+			If omitted then string is read from startIndex to end of the string.
+	Returns:
+		Returns  index of the first occurrence of value within the entire instance.
+	Remarks:
+		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
+		If obj is integer value then current instance searches for the index of the first matching char code.
+		If obj is a string then then current instance searches for the index of the first matching values that match the char codes in obj while observing IgnoreCase.
+*/
+	IndexOf(obj, StartIndex=0, Count=-1, IgnoreCase=true) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		StartIndex := MfInteger.GetValue(StartIndex, 0)
+		Count := MfInteger.GetValue(Count, -1)
+		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
+		if (StartIndex < 0 || StartIndex >= this.m_Count)
+		{
+			ex := new MfArgumentOutOfRangeException("StartIndex",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Count = 0)
+		{
+			return -1
+		}
+		if (Count < 0)
+		{
+			count := this.m_Count - StartIndex
+		}
+		if (Count - StartIndex > this.m_Count)
+		{
+			ex := new MfArgumentOutOfRangeException("Count",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (IsObject(obj))
+		{
+			if (!MfObject.IsObjInstance(obj, MfObject))
+			{
+				return -1
+			}
+			If (MfObject.IsObjInstance(obj, MfCharList))
+			{
+				if(obj.m_Count = 0)
+				{
+					return -1
+				}
+				return this._indexOfLst(obj, StartIndex, Count)
+			}
+			T := obj.GetType()
+			if (t.IsIntegerNumber)
+			{
+				return this._indexOf(obj.Value, StartIndex, Count,IgnoreCase)
+			}
+			if (T.IsString)
+			{
+				if (obj.Length = 0)
+				{
+					Return -1
+				}
+				if (obj.Length = 1)
+				{
+					num := Asc(obj.Value)
+					return this._indexOf(num, StartIndex, Count,IgnoreCase)
+				}
+				lst := new MfCharList(0, this.m_Encoding)
+				lst.AddString(obj.Value)
+				return this._indexOfLst(lst, StartIndex, Count,IgnoreCase)
+			}
+			if (T.IsChar)
+			{
+				return this._indexOf(obj.CharCode, StartIndex, Count,IgnoreCase)
+			}
+			if (T.IsUInt64)
+			{
+				if (obj.LessThenOrEqual(this.m_MaxCharSize))
+				{
+					num := obj.Value + 0
+					return this._indexOf(num, StartIndex, Count,IgnoreCase)
+				}
+				return -1
+			}
+			if (T.IsBigInt)
+			{
+				if (obj.GreaterThenOrEqual(0) && obj.LessThenOrEqual(this.m_MaxCharSize))
+				{
+					num := obj.Value + 0
+					return this._indexOf(num, StartIndex, Count, IgnoreCase)
+				}
+				return -1
+			}
+		}
+		else
+		{
+			if (Mfunc.IsInteger(obj))
+			{
+				if (obj < 0 || obj > this.m_MaxCharSize)
+				{
+					return -1
+				}
+				; integer values from 0 to 9 for var will be treated as string and not integer
+				; this is because it is not likely that a user would search for values between 0 and 9 as char code
+				; to search for charcode from 0 to 9 user muset input as supported MfObject such as MfChar
+				; or Mfbyte or MfInteger
+				If (obj <= 0 && obj <= 9)
+				{
+					num := Chr(obj)
+					return this._indexOf(num, StartIndex, Count, IgnoreCase)
+				}
+				return this._indexOf(obj, StartIndex, Count, IgnoreCase)
+			}
+			len := StrLen(obj)
+			if (len = 0)
+			{
+				return - 1
+			}
+			if (len = 1)
+			{
+				num := Asc(obj)
+				return this._indexOf(num, StartIndex, Count, IgnoreCase)
+			}
+			lst := new MfCharList(0, this.m_Encoding)
+			lst.AddString(obj)
+			return this._indexOfLst(lst, StartIndex, Count, IgnoreCase)
+		}
+		return -1
+	}
+; 	End:IndexOf ;}
+;{ Equals
+/*
+	Method: Equals()
+		Overrides MfObject.Equals()
+
+	OutputVar := instance.Equals(obj)
+
+	Equals(obj)
+		Compares the current instance with another object of the same type and returns boolean var that indicates whether the current instance equals obj instance.
+	Parameters:
+		obj
+			An MfCharList instance to compare to this instance.
+	Returns:
+		Returns a boolean value that indicates if obj equal to current instance.
+		If current instance is equal to obj then true is returned; Otherwise false is returned.
+	Throws:
+		Throws MfNullReferenceException if called as a static method.
+	Remarks:
+		Comparison is done in an ordinal manner.
+*/
+	Equals(obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(obj))
+		{
+			return false
+		}
+		If (!MfObject.IsObjInstance(obj, MfCharList))
+		{
+			return false
+		}
+		if (this.m_Count = 0 && obj.m_Count = 0)
+		{
+			return true
+		}
+		i := this.m_Count > obj.m_Count ? obj.m_Count : this.m_Count
+		if (i = 0)
+		{
+			return false
+		}
+		a := this.m_InnerList
+		b := obj.m_InnerList
+		j := 1
+		while (i > 0)
+		{
+			numA := a[j]
+			numB := b[j]
+			if (numA != NumB)
+			{
+				return false
+			}
+			i--
+			j++
+		}
+		if (this.m_Count > obj.m_Count)
+		{
+			while (j <= this.m_Count)
+			{
+				if (a[j] != 0)
+				{
+					return false
+				}
+				j++
+			}
+		}
+		else
+		{
+			while (j <= obj.m_Count)
+			{
+				if (b[j] != 0)
+				{
+					return false
+				}
+				j++
+			}
+		}
+		return true
+
+	}
+; End:Equals ;}
+;{ 	FromString
+/*
+	Method: FromString()
+		Create a new instance of MfListVar from a string.
+
+	OutputVar := instance.FromString(s [, includeWhiteSpace])
+
+	FromString(s [, includeWhiteSpace])
+		Create a new instance of MfCharList from a string by splitting the string into each char and adding char to inner list.
+	Parameters:
+		s
+			String var or instance of MfString to generate the MfCharList instance from.
+		includeWhiteSpace
+			Boolean value. If true then whitespace chars will be included if they exist s; Otherwise all Unicode whitespace chars will be ignores.
+			Can be boolean var or instance of MfBool.
+	Returns:
+		Returns new instance of MfCharList containing elements representing s.
+	Remarks:
+		Static Method
+*/
+	FromString(s, includeWhiteSpace=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		includeWhiteSpace := MfBool.GetValue(includeWhiteSpace, true)
+		str := new MfString(s, true)
+		lst := new MfCharList()
+		lstArray := []
+		iCount := 0
+		if (!includeWhiteSpace)
+		{
+			str := MfString.RemoveWhiteSpace(str, true)
+		}
+		
+		if (str.Length = 0)
+		{
+			return lst
+		}
+		enum := str.GetEnumerator(true)
+		while (enum.Next(i, c))
+		{
+			lstArray[++iCount] := c
+		}
+				
+		lst.m_InnerList := lstArray
+		lst.m_Count := str.Length
+		return lst
+	}
+; 	End:FromString ;}
+;{ 	Insert()			- Overrides - MfListBase
+/*
+	Method: Insert()
+		Inserts an integer char value element into the MfCharList at the specified index.
+	Insert(index, value)
+		Inserts an integer char value element into the MfCharList at the specified index.
+	Parameters:
+		index
+			The zero-based index at which value should be inserted.
+			Can be var integer or any type that matches IsIntegerNumber.
+		value
+			An integer value.
+			Can be var integer or any type that matches IsIntegerNumber.
+	Throws:
+		Throws MfNullReferenceException if called as a static method.
+		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is greater then Count.
+			However if AutoIncrease Size is set to true not error is thrown if index is greater then Count.
+		Throws MfArgumentException if index is not a valid Integer object or valid var Integer.
+	Remarks:
+		If index is equal to Count, value is added to the end of the instance.
+		If index is greater then Count and AutoIncrease is true then extra elements with a value of 0 will be added to
+		the instance that will fill in any extra indices absent before the index value.
+		In collections of contiguous elements, such as MfCharList, the elements that follow the insertion point move down
+		to accommodate the new element and Count is increased by one.
+		This method is an O(n) operation, where n is Count.
+*/
+	Insert(index, obj) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		_index := MfInteger.GetValue(index)
+		if (this.AutoIncrease = true)
+		{
+			If (_index >= this.m_Count)
+			{
+				this.m_FirstNullChar := this.m_Count
+			}
+			
+			While (_index >= this.m_Count)
+			{
+				this._AutoIncrease()
+			}
+		}
+		if ((_index < 0) || (_index > this.Count))
+		{
+			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_value := MfInt64.GetValue(obj)
+		if (_value < 0 || _value > this.m_MaxCharSize)
+		{
+			ex := new MfArgumentOutOfRangeException("obj"
+				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
+				, "0", format(":i",this.m_MaxCharSize)))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		If (_index = this.m_Count)
+		{
+			this._Add(_value)
+			return
+		}
+		i := _index + 1 ; step up to one based index for AutoHotkey array
+		this.m_InnerList.InsertAt(i, _value)
+		this.m_Count++
+		If (this.m_FirstNullChar = -1 && MfMemStrView.IsIgnoreCharLatin1(_value))
+		{
+			this.m_FirstNullChar := this.m_Count - 1
+		}
+	}
+;	End:Insert(index, obj) ;}
+;{ 	Remove
+/*
+	Method: Remove()
+		Removes the one or more occurrences of a specific object from the instance.
+		Overrides MfListBase.Remove()
+	Remove(obj [,StartIndex, Count, IgnoreCase, RemoveAll])
+		Removes the one or more occurrences of a specific object from the instance.
+	Parameters:
+		obj
+			The object or var to remove from the instance.
+			Can be var integer or var string or instance of MfCharList or instance of MfString or any type that matches IsIntegerNumber
+		StartIndex
+			Optional, the zero-based startIndex to start searching within the current instance of MfCharList.
+			If omitted the the then searching begin at index zero.
+		Count
+			Optional, the number of elements from StartIndex to check for index of obj within current instance of MfCharList.
+			If omitted then search starts at StartIndex and searches all elements of the current instance until if and when index is found.
+		IgnoreCase
+			Optional, if true then case will be ignored when searching for index; Otherwise case will be considered.
+			Default value is true.
+		RemoveAll
+			Optional Value, Default is false.
+			If true then all instance of obj are removed from current instance; Otherwise only first instance is removed.
+	Returns:
+		On Success returns the Object or var that was removed; Otherwise returns null
+	Throws:
+		Throws MfNullReferenceException if called as a static method.
+		Throws MfArgumentNullException if obj is null
+		Throws MfArgumentOutOfRangeException if StartIndex or Count is outside the range of elements in the list.
+	Remarks:
+		This method is an O(n) operation, where n is Count.
+		In collections of contiguous elements, such as MfCharList, the elements that follow the removed element
+		move up to occupy the vacated spot. If the collection is indexed, the indexes of the elements that are moved are also updated.
+		This behavior does not apply to collections where elements are conceptually grouped into buckets, such as a hash table.
+*/
+	Remove(obj, StartIndex:=0, Count:=-1, ignoreCase:=true, RemoveAll:=false) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(obj))
+		{
+			ex := new MfArgumentNullException("obj")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		StartIndex := MfInteger.GetValue(StartIndex, 0)
+		Count := MfInteger.GetValue(Count, -1)
+		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
+		RemoveAll := MfBool.GetValue(RemoveAll, false)
+		if (StartIndex < 0 || StartIndex >= this.m_Count)
+		{
+			ex := new MfArgumentOutOfRangeException("StartIndex",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (Count = 0)
+		{
+			return
+		}
+		if (Count < 0)
+		{
+			count := this.m_Count - StartIndex
+		}
+		if (Count - StartIndex > this.m_Count)
+		{
+			ex := new MfArgumentOutOfRangeException("Count",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		;return this._Remove(obj, StartIndex, Count, ignoreCase)
+		a := this._GetValueLengthType(obj)
+		if (a[3] = -1)
+		{
+			return
+		}
+		if (RemoveAll = false)
+		{
+			idx := this._RemoveHelper(a, StartIndex, Count, ignoreCase)
+			return
+		}
+		else
+		{
+			rep := this._GetReplaceIndexs(a, StartIndex, Count, ignoreCase) ; return instance of MfListVar
+			if (rep.m_Count = 0)
+			{
+				return
+			}
+			rlst := rep.m_InnerList
+			i := rep.m_Count
+			len := a[2]
+			; remove the index in reverse order to avoid remove incorrect chars
+			while (i >= 1)
+			{
+				this._RemoveAt(rlst[i], len)
+				i--
+			}
+		}
+		
+	}
+; 	End:Remove ;}
+;{ 	ToString
+/*
+	Method: ToString()
+		Gets a string representation of the object elements.
+		Overrides MfListBase.ToString()
+
+	OutPutVar := instance.ToString([returnAsObj, startIndex, count])
+
+	ToString([returnAsObj, startIndex, count])
+		Gets a string representation of the object elements
+	Parameters:
+		returnAsObj
+			Optional boolean value. Default is false.
+			If true result is returned as instance of MfString; Otherwise result is returned as a var string.
+			Can be boolean var or instance of MfBool.
+		startIndex
+			Optional. Default value is 0. The zero-based starting index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		count
+			Optional, the number of elements from StartIndex to include in the output string.
+			If omitted then starts at StartIndex and includes all elements to the end current instance.
+	Returns:
+		Returns string var or MfString instance representing object elements
+*/
+	ToString(returnAsObj:=false, startIndex:=0, count:="") {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		
+		_returnAsObj := MfBool.GetValue(returnAsObj, false)
+		_startIndex := MfInt64.GetValue(startIndex, 0)
+		if (_startIndex < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndex"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		_length := MfInteger.GetValue(count, this.m_Count - _startIndex)
+		
+		if (_length < 0)
+		{
+			ex := new MfArgumentOutOfRangeException("count", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_GenericPositive"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		if (_startIndex > (this.m_Count - _length))
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
+		retval := ""
+		mv := MfMemStrView.FromCharList(this,_startIndex, _length)
+		if (this.m_FirstNullChar >= 0 && this.m_FirstNullChar < this.m_Count - 1)
+		{
+			retval := mv.GetStringIgnoreNull().ToString()
+		}
+		else
+		{
+			retval := mv.ToString()
+		}
+		
+		return _returnAsObj = true?new MfString(retval):retval
+	}
+; 	End:ToString ;}
+;{ 	SubList
+/*
+	Method: Sublist()
+		Method extracts the elements from list, between two specified indices, and returns the a new list.
+
+	OutputVar := instance.SubList([startIndex, endIndex, leftToRight])
+
+	SubList([startIndex, endIndex, leftToRight])
+		Method extracts the elements from list, between two specified indices, and returns the a new list.
+	Parameters:
+		startIndex
+			Optional. Default value is 0. The zero-based starting index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		endIndex
+			Optional. Default value is null which includes all elements from startIndex to end of list.
+			The zero-based endIndex index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		leftToRight
+			Optional, Default value is true.
+			If true sublist elements are selected from start of list towards end of list;
+			Otherwise elements are selected from end of list towards start of list.
+			Can be boolean var or instance of MfBool.
+	Returns:
+		Returns a new instance of MfListVar the is a SubList of elements
+	Remarks:
+		If startIndex is greater than endIndex, this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
+		If either startIndex or endIndex is less than 0, it is treated as if it were 0.
+*/
+	SubList(startIndex=0, endIndex="", leftToRight=true) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
+		leftToRight := MfBool.GetValue(leftToRight, true)
+		maxIndex := this.Count - 1
+		
+		IsEndIndex := true
+		if (endIndex == "NaN")
+		{
+			IsEndIndex := False
+		}
+		If (IsEndIndex = true && endIndex < 0)
+		{
+			endIndex := 0
+		}
+		if (startIndex < 0)
+		{
+			startIndex := 0
+		}
+		if ((IsEndIndex = false) && (startIndex = 0))
+		{
+			Return this._clone(!leftToRight)
+		}
+		if ((IsEndIndex = false) && (startIndex > maxIndex))
+		{
+			Return this._clone(!leftToRight)
+		}
+		if ((IsEndIndex = true) && (startIndex > endIndex))
+		{
+			; swap values
+			tmp := startIndex
+			startIndex := endIndex
+			endIndex := tmp
+		}
+		if ((IsEndIndex = true) && (endIndex = startIndex))
+		{
+			return this._clone(!leftToRight)
+		}
+		if (startIndex > maxIndex)
+		{
+			return this._clone(!leftToRight)
+		}
+		if (IsEndIndex = true)
+		{
+			len :=  endIndex - startIndex
+			if ((len + 1) >= this.Count)
+			{
+				return this._clone(!leftToRight)
+			}
+		}
+		else
+		{
+			len := maxIndex
+		}
+		rLst := new MfCharList(, this.m_Encoding)
+		rl := rLst.m_InnerList
+		ll := this.m_InnerList
+		if (leftToRight)
+		{
+			i := startIndex + 1 ; Move to one base index
+			j := 1
+			;len++ ; move for one based index
+			while (j <= len)
+			{
+				rl[j] := ll[i]
+				i++
+				j++
+			}
+			rLst.m_Count := len
+			return rLst
+		}
+		else
+		{
+			i := this.m_Count - (startIndex + len)
+			i++ ; Move to one base index
+			j := len
+			;len++ ; move for one based index
+			while (j >= 1)
+			{
+				rl[j] := ll[i]
+				i++
+				j--
+			}
+			rLst.m_Count := len
+			return rLst
+		}
+	}
+; 	End:SubList ;}
+; End:Methods ;}
+;{ Internal Methods
+;{ 	_Add
+	_Add(int) {
+		
+		base._Add(int)
+		If (this.m_FirstNullChar = -1 && MfMemStrView.IsIgnoreCharLatin1(int))
+		{
+			this.m_FirstNullChar := this.m_Count - 1
+		}
+		return this.m_Count - 1
+	}
+; 	End:_Add ;}
+;{ 	_AutoIncrease
+	_AutoIncrease() {
+		if (this.IsFixedSize) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (this.IsReadOnly) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		If (this.m_Count < 1)
+		{
+			this.m_Count++
+			this.m_InnerList[this.m_Count] := 0
+			
+			return
+		}
+		NewCount := this.m_Count * 2
+		while this.m_Count < NewCount
+		{
+			this.m_Count++
+			this.m_InnerList[this.m_Count] := 0
+		}
+	}
+; 	End:_AutoIncrease ;}
+;{ 	_clone
+	; clones existing list
+	; if reverse is true then returned list is in the reverse order.
+	_clone(reverse:=false) {
+		cLst := new MfCharList(,this.m_Encoding)
+		cLst.Clear()
+		if (this.m_Count = 0)
+		{
+			return cLst
+		}
+		bl := cLst.m_InnerList
+		ll := this.m_InnerList
+		if (reverse = false)
+		{
+			i := 1
+			while (i <= this.m_Count)
+			{
+				bl[i] := ll[i]
+				i++
+			}
+		}
+		else
+		{
+			i := this.m_Count
+			j := 1
+			while (i >= 1)
+			{
+				bl[j] := ll[i]
+				i--
+				j++
+			}
+		}
+		cLst.m_Count := this.m_Count
+		return cLst
+	}
+; 	End:_clone ;}
+;{ 	_CompareIgnoreCase
 	_CompareIgnoreCase(objA, objB) {
 		
 		if (objA.Count = 0)
@@ -630,149 +1462,10 @@ class MfCharList extends MfListBase
 			return result
 		}
 	}
-	Contains(obj, IgnoreCase=true) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
-		if (this.IndexOf(obj,,IgnoreCase) >= 0)
-		{
-			return true
-		}
-		Return false
-	}
-;{ 	GetEnumerator()
-/*
-		Method: GetEnumerator()
-			GetEnumerator() Gets an enumerator
-		Remarks:
-			Returns an enumerator that iterates through a collection.  
-		Returns:
-			Returns an enumerator that iterates through a collection.
-		Throws:
-			Throws MfNotImplementedException if _NewEnum() Method has not been overridden in derived class.
-*/
-	GetCharEnumerator() {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		return new MfCharList.CharEnumerator(this)
-	}
-; End:GetEnumerator() ;}
-	IndexOf(obj, StartIndex=0, Count=-1, IgnoreCase=true) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		StartIndex := MfInteger.GetValue(StartIndex, 0)
-		Count := MfInteger.GetValue(Count, -1)
-		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
-		if (StartIndex < 0 || StartIndex >= this.m_Count)
-		{
-			ex := new MfArgumentOutOfRangeException("StartIndex",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (Count = 0)
-		{
-			return -1
-		}
-		if (Count < 0)
-		{
-			count := this.m_Count - StartIndex
-		}
-		if (Count - StartIndex > this.m_Count)
-		{
-			ex := new MfArgumentOutOfRangeException("Count",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (IsObject(obj))
-		{
-			if (!MfObject.IsObjInstance(obj, MfObject))
-			{
-				return -1
-			}
-			If (MfObject.IsObjInstance(obj, MfCharList))
-			{
-				if(obj.m_Count = 0)
-				{
-					return -1
-				}
-				return this._indexOfLst(obj, StartIndex, Count)
-			}
-			T := obj.GetType()
-			if (t.IsIntegerNumber)
-			{
-				return this._indexOf(obj.Value, StartIndex, Count,IgnoreCase)
-			}
-			if (T.IsString)
-			{
-				if (obj.Length = 0)
-				{
-					Return -1
-				}
-				if (obj.Length = 1)
-				{
-					num := Asc(obj.Value)
-					return this._indexOf(num, StartIndex, Count,IgnoreCase)
-				}
-				lst := new MfCharList(0, this.m_Encoding)
-				lst.AddString(obj.Value)
-				return this._indexOfLst(lst, StartIndex, Count,IgnoreCase)
-			}
-			if (T.IsChar)
-			{
-				return this._indexOf(obj.CharCode, StartIndex, Count,IgnoreCase)
-			}
-			if (T.IsUInt64)
-			{
-				if (obj.LessThenOrEqual(this.m_MaxCharSize))
-				{
-					num := obj.Value + 0
-					return this._indexOf(num, StartIndex, Count,IgnoreCase)
-				}
-				return -1
-			}
-			if (T.IsBigInt)
-			{
-				if (obj.GreaterThenOrEqual(0) && obj.LessThenOrEqual(this.m_MaxCharSize))
-				{
-					num := obj.Value + 0
-					return this._indexOf(num, StartIndex, Count, IgnoreCase)
-				}
-				return -1
-			}
-		}
-		else
-		{
-			if (Mfunc.IsInteger(obj))
-			{
-				if (obj < 0 || obj > this.m_MaxCharSize)
-				{
-					return -1
-				}
-				; integer values from 0 to 9 for var will be treated as string and not integer
-				; this is because it is not likely that a user would search for values between 0 and 9 as char code
-				; to search for charcode from 0 to 9 user muset input as supported MfObject such as MfChar
-				; or Mfbyte or MfInteger
-				If (obj <= 0 && obj <= 9)
-				{
-					num := Chr(obj)
-					return this._indexOf(num, StartIndex, Count, IgnoreCase)
-				}
-				return this._indexOf(obj, StartIndex, Count, IgnoreCase)
-			}
-			len := StrLen(obj)
-			if (len = 0)
-			{
-				return - 1
-			}
-			if (len = 1)
-			{
-				num := Asc(obj)
-				return this._indexOf(num, StartIndex, Count, IgnoreCase)
-			}
-			lst := new MfCharList(0, this.m_Encoding)
-			lst.AddString(obj)
-			return this._indexOfLst(lst, StartIndex, Count, IgnoreCase)
-		}
-		return -1
-	}
-
+; 	End:_CompareIgnoreCase ;}
+;{ 	_indexOf
+	; search current list of chars for a matching number of num
+	; if IgnoreCase is false then num is tested as Lower and Upper case for an index match
 	_indexOf(num, StartIndex=0, Count=-1, IgnoreCase=true) {
 		if (Count = 0)
 		{
@@ -840,7 +1533,11 @@ class MfCharList extends MfListBase
 		}
 		return -1
 	}
-
+; 	End:_indexOf ;}
+;{ 	_indexOfLst
+	; obj is instance of MfCharList
+	; searche current list for matching list of chars represented by obj
+	; if IgnoreCase is false then each char code in obj is tested as upper and lower case.
 	_indexOfLst(obj, StartIndex=0, Count=-1, IgnoreCase=true) {
 		if (Count = 0)
 		{
@@ -981,222 +1678,8 @@ class MfCharList extends MfListBase
 		}
 		Return -1
 	}
-
-;{ Equals
-	Equals(obj) {
-		if (MfNull.IsNull(obj))
-		{
-			return false
-		}
-		If (!MfObject.IsObjInstance(obj, MfCharList))
-		{
-			return false
-		}
-		if (this.m_Count = 0 && obj.m_Count = 0)
-		{
-			return true
-		}
-		i := this.m_Count > obj.m_Count ? obj.m_Count : this.m_Count
-		if (i = 0)
-		{
-			return false
-		}
-		a := this.m_InnerList
-		b := obj.m_InnerList
-		j := 1
-		while (i > 0)
-		{
-			numA := a[j]
-			numB := b[j]
-			if (numA != NumB)
-			{
-				return false
-			}
-			i--
-			j++
-		}
-		if (this.m_Count > obj.m_Count)
-		{
-			while (j <= this.m_Count)
-			{
-				if (a[j] != 0)
-				{
-					return false
-				}
-				j++
-			}
-		}
-		else
-		{
-			while (j <= obj.m_Count)
-			{
-				if (b[j] != 0)
-				{
-					return false
-				}
-				j++
-			}
-		}
-		return true
-
-	}
-; End:Equals ;}
-;{ 	FromString
-	FromString(s, includeWhiteSpace=true) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		includeWhiteSpace := MfBool.GetValue(includeWhiteSpace, true)
-		str := new MfString(s, true)
-		lst := new MfCharList()
-		lstArray := []
-		iCount := 0
-		if (!includeWhiteSpace)
-		{
-			str := MfString.RemoveWhiteSpace(str, true)
-		}
-		
-		if (str.Length = 0)
-		{
-			return lst
-		}
-		enum := str.GetEnumerator(true)
-		while (enum.Next(i, c))
-		{
-			lstArray[++iCount] := c
-		}
-				
-		lst.m_InnerList := lstArray
-		lst.m_Count := str.Length
-		return lst
-	}
-; 	End:FromString ;}
-;{ 	Insert()			- Overrides - MfListBase
-/*!
-	Method: Insert()
-		Overrides MfListBase.Insert()
-	Insert(index, obj)
-		Inserts an element into the MfList at the specified index.
-	Parameters
-		index
-			The zero-based index at which value should be inserted.
-		obj
-			The object to insert.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
-		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is greater than MfList.Count
-		Throws MfArgumentException if index is not a valid Integer object or valid var Integer.
-		Throws MfNotSupportedException if MfList is read-only or Fixed size.
-	Remarks
-		If index is equal to Count, value is added to the end of MfGenericList.
-		In MfList the elements that follow the insertion point move down to accommodate the new element.
-		This method is an O(n) operation, where n is Count.
-*/
-	Insert(index, obj) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		_index := MfInteger.GetValue(index)
-		if (this.AutoIncrease = true)
-		{
-			If (_index >= this.m_Count)
-			{
-				this.m_FirstNullChar := this.m_Count
-			}
-			
-			While (_index >= this.m_Count)
-			{
-				this._AutoIncrease()
-			}
-		}
-		if ((_index < 0) || (_index > this.Count))
-		{
-			ex := new MfArgumentOutOfRangeException("index", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		_value := MfInt64.GetValue(obj)
-		if (_value < 0 || _value > this.m_MaxCharSize)
-		{
-			ex := new MfArgumentOutOfRangeException("obj"
-				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
-				, "0", format(":i",this.m_MaxCharSize)))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		If (_index = this.m_Count)
-		{
-			this._Add(_value)
-			return
-		}
-		i := _index + 1 ; step up to one based index for AutoHotkey array
-		this.m_InnerList.InsertAt(i, _value)
-		this.m_Count++
-		If (this.m_FirstNullChar = -1 && MfMemStrView.IsIgnoreCharLatin1(_value))
-		{
-			this.m_FirstNullChar := this.m_Count - 1
-		}
-	}
-;	End:Insert(index, obj) ;}
-	Remove(obj,StartIndex=0, Count=-1, ignoreCase=true, RemoveAll=false) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		StartIndex := MfInteger.GetValue(StartIndex, 0)
-		Count := MfInteger.GetValue(Count, -1)
-		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
-		RemoveAll := MfBool.GetValue(RemoveAll, false)
-		if (StartIndex < 0 || StartIndex >= this.m_Count)
-		{
-			ex := new MfArgumentOutOfRangeException("StartIndex",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (Count = 0)
-		{
-			return
-		}
-		if (Count < 0)
-		{
-			count := this.m_Count - StartIndex
-		}
-		if (Count - StartIndex > this.m_Count)
-		{
-			ex := new MfArgumentOutOfRangeException("Count",MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexLength"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (MfNull.IsNull(obj))
-		{
-			ex := new MfArgumentNullException("obj")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		;return this._Remove(obj, StartIndex, Count, ignoreCase)
-		a := this._GetValueLengthType(obj)
-		if (a[3] = -1)
-		{
-			return
-		}
-		if (RemoveAll = fasle)
-		{
-			idx := this._RemoveHelper(a,StartIndex, Count, ignoreCase)
-			return
-		}
-		else
-		{
-			rep := this._GetReplaceIndexs(a, StartIndex, Count, ignoreCase)
-			if (rep.m_Count = 0)
-			{
-				return
-			}
-			rlst := rep.m_InnerList
-			i := rep.m_Count
-			len := a[2]
-			; remove the index in reverse order to avoid remove incorrect chars
-			while (i >= 1)
-			{
-				this._RemoveAt(rlst[i], len)
-				i--
-			}
-		}
-		
-	}
-
+; 	End:_indexOfLst ;}
+;{ 	_GetReplaceIndexs
 	_GetReplaceIndexs(a, startIndex, count, IgnoreCase) {
 		replacements := new MfListVar()
 		If (startIndex >= count)
@@ -1213,6 +1696,7 @@ class MfCharList extends MfListBase
 		{
 			return replacements
 		}
+		; if string or list
 		if (st = "s" || st = "l")
 		{
 			lst := ""
@@ -1245,7 +1729,7 @@ class MfCharList extends MfListBase
 
 			}
 		}
-		if (st = "i")
+		if (st = "i") ; if integer
 		{
 			j := a[1]
 
@@ -1270,7 +1754,8 @@ class MfCharList extends MfListBase
 		}
 		return replacements
 	}
-
+; 	End:_GetReplaceIndexs ;}
+;{ 	_RemoveHelper
 	_RemoveHelper(a, StartIndex, Count, ignoreCase) {
 		if (a[3] = -1)
 		{
@@ -1313,7 +1798,7 @@ class MfCharList extends MfListBase
 		}
 
 	}
-
+; 	End:_RemoveHelper ;}
 ;{ 	_GetValueLengthType
 	; gets an array of three values with information about the type
 	; if not a valud type then array contains three -1 values
@@ -1451,11 +1936,9 @@ class MfCharList extends MfListBase
 		return result
 	}
 ; 	End:_GetValueLengthType ;}
-	
+;{ 	_Remove
 	_Remove(obj, StartIndex=0, Count=-1, ignoreCase=true) {
-		
-		
-		
+
 		if (IsObject(obj))
 		{
 			if (!MfObject.IsObjInstance(obj, MfObject))
@@ -1610,6 +2093,8 @@ class MfCharList extends MfListBase
 		}
 		return
 	}
+; 	End:_Remove ;}
+;{ 	_RemoveAt
 	_RemoveAt(index, length) {
 		if (index + length > this.m_Count)
 		{
@@ -1627,6 +2112,8 @@ class MfCharList extends MfListBase
 		}
 		this.m_Count -= length
 	}
+; 	End:_RemoveAt ;}
+;{ 	_FromSubList
 	_FromSubList(startIndex, endIndex="") {
 		lst := this.SubList(startIndex, endIndex)
 		this.m_InnerList := ""
@@ -1634,212 +2121,9 @@ class MfCharList extends MfListBase
 		this.m_Count := lst.m_Count
 
 	}
-;{ 	ToString
-	ToString(returnAsObj = false, startIndex = 0, length="") {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		
-		_returnAsObj := MfBool.GetValue(returnAsObj, false)
-		_startIndex := MfInt64.GetValue(startIndex, 0)
-		if (_startIndex < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_StartIndex"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		_length := MfInteger.GetValue(length, this.m_Count - _startIndex)
-		
-		if (_length < 0)
-		{
-			ex := new MfArgumentOutOfRangeException("length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_GenericPositive"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+; 	End:_FromSubList ;}G1608
 
-		if (_startIndex > (this.m_Count - _length))
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayPlusOffTooSmall"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		
-		retval := ""
-		mv := MfMemStrView.FromCharList(this,_startIndex, _length)
-		if (this.m_FirstNullChar >= 0 && this.m_FirstNullChar < this.m_Count - 1)
-		{
-			retval := mv.GetStringIgnoreNull().ToString()
-		}
-		else
-		{
-			retval := mv.ToString()
-		}
-		
-		return _returnAsObj = true?new MfString(retval):retval
-	}
-; 	End:ToString ;}
-;{ 	SubList
-	; The SubList() method extracts the elements from list, between two specified indices, and returns the a new list.
-	; This method extracts the element in a list between "startIndex" and "endIndex", not including "endIndex" itself.
-	; If "startIndex" is greater than "endIndex", this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
-	; If either "startIndex" or "endIndex" is less than 0, it is treated as if it were 0.
-	; startIndex and endIndex mimic javascript substring
-	; Params
-	;	startIndex
-	;		The position where to start the extraction. First element is at index 0
-	;	endIndex
-	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
-	SubList(startIndex=0, endIndex="", leftToRight=true) {
-		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		startIndex := MfInteger.GetValue(startIndex, 0)
-		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
-		leftToRight := MfBool.GetValue(leftToRight, true)
-		maxIndex := this.Count - 1
-		
-		IsEndIndex := true
-		if (endIndex == "NaN")
-		{
-			IsEndIndex := False
-		}
-		If (IsEndIndex = true && endIndex < 0)
-		{
-			endIndex := 0
-		}
-		if (startIndex < 0)
-		{
-			startIndex := 0
-		}
-		if ((IsEndIndex = false) && (startIndex = 0))
-		{
-			Return this._clone(!leftToRight)
-		}
-		if ((IsEndIndex = false) && (startIndex > maxIndex))
-		{
-			Return this._clone(!leftToRight)
-		}
-		if ((IsEndIndex = true) && (startIndex > endIndex))
-		{
-			; swap values
-			tmp := startIndex
-			startIndex := endIndex
-			endIndex := tmp
-		}
-		if ((IsEndIndex = true) && (endIndex = startIndex))
-		{
-			return this._clone(!leftToRight)
-		}
-		if (startIndex > maxIndex)
-		{
-			return this._clone(!leftToRight)
-		}
-		if (IsEndIndex = true)
-		{
-			len :=  endIndex - startIndex
-			if ((len + 1) >= this.Count)
-			{
-				return this._clone(!leftToRight)
-			}
-		}
-		else
-		{
-			len := maxIndex
-		}
-		rLst := new MfCharList(, this.m_Encoding)
-		rl := rLst.m_InnerList
-		ll := this.m_InnerList
-		if (leftToRight)
-		{
-			i := startIndex + 1 ; Move to one base index
-			j := 1
-			;len++ ; move for one based index
-			while (j <= len)
-			{
-				rl[j] := ll[i]
-				i++
-				j++
-			}
-			rLst.m_Count := len
-			return rLst
-		}
-		else
-		{
-			i := this.m_Count - (startIndex + len)
-			i++ ; Move to one base index
-			j := len
-			;len++ ; move for one based index
-			while (j >= 1)
-			{
-				rl[j] := ll[i]
-				i++
-				j--
-			}
-			rLst.m_Count := len
-			return rLst
-		}
-	}
-; 	End:SubList ;}
-;{ 	_AutoIncrease
-	_AutoIncrease() {
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		If (this.m_Count < 1)
-		{
-			this.m_Count++
-			this.m_InnerList[this.m_Count] := 0
-			
-			return
-		}
-		NewCount := this.m_Count * 2
-		while this.m_Count < NewCount
-		{
-			this.m_Count++
-			this.m_InnerList[this.m_Count] := 0
-		}
-	}
-; 	End:_AutoIncrease ;}
-;{ 	_clone
-	; clones existing list
-	; if reverse is true then returned list is in the reverse order.
-	_clone(reverse:=false) {
-		cLst := new MfCharList(,this.m_Encoding)
-		cLst.Clear()
-		if (this.m_Count = 0)
-		{
-			return cLst
-		}
-		bl := cLst.m_InnerList
-		ll := this.m_InnerList
-		if (reverse = false)
-		{
-			i := 1
-			while (i <= this.m_Count)
-			{
-				bl[i] := ll[i]
-				i++
-			}
-		}
-		else
-		{
-			i := this.m_Count
-			j := 1
-			while (i >= 1)
-			{
-				bl[j] := ll[i]
-				i--
-				j++
-			}
-		}
-		cLst.m_Count := this.m_Count
-		return cLst
-	}
-; 	End:_clone ;}
-; End:Methods ;}
+; End:Internal Methods ;}
 ;{ Properties
 	m_AutoIncrease := false
 ;{	AutoIncrease[]
@@ -1937,7 +2221,6 @@ class MfCharList extends MfListBase
 			{
 				this.m_FirstNullChar := _index - 1
 			}
-			return this.m_InnerList[_index]
 		}
 	}
 ;{	Item[index]
@@ -2029,6 +2312,27 @@ class MfCharList extends MfListBase
 		}
 	}
 ;	End:Item[index] ;}
+;{ Encoding
+/*!
+	Property: Encoding [get]
+		Gets the Encoding value associated with the this instance
+	Value:
+		Var representing the Encoding property of the instance
+	Remarks:
+		Readonly Property
+*/
+	Encoding[]
+	{
+		get {
+			return this.m_Encoding
+		}
+		set {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
+			ex.SetProp(A_LineFile, A_LineNumber, "Encoding")
+			Throw ex
+		}
+	}
+; End:Encoding ;}
 ; End:Properties ;}
 ;{ 		internal class CharEnumerator
 	; can also enum itself
