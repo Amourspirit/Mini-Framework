@@ -1269,6 +1269,11 @@ Class MfString extends MfPrimitive
 						LastReplacemtIndex := sIndex
 						continue
 					}
+					else
+					{
+						searchStart := FoundPos + 1
+						continue
+					}
 				}
 					
 			}
