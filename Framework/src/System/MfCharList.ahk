@@ -32,14 +32,21 @@ class MfCharList extends MfListBase
 		Constructor: ()
 			Initializes a new instance of the MfList class.
 	*/
-	__new(Size=0, Encoding="UTF-16") {
+	__new(Size=0, Encoding="") {
 		if (this.__Class != "MfCharList")
 		{
 			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfStringBuilder"))
 		}
 		base.__new()
-		Encoding := MfString.GetValue(Encoding)
-		this.m_Encoding := Encoding
+		if (MfString.IsNullOrEmpty(Encoding))
+		{
+			this.m_Encoding := A_IsUnicode ? "UTF-16": "cp1252"
+		}
+		else
+		{
+			this.m_Encoding := MfString.GetValue(Encoding)
+		}
+		
 		default := 0
 		size := MfInteger.GetValue(size, 0)
 		If (size < 0)
@@ -56,13 +63,13 @@ class MfCharList extends MfListBase
 		}
 
 		
-		if (Encoding = "UTF-32")
+		if (this.m_Encoding = "UTF-32")
 		{
 			this.m_BytesPerChar := 4
 			this.m_sType := "UInt"
 			this.m_MaxCharSize := 0xFFFFFFFF
 		}
-		else if (Encoding = "UTF-16" || Encoding = "CP1200")
+		else if (this.m_Encoding = "UTF-16" || this.m_Encoding = "CP1200")
 		{
 			this.m_BytesPerChar := 2
 			this.m_sType := "UShort"
@@ -154,19 +161,9 @@ class MfCharList extends MfListBase
 ;{ 	Clone
 	Clone() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		cLst := new MfCharList()
-		cLst.Clear()
-		bl := cLst.m_InnerList
-		ll := this.m_InnerList
-		i := 1
-		while (i <= this.m_Count)
-		{
-			bl[i] := ll[i]
-			i++
-		}
-		cLst.m_Count := this.m_Count
-		return cLst
+		return this._clone(false)
 	}
+	
 ; 	End:Clone ;}
 ;{ CompareTo
 	CompareTo(obj, IgnoreCase=true) {
@@ -1044,6 +1041,35 @@ class MfCharList extends MfListBase
 
 	}
 ; End:Equals ;}
+;{ 	FromString
+	FromString(s, includeWhiteSpace=true, IgnoreCase=true) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
+		includeWhiteSpace := MfBool.GetValue(includeWhiteSpace, true)
+		str := new MfString(s, true)
+		lst := new MfCharList()
+		lstArray := []
+		iCount := 0
+		if (!includeWhiteSpace)
+		{
+			str := MfString.RemoveWhiteSpace(str, true)
+		}
+		
+		if (str.Length = 0)
+		{
+			return lst
+		}
+		enum := str.GetEnumerator(true)
+		while (enum.Next(i, c))
+		{
+			lstArray[++iCount] := c
+		}
+				
+		lst.m_InnerList := lstArray
+		lst.m_Count := str.Length
+		return lst
+	}
+; 	End:FromString ;}
 ;{ 	Insert()			- Overrides - MfListBase
 /*!
 	Method: Insert()
@@ -1662,11 +1688,11 @@ class MfCharList extends MfListBase
 	;		The position where to start the extraction. First element is at index 0
 	;	endIndex
 	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
-	SubList(startIndex=0, endIndex="") {
-		leftToRight := false
+	SubList(startIndex=0, endIndex="", leftToRight=true) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
-		leftToRight := MfBool.GetValue(leftToRight, false)
+		leftToRight := MfBool.GetValue(leftToRight, true)
 		maxIndex := this.Count - 1
 		
 		IsEndIndex := true
@@ -1684,11 +1710,11 @@ class MfCharList extends MfListBase
 		}
 		if ((IsEndIndex = false) && (startIndex = 0))
 		{
-			Return this.Clone()
+			Return this._clone(!leftToRight)
 		}
 		if ((IsEndIndex = false) && (startIndex > maxIndex))
 		{
-			Return this.Clone()
+			Return this._clone(!leftToRight)
 		}
 		if ((IsEndIndex = true) && (startIndex > endIndex))
 		{
@@ -1699,69 +1725,60 @@ class MfCharList extends MfListBase
 		}
 		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
-			return this.Clone()
+			return this._clone(!leftToRight)
 		}
 		if (startIndex > maxIndex)
 		{
-			return this.Clone()
+			return this._clone(!leftToRight)
 		}
 		if (IsEndIndex = true)
 		{
 			len :=  endIndex - startIndex
 			if ((len + 1) >= this.Count)
 			{
-				return this.Clone()
+				return this._clone(!leftToRight)
 			}
 		}
 		else
 		{
 			len := maxIndex
 		}
-		rLst := new MfCharList()
+		rLst := new MfCharList(, this.m_Encoding)
 		rl := rLst.m_InnerList
 		ll := this.m_InnerList
 		if (leftToRight)
 		{
 			i := startIndex + 1 ; Move to one base index
-			len++ ; move for one based index
-			while (i <= len)
+			j := 1
+			;len++ ; move for one based index
+			while (j <= len)
 			{
-				rl[i] := ll[i]
+				rl[j] := ll[i]
 				i++
+				j++
 			}
-			rLst.m_Count := i - 1
+			rLst.m_Count := len
 			return rLst
-		}
-		i := 1
-		iCount := 0
-		if (IsEndIndex = true)
-		{
-			While ((iCount + len) < (this.Count - 1))
-			{
-				iCount++
-			}
 		}
 		else
 		{
-			While ((iCount + (len - startIndex)) < (this.Count - 1))
+			i := this.m_Count - (startIndex + len)
+			i++ ; Move to one base index
+			j := len
+			;len++ ; move for one based index
+			while (j >= 1)
 			{
-				iCount++
+				rl[j] := ll[i]
+				i++
+				j--
 			}
+			rLst.m_Count := len
+			return rLst
 		}
-		while iCount < this.m_Count
-		{
-			iCount++
-			rl[i] := ll[iCount]
-			i++
-			
-		}
-		
-		rLst.m_Count := i - 1
-		return rLst
 	}
 ; 	End:SubList ;}
-	_AutoIncrease()
-	{
+;{ 	_AutoIncrease
+	_AutoIncrease() {
 		if (this.IsFixedSize) {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1786,13 +1803,50 @@ class MfCharList extends MfListBase
 			this.m_InnerList[this.m_Count] := 0
 		}
 	}
+; 	End:_AutoIncrease ;}
+;{ 	_clone
+	; clones existing list
+	; if reverse is true then returned list is in the reverse order.
+	_clone(reverse:=false) {
+		cLst := new MfCharList(,this.m_Encoding)
+		cLst.Clear()
+		if (this.m_Count = 0)
+		{
+			return cLst
+		}
+		bl := cLst.m_InnerList
+		ll := this.m_InnerList
+		if (reverse = false)
+		{
+			i := 1
+			while (i <= this.m_Count)
+			{
+				bl[i] := ll[i]
+				i++
+			}
+		}
+		else
+		{
+			i := this.m_Count
+			j := 1
+			while (i >= 1)
+			{
+				bl[j] := ll[i]
+				i--
+				j++
+			}
+		}
+		cLst.m_Count := this.m_Count
+		return cLst
+	}
+; 	End:_clone ;}
 ; End:Methods ;}
 ;{ Properties
 	m_AutoIncrease := false
 ;{	AutoIncrease[]
 /*
 	Property: AutoIncrease [get]
-		Gets a value indicating the list should Auto-Increase in size when Limit is reached
+		Gets or set a value indicating the list should Auto-Increase in size when Limit is reached
 	Value:
 		Var Bool
 	Remarks"
