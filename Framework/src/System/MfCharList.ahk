@@ -1042,9 +1042,8 @@ class MfCharList extends MfListBase
 	}
 ; End:Equals ;}
 ;{ 	FromString
-	FromString(s, includeWhiteSpace=true, IgnoreCase=true) {
+	FromString(s, includeWhiteSpace=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
 		includeWhiteSpace := MfBool.GetValue(includeWhiteSpace, true)
 		str := new MfString(s, true)
 		lst := new MfCharList()
