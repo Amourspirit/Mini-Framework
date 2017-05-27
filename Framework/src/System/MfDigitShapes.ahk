@@ -87,7 +87,23 @@ class MfDigitShapes extends MfEnum
 		this.AddEnumValue("NativeNational", 2)
 	}
 ; End:AddEnums() ;}
-
+;{	DestroyInstance()
+/*
+	Method: DestroyInstance()
+		Overrides MfEnum.DestroyInstance()
+	
+	MfSetFormatNumberType.DestroyInstance()
+	
+	DestroyInstance()
+		Set current instance of class to null.
+	Remarks
+		Static Method
+*/
+	DestroyInstance() {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		MfDigitShapes.m_Instance := Null
+	}
+; End:DestroyInstance() ;}
 ;{ 	GetInstance()
 /*
 	Method: GetInstance()
