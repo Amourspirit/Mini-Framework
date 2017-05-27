@@ -200,7 +200,7 @@ class MfNull extends MfNullBase
 		return obj
 	}
 ;{ GetObjOrNull
-;{ 	GetValue()			- Overrides - MfPrimitive
+;{ 	GetValue()
 /*
 	Method: GetValue()
 		Overrides MfPrimitive.GetValue()
@@ -214,6 +214,8 @@ class MfNull extends MfNullBase
 			This parameter is ignored as MfNull.Null.Value is always returned.
 	Returns:
 		Returns a var containing MfNull.Null.Value in all cases.
+	Remarks:
+		Obsolete method.
 */
 	GetValue(obj) {
 		return MfNull.Null.Value
