@@ -55,7 +55,7 @@ class MfQueue extends MfEnumerableBase
 		{
 			q.m_list := this.m_list.Clone()
 		}
-		q.m_version := q.m_version
+		q.m_version := this.m_version
 		return q
 	}
 ; 	End:Clone ;}

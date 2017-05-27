@@ -47,6 +47,18 @@ class MfStack extends MfEnumerableBase
 		this.m_version ++
 	}
 ; End:Clear() ;}
+;{ 	Clone
+	; since 0.4
+	Clone() {
+		st := new MfQueue()
+		if (this.Count > 0)
+		{
+			st.m_list := this.m_list.Clone()
+		}
+		st.m_version := this.m_version
+		return st
+	}
+; 	End:Clone ;}
 ;{ 	Contains(obj)
 /*
 	Method: Contains()
