@@ -1387,6 +1387,17 @@ Class MfString extends MfPrimitive
 	Return MD5 
 }
 ; End:GetHashCode() ;}
+;{ 	GetTypeCode()
+/*
+	Method: GetTypeCode()
+		Get an enumeration value of MfTypeCode the represents MfString Type Code.
+	Returns
+		And instance of MfEnum.EnumItem with a constant value that represents the type of MfString.
+*/
+	GetTypeCode() {
+		return MfTypeCode.Instance.String
+	}
+; End:GetTypeCode() ;}
 ;{	GetValue()			- Overrides	- MfPrimitive
 /*
 	GetValue(str)
