@@ -8,6 +8,24 @@
 class MfListVar extends MfListBase
 {
 	m_Default := ""
+	m_CaseSensitive := true
+;{ Constructor
+/*
+	Method: Constructor()
+		Initializes a new instance of the MfListVar class.
+
+	OutputVar := new MfListVar([Size, Default, IgnoreCase])
+
+		Optional. The initial number of elements to add to the instance.
+		Default value is 0
+		Default
+		Optional, the default value of elements added by if size is greater then zero.
+		Default value is 0
+		IgnoreCase
+		Boolean Value. If True then instance observes case; Otherwise case is ignored.
+	Remarks:
+		Initializes a new instance of the MfListVar class.
+*/
 	__new(Size=0, default=0, IgnoreCase=true) {
 		if (this.__Class != "MfListVar") {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfListVar"))
@@ -32,17 +50,22 @@ class MfListVar extends MfListBase
 		}
 		this.m_isInherited := false
 	}
-	;{ 	Add()				- Overrides - MfListBase
+; End:Constructor ;}
+;{ Methods
+;{ 	Add()				- Overrides - MfListBase
 /*
 	Method: Add()
-		Overrides MfList.Add()
-		This method must be overridden in the derived class
+		Adds an element to the end of the current instance.
+		Overrides MfListBase.Add()
+
+	OutputVar := instance.Add(obj)
+
 	Add(obj)
-		Adds an object to append at the end of the MfList
-	Parameters
+		Adds an element to the end of the current instance.
+	Parameters:
 		obj
-			The Object to locate in the MfList
-	Returns
+			The var to add to the current instance.
+	Returns:
 		Var containing Integer of the zero-based index at which the obj has been added.
 */
 	Add(obj) {
@@ -52,34 +75,43 @@ class MfListVar extends MfListBase
 	}
 ;	End:Add(value) ;}
 ;{ 	Clone
+/*
+	Method: Clone()
+		Clones all the elements of the current instance an return  a new instance.
+		Overrides MfListBase.Clone().
+
+	OutputVar := instance.Clone()
+
+	Clone()
+		Clones all the elements of the current instance an return  a new instance with all the elements copied.
+	Returns:
+		Returns a new instance that is a copy of the current instance.
+	Remarks:
+		This method is an O(n) operation, where n is Count.
+*/
 	Clone() {
-		cLst := new MfListVar()
-		cLst.Clear()
-		cl := cLst.m_InnerList
-		ll := this.m_InnerList
-		for i, v in ll
-		{
-			cl[i] := v
-		}
-		cLst.m_Count := this.Count
-		return cLst
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		return this._clone(false)
 	}
 ; 	End:Clone ;}
-
 ;{ 	Contains()			- Overrides - MfListBase
-/*!
+/*
 	Method: Contains()
-		Overrides MfListContains()
+		Determines whether the MfListVar contains a specific element.
+		Overrides MfListBase.Contains()
+
+	OutputVar := instance.Contains(obj)
+
 	Contains(obj)
-		Determines whether the MfList contains a specific element.
-	Parameters
+		Determines whether the MfListVar contains a specific var.
+	Parameters:
 		obj
-			The Object to locate in the MfList
-		Returns
-			Returns true if the MfList contains the specified value otherwise, false.
-	Remarks
+			The var to locate in the MfListVar
+	Returns:
+		Returns true if the MfListVar contains the specified value otherwise, false.
+	Remarks:
 		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
+		If obj is a string var then contains will follow CaseSensitive.
 */
 	Contains(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -96,6 +128,30 @@ class MfListVar extends MfListBase
 		return retval
 	}
 ;	End:Contains(obj) ;}
+;{ FromString
+/*
+	Method: FromString()
+		Create a new instance of MfListVar from a string.
+
+	OutputVar := instance.FromString(s[, includeWhiteSpace, ignoreCase])
+
+	FromString(s[, includeWhiteSpace, ignoreCase])
+		Create a new instance of MfListVar from a string by splitting the string into each char and adding char to inner list.
+	Parameters:
+		s
+			String var or instance of MfString to generate the MfListVar instance from.
+		includeWhiteSpace
+			Boolean value. If true then whitespace chars will be included if they exist s;
+			Otherwise all Unicode whitespace chars will be ignored.
+			Can be boolean var or instance of MfBool.
+		ignoreCase
+			Boolean value. Sets the CaseSensitive property of the new instance.
+			Can be boolean var or instance of MfBool.
+	Returns:
+		Returns new instance of MfListVar containing elements representing s.
+	Remarks:
+		Static Method
+*/
 	FromString(s, includeWhiteSpace=true, IgnoreCase=true) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
@@ -125,20 +181,25 @@ class MfListVar extends MfListBase
 		lst.CaseSensitive := !IgnoreCase
 		return lst
 	}
+; End:FromString ;}
 ;{ 	IndexOf()			- Overrides - MfListBase
 /*
 	Method: IndexOf()
-		Overrides MfList.IndexOf()
+		Searches for the specified var and returns the index of the first occurrence within the entire instance.
+		Overrides MfListBase.IndexOf()
+
+	OutputVar := instance.IndexOf(obj)
+
 	IndexOf(obj)
-		Searches for the specified Object and returns the zero-based index of the first occurrence within the entire MfList.
-	Parameters
+		Searches for the specified var and returns the index of the first occurrence within the entire instance.
+	Parameters:
 		obj
-			The object to locate in the List, Objects are not supportd
-	Returns
-		Returns  index of the first occurrence of value within the entire MfList,
-	Remarks
+			The var to locate in the MfListVar
+	Returns:
+		Returns  index of the first occurrence of value within the entire instance.
+	Remarks:
 		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
+		If obj is a string var then contains will follow CaseSensitive.
 */
 	IndexOf(obj, startIndex=0) {
 		startIndex := MfInteger.GetValue(startIndex)
@@ -193,17 +254,21 @@ class MfListVar extends MfListBase
 ;{ 	LastIndexOf()			- Overrides - MfListBase
 /*
 	Method: LastIndexOf()
-		Overrides MfListBase.LastIndexOf()
+		Searches for the specified var and returns the index of the last occurrence within the entire instance.
+		Overrides MfListBase.IndexOf()
+
+	OutputVar := instance.IndexOf(obj)
+
 	LastIndexOf(obj)
-		Searches for the specified Object and returns the zero-based index of the Last occurrence within the entire MfList.
-	Parameters
+		Searches for the specified var and returns the index of the last occurrence within the entire instance.
+	Parameters:
 		obj
-			The object to locate in the List, Objects are not supportd
-	Returns
-		Returns  index of the last occurrence of value within the entire List,
-	Remarks
+			The var to locate in the MfListVar
+	Returns:
+		Returns  index of the last occurrence of value within the entire instance.
+	Remarks:
 		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
+		If obj is a string var then contains will follow CaseSensitive.
 */
 	LastIndexOf(obj, startIndex=0) {
 		startIndex := MfInteger.GetValue(startIndex)
@@ -256,10 +321,49 @@ class MfListVar extends MfListBase
 		return int
 	}
 ;	End:IndexOf() ;}
+;{ ToList
+/*
+	Method: ToList()
+		Gets a MfList instance of current instance of MfListVar
+
+	OutputVar := instance.ToList()
+
+	ToList()
+		Gets a MfList instance of current instance of MfListVar
+	Returns:
+		Returns a new MfList with all the same element values as current instance of MfListVar.
+	Remarks:
+		Changing elements on returned MfList instance has no effect on current instance of MfListVar.
+*/
 	ToList() {
 		return this._ToList().Clone()
 	}
-	; startIndex and endIndex mimic javascript substring
+; End:ToList ;}
+;{ 	ToString
+/*
+	Method: ToString()
+		Gets a string representation of the object elements.
+		Overrides MfListBase.ToString()
+
+	OutPutVar := instance.ToString([separator, startIndex, endIndex])
+
+	ToString([separator, startIndex, endIndex])
+		Gets a string representation of the object elements
+	Parameters:
+		separator
+			Optional separator that will be inserted between each element in the return string.
+			Default value is comma ","
+			Can be var string, empty string or instance of MfString.
+		startIndex
+			Optional. Default value is 0. The zero-based starting index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		endIndex
+			Optional. Default value is null which includes all elements from startIndex to end of list.
+			The zero-based endIndex index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+	Returns:
+		Returns string var representing object elements
+*/
 	ToString(separator:=",", startIndex:=0, endIndex:="") {
 		
 		maxIndex := this.Count - 1
@@ -330,17 +434,35 @@ class MfListVar extends MfListBase
 		}
 		return sb.ToString()
 	}
+; 	End:ToString ;}
 ;{ 		SubList
-	; The SubList() method extracts the elements from list, between two specified indices, and returns the a new list.
-	; This method extracts the element in a list between "startIndex" and "endIndex", not including "endIndex" itself.
-	; If "startIndex" is greater than "endIndex", this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
-	; If either "startIndex" or "endIndex" is less than 0, it is treated as if it were 0.
-	; startIndex and endIndex mimic javascript substring
-	; Params
-	;	startIndex
-	;		The position where to start the extraction. First element is at index 0
-	;	endIndex
-	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
+/*
+	Method: Sublist()
+		Method extracts the elements from list, between two specified indices, and returns the a new list.
+
+	OutputVar := instance.SubList([startIndex, endIndex, leftToRight])
+
+	SubList([startIndex, endIndex, leftToRight])
+		Method extracts the elements from list, between two specified indices, and returns the a new list.
+	Parameters:
+		startIndex
+			Optional. Default value is 0. The zero-based starting index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		endIndex
+			Optional. Default value is null which includes all elements from startIndex to end of list.
+			The zero-based endIndex index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		leftToRight
+			Optional, Default value is true.
+			If true sublist elements are selected from start of list towards end of list;
+			Otherwise elements are selected from end of list towards start of list.
+			Can be boolean var or instance of MfBool.
+	Returns:
+		Returns a new instance of MfListVar the is a SubList of elements
+	Remarks:
+		If startIndex is greater than endIndex, this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
+		If either startIndex or endIndex is less than 0, it is treated as if it were 0.
+*/
 	SubList(startIndex=0, endIndex="", leftToRight=true) {
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
@@ -362,11 +484,11 @@ class MfListVar extends MfListBase
 		}
 		if ((IsEndIndex = false) && (startIndex = 0))
 		{
-			Return this.Clone()
+			Return this._clone(!leftToRight)
 		}
 		if ((IsEndIndex = false) && (startIndex > maxIndex))
 		{
-			Return this.Clone()
+			Return this._clone(!leftToRight)
 		}
 		if ((IsEndIndex = true) && (startIndex > endIndex))
 		{
@@ -377,18 +499,18 @@ class MfListVar extends MfListBase
 		}
 		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
-			return this.Clone()
+			return this._clone(!leftToRight)
 		}
 		if (startIndex > maxIndex)
 		{
-			return this.Clone()
+			return this._clone(!leftToRight)
 		}
 		if (IsEndIndex = true)
 		{
 			len :=  endIndex - startIndex
 			if ((len + 1) >= this.Count)
 			{
-				return this.Clone()
+				return this._clone(!leftToRight)
 			}
 		}
 		else
@@ -429,15 +551,56 @@ class MfListVar extends MfListBase
 		}
 	}
 ; 		End:SubList ;}
+;{ 	_clone
+	; clones existing list
+	; if reverse is true then returned list is in the reverse order.
+	_clone(reverse:=false) {
+		cLst := new MfListVar()
+		cLst.Clear()
+		if (this.m_Count = 0)
+		{
+			return cLst
+		}
+		bl := cLst.m_InnerList
+		ll := this.m_InnerList
+		if (reverse = false)
+		{
+			i := 1
+			while (i <= this.m_Count)
+			{
+				bl[i] := ll[i]
+				i++
+			}
+		}
+		else
+		{
+			i := this.m_Count
+			j := 1
+			while (i >= 1)
+			{
+				bl[j] := ll[i]
+				i--
+				j++
+			}
+		}
+		cLst.m_Count := this.m_Count
+		return cLst
+	}
+; 	End:_clone ;}
+; End:Methods ;}
 ;{ 	Properties
 	;{ CaseSensitive
-		m_CaseSensitive := true
-		/*!
-			Property: CaseSensitive [get/set]
-				Gets or sets the CaseSensitive value associated with the this instance
-			Value:
-				Var representing the CaseSensitive property of the instance
-		*/
+/*
+	Property: CaseSensitive [get\set]
+		Gets or sets the instance observes case.
+	Parameters:
+		Value:
+			boolean value or instance of MfBool.
+	Gets:
+		Gets current instance observes case.
+	Sets:
+		Sets current instance observes case.
+*/
 		CaseSensitive[]
 		{
 			get {
@@ -452,20 +615,22 @@ class MfListVar extends MfListBase
 ;{	Item[index]
 /*
 	Property: Item [get\set]
-		Overrides MfList.Item
 		Gets or sets the element at the specified index.
-		Will auto increase if index is less then Count -1
+		Overrides MfListBase.Item
 	Parameters:
-		index
+		Index:
 			The zero-based index of the element to get or set.
-		value
-			the value of the item at the specified index
+			Can be var integer or any type that matches IsIntegerNumber.
+		Value:
+			the value of the item at the specified index, this can be any var or object.
 	Gets:
 		Gets element at the specified index.
 	Sets:
 		Sets the element at the specified index
 	Throws:
-		Throws MfArgumentOutOfRangeException if index is less than zero
+		Throws MfArgumentOutOfRangeException if index is out of range of the number of elements in the list.
+	Remarks:
+		This property can not be overridden in derived classes
 */
 	Item[index]
 	{

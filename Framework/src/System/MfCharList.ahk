@@ -28,10 +28,21 @@ class MfCharList extends MfListBase
 	m_BytesPerChar := ""
 	m_FirstNullChar := -1
 ;{ Constructor
-	/*!
-		Constructor: ()
-			Initializes a new instance of the MfList class.
-	*/
+/*
+	Method: Constructor()
+		Initializes a new instance of the MfCharList class.
+
+	OutputVar := new MfCharList([Size, Encoding])
+
+		Optional. The initial number of elements to add to the instance.
+		Default value is 0, If Size is greater then 0 then n number of elements with the value of 0 will be added to the instance, where n is Size.
+		Encoding
+		Optional, the default encoding
+	Remarks:
+		Sealed Class
+		Initializes a new instance of the MfCharList class.
+		If Encoding is omitted and current AutoHotkey Version is Unicode then Encoding will default to "UTF-16"; Otherwise Encoding will default to "cp1252"
+*/
 	__new(Size=0, Encoding="") {
 		if (this.__Class != "MfCharList")
 		{
@@ -2128,12 +2139,18 @@ class MfCharList extends MfListBase
 	m_AutoIncrease := false
 ;{	AutoIncrease[]
 /*
-	Property: AutoIncrease [get]
+	Property: AutoIncrease [get\set]
 		Gets or set a value indicating the list should Auto-Increase in size when Limit is reached
-	Value:
-		Var Bool
-	Remarks"
-		Gets/Sets if the List will auto increase when limit is reached.
+	Parameters:
+		Value:
+			boolean value or instance of MfBool.
+	Gets:
+		Gets value indicating the list should Auto-Increase in size when Limit is reached
+	Sets:
+		Sets value indicating the list should Auto-Increase in size when Limit is reached
+	Remarks:
+		If AutoIncrease is true then Method Insert() and properties Item and Char. will automatically increase  if needed when adding new values.
+		All values added by AutoIncrease will have an initial value of 0
 */
 	AutoIncrease[]
 	{
@@ -2147,19 +2164,20 @@ class MfCharList extends MfListBase
 ;	End:AutoIncrease[] ;}
 /*
 	Property: Char [get\set]
-		Gets or sets the char element at the specified index.
+		Gets or sets the element at the specified index as char
 	Parameters:
-		index
-			The zero-based index of the element to get or set.
-		value
-			the value of the item at the specified index
+		Index:
+			The zero-based index of the char element to get or set.
+			Can be var integer or any type that matches IsIntegerNumber.
+		Value:
+			the char at the specified index
 	Gets:
 		Gets element at the specified index.
 	Sets:
-		Sets the char element at the specified index
+		Sets the element at the specified index
 	Throws:
-		Throws MfArgumentOutOfRangeException if index is less than zero or index is equal to or greater than Count
-		Throws MfArgumentException if index is not a valid MfInteger instance or valid var containing Integer
+		Throws MfArgumentOutOfRangeException if index is less then zero.
+		Throws MfArgumentOutOfRangeException if index is out of range of the number of elements in the list and AutoIncrease is false.
 */
 	Char[index]
 	{
@@ -2226,20 +2244,21 @@ class MfCharList extends MfListBase
 ;{	Item[index]
 /*
 	Property: Item [get\set]
+		Gets or sets the element as char code integer at the specified index.
 		Overrides MfListBase.Item
-		Gets or sets the element at the specified index.
 	Parameters:
-		index
+		Index:
 			The zero-based index of the element to get or set.
-		value
-			the value of the item at the specified index
+			Can be var integer or any type that matches IsIntegerNumber.
+		Value:
+			the value of the item at the specified index, this can be any var or object.
 	Gets:
-		Gets element at the specified index.
+		Gets element as char code integer at the specified index.
 	Sets:
-		Sets the element at the specified index
+		Sets the element as char code integer at the specified index
 	Throws:
-		Throws MfArgumentOutOfRangeException if index is less than zero or index is equal to or greater than Count
-		Throws MfArgumentException if index is not a valid MfInteger instance or valid var containing Integer
+		Throws MfArgumentOutOfRangeException if index is less then zero.
+		Throws MfArgumentOutOfRangeException if index is out of range of the number of elements in the list and AutoIncrease is false.
 */
 	Item[index]
 	{
@@ -2313,13 +2332,14 @@ class MfCharList extends MfListBase
 	}
 ;	End:Item[index] ;}
 ;{ Encoding
-/*!
+/*
 	Property: Encoding [get]
-		Gets the Encoding value associated with the this instance
-	Value:
-		Var representing the Encoding property of the instance
+		Gets the Encoding of the current instance
+	Gets:
+		Gets the Encoding of the current instance of MfCharList.
 	Remarks:
 		Readonly Property
+		Encoding may be set in the constructor.
 */
 	Encoding[]
 	{
