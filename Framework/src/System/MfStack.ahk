@@ -50,7 +50,7 @@ class MfStack extends MfEnumerableBase
 ;{ 	Clone
 	; since 0.4
 	Clone() {
-		st := new MfQueue()
+		st := new MfStack()
 		if (this.Count > 0)
 		{
 			st.m_list := this.m_list.Clone()
