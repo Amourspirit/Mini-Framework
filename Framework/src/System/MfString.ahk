@@ -2873,22 +2873,29 @@ Class MfString extends MfPrimitive
 ;{ 	RemoveWhiteSpace
 /*
 	Method: RemoveWhiteSpace()
+		Gets a string with all Unicode whitespace chars removed
 
-	RemoveWhiteSpace()
-		Gets a string with all unicode whitespace chars removed
+	OutputVar := MfString.RemoveWhiteSpace(str [, ReturnAsObject])
+
+	RemoveWhiteSpace(str [, ReturnAsObject])
+		Gets a string with all Unicode whitespace chars removed
 	Parameters:
 		str
-			The string var or MfString instance that is the source string
+			The string to remove all Unicode whitespace chars from.
+			Can be Var or instance of MfString.
 		ReturnAsObject
-			Optional. Default is false.
-			If true, then result will be returned as instance of MfString; Otherwise
-			result will be returned as string var
+			Optional Boolean Value. Default is false.
+			If true the return value will be an instance of MfString with ReturnAsObject set to true; Otherwise a string var is returned.
 	Returns:
-		Returns string var or MfString instance with all unicode chars removed
+		If ReturnAsObject is true return MfString instance; Otherwise returns string var.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+	Since:
+		Version 0.4
 	Remarks:
 		Static Method
 */
-	RemoveWhiteSpace(str, ReturnAsObject=false) {
+	RemoveWhiteSpace(str, ReturnAsObject:=false) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		ReturnAsObject := MfBool.GetValue(ReturnAsObject, false)
 		mStr := MfMemoryString.FromAny(str)
@@ -2929,7 +2936,7 @@ Class MfString extends MfPrimitive
 	Throws
 		Throws MfArgumentNullException if MfString in not an instace and str is null or empty.
 */
-	Reverse(str = "") {
+	Reverse(str:="") {
 		retval := MfString.Empty
 		_ist := this.IsInstance()
 		if(_ist)
@@ -3618,108 +3625,57 @@ Class MfString extends MfPrimitive
 */
 	ToCharArray(startIndex = 0, length = "") {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		int_StartIndex := 0
-		try
+		startIndex := MfInteger.GetValue(startIndex, 0)
+		length := MfInteger.GetValue(length, -1)
+		if ((StartIndex < 0) || (StartIndex >= this.m_Length))
 		{
-			int_StartIndex := MfInteger.GetValue(startIndex)
-		}
-		catch e
-		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_Value_Error","StartIndex"), "StartIndex")
+			ex := new MfArgumentOutOfRangeException("StartIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		
-		rao := this.ReturnAsObject
-		this.ReturnAsObject := false
-		if(MfNull.IsNull(length)) {
-			_length := (this.Length - startIndex)
-		} else {
-			_length := Null
-			try {
-				_length := MfInteger.GetValue(length)
-			} catch e {
-				ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInteger"), e)
+		If (length > 0)
+		{
+			If (length - startIndex > this.m_Length)
+			{
+				ex := new MfArgumentOutOfRangeException("Length", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
 		}
-		if ((startIndex < 0) || (startIndex > this.Length) || ((startIndex > (this.Length - _length))))
+		mStr := this._GetMStr()
+
+		clst := mStr.ToCharList(startIndex, length)
+		rlst := new MfList()
+		inLst := rLst.m_InnerList
+		j := 1
+		for i, v in clst
 		{
-			this.ReturnAsObject := rao
-			ex := new MfArgumentOutOfRangeException("startIndex"
-				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_IndexString"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
+			int := new MfInteger(v)
+			inLst[j++] := new MfChar(int)
 		}
-		
-		
-		if (_length < 0)
-		{
-			this.ReturnAsObject := rao
-			ex := new MfArgumentOutOfRangeException("length"
-				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_LengthString"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-		}
-		
-		Try 
-		{
-			if ((this.m_Length - int_StartIndex) < _length)
-			{
-				_length := this.m_Length - int_StartIndex
-			}
-			doSub := true
-			if ((int_StartIndex = 0) && (_length = this.m_Length))
-			{
-				doSub := false
-			}
-			strValue := ""
-			if (doSub = true)
-			{
-				strValue := SubStr(this.Value, (int_StartIndex + 1), _length)
-			}
-			else
-			{
-				strValue := this.Value
-			}
-			arr := new MfGenericList(MfChar)
-			c_array := StrSplit(strValue)  
-			Loop % c_array.MaxIndex()
-			{
-				arr.Add(new MfChar(c_array[a_index], rao)) ; set MfChar.ReturnAsObject to the same as this.ReturnAsObject
-			}
-			this.ReturnAsObject := rao
-		}
-		catch e
-		{
-			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_General_Error"), e)
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		
-		return arr
+		rlst.m_Count := clst.Count
+		return rlst
 	}
 ; End:ToCharArray(StartIndex = 0, Length = "") ;}
 ;{ ToCharList
 /*
 	Method: ToCharList()
 
-	ToCharList()
-		Copies the Source address Chars to destination MfCharList instance
+	OutputVar := instance.ToCharList([startIndex, length])
+
+	ToCharList([startIndex, length])
+		Convert current instance of MfString to instance of MfCharList.
 	Parameters:
-		SourceAddress
-			Source address to copy chars from
-		CharList
-			Destination instance of MfCharList
-		destinationIndex
-			The Destination index to start copying into
-		count
-			The Number of Chars to copy
-	Throws:
-		Throws MfArgumentOutOfRangeException, MfException
+		startIndex
+			Optional, the zero-based integer index starting character position of in this instance.
+			Can be MfInteger instance or var containing integer.
+		length
+			Integer value containing the number of characters copy to the list.
+			Can be MfInteger instance or var containing integer.
+	Returns:
+		Instance of MfCharList
 	Remarks:
-		instance method
+		MfCharList instance will contain a list of integer char code value that represent the string outputted.
 */
 	ToCharList(startIndex:=0, length:=-1) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -3748,23 +3704,24 @@ Class MfString extends MfPrimitive
 ;{ 	FromCharList
 /*
 	Method: FromCharList()
+		Create a new instance of MfString from an instance of MfCharList.
 
-	FromCharList()
-		Converts MfCharList into MfString instance
+	OutputVar := instance.FromCharList(chars [,startIndex, length])
+
+	MfString.FromCharList(chars [,startIndex, length])
+		Create a new instance of MfString from an instance of MfCharList.
 	Parameters:
 		chars
-			instance of MfCharList containing byte values to convert
+			Instance of MfCharList that contains chars values to convert MfString instance.
 		startIndex
-			The starting index in the MfCharList to start the conversion
-			Default value is 0
+			Optional, the zero-based starting index in chars to start the conversion.
+			If Omitted then chars are read from index 0 forward
+			Can be MfInteger instance or var containing integer.
 		length
-			the length in bytes to convert.
-			Default value is -1
-			When length is less then 0 then all chars past startIndex are included
+			Integer value containing the number of char value copy from the list.
+			Can be MfInteger instance or var containing integer.
 	Returns:
-		Returns instance of MfString with RetunAsObject set to true
-	Throws:
-		Throws MfArgumentException, MfArgumentOutOfRangeException
+		Returns new instance of MfString with RetunAsObject set to true, representing chars as a string.
 	Remarks:
 		Static Method
 */
