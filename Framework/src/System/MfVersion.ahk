@@ -570,9 +570,9 @@ class MfVersion extends MfObject
 		if (!fieldCount) {
 			return MfString.Empty
 		} else if (fieldCount = 1) {
-			return this.Major
+			return format("{:i}", this.Major)
 		} else if (fieldCount = 2) {
-			return this.Major . "." . this.Minor
+			return format("{:i}.{:i}", this.Major, this.Minor)
 		} 
 		if (this.m_Build = -1) {
 			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
@@ -581,11 +581,7 @@ class MfVersion extends MfObject
 			throw ex
 		}
 		if (fieldCount = 3) {
-			return MfString.Concat(this.Major
-				,"."
-				,this.Minor
-				,"."
-				,this.Build)
+			return format("{:i}.{:i}.{:i}", this.Major, this.Minor, this.Build)
 		}
 		if (this.m_Revision = -1)
 		{
@@ -596,13 +592,7 @@ class MfVersion extends MfObject
 		}
 		if (fieldCount = 4)
 		{
-			return MfString.Concat(this.Major
-			,"."
-			,this.Minor
-			,"."
-			,this.Build
-			,"."
-			,this.Revision)
+			return format("{:i}.{:i}.{:i}.{:i}",this.Major, this.Minor, this.Build, this.Revision)
 		}
 		ex := new MfArgumentException(Environment.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper"
 			, "0","3"), "fieldCount")
@@ -853,7 +843,7 @@ class MfVersion extends MfObject
 	Build[]
 	{
 		get {
-			return format("{:i}", this.m_Build)
+			return this.m_Build
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -875,7 +865,7 @@ class MfVersion extends MfObject
 	Major[]
 	{
 		get {
-			return format("{:i}", this.m_Major)
+			return this.m_Major
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -904,7 +894,7 @@ class MfVersion extends MfObject
 		get {
 			
 			Hiword := this.m_Revision >> 16
-			return format("{:i}", Hiword)
+			return Hiword
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -925,7 +915,7 @@ class MfVersion extends MfObject
 	Minor[]
 	{
 		get {
-			return format("{:i}", this.m_Minor)
+			return this.m_Minor
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -952,7 +942,7 @@ class MfVersion extends MfObject
 	{
 		get {
 			Loword := this.m_Revision & 0xFFFF
-			return format("{:i}", Loword)
+			return Loword
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
@@ -974,7 +964,7 @@ class MfVersion extends MfObject
 	Revision[]
 	{
 		get {
-			return format("{:i}", this.m_Revision)
+			return this.m_Revision
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
