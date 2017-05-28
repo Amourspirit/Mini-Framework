@@ -64,12 +64,12 @@ class MfStringSplitOptions extends MfEnum
 		Throws MfNotSupportedException if this sealed class is extended or inherited.
 		Throws MfArgumentException if arguments are not correct.
 */
-	__New(value) {
+	__New(args*) {
 		; Throws MfNotSupportedException if MfStringSplitOptions Sealed class is extended
 		if (this.__Class != "MfStringSplitOptions") {
 			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfStringSplitOptions"))
 		}
-		base.__New(value)
+		base.__New(args*)
 		this.m_isInherited := this.__Class != "MfStringSplitOptions"
 	}
 ; End:Constructor: () ;}
