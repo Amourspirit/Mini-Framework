@@ -46,7 +46,7 @@ class MfCharList extends MfListBase
 	__new(Size=0, Encoding="") {
 		if (this.__Class != "MfCharList")
 		{
-			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfStringBuilder"))
+			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfCharList"))
 		}
 		base.__new()
 		if (MfString.IsNullOrEmpty(Encoding))

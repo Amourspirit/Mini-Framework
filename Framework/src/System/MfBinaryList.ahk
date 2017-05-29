@@ -29,6 +29,10 @@ class MfBinaryList extends MfListBase
 			Initializes a new instance of the MfList class.
 	*/
 	__new(Size=0, default=0) {
+		if (this.__Class != "MfBinaryList")
+		{
+			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfStringBuilder"))
+		}
 		base.__new()
 		size := MfInteger.GetValue(size, 0)
 		default := MfInteger.GetValue(default, 0)
