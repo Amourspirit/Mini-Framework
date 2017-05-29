@@ -53,9 +53,17 @@ http://www.fileformat.info/info/unicode/category/index.htm
 */
 class MfCharUnicodeInfo extends MfObject
 {
-	__New()
-	{
-		throw new MfNotSupportedException()
+	/*!
+		Constructor: ()
+			Initializes a new instance of the MfCharUnicodeInfo class.
+		Remarks:
+			It is not necessary to construct new instance of MfCharUnicodeInfo class
+			as MfCharUnicodeInfo class contains static properties only
+		Throws:
+			Throws MfNotSupportedException if class instance is created
+	*/
+	__New() {
+		throw new MfNotSupportedException(MfString.Format(MfEnvironment.Instance.GetResourceString("NotSupportedException_Static_Class"), "MfCharUnicodeInfo"))
 	}
 ;{ 	BIDI_CATEGORY_OFFSET		= 1
 	static m_BIDI_CATEGORY_OFFSET		:= 1
