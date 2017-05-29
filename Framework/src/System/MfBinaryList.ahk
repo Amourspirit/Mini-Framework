@@ -15,8 +15,8 @@
  */
 ; End:License ;}
 /*!
-	Class: MfList
-		MfList class exposes methods and properties used for common List and array type operations for strongly typed collections.
+	Class: MfBinaryList
+		MfBinaryList is a sealed class that exposes methods and properties used for list of binary values.
 	Inherits:
 		MfListBase
 */
