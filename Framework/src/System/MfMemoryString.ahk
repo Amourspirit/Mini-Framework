@@ -1256,7 +1256,8 @@ class MfMemoryString extends MfObject
 		}
 
 		mStr := this._FromAny(obj)
-		if (IgnoreCase && Count < 0)
+		; InBuffer currently only 32 bit
+		if (A_PtrSize = 4 && IgnoreCase && Count < 0)
 		{
 			return this.m_MemView.InBuffer(mStr.m_MemView, startIndex)
 		}
@@ -1370,7 +1371,8 @@ class MfMemoryString extends MfObject
 		{
 			return -1
 		}
-		if (IgnoreCase && Count <= -1)
+		; InBufferRev currently only for 32 bit
+		if (A_PtrSize = 4 && IgnoreCase && Count <= -1)
 		{
 			if (startIndex >= 0)
 			{
@@ -5297,6 +5299,7 @@ class MfMemStrView extends MfMemBlkView
 	Remarks:
 		Wraper method for InBuf
 		This method is super fast due to the machine code that performs the search
+		This method only works for 32 bit machines currently and will throw MfNotSupportedException if run on any other OS other then 32 bit
 */
 	InBuffer(ByRef NeedleObj, StartOffset=0) {
 		if (NeedleObj.__Class != "MfMemStrView")
@@ -5352,6 +5355,7 @@ class MfMemStrView extends MfMemBlkView
 	Remarks:
 		Wraper method for InBufRev
 		This method is super fast due to the machine code that performs the search
+		This method only works for 32 bit machines currently and will throw MfNotSupportedException if run on any other OS other then 32 bit
 */
 	InBufferRev(ByRef NeedleObj, EndOffset=-1) {
 		if (NeedleObj.__Class != "MfMemStrView")
@@ -5420,6 +5424,13 @@ class MfMemStrView extends MfMemBlkView
 		Static Method
 */
 	InBuf(haystackAddr, needleAddr, haystackSize, needleSize, StartOffset=0) {
+		if (A_PtrSize != 4)
+		{
+			; method only works on 32 bit machines currently
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Only32BitOs"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		Static fun
 		IfEqual,fun,
 		{
@@ -5468,7 +5479,14 @@ class MfMemStrView extends MfMemBlkView
 		See InBufferRev for wraper function
 		Static Method
 */
-	InBufRev(haystackAddr, needleAddr, haystackSize, needleSize, StartOffsetOfLastNeedleByte=-1) {   
+	InBufRev(haystackAddr, needleAddr, haystackSize, needleSize, StartOffsetOfLastNeedleByte=-1) {
+		if (A_PtrSize != 4)
+		{
+			; method only works on 32 bit machines currently
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Only32BitOs"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		Static fun
 		IfEqual,fun,
 		{
@@ -5865,7 +5883,7 @@ class MfMemStrView extends MfMemBlkView
 		minIndex := 0
 		MatchCount := 0
 		iCount = 0
-		while ( i > minIndex)
+		while ( i >= minIndex)
 		{
 			iCount++
 			if (iCount > Count)
