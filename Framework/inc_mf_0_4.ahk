@@ -67,6 +67,7 @@
 #Include <Mini_Framwork\0.4\System\MfTimeSpan>						; inherits MfPrimitive
 #Include <Mini_Framwork\0.4\System\MfUint16>						; inherits MfPrimitive
 #Include <Mini_Framwork\0.4\System\MfUInt32>						; inherits MfPrimitive
+#Include <Mini_Framwork\0.4\System\MfUInt64>						; inherits MfPrimitive
 #Include <Mini_Framwork\0.4\System\MfSByte>							; inherits MfPrimitive
 #Include <Mini_Framwork\0.4\System\MfCollectionBase>				; inherits MfEnumerableBase
 #Include <Mini_Framwork\0.4\System\MfListBase>						; inherits MfEnumerableBase

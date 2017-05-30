@@ -227,8 +227,7 @@ Class MfUInt64 extends MfPrimitive
 		}
 		this.m_bigx := bigx
 
-		
-		return this
+		return this._ReturnUInt64(this)
 	}
 ;{ 	CompareTo()			- Overrides	- MfObject
 	CompareTo(obj) {
@@ -279,7 +278,7 @@ Class MfUInt64 extends MfPrimitive
 			throw ex
 		}
 		this.m_bigx := bigx
-		return this
+		return this._ReturnUInt64(this)
 
 	}
 ; 	End:Divide ;}
@@ -405,7 +404,7 @@ Class MfUInt64 extends MfPrimitive
 			}
 			catch e
 			{
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt64"), e)
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToUInt64"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -613,7 +612,7 @@ Class MfUInt64 extends MfPrimitive
 			throw ex
 		}
 		this.m_bigx := bigx
-		return this
+		return this._ReturnUInt64(this)
 
 	}
 ; 	End:Multiply ;}
@@ -749,7 +748,7 @@ Class MfUInt64 extends MfPrimitive
 
 		uint := MfBinaryConverter.ToUInt64(rBits)
 		this.m_bigx := uint.m_bigx
-		Return this
+		return this._ReturnUInt64(this)
 	}
 ; End:BitAnd ;}
 ;{ BitNot
@@ -767,7 +766,7 @@ Class MfUInt64 extends MfPrimitive
 
 		uint := MfBinaryConverter.ToUInt64(rBits)
 		this.m_bigx := uint.m_bigx
-		Return this
+		return this._ReturnUInt64(this)
 	}
 ; End:BitNot ;}
 ;{ BitOr
@@ -802,7 +801,7 @@ Class MfUInt64 extends MfPrimitive
 
 		uint := MfBinaryConverter.ToUInt64(rBits)
 		this.m_bigx := uint.m_bigx
-		Return this
+		return this._ReturnUInt64(this)
 	}
 ; End:BitOr ;}
 ;{ BitXor
@@ -892,7 +891,7 @@ Class MfUInt64 extends MfPrimitive
 
 		uint := MfBinaryConverter.ToUInt64(rBits)
 		this.m_bigx := uint.m_bigx
-		Return this
+		return this._ReturnUInt64(this)
 	}
 ; End:BitShiftLeft ;}
 ;{ BitShiftRight
@@ -941,7 +940,7 @@ Class MfUInt64 extends MfPrimitive
 			return this
 		}
 		this.m_bigx.BitShiftRight(_value)
-		return this
+		return this._ReturnUInt64(this)
 	}
 ; End:BitShiftRight ;}
 ;{	Subtract()
@@ -967,7 +966,7 @@ Class MfUInt64 extends MfPrimitive
 			throw ex
 		}
 		this.m_bigx := tx
-		return this
+		return this._ReturnUInt64(this)
 	}
 ; End:Subtract() ;}
 ;{ 	ToString()			- Overrides	- MfPrimitive
@@ -984,13 +983,13 @@ Class MfUInt64 extends MfPrimitive
 	Throws
 		Throws MfNullReferenceException if called as a static method
 */
-	ToString(base=10) {
+	ToString() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		return this.m_bigx.ToString(base)
+		return this.m_bigx.ToString(10)
 	}
 ;  End:ToString() ;}
 ;{ 	TryParse()
-	TryParse(byref int, args*) {
+	TryParse(byref result, args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
 		cnt := objParams.Count
@@ -1045,19 +1044,19 @@ Class MfUInt64 extends MfPrimitive
 		}
 		if (retval)
 		{
-			if (IsObject(int))
+			if (IsObject(result))
 			{
 				x := MfBigInt.Parse(num, 10)
-				if (!MfObject.IsObjInstance(int, MfUInt64))
+				if (!MfObject.IsObjInstance(result, MfUInt64))
 				{
-					int := new MfUInt64(0, true)
+					result := new MfUInt64(0, true)
 				}
-				int.m_bigx := x
+				result.m_bigx := x
 				;int.Value := num
 			}
 			else
 			{
-				int := num
+				result := num
 			}
 		}
 		return retval
