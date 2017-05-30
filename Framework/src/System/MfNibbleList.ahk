@@ -436,17 +436,20 @@ class MfNibbleList extends MfListBase
 		}
 		sb := new MfText.StringBuilder(_length)
 		i := _startIndex
+		i++ ; move to one base index
 		iMaxIndex := _length - 1
 		ll := this.m_InnerList
-		while i <= iMaxIndex
+		iCount := 0
+		while (iCount < _length)
 		{
-			n := ll[i + 1]
+			n := ll[i]
 			hexChar := MfByteConverter._GetHexValue(n)
 			sb.AppendString(hexChar)
 			i++
+			iCount++
 		}
 		
-		return _returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
+		return _returnAsObj = true?new MfString(sb.ToString(), true):sb.ToString()
 	}
 ; 	End:ToString ;}
 ;{ 	SubList
@@ -567,10 +570,11 @@ class MfNibbleList extends MfListBase
 	_ToByteArrayString(returnAsObj, startIndex, length) {
 		sb := new MfText.StringBuilder(length * 3)
 		i := startIndex
-		iMaxIndex := length -1
+		iMaxIndex := (startIndex + length) - 1
 		len := iMaxIndex - startIndex
 		iChunk := 0
 		ll := this.m_InnerList
+
 		If ((length & 1) && (iMaxIndex >= 0))
 		{
 			MSB := ll[1]
@@ -588,7 +592,8 @@ class MfNibbleList extends MfListBase
 			}
 			i++
 		}
-		while i <= iMaxIndex
+		iCount := 0
+		while (iCount < length)
 		{
 			bit1 := ll[i + 1]
 			bitChar1 := MfByteConverter._GetHexValue(bit1)
@@ -632,6 +637,7 @@ class MfNibbleList extends MfListBase
 				}
 			}
 			i += 2
+			iCount += 2
 		}
 		
 		return returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
