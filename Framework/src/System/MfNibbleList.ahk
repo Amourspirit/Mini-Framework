@@ -29,6 +29,10 @@ class MfNibbleList extends MfListBase
 			Initializes a new instance of the MfList class.
 	*/
 	__new(Size=0, default=0) {
+		if (this.__Class != "MfNibbleList")
+		{
+			throw new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Sealed_Class","MfNibbleList"))
+		}
 		base.__new()
 		size := MfInteger.GetValue(size, 0)
 		default := MfInteger.GetValue(default, 0)
@@ -174,7 +178,7 @@ class MfNibbleList extends MfListBase
 		}
 		try
 		{
-			_value := MfByte.GetValue(obj)
+			_value := MfInteger.GetValue(obj)
 		}
 		catch
 		{
@@ -223,7 +227,7 @@ class MfNibbleList extends MfListBase
 		if (this.Count <= 0) {
 			return int
 		}
-		_value := MfByte.GetValue(obj)
+		_value := MfInteger.GetValue(obj)
 		if (_value < 0 || _value > 15)
 		{
 			ex := new MfArgumentOutOfRangeException("obj"
@@ -269,18 +273,8 @@ class MfNibbleList extends MfListBase
 		In MfList the elements that follow the insertion point move down to accommodate the new element.
 		This method is an O(n) operation, where n is Count.
 */
-	Insert(index, obj) {
+	Insert(index, value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (this.IsFixedSize) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
-		if (this.IsReadOnly) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_List"))
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
 		_index := MfInteger.GetValue(index)
 		if (this.AutoIncrease = true)
 		{
@@ -297,14 +291,14 @@ class MfNibbleList extends MfListBase
 		}
 		If (_index = this.Count)
 		{
-			this.Add(obj)
+			this.Add(value)
 			return
 		}
 		i := _index + 1 ; step up to one based index for AutoHotkey array
-		_value := MfByte.GetValue(obj)
+		_value := MfInteger.GetValue(value)
 		if (_value < 0 || _value > 15)
 		{
-			ex := new MfArgumentOutOfRangeException("obj"
+			ex := new MfArgumentOutOfRangeException("value"
 				, MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper" 
 				, "0", "15"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)

@@ -1366,6 +1366,10 @@ class MfMemoryString extends MfObject
 			return -1
 		}
 		mStr := this._FromAny(obj)
+		if (mStr.m_CharCount = 0 || mStr.m_CharCount > this.m_CharCount)
+		{
+			return -1
+		}
 		if (IgnoreCase && Count <= -1)
 		{
 			if (startIndex >= 0)
