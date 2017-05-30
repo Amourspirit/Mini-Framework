@@ -485,7 +485,7 @@ Class MfUInt32 extends MfPrimitive
 			}
 			catch e
 			{
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToInt16"), e)
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToUInt32"), e)
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
