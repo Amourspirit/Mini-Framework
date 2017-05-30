@@ -15,8 +15,8 @@
  */
 ; End:License ;}
 /*!
-	Class: MfList
-		MfList class exposes methods and properties used for common List and array type operations for strongly typed collections.
+	Class: MfNibbleList
+		MfNibbleList is a sealed class that exposes methods and properties used for list of binary values.
 	Inherits:
 		MfListBase
 */
@@ -24,10 +24,26 @@ class MfNibbleList extends MfListBase
 {
 
 ;{ Constructor
-	/*!
-		Constructor: ()
-			Initializes a new instance of the MfList class.
-	*/
+/*
+	Method: Constructor()
+		Initializes a new instance of the MfNibbleList class.
+
+	OutputVar := new MfBinaryList([Size, Default])
+
+	Constructor([Size, Default])
+		Initializes a new instance of the MfNibbleList class.
+		Size
+			Optional. The initial number of elements to add to the instance.
+			Default value is 0
+		Default
+			Optional, the default value of elements added by if size is greater then zero.
+			Default value is 0
+	Throws:
+		Throws MfArgumentOutOfRangeException if Size is less then 0
+		Throws MfArgumentOutOfRangeException if Default is less then 0 or greater then 15
+	Remarks:
+		Initializes a new instance of the MfNibbleList class.
+*/
 	__new(Size=0, default=0) {
 		if (this.__Class != "MfNibbleList")
 		{
@@ -65,17 +81,22 @@ class MfNibbleList extends MfListBase
 ;{ 	Add()				- Overrides - MfListBase
 /*
 	Method: Add()
+		Adds a nibble element to the end of the current instance.
 		Overrides MfListBase.Add()
-		This method must be overridden in the derived class
+
+	OutputVar := instance.Add(obj)
+
 	Add(obj)
-		Adds an object to append at the end of the MfList
-	Parameters
+		Adds a nibble element to the end of the current instance.
+	Parameters:
 		obj
-			The Object to locate in the MfList
-	Returns
+			The integer nibble value from 0 to 15 to add to the current instance.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
 		Var containing Integer of the zero-based index at which the obj has been added.
-	Throws
-		Throws MfNullReferenceException if called as a static method.
+	Throws:
+		Throws MfNullReferenceException if called as static method.
+		Throws MfArgumentOutOfRangeException if obj is less then 0 or greater then 15
 */
 	Add(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -103,6 +124,25 @@ class MfNibbleList extends MfListBase
 		return this.m_Count
 	}
 ;	End:Add(value) ;}
+;{ 	AddByte
+/*
+	Method: AddByte()
+		Converts obj byte value to nibbles and adds nibble elements to the end of the current instance.
+
+	OutputVar := instance.AddByte(obj)
+
+	AddByte(obj)
+		Converts obj byte value to nibble and adds nibble elements to the end of the current instance
+	Parameters:
+		obj
+			The integer byte value of 0 to 255 to add to the current instance.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		Var containing Integer of the zero-based index at which the obj has been added.
+	Throws:
+		Throws MfNullReferenceException if called as static method.
+		Throws MfArgumentOutOfRangeException if obj is less then 0 or greater then 255
+*/
 	AddByte(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (this.IsFixedSize) {
@@ -134,40 +174,49 @@ class MfNibbleList extends MfListBase
 		
 		return this.m_Count
 	}
-
+; 	End:AddByte ;}
 ;{ 	Clone
+/*
+	Method: Clone()
+		Clones all the elements of the current instance an return  a new instance.
+		Overrides MfListBase.Clone().
+
+	OutputVar := instance.Clone()
+
+	Clone()
+		Clones all the elements of the current instance an return  a new instance with all the elements copied.
+	Returns:
+		Returns a new instance that is a copy of the current instance.
+	Throws:
+		Throws MfNullReferenceException if called as static method.
+	Remarks:
+		This method is an O(n) operation, where n is Count.
+*/
 	Clone() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		cLst := new MfNibbleList()
-		cLst.Clear()
-		nl := cLst.m_InnerList
-		ll := this.m_InnerList
-		i := 1
-		while (i <= this.m_Count)
-		{
-			nl[i] := ll[i]
-			i++
-		}
-		cLst.m_Count := this.m_Count
-		return cLst
+		return this._clone(false)
 	}
 ; 	End:Clone ;}
 ;{ 	Contains()			- Overrides - MfListBase
-/*!
+/*
 	Method: Contains()
+		Determines whether the MfNibbleList contains a specific element.
 		Overrides MfListBase.Contains()
+
+	OutputVar := instance.Contains(obj)
+
 	Contains(obj)
-		Determines whether the MfList contains a specific element.
-	Parameters
+		Determines whether the MfNibbleList contains a specific object or var.
+	Parameters:
 		obj
-			The Object to locate in the MfList
-		Returns
-			Returns true if the MfList contains the specified value otherwise, false.
-	Throws
+			The object or var to locate in the MfNibbleList
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		Returns true if the MfNibbleList contains the specified value otherwise, false.
+	Throws:
 		Throws MfNullReferenceException if called as a static method.
-	Remarks
+	Remarks:
 		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
 */
 	Contains(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -204,19 +253,24 @@ class MfNibbleList extends MfListBase
 ;{ 	IndexOf()			- Overrides - MfListBase
 /*
 	Method: IndexOf()
+		Searches for the specified var or object and returns the index of the first occurrence within the entire instance.
 		Overrides MfListBase.IndexOf()
+
+	OutputVar := instance.IndexOf(obj)
+
 	IndexOf(obj)
-		Searches for the specified Object and returns the zero-based index of the first occurrence within the entire MfList.
-	Parameters
+		Searches for the specified var or object and returns the index of the first occurrence within the entire instance.
+	Parameters:
 		obj
-			The object to locate in the MfList
-	Returns
-		Returns  index of the first occurrence of value within the entire MfList,
-	Throws
+			The object or var to locate in the MfNibbleList
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		Returns  index of the first occurrence of value within the entire instance.
+	Throws:
 		Throws MfNullReferenceException if called as a static method.
-	Remarks
+		Throws MfArgumentOutOfRangeException if obj is less then 0 or greater then 15
+	Remarks:
 		This method performs a linear search; therefore, this method is an O(n) operation, where n is Count.
-		This method determines equality by calling MfObject.CompareTo().
 */
 	IndexOf(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -253,24 +307,31 @@ class MfNibbleList extends MfListBase
 	}
 ;	End:IndexOf() ;}
 ;{ 	Insert()			- Overrides - MfListBase
-/*!
+/*
 	Method: Insert()
+		Inserts an integer nibble value into the MfNibbleList instance at the specified index.
 		Overrides MfListBase.Insert()
-	Insert(index, obj)
-		Inserts an element into the MfList at the specified index.
-	Parameters
+	Insert(index, value)
+		Inserts an integer binary value into the MfNibbleList instance at the specified index.
+	Parameters:
 		index
 			The zero-based index at which value should be inserted.
-		obj
-			The object to insert.
-	Throws
+			Can be var integer or any type that matches IsIntegerNumber.
+		value
+			An integer value from 0 to 15
+			Can be var integer or any type that matches IsIntegerNumber.
+	Throws:
 		Throws MfNullReferenceException if called as a static method.
-		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is greater than MfList.Count
+		Throws MfArgumentOutOfRangeException if index is less than zero.-or index is greater then Count.
+		However if AutoIncrease Size is set to true not error is thrown if index is greater then Count.
 		Throws MfArgumentException if index is not a valid Integer object or valid var Integer.
-		Throws MfNotSupportedException if MfList is read-only or Fixed size.
-	Remarks
-		If index is equal to Count, value is added to the end of MfGenericList.
-		In MfList the elements that follow the insertion point move down to accommodate the new element.
+		Throws MfArgumentOutOfRangeException if value is less then 0 or greater then 15
+	Remarks:
+		If index is equal to Count, value is added to the end of the instance.
+		If index is greater then Count and AutoIncrease is true then extra elements with a value of 0 will
+		be added to the instance that will fill in any extra indices absent before the index value.
+		In collections of contiguous elements, such as MfNibbleList, the elements that follow the insertion
+		point move down to accommodate the new element and Count is increased by one.
 		This method is an O(n) operation, where n is Count.
 */
 	Insert(index, value) {
@@ -310,7 +371,34 @@ class MfNibbleList extends MfListBase
 ;	End:Insert(index, obj) ;}
 
 ;{ 	ToString
-	ToString(returnAsObj = false, startIndex = 0, length="", Format=0) {
+/*
+	Method: ToString()
+		Gets a string representation of the object elements.
+		Overrides MfListBase.ToString()
+
+	OutPutVar := instance.ToString([returnAsObj, startIndex, count, format])
+
+	ToString([returnAsObj, startIndex, count, format])
+		Gets a string representation of the object elements
+	Parameters:
+		returnAsObj
+			Optional boolean value. Default is false.
+			If true result is returned as instance of MfString; Otherwise result is returned as a var string.
+			Can be boolean var or instance of MfBool.
+		startIndex
+			Optional. Default value is 0. The zero-based starting index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		count
+			Optional, the number of elements from StartIndex to include in the output string.
+			If omitted then starts at StartIndex and includes all elements to the end current instance.
+		format
+			Optional, the default value is 0. Can be 0 or 1.
+			If format is 0 then no special formating is done to the return string.
+			If format is 1 then return string is grouped into groups of 2 with a hyphen between each group.
+	Returns:
+		Returns string var or MfString instance representing object elements
+*/
+	ToString(returnAsObj:=false, startIndex:=0, length:="", Format:=0) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		
 		_returnAsObj := MfBool.GetValue(returnAsObj, false)
@@ -362,17 +450,33 @@ class MfNibbleList extends MfListBase
 	}
 ; 	End:ToString ;}
 ;{ 	SubList
-	; The SubList() method extracts the elements from list, between two specified indices, and returns the a new list.
-	; This method extracts the element in a list between "startIndex" and "endIndex", not including "endIndex" itself.
-	; If "startIndex" is greater than "endIndex", this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
-	; If either "startIndex" or "endIndex" is less than 0, it is treated as if it were 0.
-	; startIndex and endIndex mimic javascript substring
-	; Params
-	;	startIndex
-	;		The position where to start the extraction. First element is at index 0
-	;	endIndex
-	;		The position (up to, but not including) where to end the extraction. If omitted, it extracts the rest of the list
+/*
+	Method: Sublist()
+		Method extracts the elements from list, between two specified indices, and returns the a new list.
+
+	OutputVar := instance.SubList([startIndex, endIndex, leftToRight])
+
+	SubList([startIndex, endIndex, leftToRight])
+		Method extracts the elements from list, between two specified indices, and returns the a new list.
+	Parameters:
+		startIndex
+			Optional. Default value is 0. The zero-based starting index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		endIndex
+			Optional. Default value is null which includes all elements from startIndex to end of list. The zero-based endIndex index to start reading elements from.
+			Can be var integer or any type that matches IsIntegerNumber.
+		leftToRight
+			Optional, Default value is true.
+			If true sublist elements are selected from start of list towards end of list; Otherwise elements are selected from end of list towards start of list.
+			Can be boolean var or instance of MfBool.
+	Returns:
+		Returns a new instance of MfNibbleList the is a SubList of elements
+	Remarks:
+		If startIndex is greater than endIndex, this method will swap the two arguments, meaning lst.SubList(1, 4) == lst.SubList(4, 1).
+		If either startIndex or endIndex is less than 0, it is treated as if it were 0.
+*/
 	SubList(startIndex=0, endIndex="", leftToRight=true) {
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		startIndex := MfInteger.GetValue(startIndex, 0)
 		endIndex := MfInteger.GetValue(endIndex, "NaN", true)
 		leftToRight := MfBool.GetValue(leftToRight, true)
@@ -393,11 +497,11 @@ class MfNibbleList extends MfListBase
 		}
 		if ((IsEndIndex = false) && (startIndex = 0))
 		{
-			Return this.Clone()
+			Return this._clone(!leftToRight)
 		}
 		if ((IsEndIndex = false) && (startIndex > maxIndex))
 		{
-			Return this.Clone()
+			Return this._clone(!leftToRight)
 		}
 		if ((IsEndIndex = true) && (startIndex > endIndex))
 		{
@@ -408,24 +512,23 @@ class MfNibbleList extends MfListBase
 		}
 		if ((IsEndIndex = true) && (endIndex = startIndex))
 		{
-			return this.Clone()
+			return this._clone(!leftToRight)
 		}
 		if (startIndex > maxIndex)
 		{
-			return this.Clone()
+			return this._clone(!leftToRight)
 		}
 		if (IsEndIndex = true)
 		{
-			len := ((endIndex + 1) - startIndex)
-			len := len > 0 ? len: 0
-			if (len >= this.m_Count)
+			len :=  endIndex - startIndex
+			if ((len + 1) >= this.Count)
 			{
-				return this.Clone()
+				return this._clone(!leftToRight)
 			}
 		}
 		else
 		{
-			len := maxIndex + 1
+			len := maxIndex
 		}
 		rLst := new MfNibbleList()
 		rl := rLst.m_InnerList
@@ -433,27 +536,32 @@ class MfNibbleList extends MfListBase
 		if (leftToRight)
 		{
 			i := startIndex + 1 ; Move to one base index
-			len++ ; move for one based index
-			while (i <= len)
+			j := 1
+			;len++ ; move for one based index
+			while (j <= len)
 			{
-				rl[i] := ll[i]
+				rl[j] := ll[i]
 				i++
+				j++
 			}
-			rLst.m_Count := i - 1
+			rLst.m_Count := len
 			return rLst
 		}
-		
-		i := startIndex
-		cnt := this.m_Count
-		j := 1
-		While (j <= len)
+		else
 		{
-			rl[j++] := ll[cnt - i]
-			i++
-		}
-		rLst.m_Count := len
-		return rLst
-		
+			i := this.m_Count - (startIndex + len)
+			i++ ; Move to one base index
+			j := len
+			;len++ ; move for one based index
+			while (j >= 1)
+			{
+				rl[j] := ll[i]
+				i++
+				j--
+			}
+			rLst.m_Count := len
+			return rLst
+		}		
 	}
 ; 	End:SubList ;}
 	_ToByteArrayString(returnAsObj, startIndex, length) {
@@ -494,14 +602,14 @@ class MfNibbleList extends MfListBase
 			
 			if (bit2 > -1)
 			{
-				retval .= bitChar1
+				sb.AppendString(bitChar1)
 				iChunk++
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
 					iChunk := 0
 					sb.AppendString("-")
 				}
-				retval .= bitChar2
+				sb.AppendString(bitChar2)
 				iChunk++
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
@@ -515,7 +623,7 @@ class MfNibbleList extends MfListBase
 				{
 					sb.AppendString("0")
 				}
-				retval .= bitChar1
+				sb.AppendString(bitChar1)
 				iChunk++
 				if ((iChunk = 2) && (j < iMaxIndex))
 				{
@@ -528,8 +636,8 @@ class MfNibbleList extends MfListBase
 		
 		return returnAsObj = true?new MfString(sb.ToString()):sb.ToString()
 	}
-	_AutoIncrease()
-	{
+
+	_AutoIncrease() {
 		if (this.IsFixedSize) {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_FixedSize"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
@@ -555,6 +663,42 @@ class MfNibbleList extends MfListBase
 		}
 
 	}
+;{ 	_clone
+	; clones existing list
+	; if reverse is true then returned list is in the reverse order.
+	_clone(reverse:=false) {
+		cLst := new MfNibbleList()
+		cLst.Clear()
+		if (this.m_Count = 0)
+		{
+			return cLst
+		}
+		bl := cLst.m_InnerList
+		ll := this.m_InnerList
+		if (reverse = false)
+		{
+			i := 1
+			while (i <= this.m_Count)
+			{
+				bl[i] := ll[i]
+				i++
+			}
+		}
+		else
+		{
+			i := this.m_Count
+			j := 1
+			while (i >= 1)
+			{
+				bl[j] := ll[i]
+				i--
+				j++
+			}
+		}
+		cLst.m_Count := this.m_Count
+		return cLst
+	}
+; 	End:_clone ;}
 ; End:Methods ;}
 ;{ Properties
 	m_AutoIncrease := false
