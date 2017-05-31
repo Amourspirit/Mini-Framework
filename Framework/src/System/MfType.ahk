@@ -619,7 +619,113 @@ class MfType extends MfObject
 		return typeName
 	}
 ; 	End:TypeOf ;}
+; Sealed Class Following methods cannot be overriden ; Do Not document for this class
+; VerifyIsInstance([ClassName, LineFile, LineNumber, Source])
+; VerifyIsNotInstance([MethodName, LineFile, LineNumber, Source])
+; Sealed Class Following methods cannot be overriden
+; VerifyReadOnly()
+;{ MfObject Attribute Overrides - methods not used from MfObject - Do Not document for this class
+;{	AddAttribute()
+/*
+	Method: AddAttribute()
+	AddAttribute(attrib)
+		Overrides MfObject.AddAttribute Sealed Class will never have attribute
+	Parameters:
+		attrib
+			The object instance derived from MfAttribute to add.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	AddAttribute(attrib) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex		
+	}
+;	End:AddAttribute() ;}
+;{	GetAttribute()
+/*
+	Method: GetAttribute()
 
+	OutputVar := instance.GetAttribute(index)
+
+	GetAttribute(index)
+		Overrides MfObject.GetAttribute Sealed Class will never have attribute
+	Parameters:
+		index
+			the zero-based index. Can be MfInteger or var containing Integer number.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	GetAttribute(index) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:GetAttribute() ;}
+;	GetAttributes ;}
+/*
+	Method: GetAttributes()
+
+	OutputVar := instance.GetAttributes()
+
+	GetAttributes()
+		Overrides MfObject.GetAttributes Sealed Class will never have attribute
+	Throws:
+		Throws MfNotSupportedException
+*/
+	GetAttributes()	{
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:GetAttributes ;}
+;{	GetIndexOfAttribute()
+/*
+	GetIndexOfAttribute(attrib)
+		Overrides MfObject.GetIndexOfAttribute. Sealed Class will never have attribute
+	Parameters:
+		attrib
+			The object instance derived from MfAttribute.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	GetIndexOfAttribute(attrib) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:GetIndexOfAttribute() ;}
+;{	HasAttribute()
+/*
+	HasAttribute(attrib)
+		Overrides MfObject.HasAttribute. Sealed Class will never have attribute
+	Parameters:
+		attrib
+			The object instance derived from MfAttribute.
+	Throws:
+		Throws MfNotSupportedException
+*/
+	HasAttribute(attrib) {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+;	End:HasAttribute() ;}
+; End:MfObject Attribute Overrides ;}
+;{ 	GetHashCode MfObject override
+	GetHashCode() {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:GetHashCode ;}
+;{ 	GetType MfObject override
+	GetType() {
+		ex := new MfNotSupportedException()
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:GetType ;}
 ; End:Methods ;}
 ;{ Properties
 ;{	ClassName
@@ -1011,7 +1117,7 @@ class MfType extends MfObject
 			Gets if the current Type is integer
 		Remarks:
 			Read-only Property
-			Returns true if Type MfByte, MfInt16, MfInt64, or MfInteger;  Otherwise false.
+			Returns true if Type MfByte, MfInt16, MfInt64, MfInteger, MfSByte, MfUInt16, MfUInt32, MfEnum, MfEnum.EnumItem or MfFloat;  Otherwise false.
 	*/
 	m_IsIntegerNumber := ""
 	IsIntegerNumber[]
@@ -1049,7 +1155,7 @@ class MfType extends MfObject
 			Gets if the current Type is numeric
 		Remarks:
 			Read-only Property
-			Returns true if Type is numeric type sucha as MfInteger or MfFloat; Otherwise false.
+			Returns true if Type MfByte, MfInt16, MfInt64, MfInteger, MfSByte, MfUInt16, MfUInt32, MfEnum, MfEnum.EnumItem or MfFloat;  Otherwise false.
 	*/
 	m_isNumber := ""
 	IsNumber[]
