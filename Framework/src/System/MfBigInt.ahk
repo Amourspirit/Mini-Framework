@@ -1194,7 +1194,8 @@ Class MfBigInt extends MfObject
 			}
 			else if (MfObject.IsObjInstance(x, MfUInt64))
 			{
-				this.m_bi := x.m_bigx.Clone()
+				xClone := x.m_bigx.Clone()
+				this.m_bi := xClone.m_bi
 				this.m_bi := MfBigMathInt.Trim(this.m_bi, 1)
 				this.m_IsNegative := false
 			}
