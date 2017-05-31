@@ -785,11 +785,20 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		localBits := MfBinaryConverter.GetBits(this)
-		rBits := MfBinaryConverter.BitAnd(localBits, _bits)
+		try
+		{
+			localBits := MfBinaryConverter.GetBits(this)
+			rBits := MfBinaryConverter.BitAnd(localBits, _bits)
 
-		uint := MfBinaryConverter.ToUInt64(rBits)
-		this.m_bigx := uint.m_bigx
+			uint := MfBinaryConverter.ToUInt64(rBits)
+			this.m_bigx := uint.m_bigx
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		return this._ReturnUInt64(this)
 	}
 ; End:BitAnd ;}
@@ -802,12 +811,20 @@ Class MfUInt64 extends MfPrimitive
 		{
 			return this
 		}
-		
-		localBits := MfBinaryConverter.GetBits(this)
-		rBits := MfBinaryConverter.BitNot(localBits)
+		try
+		{
+			localBits := MfBinaryConverter.GetBits(this)
+			rBits := MfBinaryConverter.BitNot(localBits)
 
-		uint := MfBinaryConverter.ToUInt64(rBits)
-		this.m_bigx := uint.m_bigx
+			uint := MfBinaryConverter.ToUInt64(rBits)
+			this.m_bigx := uint.m_bigx
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		return this._ReturnUInt64(this)
 	}
 ; End:BitNot ;}
@@ -838,11 +855,21 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		localBits := MfBinaryConverter.GetBits(this)
-		rBits := MfBinaryConverter.BitOr(localBits, _bits)
+		try
+		{
+			localBits := MfBinaryConverter.GetBits(this)
+			rBits := MfBinaryConverter.BitOr(localBits, _bits)
 
-		uint := MfBinaryConverter.ToUInt64(rBits)
-		this.m_bigx := uint.m_bigx
+			uint := MfBinaryConverter.ToUInt64(rBits)
+			this.m_bigx := uint.m_bigx
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		
 		return this._ReturnUInt64(this)
 	}
 ; End:BitOr ;}
@@ -873,11 +900,21 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		localBits := MfBinaryConverter.GetBits(this)
-		rBits := MfBinaryConverter.BitXor(localBits, _bits)
+		try
+		{
+			localBits := MfBinaryConverter.GetBits(this)
+			rBits := MfBinaryConverter.BitXor(localBits, _bits)
 
-		uint := MfBinaryConverter.ToUInt64(rBits)
-		this.m_bigx := uint.m_bigx
+			uint := MfBinaryConverter.ToUInt64(rBits)
+			this.m_bigx := uint.m_bigx
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+			
 		Return this
 	}
 ; End:BitXor ;}
@@ -927,12 +964,20 @@ Class MfUInt64 extends MfPrimitive
 		{
 			return this
 		}
-		
-		localBits := MfBinaryConverter.GetBits(this)
-		rBits := MfBinaryConverter.BitShiftLeftUnSigned(localBits, _value, true, true)
+		try
+		{
+			localBits := MfBinaryConverter.GetBits(this)
+			rBits := MfBinaryConverter.BitShiftLeftUnSigned(localBits, _value, true, true)
 
-		uint := MfBinaryConverter.ToUInt64(rBits)
-		this.m_bigx := uint.m_bigx
+			uint := MfBinaryConverter.ToUInt64(rBits)
+			this.m_bigx := uint.m_bigx
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		return this._ReturnUInt64(this)
 	}
 ; End:BitShiftLeft ;}
@@ -981,7 +1026,16 @@ Class MfUInt64 extends MfPrimitive
 		{
 			return this
 		}
-		this.m_bigx.BitShiftRight(_value)
+		try
+		{
+			this.m_bigx.BitShiftRight(_value)
+		}
+		catch e
+		{
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		return this._ReturnUInt64(this)
 	}
 ; End:BitShiftRight ;}

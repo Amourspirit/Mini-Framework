@@ -2387,7 +2387,7 @@ class MfBinaryConverter extends MfObject
 		}
 		while (i <= iCount)
 		{
-			sBinary.Append(ll[i])
+			sBinary.AppendString(ll[i])
 			i++
 		}
 		if (sBinary.Length = 0)
