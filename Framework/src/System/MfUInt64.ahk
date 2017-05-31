@@ -432,12 +432,21 @@ Class MfUInt64 extends MfPrimitive
 			T := new MfType(obj)
 			if (T.IsIntegerNumber)
 			{
-				return := MfUint64._GetValueFromVar(obj.Value, CanThrow)
-				
+				if (obj.LessThen(0))
+				{
+					if (!CanThrow)
+					{
+						return "NaN"
+					}
+					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "obj"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				return obj.Value
 			}
 			else if (t.IsFloat)
 			{
-				return := MfUint64._GetValueFromVar(obj.Value, CanThrow)
+				return MfUint64._GetValueFromVar(obj.Value, CanThrow)
 			}
 			else
 			{
@@ -445,7 +454,7 @@ Class MfUInt64 extends MfPrimitive
 				{
 					return "NaN"
 				}
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "int"))
+				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("NullReferenceException_Object_Param", "obj"))
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
@@ -458,11 +467,28 @@ Class MfUInt64 extends MfPrimitive
 ; 	End:_GetValue ;}
 ;{ 	_GetValueFromVar
 	_GetValueFromVar(varInt, CanThrow=true) {
+		; in most cases MfInt64 can likely handele the getvalue and it is faster
+		result := MfInt64.GetValue(varInt, "NaN", true)
+		if (result != "NaN")
+		{
+			if (result > 0)
+			{
+				return result
+			}
+			if (!CanThrow)
+			{
+				return "NaN"
+			}
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		dotIndex := InStr(varInt, ".") - 1
 		if (dotIndex > 0)
 		{
 			varInt := SubStr(varInt, 1, dotIndex) ; drop decimal portion
 		}
+
 		bigx := MfBigInt.Parse(varInt)
 
 		if (bigx.IsNegative)
@@ -475,7 +501,7 @@ Class MfUInt64 extends MfPrimitive
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (bigx.GreaterThen(Uint64Max))
+		if (bigx.GreaterThen(MfUInt64.MaxValue))
 		{
 			if (!CanThrow)
 			{
