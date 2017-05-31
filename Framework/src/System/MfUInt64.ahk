@@ -425,6 +425,10 @@ Class MfUInt64 extends MfPrimitive
 	_GetValue(obj, CanThrow=true) {
 		retval := 0
 		if (IsObject(obj)) {
+			if (MfObject.IsObjInstance(obj, MfUInt64))
+			{
+				return obj.Value
+			}
 			T := new MfType(obj)
 			if (T.IsIntegerNumber)
 			{
