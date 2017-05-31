@@ -51,7 +51,7 @@ Class MfUInt64 extends MfPrimitive
 		if (pList.Count > 0)
 		{
 			varx := pArgs.Item[pIndex]
-			if(MfNull.IsNull(varx))
+			if(MfNull.IsNull(varx) || varx == Undefined)
 			{
 				varx := 0
 			}

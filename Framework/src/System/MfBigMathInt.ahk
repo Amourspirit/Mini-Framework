@@ -1670,7 +1670,8 @@ class MfBigMathInt extends MfObject
 		}
 		if (sb.Length = 0)
 		{
-			s := "0"
+			sb := ""
+			return "0"
 		}
 
 		return sb.ToString()
