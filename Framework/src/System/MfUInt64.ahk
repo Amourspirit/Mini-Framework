@@ -471,7 +471,7 @@ Class MfUInt64 extends MfPrimitive
 		result := MfInt64.GetValue(varInt, "NaN", true)
 		if (result != "NaN")
 		{
-			if (result > 0)
+			if (result >= 0)
 			{
 				return result
 			}
@@ -498,6 +498,18 @@ Class MfUInt64 extends MfPrimitive
 				return "NaN"
 			}
 			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticExceptionUnder"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (bigx._IsZero())
+		{
+			; if zero then error must have occured
+			; 0 values would have been handled already by MfInt64.GetValue above
+			if (!CanThrow)
+			{
+				return "NaN"
+			}
+			ex := new MfOverflowException(MfEnvironment.Instance.GetResourceString("Arg_ArithmeticException"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
