@@ -213,7 +213,7 @@ class MfBigMathInt extends MfObject
 			}
 			set {
 				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-				ex.SetProp(A_LineFile, A_LineNumber, "digitStr")
+				ex.SetProp(A_LineFile, A_LineNumber, "Uint64Max")
 				Throw ex
 			}
 		}
@@ -1698,8 +1698,8 @@ class MfBigMathInt extends MfObject
 			xl[i] := yl[i]
 			i++
 		}
-		i := k
-		while (i < x.m_Count)
+		i := k + 1
+		while (i <= x.m_Count)
 		{
 			xl[i] := 0
 			i++
