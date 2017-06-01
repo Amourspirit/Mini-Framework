@@ -712,13 +712,6 @@ class MfType extends MfObject
 	}
 ;	End:HasAttribute() ;}
 ; End:MfObject Attribute Overrides ;}
-;{ 	GetHashCode MfObject override
-	GetHashCode() {
-		ex := new MfNotSupportedException()
-		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-		throw ex
-	}
-; 	End:GetHashCode ;}
 ;{ 	GetType MfObject override
 	GetType() {
 		ex := new MfNotSupportedException()

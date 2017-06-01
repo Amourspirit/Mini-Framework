@@ -212,12 +212,12 @@ Class MfBigInt extends MfObject
 		if (x.IsNegative = false && this.IsNegative = false)
 		{
 			this.m_bi := MfBigMathInt.add(this.m_bi, x.m_bi)
-			return this
+			return this._ReturnBigInt()
 		}
 		if (x.IsNegative = true && this.IsNegative = true)
 		{
 			this.m_bi := MfBigMathInt.add(this.m_bi, x.m_bi)
-			return this
+			return this._ReturnBigInt()
 		}
 		if (this.IsNegative != x.IsNegative)
 		{
@@ -226,7 +226,7 @@ Class MfBigInt extends MfObject
 				tmp := new MfBigInt(new MfInteger(0))
 				this.m_bi := tmp.m_bi
 				this.IsNegative := False
-				return this
+				return this._ReturnBigInt()
 			}
 			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
@@ -238,9 +238,9 @@ Class MfBigInt extends MfObject
 				this.m_bi := MfBigMathInt.Sub(x.m_bi,this.m_bi)
 				this.IsNegative := !this.IsNegative
 			}
-			return this
+			return this._ReturnBigInt()
 		}
-
+		return this._ReturnBigInt()
 	}
 	BitShiftLeft(Value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -385,7 +385,7 @@ Class MfBigInt extends MfObject
 	}
 ; 	End:CompareTo ;}
 ;{ 	Divide
-	; retruns remainder as base 10
+	; retruns remainder as base MfBigInt
 	Divide(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this._VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -730,7 +730,7 @@ Class MfBigInt extends MfObject
 		}
 		if(this._IsZero())
 		{
-			return
+			return this._ReturnBigInt()
 		}
 		
 		this._ClearCache()
@@ -753,7 +753,7 @@ Class MfBigInt extends MfObject
 			}
 			this.m_bi := x.m_bi.Clone()
 			this.IsNegative := x.IsNegative
-			return this
+			return this._ReturnBigInt()
 		}
 		if(x._IsOne(true))
 		{
@@ -761,7 +761,7 @@ Class MfBigInt extends MfObject
 			{
 				this.IsNegative := !this.IsNegative
 			}
-			return this
+			return this._ReturnBigInt()
 		}
 
 		if ((x.IsNegative = false && this.IsNegative = false)
@@ -777,7 +777,7 @@ Class MfBigInt extends MfObject
 			}
 			this.m_bi := bigx
 			this.IsNegative := False
-			return this
+			return this._ReturnBigInt()
 		}
 		If (MfBigMathInt.greater(this.m_bi, x.m_bi))
 		{
@@ -789,7 +789,7 @@ Class MfBigInt extends MfObject
 		}
 		this.m_bi := bigx
 		this.IsNegative := true
-		return this
+		return this._ReturnBigInt()
 	}
 ; 	End:Multiply ;}
 ;{ 	Power
@@ -806,7 +806,7 @@ Class MfBigInt extends MfObject
 		}
 		if(this._IsZero())
 		{
-			return
+			return this._ReturnBigInt()
 		}
 		if(this._IsOne(true))
 		{
@@ -814,7 +814,7 @@ Class MfBigInt extends MfObject
 			{
 				this.IsNegative := False
 			}
-			return
+			return this._ReturnBigInt()
 		}
 		
 		exp := MfInt64.GetValue(value)
@@ -825,12 +825,12 @@ Class MfBigInt extends MfObject
 		}
 		if (exp = 1)
 		{
-			return
+			return this._ReturnBigInt()
 		}
 		if (exp = 0)
 		{
 			this.Value := 1
-			return
+			return this._ReturnBigInt()
 		}
 		this._ClearCache()	
 		bigX := this.m_bi.Clone()
@@ -841,6 +841,7 @@ Class MfBigInt extends MfObject
 			this.Multiply(bigX)
 			i++
 		}
+		return this._ReturnBigInt()
 	}
 ; 	End:Power ;}
 ;{ Subtract
@@ -872,7 +873,7 @@ Class MfBigInt extends MfObject
 				tmp := new MfBigInt(new MfInteger(0))
 				this.m_bi := tmp.m_bi
 				this.IsNegative := False
-				return this
+				return this._ReturnBigInt()
 			}
 			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
@@ -884,7 +885,7 @@ Class MfBigInt extends MfObject
 				this.IsNegative := true
 			}
 
-			return this
+			return this._ReturnBigInt()
 		}
 		if (x.IsNegative = true && this.IsNegative = true)
 		{
@@ -893,7 +894,7 @@ Class MfBigInt extends MfObject
 				tmp := new MfBigInt(new MfInteger(0))
 				this.m_bi := tmp.m_bi
 				this.IsNegative := False
-				return
+				return this._ReturnBigInt()
 			}
 			If (MfBigMathInt.Greater(this.m_bi, x.m_bi))
 			{
@@ -905,7 +906,7 @@ Class MfBigInt extends MfObject
 				this.IsNegative := false
 			}
 
-			return this
+			return this._ReturnBigInt()
 		}
 		if (this.IsNegative != x.IsNegative)
 		{
@@ -919,8 +920,9 @@ Class MfBigInt extends MfObject
 				this.m_bi := MfBigMathInt.Add(x.m_bi,this.m_bi)
 				this.IsNegative := !x.IsNegative
 			}
-			return this
+			return this._ReturnBigInt()
 		}
+		return this._ReturnBigInt()
 	}
 ; End:Subtract ;}
 ;{ 	Clone
@@ -1077,6 +1079,15 @@ Class MfBigInt extends MfObject
 ; 	End:ToString ;}
 ; 	End:Methods ;}
 ;{ 	Internal methods
+;{ _ReturnUInt64
+	_ReturnBigInt() {
+		if (this.m_ReturnAsObject)
+		{
+			return this
+		}
+		return this.Value
+	}
+; End:_ReturnUInt64 ;}
 	_IsZero() {
 		return MfBigMathInt.IsZero(this.m_bi)
 	}
