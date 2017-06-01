@@ -1417,20 +1417,12 @@ Class MfString extends MfPrimitive
 */
 	GetValue(obj) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (MfString.IsNullOrEmpty(obj))
+		if (MfNull.IsNull(obj))
 		{
-			return MfString.Empty
+			return ""
 		}
 		if (IsObject(obj))
 		{
-			if (MfObject.IsObjInstance(obj, MfString))
-			{
-				return obj.Value
-			}
-			if (MfObject.IsObjInstance(obj, MfChar))
-			{
-				return obj.Value
-			}
 			if (MfObject.IsObjInstance(obj))
 			{
 				; for non String MfObject call ToString method
