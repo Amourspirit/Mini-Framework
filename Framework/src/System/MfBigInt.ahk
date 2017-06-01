@@ -935,17 +935,23 @@ Class MfBigInt extends MfObject
 	}
 ; 	End:Clone ;}
 ;{ 	Parse
-	Parse(str, base="") {
+	Parse(s, base="") {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		if (MfObject.IsObjInstance(str,  MfListVar))
+		if (MfNull.IsNull(s))
+		{
+			ex := new MfArgumentNullException("s")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		if (MfObject.IsObjInstance(s,  MfListVar))
 		{
 			retval := new MfBigInt(new MfInteger(0))
 			retval.ReturnAsObject := true
-			retval.m_bi := str.Clone()
+			retval.m_bi := s.Clone()
 			retval.m_bi := MfBigMathInt.Trim(retval.m_bi, 1)
 			return retval
 		}
-		_str := MfString.GetValue(str)
+		_str := MfString.GetValue(s)
 		strLst := MfListVar.FromString(_str, false) ; ignore whitespace
 		ll := strLst.m_InnerList
 		if (strLst.Count = 0)
