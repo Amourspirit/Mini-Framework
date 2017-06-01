@@ -940,6 +940,7 @@ Class MfBigInt extends MfObject
 		if (MfObject.IsObjInstance(str,  MfListVar))
 		{
 			retval := new MfBigInt(new MfInteger(0))
+			retval.ReturnAsObject := true
 			retval.m_bi := str.Clone()
 			retval.m_bi := MfBigMathInt.Trim(retval.m_bi, 1)
 			return retval
@@ -949,7 +950,7 @@ Class MfBigInt extends MfObject
 		ll := strLst.m_InnerList
 		if (strLst.Count = 0)
 		{
-			return new MfBigInt(new MfInteger(0))
+			return new MfBigInt(new MfInteger(0), true)
 		}
 		sign := false
 		IsNeg := false
@@ -967,7 +968,7 @@ Class MfBigInt extends MfObject
 		}
 		if (i >= strLst.Count)
 		{
-			return new MfBigInt(new MfInteger(0))
+			return new MfBigInt(new MfInteger(0), true)
 		}
 		if (MfNull.IsNull(base))
 		{
@@ -1054,6 +1055,7 @@ Class MfBigInt extends MfObject
 		bigX := MfBigMathInt.Str2bigInt(strLst.ToString("", i), base, len, len)
 		bigX := MfBigMathInt.Trim(bigX, 1)
 		retval := new MfBigInt(new MfInteger(0))
+		retval.ReturnAsObject := true
 		retval.m_bi := bigX
 		retval.m_IsNegative := IsNeg
 		return retval

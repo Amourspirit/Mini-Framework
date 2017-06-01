@@ -1491,7 +1491,7 @@ Class MfString extends MfPrimitive
 		if (MfNull.IsNull(str)) { ; handles "" and and MfNull.Null
 			return True
 		}
-		if (ifObj)
+		if (isObj)
 		{
 			; MfString Instance is already handled
 			; return true for all other objects
