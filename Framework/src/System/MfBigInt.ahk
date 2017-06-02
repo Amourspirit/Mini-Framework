@@ -984,6 +984,10 @@ Class MfBigInt extends MfObject
 		{
 			base := MfInt16.GetValue(base, -2)
 		}
+		if (base < -2)
+		{
+			base := -2
+		}
 		if (base = -2)
 		{
 			cnt := (strLst.Count - (i + 2))
@@ -1058,7 +1062,8 @@ Class MfBigInt extends MfObject
 			len := 4 * ((strLst.Count + 1) - i)
 		}
 		len := (len >> 4) + 1
-		bigX := MfBigMathInt.Str2bigInt(strLst.ToString("", i), base, len, len)
+		;bigX := MfBigMathInt.Str2bigInt(strLst.ToString("", i), base, len, len)
+		bigX := MfBigMathInt.Str2bigInt(strLst.SubList(i), base, len, len)
 		bigX := MfBigMathInt.Trim(bigX, 1)
 		retval := new MfBigInt(new MfInteger(0))
 		retval.ReturnAsObject := true

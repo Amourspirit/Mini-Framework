@@ -156,7 +156,8 @@ class MfListVar extends MfListBase
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		IgnoreCase := MfBool.GetValue(IgnoreCase, true)
 		includeWhiteSpace := MfBool.GetValue(includeWhiteSpace, true)
-		str := new MfString(s, true)
+		str := new MfString(MfString.GetValue(s), true)
+		
 		lst := new MfListVar()
 		lstArray := []
 		iCount := 0

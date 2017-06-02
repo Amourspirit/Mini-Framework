@@ -1465,7 +1465,15 @@ class MfBigMathInt extends MfObject
 	; The array will always have at least one leading zero, unless base=-1.
 	; Base 10 and base 16 conversion are fastest and about the same speed
 	Str2bigInt(s, base, minSize) {
-		sLst := MfListVar.FromString(s, false) ; string to list, ignore whitespace is false
+		if (MfObject.IsObjInstance(s, MfListVar))
+		{
+			sLst := s
+		}
+		else
+		{
+			sLst := MfListVar.FromString(s, false) ; string to list, ignore whitespace is false
+		}
+		
 		k := sLst.m_Count
 		if (base = -1)
 		{
