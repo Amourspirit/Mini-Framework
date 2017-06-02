@@ -943,6 +943,25 @@ Class MfBigInt extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		if (MfNull.IsNull(base))
+		{
+			base := -2
+		}
+		else
+		{
+			base := MfInt16.GetValue(base, -2)
+		}
+		if (base < -2)
+		{
+			base := -2
+		}
+		if (base != -2 && (Base < 1 || Base > 95))
+		{
+			ex := new MfArgumentOutOfRangeException("base", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Bounds_Lower_Upper", "2", "95"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
 		if (MfObject.IsObjInstance(s,  MfListVar))
 		{
 			retval := new MfBigInt(new MfInteger(0))
@@ -951,7 +970,19 @@ Class MfBigInt extends MfObject
 			retval.m_bi := MfBigMathInt.Trim(retval.m_bi, 1)
 			return retval
 		}
-		strLst := MfListVar.FromString(s, false) ; ignore whitespace
+		; base values geater then base 90 the space can be used
+		; base values greater then base 93 can use + and - as part of the encoding
+		if (base > 90)
+		{
+			_str := new MfString(MfString.GetValue(s))
+			_str.TrimStart()
+			strLst := MfListVar.FromString(_str, true) ; include whitespace
+		}
+		else
+		{
+			strLst := MfListVar.FromString(s, false) ; ignore whitespace
+		}
+		
 		ll := strLst.m_InnerList
 		if (strLst.Count = 0)
 		{
@@ -975,18 +1006,7 @@ Class MfBigInt extends MfObject
 		{
 			return new MfBigInt(new MfInteger(0), true)
 		}
-		if (MfNull.IsNull(base))
-		{
-			base := -2
-		}
-		else
-		{
-			base := MfInt16.GetValue(base, -2)
-		}
-		if (base < -2)
-		{
-			base := -2
-		}
+		
 		if (base = -2)
 		{
 			cnt := (strLst.Count - (i + 2))
@@ -1038,7 +1058,7 @@ Class MfBigInt extends MfObject
 				i := 0
 				; only advance for sign if binary in not in the format of 1000000000000....
 				j := i + 2 ; move to one base index
-				While j <= strLst.Count
+				While (j <= strLst.Count)
 				{
 					If (ll[j] = 1)
 					{
@@ -1062,7 +1082,15 @@ Class MfBigInt extends MfObject
 		}
 		len := (len >> 4) + 1
 		;bigX := MfBigMathInt.Str2bigInt(strLst.ToString("", i), base, len, len)
-		bigX := MfBigMathInt.Str2bigInt(strLst.SubList(i), base, len, len)
+		if (i > 0)
+		{
+			bigX := MfBigMathInt.Str2bigInt(strLst.SubList(i), base, len, len)
+		}
+		else
+		{
+			bigX := MfBigMathInt.Str2bigInt(strLst, base, len, len)
+		}
+		
 		bigX := MfBigMathInt.Trim(bigX, 1)
 		retval := new MfBigInt(new MfInteger(0))
 		retval.ReturnAsObject := true
