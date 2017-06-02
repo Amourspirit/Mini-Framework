@@ -14,7 +14,7 @@
  * along with Mini-Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
 ; End:License ;}
-
+; Represents Unsigned Integer 64 bit object
 Class MfUInt64 extends MfPrimitive
 {
 	m_bigx := ""
@@ -33,6 +33,37 @@ Class MfUInt64 extends MfPrimitive
 
 ; End:Static Properties ;}
 ;{ Constructor
+/*
+	Method: Constructor()
+		Initializes a new instance of the MfUInt64 class.
+
+	OutputVar := new MfUInt64([int, returnAsObj, readonly])
+
+	Constructor([int, retunAsObj, readonly])
+		Initializes a new instance of the MfUInt64 class optionally setting the Value property, ReturnAsObject property and the Readonly property.
+	Parameters:
+		int
+			The MfUInt64 object, var containing integer or string of integer numbers to create a new instance with.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+		returnAsObj
+			Determines if the current instance of MfUInt64 class will return MfUInt64 instances from functions or vars containing integer. If omitted value is false
+		readonly
+			Determines if the current instance of MfUInt64 class will allow its Value to be altered after it is constructed.
+			The Readonly property will reflect this value after the class is constructed.
+			If omitted value is false
+	Throws:
+		Throws MfNotSupportedException if class is extended.
+		Throws MfArgumentException if error in parameter.
+		Throws MfNotSupportedException if incorrect type of parameters or incorrect number of parameters.
+	Remarks:
+		Sealed Class.
+		This constructor initializes the MfUInt64 with the integer value of int.
+		Value property to the value of int.
+		ReturnAsObject will have a value of returnAsObj
+		Readonly will have a value of readonly.
+		If Readonly is true then any attempt to change the underlying value will result in MfNotSupportedException being thrown.
+		AutoHotkey has a integer upper limit of MfInt64.MaxValue. MfUInt64 can have greater values up to MfUInt.MaxValue. For this reason any integer greater then MfInt64.MaxValue need to be wrapped in double quotes "" eg i := new MfUInt64("9223372036854775900"). It is recommended to wrap all var value for int in double quotes as a precaution.
+*/
 	__New(args*) {
 		if (this.__Class != "MfUInt64")
 		{
@@ -205,6 +236,38 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:_ConstructorParams ;}
 ;{ Methods
+/*
+	Method: Add()
+	Add(value)
+		Adds MfUInt64 value to current instance of MfUInt64.
+	Parameters:
+		value
+			The value to add to the current instance.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated value; Otherwise returns var
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfArgumentException if value is not an instance of MfUInt64 and can not be converted into integer value.
+		Throws MfArgumentOutOfRangeException if adding value is less then MinValue and greater than MaxValue
+	Remarks:
+		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
+		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
+		When adding value greater then MfInt64.MaxValue the values must be enclosed in "" and passed as a string as shown in the last
+		part of the example below. AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed
+		into MfUInt64 methods can be wrapped in double quotes. eg: i := new MfUInt64("10", true)
+	Example:
+		i := new MfUInt64(10, true) ; create new MfUInt64 and set it RetrunAsObject to value to true
+		i.Add(2)
+		iNew := new MfUInt64(8)
+		MsgBox % i.Add(iNew).Value                   ; displays 20
+		MsgBox % i.Add(-10).Value                    ; displays 10
+		MsgBox % i.Add(10).Add(10).Value             ; displays 30
+		MsgBox % i.Add("18446744073709551515").Value ; displays 18446744073709551545
+
+*/
 	Add(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -230,6 +293,28 @@ Class MfUInt64 extends MfPrimitive
 		return this._ReturnUInt64(this)
 	}
 ;{ 	CompareTo()			- Overrides	- MfObject
+/*
+	Method: CompareTo()
+		Overrides MfObject.CompareTo
+
+	OutputVar := instance.CompareTo(obj)
+
+	CompareTo(obj)
+		Compares this instance to a specified MfUInt64 instance.
+	Parameters:
+		obj
+			A MfUInt64 object to compare to current instance.
+	Returns:
+		Returns a var containing integer indicating the position of this instance in the sort order in relation to the value parameter.
+		Return Value Description Less than zero This instance precedes obj value. Zero This instance has the same position in the sort order as value.
+		Greater than zero This instance follows
+	Throws:
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentException if value is not an instance of MfUInt64.
+	Remarks:
+		Compares this instance to a specified MfUInt64 instance and indicates whether this instance precedes, follows, or appears in the same
+		position in the sort order as the specified MfUInt64 instance.
+*/
 	CompareTo(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(value))
@@ -249,6 +334,45 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; 	End:Clone ;}
 ;{ 	Divide
+/*
+	Method: Divide()
+
+	OutputVar := instance.Divide(value)
+
+	Divide(value)
+		Divides the current instance of MfUInt64 by the divisor value.
+	Parameters:
+		value
+			The Divisor value to divide the current instance Value by.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfDivideByZeroException if value is zero.
+		Throws MfArithmeticException if the operation fails or value is not an instance of MfUInt64 and can not be converted into integer value.
+		Throws MfArgumentOutOfRangeException if dividing result is less then MinValue and greater than MaxValue
+	Remarks:
+		When value greater then MfInt64.MaxValue the values must be enclosed in "" and passed as a string as shown in the example below.
+		AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed into MfUInt64 methods
+		can be wrapped in double quotes. eg: i := new MfUInt64("10", true)
+		If the result of the operation is not a whole number such as 4/2 but rather a float number such as 8/3 (8/3 = 2.6666...) then
+		the result will always be the whole number portion of the operation.
+		For example:
+			mfInt := new MfUInt64(8)
+			MsgBox % mfInt.Divide(3) ; displays 2
+
+		If you need to work with decimal/float numbers see MfFloat
+	Example:
+		i := new MfUInt64(MfUInt64.MaxValue, true) ; create new MfUInt64 at max value and set it RetrunAsObject to value to true
+		iNew := new MfUInt64("8")
+		MsgBox % i.Divide(iNew).Value          ; displays 2305843009213693951
+		MsgBox % i.Add(-5).Value               ; displays 2305843009213693946
+		MsgBox % i.Add("10").Divide("2").Value ; displays 1152921504606846978
+
+*/
 	Divide(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -283,6 +407,29 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; 	End:Divide ;}
 ;{ 	Equals()			- Overrides - MfObject
+/*
+	Method: Equals()
+		Overrides MfObject.Equals()
+
+	OutputVar := instance.Equals(value)
+
+	Equals(value)
+		Gets if this instance Value is the same as the obj instance.Value
+	Parameters:
+		value
+			The Object or var containing, integer to compare to current instance.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		Returns Boolean value of true if this Value and value are equal; Otherwise false.
+	Throws:
+		Throws MfNullReferenceException if called as a static method
+	Remarks:
+		If value is unable to be converted to a integer then false will be returned.
+		AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed into
+		MfUInt64 methods can be wrapped in double quotes. eg: i := new MfUInt64("10", true)
+		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
+		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
+*/
 	Equals(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(value))
@@ -297,14 +444,14 @@ Class MfUInt64 extends MfPrimitive
 /*
 	Method: GetHashCode()
 		Overrides MfObject.GetHashCode()
-	
+
 	OutputVar := instance.GetHashCode()
-	
+
 	GetHashCode()
 		Gets A hash code for the MfUInt64 instance.
-	Returns
+	Returns:
 		A 32-bit signed integer hash code as var.
-	Throws
+	Throws:
 		Throws MfNullReferenceException if object is not an instance.
 */
 	GetHashCode() {
@@ -318,15 +465,91 @@ Class MfUInt64 extends MfPrimitive
 ;{ 	GetTypeCode()
 /*
 	Method: GetTypeCode()
-		Get an enumeration value of MfTypeCode the represents MfInt64 Type Code.
-	Returns
-		And instance of MfEnum.EnumItem with a constant value that represents the type of MfInt64.
+
+	OutputVar := instance.GetTypeCode()
+
+	GetTypeCode()
+		Get an enumeration value of MfTypeCode the represents MfUInt64 Type Code.
+	Returns:
+		And instance of MfEnum.EnumItem with a constant value that represents the type of MfUInt64.
 */
 	GetTypeCode() {
 		return MfTypeCode.Instance.UInt64
 	}
 ; End:GetTypeCode() ;}
 ;{ 	GetValue()			- Overrides	- MfPrimitive
+/*
+	Method: GetValue()
+		Overrides MfPrimitive.GetValue().
+
+	OutputVar := MfUInt64.GetValue(Obj)
+	OutputVar := MfUInt64.GetValue(Obj, Default)
+	OutputVar := MfUInt64.GetValue(Obj, Default, AllowAny)
+
+	MfUInt64.GetValue(Obj)
+		Gets the integer number from Object or var containing integer.
+	Parameters:
+		Obj
+			The Object or var containing, integer or hex value
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		Returns a var containing a integer No less then MinValue and no greater then MaxValue.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+		Throws MfArgumentOutOfRangeException if Obj is less then MinValue or Greater then MaxValue.
+		Throws MfArgumentException if argument Obj is can not be converted to integer value.
+	Remarks:
+		Static Method
+		AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed into MfUInt64 methods can be wrapped
+		in double quotes. eg: i := new MfUInt64("10", true)
+		Throws an error if unable to convert Obj to integer.
+		
+	MfUInt64.GetValue(Obj, Default)
+		Gets a integer number from Obj or returns Default value if Obj is unable to be converted to integer. Default must be a value that can be
+		converted to integer or it will be ignored if Obj can not be converted to integer and an error will be thrown.
+	Parameters:
+		Obj
+			The Object or var containing, integer or hex value
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+		Default
+			The value to return if Obj is Cannot be converted
+			Can be any type that matches IsIntegerNumber or var of integer.
+	Returns:
+		Returns a var containing a integer or Default value if Obj is unable to be converted to integer.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+	Remarks:
+		Static Method
+		AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed into MfUInt64 methods can be wrapped
+		in double quotes. eg: i := new MfUInt64("10", true)
+		If Default is not a valid integer or MfUInt64 instance then GetValue will throw an error if Obj can not be converted to integer.
+		If Default can not be converted to a integer then this would method will yield the same results as calling MfUInt64.GetValue(Obj).
+
+	MfUInt64.GetValue(Obj, Default, AllowAny)
+		Gets a integer number from Obj or returns Default value if Obj is unable to be converted to integer.
+	Parameters:
+		Obj
+			The Object or var containing, integer or hex value
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+		Default
+			The value to return if Obj is Cannot be converted
+			Can be any type that matches IsIntegerNumber or var of integer.
+		AlowAny
+			Determines if Default can be a value other then integer. If true Default can be any var, Object or null; Otherwise Default must be a integer value.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+		Throws MfArgumentException if AllowAny is not a valid boolean.
+	Remarks:
+		Static Method.
+		AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed into MfUInt64 methods can be wrapped
+		in double quotes. eg: i := new MfUInt64("10", true)
+		If AllowAny is true then Default can be any value including var, object or null. However if AllowAny is false then this method will yield
+		the same result as calling MfUInt64.GetValue(Obj, Default).
+	General Remarks:
+		If Obj is a float or MfFloat instance then GetValue() will alway round down for positive number and round up for negative numbers.
+		For instance MfInteger.GetValue(2.8) will be 2 and MfInteger.GetValue(-2.8) will be -2.
+		Throws MfNotSupportedException if incorrect number of parameters are passed in.
+*/
 	GetValue(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		;obj, default=0, AllowAny=false
@@ -527,6 +750,26 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; 	End:_GetValueFromVar ;}
 ;{ 	GreaterThen
+/*
+	Method: GreaterThen()
+
+	OutputVar := instance.GreaterThen(value)
+
+	GreaterThan(value)
+		Compares the current MfUInt64 object to a specified MfUInt64 instance and returns an indication of their relative values.
+	Parameters:
+		value
+			The Object or var containing, integer to compare to current instance.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		Returns true if the current instance has greater value then the value instance; Otherwise false.
+	Throws:
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentException if value is not an instance of MfUInt64 and can not be converted into integer value.
+	Remarks:
+		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
+		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
+*/
 	GreaterThen(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
@@ -554,6 +797,26 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; 	End:GreaterThen ;}
 ;{ 	GreaterThenOrEqual
+/*
+	Method: GreaterThenOrEqual()
+
+	OutputVar := instance.GreaterThenOrEqual(value)
+
+	GreaterThenOrEqual(value)
+		Compares the current MfUInt64 object to a specified MfUInt64 object and returns an indication of their relative values.
+	Parameters:
+		value
+			The Object or var containing, integer to compare to current instance.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		Returns true if the current instance has greater or equal value then the value instance; otherwise false.
+	Throws:
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentException if value is not an instance of MfUInt64 and can not be converted into integer value.
+	Remarks:
+		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
+		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
+*/
 	GreaterThenOrEqual(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
@@ -596,6 +859,26 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; 	End:LessThen ;}
 ;{ 	LessThenOrEqual
+/*
+	Method: LessThen()
+
+	OutputVar := instance.LessThen(value)
+
+	LessThen(value)
+		Compares the current MfUInt64 object to a specified MfUInt64 object and returns an indication of their relative values.
+	Parameters:
+		value
+			The Object or var containing, integer to compare to current instance.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		Returns true if the current instance has less value then the value instance; otherwise false.
+	Throws:
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentException if value is not an instance of MfUInt64 and can not be converted into integer value.
+	Remarks:
+		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
+		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
+*/
 	LessThenOrEqual(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
@@ -617,6 +900,37 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; 	End:LessThenOrEqual ;}
 ;{ 	Multiply
+/*
+	Method: Multiply()
+
+	OutputVar := instance.Multiply(value)
+
+	Multiply(value)
+		Multiplies the current instance of MfUInt64 by the value.
+	Parameters:
+		value
+			The value to multiply the current instance Value by.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfDivideByZeroException if value is zero.
+		Throws MfArithmeticException if the operation fails or value is not an instance of MfUInt64 and can not be converted into integer value.
+		Throws MfArgumentOutOfRangeException if dividing result is less then MinValue and greater than MaxValue
+	Remarks:
+		When multiplying value greater then MfInt64.MaxValue the values must be enclosed in "" and passed as a string.
+		AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed into MfUInt64
+		methods can be wrapped in double quotes. eg: i := new MfUInt64("10", true)
+		If the result of the operation is not a whole number such as 4*3 but rather a float number such as 4*3.3 (4 * 3.2 = 13.2)
+		then the result will always be the whole number portion of the operation.
+		For example:
+			mfInt := new MfUInt64(4)
+			MsgBox % mfInt.Multiply(3.2) ; displays 12
+		If you need to work with decimal/float numbers see MfFloat
+*/
 	Multiply(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -659,11 +973,206 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; 	End:Multiply ;}
 ;{ 	Parse()
-	;parse UMfUint from string
-	; Parmas,
-	;	value - string to parse or MfUInt64 or MfInt64 instance or MfChar instance or 
-	;	ReturnAsObject
-	;	Base - the Base to convert string from, only applied if value is string
+/*
+	Method: Parse()
+
+	OutputVar := MfUInt64.Parse(s)
+	OutputVar := MfUInt64.Parse(s, style)
+	OutputVar := MfUInt64.Parse(s, provider)
+	OutputVar := MfUInt64.Parse(s, style, provider)
+
+	MfUInt64.Parse(s)
+		Converts the s representation of a number to its MfUInt64 equivalent
+	Parameters:
+		s
+			An string var of object convert.
+			Can be var or instance of MfChar, MfString
+	Returns:
+		Returns MfUInt64 instance equivalent to the number contained in s.
+	Throws:
+		Throws MfArgumentNullException if s is null.
+		Throws MfFormatException if s is not of the correct format.
+		Throws MfOverFlowExcpetion s represents a number less than MinValue or greater than MaxValue.
+	Remarks:
+		Static method
+		The s parameter contains a number of the form:
+		[ws][sign]digits[ws]
+		Elements in square brackets ([ and ]) are optional. The following table describes each element.
+
+		Element		Description
+		ws			Optional white space.
+		sign		An optional positive or negative sign.
+		digits		A sequence of digits ranging from 0 to 9
+		
+		The s parameter is interpreted using the MfNumberStyles.Integer style. In addition to the byte value's decimal digits,
+		only leading and trailing spaces together with a leading sign are allowed. (If the sign is present, it must be a positive sign or
+		the method throws an MfOverFlowExcpetion.)
+		To explicitly define the style elements that can be present in s, use either the MfUInt64.Parse(s, style) or
+		the MfUInt64.Parse(s, style, provider) method.
+		The s parameter is parsed using the formatting information in a MfNumberFormatInfo object.
+		To parse a string using other formatting information, use the MfUInt64.Parse(s, style, provider) method.
+
+	Method: MfUInt64.Parse(s, style)
+		Converts the s representation of a number to its MfUInt64 equivalent
+		s
+		An string var of object convert.
+		Can be var or instance of MfChar, MfString
+		style
+		MfNumberStyles Instance or Integer var representing instance.
+		A bitwise combination of MfNumberStyles values that indicates the style elements that can be present in s.
+		A typical value to specify is MfNumberStyles.Integer.
+	Returns:
+		Returns MfUInt32 instance equivalent to the number contained in s.
+	Throws:
+		Throws MfInvalidOperationException if not called as static method.
+		Throws MfArgumentNullException if s is null.
+		Throws MfFormatException if s is not of the correct format.
+		Throws MfOverFlowExcpetion s represents a number less than MinValue or greater than MaxValue.
+		Throws MfArgumentException style is not a MfNumberStyles value.
+		-or-
+		style is not a combination of MfNumberStyles.AllowHexSpecifier and MfNumberStyles.HexNumber values.
+	Remarks:
+		Static method
+		The style parameter defines the style elements (such as white space or the positive sign) that are allowed in the s parameter
+		for the parse operation to succeed. It must be a combination of bit flags from the MfNumberStyles enumeration. Depending on the value of style,
+		the s parameter may include the following elements:
+		
+		[ws][$][sign]digits[.fractional_digits][e[sign]digits][ws]
+		Elements in square brackets ([ and ]) are optional. The following table describes each element.
+		Element				Description
+		ws					Optional white space. White space can appear at the beginning of s if style includes the
+							MfNumberStyles.AllowLeadingWhite flag, or at the end of s if style includes the MfNumberStyles.AllowTrailingWhite flag.
+		$					A currency symbol. Its position in the string is defined by the MfNumberFormatInfo.CurrencyPositivePattern property.
+							The current culture's currency symbol can appear in s if style includes the MfNumberStyles.AllowCurrencySymbol flag.
+		sign				An optional positive or negative sign.
+		digits				A sequence of digits ranging from 0 to 9
+		.					A decimal point symbol. The default decimal point symbol can appear in s if style includes the MfNumberStyles.AllowDecimalPoint flag.
+		fractional_digits	One or more occurrences of the digit 0. Fractional digits can appear in s only if style includes the MfNumberStyles.AllowDecimalPoint flag.
+		e					The e or E character, which indicates that the value is represented in exponential notation.
+							The s parameter can represent a number in exponential notation if style includes the MfNumberStyles.AllowExponent flag.
+		hexdigits			A sequence of hexadecimal digits from 0 through f, or 0 through F.
+
+		A string with decimal digits only (which corresponds to the MfNumberStyles.None style) always parses successfully.
+		Most of the remaining MfNumberStyles enumerations control elements that may be but are not required to be present in this input string.
+		The following table indicates how individual MfNumberStyles enumerations affect the elements that may be present in s.
+		
+		Non-composite NumberStyles values		Elements permitted in s in addition to digits
+		MfNumberStyles.None						Decimal digits only.
+		MfNumberStyles.AllowDecimalPoint		The . and fractional_digits elements. However, fractional_digits must consist of only one or more 0 digits or
+												an MfOverflowException is thrown.
+		MfNumberStyles.AllowExponent			The s parameter can also use exponential notation.
+		MfNumberStyles.AllowLeadingWhite		The ws element at the beginning of s.
+		MfNumberStyles.AllowTrailingWhite		The ws element at the end of s.
+		MfNumberStyles.AllowLeadingSign			A positive sign can appear before digits.
+		MfNumberStyles.AllowTrailingSign		A positive sign can appear after digits.
+		MfNumberStyles.AllowParentheses			Although this flag is supported, the use of parentheses in s results in an MfOverflowException.
+		MfNumberStyles.AllowThousands			Although the group separator symbol can appear in s, it can be preceded by only one or more 0 digits.
+		MfNumberStyles.AllowCurrencySymbol		The $ element.
+
+		If the MfNumberStyles.AllowHexSpecifier flag is used, s must be a hexadecimal value without a prefix. For example, "C9AF3" parses successfully,
+		but "0xC9AF3" does not. The only other flags that can be combined with it are MfNumberStyles.AllowLeadingWhite and MfNumberStyles.AllowTrailingWhite.
+		(The MfNumberStyles enumeration includes a composite number style, MfNumberStyles.HexNumber, that includes both white space flags.)
+		The s parameter is parsed using the formatting information in a MfNumberFormatInfo object that is initialized.
+		To use the formatting information of some other, call the MfInteger.Parse(s, style, provider) overload.
+
+	Method: MfUInt64.Parse(s, provider)
+		Converts the s representation of a number to its MfUInt64 equivalent
+		s
+		An string var of object convert.
+		Can be var or instance of MfChar, MfString
+		provider
+		An object that supplies culture-specific parsing information about s. If provider is null, then MfNumberFormatInfo is used.
+	Returns:
+		Returns MfUInt64 instance equivalent to the number contained in s.
+	Throws:
+		Throws MfInvalidOperationException if not called as static method.
+		Throws MfArgumentNullException if s is null.
+		Throws MfFormatException if s is not of the correct format.
+		Throws MfOverFlowExcpetion s represents a number less than MinValue or greater than MaxValue.
+	Remarks:
+		Static method
+		The s parameter contains a number of the form:
+		[ws][sign]digits[ws]
+		Elements in square brackets ([ and ]) are optional. The following table describes each element.
+
+		Element		Description
+		ws			Optional white space.
+		sign		An optional positive or negative sign.
+		digits		A sequence of digits ranging from 0 to 9
+
+		The s parameter is interpreted using the MfNumberStyles.Integer style. In addition to the byte value's decimal digits,
+		only leading and trailing spaces together with a leading sign are allowed. (If the sign is present, it must be a positive sign or
+		the method throws an MfOverFlowExcpetion.)
+		To explicitly define the style elements that can be present in s, use either the MfUInt64.Parse(s, style) or the MfUInt64.Parse(s, style, provider) method.
+		The s parameter is parsed using the formatting information in a MfNumberFormatInfo object. To parse a string using other formatting information,
+		use the MfUInt64.Parse(s, style, provider) method.
+
+	Method: MfUInt32.Parse(s, style, provider)
+		Converts the s representation of a number to its MfUInt64 equivalent
+		s
+		An string var of object convert.
+		Can be var or instance of MfChar, MfString
+		style
+		MfNumberStyles Instance or Integer var representing instance.
+		A bitwise combination of MfNumberStyles values that indicates the style elements that can be present in s. A typical value to specify is MfNumberStyles.Integer.
+		provider
+		An object that supplies culture-specific parsing information about s. If provider is null, then MfNumberFormatInfo is used.
+	Returns:
+		Returns MfUInt64 instance equivalent to the number contained in s.
+	Throws:
+		Throws MfInvalidOperationException if not called as static method.
+		Throws MfArgumentNullException if s is null.
+		Throws MfFormatException if s is not of the correct format.
+		Throws MfOverFlowExcpetion s represents a number less than MinValue or greater than MaxValue.
+		Throws MfArgumentException style is not a MfNumberStyles value.
+		-or-
+		style is not a combination of MfNumberStyles.AllowHexSpecifier and MfNumberStyles.HexNumber values.
+	Remarks:
+		Static method
+		The style parameter defines the style elements (such as white space or the positive sign) that are allowed in the s parameter for the parse operation to succeed.
+		It must be a combination of bit flags from the MfNumberStyles enumeration. Depending on the value of style, the s parameter may include the following elements:
+		
+		[ws][$][sign]digits[.fractional_digits][e[sign]digits][ws]
+		Elements in square brackets ([ and ]) are optional. The following table describes each element.
+		Element				Description
+		ws					Optional white space. White space can appear at the beginning of s if style includes the
+							MfNumberStyles.AllowLeadingWhite flag, or at the end of s if style includes the MfNumberStyles.AllowTrailingWhite flag.
+		$					A currency symbol. Its position in the string is defined by the MfNumberFormatInfo.CurrencyPositivePattern property.
+							The current culture's currency symbol can appear in s if style includes the MfNumberStyles.AllowCurrencySymbol flag.
+		sign				An optional positive or negative sign.
+		digits				A sequence of digits ranging from 0 to 9
+		.					A decimal point symbol. The default decimal point symbol can appear in s if style includes the MfNumberStyles.AllowDecimalPoint flag.
+		fractional_digits	One or more occurrences of the digit 0. Fractional digits can appear in s only if style includes the MfNumberStyles.AllowDecimalPoint flag.
+		e					The e or E character, which indicates that the value is represented in exponential notation.
+							The s parameter can represent a number in exponential notation if style includes the MfNumberStyles.AllowExponent flag.
+		hexdigits			A sequence of hexadecimal digits from 0 through f, or 0 through F.
+
+		A string with decimal digits only (which corresponds to the MfNumberStyles.None style) always parses successfully.
+		Most of the remaining MfNumberStyles enumerations control elements that may be but are not required to be present in this input string.
+		The following table indicates how individual MfNumberStyles enumerations affect the elements that may be present in s.
+		
+		Non-composite NumberStyles values		Elements permitted in s in addition to digits
+		MfNumberStyles.None						Decimal digits only.
+		MfNumberStyles.AllowDecimalPoint		The . and fractional_digits elements. However, fractional_digits must consist of only one or more 0 digits or
+												an MfOverflowException is thrown.
+		MfNumberStyles.AllowExponent			The s parameter can also use exponential notation.
+		MfNumberStyles.AllowLeadingWhite		The ws element at the beginning of s.
+		MfNumberStyles.AllowTrailingWhite		The ws element at the end of s.
+		MfNumberStyles.AllowLeadingSign			A positive sign can appear before digits.
+		MfNumberStyles.AllowTrailingSign		A positive sign can appear after digits.
+		MfNumberStyles.AllowParentheses			Although this flag is supported, the use of parentheses in s results in an MfOverflowException.
+		MfNumberStyles.AllowThousands			Although the group separator symbol can appear in s, it can be preceded by only one or more 0 digits.
+		MfNumberStyles.AllowCurrencySymbol		The $ element.
+
+		Although this flag is supported, the use of parentheses in s results in an MfOverflowException.
+		MfNumberStyles.AllowThousands
+		Although the group separator symbol can appear in s, it can be preceded by only one or more 0 digits.
+		MfNumberStyles.AllowCurrencySymbol
+		The $ element.
+		If the MfNumberStyles.AllowHexSpecifier flag is used, s must be a hexadecimal value without a prefix. For example, "C9AF3" parses successfully,
+		but "0xC9AF3" does not. The only other flags that can be combined with it are MfNumberStyles.AllowLeadingWhite and MfNumberStyles.AllowTrailingWhite.
+		(The MfNumberStyles enumeration includes a composite number style, MfNumberStyles.HexNumber, that includes both white space flags.)
+*/
 	Parse(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
@@ -759,6 +1268,35 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:Parse() ;}
 ;{ BitAnd
+/*
+	Method: BitAnd()
+		Namespace ›› System ›› MfUInt64 ›› Methods ›› Parent Previous Next
+	BitAnd()
+		OutputVar := instance.BitAnd(value)
+
+	BitAnd(value)
+		Performs logical AND operation current instance bits and value bits.
+	Parameters:
+		value
+			The  value to logically AND bits with current instance.
+			Can be any type that matches IsNumber ,instance of MfUInt64. or Instance of MfBigInt.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfArgumentOutOfRangeException if value bit count is greater then 64 bits.
+		Throws MfException for any other errors during the operation.
+	Remarks:
+		AutoHotkey has a integer upper limit of MfInt64.MaxValue. MfUInt64 can have greater values up to MfUInt.MaxValue.
+		For this reason preforming bitwise operations in the standard AutoHotkey way by using <<, >>, &, ^, | operates will not work on on MfUInt64 values.
+	Example:
+		Int := new MfInt64(123456789)
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitAnd(Int)
+		MsgBox % UInt.Value ; 35209476
+*/
 	BitAnd(Value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -803,6 +1341,27 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:BitAnd ;}
 ;{ BitNot
+/*
+	Method: BitNot()
+
+	OutputVar := instance.BitNot()
+
+	BitNot()
+		Performs logical NOT operation current instance bits
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfException for any other errors during the operation.
+	Remarks:
+		AutoHotkey has a integer upper limit of MfInt64.MaxValue. MfUInt64 can have greater values up to MfUInt.MaxValue.
+		For this reason preforming bitwise operations in the standard AutoHotkey way by using <<, >>, &, ^, | operates will not work on on MfUInt64 values.
+	Example:
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitNot()
+		MsgBox % UInt.Value ; 18369299509254986969
+*/
 	BitNot() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -829,6 +1388,34 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:BitNot ;}
 ;{ BitOr
+/*
+	Method: BitOr()
+
+	OutputVar := instance.BitOr(value)
+
+	BitOr(value)
+		Performs logical OR operation current instance bits and value bits.
+	Parameters:
+		value
+			The  value to logically OR bits with current instance.
+			Can be any type that matches IsNumber ,instance of MfUInt64. or Instance of MfBigInt.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfArgumentOutOfRangeException if value bit count is greater then 64 bits.
+		Throws MfException for any other errors during the operation.
+	Remarks:
+		AutoHotkey has a integer upper limit of MfInt64.MaxValue. MfUInt64 can have greater values up to MfUInt.MaxValue.
+		For this reason preforming bitwise operations in the standard AutoHotkey way by using <<, >>, &, ^, | operates will not work on on MfUInt64 values.
+	Example:
+		Int := new MfInt64(123456789)
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitOr(Int)
+		MsgBox % UInt.Value ; 77444564542811959
+*/
 	BitOr(Value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -874,6 +1461,34 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:BitOr ;}
 ;{ BitXor
+/*
+	Method: BitXor()
+
+	OutputVar := instance.BitXor(value)
+
+	BitxXor(value)
+		Performs logical Xor operation current instance bits and value bits.
+	Parameters:
+		value
+			The  value to logically Xor bits with current instance.
+			Can be any type that matches IsNumber ,instance of MfUInt64. or Instance of MfBigInt.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfArgumentOutOfRangeException if value bit count is greater then 64 bits.
+		Throws MfException for any other errors during the operation.
+	Remarks:
+		AutoHotkey has a integer upper limit of MfInt64.MaxValue. MfUInt64 can have greater values up to MfUInt.MaxValue.
+		For this reason preforming bitwise operations in the standard AutoHotkey way by using <<, >>, &, ^, | operates will not work on on MfUInt64 values.
+	Example:
+		Int := new MfInt64(123456789)
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitXor(Int)
+		MsgBox % UInt.Value ; 77444564507602483
+*/
 	BitXor(Value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -919,6 +1534,36 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:BitXor ;}
 ;{ BitShiftLeft
+/*
+	Method: BitShiftLeft()
+
+	OutputVar := instance.BitShiftLeft(value)
+
+	BitShiftLeft(value)
+		Performs left shift operation current instance bits by value amount.
+	Parameters:
+		value
+			The number of places to shift bits left.
+			Can var integer or any type that matches IsInteger.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfException for any other errors during the operation.
+	Remarks:
+		AutoHotkey has a integer upper limit of MfInt64.MaxValue. MfUInt64 can have greater values up to MfUInt.MaxValue.
+		For this reason preforming bitwise operations in the standard AutoHotkey way by using <<, >>, &, ^, | operates will not work on on MfUInt64 values.
+		Bits are wrapped when shifted. Shifting by multiples 64 would give you the same number
+	Example:
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitShiftLeft(10)
+		MsgBox % UInt.Value ; 5516257706635991040
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitShiftLeft(64)
+		MsgBox % UInt.Value ; 77444564454564646
+*/
 	BitShiftLeft(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -982,6 +1627,36 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:BitShiftLeft ;}
 ;{ BitShiftRight
+/*
+	Method: BitShiftRight()
+
+	OutputVar := instance.BitShiftRight(value)
+
+	BitShiftRight(value)
+		Performs right shift operation current instance bits by value amount.
+	Parameters:
+		value
+			The number of places to shift bits right.
+			Can var integer or any type that matches IsInteger.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated Value; Otherwise returns Value as var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfException for any other errors during the operation.
+	Remarks:
+		AutoHotkey has a integer upper limit of MfInt64.MaxValue. MfUInt64 can have greater values up to MfUInt.MaxValue.
+		For this reason preforming bitwise operations in the standard AutoHotkey way by using <<, >>, &, ^, | operates will not work on on MfUInt64 values.
+		Bits are wrapped when shifted. Shifting by multiples 64 would give you the same number
+	Example:
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitShiftRight(10)
+		MsgBox % UInt.Value ; 75629457475160
+		UInt := new MfUInt64("77444564454564646", true)
+		UInt.BitShiftRight(64)
+		MsgBox % UInt.Value ; 77444564454564646
+*/
 	BitShiftRight(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1040,6 +1715,40 @@ Class MfUInt64 extends MfPrimitive
 	}
 ; End:BitShiftRight ;}
 ;{	Subtract()
+/*
+	Method: Subtract()
+
+	OutputVar := instance.Subtract(value)
+
+	Subtract(value)
+		Subtracts MfUInt64 value from current instance of MfUInt64.
+	Parameters:
+		value
+			The value to subtract from the current instance.
+			Can be any type that matches IsNumber, var integer or var string of integer numbers.
+	Returns:
+		If ReturnAsObject is true then returns current instance of MfUInt64 with an updated value; Otherwise returns var.
+	Throws:
+		Throws MfNotSupportedException if Readonly is true.
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentNullException if value is null.
+		Throws MfArgumentException if value is not an instance of MfUInt64 and can not be converted into integer value.
+		Throws MfArgumentOutOfRangeException if adding value is less then MinValue and greater than MaxValue
+	Remarks:
+		When subtracting value greater then MfInt64.MaxValue the values must be enclosed in "" and passed as a string as shown in the last part of the example below.
+		AutoHotkey has an integer upper limit of MfInt64.MaxValue. As a precaution all integer values passed into MfUInt64 methods can be wrapped in
+		double quotes. eg: i := new MfUInt64("10", true)
+		If value is a float or MfFloat instance then method will alway round down for positive number and round up for negative numbers.
+		For instance 2.8 is converted to 2 and -2.8 is converted to -2.
+	Exanple:
+		i := new MfUInt64(MfUInt64.MaxValue, true) ; create new MfInt64 max value and set it RetrunAsObject to value to true
+		i.Subtract(2) ; i.Value is now 18446744073709551613
+		iNew := new MfUInt64(5)
+		MsgBox % i.Subtract(iNew).Value ; displays 18446744073709551608
+		MsgBox % i.Subtract(10).Value   ; displays 18446744073709551598
+		MsgBox % i.Subtract(3).Subtract("18446744073709451613").Value ; displays 99982
+
+*/
 	Subtract(value) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
@@ -1074,9 +1783,9 @@ Class MfUInt64 extends MfPrimitive
 
 	ToString()
 		Gets a string representation of the MfUInt64 instance.
-	Returns
+	Returns:
 		Returns string var representing current instance Value.
-	Throws
+	Throws:
 		Throws MfNullReferenceException if called as a static method
 */
 	ToString() {
@@ -1085,6 +1794,107 @@ Class MfUInt64 extends MfPrimitive
 	}
 ;  End:ToString() ;}
 ;{ 	TryParse()
+/*
+	Method: TryParse()
+
+	OutputVar := MfUInt64.TryParse(result, s)
+	OubputVar := MfUInt64.TryParse(byRef result, s, style[, provider])
+
+	MfUInt64.TryParse(byRef result, s)
+		Tries to converts the s representation of a number to its MfUInt64 equivalent. A return value indicates whether the conversion succeeded.
+	Parameters:
+		result
+			Contains the value equivalent to the number contained in s, if the conversion succeeded.
+			The conversion fails if the s parameter is not of the correct format, or represents a number less than MinValue or greater than MaxValue.
+		s
+			An object to convert.
+			Can be var or instance of MfChar, MfString
+	Returns:
+		Returns true if parse is a success; Otherwise false
+	Throws:
+		Throws MfInvalidOperationException if not called as static method.
+	Remarks:
+		The conversion fails and the method returns false if the s parameter is not in the correct format, if it is null, or if it represents a number
+		less than MinValue or greater than MaxValue.
+		The MfUInt64.TryParse(result, s) method is similar to the MfUInt64.Parse(s) method, except that MfUInt64.TryParse(result, s)
+		does not throw an exception if the conversion fails.
+		The s parameter contains a number of the form:
+		
+		Element		Description
+		ws			Optional white space.
+		sign		An optional positive or negative sign.
+		digits		A sequence of digits ranging from 0 to 9
+
+		The s parameter is interpreted using the MfNumberStyles.Integer style. In addition to the byte value's decimal digits, only leading and trailing spaces together with a leading sign are allowed. (If the sign is present, it must be a positive sign or the method throws an MfOverFlowExcpetion.)
+		Example
+
+	Method: MfUInt64.TryParse(byRef result, s, style[, provider ])
+		Tries to converts the s representation of a number to its MfUInt64 equivalent. A return value indicates whether the conversion succeeded.
+		result
+		Contains the value equivalent to the number contained in s, if the conversion succeeded.
+		The conversion fails if the s parameter is not of the correct format, or represents a number less than MinValue or greater than MaxValue.
+		s
+		An string var of object convert.
+		Can be var or instance of MfChar, MfString
+		style
+		MfNumberStyles Instance or Integer var representing instance.
+		A bitwise combination of MfNumberStyles values that indicates the style elements that can be present in s. A typical value to specify is MfNumberStyles.Integer.
+		provider
+		An Optional object that supplies culture-specific parsing information about s. If provider is null, then MfNumberFormatInfo is used.
+	Returns:
+		Returns true if parse is a success; Otherwise false
+	Throws:
+		Throws MfInvalidOperationException if not called as static method.
+		Throws MfArgumentException style is not a MfNumberStyles value.
+		-or-
+		style is not a combination of MfNumberStyles.AllowHexSpecifier and MfNumberStyles.HexNumber values.
+	Remarks:
+		The TryParse method is like the Parse method, except the TryParse method does not throw an exception if the conversion fails.
+		It eliminates the need to use exception handling to test for a MfFormatException in the event that s is invalid and cannot be parsed successfully.
+		The style parameter defines the style elements (such as white space or a positive or negative sign) that are allowed in the s parameter
+		for the parse operation to succeed. It must be a combination of bit flags from the NumberStyles enumeration.
+		The style parameter defines the style elements (such as white space or the positive sign) that are allowed in the s parameter for the parse
+		operation to succeed. It must be a combination of bit flags from the MfNumberStyles enumeration. Depending on the value of style,
+		the s parameter may include the following elements:
+
+		[ws][$][sign]digits[.fractional_digits][e[sign]digits][ws]
+		Elements in square brackets ([ and ]) are optional. The following table describes each element.
+		Element				Description
+		ws					Optional white space. White space can appear at the beginning of s if style includes the
+							MfNumberStyles.AllowLeadingWhite flag, or at the end of s if style includes the MfNumberStyles.AllowTrailingWhite flag.
+		$					A currency symbol. Its position in the string is defined by the MfNumberFormatInfo.CurrencyPositivePattern property.
+							The current culture's currency symbol can appear in s if style includes the MfNumberStyles.AllowCurrencySymbol flag.
+		sign				An optional positive or negative sign.
+		digits				A sequence of digits ranging from 0 to 9
+		.					A decimal point symbol. The default decimal point symbol can appear in s if style includes the MfNumberStyles.AllowDecimalPoint flag.
+		fractional_digits	One or more occurrences of the digit 0. Fractional digits can appear in s only if style includes the MfNumberStyles.AllowDecimalPoint flag.
+		e					The e or E character, which indicates that the value is represented in exponential notation.
+							The s parameter can represent a number in exponential notation if style includes the MfNumberStyles.AllowExponent flag.
+		hexdigits			A sequence of hexadecimal digits from 0 through f, or 0 through F.
+
+		A string with decimal digits only (which corresponds to the MfNumberStyles.None style) always parses successfully.
+		Most of the remaining MfNumberStyles enumerations control elements that may be but are not required to be present in this input string.
+		The following table indicates how individual MfNumberStyles enumerations affect the elements that may be present in s.
+		
+		Non-composite NumberStyles values		Elements permitted in s in addition to digits
+		MfNumberStyles.None						Decimal digits only.
+		MfNumberStyles.AllowDecimalPoint		The . and fractional_digits elements. However, fractional_digits must consist of only one or more 0 digits or
+												an MfOverflowException is thrown.
+		MfNumberStyles.AllowExponent			The s parameter can also use exponential notation.
+		MfNumberStyles.AllowLeadingWhite		The ws element at the beginning of s.
+		MfNumberStyles.AllowTrailingWhite		The ws element at the end of s.
+		MfNumberStyles.AllowLeadingSign			A positive sign can appear before digits.
+		MfNumberStyles.AllowTrailingSign		A positive sign can appear after digits.
+		MfNumberStyles.AllowParentheses			Although this flag is supported, the use of parentheses in s results in an MfOverflowException.
+		MfNumberStyles.AllowThousands			Although the group separator symbol can appear in s, it can be preceded by only one or more 0 digits.
+		MfNumberStyles.AllowCurrencySymbol		The $ element.
+
+		If the MfNumberStyles.AllowHexSpecifier flag is used, s must be a hexadecimal value without a prefix. For example, "C9AF3" parses successfully,
+		but "0xC9AF3" does not. The only other flags that can be combined with it are MfNumberStyles.AllowLeadingWhite and MfNumberStyles.AllowTrailingWhite.
+		(The MfNumberStyles enumeration includes a composite number style, MfNumberStyles.HexNumber, that includes both white space flags.)
+		The provider parameter is an MfFormatProvider implementation, such as a MFNumberFormatInfo object, whose GetFormat method returns a MFNumberFormatInfo object.
+		The MFNumberFormatInfo object provides culture-specific information about the format of s.
+*/
 	TryParse(byref result, args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		objParams := MfInt16._intParseParams(A_ThisFunc, args*)
@@ -1421,16 +2231,16 @@ Class MfUInt64 extends MfPrimitive
 ; 	End:MinValue ;}
 ;{	Value
 /*
-	Property: Value [get/set]
+	Property: Value [get\set]
 		Overrides MfPrimitive.Value
 		Gets or sets the value associated with the this instance of MfUInt64
 	Value:
-		Value is a integer and can be var or any type that matches MfType.IsIntegerNumber.
-	Sets:
-		Set the Value of the instance. Can  be var or any type that matches MfType.IsIntegerNumber. 
+		Value is a integer and can be var or any type that matches IsIntegerNumber.
 	Gets:
 		Gets integer Value as var with a value no less then MinValue and no greater than MaxValue.
-	Throws
+	Sets:
+		Set the Value of the instance. Can  be var or any type that matches IsIntegerNumber.
+	Throws:
 		Throws MfNotSupportedException on set if Readonly is true.
 		Throws MfArgumentOutOfRangeException if value is less then MinValue or greater then MaxValue
 		Throws MfArgumentException for other errors.
@@ -1448,9 +2258,4 @@ Class MfUInt64 extends MfPrimitive
 	}
 ;	End:Value ;}
 ; End:Properties ;}
-;{ BigInteger-Calculation with AHK
-;	https://autohotkey.com/board/topic/3474-biginteger-calculation-with-ahk/
-
-	
-; End:BigInteger-Calculation with AHK ;}
 }
