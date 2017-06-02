@@ -951,8 +951,7 @@ Class MfBigInt extends MfObject
 			retval.m_bi := MfBigMathInt.Trim(retval.m_bi, 1)
 			return retval
 		}
-		_str := MfString.GetValue(s)
-		strLst := MfListVar.FromString(_str, false) ; ignore whitespace
+		strLst := MfListVar.FromString(s, false) ; ignore whitespace
 		ll := strLst.m_InnerList
 		if (strLst.Count = 0)
 		{
