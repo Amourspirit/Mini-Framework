@@ -121,23 +121,25 @@ class MfStringBuilder extends MfObject
 ;{ 	Append
 	; append object, var, char, charcode or MfCharList or MfObject x number of times
 	Append(args*) {
-		
-		pArgs := this._AppendParams(A_ThisFunc, args*)
-		pList := pArgs.ToStringList()
-
-		cnt := pList.Count
+		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
+		cnt := MfParams.GetArgCount(args*)
+		; by checking for single item via cout it is much faster then loading from _AppendParams and then processing
+		; most usage if Append will be appending a single itemd such as a string or var.
 		if (cnt = 1)
 		{
-			s := pList.Item[0].Value
-			obj := pArgs.Item[0]
-			if (s = "MfCharList")
+			obj := args[1]
+			if (MfObject.IsObjInstance(obj, MfCharList))
 			{
 				this._AppendCharList(obj, 0, obj.Count)
 				return this
 			}
-			this._AppendString(obj)
-			return this
+			; can handel null values
+			return this._AppendString(obj)
 		}
+
+		pArgs := this._AppendParams(A_ThisFunc, args*)
+		pList := pArgs.ToStringList()
+
 		if (cnt = 2)
 		{
 			; only valid choice is MfChar and Repeat count
@@ -1211,6 +1213,7 @@ class MfStringBuilder extends MfObject
 		sLen := ms.m_CharCount
 		if (sLen = 0)
 		{
+			ms := ""
 			return this
 		}
 		chunkChars := this.m_ChunkChars
