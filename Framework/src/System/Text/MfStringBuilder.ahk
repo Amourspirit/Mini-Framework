@@ -148,6 +148,7 @@ class MfStringBuilder extends MfObject
 				num :=  MfInt64.GetValue(pArgs.Item[1])
 				cc := pArgs.Item[0].Charcode
 				this._AppendCharCode(cc, num)
+				return this
 			}
 		}
 		if (cnt = 3)
@@ -196,7 +197,7 @@ class MfStringBuilder extends MfObject
 	AppendFormatted(str, args*) {
 		_str := MfString.GetValue(str)
 		fStr := MfString.Format(_str, args*)
-		this._AppendString(fStr)
+		return this._AppendString(fStr)
 	}
 ; 	End:AppendFormatted ;}
 ;{ 	AppendLine
