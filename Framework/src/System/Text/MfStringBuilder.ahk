@@ -192,21 +192,21 @@ class MfStringBuilder extends MfObject
 		return this
 	}
 ; 	End:AppendString ;}
-;{ 	AppendFormatted
+;{ 	AppendFormat
 	; append a formatted string See MfString.Format()
-	AppendFormatted(str, args*) {
+	AppendFormat(str, args*) {
 		_str := MfString.GetValue(str)
 		fStr := MfString.Format(_str, args*)
 		return this._AppendString(fStr)
 	}
-; 	End:AppendFormatted ;}
+; 	End:AppendFormat ;}
 ;{ 	AppendLine
 	; append object, var, char, charcode or MfCharList or MfObject followed by a new line
 	; or just append a new line
-	AppendLine(obj = "") {
-		if (MfNull.IsNull(obj) = false)
+	AppendLine(value = "") {
+		if (MfNull.IsNull(value) = false)
 		{
-			this._AppendString(obj)
+			this._AppendString(value)
 		}
 		return this._AppendString(this.m_Nl)
 	}
@@ -244,9 +244,9 @@ class MfStringBuilder extends MfObject
 	; Copy chars of current instance to destination
 	; destination is instance of MfCharList
 	CopyTo(sourceIndex, destination, destinationIndex, count) {
-			sourceIndex := MfInteger.GetValue(sourceIndex)
-			destinationIndex := MfInteger.GetValue(destinationIndex)
-			count := MfInteger.GetValue(count)
+			sourceIndex := MfInteger.GetValue(sourceIndex, -1)
+			destinationIndex := MfInteger.GetValue(destinationIndex, -1)
+			count := MfInteger.GetValue(count, -1)
 
 			if (MfNull.IsNull(destination))
 			{
