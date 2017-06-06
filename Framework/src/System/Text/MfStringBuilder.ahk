@@ -427,7 +427,9 @@ class MfStringBuilder extends MfObject
 			count := 0
 			try
 			{
+				; index, value, repeatCount
 				count := MfInteger.GetValue(pArgs.Item[2])
+				this._InsertObjInt(index, pArgs.Item[1].ToString(), count)
 				return this
 			}
 			catch e
