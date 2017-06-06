@@ -417,9 +417,12 @@ class MfMemoryString extends MfObject
 */
 ;{ 	Clear
 	Clear() {
+		Capacity := this.m_MemView.Size
+		FillBytes := this.m_FillBytes
+		Encoding := this.m_Encoding
 		this.m_CharCount := 0
 		this.m_MemView := ""
-		this.m_MemView := new MfMemStrView(this.Capacity, this.m_FillBytes, this.m_Encoding)
+		this.m_MemView := new MfMemStrView(Capacity, FillBytes, Encoding)
 		return this
 	}
 ; 	End:Clear ;}

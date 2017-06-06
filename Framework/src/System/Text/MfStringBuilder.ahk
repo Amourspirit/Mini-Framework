@@ -1149,6 +1149,7 @@ class MfStringBuilder extends MfObject
 				{
 					this.m_ChunkLength := 0
 					this.m_ChunkOffset := 0
+					this.m_ChunkChars.Clear()
 					return
 				}
 				i := _value - this.Length
