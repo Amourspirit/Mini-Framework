@@ -1051,14 +1051,14 @@ class MfStringBuilder extends MfObject
 			}
 		}
 	; End:MaxCapacity ;}
-	;{ Item
+	;{ Chars
 		/*!
-			Property: Item [get/set]
-				Gets or sets the Item value associated with the this instance
+			Property: Chars [get/set]
+				Gets or sets the Chars value associated with the this instance
 			Value:
-				Var representing the Item property of the instance
+				Var representing the Chars property of the instance
 		*/
-		Item[index]
+		Chars[index]
 		{
 			get {
 				;return this.m_Item
@@ -1119,7 +1119,7 @@ class MfStringBuilder extends MfObject
 				this._SetChar(stringBuilder, i, value)
 			}
 		}
-	; End:Item ;}
+	; End:Chars ;}
 	;{ Length
 		/*!
 			Property: Length [get/set]
