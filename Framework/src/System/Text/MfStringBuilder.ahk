@@ -516,11 +516,16 @@ class MfStringBuilder extends MfObject
 ;{ 	Replace
 	; Replace oldValue with newValue in the currrent instance
 	Replace(oldValue, newValue, startIndex=0, count=-1) {
-		startIndex := MfInteger.GetValue(startIndex, 1)
+		if (MfNull.IsNull(oldValue))
+		{
+			ex := new MfArgumentNullException("oldValue")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		startIndex := MfInteger.GetValue(startIndex, 0)
 		count := MfInteger.GetValue(count, -1)
 		currentLength := this.Length
-		
-		
+				
 		if ((startIndex < 0) || (startIndex > currentLength))
 		{
 			ex := new MfArgumentOutOfRangeException("startIndex", MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_Index"))
@@ -538,12 +543,7 @@ class MfStringBuilder extends MfObject
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		if (MfNull.IsNull(oldValue))
-		{
-			ex := new MfArgumentNullException("oldValue")
-			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw ex
-		}
+		
 		MsOldVal := MfMemoryString.FromAny(oldValue, this.m_Encoding)
 		if (MsOldVal.Length = 0)
 		{
@@ -557,18 +557,20 @@ class MfStringBuilder extends MfObject
 		; this._Replace(MsOldVal, MsNewVal, startIndex, Count)
 		; return this
 
-		; uainf the method of of mergin and replacing was 30 time faster
+		; the method of of mergin and replacing was 30 time faster
 		; on a string with 4200 chars with a initial buffer of 3000 chars.
 		; the MsMemoryString is much faster with find and replace
 		; mostly because it does not have to work on multible chunks
 		; and consider peices here and there.
 		; Also the case insenstive MfMemoryString method uses a special
-		; fast machine code method to find the index of the old value.
+		; fast machine code method to find the index of the old value ( on 32 bit machine only ).
 		; When the newValue and oldValue length are the same the replacements
 		; are even faster as the replacement is done by just overwriting the bytes
 		; and not mem copy method are used to move and copy bytes to rebuild the string.
 		; Due to the speed advantages it is worth merging the smaller chunks together
 		; into one chunk and then using MfMemoryString to replace.
+		; Note that the maching code fast index searching of MfMemoryString only works on 32 bit machines currently. This is not
+		; an issue as there are fallbacks for 64 bit machines but would affect the prefromace some what.
 		if (this.m_ChunkOffset > 0 && this.Length < this.MaxChunkSize)
 		{
 			if (deltaLength = 0)
@@ -2142,6 +2144,8 @@ class MfStringBuilder extends MfObject
 			; it was much slower on instances with longer length. It seeem the most effecient way is to exclude it for now
 			; Anoter consideration is to get the indexs for current chunk in a seperate list as _GetReplaceIndexsForChunk method does
 			; and then add those indexes to the current list.
+			; Note that the maching code fast index searching of MfMemoryString only works on 32 bit machines currently. This is not
+			; an issue as there are fallbacks for 64 bit machines but would affect the prefromace of the block that is commented out below.
 
 			;if (iPrev != chunk.m_ChunkOffset && iPrev < -2) ; this line would ensure the entire block was bypassed
 			;~ if (iPrev != chunk.m_ChunkOffset)
@@ -2218,10 +2222,10 @@ class MfStringBuilder extends MfObject
 				}
 				replacements.Item[replacementsCount++] := indexInChunk
 				;OutputDebug % "Replacement Count: " . replacementsCount . " Index: " . indexInChunk
-				OutputDebug % "2: Before count:" . count . " indexInChunk: " . indexInChunk
+				;OutputDebug % "2: Before count:" . count . " indexInChunk: " . indexInChunk
 				indexInChunk += searchLen
 				count -= searchLen
-				OutputDebug % "2: After  count:" . count . " indexInChunk: " . indexInChunk
+				;OutputDebug % "2: After  count:" . count . " indexInChunk: " . indexInChunk
 
 			}
 			else
