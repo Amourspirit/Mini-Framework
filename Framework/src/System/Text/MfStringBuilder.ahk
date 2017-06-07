@@ -1116,7 +1116,7 @@ class MfStringBuilder extends MfObject
 					}
 					;this._SetCharFromChunk(stringBuilder.m_ChunkChars, i, value)
 				}
-				this._SetChar(stringBuilder, i, value)
+				this._SetChar(stringBuilder, i, MfString.GetValue(value))
 			}
 		}
 	; End:Chars ;}
