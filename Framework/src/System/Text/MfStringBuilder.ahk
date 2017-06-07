@@ -1618,14 +1618,13 @@ class MfStringBuilder extends MfObject
 						{
 							if (cnt = 1 || cnt = 2)
 							{
-								result := MfInteger.GetValue(arg, "NaN", true)
-								if (result == "NaN")
+								if (Mfunc.IsInteger(arg))
 								{
-									p.AddString(arg)
+									p.AddInteger(arg)
 								}
 								else
 								{
-									p.AddInteger(result)
+									p.AddString(arg)
 								}
 								i++
 								continue
