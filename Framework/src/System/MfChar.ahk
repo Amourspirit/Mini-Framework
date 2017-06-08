@@ -592,13 +592,50 @@ class MfChar extends MfPrimitive
 */	
 	GetUnicodeCategory(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		
 		if (MfObject.IsObjInstance(args[1],MfParams)) {
 			objParams := args[1] ; arg 1 is a MfParams object so we will use it
 		} else {
 			objParams := new MfParams()
-			for index, arg in args
+			cnt := MfParams.GetArgCount(args*)
+			if (cnt = 1)
 			{
-				objParams.Add(arg)
+				arg := args[1]
+				if (MfObject.IsObjInstance(arg, MfChar))
+				{
+					objParams.Add(arg)
+				}
+				else
+				{
+					c := new MfChar(MfString.GetValue(arg))
+					objParams.Add(c)
+				}
+			}
+			else if(cnt = 2)
+			{
+				arg1 := args[1]
+				arg2 := args[2]
+				objStr := ""
+				objInt := ""
+				if (MfObject.IsObjInstance(arg1, MfString))
+				{
+					objStr := arg1
+				}
+				else
+				{
+					objStr := new MfString(MfString.GetValue(arg1))
+				}
+				if (MfObject.IsObjInstance(arg2, MfInteger))
+				{
+					objInt := arg2
+				}
+				else
+				{
+					objInt := new MfInteger(MfInteger.GetValue(arg2))
+				}
+				objParams.Add(objStr)
+				objParams.Add(objInt)
+
 			}
 		}
 		if ((objParams.Count < 1) || (objParams.Count > 2)) {
@@ -2126,6 +2163,8 @@ class MfChar extends MfPrimitive
 			}
 			i := MfChar.categoryForLatin1[index + 1]
 			retvar := new MfUnicodeCategory(i)
+			;retvar := MfEnum.ToObject(MfUnicodeCategory.GetType(), i)
+
 		} catch e {
 			throw e
 		} finally {

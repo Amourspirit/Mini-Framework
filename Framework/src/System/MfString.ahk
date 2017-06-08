@@ -4289,6 +4289,7 @@ Class MfString extends MfPrimitive
 		; sometime appending string does not change ptr will also check is a new Length set
 		if (this.m_ptrChanged || (this.m_mStr.m_CharCount != this.m_Length))
 		{
+			this._ResetPtr()
 			this.m_ptrChanged := false
 			this.m_mStr := ""
 			this.m_mStr := new MfMemoryString(this.m_length,,,this.m_ptr)
@@ -4419,7 +4420,39 @@ Class MfString extends MfPrimitive
 	; set the internal field m_ptr to the current memory address of the string value of the instance
 	_ResetPtr() {
 		ptrOld := this.m_ptr
+		; sometimes ObjGetAddress(this, "m_value") will return ""
+		; this is the case if m_value is a number and not a string
+		; append "" to m_value and try again
+		; this should work but if it does not then _GetMStr() will throw an error when trying to create a memory string from address
+		if (ptrOld = "")
+		{
+			this.m_value := this.m_value . ""
+		}
 		this.m_ptr := ObjGetAddress(this, "m_value")
+		if (this.m_ptr = "")
+		{
+			if (this.m_length = 0)
+			{
+				; all null "" value in AutoHotkey have the same memory address
+				; ObjGetAddress(this, "m_value") will return "" when m_value = ""
+				; for this reason will assign default null memory address so MfMemoryString has something to read if needed
+				; as soon as the MfString.Value is changed in any way this method will be called again and will result in a new
+				; memory string being assigned to this.m_ptr
+				ptrOld := ""
+				this.m_ptr := &ptrOld
+				this.m_ptrChanged := true
+				return
+			}
+			else
+			{
+				; we should never end up here but throw an error so we are notified that something critical happened
+				ex := new MfSystemException(MfEnvironment.Instance.GetResourceString("Exception_Error", "Critical memory error in MfString Class"))
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw ex
+			}
+			
+		}
+
 		if (ptrOld != this.m_ptr)
 		{
 			this.m_ptrChanged := true
@@ -4438,15 +4471,14 @@ Class MfString extends MfPrimitive
 ; End:_ResetLength() ;}
 ;{	String2Hex(x)
 	; Convert a string to hex digits
-	String2Hex(x, hypenate=true)                 
-	{                             
+	String2Hex(x, hypenate=true) {                             
 		mStr := MfMemoryString.FromAny(x)
 		lst := mStr.ToByteList()
 		mStr := ""
 		hex := lst.ToString(,,,hypenate = true?3:2)
 		Return hex
-
 	}
+
 	_GetCRC32(x)
 	{
 	   L := StrLen(x)>>1          ; length in bytes
