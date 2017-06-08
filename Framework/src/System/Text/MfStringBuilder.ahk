@@ -1526,7 +1526,12 @@ class MfStringBuilder extends MfObject
 			throw ex
 		}
 		
-		num := MfMath.Max(minBlockCharCount, MfMath.Min(this.Length, MfStringBuilder.DefaultCapacity))
+		; Compute the length of the new block we need 
+		; We make the new chunk at least big enough for the current need (minBlockCharCount)
+		; But also as big as the current length (thus doubling capacity), up to a maximum
+		; (so we stay in the small object heap, and never allocate really big chunks even if
+		; the string gets really big.
+		newBlockLength := MfMath.Max(minBlockCharCount, MfMath.Min(this.Length, this.MaxChunkSize))
 		params := new MfParams()
 		params.Data.Add("_internalsb", true)
 		params.Add(this)
@@ -1534,14 +1539,14 @@ class MfStringBuilder extends MfObject
 		this.m_ChunkPrevious := new MfStringBuilder(params)
 		this.m_ChunkOffset += this.m_ChunkLength
 		this.m_ChunkLength := 0
-		if (this.m_ChunkOffset + num < num)
+		if (this.m_ChunkOffset + newBlockLength < newBlockLength)
 		{
 			this.m_ChunkChars := null
 			ex := new MfOutOfMemoryException()
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		this.m_ChunkChars := new MfMemoryString(num,, this.m_Encoding)
+		this.m_ChunkChars := new MfMemoryString(newBlockLength,, this.m_Encoding)
 		
 		
 	}
