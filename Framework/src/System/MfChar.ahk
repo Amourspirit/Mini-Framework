@@ -2145,6 +2145,7 @@ class MfChar extends MfPrimitive
 ; End:_GetByteArray ;}	
 ;{	GetLatin1UnicodeCategory()
 	;private static MfUnicodeCategory GetLatin1UnicodeCategory(MfChar ch)
+	; returns MfEnum.EnumItem
 	GetLatin1UnicodeCategory(c)	{
 		;wasformat := A_FormatInteger
 		;SetFormat, Integer, D
@@ -2162,15 +2163,14 @@ class MfChar extends MfPrimitive
 				throw ex
 			}
 			i := MfChar.categoryForLatin1[index + 1]
-			retvar := new MfUnicodeCategory(i)
-			;retvar := MfEnum.ToObject(MfUnicodeCategory.GetType(), i)
+			;retvar := new MfUnicodeCategory(i)
+			retvar := MfEnum.ParseItem(MfUnicodeCategory.GetType(), i)
 
 		} catch e {
-			throw e
-		} finally {
-			;SetFormat, Integer, %wasformat%
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
-		
 		return retvar
 	}
 ; End:GetLatin1UnicodeCategory() ;}

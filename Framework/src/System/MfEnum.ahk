@@ -1273,7 +1273,6 @@ class MfEnum extends MfValueType
 		; Value is expected to be a string but if is number parse and send back
 		if (Mfunc.IsInteger(_value.Value))
 		{
-			wf := Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, "D")
 			try
 			{
 
@@ -1295,10 +1294,6 @@ class MfEnum extends MfValueType
 				parseResult.SetFailure(e)
 				result := false
 				return result
-			}
-			Finally
-			{
-				 Mfunc.SetFormat(MfSetFormatNumberType.Instance.IntegerFast, wf)
 			}
 		}
 
