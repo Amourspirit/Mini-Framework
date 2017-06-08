@@ -1677,7 +1677,9 @@ class MfChar extends MfPrimitive
 		try {
 			c := MfChar._GetCharFromInput(args*)
 		} catch e {
-			throw e
+			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 		try {
 			if (MfChar.IsUpper(c)) {
