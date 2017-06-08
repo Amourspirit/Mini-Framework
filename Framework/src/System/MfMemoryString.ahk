@@ -1738,9 +1738,9 @@ class MfMemoryString extends MfObject
 	Returns:
 		Returns 
 	Throws:
-		Throws MfException if
+		Throws MfArgumentOutOfRangeException
 	Remarks:
-		If ReplaceAtIndex
+		If newValue parameter is null or empty then Remove(Index, Length) is called.
 */
 	ReplaceAtIndex(Index, Length, newValue) {
 		index := MfInteger.GetValue(index)
@@ -1758,7 +1758,7 @@ class MfMemoryString extends MfObject
 		mStr := this._FromAny(newValue)
 		if (mStr.m_CharCount = 0)
 		{
-			return this
+			return this.Remove(index,length)
 		}
 		delta :=  mStr.m_CharCount - Length
 		if (delta = 0)
