@@ -74,9 +74,7 @@ class MfCharUnicodeInfo extends MfObject
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
@@ -90,9 +88,7 @@ class MfCharUnicodeInfo extends MfObject
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
@@ -106,9 +102,7 @@ class MfCharUnicodeInfo extends MfObject
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
@@ -122,9 +116,7 @@ class MfCharUnicodeInfo extends MfObject
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
@@ -138,9 +130,7 @@ class MfCharUnicodeInfo extends MfObject
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
@@ -170,9 +160,7 @@ class MfCharUnicodeInfo extends MfObject
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
@@ -209,69 +197,33 @@ class MfCharUnicodeInfo extends MfObject
 		Throws MfArgumentException if ch, s or index are object but not of the expected type.
 */
 	GetDecimalDigitValue(args*) {
-		if (MfObject.IsObjInstance(args[1],MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			for index, arg in args
-			{
-				objParams.Add(arg)
-			}
-		}
-		if ((objParams.Count < 1) || (objParams.Count > 2)) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
-			throw ex
-		}
-		retval := -1.0
 		
+		retval := -1.0
+		iChar := ""
+		try
+		{
+			iChar := MfCharUnicodeInfo._GetCharCode(args*)
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw e
+		}
 		try {
-			iChar := 0
-			strParms := objParams.ToString()
-			if (strParms = "MfChar") {
-				iChar := objParams.Item[0].CharCode
-			} else if (strParms = "MfString") {
-				strV := objParams.Item[0].Value
-				if (RegExMatch(strV, "i)^0x[0-9A-F]{4}$")) {
-					cc := new MfChar(New MfInteger(strV))
-				} else {
-					cc := new MfChar(strV)
-				}
-				ichar := cc.CharCode
-			} else if (strParms = "MfInteger") {
-				iObj := objParams.Item[0]
-				cc := new MfChar(iObj)
-				iChar := cc.CharCode
-			} else if (strParms = "MfString,MfInteger") {
-				sObj := objParams.Item[0]
-				sObj.ReturnAsObject := true
-				iObj := objParams.Item[1]
-				if ((sObj.Length > 0) && ((sObj.Length - 1) >= iObj.Value)) {
-					iChar := sObj.Index[iObj].CharCode
-				}
-			} else if (strParms = "MfString,MfString") {
-				; MfString,MfString should be var passed as non objects. Assuming string and integer
-				sObj := objParams.Item[0]
-				sObj.ReturnAsObject := true
-				iObj := new MfInteger(objParams.Item[1].Value)
-				if ((sObj.Length > 0) && ((sObj.Length - 1) >= iObj.Value)) {
-					iChar := sObj.Index[iObj].CharCode
-				}
-			} else {
-				ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
-				ex.Source := A_ThisFunc
-				ex.File := A_LineFile
-				ex.Line := A_LineNumber
-				throw ex
+			
+			if (iChar >= 48 && iChar <= 57)
+			{
+				return iChar - 48
 			}
+			if (iChar <= 255)
+			{
+				return -1
+			}
+			
 			retval :=  MfUcd.UCDSqlite.Instance.GetDecimalDigitValue(iChar)
 		} catch e {
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
-			ex.Source	:= A_ThisFunc
-			ex.File		:= A_LineFile
-			ex.Line		:= A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		
@@ -308,69 +260,38 @@ class MfCharUnicodeInfo extends MfObject
 		Throws MfArgumentException if ch, s or index are object but not of the expected type.
 */
 	GetDigitValue(args*) {
-		if (MfObject.IsObjInstance(args[1],MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			for index, arg in args
-			{
-				objParams.Add(arg)
-			}
-		}
-		if ((objParams.Count < 1) || (objParams.Count > 2)) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
-			throw ex
-		}
 		retval := -1.0
+		iChar := ""
+		try
+		{
+			iChar := MfCharUnicodeInfo._GetCharCode(args*)
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw e
+		}
 		
 		try {
-			iChar := 0
-			strParms := objParams.ToString()
-			if (strParms = "MfChar") {
-				iChar := objParams.Item[0].CharCode
-			} else if (strParms = "MfString") {
-				strV := objParams.Item[0].Value
-				if (RegExMatch(strV, "i)^0x[0-9A-F]{4}$")) {
-					cc := new MfChar(New MfInteger(strV))
-				} else {
-					cc := new MfChar(strV)
-				}
-				ichar := cc.CharCode
-			} else if (strParms = "MfInteger") {
-				iObj := objParams.Item[0]
-				cc := new MfChar(iObj)
-				iChar := cc.CharCode
-			} else if (strParms = "MfString,MfInteger") {
-				sObj := objParams.Item[0]
-				sObj.ReturnAsObject := true
-				iObj := objParams.Item[1]
-				if ((sObj.Length > 0) && ((sObj.Length - 1) >= iObj.Value)) {
-					iChar := sObj.Index[iObj].CharCode
-				}
-			} else if (strParms = "MfString,MfString") {
-				; MfString,MfString should be var passed as non objects. Assuming string and integer
-				sObj := objParams.Item[0]
-				sObj.ReturnAsObject := true
-				iObj := new MfInteger(objParams.Item[1].Value)
-				if ((sObj.Length > 0) && ((sObj.Length - 1) >= iObj.Value)) {
-					iChar := sObj.Index[iObj].CharCode
-				}
+			if (iChar >= 48 && iChar <= 57)
+			{
+				return iChar - 48
+			}
+			if (iChar <= 255)
+			{
+				return -1
 			}
 			retval := MfUcd.UCDSqlite.Instance.GetDigitValue(iChar)
 		} catch e {
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
-			ex.Source	:= A_ThisFunc
-			ex.File		:= A_LineFile
-			ex.Line		:= A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		
 		return retval
 	}
 ; 	End:GetDigitValue ;}
+
 ;{ 	GetNumericValue
 /*
 	Method: GetNumericValue()
@@ -408,63 +329,30 @@ class MfCharUnicodeInfo extends MfObject
 		the Aegean numbering system consists of code points U+10107 through U+10133.
 */
 	GetNumericValue(args*) {
-		if (MfObject.IsObjInstance(args[1],MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			for index, arg in args
-			{
-				objParams.Add(arg)
-			}
-		}
-		if ((objParams.Count < 1) || (objParams.Count > 2)) {
-			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
-			throw ex
-		}
 		retval := -1.0
+		try
+		{
+			iChar := MfCharUnicodeInfo._GetCharCode(args*)
+		}
+		catch e
+		{
+			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw e
+		}
 		
 		try {
-			iChar := 0
-			strParms := objParams.ToString()
-			if (strParms = "MfChar") {
-				iChar := objParams.Item[0].CharCode
-			} else if (strParms = "MfString") {
-				strV := objParams.Item[0].Value
-				if (RegExMatch(strV, "i)^0x[0-9A-F]{4}$")) {
-					cc := new MfChar(New MfInteger(strV))
-				} else {
-					cc := new MfChar(strV)
-				}
-				ichar := cc.CharCode
-			} else if (strParms = "MfInteger") {
-				iObj := objParams.Item[0]
-				cc := new MfChar(iObj)
-				iChar := cc.CharCode
-			} else if (strParms = "MfString,MfInteger") {
-				sObj := objParams.Item[0]
-				sObj.ReturnAsObject := true
-				iObj := objParams.Item[1]
-				if ((sObj.Length > 0) && ((sObj.Length - 1) >= iObj.Value)) {
-					iChar := sObj.Index[iObj].CharCode
-				}
-			} else if (strParms = "MfString,MfString") {
-				; MfString,MfString should be var passed as non objects. Assuming string and integer
-				sObj := objParams.Item[0]
-				sObj.ReturnAsObject := true
-				iObj := new MfInteger(objParams.Item[1].Value)
-				if ((sObj.Length > 0) && ((sObj.Length - 1) >= iObj.Value)) {
-					iChar := sObj.Index[iObj].CharCode
-				}
+			if (iChar >= 48 && iChar <= 57)
+			{
+				return iChar - 48
+			}
+			if (iChar <= 255)
+			{
+				return -1
 			}
 			retval := MfUcd.UCDSqlite.Instance.GetNumericValue(iChar)
 		} catch e {
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
-			ex.Source	:= A_ThisFunc
-			ex.File		:= A_LineFile
-			ex.Line		:= A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		
@@ -491,22 +379,12 @@ class MfCharUnicodeInfo extends MfObject
 		Throws MfNotSupportedException
 */
 	_IsWhiteSpace(args*) {
-		WasFormat := A_FormatInteger
-		SetFormat, IntegerFast, D
-		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			cc := c.CharCode + 0
-				
-			; from unicode database
-			retval := ((cc >= 9 && cc <= 13) || (cc = 32) || (cc = 133) || (cc = 160) || (cc = 5760) || (cc >= 8192 && cc <= 8202)
-				|| (cc = 8232) || (cc = 8233) || (cc = 8239) || (cc = 8287) || (cc = 12288))
-		
-		} catch e {
-			throw e
-		} finally {
-			SetFormat,IntegerFast, %WasFormat%
-		}
+		c := MfChar._GetCharFromInput(args*)
+		cc := c.CharCode + 0
+			
+		; from unicode database
+		retval := ((cc >= 9 && cc <= 13) || (cc = 32) || (cc = 133) || (cc = 160) || (cc = 5760) || (cc >= 8192 && cc <= 8202)
+			|| (cc = 8232) || (cc = 8233) || (cc = 8239) || (cc = 8287) || (cc = 12288))
 		return retval
 	}
 ; 		End:IsWhiteSpace ;}
@@ -546,101 +424,293 @@ class MfCharUnicodeInfo extends MfObject
 		}
 		return -1
 	}
-	
-	GetUnicodeCategory(c) {
-		if (!MfObject.IsObjInstance(c, "MfChar")) {
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "c", "MfChar"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+;{ 	GetUnicodeCategory
+	; Makes a call to the framework unicode database and get the category for a MfChar Instance
+	; Returns an instance of MfEnum.EnumItem
+/*
+	Method: GetUnicodeCategory(c)
+		Categorizes a specified Unicode character into a group identified by one of the MfUnicodeCategory values for c.
+	Parameters:
+		c
+			The Unicode character instance of MfChar to categorize.
+			Can be a var containing character or MfChar instance.
+	Returns:
+		A MfUnicodeCategory value as instance of MfEnum.EnumItem that identifies the group.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+		Throws MfNotSupportedException if Overloads can not match Parameters.
+	Remarks:
+		Static Method
+
+	Method: GetUnicodeCategory(s, index)
+		Categorizes a specified Unicode character into a group identified by one of the MfUnicodeCategory values for the character
+		in string s at the location of Zero-based index.
+	Parameters:
+		s
+			The String containing the Unicode character for which to get the Unicode category.
+			Can be MfString instance or var.
+		index
+			An integer that contains the zero-based index position of the character to categorize in s.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		A MfUnicodeCategory value as instance of MfEnum.EnumItem that identifies the group.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+		Throws MfNotSupportedException if Overloads can not match Parameters.
+		Throws MfArgumentOutOfRangeException if argument index is out of range
+	Remarks:
+		Static Method
+*/
+	GetUnicodeCategory(args*) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		
+		if (MfObject.IsObjInstance(args[1],MfParams)) {
+			objParams := args[1] ; arg 1 is a MfParams object so we will use it
+		} else {
+			objParams := new MfParams()
+			cnt := MfParams.GetArgCount(args*)
+			if (cnt = 1)
+			{
+				arg := args[1]
+				if (MfObject.IsObjInstance(arg, MfChar))
+				{
+					objParams.Add(arg)
+				}
+				else
+				{
+					c := new MfChar(MfString.GetValue(arg))
+					objParams.Add(c)
+				}
+			}
+			else if(cnt = 2)
+			{
+				arg1 := args[1]
+				arg2 := args[2]
+				objStr := ""
+				objInt := ""
+				if (MfObject.IsObjInstance(arg1, MfString))
+				{
+					objStr := arg1
+				}
+				else
+				{
+					objStr := new MfString(MfString.GetValue(arg1))
+				}
+				if (MfObject.IsObjInstance(arg2, MfInteger))
+				{
+					objInt := arg2
+				}
+				else
+				{
+					objInt := new MfInteger(MfInteger.GetValue(arg2))
+				}
+				objParams.Add(objStr)
+				objParams.Add(objInt)
+
+			}
+		}
+		if ((objParams.Count < 1) || (objParams.Count > 2)) {
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
+		strParms := objParams.ToString()
+		if (strParms = "MfChar")
+		{
+			c := objParams.Item[0]
+		}
+		else if (strParms = "MfString,MfInteger")
+		{
+			s := objParams.Item[0]
+			index := objParams.Item[1]
+			c := new MfChar(s.Index[index])
+		}
+		else
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+
+		if (MfChar.IsLatin1(c))
+		{
+			; Much faster then makeing call to database
+			return MfChar.GetLatin1UnicodeCategory(c)
+		}
+		; make call to database to get info.
 		try {
 			str := MfUcd.UCDSqlite.Instance.GetUnicodeGeneralCategory(c.Charcode)
 			if (str = "Lu") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.UppercaseLetter)
+				return MfUnicodeCategory.Instance.UppercaseLetter
 			} else if (str = "Ll") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.LowercaseLetter)
+				return MfUnicodeCategory.Instance.LowercaseLetter
 			} else if (str = "Lt") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.TitlecaseLetter)
+				return MfUnicodeCategory.Instance.TitlecaseLetter
 			} else if (str = "Lm") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.ModifierLetter)
+				return MfUnicodeCategory.Instance.ModifierLetter
 			} else if (str = "Lo") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.OtherLetter)
+				return MfUnicodeCategory.Instance.OtherLetter
 			} else if (str = "Mn") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.NonSpacingMark)
+				return MfUnicodeCategory.Instance.NonSpacingMark
 			} else if (str = "Mc") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.SpacingCombiningMark)
+				return MfUnicodeCategory.Instance.SpacingCombiningMark
 			} else if (str = "Me") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.EnclosingMark)
+				return MfUnicodeCategory.Instance.EnclosingMark
 			} else if (str = "Nd") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.DecimalDigitNumber)
+				return MfUnicodeCategory.Instance.DecimalDigitNumber
 			} else if (str = "Nl") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.LetterNumber)
+				return MfUnicodeCategory.Instance.LetterNumber
 			} else if (str = "No") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.OtherNumber)
+				return MfUnicodeCategory.Instance.OtherNumber
 			} else if (str = "Zs") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.SpaceSeparator)
+				return MfUnicodeCategory.Instance.SpaceSeparator
 			} else if (str = "Zl") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.LineSeparator)
+				return MfUnicodeCategory.Instance.LineSeparator
 			} else if (str = "Zp") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.ParagraphSeparator)
+				return MfUnicodeCategory.Instance.ParagraphSeparator
 			} else if (str = "Cc") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.Control)
+				return MfUnicodeCategory.Instance.Control
 			} else if (str = "Cf") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.Format)
+				return MfUnicodeCategory.Instance.Format
 			} else if (str = "Cs") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.Surrogate)
+				return MfUnicodeCategory.Instance.Surrogate
 			} else if (str = "Co") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.PrivateUse)
+				return MfUnicodeCategory.Instance.PrivateUse
 			} else if (str = "Pc") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.ConnectorPunctuation)
+				return MfUnicodeCategory.Instance.ConnectorPunctuation
 			} else if (str = "Pd") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.DashPunctuation)
+				return MfUnicodeCategory.Instance.DashPunctuation
 			} else if (str = "Ps") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.OpenPunctuation)
+				return MfUnicodeCategory.Instance.OpenPunctuation
 			} else if (str = "Pe") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.ClosePunctuation)
+				return MfUnicodeCategory.Instance.ClosePunctuation
 			} else if (str = "Pi") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.InitialQuotePunctuation)
+				return MfUnicodeCategory.Instance.InitialQuotePunctuation
 			} else if (str = "Pf") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.FinalQuotePunctuation)
+				return MfUnicodeCategory.Instance.FinalQuotePunctuation
 			} else if (str = "Po") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.OtherPunctuation)
+				return MfUnicodeCategory.Instance.OtherPunctuation
 			} else if (str = "Sm") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.MathSymbol)
+				return MfUnicodeCategory.Instance.MathSymbol
 			} else if (str = "Sc") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.CurrencySymbol)
+				return MfUnicodeCategory.Instance.CurrencySymbol
 			} else if (str = "Sk") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.ModifierSymbol)
+				return MfUnicodeCategory.Instance.ModifierSymbol
 			} else if (str = "So") {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.OtherSymbol)
+				return MfUnicodeCategory.Instance.OtherSymbol
 			}  else {
-				return new MfUnicodeCategory(MfUnicodeCategory.Instance.OtherNotAssigned)
+				return MfUnicodeCategory.Instance.OtherNotAssigned
 			}
 			
 		} catch e {
 			ex := new MfException(MfString.Format(MfEnvironment.Instance.GetResourceString("Exception_Error"), A_ThisFunc), e)
-			ex.Source	:= A_ThisFunc
-			ex.File		:= A_LineFile
-			ex.Line		:= A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		} 
 	}
-	
+; 	End:GetUnicodeCategory ;}
 	_GetCharFromString(s, index) {
 		s := new MfString(args[1], true) ; create string instance that returns objects
 
 			if (index >= _s.Length)
 			{
 				ex := new MfArgumentOutOfRangeException("index")
-				ex.Source := A_ThisFunc
-				ex.File := A_LineFile
-				ex.Line := A_LineNumber
+				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
 			return _s.Index[args[2]] ; get MfChar instanance
 	}
+	;{ 	_GetCharCode
+	; gets charcode for integer obj or var, char obj or string , string obj or var and index obj or var
+	; uses to read constructor params for GetDecimalDigitValue, GetDigitValue and GetNumericValue
+	; returns integer that represents the char code
+	; Static Private method
+	_GetCharCode(args*) {
+		if (MfObject.IsObjInstance(args[1],MfParams))
+		{
+			objParams := args[1] ; arg 1 is a MfParams object so we will use it
+		}
+		else
+		{
+			objParams := new MfParams()
+			for index, arg in args
+			{
+				objParams.Add(arg)
+			}
+		}
+		if ((objParams.Count < 1) || (objParams.Count > 2))
+		{
+			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		try
+		{
+			iChar := 0
+			strParms := objParams.ToString()
+			if (strParms = "MfChar")
+			{
+				return objParams.Item[0].CharCode
+			}
+			else if (strParms = "MfString")
+			{
+				strV := objParams.Item[0].Value
+				if (RegExMatch(strV, "i)^0x[0-9A-F]{4}$"))
+				{
+					cc := new MfChar(new MfInteger(strV))
+				}
+				else
+				{
+					cc := new MfChar(strV)
+				}
+				return cc.CharCode
+			}
+			else if (strParms = "MfInteger")
+			{
+				val := objParams.Item[0].Value
+				If (val < MfChar.MinValue || val > MfChar.MaxValue)
+				{
+					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_CharCode"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				return val
+			}
+			else if (strParms = "MfString,MfInteger")
+			{
+				sObj := objParams.Item[0]
+				iObj := objParams.Item[1]
+				if (sObj.Length = 0)
+				{
+					return -1
+				}
+				iChar := new MfChar(sObj.Index[iObj]).CharCode
+			}
+			else if (strParms = "MfString,MfString")
+			{
+				; MfString,MfString should be var passed as non objects. Assuming string and integer
+				sObj := objParams.Item[0]
+				if (sObj.Length = 0)
+				{
+					return -1
+				}
+				iObj := MfInteger.GetValue(objParams.Item[1].Value, -1)
+				if (iObj = -1)
+				{
+					return -1
+				}
+				iChar := new MfChar(sObj.Index[iObj]).CharCode
+			}
+			return iChar
+		}
+		catch e
+		{
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+	}
+; 	End:_GetCharCode ;}
 ; 	End:Methods ;}
 }
 /*!

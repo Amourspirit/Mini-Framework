@@ -561,120 +561,54 @@ class MfChar extends MfPrimitive
 ; End:GetTypeCode() ;}
 ;{ 	GetUnicodeCategory - Static
 /*
-	Method: GetUnicodeCategory()
-	
-	OutputVar := MfChar.GetUnicodeCategory(c)
-	OutputVar := MfChar.GetUnicodeCategory(s, index)
-	
-	GetUnicodeCategory(c)
+	Method: GetUnicodeCategory(c)
 		Categorizes a specified Unicode character into a group identified by one of the MfUnicodeCategory values for c.
-	
-	GetUnicodeCategory(s, index)
-		Categorizes a specified Unicode character into a group identified by one of the MfUnicodeCategory values for the
-		character in string s at the location of Zero-based index.
-	Parameters
+	Parameters:
 		c
-			The Unicode character instance of MfChar to categorize. Can be a var containing character or MfChar instance or
-			string var containing hex value Eg:"0x0061".
-		s
-			The String containing the Unicode character for which to get the Unicode category. Can be MfString instance or String var.
-			Can be instance of MfString, or var containing string.
-		index
-			An integer that contains the zero-based index position of the character to categorize in s.
-			Can be MfInteger Instance or var containing Integer.
-	Returns
-		A MfUnicodeCategory value that identifies the group.
-	Throws
+			The Unicode character instance of MfChar to categorize.
+			Can be a var containing character or MfChar instance.
+	Returns:
+		A MfUnicodeCategory value as instance of MfEnum.EnumItem that identifies the group.
+	Throws:
 		Throws MfInvalidOperationException if not called as a static method.
 		Throws MfNotSupportedException if Overloads can not match Parameters.
-	Remarks
+	Remarks:
 		Static Method
-*/	
+
+	Method: GetUnicodeCategory(s, index)
+		Categorizes a specified Unicode character into a group identified by one of the MfUnicodeCategory values for the character
+		in string s at the location of Zero-based index.
+	Parameters:
+		s
+			The String containing the Unicode character for which to get the Unicode category.
+			Can be MfString instance or var.
+		index
+			An integer that contains the zero-based index position of the character to categorize in s.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		A MfUnicodeCategory value as instance of MfEnum.EnumItem that identifies the group.
+	Throws:
+		Throws MfInvalidOperationException if not called as a static method.
+		Throws MfNotSupportedException if Overloads can not match Parameters.
+		Throws MfArgumentOutOfRangeException if argument index is out of range
+	Remarks:
+		Static Method
+*/
 	GetUnicodeCategory(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		
-		if (MfObject.IsObjInstance(args[1],MfParams)) {
-			objParams := args[1] ; arg 1 is a MfParams object so we will use it
-		} else {
-			objParams := new MfParams()
-			cnt := MfParams.GetArgCount(args*)
-			if (cnt = 1)
-			{
-				arg := args[1]
-				if (MfObject.IsObjInstance(arg, MfChar))
-				{
-					objParams.Add(arg)
-				}
-				else
-				{
-					c := new MfChar(MfString.GetValue(arg))
-					objParams.Add(c)
-				}
-			}
-			else if(cnt = 2)
-			{
-				arg1 := args[1]
-				arg2 := args[2]
-				objStr := ""
-				objInt := ""
-				if (MfObject.IsObjInstance(arg1, MfString))
-				{
-					objStr := arg1
-				}
-				else
-				{
-					objStr := new MfString(MfString.GetValue(arg1))
-				}
-				if (MfObject.IsObjInstance(arg2, MfInteger))
-				{
-					objInt := arg2
-				}
-				else
-				{
-					objInt := new MfInteger(MfInteger.GetValue(arg2))
-				}
-				objParams.Add(objStr)
-				objParams.Add(objInt)
-
-			}
+		try
+		{
+			return MfCharUnicodeInfo.GetUnicodeCategory(args*)
 		}
-		if ((objParams.Count < 1) || (objParams.Count > 2)) {
-			e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
-			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw e
+		catch err
+		{
+			if (MfObject.IsObjInstance(err, MfNotSupportedException))
+			{
+				err.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+				throw err
+			}
+			throw err
 		}
-		retval := -1
-		strParms := objParams.ToString()
-		if (strParms = "MfChar") {
-			c := objParams.Item[0]
-			if (MfChar.IsLatin1(c))
-			{
-				retval := MfChar.GetLatin1UnicodeCategory(c)
-			}
-		} else if (strParms = "MfString,MfInteger") {
-			s := objParams.Item[0]
-			s.ReturnAsObject := true
-			
-			index := objParams.Item[1]
-			if (index.Value >= str.Length)
-			{
-				ex := new MfArgumentOutOfRangeException("index")
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-			c := s.Index[index]
-			if (MfChar.IsLatin1(c))
-			{
-				retval := MfChar.GetLatin1UnicodeCategory(c)
-			} else {
-				return MfCharUnicodeInfo.GetUnicodeCategory(c)
-			}
-		} else {
-			e := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload"))
-			e.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-			throw e
-		}
-		return retval
 	}
 ; End:GetUnicodeCategory() ;}	
 ;{ 	GetValue - Static
@@ -711,7 +645,7 @@ class MfChar extends MfPrimitive
 */
 	GetValue(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		retval := MfString.Empty
+		retval := ""
 		ch := MfChar._GetCharFromInput(args*)
 		if (MfNull.IsNull(ch) = true) {
 			return Null
@@ -817,23 +751,18 @@ class MfChar extends MfPrimitive
 */
 	IsDigit(args*) { ;MfChar or String, MfInteger
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			if (MfChar.IsLatin1(c) = true) {
-				cVal := c.CharCode + 0
-				;~ cVal .= "" ; necessary for integer fast
-				if ((cVal >= 48) && (cVal <= 57)) {
-					retval := true
-				}
-			} else {
-				Cat := MfCharUnicodeInfo.GetUnicodeCategory(c)
-				retval := (cat.Value = MfUnicodeCategory.Instance.DecimalDigitNumber.Value)
+		c := MfChar._GetCharFromInput(args*)
+		if (MfChar.IsLatin1(c) = true) {
+			cVal := c.CharCode + 0
+			;~ cVal .= "" ; necessary for integer fast
+			if ((cVal >= 48) && (cVal <= 57)) {
+				return true
 			}
-		} catch e {
-			throw e
-		} 
-		return retval
+			return false
+		} else {
+			Cat := MfCharUnicodeInfo.GetUnicodeCategory(c)
+			return cat.Equals(MfUnicodeCategory.Instance.DecimalDigitNumber)
+		}
 	}
 ; End:IsDigit() ;}
 ;{ 	IsHighSurrogate - static
@@ -934,22 +863,16 @@ class MfChar extends MfPrimitive
 */
 	IsLetter(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
+		c := MfChar._GetCharFromInput(args*)
 			
-			if (!MfChar.IsLatin1(c)) {
-				retval := MfChar.CheckLetter(MfCharUnicodeInfo.GetUnicodeCategory(c))
-			} else if (MfChar.IsAscii(c)) {
-				cc := c.Charcode
-				retval := ((cc >= 65) && (cc <= 122))
-			} else {
-				retval := MfChar.CheckLetter(MfChar.GetLatin1UnicodeCategory(c))
-			}
-		} catch e {
-			throw e
-		} 
-		return retval
+		if (!MfChar.IsLatin1(c)) {
+			return MfChar.CheckLetter(MfCharUnicodeInfo.GetUnicodeCategory(c))
+		} else if (MfChar.IsAscii(c)) {
+			cc := c.Charcode
+			return ((cc >= 65) && (cc <= 122))
+		} else {
+			return MfChar.CheckLetter(MfChar.GetLatin1UnicodeCategory(c))
+		}
 	}
 ; 	End:IsLetter ;}
 ;{ 	IsLetterOrDigit - static
@@ -988,18 +911,15 @@ class MfChar extends MfPrimitive
 */
 	IsLetterOrDigit(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
-		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			If (MfChar.IsLatin1(c)) {
-				retval := MfChar.CheckLetterOrDigit(MfChar.GetLatin1UnicodeCategory(c))
-			} else {
-				retval := MfChar.CheckLetterOrDigit(MfCharUnicodeInfo.GetUnicodeCategory(c))
-			}
-		} catch e {
-			throw e
+		c := MfChar._GetCharFromInput(args*)
+		If (MfChar.IsLatin1(c))
+		{
+			return MfChar.CheckLetterOrDigit(MfChar.GetLatin1UnicodeCategory(c))
 		}
-		return retval
+		else
+		{
+			return MfChar.CheckLetterOrDigit(MfCharUnicodeInfo.GetUnicodeCategory(c))
+		}
 	}
 ; 	End:IsLetterOrDigit ;}
 ;{ 	IsLower - static
@@ -1037,21 +957,38 @@ class MfChar extends MfPrimitive
 	
 */
 	IsLower(args*) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		; Could use (MfChar.GetUnicodeCategory(c).Value = MfUnicodeCategory.Instance.LowercaseLetter.Value)
+		; but using GetUnicodeCategory makes a call to the database which is a much longer round trip to get the info
+		;
+		; many characters are not categorized as lower or upper case. Only characters that have a corresponding case would have
+		; this a lower or upper category.
+		; charactores that are not categorized as lower or upper have the same value when converter to upper or lower
+		; A faster way to check to is convert the char to upper and compare case insensitive operator ==
+		; if char value is == char value converted to upper then it can not be lower.
+		; Next test if char value == char lower then return the compare result
+		; For example:
+		; 	0x2764 ❤ heavy black heart, Lower 0x2764 upper 0x2764, IsLower for this char will always be false because
+		;	it does not have the a lower or upper case category
+		;
+		;	Ox0561 "ա", Upper 0x0531 "Ա" IsLower("ա") reports true because it in in the catagory of Lower case
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			if (!MfChar.IsLatin1(c)) {
-				retval := (MfCharUnicodeInfo.GetUnicodeCategory(c).Value = MfUnicodeCategory.Instance.LowercaseLetter.Value)
-			} else if (MfChar.IsAscii(c)) {
-				retval := ((c.CharCode >= 0x0061) && (c.CharCode <= 0x007A))
-			} else {
-				retval := (MfChar.GetLatin1UnicodeCategory(c).Value = MfUnicodeCategory.Instance.LowercaseLetter.Value)
-			}
-		} catch e {
-			throw e
+		c := MfChar._GetCharFromInput(args*)
+		if (MfChar.IsLatin1(c))
+		{
+			return ((c.CharCode >= 0x0061) && (c.CharCode <= 0x007A))
 		}
-		return retval
+		else
+		{
+			val := c.Value
+			cUpper := Mfunc.StringUpper(val)
+			
+			if (cUpper == val)
+			{
+				return false
+			}
+			cLower := Mfunc.StringLower(val)
+			return cLower == val
+		}
 	}
 ; 	End:IsLower ;}
 ;{ 	IsLowSurrogate - static
@@ -1095,13 +1032,9 @@ class MfChar extends MfPrimitive
 	IsLowSurrogate(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			cHex := c.CharCode
-			retval := ((cHex >= 0xDC00) && (cHex <= 0xDFFF))
-		} catch e {
-			throw e
-		}
+		c := MfChar._GetCharFromInput(args*)
+		cHex := c.CharCode
+		retval := ((cHex >= 0xDC00) && (cHex <= 0xDFFF))
 		return retval
 	}
 ; 	End:IsLowSurrogate ;}
@@ -1146,17 +1079,13 @@ class MfChar extends MfPrimitive
 	IsNumber(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			if (!MfChar.IsLatin1(c)) {
-				retval := MfChar.CheckNumber(MfCharUnicodeInfo.GetUnicodeCategory(c))
-			} else if (MfChar.IsAscii(c)) {
-				retval := ((c.CharCode >= 0x0030) && (c.CharCode <= 0x0039))
-			} else {
-				retval := MfChar.CheckNumber(MfChar.GetLatin1UnicodeCategory(c))
-			}
-		} catch e {
-			throw e
+		c := MfChar._GetCharFromInput(args*)
+		if (!MfChar.IsLatin1(c)) {
+			retval := MfChar.CheckNumber(MfCharUnicodeInfo.GetUnicodeCategory(c))
+		} else if (MfChar.IsAscii(c)) {
+			retval := ((c.CharCode >= 0x0030) && (c.CharCode <= 0x0039))
+		} else {
+			retval := MfChar.CheckNumber(MfChar.GetLatin1UnicodeCategory(c))
 		}
 		return retval
 	}
@@ -1198,15 +1127,11 @@ class MfChar extends MfPrimitive
 	IsPunctuation(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			if (MfChar.IsLatin1(c)) {
-				retval := MfChar.CheckPunctuation(MfChar.GetLatin1UnicodeCategory(c))
-			} else {
-				retval := MfChar.CheckPunctuation(MfCharUnicodeInfo.GetUnicodeCategory(c))
-			}
-		} catch e {
-			throw e
+		c := MfChar._GetCharFromInput(args*)
+		if (MfChar.IsLatin1(c)) {
+			retval := MfChar.CheckPunctuation(MfChar.GetLatin1UnicodeCategory(c))
+		} else {
+			retval := MfChar.CheckPunctuation(MfCharUnicodeInfo.GetUnicodeCategory(c))
 		}
 		return retval
 	}
@@ -1247,15 +1172,11 @@ class MfChar extends MfPrimitive
 	IsSeparator(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			if (MfChar.IsLatin1(c)) {
-				retval := MfChar._IsSeparatorLatin1(c)
-			} else {
-				retval := MfChar.CheckSeparator(MfCharUnicodeInfo.GetUnicodeCategory(c))
-			}
-		} catch e {
-			throw e
+		c := MfChar._GetCharFromInput(args*)
+		if (MfChar.IsLatin1(c)) {
+			retval := MfChar._IsSeparatorLatin1(c)
+		} else {
+			retval := MfChar.CheckSeparator(MfCharUnicodeInfo.GetUnicodeCategory(c))
 		}
 		return retval
 	}
@@ -1294,12 +1215,8 @@ class MfChar extends MfPrimitive
 	IsSurrogate(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			retval := MfChar._IsSurrogateC(c)
-		} catch e {
-			throw e
-		}
+		c := MfChar._GetCharFromInput(args*)
+		retval := MfChar._IsSurrogateC(c)
 		return retval
 	}
 ;	End:IsSurrogate() ;}
@@ -1428,15 +1345,11 @@ class MfChar extends MfPrimitive
 	IsSymbol(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			if (MfChar.IsLatin1(c)) {
-				retval := MfChar.CheckSymbol(MfChar.GetLatin1UnicodeCategory(c))
-			} else {
-				retval := MfChar.CheckSymbol(MfCharUnicodeInfo.GetUnicodeCategory(c))
-			}
-		} catch e {
-			throw e
+		c := MfChar._GetCharFromInput(args*)
+		if (MfChar.IsLatin1(c)) {
+			retval := MfChar.CheckSymbol(MfChar.GetLatin1UnicodeCategory(c))
+		} else {
+			retval := MfChar.CheckSymbol(MfCharUnicodeInfo.GetUnicodeCategory(c))
 		}
 		return retval
 	}
@@ -1475,21 +1388,38 @@ class MfChar extends MfPrimitive
 		Valid uppercase letters are members of the following category in MfUnicodeCategory: UppercaseLetter.
 	*/
 	IsUpper(args*) {
-		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		; Could use (MfChar.GetUnicodeCategory(c).Value = MfUnicodeCategory.Instance.UppercaseLetter.Value)
+		; but using GetUnicodeCategory makes a call to the database which is a much longer round trip to get the info
+		;
+		; many characters are not categorized as lower or upper case. Only characters that have a corresponding case would have
+		; this a lower or upper category.
+		; charactores that are not categorized as lower or upper have the same value when converter to upper or lower
+		; A faster way to check to is convert the char to lower and compare case insensitive operator ==
+		; if char value is == char value converted to lower then it can not be upper.
+		; Next test if char value == char upper then return the compare result
+		; For example:
+		; 	0x2764 ❤ heavy black heart, Lower 0x2764 upper 0x2764, IsUpper for this char will always be false because
+		;	it does not have the a lower or upper case category
+		;
+		;	Ox0561 "ա", Upper 0x0531 "Ա" IsUpper("Ա") reports true because it in in the catagory of Upper case
 		retval := false
-		try {
-			c := MfChar._GetCharFromInput(args*)
-			if (!MfChar.IsLatin1(c)) {
-				retval := (MfCharUnicodeInfo.GetUnicodeCategory(c).Value = MfUnicodeCategory.Instance.UppercaseLetter.Value)
-			} else if (MfChar.IsAscii(c)) {
-				retval := ((c.CharCode >= 0x0041) && (c.CharCode <= 0x005A))
-			} else {
-				retval := (MfChar.GetLatin1UnicodeCategory(c).Value = MfUnicodeCategory.Instance.UppercaseLetter.Value)
-			}
-		} catch e {
-			throw e
+		c := MfChar._GetCharFromInput(args*)
+		if (MfChar.IsLatin1(c))
+		{
+			return ((c.CharCode >= 0x0041) && (c.CharCode <= 0x005A))
 		}
-		return retval
+		else
+		{
+			val := c.Value
+			cLower := Mfunc.StringLower(val)
+			
+			if (cLower == val)
+			{
+				return false
+			}
+			cUpper := Mfunc.StringUpper(val)
+			return cUpper == val
+		}
 	}
 ; 	End:IsUpper ;}
 ;{	IsWhiteSpace - static
@@ -1528,11 +1458,7 @@ class MfChar extends MfPrimitive
 	IsWhiteSpace(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := false
-		try {
-			retval := MfCharUnicodeInfo._IsWhiteSpace(args*)
-		} catch e {
-			throw e
-		}
+		retval := MfCharUnicodeInfo._IsWhiteSpace(args*)
 		return retval
 	}
 ; End:IsWhiteSpace() ;}
@@ -1607,12 +1533,7 @@ class MfChar extends MfPrimitive
 	ToLower(args*) {
 		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		retval := Null
-		c := Null
-		try {
-			c := MfChar._GetCharFromInput(args*)
-		} catch e {
-			throw e
-		}
+		c := MfChar._GetCharFromInput(args*)
 		try {
 			if (MfChar.IsLower(c)) {
 				if (c.ReturnAsObject = true) {
@@ -1621,8 +1542,7 @@ class MfChar extends MfPrimitive
 					retval := c.Value
 				}
 			} else {
-				cVal := c.Value
-				StringLower, cLVal, cVal
+				cLVal := Mfunc.StringLower(c.Value)
 				if (c.ReturnAsObject = true) {
 					retval := new MfChar(cLVal, true)
 				} else {
@@ -1689,8 +1609,7 @@ class MfChar extends MfPrimitive
 					retval := c.Value
 				}
 			} else {
-				cVal := c.Value
-				StringUpper, cUVal, cVal
+				cUVal := Mfunc.StringUpper(c.Value)
 				if (c.ReturnAsObject = true) {
 					retval := new MfChar(cUVal, true)
 				} else {
@@ -1721,7 +1640,7 @@ class MfChar extends MfPrimitive
 */
 	ToString() {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
-		return this.Value
+		return this.Value . ""
 	}
 ;  End:ToString() ;}
 ;{ 	TryParse
@@ -1806,74 +1725,87 @@ class MfChar extends MfPrimitive
 ;{ Internal Methods
 ;{	check methods	
 	CheckLetter(uc)	{
+		; uc value is MfUnicodeCategory EnumItem
+		; UppercaseLetter or LowercaseLetter or TitlecaseLetter
+		; or ModifierLetter or OtherLetter
 		val := MfInteger.GetValue(uc)
-		if ((val = MfUnicodeCategory.Instance.UppercaseLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.LowercaseLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.TitlecaseLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.ModifierLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.OtherLetter.Value))
+		if ((val => 0) && (val <= 4))
 		{
 			return true
 		}
-		return false
+		else
+		{
+			return false
+		}
 	}
 	CheckLetterOrDigit(uc) {
+		; uc value is MfUnicodeCategory EnumItem
+		; UppercaseLetter or LowercaseLetter or TitlecaseLetter
+		; or ModifierLetter or OtherLetter or DecimalDigitNumber
 		val := MfInteger.GetValue(uc)
-		if ((val = MfUnicodeCategory.Instance.UppercaseLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.LowercaseLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.TitlecaseLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.ModifierLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.OtherLetter.Value)
-			|| (val = MfUnicodeCategory.Instance.DecimalDigitNumber.Value))
+		if ((val => 0) && (val <= 4) || val = 8)
 		{
 			return true
 		}
-		return false
+		else
+		{
+			return false
+		}
 	}
 	CheckNumber(uc) {
 		val := MfInteger.GetValue(uc)
-		if ((val = MfUnicodeCategory.Instance.OtherNumber.Value)
-			|| (val = MfUnicodeCategory.Instance.LetterNumber.Value)
-			|| (val = MfUnicodeCategory.Instance.DecimalDigitNumber.Value))
+		; uc value is MfUnicodeCategory EnumItem
+		; DecimalDigitNumber or LetterNumber or OtherNumber
+		val := MfInteger.GetValue(uc)
+		if ((val => 8) && (val <= 10))
 		{
 			return true
 		}
-		return false
+		else
+		{
+			return false
+		}
 	}
 	CheckPunctuation(uc) {
+		; uc value is MfUnicodeCategory EnumItem
+		; ConnectorPunctuation or DashPunctuation or OpenPunctuation
+		; or ClosePunctuation or InitialQuotePunctuation or FinalQuotePunctuation
+		; or OtherPunctuation
 		val := MfInteger.GetValue(uc)
-		if ((val = MfUnicodeCategory.Instance.ConnectorPunctuation.Value)
-			|| (val = MfUnicodeCategory.Instance.DashPunctuation.Value)
-			|| (val = MfUnicodeCategory.Instance.OpenPunctuation.Value)
-			|| (val = MfUnicodeCategory.Instance.ClosePunctuation.Value)
-			|| (val = MfUnicodeCategory.Instance.InitialQuotePunctuation.Value)
-			|| (val = MfUnicodeCategory.Instance.FinalQuotePunctuation.Value)
-			|| (val = MfUnicodeCategory.Instance.OtherPunctuation.Value))
+		if ((val => 18) && (val <= 24))
 		{
 			return true
 		}
-		return false
+		else
+		{
+			return false
+		}
 	}
 	CheckSeparator(uc) {
+		; uc value is MfUnicodeCategory EnumItem
+		; SpaceSeparator or LineSeparator or ParagraphSeparator
 		val := MfInteger.GetValue(uc)
-		if ((val = MfUnicodeCategory.Instance.SpaceSeparator.Value)
-			|| (val = MfUnicodeCategory.Instance.LineSeparator.Value)
-			|| (val = MfUnicodeCategory.Instance.ParagraphSeparator.Value))
+		if ((val => 11) && (val <= 13))
 		{
 			return true
 		}
-		return false
+		else
+		{
+			return false
+		}
 	}
 	CheckSymbol(uc)	{
+		; uc value is MfUnicodeCategory EnumItem
+		; MathSymbol or CurrencySymbol or ModifierSymbol or OtherSymbol
 		val := MfInteger.GetValue(uc)
-		if ((val = MfUnicodeCategory.Instance.MathSymbol.Value)
-			|| (val = MfUnicodeCategory.Instance.CurrencySymbol.Value)
-			|| (val = MfUnicodeCategory.Instance.ModifierSymbol.Value)
-			|| (val = MfUnicodeCategory.Instance.OtherSymbol.Value))
+		if ((val => 25) && (val <= 28))
 		{
 			return true
 		}
-		return false
+		else
+		{
+			return false
+		}
 	}
 ; End:check methods ;}	
 ;{ 	_GetCharFromInput
@@ -1973,8 +1905,6 @@ class MfChar extends MfPrimitive
 		if (MfNull.IsNull(c)) {
 			return chr(0)
 		}
-
-
 		;WasFormat := A_FormatInteger
 		try
 		{
@@ -2164,16 +2094,16 @@ class MfChar extends MfPrimitive
 				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 				throw ex
 			}
-			i := MfChar.categoryForLatin1[index + 1]
+			i := MfChar.categoryForLatin1[index + 1] ; returns an integer var
 			;retvar := new MfUnicodeCategory(i)
-			retvar := MfEnum.ParseItem(MfUnicodeCategory.GetType(), i)
+			; MfEnum.ParseItem will parse integer first before attempting to search by name and return MfEnum.EnumItem
+			return MfEnum.ParseItem(MfUnicodeCategory.GetType(), i)
 
 		} catch e {
 			ex := new MfException(MfEnvironment.Instance.GetResourceString("Exception_Error", A_ThisFunc), e)
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
-		return retvar
 	}
 ; End:GetLatin1UnicodeCategory() ;}
 ;{ 	IsAscii()
@@ -2199,70 +2129,23 @@ class MfChar extends MfPrimitive
 ; 	End:IsAscii() ;}
 ;{ 	isCharInstance()
 	_isCharInstance(ByRef c) {
-		if ((IsObject(c)) && (IsFunc(c.Is)) && (c.Is(MfChar)) && (c.IsInstance())) {
-			return true
-		}
-		return false
+		return MfObject.IsObjInstance(c, MfChar)
 	}
 ; End:_isCharInstance(ByRef c) ;}
-;{ 	_IsDigit internal method
-	_IsDigit(c) {
-		;WasFormat := A_FormatInteger
-		;SetFormat, IntegerFast, D
-		retval := false
-		try {
-			if (IsObject(c)) {
-				if (!MfObject.IsObjInstance(c,"MfChar")) {
-					ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType", "c","MfChar"),"c")
-					ex.Source := A_ThisFunc
-					throw ex
-				}
-				if (this.IsLatin1(c)) {
-					retval := ((c.CharCode >= 48 ) && (c.CharCode <= 57))
-				} else {
-					ex := new ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Latin1Only"))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-				
-			} else {
-				obj := new MfChar(c)
-				if (this.IsLatin1(obj)) {
-					retval := ((obj.CharCode >= 48 ) && (obj.CharCode <= 57))
-				} else {
-					ex := new ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Latin1Only"))
-					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-					throw ex
-				}
-			}	
-		} catch e {
-			throw e
-		} finally {
-			;SetFormat, IntegerFast, %WasFormat%
-		}
-		return retval
-	}
-; 	End:_IsDigit internal method ;}
 ;{	IsLatin1()
 	IsLatin1(c)	{
 		;WasFormat := A_FormatInteger
 		;SetFormat, IntegerFast, D
 		retval := false
-		try {
-			if (MfObject.IsObjInstance(c,MfChar)) {
-				retval := c.CharCode <= 255
-			} else if (!IsObject(c)) {
-				ch := new MfChar(c)
-				retval := ch.CharCode <= 255
-			} else {
-				ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType","c","MfChar"),"c")
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
-		} catch e {
-			throw e
-		} finally {
-			;SetFormat, IntegerFast, %WasFormat%
+		if (MfObject.IsObjInstance(c,MfChar)) {
+			retval := c.CharCode <= 255
+		} else if (!IsObject(c)) {
+			ch := new MfChar(c)
+			retval := ch.CharCode <= 255
+		} else {
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Argument_IncorrectObjType","c","MfChar"),"c")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
 		}
 		return retval
 	}
@@ -2429,11 +2312,6 @@ class MfChar extends MfPrimitive
 		return MfObject.IsObjInstance(obj, MfChar)
 	}
 ; End:IsCharObj(obj) ;}
-;{ 	_ResetLength
-	_ResetLength() {
-		this.m_length := StrLen(this.m_value)
-	}
-; 	End:_ResetLength ;}
 ;{ 	StrPutVar - Static
 	; http://l.autohotkey.net/docs/commands/StrPutGet.htm
 	_StrPutVar(String, ByRef Var, encoding) {
@@ -2584,17 +2462,13 @@ class MfChar extends MfPrimitive
 			if (this.m_CharCodeSet = false)
 			{
 				this.m_CharCodeSet := true
-				this.m_CharCode := "0x" . this._Text2Hex(this.m_Value)
+				;this.m_CharCode := "0x" . this._Text2Hex(this.m_Value)
+				this.m_CharCode := Ord(this.m_Value)
 			}
 			return this.m_CharCode
 		}
 		set {
 			this.VerifyReadOnly(this, A_LineFile, A_LineNumber, A_ThisFunc)
-			if ((!Mfunc.IsNumeric(value)) && (!MfObject.IsObjInstance(value, "MfInteger"))) {
-				ex := new MfInvalidCastException(MfEnvironment.Instance.GetResourceString("InvalidCastException_ValueToNumber"))
-				ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
-				throw ex
-			}
 			_val := MfInteger.GetValue(value)
 			if ((_val < MfChar.MinValue) || (_val > MfChar.MaxValue)) {
 				ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_CharCode"))
@@ -2602,7 +2476,8 @@ class MfChar extends MfPrimitive
 				throw ex
 			}
 			this.m_Value := Chr(_val)
-			this.m_CharCode := "0x" . this._Text2Hex(this.m_Value)
+			;this.m_CharCode := "0x" . this._Text2Hex(this.m_Value)
+			this.m_CharCode := _val
 			this.m_CharCodeSet := true
 			return this.m_CharCode
 		}
@@ -2672,7 +2547,7 @@ class MfChar extends MfPrimitive
 
 ; End:Properties;}
 	__Delete() {
-		MfUnicodeCategory.DestroyInstance()
+		;MfUnicodeCategory.DestroyInstance()
 		; release MfUnicodeCategory memory in case we are finished with it.
 	}
 }
