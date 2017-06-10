@@ -458,6 +458,21 @@ class MfChar extends MfPrimitive
 
 	}
 ; End:CompareTo(c) ;}
+;{ 	FromCharCode
+	FromCharCode(charCode) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
+		if (MfNull.IsNull(charCode))
+		{
+			ex := new MfArgumentNullException("charCode")
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
+		cc := MfInteger.GetValue(charCode)
+		c := new MfChar(,true)
+		c.CharCode := cc
+		return c
+	}
+; 	End:FromCharCode ;}
 ;{ 	GetHashCode
 	/*!
 /*!
