@@ -477,6 +477,190 @@ Class MfString extends MfPrimitive
 		return sb.ToString()
 	}
 ; 	End:Concat ;}
+;{ 	Contains
+	Contains(args*) {
+		objParams := Null
+		if (this.IsInstance())
+		{
+			objParams := this._IndexOfParams(A_ThisFunc, args*)
+		}
+		else
+		{
+			objParams := MfString._IndexOfParams(A_ThisFunc, args*)
+		}
+	
+		strParms := objParams.ToString()
+		
+		retval := -2 ; real return value can not be less than -1
+		isInst := this.IsInstance()
+		if (isInst) {
+			if (strParms = "MfChar") { ; searchChar
+				obj := objParams.Item[0]
+				if (obj.CharCode = 0)
+				{
+					return true
+				}
+				idx := this._IndexOfC(obj)
+				return idx >= 0
+			}
+			if (strParms = "MfString") { ; var searchChar or searchString
+				str := objParams.Item[0]
+				if (str.Length = 0)
+				{
+					return true
+				}
+				idx := this._IndexOfS(str)
+				return idx >= 0
+			}
+			if (strParms = "MfChar,MfInteger") { ; searchChar, startIndex
+				c := objParams.Item[0]
+				if (c.CharCode = 0)
+				{
+					return true
+				}
+				idx := this._IndexOfCI(c, objParams.Item[1])
+				return idx >= 0
+			}
+			if (strParms = "MfString,MfInteger") { ; searchString, startIndex
+				str := objParams.Item[0]
+				if (str.Length = 0)
+				{
+					return true
+				}
+				idx := this._IndexofSI(str, objParams.Item[1])
+				return idx >= 0
+			}
+			if (strParms = "MfString,MfString") { ;  var searchChar or searchString, startIndex
+				str := objParams.Item[0]
+				if (str.Length = 0)
+				{
+					return true
+				}
+				_StartIndex := new MfInteger()
+				if (!MfInteger.TryParse(_startIndex, objParams.Item[1])) {
+					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_LengthString"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				idx := this._IndexofSI(str, _StartIndex)
+				return idx >= 0
+			}
+			if (strParms = "MfChar,MfInteger,MfInteger") {  ; searchChar, startIndex, count
+				c := objParams.Item[0]
+				if (c.CharCode = 0)
+				{
+					return true
+				}
+				idx := this._IndexOfCII(c, objParams.Item[1], objParams.Item[2])
+				return idx >= 0
+			}
+			if (strParms = "MfString,MfInteger,MfInteger") { ;searchString, startIndex, count
+				str := objParams.Item[0]
+				if (str.Length = 0)
+				{
+					return true
+				}
+				idx := this._IndexofSII(str, objParams.Item[1], objParams.Item[2])
+				return idx >= 0
+			}
+			if (strParms = "MfString,MfString,MfString") { ;searchString, startIndex, count
+				str := objParams.Item[0]
+				if (str.Length = 0)
+				{
+					return true
+				}
+				_StartIndex := new MfInteger()
+				_Count := new MfInteger()
+				if (!MfInteger.TryParse(_StartIndex, objParams.Item[1]) 
+					|| (!MfInteger.TryParse(_Count, objParams.Item[2]))) {
+					ex := new MfArgumentOutOfRangeException(MfEnvironment.Instance.GetResourceString("ArgumentOutOfRange_LengthString"))
+					ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+					throw ex
+				}
+				idx := this._IndexofSII(str, _StartIndex, _Count)
+				return idx >= 0
+			}
+		}
+		else
+		{
+			if (strParms = "MfString,MfChar") { ; searchChar
+				c := objParams.Item[1]
+				if (c.CharCode = 0)
+				{
+					return true
+				}
+				str := objParams.Item[0]
+				return str.Contains(c)
+			}
+			if (strParms = "MfString,MfString") { ; var searchChar or searchString
+				str := objParams.Item[0]
+				strSearch := objParams.Item[1]
+				if (strSearch.Length = 0)
+				{
+					return true
+				}
+				return str.Contains(strSearch)
+			}
+			if (strParms = "MfString,MfChar,MfInteger") { ; searchChar, startIndex
+				str := objParams.Item[0]
+				c := objParams.Item[1]
+				if (c.CharCode = 0)
+				{
+					return true
+				}
+				return str.Contains(c, objParams.Item[2])
+			}
+			if (strParms = "MfString,MfString,MfInteger") { ; searchString, startIndex
+				str := objParams.Item[0]
+				strSearch := objParams.Item[1]
+				if (strSearch.Length = 0)
+				{
+					return true
+				}
+				return str.Contains(strSearch, objParams.Item[2])
+			}
+			if (strParms = "MfString,MfString,MfString") { ;  var searchChar or searchString, startIndex
+				str := objParams.Item[0]
+				strSearch := objParams.Item[1]
+				if (strSearch.Length = 0)
+				{
+					return true
+				}
+				return str.Contains(strSearch, objParams.Item[2])
+			}
+			if (strParms = "MfString,MfChar,MfInteger,MfInteger") {  ; searchChar, startIndex, count
+				str := objParams.Item[0]
+				c := objParams.Item[1]
+				if (c.CharCode = 0)
+				{
+					return true
+				}
+				return str.Contains(c, objParams.Item[2], objParams.Item[3])
+			}
+			if (strParms = "MfString,MfString,MfInteger,MfInteger") { ;searchString, startIndex, count
+				str := objParams.Item[0]
+				strSearch := objParams.Item[1]
+				if (strSearch.Length = 0)
+				{
+					return true
+				}
+				return str.Contains(strSearch, objParams.Item[2], objParams.Item[3])
+			}
+			if (strParms = "MfString,MfString,MfString,MfString") { ;searchString, startIndex, count
+				str := objParams.Item[0]
+				strSearch := objParams.Item[1]
+				if (strSearch.Length = 0)
+				{
+					return true
+				}
+				return str.Contains(strSearch, objParams.Item[2], objParams.Item[3])
+			}
+		}
+		ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
+		ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+		throw ex
+	}
+; 	End:Contains ;}
 ;{ 	CutIfLong()
 /*
 	CutIfLong(maxLen)
@@ -1818,6 +2002,10 @@ Class MfString extends MfPrimitive
 		objParams := Null
 		if (this.IsInstance())
 		{
+			if (this.Length = 0)
+			{
+				return -1
+			}
 			objParams := this._IndexOfParams(A_ThisFunc, args*)
 		}
 		else
@@ -1947,7 +2135,9 @@ Class MfString extends MfPrimitive
 		else
 		{
 			p := new MfParams()
-			p.AllowEmptyString := True
+			p.AllowEmptyString := true
+			p.AllowEmptyValue := true
+			;p.AllowOnlyAhkObj := false
 			
 			cnt := args.MaxIndex()
 			pIndex := -1
@@ -1971,15 +2161,15 @@ Class MfString extends MfPrimitive
 							if (index = 1) ; Instance must be string or char cannot be 0 in length
 							{
 								pIndex := p.AddString(arg)
-								if (p.Item[pIndex].Length = 0)
-								{
-									; throw error
-									sMsg := MfEnvironment.Instance.GetResourceString("ArgumentNull_WithParamName", index)
-									sParam := MfEnvironment.Instance.GetResourceString("Argument_nth", index)
-									err := new MfArgumentNullException(sParam, sMsg)
-									err.SetProp(A_LineFile, A_LineNumber, MethodName)
-									throw err
-								}
+								; if (p.Item[pIndex].Length = 0)
+								; {
+								; 	; throw error
+								; 	sMsg := MfEnvironment.Instance.GetResourceString("ArgumentNull_WithParamName", index)
+								; 	sParam := MfEnvironment.Instance.GetResourceString("Argument_nth", index)
+								; 	err := new MfArgumentNullException(sParam, sMsg)
+								; 	err.SetProp(A_LineFile, A_LineNumber, MethodName)
+								; 	throw err
+								; }
 
 							}
 							else ; args 2 and 3 can only be integer
@@ -2016,7 +2206,9 @@ Class MfString extends MfPrimitive
 						{
 							if (index = 1) ; Non-Instance must be string
 							{
-								p.AddString(arg)
+								str := new MfString(arg)
+								str.IgnoreCase := (!(A_StringCaseSense = "On"))
+								p.Add(str)
 							}
 							else if (index = 2) ; Non-Instance must be string or char
 							{
@@ -2289,6 +2481,10 @@ Class MfString extends MfPrimitive
 		objParams := Null
 		if (this.IsInstance())
 		{
+			if (this.Length = 0)
+			{
+				return -1
+			}
 			objParams := this._IndexOfParams(A_ThisFunc, args*)
 		}
 		else
@@ -4322,8 +4518,6 @@ Class MfString extends MfPrimitive
 		return mstr.IndexOf(searchString,startIndex, count, this.m_IgnoreCase)
 	}
 	_IndexOfSC(str, searchChar) {
-		
-
 		c := MfChar.GetValue(searchChar) ; returns null or single MfChar as var
 		retVal := -1
 		if (str.m_Length = 0) {
@@ -4338,7 +4532,15 @@ Class MfString extends MfPrimitive
 	}
 	_IndexOfSS(str, searchString) {
 		mstr := str._GetMStr()
+		if (mstr.Length = 0)
+		{
+			return -1
+		}
 		mSearch := searchString._GetMStr()
+		if (mSearch.Length = 0)
+		{
+			return -1
+		}
 		return mstr.IndexOf(mSearch,0,,str.m_IgnoreCase)
 	}
 ; End:IndexOf ;}
@@ -4361,10 +4563,18 @@ Class MfString extends MfPrimitive
 	}
 	_LastIndexOfCI(searchChar, startIndex) {
 		mstr := this._GetMStr()
+		if (mstr.Length = 0)
+		{
+			return -1
+		}
 		return mstr.LastIndexOf(searchChar,startIndex,,this.m_IgnoreCase)
 	}
 	_LastIndexOfCII(searchChar, startIndex, count) {
 		mstr := this._GetMStr()
+		if (mstr.Length = 0)
+		{
+			return -1
+		}
 		return mstr.LastIndexOf(searchChar,startIndex, count, this.m_IgnoreCase)
 	}
 	_LastIndexOfS(searchString) {
@@ -4372,14 +4582,26 @@ Class MfString extends MfPrimitive
 	}
 	_LastIndexOfSS(str,searchString) {
 		mstr := str._GetMStr()
+		if (mstr.Length = 0)
+		{
+			return -1
+		}
 		return mstr.LastIndexOf(searchString,,, str.m_IgnoreCase)
 	}
 	_LastIndexOfSI(searchString, startIndex) { ; search instance substring for str
 		mstr := this._GetMStr()
+		if (mstr.Length = 0)
+		{
+			return -1
+		}
 		return mstr.LastIndexOf(searchString,,, this.m_IgnoreCase)
 	}
 	_LastIndexOfSII(searchString, startIndex, count) { ; search instance substring for str
 		mstr := this._GetMStr()
+		if (mstr.Length = 0)
+		{
+			return -1
+		}
 		return mstr.LastIndexOf(searchString, startIndex, count, this.m_IgnoreCase)
 	}
 ; End:LastIndexOf() ;}
