@@ -91,7 +91,7 @@ class MfStringBuilder extends MfObject
 		}
 		else if (IsInit = false && strP = "MfInteger,MfInteger,MfStringBuilder") ; size, maxCapacity, previousBlock
 		{
-			if (pArgs.Data.Contains("_InternalOnly") && pArgs.Data["_InternalOnly"] = true)
+			if (pArgs.Data.Contains("_InternalOnly") && pArgs.Data.Item["_InternalOnly"] = true)
 			{
 				this._newIntIntSb(pArgs.Item[0], pArgs.Item[1], pArgs.Item[2])
 				IsInit := true
