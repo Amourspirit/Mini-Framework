@@ -106,6 +106,20 @@ class MfIOException extends MfSystemException
 		this.m_isInherited := this.__Class != "MfIOException"
 	}
 ;	End:Constructor ;}
+;{ 	Is - Overrides MfObject
+	Is(ObjType) {
+		typeName := MfType.TypeOfName(ObjType)
+		if (typeName = "MfIO.IOException")
+		{
+			return true
+		}
+		if (typeName = "IOException")
+		{
+			return true
+		}
+		return base.Is(ObjType)
+	}
+; 	End:Is ;}
 }
 /*!
 	End of class

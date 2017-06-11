@@ -91,6 +91,20 @@ class MfDirectoryNotFoundException extends MfIOException
 		this.m_isInherited := this.__Class != "MfDirectoryNotFoundException"
 	}
 ;	End:Constructor ;}
+;{ 	Is - Overrides MfIOException
+	Is(ObjType) {
+		typeName := MfType.TypeOfName(ObjType)
+		if (typeName = "MfIO.DirectoryNotFoundException")
+		{
+			return true
+		}
+		if (typeName = "DirectoryNotFoundException")
+		{
+			return true
+		}
+		return base.Is(ObjType)
+	}
+; 	End:Is ;}
 }
 /*!
 	End of class

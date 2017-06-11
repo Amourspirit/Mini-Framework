@@ -19,4 +19,11 @@
 #Include <Mini_Framwork\0.4\System\IO\MfDirectoryNotFoundException>
 #Include <Mini_Framwork\0.4\System\IO\MfDriveNotFoundException>
 #Include <Mini_Framwork\0.4\System\IO\MfFileNotFoundException>
+Class MfIO
+{
+	static IOException := MfIOException
+	static DirectoryNotFoundException := MfDirectoryNotFoundException
+	static DriveNotFoundException := MfDriveNotFoundException
+	static FileNotFoundException := MfFileNotFoundException
+}
 ; End:IO Exceptions ;}

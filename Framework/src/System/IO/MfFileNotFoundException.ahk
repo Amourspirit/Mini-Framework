@@ -122,6 +122,20 @@ class MfFileNotFoundException extends MfIOException
 	}
 ;	End:Constructor ;}
 ;{ overrides
+;{ 	Is - Overrides MfIOException
+	Is(ObjType) {
+		typeName := MfType.TypeOfName(ObjType)
+		if (typeName = "MfIO.FileNotFoundException")
+		{
+			return true
+		}
+		if (typeName = "FileNotFoundException")
+		{
+			return true
+		}
+		return base.Is(ObjType)
+	}
+; 	End:Is ;}
 ;{	ToString()
 /*
 	Method: ToString()

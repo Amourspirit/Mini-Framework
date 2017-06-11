@@ -84,6 +84,20 @@ class MfDriveNotFoundException extends MfIOException
 		this.m_isInherited := this.__Class != "MfDriveNotFoundException"
 	}
 ;	End:Constructor ;}
+;{ 	Is - Overrides MfIOException
+	Is(ObjType) {
+		typeName := MfType.TypeOfName(ObjType)
+		if (typeName = "MfIO.DriveNotFoundException")
+		{
+			return true
+		}
+		if (typeName = "DriveNotFoundException")
+		{
+			return true
+		}
+		return base.Is(ObjType)
+	}
+; 	End:Is ;}
 }
 /*!
 	End of class
