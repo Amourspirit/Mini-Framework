@@ -27,61 +27,75 @@ class MfFileNotFoundException extends MfIOException
 	m_FileName := Null
 ;{ Constructor
 /*
+	OutputVar := new MfIO.FileNotFoundException()
+	OutputVar := new MfIO.FileNotFoundException(message)
+	OutputVar := new MfIO.FileNotFoundException(message, innerException)
+	OutputVar := new MfIO.FileNotFoundException(message, fileName)
+	OutputVar := new MfIO.FileNotFoundException(message, fileName, innerException)
+*/
+/*
 	Method: Constructor()
-
-	OutputVar := new MfFileNotFoundException()
-	OutputVar := new MfFileNotFoundException(message)
-	OutputVar := new MfFileNotFoundException(message, innerException)
-	OutputVar := new MfFileNotFoundException(message, fileName)
-	OutputVar := new MfFileNotFoundException(message, fileName, innerException)
-
-	Constructor()
-		Initializes a new instance of the MfFileNotFoundException class with its message string set to a
-		system-supplied message and its HRESULT set to COR_E_FILENOTFOUND.
-	Remarks:
-		This constructor initializes the Message property of the new instance to a system-supplied message
-		that describes the error, such as "Could not find the specified file."
-
-	Constructor(message)
-		Initializes a new instance of the MfFileNotFoundException class with its Message string set to
-		message and its HRESULT set to COR_E_FILENOTFOUND.
+		Initializes a new instance of the FileNotFoundException class with its message string set to a system-supplied message and
+		its HRESULT set to COR_E_FILENOTFOUND.
+		This constructor initializes the Message property of the new instance to a system-supplied message that describes the error,
+		such as "Could not find the specified file."
+*/
+/*
+	Method: Constructor(message)
+		Initializes a new instance of the FileNotFoundException class with its Message string set to message and its HRESULT set to COR_E_FILENOTFOUND.
+	Parameters:
+		message
+			The error message that explains the reason for the exception.
+			Can be instance of MfString or var containing string.
 	Remarks:
 		This constructor initializes the Message property of the new instance using message.
-
-	Constructor(message, innerException)
-		Initializes a new instance of the MfFileNotFoundException class with a specified error message and a
-		reference to the inner exception that is the cause of this exception.
-	Remarks:
-		An exception that is thrown as a direct result of a previous exception should include a reference to
-		the previous exception in the InnerException property. The InnerException property returns the same
-		value that is passed into the constructor, or Null if the InnerException property does not supply
-		the inner exception value to the constructor.
-
-	Constructor(message, fileName)
-		Initializes a new instance of the MfFileNotFoundException class with its Message string set to
-		message, specifying the file name that cannot be found, and its HRESULT set to COR_E_FILENOTFOUND.
-	Remarks:
-		The constructor initializes the Message property of the new instance using message and the FileName
-		property using fileName.
-
-	Constructor(message, fileName, innerException)
-		Initializes a new instance of the MfFileNotFoundException class with a specified error message and a
-		reference to the inner exception that is the cause of this exception.
+*/
+/*
+	Method: Constructor(message, innerException)
+		Initializes a new instance of the FileNotFoundException class with a specified error message and a reference to the inner
+		exception that is the cause of this exception.
 	Parameters:
 		message
 			The error message that explains the reason for the exception.
 			Can be instance of MfString or var containing string.
 		innerException
-			The exception that is the cause of the current exception, or a null reference if no inner exception
-			is specified.
+			The exception that is the cause of the current exception, or a null reference if no inner exception is specified.
+	Remarks:
+		An exception that is thrown as a direct result of a previous exception should include a reference to the previous
+		exception in the InnerException property. The InnerException property returns the same value that is passed into the constructor,
+		or Null if the InnerException property does not supply the inner exception value to the constructor.
+*/
+/*
+	Method: Constructor(message, fileName)
+		Initializes a new instance of the FileNotFoundException class with its Message string set to message,
+		specifying the file name that cannot be found, and its HRESULT set to COR_E_FILENOTFOUND.
+	Parameters:
+		message
+			The error message that explains the reason for the exception.
+			Can be instance of MfString or var containing string.
 		fileName
 			The full name of the file for the exception.
 			Can be instance of MfString or var containing string.
 	Remarks:
-		An exception that is thrown as a direct result of a previous exception should include a reference to
-		the previous exception in the InnerException property. The InnerException property returns the same
-		value that is passed into the constructor, or Null if the InnerException property does not supply
-		the inner exception value to the constructor.
+		The constructor initializes the Message property of the new instance using message and the FileName property using fileName.
+*/
+/*
+	Method: Constructor(message, fileName, innerException)
+		Initializes a new instance of the FileNotFoundException class with a specified error message,
+		file name and a reference to the inner exception that is the cause of this exception.
+	Parameters:
+		message
+			The error message that explains the reason for the exception.
+			Can be instance of MfString or var containing string.
+		innerException
+			The exception that is the cause of the current exception, or a null reference if no inner exception is specified.
+		fileName
+			The full name of the file for the exception.
+			Can be instance of MfString or var containing string.
+	Remarks:
+		An exception that is thrown as a direct result of a previous exception should include a reference to the previous exception in the InnerException property.
+		The InnerException property returns the same value that is passed into the constructor, or Null if the InnerException property does not supply the
+		inner exception value to the constructor.
 */
 	__New(args*) {
 		
@@ -113,9 +127,7 @@ class MfFileNotFoundException extends MfIOException
 			this.m_FileName := MfString.GetValue(args[2])
 		} else {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_MethodOverload", A_ThisFunc))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 		this.m_isInherited := this.__Class != "MfFileNotFoundException"
@@ -123,6 +135,35 @@ class MfFileNotFoundException extends MfIOException
 ;	End:Constructor ;}
 ;{ overrides
 ;{ 	Is - Overrides MfIOException
+/*
+	Method: Is()
+		Overrides IOException.Is()
+
+	OutputVar := instance.Is(ObjType)
+
+	Is(ObjType)
+		Gets if current instance of FileNotFoundException is of the same type as ObjType or derived from ObjType.
+	Parameters:
+		ObjType
+			The object or type to compare to this instance Type.
+			ObjType can be an instance of MfType or an object derived from MfObject or an instance of or a string containing
+			the name of the object type such as "MfObject"
+	Returns:
+		Returns true if current object instance is of the same Type as the ObjType or if current instance is derived from ObjType or
+		if ObjType = "MfIO.FileNotFoundException" or ObjType = "MfFileNotFoundException" or if ObjType = "FileNotFoundException"; Otherwise false.
+	Remarks:
+		If a string is used as the Type case is ignored so "MfObject" is the same as "mfobject"
+		Example
+		ex := new MfIO.FileNotFoundException()
+		MsgBox % ex.Is(MfIO.FileNotFoundException)   ; display 1 for true
+		MsgBox % ex.Is("MfIO.FileNotFoundException") ; display 1 for true
+		MsgBox % ex.Is("MFFileNotFoundException")    ; display 1 for true
+		MsgBox % ex.Is("FileNotFoundException")      ; display 1 for true
+		MsgBox % ex.Is(MfIO.IOException)             ; display 1 for true
+		MsgBox % ex.Is(MfException)                  ; display 1 for true
+		MsgBox % ex.Is(MfObject)                     ; display 1 for true
+		MsgBox % ex.Is(MfString)                     ; display 0 for false
+*/
 	Is(ObjType) {
 		typeName := MfType.TypeOfName(ObjType)
 		if (typeName = "MfIO.FileNotFoundException")
@@ -146,9 +187,29 @@ class MfFileNotFoundException extends MfIOException
 		Returns var containing string representation of the current exception.
 	Throws:
 		Throws MfNullReferenceException is called on a non instance of class
+	Example:
+		try
+		{
+			file := GetFile("C:/tmp/myfile.txt")
+		}
+		catch e
+		{
+			MsgBox, 16, File Error, % e.ToString()
+		}
+		; display a message box with the following message
+		; FileNotFoundException: Unable to Locate File
+		; File name: 'C:/tmp/myfile.txt'
+
+		GetFile(file)
+		{
+			; ... some code to try and locate file
+			ex := new MfIO.FileNotFoundException("Unable to Locate File", file)
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 */
 	ToString() {	
-		str := this.__Class . ": " . this.Message
+		str := "FileNotFoundException: " . this.Message
 		if (!MfString.IsNullOrEmpty(this.m_FileName)) {
 			str .= MfEnvironment.Instance.NewLine
 			str .= MfEnvironment.Instance.GetResourceString("IO.FileName_Name", this.m_FileName)
@@ -171,7 +232,7 @@ class MfFileNotFoundException extends MfIOException
 	Gets:
 		Gets the name of the file, or Null if no file name was passed to the constructor for this instance.
 	Remarks:
-		This property is read-only and can only be set in the Constructor for the MfFileNotFoundException.
+		This property is read-only and can only be set in the Constructor for the FileNotFoundException.
 */
 	FileName[]
 	{
@@ -180,9 +241,7 @@ class MfFileNotFoundException extends MfIOException
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property"))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			Throw ex
 		}
 	}
@@ -205,7 +264,6 @@ class MfFileNotFoundException extends MfIOException
 		get {
 			
 			if (MfString.IsNullOrEmpty(this.m_Message) || (this.m_Message = Undefined)) {
-				SetFormat, Integer, D
 				if ((MfString.IsNullOrEmpty(this.m_FileName)) && (this.HResult = -2146233088)) {
 					this.m_Message := MfEnvironment.Instance.GetResourceString("IO.FileNotFound")
 				}
@@ -217,9 +275,7 @@ class MfFileNotFoundException extends MfIOException
 		}
 		set {
 			ex := new MfNotSupportedException(MfEnvironment.Instance.GetResourceString("NotSupportedException_Readonly_Property", A_ThisFunc))
-			ex.Source := A_ThisFunc
-			ex.File := A_LineFile
-			ex.Line := A_LineNumber
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
 	}
