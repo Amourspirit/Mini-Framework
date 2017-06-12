@@ -31,7 +31,124 @@ class MfStringBuilder extends MfObject
 	m_Nl := ""
 	m_HasNullChar := false
 ;{ 	Constructor
-	; Capacity is the length in chars
+/*
+	OutputVar := new MfText.StringBuilder()
+	OutputVar := new MfText.StringBuilder(capacity)
+	OutputVar := new MfText.StringBuilder(capacity, maxCapacity)
+	OutputVar := new MfText.StringBuilder(value)
+	OutputVar := new MfText.StringBuilder(value, capacity)
+	OutputVar := new MfText.StringBuilder(value, startIndex, length, capacity)
+*/
+/*
+	Method: Constructor()
+		Initializes a new instance of the StringBuilder class.
+		The string value of this instance is set to empty string, and the capacity is set to the implementation-specific default capacity.
+*/
+/*
+	Method: Constructor(capacity)
+		Initializes a new instance of the StringBuilder class using the specified capacity.
+
+	Parameters:
+		capacity
+			The suggested starting size of the StringBuilder.
+			Can be any type that matches IsInteger or var integer
+	Throws:
+		Throws MfArgumentOutOfRangeException if capacity is less than zero.
+	Remarks:
+		The capacity parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance.
+		Its value is assigned to the Capacity property. If the number of characters to be stored in the current instance exceeds this capacity value,
+		the StringBuilder object allocates additional memory to store them.
+		If capacity is zero, the implementation-specific default capacity is used.
+		The string value of this instance is set to null. If capacity is zero, the implementation-specific default capacity is used.
+		If you intend to call the Constructor(value) method by passing in numeric integer string then wrap the in an instance of MfString
+		to ensure the correct overload is called. sb := new MfText.StringBuilder("1000") will call the Constructor(capacity) overload.
+		sb := new MfText.StringBuilder(new MfString("1000")) will call the Constructor(value) overload. 
+		sb := new MfText.StringBuilder("1000.0") will call the Constructor(value) overload.
+*/
+/*
+	Method: Constructor(capacity, maxCapacity)
+		Initializes a new instance of the StringBuilder class that starts with a specified capacity and can grow to a specified maximum.
+	Parameters:
+		capacity
+			The suggested starting size of the StringBuilder.
+			Can be any type that matches IsInteger or var integer
+		maxCapacity
+			The maximum number of characters the current string can contain.
+			Can be any type that matches IsInteger or var integer.
+	Throws:
+		Throws MfArgumentOutOfRangeException if maxCapacity is less than one, capacity is less than zero, or capacity is greater than maxCapacity.
+	Remarks:
+		The capacity parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance.
+		Its value is assigned to the Capacity property. If the number of characters to be stored in the current instance exceeds this capacity value,
+		the StringBuilder object allocates additional memory to store them.
+		If capacity is zero, the implementation-specific default capacity is used.
+		The maxCapacity property defines the maximum number of characters that the current instance can hold. Its value is assigned to the MaxCapacity property.
+		If the number of characters to be stored in the current instance exceeds this maxCapacity value, the StringBuilder object does not allocate additional memory,
+		but instead throws an exception.
+*/
+/*
+	Method: Constructor(value)
+		Initializes a new instance of the StringBuilder class using the specified string.
+	Parameters:
+		value
+			The string that contains the substring used to initialize the value of this instance. If value is null, the new StringBuilder will contain the empty string.
+			Can be var number or string or any object that derives from MfObject.
+	Remarks:
+		If value is null, the new StringBuilder will contain the empty string.
+		If value is an object then its ToString output is used.
+		If var integer is passed into Constructor(value) such as sb := new MfText.StringBuilder("1000") it will result
+		in the Constructor(capacity) overload being called. To pass integer var into Constructor(value) first wrap the integer
+		var in instance of MfString as follows sb := new MfText.StringBuilder(new MfString("1000"))
+		Calling Constructor(value) and passing in a non-integer number is fine such as  sb := new MfText.StringBuilder("1000.0")
+*/
+/*
+	Method: Constructor(value, capacity)
+		Initializes a new instance of the StringBuilder class using the specified string and capacity.
+	Parameters:
+		value
+			The string that contains the substring used to initialize the value of this instance. If value is null, the new StringBuilder will contain the empty string.
+			Can be var number or string or any object that derives from MfObject.
+		capacity
+			The suggested starting size of the StringBuilder.
+			Can be any type that matches IsInteger or var integer.
+	Throws:
+		Throws MfArgumentOutOfRangeException if capacity is less than zero.
+	Remarks:
+		The capacity parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance.
+		Its value is assigned to the Capacity property. If the number of characters to be stored in the current instance exceeds this capacity value,
+		the StringBuilder object allocates additional memory to store them.
+		If capacity is zero, the implementation-specific default capacity is used.
+		If value is an object then its ToString output is used.
+		If var integer is passed into Constructor(value, capacity) such as sb := new MfText.StringBuilder("1000", 255) it will result
+		in the Constructor(capacity, maxCapacity) overload being called. To pass integer var into Constructor(value, capacity) first wrap the
+		integer var in instance of MfString as follows sb :=  new MfText.StringBuilder(new MfString("1000"), 255)
+		Calling Constructor(value, capacity) and passing in a non-integer number is fine such as  sb := new MfText.StringBuilder("1000.0", 255)
+*/
+/*
+	Method: Constructor(value, startIndex, length, capacity)
+		Initializes a new instance of the StringBuilder class from the specified substring and capacity.
+	Parameters:
+		value
+			The string that contains the substring used to initialize the value of this instance. If value is null, the new StringBuilder will contain the empty string.
+			Can be var number or string or any object that derives from MfObject.
+		startIndex
+			The position within value where the substring begins.
+			Can be any type that matches IsInteger or var integer.
+		length
+			The number of characters in the substring.
+			Can be any type that matches IsInteger or var integer.
+		capacity
+			The suggested starting size of the StringBuilder.
+			Can be any type that matches IsInteger or var integer.
+	Throws:
+		Throws MfArgumentOutOfRangeException if capacity is less than zero or startIndex plus length is not a position within value.
+	Remarks:
+		The capacity parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance.
+		Its value is assigned to the Capacity property. If the number of characters to be stored in the current instance exceeds this capacity value,
+		the StringBuilder object allocates additional memory to store them.
+		If capacity is zero, the implementation-specific default capacity is used.
+		If value is an object then its ToString output is used.
+*/
 	__new(args*) {
 		if (this.__Class != "MfStringBuilder")
 		{
@@ -119,7 +236,202 @@ class MfStringBuilder extends MfObject
 ; 	End:Constructor ;}
 ;{ Methods
 ;{ 	Append
-	; append object, var, char, charcode or MfCharList or MfObject x number of times
+/*
+	OutputVar := instance.Append(chars)
+	OutputVar := instance.Append(chars, startIndex, charCount)
+	OutputVar := instance.Append(char, repeatCount)
+	OutputVar := instance.Append(value)
+	OutputVar := instance.Append(value, startIndex, count)
+*/
+/*
+	Method: Append(chars)
+		Appends the string representation of the Unicode characters in a specified list to this instance.
+	Parameters:
+		chars
+			Instance of MfCharList to append.
+	Returns:
+		A reference to this instance after the append operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException if enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		This method appends all the characters in the specified MfCharList to the current instance in the same order as they appear in value.
+		If value is null, no changes are made.
+		The Append(chars) method modifies the existing instance of this class; it does not return a new class instance.
+		Because of this, you can call a method or property on the existing reference and you do not have to assign the return value
+		to a StringBuilder object, as the following example illustrates.
+	Example:
+		lst := new MfCharList()
+		lst.AddString("aeiou")
+		sb := new MfText.StringBuilder()
+		sb.Append("The characters in the array: ").Append(lst)
+		MsgBox % sb.ToString() ; The characters in the array: aeiou
+		
+*/
+/*
+	Method: Append(chars, startIndex, charCount)
+		Appends the string representation of a specified sublist of Unicode characters to this instance.
+	Parameters:
+		chars
+			Instance of MfCharList to append.
+		startIndex
+			The starting position in chars.
+			Can var integer or any type that matches IsInteger.
+		charCount
+			The number of characters to append.
+			Can var integer or any type that matches IsInteger.
+	Returns:
+		A reference to this instance after the append operation has completed.
+	Throws:
+		Throws MfArgumentNullException if chars is null or chars.Count is 0 and startIndex or charCount is not equal to zero.
+		Throws MfArgumentOutOfRangeException if charCount is less than zero.
+		- or -
+		startIndex is less than zero.
+		- or -
+		startIndex + charCount is greater than the length of value.
+		- or -
+		Enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		This method appends the specified range of characters in value to the current instance.
+		If value is null and startIndex and charCount are both zero, no changes are made.
+		The Append(chars, startIndex, charCount) method modifies the existing instance of this class;
+		it does not return a new class instance. Because of this, you can call a method or property on the existing reference and
+		you do not have to assign the return value to a StringBuilder object, as the following example illustrates.
+	Example:
+		lst := new MfCharList()
+		lst.AddString("abcde")
+		startPosition := lst.IndexOf("a")
+		endPosition := lst.IndexOf("c")
+		sb := new MfText.StringBuilder()
+		if (startPosition >= 0 && endPosition >= 0)
+		{
+			sb.Append("The list from positions ").Append(startPosition)
+				.Append(" to ").Append(endPosition).Append(" contains ")
+				.Append(lst, startPosition, endPosition + 1).Append(".")
+		}
+		MsgBox % sb.ToString() ; The list from positions 0 to 2 contains abc.
+*/
+/*
+	Method: Append(char, repeatCount)
+		Appends a specified number of copies of the string representation of a Unicode character to this instance.
+	Parameters:
+		char
+			The character to append.
+			Can be var, instance of MfChar or Instance of MfString.
+			Only the first char will be used if var or MfString has more then one char.
+		repeatCount
+			The number of times to append value.
+			Can var integer or any type that matches IsInteger.
+	Returns:
+		A reference to this instance after the append operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException repeatCount is less than zero or enlarging the value of this instance would exceed MaxCapacity.
+		Throws MfOutOfMemoryException Out of memory.
+	Remarks:
+		The Append(char, repeatCount) method modifies the existing instance of this class; it does not return a new class instance.
+		Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to
+		a StringBuilder object, as the following example illustrates.
+	Example:
+		sb := new MfText.StringBuilder()
+		flt := new MfFloat(1589.1965,,,"0.4")
+		sb.Append("*", 5)
+			.AppendFormat("{0}{1:0.2f}", MfNumberFormatInfo.InvariantInfo.CurrencySymbol, flt.Value)
+			.Append("*", 5)
+		MsgBox % sb.ToString() ; *****$1589.20*****
+*/
+/*
+	Method: Append(value)
+		Appends a copy of the specified string var or object to this instance.
+	Parameters:
+		value
+			Value to append to current instance.
+			Can be var number or string or any object that derives from MfObject.
+	Returns:
+		A reference to this instance after the append operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException if enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		The Append(value) method modifies the existing instance of this class; it does not return a new class instance.
+		Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to a StringBuilder object.
+		When value is an object derived from MfObject it will be added to the current instance by calling the objects
+		ToString() method. Eg: sb.Append(new MfInt16(26)) equals sb.Append(new MfInt16(26).ToString())
+	Example:
+		flt := new MfFloat(1589.1965)
+		sb := new MfText.StringBuilder()
+		sb.Append(flt)
+		MsgBox % sb.ToString() ; 1589.1965
+		sb := new MfText.StringBuilder()
+		sb.Append("Hello World").Append(". Nice to See You!")
+		MsgBox % sb.ToString() ; Hello World. Nice to See You!
+		sb := new MfText.StringBuilder()
+		sb.Append(5).Append(2 + 2).Append(".").Append(3 * 21)
+		MsgBox % sb.ToString() ; 54.63
+		sb := new MfText.StringBuilder()
+		sb.Append(new MfSByte(-124))
+		MsgBox % sb.ToString() ; -124
+		sb := new MfText.StringBuilder()
+		sb.Append(new MfInt64(MfInt64.MinValue))
+		MsgBox % sb.ToString() ; -9223372036854775808
+		sb := new MfText.StringBuilder()
+		sb.Append(new MfUInt64(MfUInt64.MaxValue))
+		MsgBox % sb.ToString() ; 18446744073709551615
+		sb := new MfText.StringBuilder()
+		sb.Append(MfUInt64.MaxValue)
+		MsgBox % sb.ToString() ; 18446744073709551615
+		sb := new MfText.StringBuilder()
+		sb.Append(new MfChar("Z"))
+		MsgBox % sb.ToString() ; Z
+		sb := new MfText.StringBuilder()
+		ex := new MfFormatException("This is a format Exception")
+		ex.SetProp(A_LineFile, A_LineNumber, "My Special Script")
+		sb.Append(ex)
+		MsgBox % sb.ToString()
+		; MfFormatException: This is a format Exception
+		; Source:My Special Script
+		; Line:21
+		; File:D:\Users\user\Documents\AutoHotkey\Scripts\Sample.ahk
+*/		
+/*
+	Method: Append(value, startIndex, count)
+		Appends a copy of the specified substring to this instance.
+	Parameters:
+		value
+			Value to append to current instance.
+			Can be var number or string or instance of MfString.
+		startIndex
+			The starting position of the substring within value.
+			Can var integer or any type that matches IsInteger.
+		count
+			The number of characters in value to append.
+			Can var integer or any type that matches IsInteger.
+	Returns:
+		A reference to this instance after the append operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException if count is less than zero.
+		- or -
+		startIndex is less than zero.
+		- or -
+		startIndex + count is greater than the length of value.
+		- or -
+		Enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		This method appends the specified range of characters in value to the current instance. If value is null and startIndex and count are both zero, no changes are made.
+		The Append(value, startIndex, count) method modifies the existing instance of this class; it does not return a new class instance. Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to a StringBuilder object, as the following example illustrates.
+	Example:
+		str := new MfString("First;George Washington;1789;1797", true)
+		sb := new MfText.StringBuilder()
+		index := 0
+		length := str.IndexOf(";", index)
+		sb.Append(str, index, length).Append(" President of the United States: ")
+		index += length + 1
+		length := str.IndexOf(";", index) - index
+		sb.Append(str, index, length).Append(", from ")
+		index += length + 1
+		length := str.IndexOf(";", index) - index
+		sb.Append(str, index, length).Append(" to ")
+		index += length + 1
+		sb.Append(str, index, str.Length - index)
+		MsgBox % sb.ToString() ; First President of the United States: George Washington, from 1789 to 1797
+*/
 	Append(args*) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		cnt := MfParams.GetArgCount(args*)
@@ -186,6 +498,8 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:Append ;}
 ;{ 	AppendString
+	; internal Method
+	; use Append(value) method for public use
 	AppendString(str) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		this._AppendString(str)
@@ -193,7 +507,46 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:AppendString ;}
 ;{ 	AppendFormat
-	; append a formatted string See MfString.Format()
+/*
+	Method: AppendFormat(str, arg, arg2, ..., argN)
+		Appends the string returned by processing a composite format string, which contains zero or more format items,
+		to this instance. Each format item is replaced by the string representation of a corresponding argument in a parameter array.
+	Parameters:
+		str
+			String to format. Can be any object derived from MfObject or var containing string.
+			A format string composed of literal text and placeholders of the form {Index:Format}.
+			Index is an integer indicating which input value to use, where 0 is the first value.
+			Format is an optional format specifier, as described below.
+			Omit the index to use the next input value in the sequence (even if it has been used earlier in the string).
+			For example, "{2:i} {:i}" formats the second and third input values as decimal integers, separated by a space.
+			If Index is omitted, Format must still be preceded by :. Specify empty braces to use the next input value with default formatting: {}
+			Use {{} and {}} to include literal braces in the string. Any other invalid placeholders are included in the result as is.
+		arg
+			One or more args to format str with.
+			Input values to be formatted and inserted into the final string. Each value is a separate parameter. The first value has an index of 0.
+	Remarks:
+		This method uses the composite formatting feature to convert the value of an object to its text representation and embed
+		that representation in the current StringBuilder object.
+	Related:
+		MfString.Format()
+	Example:
+		sb := new MfText.StringBuilder()
+		int := new MfInteger(5432)
+		str := "abcd"
+		flt := new MfFloat(456.789)
+		sb.AppendLine("StringBuilder.AppendFormat method:")
+		sb.AppendFormat("1) {0}", int)
+		sb.AppendLine()
+		sb.AppendFormat("2) {0}, {1}", int, str)
+		sb.AppendLine()
+		sb.AppendFormat("3) {0}, {1}, {2}", int, str, flt)
+		MsgBox % sb.ToString()
+		; StringBuilder.AppendFormat method:
+		; 1) 5432
+		; 2) 5432, abcd
+		; 3) 5432, abcd, 456.789
+*/
+
 	AppendFormat(str, args*) {
 		_str := MfString.GetValue(str)
 		fStr := MfString.Format(_str, args*)
@@ -201,8 +554,53 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:AppendFormat ;}
 ;{ 	AppendLine
-	; append object, var, char, charcode or MfCharList or MfObject followed by a new line
-	; or just append a new line
+/*
+	Method: AppendLine()
+		Appends the default line terminator to the end of the current StringBuilder object.
+		A reference to this instance after the append operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException if enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		The default line terminator is the current value of the MfEnvironment.NewLine property.
+		The capacity of this instance is adjusted as needed.
+*/
+/*
+	Method: AppendLine(value)
+		Appends a copy of the specified string followed by the default line terminator to the end of the current StringBuilder object.
+		value
+		The string to append.
+	Returns:
+		A reference to this instance after the append operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException if enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		The default line terminator is the current value of the MfEnvironment.NewLine property.
+		The capacity of this instance is adjusted as needed.
+	Example:
+		sb := new MfText.StringBuilder()
+		line := "A line of text."
+		num := 123
+		; Append two lines of text.
+		sb.AppendLine("The first line of text.")
+		sb.AppendLine(line)
+		sb.AppendLine()
+		sb.AppendLine("")
+		; Append the non-string value, 123, and two new lines
+		sb.Append(num).AppendLine().AppendLine()
+		; Append two lines of text.
+		sb.AppendLine(line)
+		sb.AppendLine("The last line of text.")
+		MsgBox % sb.ToString()
+		; The first line of text.
+		; A line of text.
+
+
+		; 123
+
+		; A line of text.
+		; The last line of text.
+*/
+
 	AppendLine(value = "") {
 		if (MfNull.IsNull(value) = false)
 		{
@@ -212,13 +610,46 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:AppendLine ;}
 ;{ 	Clear
+/*
+	Method: Clear()
+		Removes all characters from the current StringBuilder instance.
+
+	OutputVar := instance.Clear()
+
+	Clear()
+		Removes all characters from the current StringBuilder instance.
+	Returns:
+		A reference to this instance after the append operation has completed.
+	Remarks:
+		Clear is a convenience method that is equivalent to setting the Length property of the current instance to 0 (zero).
+		Calling the Clear method does not modify the current instance's Capacity or MaxCapacity property.
+*/
 	Clear() {
 		this.Length := 0
 		return this
 	}
 ; 	End:Clear ;}
 ;{ 	CompareTo - Overrides MfObject CompareTo
-	; Compares current instance to obj instance
+/*
+	Method: CompareTo()
+		Overrides MfObject.CompareTo
+	CompareTo(obj)
+		Compares this instance to a specified StringBuilder instance.
+	Parameters:
+		obj
+			A StringBuilder object to compare to current instance.
+	Returns:
+		Returns a var containing integer indicating the position of this instance in the sort order in relation to the value parameter.
+		Return Value Description Less than zero This instance precedes obj value.
+		Zero This instance has the same position in the sort order as value. Greater than zero This instance follows
+	Throws:
+		Throws MfNullReferenceException if called as a static method
+		Throws MfArgumentException if value is not an instance of StringBuilder.
+	Remarks:
+		Compares this instance to a specified StringBuilder instance and indicates whether this instance precedes,
+		follows, or appears in the same position in the sort order as the specified StringBuilder instance.
+		Compare is done as ordinal.
+*/
 	CompareTo(obj) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(obj))
@@ -241,8 +672,32 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:CompareTo ;}
 ;{ 	CopyTo
-	; Copy chars of current instance to destination
-	; destination is instance of MfCharList
+/*
+	Method: CopyTo()
+	CopyTo(sourceIndex, destination, destinationIndex, count)
+		Copies the characters from a specified segment of this instance to a specified segment of a destination MfCharList.
+	Parameters:
+		sourceIndex
+			The starting position in this instance where characters will be copied from. The index is zero-based
+			Can be any type that matches IsInteger or var integer.
+		destination
+			The MfCharList instance where characters will be copied.
+		destinationIndex
+			The starting position in destination where characters will be copied. The index is zero-based.
+			Can be any type that matches IsInteger or var integer.
+		count
+			The number of characters to be copied.
+			Can be any type that matches IsInteger or var integer.
+	Throws:
+		Throws MfArgumentNullException if destination is null.
+		Throws MfArgumentOutOfRangeException sourceIndex, destinationIndex, or count, is less than zero -or- sourceIndex is greater than the length of this instance.
+		Throws MfArgumentException if sourceIndex + count is greater than the length of this instance. -or- destinationIndex + count is greater than the length of destination.
+	Remarks:
+		The CopyTo method is intended to be used in the rare situation when you need to efficiently copy successive sections of a StringBuilder object to a list.
+		For example, your application could populate a StringBuilder object with a large number of characters then use the
+		CopyTo method to copy small, successive pieces of the StringBuilder object to a list where the pieces are processed.
+		When all the data in the StringBuilder object is processed, the size of the StringBuilder object is set to zero and the cycle is repeated.
+*/
 	CopyTo(sourceIndex, destination, destinationIndex, count) {
 			sourceIndex := MfInteger.GetValue(sourceIndex, -1)
 			destinationIndex := MfInteger.GetValue(destinationIndex, -1)
@@ -325,7 +780,25 @@ class MfStringBuilder extends MfObject
 ; 	End:CopyTo ;}
 
 ;{ 	EnsureCapacity
-	; ensure current instance has internal capacity specified by Parameter capacity
+/*
+	Method: EnsureCapacity()
+
+	OutputVar := instance.EnsureCapacity(capacity)
+
+	EnsureCapacity(capacity)
+		Ensures that the capacity of this instance of StringBuilder is at least the specified value.
+	Parameters:
+		capacity
+			The minimum capacity to ensure.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		The new capacity of this instance as var integer.
+	Throws:
+		Throws MfArgumentOutOfRangeException capacity is less than zero -or- Enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		If the current capacity is less than the capacity parameter, memory for this instance is reallocated to hold at
+		least capacity number of characters; otherwise, no memory is changed.
+*/
 	EnsureCapacity(capacity) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		capacity := MfInteger.GetValue(capacity)
@@ -344,23 +817,97 @@ class MfStringBuilder extends MfObject
 ; 	End:EnsureCapacity ;}
 ;{ 	Insert
 /*
-	Method: Insert()
-
-	Insert()
-		Inserts a obj into this instance at the specified character position.
+	OutputVar := instance.Insert(index, chars)
+	OutputVar := instance.Insert(index, chars, startIndex, charCount)
+	OutputVar := instance.Insert(index, value)
+	OutputVar := instance.Insert(index, value, repeatCount)
+*/
+/*
+	Method: Insert(index, chars)
+		Inserts the string representation of the Unicode characters in a specified list to this instance.
 	Parameters:
 		index
-			The position in this instance where insertion begins. 
-		obj
-			The MfObject based object or var to insert
-		Count
-			Optional value. If included the obj will be inserted at the index Count times.
+			The position in this instance where insertion begins.
+			Can be any type that matches IsInteger or var integer.
+		chars
+			Instance of MfCharList to insert.
 	Returns:
-		Returns A reference to this instance after the insert operation has completed. 
+		A reference to this instance after the insert operation has completed.
 	Throws:
-		Throws MfArgumentException if index is not a valid integer
-		Throws MfArgumentOutOfRangeException if index is out of range
-		Throws MfException if error compleating the insert
+		Throws MfArgumentOutOfRangeException if index is less than zero or greater than the Length of this instance
+		-or-
+		enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		This method inserts at the index position all the characters in the specified MfCharList to the current instance
+		in the same order as they appear in value. If value is null, no changes are made.
+*/
+/*
+	Method: Insert(index, chars, startIndex, charCount)
+		Inserts the string representation of a specified sublist of Unicode characters to this instance.
+	Parameters:
+		index
+			The position in this instance where insertion begins.
+			Can be any type that matches IsInteger or var integer.
+		chars
+			Instance of MfCharList to insert.
+		startIndex
+			The starting position in chars.
+			Can var integer or any type that matches IsInteger.
+		charCount
+			The number of characters to append.
+			Can var integer or any type that matches IsInteger.
+	Returns:
+		A reference to this instance after the insert operation has completed.
+	Throws:
+		Throws MfArgumentNullException if chars is null or chars.Count is 0 and startIndex or charCount is not equal to zero.
+		Throws MfArgumentOutOfRangeException if index, startIndex or charCount is less than zero.
+		- or -
+		index is greater than the length of this instance.
+		- or -
+		startIndex + charCount is greater than the length of value.
+		- or -
+		Enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		Existing characters are shifted to make room for the new text. The Capacity of this instance is adjusted as needed.
+*/
+/*
+	Method: Insert(index, value)
+		Insert a copy of the specified string var or object to this instance.
+	Parameters:
+		index
+			The position in this instance where insertion begins.
+			Can be any type that matches IsInteger or var integer.
+		value
+			Value to append to current instance.
+			Can be var number or string or any object that derives from MfObject.
+	Returns:
+		A reference to this instance after the insert operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException if index is less than zero or greater than the current Length of this instance
+		or enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		Existing characters are shifted to make room for the new text. The Capacity of this instance is adjusted as needed.
+*/
+/*
+	Method: Insert(index, value, repeatCount)
+		Inserts a specified number of copies of the string representation of a Unicode characters to this instance.
+	Parameters:
+		index
+			The position in this instance where insertion begins.
+			Can be any type that matches IsInteger or var integer.
+		value
+			Value to append to current instance.
+			Can be var number or string or any object that derives from MfObject.
+		repeatCount
+			The number of times to append value.
+			Can var integer or any type that matches IsInteger.
+	Returns:
+		A reference to this instance after the insert operation has completed.
+	Throws:
+		Throws MfArgumentOutOfRangeException repeatCount is less than zero or enlarging the value of this instance would exceed MaxCapacity.
+		Throws MfOutOfMemoryException Out of memory.
+	Remarks:
+		Existing characters are shifted to make room for the new text. The Capacity of this instance is adjusted as needed.
 */
 	Insert(args*) {
 		pArgs := this._InsertParams(A_ThisFunc, args*)
@@ -514,7 +1061,60 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:Insert ;}
 ;{ 	Replace
-	; Replace oldValue with newValue in the currrent instance
+/*
+	OutputVar := instance.Replace(oldValue, newValue)
+	OutputVar := instance.Replace(oldValue, newValue, startIndex, count)
+*/
+/*
+	Method: Replace(oldValue, newValue)
+		Replaces, within a substring of this instance, all occurrences of a specified string with another specified string.
+	Parameters:
+		oldValue
+			The string to replace.
+			Can be var number or string or any object that derives from MfObject.
+		newValue
+			The string that replaces oldValue, or null.
+			Can be var number or string or any object that derives from MfObject.
+	Returns:
+		A reference to this instance with all instances of oldValue replaced by newValue.
+	Throws:
+		Throws MfArgumentNullException if oldValue is null.
+		Throws MfArgumentException if The length of oldValue is zero.
+		Throws MfArgumentOutOfRangeException if enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		This method performs an ordinal, case-sensitive comparison to identify occurrences of oldValue in the specified substring.
+		If newValue is null, all occurrences of oldValue are removed.
+*/
+/*
+	Method: Replace(oldValue, newValue, startIndex, count)
+		Replaces, within a substring of this instance, all occurrences of a specified string with another specified string.
+	Parameters:
+		oldValue
+			The string to replace.
+			Can be var number or string or any object that derives from MfObject.
+		newValue
+			The string that replaces oldValue, or null.
+			Can be var number or string or any object that derives from MfObject.
+		startIndex
+			The position in this instance where the substring begins.
+			Can be any type that matches IsInteger or var integer.
+		count
+			The length of the substring.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		A reference to this instance with all instances of oldValue replaced by newValue in the range from startIndex to startIndex + count - 1.
+	Throws:
+		Throws MfArgumentNullException if oldValue is null.
+		Throws MfArgumentException if The length of oldValue is zero.
+		Throws MfArgumentOutOfRangeException if startIndex or count is less than zero.
+		- or -
+		startIndex plus count indicates a character position not within this instance.
+		- or -
+		Enlarging the value of this instance would exceed MaxCapacity.
+	Remarks:
+		This method performs an ordinal, case-sensitive comparison to identify occurrences of oldValue in the specified substring.
+		If newValue is null, all occurrences of oldValue are removed.
+*/
 	Replace(oldValue, newValue, startIndex=0, count=-1) {
 		if (MfNull.IsNull(oldValue))
 		{
@@ -646,7 +1246,31 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:Replace ;}
 ;{ 	Remove
-	; Remove a section of chars from current instance
+/*
+	Method: Remove()
+		Removes the specified range of characters from this instance.
+
+	OutputVar := instance.Remove(startIndex, length)
+
+	Remove(startIndex, length)
+		Removes the specified range of characters from this instance.
+	Parameters:
+		startIndex
+			The zero-based position in this instance where removal begins.
+			Can be any type that matches IsInteger or var integer.
+		length
+			The number of characters to remove.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		A reference to this instance after the insert operation has completed.
+	Throws:
+		Throws MfArgumentException if startIndex or length are not valid integers.
+		Throws MfArgumentOutOfRangeException if If startIndex or length is less than zero, or startIndex + length is greater than the length of this instance.
+	Remarks:
+		The current method removes the specified range of characters from the current instance.
+		The characters at (startIndex + length) are moved to startIndex, and the string value of the current instance is shortened by length.
+		The capacity of the current instance is unaffected.
+*/
 	Remove(startIndex, length) {
 		try
 		{
@@ -702,7 +1326,20 @@ class MfStringBuilder extends MfObject
 ; 	End:Remove ;}
 
 ;{ 	Equals
-	; compare this instance to another instance of MfStringBulder to see if they are equal
+/*
+	Method: Equals()
+		Overrides MfObject.Equals()
+
+	OutputVar := instance.Equals(sb)
+
+	Equals(sb)
+		Returns a value indicating whether this instance is equal to a specified StringBuilder.
+	Parameters:
+		sb
+			An StringBuilder to compare with this instance.
+	Returns:
+		true if this instance and sb have equal string, Capacity, and MaxCapacity values; otherwise, false.
+*/
 	Equals(sb) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		if (MfNull.IsNull(sb))
@@ -808,6 +1445,32 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:Equals ;}
 ;{ 	Is - Overrides MfObject
+/*
+	Method: Is()
+		Overrides MfObject.Is().
+
+	OutputVar := instance.Is(ObjType)
+
+	Is(ObjType)
+		Gets if current instance of StringBuilder is of the same type as ObjType or derived from ObjType.
+	Parameters:
+		ObjType
+			The object or type to compare to this instance Type.
+			ObjType can be an instance of MfType or an object derived from MfObject or an instance of or
+			a string containing the name of the object type such as "MfObject"
+	Returns:
+		Returns true if current object instance is of the same Type as the ObjType or if current instance is derived from ObjType or
+		if ObjType = "MfText.StringBuilder" or ObjType = "MfStringBuilder" or if ObjType = "MfText.StringBuilder"; Otherwise false.
+	Remarks:
+		If a string is used as the Type case is ignored so "MfObject" is the same as "mfobject"
+	Example:
+		sb := new MfText.StringBuilder("Initial string for stringbuilder.")
+		MsgBox % sb.Is("MfText.StringBuilder") ; display 1 for true
+		MsgBox % sb.Is("StringBuilder")        ; display 1 for true
+		MsgBox % sb.Is("MfStringBuilder")      ; display 1 for true
+		MsgBox % sb.Is(MfObject)               ; display 1 for true
+		MsgBox % sb.Is(MfString)               ; display 0 for false
+*/
 	Is(ObjType) {
 		typeName := MfType.TypeOfName(ObjType)
 		if (typeName = "MfText.StringBuilder")
@@ -822,6 +1485,73 @@ class MfStringBuilder extends MfObject
 	}
 ; 	End:Is ;}
 ;{ 	ToString - Overrides MfObject
+/*
+	OutputVar := instance.ToString()
+	OutputVar := instance.ToString(AsStringObj)
+	OutputVar := instance.ToString(AsStringObj, startIndex)
+	OutputVar := instance.ToString(AsStringObj, startIndex, length)
+*/
+/*
+	Method: ToString()
+		Converts the value of this instance to a string var.
+		A string var whose value is the same as this instance.
+	Remarks:
+		You must call the ToString() method to convert the StringBuilder object to a String var.
+*/
+/*
+	Method: ToString(AsStringObj)
+		Converts the value of this instance to a string var or instance of MfString.
+	Parameters:
+		AsStringObj
+			Boolean value; If true return value will be instance of MfString; Otherwise returns var string.
+			Can be boolean var or instance of MfBool.
+	Returns:
+		If AsStringObj is true a MfString whose value is the same as the specified string of this instance;
+		Otherwise a string var whose value is the same as the specified string of this instance.
+*/
+/*
+	Method: ToString(AsStringObj, startIndex)
+		Converts the value of this instance to a substring var or instance of MfString.
+	Parameters:
+		AsStringObj
+			Boolean value; If true return value will be instance of MfString; Otherwise returns var string.
+			Can be boolean var or instance of MfBool.
+			Optional Parameter. Default value is false.
+		startIndex
+			The zero-based starting position of the substring in this instance.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		If AsStringObj is true a MfString whose value is the same as the specified substring of this instance;
+		Otherwise a string var whose value is the same as the specified substring of this instance.
+		The return substring will be from the zero-base position of startIndex to the end of the instance length.
+	Throws:
+		Throws MfArgumentOutOfRangeException startIndex is less than zero.
+	Remarks:
+		You must call the ToString(AsStringObj, startIndex) method to convert the StringBuilder object to a substring var or instance of MfString.
+*/
+/*
+	Method: ToString(AsStringObj, startIndex, length)
+		Converts the value of this instance to a substring var or instance of MfString.
+	Parameters:
+		AsStringObj
+			Boolean value; If true return value will be instance of MfString; Otherwise returns var string.
+			Can be boolean var or instance of MfBool.
+			Optional Parameter. Default value is false.
+		startIndex
+			The zero-based starting position of the substring in this instance.
+			Can be any type that matches IsInteger or var integer.
+		length
+			The length of the substring.
+			Can be any type that matches IsInteger or var integer.
+	Returns:
+		If AsStringObj is true a MfString whose value is the same as the specified substring of this instance;
+		Otherwise a string var whose value is the same as the specified substring of this instance.
+	Throws:
+		Throws MfArgumentOutOfRangeException if startIndex or length is less than zero or the sum of startIndex and
+		length is greater than the length of the current instance.
+	Remarks:
+		You must call the ToString(AsStringObj, startIndex, length) method to convert the StringBuilder object to a substring var or instance of MfString.
+*/
 	ToString(AsStringObj:=false, startIndex:=0, length:=-1) {
 		this.VerifyIsInstance(this, A_LineFile, A_LineNumber, A_ThisFunc)
 		
@@ -983,15 +1713,25 @@ class MfStringBuilder extends MfObject
 ; 	End:__Delete ;}
 ; End:Methods ;}
 ;{ 	Properties
-	;{ Capacity
-		/*!
-			Property: Capacity [get/set]
-				Gets or sets the maximum number of characters that can be contained in the memory allocated by the current instance.
-			Value:
-				Var representing the Capacity property of the instance
-			Returns:
-				The maximum number of characters that can be contained in the memory allocated by the current instance
-		*/
+;{ Capacity
+/*
+	Property: Capacity [get\set]
+		Gets or sets the maximum number of characters that can be contained in the memory allocated by the current instance.
+	Value:
+		Value is an integer and can be var or any type that matches IsIntegerNumber.
+	Gets:
+		Gets integer var of the capacity of the current StringBuilder object.
+	Sets:
+		Set the capacity of the current StringBuilder object.
+		Can  be var or any type that matches IsIntegerNumber.
+	Throws:
+		Throws MfArgumentOutOfRangeException if the value specified for a set operation is less than zero or greater than MaxCapacity.
+	Remarks:
+		The maximum number of characters that can be contained in the memory allocated by the current instance. Its value can range from Length to MaxCapacity.
+		Capacity does not affect the string value of the current instance. Capacity can be decreased as long as it is not less than Length.
+		The StringBuilder dynamically allocates more space when required and increases Capacity accordingly.
+		For performance reasons, a StringBuilder might allocate more memory than needed. The amount of memory allocated is implementation-specific.
+*/
 		Capacity[]
 		{
 			get {
@@ -1030,15 +1770,29 @@ class MfStringBuilder extends MfObject
 			}
 		}
 	; End:Capacity ;}
-	;{ MaxCapacity
-		/*!
-			Property: MaxCapacity [get]
-				Gets the MaxCapacity value associated with the this instance
-			Value:
-				Var representing the MaxCapacity property of the instance
-			Remarks:
-				Readonly Property
-		*/
+;{ MaxCapacity
+/*
+	Property: MaxCapacity [get]
+		Gets the maximum capacity of the current StringBuilder object.
+	Value:
+		Value is an integer and can be var or any type that matches IsIntegerNumber.
+	Gets:
+		Gets integer var of the maximum capacity of the current StringBuilder object
+	Throws:
+		Throws MfArgumentOutOfRangeException if the value specified for a set operation is less than zero or greater than MaxCapacity.
+	Remarks:
+		The length of a StringBuilder object is defined by its number of Char objects.
+		Like the MfString.Length property, the Length property indicates the length of the current string object.
+		Unlike the MfString.Length property, which is read-only, the Length property allows you to modify the length of the string stored to the
+		StringBuilder object.
+		If the specified length is less than the current length, the current StringBuilder object is truncated to the specified length.
+		If the specified length is greater than the current length, the end of the string value of the current StringBuilder object is
+		padded with the Unicode NULL character (U+0000).
+		If the specified length is greater than the current capacity, Capacity increases so that it is greater than or equal to the specified length.
+		When you instantiate the StringBuilder object by calling Constructor(capacity, maxCapacity), both the length and the capacity of
+		the StringBuilder instance can grow beyond the value of its MaxCapacity property. This can occur particularly when you call the Append,
+		 and AppendFormat methods to append small strings.
+*/
 		MaxCapacity[]
 		{
 			get {
@@ -1050,14 +1804,29 @@ class MfStringBuilder extends MfObject
 				Throw ex
 			}
 		}
-	; End:MaxCapacity ;}
-	;{ Chars
-		/*!
-			Property: Chars [get/set]
-				Gets or sets the Chars value associated with the this instance
-			Value:
-				Var representing the Chars property of the instance
-		*/
+; End:MaxCapacity ;}
+;{ Chars
+/*
+	Property: Chars [get\set]
+		Gets or sets the character at the specified character position in this instance.
+	Parameters:
+		Index:
+			The zero-based position of the character.
+			Can be any type that matches IsInteger or var integer.
+		Value:
+			When setting can be var string or instance of MfChar or MfString.
+	Gets:
+		Returns var string containing the char value at the position of the argument index.
+	Sets:
+		Sets the char value at the position of the argument index.
+	Throws:
+		Throws MfArgumentOutOfRangeException if index is outside the bounds of this instance while setting a character.
+		Throws MfIndexOutOfRangeException if index is outside the bounds of this instance while getting a character.
+	Remarks:
+		The index parameter is the position of a character within the StringBuilder.
+		The first character in the string is at index 0. The length of a string is the number of characters it contains.
+		The last accessible character of a StringBuilder instance is at index Length - 1.
+*/
 		Chars[index]
 		{
 			get {
@@ -1119,14 +1888,29 @@ class MfStringBuilder extends MfObject
 				this._SetChar(stringBuilder, i, MfString.GetValue(value))
 			}
 		}
-	; End:Chars ;}
-	;{ Length
-		/*!
-			Property: Length [get/set]
-				Gets or sets the Length value associated with the this instance
-			Value:
-				Var representing the Length property of the instance
-		*/
+; End:Chars ;}
+;{ Length
+/*
+	Property: Length [get\set]
+		Gets or sets the length of the current StringBuilder object.
+	Value:
+		Value is an integer and can be var or any type that matches IsIntegerNumber.
+	Gets:
+		Gets integer var of the length of the current StringBuilder object
+	Sets:
+		Set the length of the current StringBuilder object.
+		Can  be var or any type that matches IsIntegerNumber.
+	Throws:
+		Throws MfArgumentOutOfRangeException if the value specified for a set operation is less than zero or greater than MaxCapacity.
+	Remarks:
+		The length of a StringBuilder object is defined by its number of Char objects.
+		Like the MfString.Length property, the Length property indicates the length of the current string object. Unlike the MfString.Length
+		property, which is read-only, the Length property allows you to modify the length of the string stored to the StringBuilder object.
+		If the specified length is less than the current length, the current StringBuilder object is truncated to the specified length.
+		If the specified length is greater than the current length, the end of the string value of the current StringBuilder object is
+		padded with the Unicode NULL character (U+0000).
+		If the specified length is greater than the current capacity, Capacity increases so that it is greater than or equal to the specified length.
+*/
 		Length[]
 		{
 			get {
