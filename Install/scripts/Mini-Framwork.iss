@@ -8,7 +8,7 @@
 #define MyAppMajor "0"
 #define MyAppMinor "4"
 #define MyAppBuild "0"
-#define MyAppRevision "4"
+#define MyAppRevision "5"
 #define MyAppPublisher "Paul Moss"
 #define MyAppURL "https://github.com/Amourspirit/Mini-Framework"
 #define BaseFw "\Mini_Framwork\0.4"
@@ -128,7 +128,6 @@ Source: "src\System\MfTypeCode.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; F
 Source: "src\System\Mfunc.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; Flags: ignoreversion
 Source: "src\System\MfGenericList.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; Flags: ignoreversion
 Source: "src\System\MfListVar.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; Flags: ignoreversion
-Source: "src\System\MfIntList.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; Flags: ignoreversion
 Source: "src\System\MfByteList.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; Flags: ignoreversion
 Source: "src\System\MfNibbleList.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; Flags: ignoreversion
 Source: "src\System\MfBinaryList.ahk"; DestDir: "{#LibFolder}\{#BaseFw}\System"; Flags: ignoreversion

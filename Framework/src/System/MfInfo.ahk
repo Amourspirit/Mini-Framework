@@ -40,7 +40,7 @@ Class MfInfo extends MfObject
 	{
 		get {
 			if (MfNull.IsNull(MfInfo.m_Version)) {
-				MfInfo.m_Version := new MfVersion(0, 4, 0, 4)
+				MfInfo.m_Version := new MfVersion(0, 4, 0, 5)
 			}
 			return MfInfo.m_Version
 		}

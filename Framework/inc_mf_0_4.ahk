@@ -77,7 +77,6 @@
 #Include <Mini_Framwork\0.4\System\MfList>							; inherits MfListBase
 #Include <Mini_Framwork\0.4\System\MfGenericList>					; inherits MfListBase
 #Include <Mini_Framwork\0.4\System\MfListVar>						; inherits MfListBase
-#Include <Mini_Framwork\0.4\System\MfIntList>						; inherits MfListBase
 #Include <Mini_Framwork\0.4\System\MfByteList>						; inherits MfListBase
 #Include <Mini_Framwork\0.4\System\MfNibbleList>					; inherits MfListBase
 #Include <Mini_Framwork\0.4\System\MfBinaryList>					; inherits MfListBase
