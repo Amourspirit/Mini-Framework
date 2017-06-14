@@ -1,0 +1,94 @@
+﻿<html>
+	
+<head>
+	<title>Equals()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilderEquals");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Equals()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderEnsureCapacity.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderInsert.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Equals()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html#EqualObj">MfObject.Equals()</a></p>
+<p class="rvps20"><span class="rvts49">OutputVar := instance.Equals(sb)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Equals(sb)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Returns a value indicating whether this instance is equal to a specified </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">sb</span></p>
+<p class="rvps22"><span class="rvts54">An </span><a class="rvts53" href="StringBuilder.html">StringBuilder</a><span class="rvts54"> to compare with this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if this instance and sb have equal string, </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6">, and </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6"> values; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6">The following code uses the Equals method to check whether two StringBuilder objects are equal. The method is called repeatedly after small changes are made to each object.</span></p>
+<p class="rvps14"><span class="rvts31">sb := &nbsp;</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(</span><span class="rvts42">"abc"</span><span class="rvts31">)</span><br/><span class="rvts31">sb2 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(</span><span class="rvts42">"abc"</span><span class="rvts31">, </span><span class="rvts68">16</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"a1) sb1.Length = {0}, sb1.Capacity = {1}"</span><span class="rvts31">, sb1.</span><span class="rvts35">Length</span><span class="rvts31">, sb1.</span><span class="rvts35">Capacity</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"a2) sb2.Length = {0}, sb2.Capacity = {1}"</span><span class="rvts31">, sb2.</span><span class="rvts35">Length</span><span class="rvts31">, sb2.</span><span class="rvts35">Capacity</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"a3) sb1.ToString() = '{0}', sb2.ToString() = '{1}'"</span><span class="rvts31">, sb1.</span><span class="rvts47">ToString</span><span class="rvts31">(), sb2.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"a4) sb1 equals sb2: {0}"</span><span class="rvts31">, sb1.</span><span class="rvts47">Equals</span><span class="rvts31">(sb2) = </span><span class="rvts33">true</span><span class="rvts31">?</span><span class="rvts42">"true"</span><span class="rvts31">:</span><span class="rvts42">"false"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"Ensure sb1 has a capacity of at least 50 characters."</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb1.</span><span class="rvts47">EnsureCapacity</span><span class="rvts31">(</span><span class="rvts68">50</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"b1) sb1.Length = {0}, sb1.Capacity = {1}"</span><span class="rvts31">, sb1.</span><span class="rvts35">Length</span><span class="rvts31">, sb1.</span><span class="rvts35">Capacity</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"b2) sb2.Length = {0}, sb2.Capacity = {1}"</span><span class="rvts31">, sb2.</span><span class="rvts35">Length</span><span class="rvts31">, sb2.</span><span class="rvts35">Capacity</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"b3) sb1.ToString() = '{0}', sb2.ToString() = '{1}'"</span><span class="rvts31">, sb1.</span><span class="rvts47">ToString</span><span class="rvts31">(), sb2.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"b4) sb1 equals sb2: {0}"</span><span class="rvts31">, sb1.</span><span class="rvts47">Equals</span><span class="rvts31">(sb2) = </span><span class="rvts33">true</span><span class="rvts31">?</span><span class="rvts42">"true"</span><span class="rvts31">:</span><span class="rvts42">"false"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"Set the length of sb1 to zero."</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"Set the capacity of sb2 to 51 characters."</span><span class="rvts31">)</span><br/><span class="rvts31">sb1.</span><span class="rvts35">Length</span><span class="rvts31"> := </span><span class="rvts68">0</span><br/><span class="rvts31">sb2.</span><span class="rvts35">Capacity</span><span class="rvts31"> := </span><span class="rvts68">51</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"c1) sb1.Length = {0}, sb1.Capacity = {1}"</span><span class="rvts31">, sb1.</span><span class="rvts35">Length</span><span class="rvts31">, sb1.</span><span class="rvts35">Capacity</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"c2) sb2.Length = {0}, sb2.Capacity = {1}"</span><span class="rvts31">, sb2.</span><span class="rvts35">Length</span><span class="rvts31">, sb2.</span><span class="rvts35">Capacity</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"c3) sb1.ToString() = '{0}', sb2.ToString() = '{1}'"</span><span class="rvts31">, sb1.</span><span class="rvts47">ToString</span><span class="rvts31">(), sb2.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">("c4) sb1 equals sb2: {0}", sb1.</span><span class="rvts47">Equals</span><span class="rvts31">(sb2) = </span><span class="rvts33">true</span><span class="rvts31">?</span><span class="rvts42">"true"</span><span class="rvts31">:</span><span class="rvts42">"false"</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">a1) sb1.Length = 3, sb1.Capacity = 16</span><br/><span class="rvts32">a2) sb2.Length = 3, sb2.Capacity = 16</span><br/><span class="rvts32">a3) sb1.ToString() = 'abc', sb2.ToString() = 'abc'</span><br/><span class="rvts32">a4) sb1 equals sb2: true</span><br/><span class="rvts32"></span><br/><span class="rvts32">Ensure sb1 has a capacity of at least 50 characters.</span><br/><span class="rvts32"></span><br/><span class="rvts32">b1) sb1.Length = 3, sb1.Capacity = 50</span><br/><span class="rvts32">b2) sb2.Length = 3, sb2.Capacity = 16</span><br/><span class="rvts32">b3) sb1.ToString() = 'abc', sb2.ToString() = 'abc'</span><br/><span class="rvts32">b4) sb1 equals sb2: false</span><br/><span class="rvts32"></span><br/><span class="rvts32">Set the length of sb1 to zero.</span><br/><span class="rvts32">Set the capacity of sb2 to 51 characters.</span><br/><span class="rvts32"></span><br/><span class="rvts32">c1) sb1.Length = 0, sb1.Capacity = 50</span><br/><span class="rvts32">c2) sb2.Length = 3, sb2.Capacity = 51</span><br/><span class="rvts32">c3) sb1.ToString() = '', sb2.ToString() = 'abc'</span><br/><span class="rvts32">c4) sb1 equals sb2: false</span><br/><span class="rvts32">*/</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

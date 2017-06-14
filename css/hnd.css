@@ -132,304 +132,319 @@ span.rvts22
  font-style: italic;
  color: #808080;
 }
-span.rvts23 /* Font Style */
+span.rvts23
+{
+ font-size: 11pt;
+ color: #808080;
+}
+span.rvts24 /* Font Style */
 {
  font-family: 'Tahoma', 'Geneva', sans-serif;
  font-style: italic;
  color: #c0c0c0;
 }
-a.rvts24, span.rvts24 /* Font Style */
+a.rvts25, span.rvts25 /* Font Style */
 {
  font-family: 'Tahoma', 'Geneva', sans-serif;
  font-style: italic;
  color: #6666ff;
  text-decoration: underline;
 }
-span.rvts25
+span.rvts26
 {
  font-size: 11pt;
  color: #000000;
 }
-span.rvts26
+span.rvts27
 {
  font-size: 11pt;
  font-family: 'consolas';
  color: #000000;
 }
-span.rvts27
+span.rvts28
 {
  font-size: 23pt;
  font-weight: bold;
  color: #000080;
 }
-span.rvts28
-{
- font-size: 11pt;
- font-weight: bold;
- color: #000000;
-}
 span.rvts29
 {
- font-size: 13pt;
+ font-size: 11pt;
  font-weight: bold;
  color: #000000;
 }
 span.rvts30
 {
- font-size: 11pt;
- font-family: 'Consolas';
+ font-size: 13pt;
+ font-weight: bold;
+ color: #000000;
 }
 span.rvts31
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #666699;
 }
 span.rvts32
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #339966;
+ color: #666699;
+ background-color: #f6f6e8;
 }
 span.rvts33
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #0000ff;
+ color: #339966;
+ background-color: #f6f6e8;
 }
 span.rvts34
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #0060bf;
+ color: #0000ff;
+ background-color: #f6f6e8;
 }
 span.rvts35
 {
  font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0060bf;
+ background-color: #f6f6e8;
 }
 span.rvts36
+{
+ font-size: 11pt;
+}
+span.rvts37
 {
  font-size: 11pt;
  font-style: italic;
  color: #808080;
 }
-a.rvts37, span.rvts37
+a.rvts38, span.rvts38
 {
  font-size: 11pt;
  color: #0000ff;
  text-decoration: none;
  border-bottom: double #0000ff;
 }
-a.rvts38, span.rvts38
+a.rvts39, span.rvts39
 {
  font-size: 11pt;
  color: #0000ff;
  text-decoration: underline;
 }
-span.rvts39
+span.rvts40
 {
  font-size: 11pt;
  font-weight: bold;
 }
-span.rvts40
+span.rvts41
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #000000;
- background-color: #eeeeee;
-}
-span.rvts41
-{
- font-size: 11pt;
- color: #808080;
+ background-color: #f6f6e8;
 }
 span.rvts42
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #800000;
+ background-color: #f6f6e8;
 }
 span.rvts43
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #000000;
- background-color: #eeeeee;
+ background-color: #f6f6e8;
 }
 span.rvts44
 {
- font-family: 'Courier New', 'Courier', monospace;
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #339966;
+ background-color: #f6f6e8;
 }
 span.rvts45
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #008080;
+ color: #0000ff;
+ background-color: #f6f6e8;
 }
 span.rvts46
 {
- font-size: 11pt;
- color: #00008b;
+ font-family: 'Courier New', 'Courier', monospace;
 }
 span.rvts47
 {
  font-size: 11pt;
- color: #000000;
+ font-family: 'Consolas';
+ color: #008080;
+ background-color: #f6f6e8;
 }
 span.rvts48
+{
+ font-size: 11pt;
+ color: #000000;
+}
+span.rvts49
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #000000;
 }
-span.rvts49
+span.rvts50
 {
  font-size: 23pt;
  font-weight: bold;
  color: #00008b;
 }
-span.rvts50
+span.rvts51
 {
  font-size: 11pt;
  font-family: 'Consolas';
  font-style: italic;
  color: #000000;
 }
-span.rvts51
+span.rvts52
 {
  font-size: 12pt;
  font-style: italic;
 }
-a.rvts52, span.rvts52
+a.rvts53, span.rvts53
 {
  font-size: 12pt;
  color: #0000ff;
  text-decoration: underline;
 }
-span.rvts53
+span.rvts54
 {
  font-size: 12pt;
 }
-span.rvts54
+span.rvts55
 {
  font-size: 11pt;
  font-style: italic;
  color: #008000;
 }
-span.rvts55
+span.rvts56
 {
  font-size: 13pt;
  font-weight: bold;
  color: #808080;
 }
-a.rvts56, span.rvts56
+a.rvts57, span.rvts57
 {
  font-size: 13pt;
  font-weight: bold;
  color: #0000ff;
  text-decoration: underline;
 }
-span.rvts57
+span.rvts58
 {
  font-size: 11pt;
  font-style: italic;
  color: #000000;
 }
-span.rvts58
+span.rvts59
 {
  font-size: 13pt;
  font-weight: bold;
  color: #008800;
 }
-a.rvts59, span.rvts59
+a.rvts60, span.rvts60
 {
  font-size: 12pt;
  color: #808000;
  text-decoration: none;
 }
-span.rvts60
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #666699;
-}
-span.rvts61
-{
- font-size: 11pt;
- font-family: 'consolas';
- color: #000000;
-}
-span.rvts62
+a.rvts61, span.rvts61
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts62
+{
+ font-size: 11pt;
+ font-family: 'consolas';
+ color: #000000;
 }
 span.rvts63
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #800000;
+ background-color: #f6f6e8;
 }
 span.rvts64
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #339966;
+ color: #666699;
+ background-color: #f6f6e8;
 }
 span.rvts65
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #0060bf;
+ background-color: #f6f6e8;
 }
 span.rvts66
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #008080;
+ background-color: #f6f6e8;
 }
 span.rvts67
 {
- font-size: 11pt;
- font-style: italic;
- color: #000000;
-}
-a.rvts68, span.rvts68
-{
- font-size: 12pt;
- color: #0000ff;
- text-decoration: none;
- border-bottom: double #0000ff;
-}
-span.rvts69
-{
  font-size: 12pt;
  font-style: italic;
 }
-span.rvts70
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #000000;
-}
-span.rvts71
-{
- font-size: 11pt;
- font-family: 'consolas';
- color: #00a000;
-}
-span.rvts72
+span.rvts68
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #0080c0;
+ background-color: #f6f6e8;
+}
+span.rvts69
+{
+ font-size: 12pt;
+ font-weight: bold;
+}
+span.rvts70
+{
+ font-size: 12pt;
+ font-style: italic;
+ color: #008000;
+}
+a.rvts71, span.rvts71
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ font-style: italic;
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts72
+{
+ font-size: 11pt;
+ font-style: italic;
+ color: #000000;
 }
 span.rvts73
 {
  font-size: 11pt;
- font-style: italic;
- font-weight: bold;
+ font-family: 'Consolas';
+ color: #000000;
 }
 span.rvts74
 {
@@ -438,82 +453,84 @@ span.rvts74
  font-weight: bold;
  color: #008800;
 }
-span.rvts75
+a.rvts75, span.rvts75
 {
- font-size: 12pt;
- font-weight: bold;
+ font-size: 11pt;
+ color: #0000ff;
+ text-decoration: underline;
 }
 span.rvts76
-{
- font-size: 12pt;
- font-style: italic;
- color: #008000;
-}
-span.rvts77
 {
  font-size: 13pt;
  font-weight: bold;
  color: #008800;
 }
-span.rvts78
+span.rvts77
 {
  font-size: 12pt;
  font-style: italic;
 }
-span.rvts79
+span.rvts78
 {
  font-size: 12pt;
 }
-a.rvts80, span.rvts80
+a.rvts79, span.rvts79
 {
  font-size: 12pt;
  color: #0000ff;
  text-decoration: underline;
 }
-span.rvts81
+span.rvts80
 {
  font-size: 12pt;
  font-style: italic;
  color: #008000;
 }
-span.rvts82
+span.rvts81
 {
  font-size: 12pt;
  font-weight: bold;
 }
-a.rvts83, span.rvts83
-{
- font-size: 11pt;
- color: #0000ff;
- text-decoration: underline;
-}
-span.rvts84
+span.rvts82
 {
  font-size: 11pt;
  font-family: 'Consolas';
 }
-span.rvts85
-{
- font-size: 23pt;
- font-weight: bold;
- color: #000080;
-}
-span.rvts86
+span.rvts83
 {
  font-size: 11pt;
  font-family: 'Consolas';
  font-weight: bold;
  color: #000000;
- background-color: #eeeeee;
+ background-color: #f6f6e8;
 }
-span.rvts87
+span.rvts84
 {
  font-size: 11pt;
  font-style: italic;
 }
+span.rvts85
+{
+ font-size: 11pt;
+ font-weight: bold;
+}
+span.rvts86
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ font-style: italic;
+ font-weight: bold;
+ color: #000000;
+}
+span.rvts87
+{
+ font-size: 12pt;
+ font-weight: bold;
+}
 span.rvts88
 {
  font-size: 11pt;
+ font-style: italic;
  font-weight: bold;
 }
 span.rvts89
@@ -521,137 +538,116 @@ span.rvts89
  font-size: 11pt;
  font-family: 'Consolas';
  font-style: italic;
- font-weight: bold;
  color: #000000;
 }
-span.rvts90
+a.rvts90, span.rvts90
 {
  font-size: 11pt;
- font-family: 'Consolas';
- font-weight: bold;
- color: #000000;
+ font-style: italic;
+ color: #0000ff;
+ text-decoration: underline;
 }
 span.rvts91
 {
  font-size: 12pt;
- font-weight: bold;
+ font-style: italic;
+ color: #808080;
 }
 span.rvts92
 {
- font-size: 11pt;
- font-family: 'Consolas';
- color: #000000;
+ font-size: 12pt;
+ color: #808080;
 }
 span.rvts93
-{
- font-size: 11pt;
- font-family: 'Consolas';
- font-style: italic;
- color: #000000;
-}
-span.rvts94
-{
- font-size: 12pt;
- font-style: italic;
- color: #808080;
-}
-span.rvts95
-{
- font-size: 12pt;
- color: #808080;
-}
-a.rvts96, span.rvts96
-{
- font-size: 11pt;
- color: #4280ca;
- text-decoration: none;
-}
-a.rvts96:hover { color: #2a6496; text-decoration: underline; }
-span.rvts97
 {
  font-size: 17pt;
  font-weight: bold;
  color: #a04040;
 }
-span.rvts98
+span.rvts94
 {
  font-size: 11pt;
  font-weight: bold;
  color: #000000;
 }
+span.rvts95
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #000000;
+ background-color: #f6f6e8;
+}
+span.rvts96
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #000000;
+ background-color: #f6f6e8;
+}
+span.rvts97
+{
+ font-size: 23pt;
+ font-weight: bold;
+ color: #000080;
+}
+span.rvts98
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0000ff;
+ background-color: #f6f6e8;
+}
 span.rvts99
 {
- font-size: 13pt;
- font-weight: bold;
- color: #00aa00;
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #008080;
+ background-color: #f6f6e8;
 }
 span.rvts100
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #000000;
- background-color: #eeeeee;
+ color: #800000;
+ background-color: #f6f6e8;
 }
 span.rvts101
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #000000;
- background-color: #eeeeee;
+ color: #808080;
 }
 span.rvts102
 {
  font-size: 11pt;
  font-family: 'Consolas';
- color: #0000ff;
-}
-span.rvts103
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #008080;
-}
-span.rvts104
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #800000;
-}
-span.rvts105
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #808080;
-}
-span.rvts106
-{
- font-size: 11pt;
- font-family: 'Consolas';
  color: #666699;
+ background-color: #f6f6e8;
 }
-a.rvts107, span.rvts107
+a.rvts103, span.rvts103
 {
  font-size: 12pt;
  font-weight: bold;
  color: #808000;
  text-decoration: none;
 }
-span.rvts108
+span.rvts104
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #0080c0;
+ background-color: #f6f6e8;
 }
-a.rvts109, span.rvts109
+a.rvts105, span.rvts105
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #000000;
- background-color: #eeeeee;
+ background-color: #f6f6e8;
  text-decoration: none;
 }
-a.rvts109:hover { color: #0000ff; }
-span.rvts110
+a.rvts105:hover { color: #0000ff; }
+span.rvts106
 {
  font-size: 13pt;
  font-weight: bold;
@@ -659,26 +655,38 @@ span.rvts110
  background-color: #ffff99;
  text-decoration: underline overline;
 }
-span.rvts111
+span.rvts107
+{
+ font-size: 12pt;
+ color: #808000;
+}
+span.rvts108
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0080c0;
+ background-color: #f6f6e8;
+}
+span.rvts109
 {
  font-size: 11pt;
  font-family: 'Consolas';
  font-weight: bold;
 }
-span.rvts112
+span.rvts110
 {
  font-size: 11pt;
  font-family: 'Consolas';
  font-style: italic;
 }
-a.rvts113, span.rvts113
+a.rvts111, span.rvts111
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #0000ff;
  text-decoration: underline;
 }
-a.rvts114, span.rvts114
+a.rvts112, span.rvts112
 {
  font-size: 11pt;
  font-family: 'Consolas';
@@ -686,215 +694,259 @@ a.rvts114, span.rvts114
  text-decoration: none;
  border-bottom: double #0000ff;
 }
-span.rvts115
-{
- font-size: 17pt;
- font-weight: bold;
- color: #a04040;
-}
-a.rvts116, span.rvts116
-{
- font-size: 11pt;
- color: #0000ff;
- text-decoration: underline;
-}
-a.rvts116:hover { color: #0000ff; }
-span.rvts117
-{
- font-size: 11pt;
- color: #0000ff;
- text-decoration: underline;
-}
-span.rvts118
+span.rvts113
 {
  font-size: 11pt;
  font-style: italic;
  color: #008000;
 }
-span.rvts119
+span.rvts114
+{
+ font-size: 17pt;
+ font-weight: bold;
+ color: #a04040;
+}
+span.rvts115
 {
  font-size: 11pt;
  font-family: 'Consolas';
 }
-span.rvts120
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #0000ff;
-}
-span.rvts121
+span.rvts116
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #339966;
 }
-span.rvts122
+span.rvts117
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0000ff;
+}
+span.rvts118
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #800000;
+}
+span.rvts119
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #008080;
 }
-span.rvts123
+span.rvts120
 {
  font-size: 11pt;
- font-family: 'Consolas';
- color: #666699;
+ color: #808080;
 }
-a.rvts124, span.rvts124
-{
- font-size: 12pt;
- color: #0000ff;
- text-decoration: underline;
-}
-a.rvts124:hover { color: #0000ff; }
-span.rvts125
+span.rvts121
 {
  font-size: 11pt;
  font-style: italic;
  color: #808080;
 }
-a.rvts126, span.rvts126
+span.rvts122
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #666699;
+}
+span.rvts123
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #000000;
+ background-color: #eeeeee;
+}
+span.rvts124
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0060bf;
+}
+span.rvts125
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0080c0;
+}
+span.rvts126
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ font-weight: bold;
+ color: #000000;
+ background-color: #eeeeee;
+}
+a.rvts127, span.rvts127
 {
  font-size: 12pt;
  color: #0000ff;
  text-decoration: none;
  border-bottom: double #0000ff;
 }
-span.rvts127
+a.rvts128, span.rvts128
 {
  font-size: 11pt;
- font-family: 'Consolas';
- color: #800000;
+ color: #4280ca;
+ text-decoration: none;
 }
-span.rvts128
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #0080c0;
-}
+a.rvts128:hover { color: #2a6496; text-decoration: underline; }
 span.rvts129
 {
- font-size: 11pt;
- font-family: 'Consolas';
- color: #0060bf;
+ font-size: 13pt;
+ font-weight: bold;
+ color: #00aa00;
 }
 a.rvts130, span.rvts130
 {
  font-size: 11pt;
- font-family: 'Consolas';
  color: #0000ff;
  text-decoration: underline;
 }
+a.rvts130:hover { color: #0000ff; }
 span.rvts131
 {
  font-size: 11pt;
- font-family: 'consolas';
- color: #000000;
- background-color: #f6f6e8;
-}
-a.rvts132, span.rvts132
-{
- font-size: 11pt;
- font-family: 'consolas';
- color: #4280ca;
- background-color: #f6f6e8;
- text-decoration: none;
-}
-a.rvts132:hover { color: #2a6496; text-decoration: underline; }
-a.rvts133, span.rvts133
-{
- font-size: 13pt;
- font-weight: bold;
  color: #0000ff;
  text-decoration: underline;
+}
+span.rvts132
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ background-color: #f6f6e8;
+}
+span.rvts133
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #00a000;
 }
 span.rvts134
-{
- font-size: 11pt;
- color: #808080;
-}
-span.rvts135
-{
- font-size: 11pt;
- color: #0000ff;
- text-decoration: underline;
-}
-span.rvts136
-{
- font-size: 11pt;
- font-family: 'Consolas';
- color: #0080c0;
-}
-span.rvts137
-{
- font-size: 11pt;
- font-family: 'Consolas';
-}
-span.rvts138
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #0000a0;
 }
-span.rvts139
+span.rvts135
 {
  font-size: 12pt;
  font-style: italic;
  font-weight: bold;
 }
-span.rvts140
+a.rvts136, span.rvts136
+{
+ font-size: 12pt;
+ color: #808000;
+ text-decoration: none;
+}
+a.rvts137, span.rvts137
+{
+ font-size: 11pt;
+ font-weight: bold;
+ color: #0000ff;
+ text-decoration: underline;
+}
+span.rvts138
+{
+ font-size: 11pt;
+ font-family: 'consolas';
+ color: #000000;
+ background-color: #f6f6e8;
+}
+span.rvts139
 {
  font-size: 11pt;
  font-family: 'Consolas';
  color: #000000;
- background-color: #eeeeee;
+ background-color: #f6f6e8;
+}
+span.rvts140
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #339966;
+ background-color: #f6f6e8;
 }
 span.rvts141
 {
  font-size: 11pt;
  font-family: 'Consolas';
- font-weight: bold;
- color: #000000;
- background-color: #eeeeee;
+ color: #0000ff;
+ background-color: #f6f6e8;
 }
 span.rvts142
 {
  font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0060bf;
+ background-color: #f6f6e8;
 }
-a.rvts143, span.rvts143
+span.rvts143
 {
  font-size: 11pt;
- color: #000000;
+ font-family: 'Consolas';
+ color: #008080;
+ background-color: #f6f6e8;
+}
+span.rvts144
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #666699;
+ background-color: #f6f6e8;
+}
+span.rvts145
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0080c0;
+ background-color: #f6f6e8;
+}
+span.rvts146
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #800000;
+ background-color: #f6f6e8;
+}
+a.rvts147, span.rvts147
+{
+ font-size: 11pt;
+ font-family: 'Consolas';
+ color: #0000ff;
  text-decoration: underline;
 }
-a.rvts144, span.rvts144
+a.rvts148, span.rvts148
 {
  font-size: 23pt;
  font-weight: bold;
  color: #0000ff;
  text-decoration: underline;
 }
-span.rvts145
+span.rvts149
 {
  font-size: 23pt;
  font-weight: bold;
  color: #000000;
 }
-a.rvts146, span.rvts146
+a.rvts150, span.rvts150
 {
  font-size: 17pt;
  font-weight: bold;
  color: #808000;
  text-decoration: none;
 }
-a.rvts147, span.rvts147
+a.rvts151, span.rvts151
 {
  font-size: 17pt;
  font-weight: bold;
  color: #0000ff;
  text-decoration: underline;
 }
-span.rvts148
+span.rvts152
 {
  font-size: 23pt;
  font-weight: bold;
@@ -1108,9 +1160,8 @@ p,ul,ol /* Paragraph Style */
 {
  text-align: left;
  text-indent: 0px;
- page-break-after: avoid;
  padding: 0px 0px 0px 0px;
- margin: 16px 0px 4px 0px;
+ margin: 16px 0px 9px 0px;
 }
 .rvps28
 {
@@ -1123,13 +1174,6 @@ p,ul,ol /* Paragraph Style */
 }
 .rvps29
 {
- text-align: left;
- text-indent: 0px;
- padding: 0px 0px 0px 0px;
- margin: 16px 0px 9px 0px;
-}
-.rvps30
-{
  border-color: #e8e89a;
  border-style: solid;
  border-width: 1px;
@@ -1137,34 +1181,11 @@ p,ul,ol /* Paragraph Style */
  padding: 10px 0px 10px 10px;
  margin: 0px 0px 14px 0px;
 }
+.rvps30
+{
+ margin: 4px 0px 10px 48px;
+}
 .rvps31
-{
- border-color: #e0e0e0;
- border-style: solid;
- border-width: 4px;
- border-top: none;
- border-right: none;
- border-bottom: none;
- padding: 0px 0px 0px 22px;
- margin: 3px 0px 3px 0px;
-}
-.rvps32
-{
- margin: 3px 0px 3px 0px;
-}
-.rvps33
-{
- text-align: left;
- text-indent: 0px;
- page-break-after: avoid;
- padding: 0px 0px 0px 0px;
- margin: 16px 0px 1px 0px;
-}
-.rvps34
-{
- margin: 10px 0px 10px 0px;
-}
-.rvps35
 {
  text-align: left;
  text-indent: 0px;
@@ -1172,24 +1193,7 @@ p,ul,ol /* Paragraph Style */
  padding: 0px 0px 0px 0px;
  margin: 16px 0px 4px 0px;
 }
-.rvps36
-{
- text-align: center;
- margin: 10px 0px 10px 0px;
-}
-.rvps37
-{
- text-align: left;
- text-indent: 0px;
- page-break-after: avoid;
- padding: 0px 0px 0px 0px;
- margin: 23px 0px 9px 0px;
-}
-.rvps38
-{
- margin: 4px 0px 10px 0px;
-}
-.rvps39
+.rvps32
 {
  border-color: #e0e0e0;
  border-style: solid;
@@ -1198,14 +1202,42 @@ p,ul,ol /* Paragraph Style */
  border-right: none;
  border-bottom: none;
  padding: 0px 0px 0px 22px;
- margin: 6px 0px 6px 0px;
+ margin: 3px 0px 3px 0px;
 }
-.rvps40
+.rvps33
+{
+ margin: 3px 0px 3px 0px;
+}
+.rvps34
+{
+ text-align: left;
+ text-indent: 0px;
+ page-break-after: avoid;
+ padding: 0px 0px 0px 0px;
+ margin: 16px 0px 1px 0px;
+}
+.rvps35
+{
+ margin: 4px 0px 10px 72px;
+}
+.rvps36
+{
+ margin: 4px 0px 10px 0px;
+}
+.rvps37
 {
  text-align: center;
  margin: 4px 0px 10px 0px;
 }
-.rvps41
+.rvps38
+{
+ text-align: left;
+ text-indent: 0px;
+ page-break-after: avoid;
+ padding: 0px 0px 0px 0px;
+ margin: 23px 0px 9px 0px;
+}
+.rvps39
 {
  white-space: nowrap;
  border-color: #c8c8c8;
@@ -1217,9 +1249,22 @@ p,ul,ol /* Paragraph Style */
  padding: 10px 0px 10px 10px;
  margin: 9px 0px 9px 0px;
 }
+.rvps40
+{
+ margin: 10px 0px 10px 0px;
+}
+.rvps41
+{
+ text-align: center;
+ margin: 10px 0px 10px 0px;
+}
 .rvps42
 {
- margin: 4px 0px 4px 0px;
+ text-align: left;
+ text-indent: 0px;
+ page-break-after: avoid;
+ padding: 0px 0px 0px 0px;
+ margin: 16px 0px 4px 0px;
 }
 .rvps43
 {

@@ -60,7 +60,7 @@
 				
 				<a href="MfStringConcat.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfStringCutIfLong.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfStringContains.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,22 +68,22 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Constructor()</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Constructor()</span></span></h1>
 <p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> class.</span></p>
-<p class="rvps20"><span class="rvts48">OutputVar := new MfString([str, returnAsObj, read-only])</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := new MfString([str, returnAsObj, read-only])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor([str, retunAsObj, read-only])</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> class optionally setting the </span><a class="rvts12" href="MfStringValue.html">Value</a><span class="rvts6"> property, </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> property and the </span><span class="rvts12">read-only</span><span class="rvts6"> property.</span></p>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> class optionally setting the </span><a class="rvts12" href="MfStringValue.html">Value</a><span class="rvts6"> property, </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> property and the </span><a class="rvts12" href="MfPrimitiveReadonly.html">Readonly</a><span class="rvts6"> property.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">str</span></p>
-<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> object or var containing string to create a new instance with.</span></p>
-<p class="rvps21"><span class="rvts51">returnAsObj</span></p>
-<p class="rvps22"><span class="rvts53">Determines if the current instance of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> class will return </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instances from functions or vars contaning strings. If omitted value is false</span></p>
-<p class="rvps21"><span class="rvts51">read-only</span></p>
-<p class="rvps22"><span class="rvts53">Determines if the current instance of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> class will allow its </span><a class="rvts52" href="MfStringValue.html">Value</a><span class="rvts53"> to be altered after it is constructed.</span><br/><span class="rvts53">The </span><span class="rvts52">read-only</span><span class="rvts53"> propery will reflect this value after the classe is constructed.</span><br/><span class="rvts53">If omitted value is </span><span class="rvts75">false</span></p>
+<p class="rvps21"><span class="rvts52">str</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> object or var containing string to create a new instance with.</span></p>
+<p class="rvps21"><span class="rvts52">returnAsObj</span></p>
+<p class="rvps22"><span class="rvts54">Determines if the current instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> class will return </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instances from functions or vars contaning strings. If omitted value is false</span></p>
+<p class="rvps21"><span class="rvts52">read-only</span></p>
+<p class="rvps22"><span class="rvts54">Determines if the current instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> class will allow its </span><a class="rvts53" href="MfStringValue.html">Value</a><span class="rvts54"> to be altered after it is constructed.</span><br/><span class="rvts54">The </span><span class="rvts53">read-only</span><span class="rvts54"> propery will reflect this value after the classe is constructed.</span><br/><span class="rvts54">If omitted value is </span><span class="rvts69">false</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if </span><span class="rvts54">str</span><span class="rvts6"> is object but not set to an instance.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><span class="rvts54">str</span><span class="rvts6"> is object but not derived from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if class is extended</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if </span><span class="rvts55">str</span><span class="rvts6"> is object but not set to an instance.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><span class="rvts55">str</span><span class="rvts6"> is object but not derived from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if class is extended</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance will contain a value of </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6"> if </span><span class="rvts54">str</span><span class="rvts6"> is omitted.</span><br/><span class="rvts15">Sealed</span><span class="rvts6"> Class</span></p>
+<p class="rvps2"><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance will contain a value of </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6"> if </span><span class="rvts55">str</span><span class="rvts6"> is omitted.</span><br/><span class="rvts15">Sealed</span><span class="rvts6"> Class</span></p>
 </div>
 	
 	<div id="topic_footer">

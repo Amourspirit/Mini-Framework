@@ -68,23 +68,25 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Escape()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Escape()</span><br/><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Escape(EscapeChar)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Escape()</span></span></h2>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Escape()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Escape()</span><br/><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Escape(EscapeChar)</span></p>
+<h2 class="rvps5"><a name="Escape1"></a>
+<span class="rvts0"><span class="rvts16">Escape()</span></span></h2>
 <p class="rvps2"><span class="rvts6">Escapes current instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> for use with AutoHotkey and returns a copy.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns string copy that has been escaped. All </span><span class="rvts43">,%`;</span><span class="rvts6"> &nbsp;are proceeded by </span><span class="rvts18">`</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns var containing string.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Escape(EscapeChar)</span></span></h2>
+<h2 class="rvps5"><a name="Escape2"></a>
+<span class="rvts0"><span class="rvts16">Escape(EscapeChar)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Escapes current instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> for use with AutoHotkey and returns a copy.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns string copy that has been escaped. All </span><span class="rvts43">,%`;</span><span class="rvts6"> &nbsp;are proceeded by value of EscapeChar.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns var containing string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">EscapeChar</span></p>
-<p class="rvps22"><span class="rvts53">The Char or string to use to escape with.</span><br/><span class="rvts75">Defaults</span><span class="rvts53"> to ` also know as back-tick.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> or </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53"> instance. Also can be var contaning string.</span></p>
+<p class="rvps21"><span class="rvts52">EscapeChar</span></p>
+<p class="rvps22"><span class="rvts54">The Char or string to use to escape with.</span><br/><span class="rvts69">Defaults</span><span class="rvts54"> to ` also know as back-tick.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> or </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> instance. Also can be var contaning string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfICE22.html">MfInvalidCastException</a><span class="rvts6"> if </span><span class="rvts54">EscapeChar</span><span class="rvts6"> cannot be cast to string.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts54">EscapeChar</span><span class="rvts6"> is null.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfICE22.html">MfInvalidCastException</a><span class="rvts6"> if </span><span class="rvts55">EscapeChar</span><span class="rvts6"> cannot be cast to string.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">EscapeChar</span><span class="rvts6"> is null.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Escapes </span><span class="rvts43">,%`;</span><span class="rvts6"> and double quotes. If </span><span class="rvts54">EscapeChar</span><span class="rvts6"> is not one of the preceding chars then it is added to the preceding chars</span></p>
+<p class="rvps2"><span class="rvts6">Escapes </span><span class="rvts43">,%`;</span><span class="rvts6"> and double quotes. If </span><span class="rvts55">EscapeChar</span><span class="rvts6"> is not one of the preceding chars then it is added to the preceding chars</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
 <p class="rvps2"><a class="rvts12" href="MfStringUnEscape.html">UnEscape()</a></p>
 </div>

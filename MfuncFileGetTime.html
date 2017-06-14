@@ -68,15 +68,15 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileGetTime()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.FileGetTime([Filename, WhichTime])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">FileGetTime()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := Mfunc.FileGetTime([Filename, WhichTime])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileGetTime([Filename, WhichTime])</span></span></h2>
 <p class="rvps2"><span class="rvts6">Retrieves the datetime stamp of a file or folder.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">Filename</span></p>
-<p class="rvps22"><span class="rvts53">The name of the target file or folder, which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. If omitted, the current file of the innermost enclosing</span><a class="rvts59" href="http://ahkscript.org/docs/commands/LoopFile.htm" target="_blank">File-Loop</a><span class="rvts53"> will be used instead.</span></p>
-<p class="rvps21"><span class="rvts51">WhichTime</span></p>
-<p class="rvps22"><span class="rvts53">Which timestamp to retrieve:</span><br/><span class="rvts53">M = Modification time (this is the default if the parameter is omitted)</span><br/><span class="rvts53">C = Creation time</span><br/><span class="rvts53">A = Last access time</span></p>
+<p class="rvps21"><span class="rvts52">Filename</span></p>
+<p class="rvps22"><span class="rvts54">The name of the target file or folder, which is assumed to be in </span><a class="rvts60" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts54"> if an absolute path isn't specified. If omitted, the current file of the innermost enclosing</span><a class="rvts60" href="http://ahkscript.org/docs/commands/LoopFile.htm" target="_blank">File-Loop</a><span class="rvts54"> will be used instead.</span></p>
+<p class="rvps21"><span class="rvts52">WhichTime</span></p>
+<p class="rvps22"><span class="rvts54">Which timestamp to retrieve:</span><br/><span class="rvts54">M = Modification time (this is the default if the parameter is omitted)</span><br/><span class="rvts54">C = Creation time</span><br/><span class="rvts54">A = Last access time</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns the retrieved date-time in format YYYYMMDDHH24MISS. The time is your own local time, not UTC/GMT.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
@@ -87,7 +87,7 @@
 <p class="rvps2"><span class="rvts6">See </span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileSetTime.htm#YYYYMMDD" target="_blank">YYYYMMDDHH24MISS</a><span class="rvts6"> for an explanation of dates and times.</span></p>
 <p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileGetTime.htm" target="_blank">AutoHotkey Docs - FileGetTime</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetTime</span><span class="rvts30">(</span><span class="rvts42">"C:\My Documents\test.doc</span><span class="rvts30">") </span><span class="rvts31">; Retrieves the modification time by default.</span><br/><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetTime</span><span class="rvts30">(</span><span class="rvts42">"C:\My Documents\test.doc"</span><span class="rvts30">, </span><span class="rvts42">"C"</span><span class="rvts30">) </span><span class="rvts31">; Retrieves the creation time.</span></p>
+<p class="rvps14"><span class="rvts31">OutputVar := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">FileGetTime</span><span class="rvts31">(</span><span class="rvts42">"C:\My Documents\test.doc</span><span class="rvts31">") </span><span class="rvts32">; Retrieves the modification time by default.</span><br/><span class="rvts31">OutputVar := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">FileGetTime</span><span class="rvts31">(</span><span class="rvts42">"C:\My Documents\test.doc"</span><span class="rvts31">, </span><span class="rvts42">"C"</span><span class="rvts31">) </span><span class="rvts32">; Retrieves the creation time.</span></p>
 </div>
 	
 	<div id="topic_footer">

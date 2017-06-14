@@ -58,7 +58,7 @@
 			<div id="topic_header_nav">
 				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfAttributeVerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfBinaryListToString.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="MfBoolFields.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -68,13 +68,266 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfBool Class</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">MfBool Class</span></span></h1>
 <p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6">)</span></p>
-<p class="rvps2"><span class="rvts6">Represents MfBool object for handling true and false values.</span></p>
+<p class="rvps2"><span class="rvts6">Represents Boolean object for handling </span><span class="rvts18">true</span><span class="rvts6"> and </span><span class="rvts18">false</span><span class="rvts6"> values.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
-<p class="rvps2"><a class="rvts12" href="MfBoolFields.html">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfBoolProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfBoolMethods.html">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfBoolConstructor.html">Constructor()</a></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">UserInput := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">InputBox</span><span class="rvts30">(</span><span class="rvts42">"Question!"</span><span class="rvts30">, </span><span class="rvts42">"Programming is cool (true or false)"</span><span class="rvts30">, , </span><span class="rvts72">300</span><span class="rvts30">, </span><span class="rvts72">140</span><span class="rvts30">)</span><br/><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts32">ErrorLevel</span><span class="rvts30">)</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, CANCEL was pressed.</span><br/><span class="rvts30">}</span><br/><span class="rvts32">else</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">try</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;bValue := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfBool</span><span class="rvts30">(</span><span class="rvts33">MfBool</span><span class="rvts30">.</span><span class="rvts45">GetValue</span><span class="rvts30">(UserInput))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (bValue.</span><span class="rvts34">IsTrue</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Aggreed, I aggree!</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Artistic!, Maybe you would enjoy something a little more artistic.</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">catch</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">16</span><span class="rvts30">, Bad Input, The input was not acceptable.</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+<p class="rvps2"><a class="rvts12" href="MfBool.html#Fields">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfBool.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfBool.html#Methods">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfBool.html#Example">Example</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolConstructor.html">Constructor([val, retunAsObj, readonly])</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> class optionally setting the </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> property, </span><a class="rvts12" href="MfBoolReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> property and </span><a class="rvts12" href="MfBoolReadonly.html">Readonly</a><span class="rvts6"> Property.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Fields"></a>
+<span class="rvts0"><span class="rvts17">Fields</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolFalse.html">False</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Get a var of representing </span><span class="rvts18">False</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolFalseString.html">FalseString</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Get a string var representing </span><span class="rvts18">False</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolTrue.html">True</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a var value representing </span><span class="rvts18">True</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolTrueString.html">TrueString</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Get a string var representing </span><span class="rvts18">True</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolFalseObj.html">FalseObj</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a new instances of </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> with its </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> property set to </span><span class="rvts18">False</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolIsFalse.html">IsFalse</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if the </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> associated with the this instance of </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolIsTrue.html">IsTrue</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if the </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> associated with the this instance of </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfPrimitiveReadonly.html">ReadOnly</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the if the derived class will allow the underlying value to be altered after the constructor has been called. Inherited from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfPrimitiveReturnAsObject.html">ReturnAsObject</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the if the class will return objects as their return value for various functions</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolTrueObj.html">TrueObj</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a new instances of </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> with its </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> property set to </span><span class="rvts18">True</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolValue.html">Value</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the value associated with the class. Overrides </span><a class="rvts12" href="MfPrimitiveValue.html">MfPrimitive.Value</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolCompareTo.html">CompareTo(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares this instance to a specified </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> object. Overrides </span><a class="rvts12" href="MfObjectCompareTo.html">MfObject.CompareTo()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolEquals.html">Equals(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if this instance </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> is the same as the </span><span class="rvts55">value. </span><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolGetHashCode.html">GetHashCode()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets A hash code for the current </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6">. Overrides </span><a class="rvts12" href="MfObjectGetHashCode.html">MfObject.GetHashCode()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolGetValue.html#GetValue1">GetValue(Obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the boolean var from Object or var containing </span><span class="rvts15">boolean</span><span class="rvts6">. Overrides </span><a class="rvts12" href="MfPrimitiveGetValue.html">MfPrimitive.GetValue()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolGetValue.html#GetValue2">GetValue(Obj, Default)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a boolean var from </span><span class="rvts55">Obj</span><span class="rvts6"> or returns </span><span class="rvts55">Default</span><span class="rvts6"> value if </span><span class="rvts55">Obj</span><span class="rvts6"> is unable to be converted to boolean. Default must be a value that can be converted to boolean or it will be ignored if </span><span class="rvts55">Obj</span><span class="rvts6"> can not be converted to boolean and an error will be thrown. Overrides </span><a class="rvts12" href="MfPrimitiveGetValue.html">MfPrimitive.GetValue()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolGetValue.html#GetValue3">GetValue(Obj, Default, AllowAny)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a boolean var from </span><span class="rvts55">Obj</span><span class="rvts6"> or returns </span><span class="rvts55">Default</span><span class="rvts6"> value if </span><span class="rvts55">Obj</span><span class="rvts6"> is unable to be converted to boolean.</span><span class="rvts55">Default</span><span class="rvts6"> can be not boolean if </span><span class="rvts55">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">. Overrides </span><a class="rvts12" href="MfPrimitiveGetValue.html">MfPrimitive.GetValue()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolIs.html">Is(ObjType)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if current instance of </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> is of the same type as </span><span class="rvts55">ObjType</span><span class="rvts6"> or derived from </span><span class="rvts55">ObjType</span><span class="rvts6">. Overrides </span><a class="rvts12" href="MfObjectIs.html">MfObject.Is()</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolParse.html">Parse(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the specified string representation of a logical value to its Boolean equivalent, or throws an exception if the string is not equal to the value of </span><a class="rvts12" href="MfBoolTrueString.html">TrueString</a><span class="rvts6"> or </span><a class="rvts12" href="MfBoolFalseString.html">FalseString</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolToString.html">ToString()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a string representation of the </span><a class="rvts12" href="MfPrimitiveValue.html">Value</a><span class="rvts6"> of the object. Overrides </span><a class="rvts12" href="MfPrimitiveToString.html">MfPrimitive.ToString()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolTryParse.html">TryParse(byref bool, obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Tries to convert the specified string representation of a logical value to its Boolean equivalent. A return value indicates whether the conversion succeeded or failed.</span><br/><span class="rvts6">The conversion fails if the obj parameter is null, or is not equal to the value of either the </span><a class="rvts12" href="MfBoolTrueString.html">TrueString</a><span class="rvts6"> or </span><a class="rvts12" href="MfBoolFalseString.html">FalseString</a><span class="rvts6"> field.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">UserInput := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">InputBox</span><span class="rvts31">(</span><span class="rvts42">"Question!"</span><span class="rvts31">, </span><span class="rvts42">"Programming is cool (true or false)"</span><span class="rvts31">, , </span><span class="rvts68">300</span><span class="rvts31">, </span><span class="rvts68">140</span><span class="rvts31">)</span><br/><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts33">ErrorLevel</span><span class="rvts31">)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, CANCEL was pressed.</span><br/><span class="rvts31">}</span><br/><span class="rvts33">else</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">try</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;bValue := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBool</span><span class="rvts31">(</span><span class="rvts34">MfBool</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(UserInput))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (bValue.</span><span class="rvts35">IsTrue</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Agreed, I agree!</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">else</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Artistic!, Maybe you would enjoy something a little more artistic.</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">catch</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">16</span><span class="rvts31">, Bad Input, The input was not acceptable.</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31">}</span></p>
 </div>
 	
 	<div id="topic_footer">

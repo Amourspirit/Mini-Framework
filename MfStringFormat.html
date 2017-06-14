@@ -60,7 +60,7 @@
 				
 				<a href="MfStringEscapeSend.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfStringGetAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfStringFromCharList.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,22 +68,220 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Format()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := MfString.Format(str, arg, arg2, ..., argN)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Format()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Formats a variable number of input values according to a format string.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := MfString.Format(str, arg, arg2, ..., argN)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfString.Format(str, arg, arg2, ..., argN)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Formats string replacing {#} with corresponding replacement </span><span class="rvts54">arg</span></p>
+<p class="rvps2"><span class="rvts6">Formats a variable number of input values according to a format string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">str</span></p>
-<p class="rvps22"><span class="rvts53">String to format. Can be any object derived from </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> or var containing string.</span></p>
-<p class="rvps21"><span class="rvts51">arg</span></p>
-<p class="rvps22"><span class="rvts53">One or more arg to format </span><span class="rvts76">str</span><span class="rvts53"> with.</span></p>
+<p class="rvps21"><span class="rvts52">str</span></p>
+<p class="rvps22"><span class="rvts54">String to format. Can be any object derived from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54"> or var containing string.</span><br/><span class="rvts54">A format string composed of literal text and placeholders of the form </span><span class="rvts95">{Index:Format}</span><span class="rvts54">.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Index is an integer indicating which input value to use, where 0 is the first value.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Format is an optional format specifier, as described below.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Omit the index to use the next input value in the sequence (even if it has been used earlier in the string). For example,</span><span class="rvts95"> "{2:i} {:i}"</span><span class="rvts54"> formats the second and third input values as decimal integers, separated by a space. If Index is omitted, Format must still be preceded by </span><span class="rvts95">:</span><span class="rvts54">. Specify empty braces to use the next input value with default formatting: </span><span class="rvts95">{}</span><br/><span class="rvts95"></span><br/><span class="rvts54">Use </span><span class="rvts95">{{}</span><span class="rvts54"> and </span><span class="rvts95">{}}</span><span class="rvts54"> to include literal braces in the string. Any other invalid placeholders are included in the result as is.</span></p>
+<p class="rvps21"><span class="rvts52">arg</span></p>
+<p class="rvps22"><span class="rvts54">One or more args to format </span><span class="rvts70">str</span><span class="rvts54"> with.</span><br/><span class="rvts54">Input values to be formatted and inserted into the final string. Each value is a separate parameter. The first value has an index of 0.</span></p>
+<h3 class="rvps6"><a name="MfStringFormatSpecifiers"></a>
+<span class="rvts0"><span class="rvts17">Format Specifiers</span></span></h3>
+<p class="rvps2"><span class="rvts6">Each format specifier can include the following components, in this order (without the spaces):</span></p>
+<p class="rvps20"><span class="rvts49">Flags Width .Precision ULT Type</span></p>
+<p class="rvps2"><a class="rvts12" href="MfStringFormat.html#Flag">Flags</a><span class="rvts6"> which affect output justification and prefixes: </span><span class="rvts43">-</span><span class="rvts6"> </span><span class="rvts43">+</span><span class="rvts6"> </span><span class="rvts43">0</span><span class="rvts6"> space </span><span class="rvts43">#</span></p>
+<p class="rvps2"><span class="rvts18">Width</span><span class="rvts6">: a decimal integer which controls the minimum width of the formatted value, in characters. By default, values are right-aligned and spaces are used for padding. This can be overridden by using the </span><span class="rvts43">-</span><span class="rvts6"> (left-align) and </span><span class="rvts43">0</span><span class="rvts6"> (zero prefix) flags.</span></p>
+<p class="rvps2"><span class="rvts18">.Precision</span><span class="rvts6">: a decimal integer which controls the maximum number of string characters, decimal places, or significant digits to output, depending on the output type. It must be preceded by a decimal point. Specifying a precision may cause the value to be be truncated or rounded.</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps30"><span class="rvts43">f</span><span class="rvts6">, </span><span class="rvts43">e</span><span class="rvts6">, </span><span class="rvts43">E</span><span class="rvts6">: Precision specifies the number of digits after the decimal point. The default is 6.</span></li>
+<li style="margin-left: 0px" class="rvps30"><span class="rvts43">g</span><span class="rvts6">, </span><span class="rvts43">G</span><span class="rvts6">: Precision specifies the maximum number of significant digits. The default is 6.</span></li>
+<li style="margin-left: 0px" class="rvps30"><span class="rvts43">s</span><span class="rvts6">: Precision specifies the maximum number of characters to be printed. Characters in excess of this are not printed.</span></li>
+<li class="rvps2"><span class="rvts6">For the integer types (</span><span class="rvts43">d</span><span class="rvts6">, </span><span class="rvts43">i</span><span class="rvts6">, </span><span class="rvts43">u</span><span class="rvts6">, </span><span class="rvts43">x</span><span class="rvts6">, </span><span class="rvts43">X</span><span class="rvts6">, </span><span class="rvts43">o</span><span class="rvts6">), </span><span class="rvts84">Precision</span><span class="rvts6"> acts like </span><span class="rvts84">Width</span><span class="rvts6"> with the </span><span class="rvts43">0</span><span class="rvts6"> prefix and a default of 1.</span></li>
+</ul></ul>
+<p class="rvps18"><span class="rvts18">ULT</span><span class="rvts6"> specifies a case transformation to apply to a string value -- </span><span class="rvts18">U</span><span class="rvts6">pper, </span><span class="rvts18">L</span><span class="rvts6">ower or </span><span class="rvts18">T</span><span class="rvts6">itle. Valid only with the </span><span class="rvts43">s</span><span class="rvts6"> type. For example </span><span class="rvts43">{:U}</span><span class="rvts6"> or </span><span class="rvts43">{:.20Ts}</span><span class="rvts6">. Lower-case </span><span class="rvts43">l</span><span class="rvts6"> and </span><span class="rvts43">t</span><span class="rvts6"> are also supported, but </span><span class="rvts43">u</span><span class="rvts6"> is reserved for unsigned integers.</span></p>
+<p class="rvps18"><span class="rvts6"><br/></span></p>
+<p class="rvps18"><a class="rvts12" href="MfStringFormat.html#type">Type</a><span class="rvts6">: a character indicating how the input value should be interpreted. If omitted, it defaults to s.</span></p>
+<p class="rvps18"><a name="Flag"></a>
+<span class="rvts6"><br/></span></p>
+<div class="rvps18"><table width="100%" border="1" cellpadding="6" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td width="76" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts18">Flag</span></p>
+</td>
+<td width="657" valign="top" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps3"><span class="rvts18">Meaning</span></p>
+</td>
+<td width="208" valign="top" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps3"><span class="rvts18">Default</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="76" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts43">-</span></p>
+</td>
+<td width="657" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">Left align the result within the given field width (insert spaces to the right if needed).</span></p>
+</td>
+<td width="208" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">Right align.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="76" valign="middle" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts43">+</span></p>
+</td>
+<td width="657" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">Use a sign (+ or -) to prefix the output value if it is of a signed type.</span></p>
+</td>
+<td width="208" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">Sign appears only for negative signed values (-).</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="76" valign="middle" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts43">0</span></p>
+</td>
+<td width="657" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">If width is prefixed by 0, leading zeros are added until the minimum width is reached. If both 0 and </span><span class="rvts43">-</span><span class="rvts6"> appear, the 0 is ignored. If 0 is specified as an integer format (i, u, x, X, o, d) and a precision specification is also present - for example, </span><span class="rvts43">{:04.d}</span><span class="rvts6"> - the 0 is ignored.</span></p>
+</td>
+<td width="208" valign="middle" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">No padding.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="76" valign="middle" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">space</span></p>
+</td>
+<td width="657" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">Use a single space to prefix the output value with a space if it is signed and positive. The space is ignored if both the space and </span><span class="rvts43">+</span><span class="rvts6"> flags appear.</span></p>
+</td>
+<td width="208" valign="middle" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">No space appears.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="76" valign="middle" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts43">#</span></p>
+</td>
+<td width="657" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><p class="rvps2"><span class="rvts6">When it's used with the o, x, or X format, the # flag uses </span><span class="rvts43">0</span><span class="rvts6">, </span><span class="rvts43">0x</span><span class="rvts6">, or </span><span class="rvts43">0X</span><span class="rvts6">, respectively, to prefix any nonzero output value.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">When it's used with the e, E, f, a or A format, the # flag forces the output value to contain a decimal point.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">When it's used with the g or G format, the # flag forces the output value to contain a decimal point and prevents the truncation of trailing zeros.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Ignored when used with c, d, i, u, or s.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+</td>
+<td width="208" style="border-color: #000000; border-style: solid; padding: 3px 10px;"><br/>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><a name="type"></a>
+<span class="rvts6"><br/></span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps3"><span class="rvts18">Type Character</span></p>
+</td>
+<td width="96" valign="top" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps3"><span class="rvts18">Argument</span></p>
+</td>
+<td width="754" valign="top" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps3"><span class="rvts18">Output format</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">d</span><span class="rvts6"> or </span><span class="rvts43">i</span></p>
+</td>
+<td width="96" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Integer</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Signed decimal integer.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">u</span></p>
+</td>
+<td width="96" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Integer</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Unsigned decimal integer.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">x</span><span class="rvts6"> or </span><span class="rvts43">X</span></p>
+</td>
+<td width="96" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Integer</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Unsigned hexadecimal integer; uses "abcdef" or "ABCDEF" depending on the case of </span><span class="rvts43">x</span><span class="rvts6">. The </span><span class="rvts43">0x</span><span class="rvts6"> prefix is not included unless the </span><span class="rvts43">#</span><span class="rvts6"> flag is used, as in </span><span class="rvts43">{:#x}</span><span class="rvts6">. For hexadecimal formatting consistent with </span><a class="rvts12" href="MfuncSetFormat.html">SetFormat</a><span class="rvts6">, use</span><span class="rvts43"> 0x{:x}</span><span class="rvts6"> or similar.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">o</span></p>
+</td>
+<td width="96" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Integer</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Unsigned octal integer.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">f</span></p>
+</td>
+<td width="96" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Floating-point</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Signed value that has the form [ - ]dddd.dddd, where dddd is one or more decimal digits. The number of digits before the decimal point depends on the magnitude of the number, and the number of digits after the decimal point depends on the requested precision.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">e</span></p>
+</td>
+<td width="96" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Floating-point</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Signed value that has the form [ - ]d.dddd e [sign]dd[d] where d is one decimal digit, dddd is one or more decimal digits, dd[d] is two or three decimal digits depending on the output format and size of the exponent, and sign is + or -.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">E</span></p>
+</td>
+<td width="96" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Floating-point</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Identical to the </span><span class="rvts43">e</span><span class="rvts6"> format except that E rather than e introduces the exponent.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">g</span></p>
+</td>
+<td width="96" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Floating-point</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Signed values are displayed in </span><span class="rvts43">f</span><span class="rvts6"> or </span><span class="rvts43">e</span><span class="rvts6"> format, whichever is more compact for the given value and precision. The </span><span class="rvts43">e</span><span class="rvts6"> format is used only when the exponent of the value is less than -4 or greater than or equal to the precision argument. Trailing zeros are truncated, and the decimal point appears only if one or more digits follow it.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">G</span></p>
+</td>
+<td width="96" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Floating-point</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Identical to the </span><span class="rvts43">g</span><span class="rvts6"> format, except that E, rather than e, introduces the exponent (where appropriate).</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">a</span></p>
+</td>
+<td width="96" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Floating-point</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Signed hexadecimal double-precision floating-point value that has the form [?]0xh.hhhh </span><span class="rvts18">p</span><span class="rvts6">±dd, where h.hhhh are the hex digits (using lower case letters) of the mantissa, and dd are one or more digits for the exponent. The precision specifies the number of digits after the point.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">A</span></p>
+</td>
+<td width="96" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Floating-point</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Identical to the </span><span class="rvts43">a</span><span class="rvts6"> format, except that P, rather than p, introduces the exponent.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">s</span></p>
+</td>
+<td width="96" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">String</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Specifies a string. If the input value is numeric, it is automatically converted to a string using the script's </span><a class="rvts12" href="MfuncSetFormat.html">current number format</a><span class="rvts6"> before the Width and Precision arguments are applied.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="91" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts43">c</span></p>
+</td>
+<td width="96" valign="middle" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Character code</span></p>
+</td>
+<td width="754" style="border-color: #000000; border-style: solid; padding: 6px 3px;"><p class="rvps2"><span class="rvts6">Specifies a single character by its ordinal value, similar to Chr(n). If the input value is outside the expected range, it wraps around.</span></p>
+</td>
+</tr>
+</table>
+</div>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns formated </span><span class="rvts15">string</span><span class="rvts6">.</span><br/><span class="rvts6">If </span><span class="rvts54">str</span><span class="rvts6"> Parameter is an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and that instance has </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> set to </span><span class="rvts18">true</span><span class="rvts6"> then a new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> will be returned containing the formated version; otherwise a var will be returned containing the formated version.</span><br/><span class="rvts6">If </span><span class="rvts54">str</span><span class="rvts6"> is null or empty then </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6"> value is returned.</span></p>
+<p class="rvps2"><span class="rvts6">Returns formated </span><span class="rvts15">string</span><span class="rvts6">.</span><br/><span class="rvts6">If </span><span class="rvts55">str</span><span class="rvts6"> Parameter is an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and that instance has </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> set to </span><span class="rvts18">true</span><span class="rvts6"> then a new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> will be returned containing the formated version; otherwise a var will be returned containing the formated version.</span><br/><span class="rvts6">If </span><span class="rvts55">str</span><span class="rvts6"> is null or empty then </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6"> value is returned.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Objects Derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> will call their ToString() method if Passed in as </span><span class="rvts54">arg</span><span class="rvts6">. If </span><span class="rvts54">arg</span><span class="rvts6"> is </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> and not an Instance then its type name is used </span><span class="rvts18">Objects</span><span class="rvts6"> passed in as </span><span class="rvts54">arg</span><span class="rvts6"> must be of type </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">. All </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> derived classes will call instance.ToString().</span></p>
-<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">str</span><span class="rvts6"> is an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and that instance has it </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> set to </span><span class="rvts18">true</span><span class="rvts6"> then the return value will be a new instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">; Otherwise a string var is returned.</span></p>
+<p class="rvps2"><span class="rvts6">Objects Derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> will call their ToString() method if Passed in as </span><span class="rvts55">arg</span><span class="rvts6">. If </span><span class="rvts55">arg</span><span class="rvts6"> is </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> and not an Instance then its type name is used </span><span class="rvts18">Objects</span><span class="rvts6"> passed in as </span><span class="rvts55">arg</span><span class="rvts6"> must be of type </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">. All </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> derived classes will call instance.ToString().</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">str</span><span class="rvts6"> is an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and that instance has it </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> set to </span><span class="rvts18">true</span><span class="rvts6"> then the return value will be a new instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">; Otherwise a string var is returned.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfuncSetFormat.html">SetFormat()</a></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">myString := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"DateTime:{0}/{1}/{2}"</span><span class="rvts30">, </span><span class="rvts32">A_YYYY</span><span class="rvts30">, </span><span class="rvts32">A_MM</span><span class="rvts30">, </span><span class="rvts32">A_DD</span><span class="rvts30">) </span><span class="rvts31">; result DateTime:2016/06/01</span><br/><span class="rvts31"></span><br/><span class="rvts30">myOsInfo := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"OsType:{0} Version:{1}"</span><span class="rvts30">, </span><span class="rvts32">A_OSType</span><span class="rvts30">, </span><span class="rvts32">A_OSVersion</span><span class="rvts30">) </span><span class="rvts31">; OsType:WIN32_NT Version:WIN_8.1</span><br/><span class="rvts30"></span><br/><span class="rvts30">i := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">5</span><span class="rvts30">)</span><br/><span class="rvts30">str := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Cool computer"</span><span class="rvts30">)</span><br/><span class="rvts30">mystr := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"My computer is named:'{0}' and I have had it for {1} years"</span><span class="rvts30">, str, i)</span><br/><span class="rvts31">; My computer is named:'Cool computer' and I have had it for 5 years</span><br/><span class="rvts30"></span><br/><span class="rvts30">strObjA := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(mystr, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts31">; The above line sets MfString instance to return it method outputs as objects. This allows for method chaining</span><br/><span class="rvts31"></span><br/><span class="rvts31">; strObjA has ReturnAsObject set to true so ResultA will be an instance of MfString</span><br/><span class="rvts30">resultA := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(strObjA, str, i).</span><span class="rvts45">Substring</span><span class="rvts30">(</span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(</span><span class="rvts42">"I:58"</span><span class="rvts30">)).</span><span class="rvts45">PadLeft</span><span class="rvts30">(</span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(</span><span class="rvts42">"i=20,C=."</span><span class="rvts30">))</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % resultA.</span><span class="rvts34">Value</span><span class="rvts30"> </span><span class="rvts31">; displays ...............years</span></p>
+<p class="rvps14"><span class="rvts31">myString := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"DateTime:{0}/{1}/{2}"</span><span class="rvts31">, </span><span class="rvts33">A_YYYY</span><span class="rvts31">, </span><span class="rvts33">A_MM</span><span class="rvts31">, </span><span class="rvts33">A_DD</span><span class="rvts31">) </span><span class="rvts32">; result DateTime:2016/06/01</span><br/><span class="rvts32"></span><br/><span class="rvts31">myOsInfo := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"OsType:{0} Version:{1}"</span><span class="rvts31">, </span><span class="rvts33">A_OSType</span><span class="rvts31">, </span><span class="rvts33">A_OSVersion</span><span class="rvts31">) </span><span class="rvts32">; OsType:WIN32_NT Version:WIN_8.1</span><br/><span class="rvts31"></span><br/><span class="rvts31">i := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">5</span><span class="rvts31">)</span><br/><span class="rvts31">str := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Cool computer"</span><span class="rvts31">)</span><br/><span class="rvts31">mystr := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"My computer is named:'{0}' and I have had it for {1} years"</span><span class="rvts31">, str, i)</span><br/><span class="rvts32">; My computer is named:'Cool computer' and I have had it for 5 years</span><br/><span class="rvts31"></span><br/><span class="rvts31">strObjA := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(mystr, </span><span class="rvts33">true</span><span class="rvts31">)</span><br/><span class="rvts32">; The above line sets MfString instance to return it method outputs as objects. This allows for method chaining</span><br/><span class="rvts32"></span><br/><span class="rvts32">; strObjA has ReturnAsObject set to true so ResultA will be an instance of MfString</span><br/><span class="rvts31">resultA := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(strObjA, str, i).</span><span class="rvts47">Substring</span><span class="rvts31">(</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">(</span><span class="rvts42">"I:58"</span><span class="rvts31">)).</span><span class="rvts47">PadLeft</span><span class="rvts31">(</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">(</span><span class="rvts42">"i=20,C=."</span><span class="rvts31">))</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % resultA.</span><span class="rvts35">Value</span><span class="rvts31"> </span><span class="rvts32">; displays ...............years</span></p>
+<p class="rvps14"><span class="rvts32">; Simple substitution</span><br/><span class="rvts31">s := </span><span class="rvts42">""</span><br/><span class="rvts31">s .= </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"{1}, {0}!`r`n"</span><span class="rvts31">, </span><span class="rvts42">"World"</span><span class="rvts31">, </span><span class="rvts42">"Hello"</span><span class="rvts31">)</span><br/><span class="rvts32">; Padding with spaces</span><br/><span class="rvts31">s .= </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"|{:-10}|`r`n|{:10}|`r`n"</span><span class="rvts31">, </span><span class="rvts42">"Left"</span><span class="rvts31">, </span><span class="rvts42">"Right"</span><span class="rvts31">)</span><br/><span class="rvts31">; Hexadecimal</span><br/><span class="rvts31">s .= </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"{0:#x} {1:X} 0x{2:x}`r`n"</span><span class="rvts31">, </span><span class="rvts68">3735928559</span><span class="rvts31">, </span><span class="rvts68">195948557</span><span class="rvts31">, </span><span class="rvts68">0</span><span class="rvts31">)</span><br/><span class="rvts32">; Floating-point</span><br/><span class="rvts31">s .= </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"{0:0.3f} {0:.10f}"</span><span class="rvts31">, </span><span class="rvts68">4</span><span class="rvts31">*atan(</span><span class="rvts68">1</span><span class="rvts31">))</span><br/><span class="rvts31"></span><br/><span class="rvts34">ListVars</span><span class="rvts31"> &nbsp;</span><span class="rvts32">; Use AutoHotkey's main window to display monospaced text.</span><br/><span class="rvts33">WinWaitActive ahk_class AutoHotkey</span><br/><span class="rvts33">ControlSetText</span><span class="rvts31"> Edit1, %s%</span><br/><span class="rvts33">WinWaitClose</span></p>
+<p class="rvps14"><span class="rvts31">flt := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts35">MfFloat</span><span class="rvts31">(</span><span class="rvts68">1589.1965</span><span class="rvts31">,,,</span><span class="rvts42">"0.4"</span><span class="rvts31">)</span><br/><span class="rvts31">str := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"*****"</span><span class="rvts31">, </span><span class="rvts33">true</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"{0}{1:0.2f}"</span><span class="rvts31">, </span><span class="rvts34">MfNumberFormatInfo</span><span class="rvts31">.</span><span class="rvts35">InvariantInfo</span><span class="rvts31">.</span><span class="rvts35">CurrencySymbol</span><span class="rvts31">, flt.</span><span class="rvts35">Value</span><span class="rvts31">))</span><br/><span class="rvts31"> &nbsp; &nbsp;.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"*****"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts35">Value</span><span class="rvts31"> </span><span class="rvts32">; *****$1589.20*****</span></p>
 </div>
 	
 	<div id="topic_footer">

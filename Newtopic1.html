@@ -1,0 +1,100 @@
+﻿<html>
+	
+<head>
+	<title>VerifyReadOnly()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("Newtopic1");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">VerifyReadOnly()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfPrimitive.html">MfPrimitive</a> &rsaquo;&rsaquo; <a href="MfPrimitiveMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfPrimitiveMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfPrimitiveToString.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStack.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">VerifyReadOnly()</span></span></h1>
+<p class="rvps20"><span class="rvts49">VerifyReadOnly([ClassName, LineFile, LineNumber, Source])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">VerifyReadOnly()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Check to see if current derived instance is readonly and throws an error if an attempt is made to change a value of a readonly instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">ClassName</span></p>
+<p class="rvps22"><span class="rvts54">Optional name of class calling method, Default to the calling class name</span></p>
+<p class="rvps21"><span class="rvts52">LineFile</span></p>
+<p class="rvps22"><span class="rvts54">Optional, The File that called the method. Defaults to A_LineFile</span></p>
+<p class="rvps21"><span class="rvts52">LineNumber</span></p>
+<p class="rvps22"><span class="rvts54">Optional, The Line that the error was thrown on. Defaults to A_LineNumber</span></p>
+<p class="rvps21"><span class="rvts52">Source</span></p>
+<p class="rvps22"><span class="rvts54">Optional, A Source related to the error. Defaults to A_ThisFunc</span><br/><span class="rvts54">Can be any Object or var</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throw </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if derived class is set to read only</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Protected method</span><br/><span class="rvts6">When Applied as in the example below </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> will be throw if instance is </span><a class="rvts12" href="MfPrimitiveReadonly.html">Readonly</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts33">Class</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31"> </span><span class="rvts33">extends</span><span class="rvts31"> </span><span class="rvts34">MfPrimitive</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts32">; ... other code</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts47">Add</span><span class="rvts31">(value) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.</span><span class="rvts47">VerifyIsInstance</span><span class="rvts31">(</span><span class="rvts33">this</span><span class="rvts31">, </span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">) </span><span class="rvts32">; MfObject protected method</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.</span><span class="rvts47">VerifyReadOnly</span><span class="rvts31">(</span><span class="rvts33">this</span><span class="rvts31">, </span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">) &nbsp; </span><span class="rvts32">; MfPrimitive protected method</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts34">MfNull</span><span class="rvts31">.</span><span class="rvts33">IsNull</span><span class="rvts31">(value)) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfArgumentNullException</span><span class="rvts31">(</span><span class="rvts42">"value"</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ex.</span><span class="rvts47">SetProp</span><span class="rvts31">(</span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">throw</span><span class="rvts31"> ex</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; ... other code</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

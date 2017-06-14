@@ -1,0 +1,96 @@
+﻿<html>
+	
+<head>
+	<title>Contains()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharListContains");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Contains()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCharList.html">MfCharList</a> &rsaquo;&rsaquo; <a href="MfCharListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCharListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCharListConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="Newtopic7.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Contains()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Determines whether the </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6"> contains a specific element.</span><br/><span class="rvts6">Overrides </span><a class="rvts12" href="MfListBaseContains.html">MfListBase.Contains()</a></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Contains(obj [, ignoreCase])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Contains(obj [, ignoreCase])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Determines whether the </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6"> contains a specific var.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">obj</span></p>
+<p class="rvps22"><span class="rvts54">The char code integer or instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> or string to find matching index of within current instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54">.</span><br/><span class="rvts54">Can be var </span><span class="rvts67">integer</span><span class="rvts54"> or var </span><span class="rvts67">string</span><span class="rvts54"> or instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> or instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">IgnoreCase</span></p>
+<p class="rvps22"><span class="rvts54">Optional, if </span><span class="rvts69">true</span><span class="rvts54"> then case will be ignored when searching; Otherwise case will be considered.</span><br/><span class="rvts54">Default value is </span><span class="rvts69">true</span><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if the </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6"> contains the specified </span><span class="rvts55">obj</span><span class="rvts6"> otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method performs a linear search; therefore, this method is an O(n) operation, where n is </span><a class="rvts12" href="MfListBaseCount.html">Count</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">If obj is a string var then contains will follow </span><span class="rvts55">ignoreCase</span><span class="rvts6">.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

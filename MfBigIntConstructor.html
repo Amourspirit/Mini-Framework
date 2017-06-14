@@ -1,0 +1,97 @@
+﻿<html>
+	
+<head>
+	<title>Constructor()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfBigIntConstructor");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Constructor()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfBigInt.html">MfBigInt</a> &rsaquo;&rsaquo; <a href="MfBigIntMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfBigIntMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfBigIntCompareTo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfBigIntDivide.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Constructor()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> class.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := new MfInt64([int, returnAsObj, readonly])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor([int, retunAsObj, readonly])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> class optionally setting the </span><a class="rvts12" href="MfBigIntValue.html">Value</a><span class="rvts6"> property, </span><a class="rvts12" href="MfBigIntReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> property and the </span><a class="rvts12" href="MfBigIntReadonly.html">ReadOnly</a><span class="rvts6"> property.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">int</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfBigInt.html">MfBigInt</a><span class="rvts54"> object or var containing integer to create a new instance with.</span></p>
+<p class="rvps21"><span class="rvts52">returnAsObj</span></p>
+<p class="rvps22"><span class="rvts54">Determines if the current instance of </span><a class="rvts53" href="MfBigInt.html">MfBigInt</a><span class="rvts54"> class will return </span><a class="rvts53" href="MfBigInt.html">MfBigInt</a><span class="rvts54"> instances from functions or vars containing integer. If omitted value is false</span></p>
+<p class="rvps21"><span class="rvts52">readonly</span></p>
+<p class="rvps22"><span class="rvts54">Determines if the current instance of </span><a class="rvts53" href="MfBigInt.html">MfBigInt</a><span class="rvts54"> class will allow its </span><a class="rvts53" href="MfBigIntValue.html">Value</a><span class="rvts54"> to be altered after it is constructed.</span><br/><span class="rvts54">The </span><a class="rvts53" href="MfBigIntReadonly.html">ReadOnly</a><span class="rvts54"> property will reflect this value after the class is constructed.</span><br/><span class="rvts54">If omitted value is </span><span class="rvts69">false</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Sealed</span><span class="rvts6"> Class.</span><br/><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> with the integer value of int.</span><br/><a class="rvts12" href="MfBigIntValue.html">Value</a><span class="rvts6"> property to the value of </span><span class="rvts55">int</span><span class="rvts6">.</span><br/><a class="rvts12" href="MfBigIntReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> will have a value of </span><span class="rvts55">returnAsObj</span><br/><a class="rvts12" href="MfBigIntReadonly.html">ReadOnly</a><span class="rvts6"> will have a value of </span><span class="rvts55">readonly</span><span class="rvts6">.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfBigIntReadonly.html">ReadOnly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6"> then any attempt to change the underlying value will result in </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> being thrown.</span><br/><span class="rvts6"><br/></span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if class is extended.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if error in parameter.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if incorrect type of parameters or incorrect number of parameters.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

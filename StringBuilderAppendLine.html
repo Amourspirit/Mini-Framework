@@ -1,0 +1,110 @@
+﻿<html>
+	
+<head>
+	<title>AppendLine()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilderAppendLine");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">AppendLine()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderAppendFormat.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderClear.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">AppendLine()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts71" href="StringBuilderAppendLine.html#AppendLine1">instance</a><a class="rvts61" href="StringBuilderAppendLine.html#AppendLine1">.AppendLine()</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="StringBuilderAppendLine.html#AppendLine2">instance</a><a class="rvts61" href="StringBuilderAppendLine.html#AppendLine2">.AppendLine(value)</a></p>
+<h2 class="rvps5"><a name="AppendLine1"></a>
+<span class="rvts0"><span class="rvts16">AppendLine()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends the default line terminator to the end of the current </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance after the append operation has completed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The default line terminator is the current value of the </span><a class="rvts12" href="MfEnvironmentNewLine.html">MfEnvironment.NewLine</a><span class="rvts6"> property.</span></p>
+<p class="rvps2"><span class="rvts6">The capacity of this instance is adjusted as needed.</span></p>
+<p class="rvps2"><a class="rvts12" href="StringBuilderAppendLine.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="AppendLine2"></a>
+<span class="rvts0"><span class="rvts16">AppendLine(value)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends a copy of the specified string followed by the default line terminator to the end of the current </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The string to append.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance after the append operation has completed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The default line terminator is the current value of the </span><a class="rvts12" href="MfEnvironmentNewLine.html">MfEnvironment.NewLine</a><span class="rvts6"> property.</span></p>
+<p class="rvps2"><span class="rvts6">The capacity of this instance is adjusted as needed.</span></p>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">sb := new </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">line := </span><span class="rvts42">"A line of text."</span><br/><span class="rvts31">num := </span><span class="rvts68">123</span><br/><span class="rvts68"></span><br/><span class="rvts32">; Append two lines of text.</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"The first line of text."</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(line)</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">""</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Append the non-string value, 123, and two new lines</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(num).</span><span class="rvts47">AppendLine</span><span class="rvts31">().</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Append two lines of text.</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(line)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">("The last line of text.")</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">The first line of text.</span><br/><span class="rvts32">A line of text.</span><br/><span class="rvts32"></span><br/><span class="rvts32"></span><br/><span class="rvts32">123</span><br/><span class="rvts32"></span><br/><span class="rvts32">A line of text.</span><br/><span class="rvts32">The last line of text.</span><br/><span class="rvts32">*/</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

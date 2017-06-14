@@ -1,0 +1,95 @@
+﻿<html>
+	
+<head>
+	<title>NativeDigits</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNFI18NativeDigits");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">NativeDigits</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfNFI18.html">MfNumberFormatInfo</a> &rsaquo;&rsaquo; <a href="MfNFI18Properties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNFI18Properties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNFI18NaNSymbol.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNFI18NegativeInfinitySymbol.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">NativeDigits</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets a </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> list of string of native digits equivalent to the Western digits 0 through 9.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.NativeDigits</span><br/><span class="rvts51">instance</span><span class="rvts49">.NativeDigits := Value</span></p>
+<p class="rvps21"><span class="rvts52">Value</span></p>
+<p class="rvps22"><span class="rvts54">Instance of </span><a class="rvts53" href="MfListVar.html">MfListVar</a><span class="rvts54"> containing elements of string var values containing the native equivalent of the Western digits 0 through 9.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> containing elements of string var values containing the native equivalent of the Western digits 0 through 9. The default is a list having the elements "0", "1", "2", "3", "4", "5", "6", "7", "8", and "9".</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Set a </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> list of string of native digits equivalent to the Western digits 0 through 9.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if the property is being set and the </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> is read-only.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if the property is being set to null -or- In a set operation, an element of the value list is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if the property is being set and the list does not contain 10 elements.</span><br/><span class="rvts6">-or-</span><br/><span class="rvts6">In a set operation, an element of the value list does not contain either a single Char object or a pair of Char objects that comprise a surrogate pair.</span><br/><span class="rvts6">-or-</span><br/><span class="rvts6">In a set operation, an element of the value list is not a number digit as defined by the Unicode Standard. That is, the digit in the array element does not have the Unicode Number, Decimal Digit (Nd) General Category value.</span><br/><span class="rvts6">-or-</span><br/><span class="rvts6">n a set operation, the numeric value of an element in the value array does not correspond to the element's position in the array. That is, the element at index 0, which is the first element of the array, does not have a numeric value of 0, or the element at index 1 does not have a numeric value of 1.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Any list derived from </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6"> containing string elements can be used to set </span><span class="rvts23">NativeDigits</span><span class="rvts6"> if </span><a class="rvts12" href="MfNFI18IsReadOnly.html">IsReadOnly</a><span class="rvts6"> is false. However </span><span class="rvts23">NativeDigits</span><span class="rvts6"> will always return </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> instance.</span></p>
+<p class="rvps2"><span class="rvts6">The character set that is specified by the </span><span class="rvts23">NativeDigits</span><span class="rvts6"> property has no effect on parsing or formatting operations. Only the Basic Latin digits 0 (U+0030) through 9 (U+0039) are used when formatting or parsing numeric values or date and time values.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

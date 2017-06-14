@@ -1,0 +1,97 @@
+﻿<html>
+	
+<head>
+	<title>AppendFormat()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilderAppendFormat");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">AppendFormat()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderAppend.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderAppendLine.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">AppendFormat()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := instance.AppendFormat(str, arg, arg2, ..., argN)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">AppendFormat(str, arg, arg2, ..., argN)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends the string returned by processing a composite format string, which contains zero or more format items, to this instance. Each format item is replaced by the string representation of a corresponding argument in a parameter array.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">str</span></p>
+<p class="rvps22"><span class="rvts54">String to format. Can be any object derived from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54"> or var containing string.</span><br/><span class="rvts54">A format string composed of literal text and placeholders of the form </span><span class="rvts95">{Index:Format}</span><span class="rvts54">.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Index is an integer indicating which input value to use, where 0 is the first value.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Format is an optional format specifier, as described below.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Omit the index to use the next input value in the sequence (even if it has been used earlier in the string). For example,</span><span class="rvts95"> "{2:i} {:i}"</span><span class="rvts54"> formats the second and third input values as decimal integers, separated by a space. If Index is omitted, Format must still be preceded by </span><span class="rvts95">:</span><span class="rvts54">. Specify empty braces to use the next input value with default formatting: </span><span class="rvts95">{}</span><br/><span class="rvts95"></span><br/><span class="rvts54">Use </span><span class="rvts95">{{}</span><span class="rvts54"> and </span><span class="rvts95">{}}</span><span class="rvts54"> to include literal braces in the string. Any other invalid placeholders are included in the result as is.</span></p>
+<p class="rvps21"><span class="rvts52">arg</span></p>
+<p class="rvps22"><span class="rvts54">One or more args to format </span><span class="rvts70">str</span><span class="rvts54"> with.</span><br/><span class="rvts54">Input values to be formatted and inserted into the final string. Each value is a separate parameter. The first value has an index of 0.</span></p>
+<p class="rvps2"><span class="rvts6">See</span><a class="rvts12" href="MfStringFormat.html#MfStringFormatSpecifiers"> Format Specifiers</a><span class="rvts6"> for format options.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method uses the composite formatting feature to convert the value of an object to its text representation and embed that representation in the current </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfStringFormat.html">MfString.Format()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">int := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(5432)</span><br/><span class="rvts31">str := </span><span class="rvts42">"abcd"</span><br/><span class="rvts31">flt := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfFloat</span><span class="rvts31">(</span><span class="rvts68">456.789</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"StringBuilder.AppendFormat method:"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"1) {0}"</span><span class="rvts31">, int)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"2) {0}, {1}"</span><span class="rvts31">, int, str)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"3) {0}, {1}, {2}"</span><span class="rvts31">, int, str, flt)</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">StringBuilder.AppendFormat method:</span><br/><span class="rvts32">1) 5432</span><br/><span class="rvts32">2) 5432, abcd</span><br/><span class="rvts32">3) 5432, abcd, 456.789</span><br/><span class="rvts32">*/</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

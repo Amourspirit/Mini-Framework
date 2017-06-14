@@ -1,0 +1,97 @@
+﻿<html>
+	
+<head>
+	<title>NumberGroupSizes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNFI18NumberGroupSizes");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">NumberGroupSizes</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfNFI18.html">MfNumberFormatInfo</a> &rsaquo;&rsaquo; <a href="MfNFI18Properties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNFI18Properties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNFI18NumberGroupSeparator.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNFI18NumberNegativePattern.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">NumberGroupSizes</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the number of digits in each group to the left of the decimal in numeric values.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.NumberGroupSizes</span><br/><span class="rvts51">instance</span><span class="rvts49">.NumberGroupSizes := Value</span></p>
+<p class="rvps21"><span class="rvts52">Value</span></p>
+<p class="rvps22"><span class="rvts54">Instance of </span><a class="rvts53" href="MfListVar.html">MfListVar</a><span class="rvts54"> containing integer var values</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets the number of digits in each group to the left of the decimal in numeric values as </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6">.</span><br/><span class="rvts6">The default for </span><a class="rvts12" href="MfNFI18InvariantInfo.html">InvariantInfo</a><span class="rvts6"> is a </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> instance with only one element, which is set to a value of 3.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets the number of digits in each group to the left of the decimal in numeric values</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if the property is being set and the </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> is read-only.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if the property is being set to null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if the property is being set and the list contains an entry that is less than </span><span class="rvts18">0</span><span class="rvts6"> or greater than </span><span class="rvts18">9</span><span class="rvts6">..-or- value is not a </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6"> derived list.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Any list derived from </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6"> containing integer elements can be used to set </span><span class="rvts23">NumberGroupSizes</span><span class="rvts6"> if </span><a class="rvts12" href="MfNFI18IsReadOnly.html">IsReadOnly</a><span class="rvts6"> is false. However </span><span class="rvts23">NumberGroupSizes</span><span class="rvts6"> will always return </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> instance.</span><br/><span class="rvts6"></span><br/><span class="rvts6">The value of the </span><span class="rvts23">NumberGroupSizes</span><span class="rvts6"> property affects the result of number values that are formatted by using the "N" . If a custom numeric format string or other standard numeric format strings are used, the value of the </span><span class="rvts23">NumberGroupSizes</span><span class="rvts6"> property is ignored.</span></p>
+<p class="rvps2"><span class="rvts6">Every element in the list must be an integer from 1 through 9. The last element can be 0.</span></p>
+<p class="rvps2"><span class="rvts6">The first element of the array defines the number of elements in the least significant group of digits immediately to the left of the </span><a class="rvts12" href="MfNFI18NumberDecimalSeparator.html">NumberDecimalSeparator</a><span class="rvts6">. Each subsequent element refers to the next significant group of digits to the left of the previous group. If the last element of the list is not 0, the remaining digits are grouped based on the last element of the array. If the last element is 0, the remaining digits are not grouped.</span></p>
+<p class="rvps2"><span class="rvts6">For example, if the list contains { 3, 4, 5 }, the digits are grouped similar to "55,55555,55555,55555,4444,333.00". If the list contains { 3, 4, 0 }, the digits are grouped similar to "55555555555555555,4444,333.00".</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

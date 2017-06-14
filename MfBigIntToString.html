@@ -1,0 +1,108 @@
+﻿<html>
+	
+<head>
+	<title>ToString()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfBigIntToString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ToString()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfBigInt.html">MfBigInt</a> &rsaquo;&rsaquo; <a href="MfBigIntMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfBigIntMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfBigIntSubtract.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCharList1.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">ToString()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfBigIntToString.html#ToString1">instance</a><a class="rvts61" href="MfBigIntToString.html#ToString1">.ToString()</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfBigIntToString.html#ToString2">instance.ToString(base)</a></p>
+<h2 class="rvps5"><a name="ToString1"></a>
+<span class="rvts0"><span class="rvts16">ToString()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a string representation of the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns string var representing current instance </span><a class="rvts12" href="MfBigIntValue.html">Value</a><span class="rvts6"> as base 10.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called as a static method</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; 1234567890</span></p>
+<h2 class="rvps5"><a name="ToString2"></a>
+<span class="rvts0"><span class="rvts16">ToString(base)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a string representation of the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> instance encode by the value of </span><span class="rvts55">base</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">base</span></p>
+<p class="rvps22"><span class="rvts54">The base value to encode return string as. Base values from </span><span class="rvts69">2</span><span class="rvts54"> to </span><span class="rvts69">95</span><span class="rvts54"> are accepted.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns string var representing current instance </span><a class="rvts12" href="MfBigIntValue.html">Value</a><span class="rvts6"> encoded as </span><span class="rvts55">base</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called as a static method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">base</span><span class="rvts6"> equals 2 (binary) then a binary bit will be append to the start of the output. </span><span class="rvts18">0</span><span class="rvts6"> if current instance </span><a class="rvts12" href="MfBigIntIsNegative.html">IsNegative</a><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6">; Otherwise </span><span class="rvts18">1</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfBigIntParse.html">Parse()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">) </span><span class="rvts32">; 1234567890</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">2</span><span class="rvts31">) </span><span class="rvts32">; 01001001100101100000001011010010</span><br/><span class="rvts32">; first bit on the left is 0 indicating positive value</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"-1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">2</span><span class="rvts31">) </span><span class="rvts32">; 11001001100101100000001011010010</span><br/><span class="rvts32">; first bit on the left is 1 indicating negative value</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">5</span><span class="rvts31">) </span><span class="rvts32">; 10012022133030</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">16</span><span class="rvts31">) </span><span class="rvts32">; 499602D2</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"-1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">16</span><span class="rvts31">) </span><span class="rvts32">; -499602D2</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">25</span><span class="rvts31">) </span><span class="rvts32">; 51AC8FF</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">64</span><span class="rvts31">) </span><span class="rvts32">; 19bWBI</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">88</span><span class="rvts31">) </span><span class="rvts32">; Kpsio</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"1234567890"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % &nbsp;bigI.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts68">95</span><span class="rvts31">) </span><span class="rvts32">; FE Lj</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

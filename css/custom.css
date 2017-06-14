@@ -1,3 +1,31 @@
+.h1custom
+{
+	text-align: left;
+	text-indent: 0px;
+	text-decoration: none;
+	page-break-after: avoid;
+	padding: 0px 0px 0px 0px;
+	margin: 16px 0px 4px 0px;
+	font-size: 23pt;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: #000080;
+}
+.h3custom
+{
+	text-align: left;
+	text-indent: 0px;
+	text-decoration: none;
+	page-break-after: avoid;
+	padding: 0px 0px 0px 0px;
+	margin: 16px 0px 1px 0px;
+	font-size: 13pt;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	font-style: normal;
+	font-weight: bold;
+	color: #008800;
+}
 .PME_List, .Exceptions_List, .Internal_List
 {
 	width: 20em;

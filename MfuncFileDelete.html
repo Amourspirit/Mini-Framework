@@ -68,13 +68,13 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileDelete()</span></span></h1>
-<p class="rvps20"><span class="rvts48">Mfunc.FileDelete(FilePattern)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">FileDelete()</span></span></h1>
+<p class="rvps20"><span class="rvts49">Mfunc.FileDelete(FilePattern)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileDelete(FilePattern)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Deletes one or more files.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">FilePattern</span></p>
-<p class="rvps22"><span class="rvts53">The name of a single file or a wildcard pattern such as C:\Temp*.tmp. FilePattern is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified.</span><br/><span class="rvts53">To remove an entire folder, along with all its sub-folders and files, use </span><a class="rvts52" href="MfuncFileRemoveDir.html">Mfunc.FileRemoveDir</a><span class="rvts53">.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">FilePattern</span></p>
+<p class="rvps22"><span class="rvts54">The name of a single file or a wildcard pattern such as C:\Temp*.tmp. FilePattern is assumed to be in </span><a class="rvts60" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts54"> if an absolute path isn't specified.</span><br/><span class="rvts54">To remove an entire folder, along with all its sub-folders and files, use </span><a class="rvts53" href="MfuncFileRemoveDir.html">Mfunc.FileRemoveDir</a><span class="rvts54">.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
 <p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> on error if </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a><span class="rvts6"> is non-zero then </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> message is set to the value of </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
@@ -82,7 +82,7 @@
 <p class="rvps2"><span class="rvts6">To delete a read-only file, first remove the read-only attribute.</span><br/><span class="rvts6">For example: </span><span class="rvts43">Mfunc.FileSetAttrib("-R", "C:\My File.txt")</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileDelete.htm" target="_blank">AutoHotkey Docs - FileDelete</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileDelete</span><span class="rvts30">(</span><span class="rvts42">"C:\temp files\*.tmp"</span><span class="rvts30">)</span></p>
+<p class="rvps14"><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">FileDelete</span><span class="rvts31">(</span><span class="rvts42">"C:\temp files\*.tmp"</span><span class="rvts31">)</span></p>
 </div>
 	
 	<div id="topic_footer">

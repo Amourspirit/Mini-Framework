@@ -1,0 +1,96 @@
+﻿<html>
+	
+<head>
+	<title>Add()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfUInt16Add");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Add()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfUInt16.html">MfUInt16</a> &rsaquo;&rsaquo; <a href="MfUInt16Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfUInt16Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfUInt16Methods.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfUInt16CompareTo.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Add()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Add(value)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Add(value)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Adds </span><a class="rvts12" href="MfUInt16.html">MfUInt16</a><span class="rvts6"> value to current instance of </span><a class="rvts12" href="MfUInt16.html">MfUInt16</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The value to add to the current instance.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts54"> or var integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><a class="rvts12" href="MfInt16ReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> is true then returns current instance of </span><a class="rvts12" href="MfUInt16.html">MfUInt16</a><span class="rvts6"> with an updated value; Otherwise returns var containing </span><span class="rvts15">integer</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if </span><a class="rvts12" href="MfPrimitiveReadonly.html">Readonly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called as a static method</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if value is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts55">value</span><span class="rvts6"> is not an instance of </span><a class="rvts12" href="MfUInt16.html">MfUInt16</a><span class="rvts6"> and can not be converted into integer value.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if adding value is less then </span><a class="rvts12" href="MfUInt16MinValue.html">MinValue</a><span class="rvts6"> and greater than </span><a class="rvts12" href="MfUInt16MaxValue.html">MaxValue</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps36"><span class="rvts6">If </span><span class="rvts113">value</span><span class="rvts6"> is a float or </span><a class="rvts75" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance then method will alway round down for positive number and round up for negative numbers. For instance </span><span class="rvts18">2.8</span><span class="rvts6"> is converted to </span><span class="rvts18">2</span><span class="rvts6"> and </span><span class="rvts18">-2.8</span><span class="rvts6"> is converted to </span><span class="rvts18">-2</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">i := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfUInt16</span><span class="rvts31">(10, </span><span class="rvts33">true</span><span class="rvts31">) </span><span class="rvts32">; create new MfUInt16 and set it RetrunAsObject to value to true</span><br/><span class="rvts31">i.</span><span class="rvts47">Add</span><span class="rvts31">(2)</span><br/><span class="rvts31">iNew := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfUInt16</span><span class="rvts31">(8)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % i.</span><span class="rvts47">Add</span><span class="rvts31">(iNew).</span><span class="rvts33">Value</span><span class="rvts31"> </span><span class="rvts32">; displays 20</span><br/><span class="rvts33">Msgbox</span><span class="rvts31"> % i.</span><span class="rvts47">Add</span><span class="rvts31">(-10).</span><span class="rvts33">Value</span><span class="rvts31"> </span><span class="rvts32">; displays 10</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % i.</span><span class="rvts47">Add</span><span class="rvts31">(10).</span><span class="rvts47">Add</span><span class="rvts31">(10).</span><span class="rvts33">Value</span><span class="rvts31"> </span><span class="rvts32">; displays 30</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

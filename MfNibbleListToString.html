@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>ToString()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNibbleListToString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">ToString()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCharList2.html">MfNibbleList</a> &rsaquo;&rsaquo; <a href="MfNibbleListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNibbleListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNibbleListSubList.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNMOE22.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">ToString()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets a string representation of the object elements.</span><br/><span class="rvts6">Overrides </span><a class="rvts12" href="MfFP16ToString1.html">MfListBase.ToString()</a></p>
+<p class="rvps20"><span class="rvts49">OutPutVar := instance.ToString([returnAsObj, startIndex, count, format])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">ToString([returnAsObj, startIndex, count, format])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a string representation of the object elements</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">returnAsObj</span></p>
+<p class="rvps22"><span class="rvts54">Optional boolean value. Default is </span><span class="rvts69">false</span><span class="rvts54">.</span><br/><span class="rvts54">If </span><span class="rvts69">true</span><span class="rvts54"> result is returned as instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54">; Otherwise result is returned as a var string.</span><br/><span class="rvts54">Can be boolean var or instance of </span><a class="rvts53" href="MfBool.html">MfBool</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">Optional. Default value is </span><span class="rvts69">0</span><span class="rvts54">. The</span><span class="rvts69"> zero-based</span><span class="rvts54"> starting index to start reading elements from.</span><br/><span class="rvts54">Can be var integer or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">Optional, the number of elements from </span><span class="rvts70">StartIndex</span><span class="rvts54"> to include in the output string.</span><br/><span class="rvts54">If omitted then starts at </span><span class="rvts70">StartIndex</span><span class="rvts54"> and includes all elements to the end current instance.</span></p>
+<p class="rvps21"><span class="rvts52">format</span></p>
+<p class="rvps22"><span class="rvts54">Optional, the default value is </span><span class="rvts69">0</span><span class="rvts54">. Can be </span><span class="rvts69">0</span><span class="rvts54"> or </span><span class="rvts69">1</span><span class="rvts54">.</span><br/><span class="rvts54">If format is </span><span class="rvts69">0</span><span class="rvts54"> then no special formating is done to the return string.</span><br/><span class="rvts54">If format is </span><span class="rvts69">1</span><span class="rvts54"> then return string is grouped into groups of 2 with a hyphen between each group. See Example below.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns string var or </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance representing object elements</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">s := </span><span class="rvts42">"23FE4A5C"</span><br/><span class="rvts31">lst := </span><span class="rvts34">MfNibConverter</span><span class="rvts31">.</span><span class="rvts47">FromHex</span><span class="rvts31">(s)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % lst.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; 23FE4A5C</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % lst.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts33">true</span><span class="rvts31">,,,</span><span class="rvts68">1</span><span class="rvts31">).</span><span class="rvts35">Value</span><span class="rvts31"> </span><span class="rvts32">; 23-FE-4A-5C</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % lst.</span><span class="rvts47">ToString</span><span class="rvts31">(,</span><span class="rvts68">2</span><span class="rvts31">,</span><span class="rvts68">4</span><span class="rvts31">) </span><span class="rvts32">; FE4A</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % lst.</span><span class="rvts47">ToString</span><span class="rvts31">(,</span><span class="rvts68">2</span><span class="rvts31">,4,</span><span class="rvts68">1</span><span class="rvts31">) </span><span class="rvts32">; FE-4A</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

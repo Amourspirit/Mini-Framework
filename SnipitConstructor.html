@@ -1,0 +1,174 @@
+﻿<html>
+	
+<head>
+	<title>Constructor()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("SnipitConstructor");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Constructor()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderCompareTo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderCopyTo.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Constructor()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := new </span><a class="rvts61" href="SnipitConstructor.html#Constructor1">MfText.StringBuilder()</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="SnipitConstructor.html#Constructor2">MfText.StringBuilder(capacity)</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="SnipitConstructor.html#Constructor3">MfText.StringBuilder(capacity, maxCapacity)</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="SnipitConstructor.html#Constructor4">MfText.StringBuilder(value)</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="SnipitConstructor.html#Constructor5">MfText.StringBuilder(value, capacity)</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="SnipitConstructor.html#Constructor6">MfText.StringBuilder(value, startIndex, length, capacity)</a></p>
+<h2 class="rvps5"><a name="Constructor1"></a>
+<span class="rvts0"><span class="rvts16">Constructor()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The string value of this instance is set to empty string, and the capacity is set to the implementation-specific default capacity.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span></p>
+<h2 class="rvps5"><a name="Constructor2"></a>
+<span class="rvts0"><span class="rvts16">Constructor(capacity)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class using the specified </span><span class="rvts55">capacity</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">capacity</span></p>
+<p class="rvps22"><span class="rvts54">The suggested starting size of the </span><a class="rvts53" href="StringBuilder.html">StringBuilder</a><span class="rvts54">.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">capacity</span><span class="rvts6"> is less than zero.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">capacity</span><span class="rvts6"> parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance. Its value is assigned to the </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6"> property. If the number of characters to be stored in the current instance exceeds this capacity value, the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object allocates additional memory to store them.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">capacity</span><span class="rvts6"> is zero, the implementation-specific default capacity is used.</span></p>
+<p class="rvps2"><span class="rvts6">The string value of this instance is set to null. If capacity is zero, the implementation-specific default capacity is used.</span></p>
+<p class="rvps2"><span class="rvts6">If you intend to call the </span><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a><span class="rvts6"> method by passing in numeric integer string then wrap the in an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> to ensure the correct overload is called.</span><span class="rvts43"> sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts63">"1000"</span><span class="rvts43">)</span><span class="rvts6"> will call the </span><a class="rvts12" href="SnipitConstructor.html#Constructor2">Constructor(capacity)</a><span class="rvts6"> overload. </span><span class="rvts43">sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfString</span><span class="rvts43">(</span><span class="rvts63">"1000"</span><span class="rvts43">))</span><span class="rvts6"> will call the </span><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a><span class="rvts6"> overload. &nbsp;</span><span class="rvts43">sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts63">"1000.0"</span><span class="rvts43">)</span><span class="rvts6"> will call the </span><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a><span class="rvts6"> overload.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">capacity := </span><span class="rvts68">255</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(capacity)</span></p>
+<h2 class="rvps5"><a name="Constructor3"></a>
+<span class="rvts0"><span class="rvts16">Constructor(capacity, maxCapacity)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class that starts with a specified </span><span class="rvts55">capacity</span><span class="rvts6"> and can grow to a specified maximum.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">capacity</span></p>
+<p class="rvps22"><span class="rvts54">The suggested starting size of the </span><a class="rvts53" href="StringBuilder.html">StringBuilder</a><span class="rvts54">.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer</span></p>
+<p class="rvps21"><span class="rvts52">maxCapacity</span></p>
+<p class="rvps22"><span class="rvts54">The maximum number of characters the current string can contain.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">maxCapacity</span><span class="rvts6"> is less than one, </span><span class="rvts55">capacity</span><span class="rvts6"> is less than zero, or </span><span class="rvts55">capacity</span><span class="rvts6"> is greater than </span><span class="rvts55">maxCapacity</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">capacity</span><span class="rvts6"> parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance. Its value is assigned to the </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6"> property. If the number of characters to be stored in the current instance exceeds this capacity value, the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object allocates additional memory to store them.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">capacity</span><span class="rvts6"> is zero, the implementation-specific default capacity is used.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">maxCapacity</span><span class="rvts6"> property defines the maximum number of characters that the current instance can hold. Its value is assigned to the </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6"> property. If the number of characters to be stored in the current instance exceeds this </span><span class="rvts55">maxCapacity</span><span class="rvts6"> value, the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object does not allocate additional memory, but instead throws an exception.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">capacity := </span><span class="rvts68">255</span><br/><span class="rvts31">maxCapacity := </span><span class="rvts68">1024</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(capacity, maxCapacity)</span></p>
+<h2 class="rvps5"><a name="Constructor4"></a>
+<span class="rvts0"><span class="rvts16">Constructor(value)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class using the specified string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The string that contains the substring used to initialize the value of this instance. If value is null, the new StringBuilder will contain the empty string.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">value</span><span class="rvts6"> is null, the new </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> will contain the empty string.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">value</span><span class="rvts6"> is an object then its ToString output is used.</span></p>
+<p class="rvps2"><span class="rvts6">If var integer is passed into </span><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a><span class="rvts6"> such as </span><span class="rvts43">sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts63">"1000"</span><span class="rvts43">)</span><span class="rvts6"> it will result in the </span><a class="rvts12" href="SnipitConstructor.html#Constructor2">Constructor(capacity)</a><span class="rvts6"> overload being called. To pass integer var into </span><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a><span class="rvts6"> first wrap the integer var in instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> as follows </span><span class="rvts43">sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfString</span><span class="rvts43">(</span><span class="rvts63">"1000"</span><span class="rvts43">))</span></p>
+<p class="rvps2"><span class="rvts6">Calling </span><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a><span class="rvts6"> and passing in a non-integer number is fine such as &nbsp;</span><span class="rvts43">sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts63">"1000.0"</span><span class="rvts43">)</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">initialString := </span><span class="rvts42">"Initial string for stringbuilder."</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(initialString)</span><br/><span class="rvts31"></span><br/><span class="rvts31">initialString := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Initial string for stringbuilder."</span><span class="rvts31">)</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(initialString)</span></p>
+<h2 class="rvps5"><a name="Constructor5"></a>
+<span class="rvts0"><span class="rvts16">Constructor(value, capacity)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class using the specified string and </span><span class="rvts55">capacity</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The string that contains the substring used to initialize the value of this instance. If value is null, the new StringBuilder will contain the empty string.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">capacity</span></p>
+<p class="rvps22"><span class="rvts54">The suggested starting size of the </span><a class="rvts53" href="StringBuilder.html">StringBuilder</a><span class="rvts54">.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">capacity</span><span class="rvts6"> is less than zero.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">capacity</span><span class="rvts6"> parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance. Its value is assigned to the </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6"> property. If the number of characters to be stored in the current instance exceeds this capacity value, the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object allocates additional memory to store them.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">capacity</span><span class="rvts6"> is zero, the implementation-specific default capacity is used.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">value</span><span class="rvts6"> is an object then its ToString output is used.</span></p>
+<p class="rvps2"><span class="rvts6">If var integer is passed into </span><a class="rvts12" href="SnipitConstructor.html#Constructor5">Constructor(value, capacity)</a><span class="rvts6"> such as </span><span class="rvts43">sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts63">"1000"</span><span class="rvts43">, </span><span class="rvts108">255</span><span class="rvts43">)</span><span class="rvts6"> it will result in the </span><a class="rvts12" href="SnipitConstructor.html#Constructor3">Constructor(capacity, maxCapacity)</a><span class="rvts6"> overload being called. To pass integer var into </span><a class="rvts12" href="SnipitConstructor.html#Constructor5">Constructor(value, capacity)</a><span class="rvts6"> first wrap the integer var in instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> as follows </span><span class="rvts43">sb := &nbsp;</span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfString</span><span class="rvts43">(</span><span class="rvts63">"1000"</span><span class="rvts43">), </span><span class="rvts108">255</span><span class="rvts43">)</span></p>
+<p class="rvps2"><span class="rvts6">Calling </span><a class="rvts12" href="SnipitConstructor.html#Constructor5">Constructor(value, capacity)</a><span class="rvts6"> and passing in a non-integer number is fine such as &nbsp;</span><span class="rvts43">sb := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">(</span><span class="rvts63">"1000.0"</span><span class="rvts43">, </span><span class="rvts108">255</span><span class="rvts43">)</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">initialString := </span><span class="rvts42">"Initial string for stringbuilder."</span><br/><span class="rvts31">capacity := </span><span class="rvts68">255</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(initialString, capacity)</span><br/><span class="rvts31"></span><br/><span class="rvts31">initialString := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Initial string for stringbuilder."</span><span class="rvts31">)</span><br/><span class="rvts31">capacity := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">255)</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(initialString, capacity)</span></p>
+<h2 class="rvps5"><a name="Constructor6"></a>
+<span class="rvts0"><span class="rvts16">Constructor(value, startIndex, length, capacity)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class from the specified substring and </span><span class="rvts55">capacity</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The string that contains the substring used to initialize the value of this instance. If value is null, the new StringBuilder will contain the empty string.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">The position within value where the substring begins.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">length</span></p>
+<p class="rvps22"><span class="rvts54">The number of characters in the substring.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">capacity</span></p>
+<p class="rvps22"><span class="rvts54">The suggested starting size of the </span><a class="rvts53" href="StringBuilder.html">StringBuilder</a><span class="rvts54">.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">capacity</span><span class="rvts6"> is less than zero or </span><span class="rvts55">startIndex</span><span class="rvts6"> plus </span><span class="rvts55">length</span><span class="rvts6"> is not a position within </span><span class="rvts55">value</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">capacity</span><span class="rvts6"> parameter defines the maximum number of characters that can be stored in the memory allocated by the current instance. Its value is assigned to the </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6"> property. If the number of characters to be stored in the current instance exceeds this capacity value, the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object allocates additional memory to store them.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">capacity</span><span class="rvts6"> is zero, the implementation-specific default capacity is used.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">value</span><span class="rvts6"> is an object then its ToString output is used.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">initialString := </span><span class="rvts42">"Initial string for stringbuilder."</span><br/><span class="rvts31">startIndex := </span><span class="rvts68">0</span><br/><span class="rvts31">substringLength := </span><span class="rvts68">14</span><br/><span class="rvts31">capacity := </span><span class="rvts68">255</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(initialString, startIndex, substringLength, capacity)</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

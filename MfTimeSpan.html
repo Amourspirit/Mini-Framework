@@ -58,7 +58,7 @@
 			<div id="topic_header_nav">
 				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfSSO20VerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfSSO20GetInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="MfTimeSpanFields.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -68,15 +68,452 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfTimeSpan Class</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">MfTimeSpan Class</span></span></h1>
 <p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6">)</span></p>
-<p class="rvps2"><span class="rvts6">A MfTimeSpan object represents a time interval (duration of time or elapsed time) that is measured as a positive or negative number of days, hours, minutes, seconds, and fractions of a second. The </span><span class="rvts41">MfTimeSpan</span><span class="rvts6"> object can also be used to represent the time of day, but only if the time is unrelated to a particular date.</span></p>
-<p class="rvps2"><span class="rvts6">The largest unit of time that the </span><span class="rvts41">MfTimeSpan</span><span class="rvts6"> object uses to measure duration is a day. Time intervals are measured in days for consistency, because the number of days in larger units of time, such as months and years, varies.</span></p>
-<p class="rvps2"><span class="rvts6">The value of a MfTimeSpan object is the number of ticks that equal the represented time interval. A tick is equal to 100 nanoseconds, or one ten-millionth of a second. The value of a </span><span class="rvts41">MfTimeSpan</span><span class="rvts6"> object can range from </span><a class="rvts12" href="MfTimeSpanMinValue.html">MfTimeSpan.MinValue</a><span class="rvts6"> to </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MfTimeSpan.MaxValue</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">A </span><span class="rvts23">MfTimeSpan</span><span class="rvts6"> object represents a time interval (duration of time or elapsed time) that is measured as a positive or negative number of days, hours, minutes, seconds, and fractions of a second. The </span><span class="rvts23">MfTimeSpan</span><span class="rvts6"> object can also be used to represent the time of day, but only if the time is unrelated to a particular date.</span></p>
+<p class="rvps2"><span class="rvts6">The largest unit of time that the </span><span class="rvts23">MfTimeSpan</span><span class="rvts6"> object uses to measure duration is a day. Time intervals are measured in days for consistency, because the number of days in larger units of time, such as months and years, varies.</span></p>
+<p class="rvps2"><span class="rvts6">The value of a </span><span class="rvts23">MfTimeSpan</span><span class="rvts6"> object is the number of ticks that equal the represented time interval. A tick is equal to 100 nanoseconds, or one ten-millionth of a second. The value of a </span><span class="rvts23">MfTimeSpan</span><span class="rvts6"> object can range from </span><a class="rvts12" href="MfTimeSpanMinValue.html">MfTimeSpan.MinValue</a><span class="rvts6"> to </span><a class="rvts12" href="MfTimeSpanMaxValue.html">MfTimeSpan.MaxValue</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
-<p class="rvps2"><a class="rvts12" href="MfTimeSpanFields.html">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpanProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpanMethods.html">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpanConstructor.html">Constructor()</a></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts33">MfTimeSpan</span><span class="rvts30">.</span><span class="rvts34">Zero</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 00</span><br/><span class="rvts31"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">5624853448000</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 06.12:14:45.3448000</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">0</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07:14:00</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07:14:17</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">, </span><span class="rvts72">41</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41</span><br/><span class="rvts30"></span><br/><span class="rvts30">span := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(</span><span class="rvts72">7</span><span class="rvts30">, </span><span class="rvts72">14</span><span class="rvts30">, </span><span class="rvts72">17</span><span class="rvts30">, </span><span class="rvts72">41</span><span class="rvts30">, </span><span class="rvts33">243</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 07.14:17:41.2430000</span><br/><span class="rvts30"></span><br/><span class="rvts30">iHour := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">14</span><span class="rvts30">)</span><br/><span class="rvts30">iMin &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">57</span><span class="rvts30">)</span><br/><span class="rvts30">iSec &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">29</span><span class="rvts30">)</span><br/><span class="rvts30">span &nbsp;:= </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfTimeSpan</span><span class="rvts30">(iHour, iMin, iSec)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % span.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: 14:57:29</span></p>
+<p class="rvps2"><a class="rvts12" href="MfTimeSpan.html#Fields">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpan.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpan.html#Methods">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfTimeSpan.html#Example">Example</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanConstructor.html#Constructor1">Constructor()</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanConstructor.html#Constructor2">Constructor(ts)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to the specified number of ticks of </span><span class="rvts55">ts</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanConstructor.html#Constructor3">Constructor(ticks)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to the specified number of </span><span class="rvts55">ticks</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanConstructor.html#Constructor4">Constructor(hours, minutes, seconds)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to a specified number of </span><span class="rvts55">hours</span><span class="rvts6">, </span><span class="rvts55">minutes</span><span class="rvts6">, and </span><span class="rvts55">seconds</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanConstructor.html#Constructor5">Constructor(days, hours, minutes, seconds)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to a specified number of </span><span class="rvts55">days</span><span class="rvts6">, </span><span class="rvts55">hours</span><span class="rvts6">, </span><span class="rvts55">minutes</span><span class="rvts6">, and </span><span class="rvts55">seconds</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanConstructor.html#Constructor6">Constructor(days, hours, minutes, seconds, milliseconds)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> structure to a specified number of </span><span class="rvts55">days</span><span class="rvts6">, </span><span class="rvts55">hours</span><span class="rvts6">, </span><span class="rvts55">minutes</span><span class="rvts6">, </span><span class="rvts55">seconds</span><span class="rvts6"> and </span><span class="rvts55">milliseconds</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Fields"></a>
+<span class="rvts0"><span class="rvts17">Fields</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanMaxValue.html">MaxValue</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the maximum </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> value</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanMinValue.html">MinValue</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the minimum </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> value.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTicksPerDay.html">TicksPerDay</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the number of ticks in 1 day as instance of </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTicksPerHour.html">TicksPerHour</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the number of ticks in 1 hour as instance of </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTicksPerMillisecond.html">TicksPerMillisecond</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the number of ticks in 1 millisecond as instance of </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTicksPerMinute.html">TicksPerMinute</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the number of ticks in 1 minute as instance of </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTicksPerSecond.html">TicksPerSecond</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the number of ticks in 1 second as instance of </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanZero.html">Zero</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the zero </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> value as instance of </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanDays.html">Days</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the days component of the time interval represented by the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object as </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanHours.html">Hours</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the hours component of the time interval represented by the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object as </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanMilliseconds.html">Milliseconds</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the milliseconds component of the time interval represented by the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object as </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanMinutes.html">Minutes</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the minutes component of the time interval represented by the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> class as </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanSeconds.html">Seconds</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the seconds component of the time interval represented by the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object as </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTicks.html">Ticks</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the number of ticks that represent the value of the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object as </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTotalDays.html">TotalDays</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object expressed in whole and fractional days as </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTotalHours.html">TotoaHours</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object expressed in whole and fractional hours as </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTotalMilliseconds.html">TotalMilliseconds</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object expressed in whole and fractional milliseconds as </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTotalMinutes.html">TotalMinutes</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object expressed in whole and fractional minutes as </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTotalSeconds.html">TotalSeconds</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object expressed in whole and fractional seconds as </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanValue.html">Value</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the value associated with the this instance of </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6">. Overrides </span><a class="rvts12" href="MfPrimitiveValue.html">MfPrimitive.Value</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanAdd.html">Add(ts)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a new </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object whose value is the sum of the specified </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object and this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanCompare.html">Compare(t1, t2)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares two </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> values and returns an integer that indicates whether the first value is shorter than, equal to, or longer than the second value.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanCompareTo.html">CompareTo(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current instance with another object of the same type and returns an Integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.. Overrides </span><a class="rvts12" href="MfObjectCompareTo.html">MfObject.CompareTo()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanDuration.html">Duration()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a new </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object whose value is the absolute value of the current </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanEquals.html">Equals(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares objects to see if they are the same</span><span class="rvts55">. </span><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanEquals.html#Equals2">Equals(objA, objB)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares objects to see if they are the same.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanFromDays.html">FromDays(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> that represents a specified number of days, where the specification is accurate to the nearest millisecond.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanFromHours.html">FromHours(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> that represents a specified number of hours, where the specification is accurate to the nearest millisecond.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanFromMilliseconds.html">FromMilliseconds(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> that represents a specified number of milliseconds, where the specification is accurate to the nearest millisecond.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanFromMinutes.html">FromMinutes(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> that represents a specified number of minutes, where the specification is accurate to the nearest millisecond.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanFromSeconds.html">FromSeconds(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> that represents a specified number of seconds, where the specification is accurate to the nearest minutes.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanFromTicks.html">FromTicks(value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> that represents a specified time, where the specification is in units of ticks.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanGetHashCode.html">GetHashCode()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets A hash code for the </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> instance. Overrides </span><a class="rvts12" href="MfObjectGetHashCode.html">MfObject.GetHashCode()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIs.html">Is(type)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets if current instance of object is of the same type. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanNegate.html">Negate()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a new </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object whose value is the negated value of this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanParse.html">Parse(str)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the string representation of a time interval to its </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> equivalent.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanSubtract.html">Subtract(ts)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a new </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> object whose </span><a class="rvts12" href="MfTimeSpanValue.html">Value</a><span class="rvts6"> is the difference between the specified </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> instance and this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanToString.html">ToString()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a string representation of the current instance of </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6">.. Overrides </span><a class="rvts12" href="MfPrimitiveToString.html">MfPrimitive.ToString()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfTimeSpanTryParse.html">TryParse(result, s)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the string representation of a time interval to its </span><a class="rvts12" href="MfTimeSpan.html">MfTimeSpan</a><span class="rvts6"> equivalent and returns a value that indicates whether the conversion succeeded.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">span := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfTimeSpan</span><span class="rvts31">(</span><span class="rvts34">MfTimeSpan</span><span class="rvts31">.</span><span class="rvts35">Zero</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % span.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: 00</span><br/><span class="rvts32"></span><br/><span class="rvts31">span := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfTimeSpan</span><span class="rvts31">(</span><span class="rvts68">5624853448000</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % span.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: 06.12:14:45.3448000</span><br/><span class="rvts31"></span><br/><span class="rvts31">span := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfTimeSpan</span><span class="rvts31">(</span><span class="rvts68">7</span><span class="rvts31">, </span><span class="rvts68">14</span><span class="rvts31">, </span><span class="rvts68">0</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % span.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: 07:14:00</span><br/><span class="rvts31"></span><br/><span class="rvts31">span := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfTimeSpan</span><span class="rvts31">(</span><span class="rvts68">7</span><span class="rvts31">, </span><span class="rvts68">14</span><span class="rvts31">, </span><span class="rvts68">17</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % span.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: 07:14:17</span><br/><span class="rvts31"></span><br/><span class="rvts31">span := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfTimeSpan</span><span class="rvts31">(</span><span class="rvts68">7</span><span class="rvts31">, </span><span class="rvts68">14</span><span class="rvts31">, </span><span class="rvts68">17</span><span class="rvts31">, </span><span class="rvts68">41</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % span.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: 07.14:17:41</span><br/><span class="rvts31"></span><br/><span class="rvts31">span := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfTimeSpan</span><span class="rvts31">(</span><span class="rvts68">7</span><span class="rvts31">, </span><span class="rvts68">14</span><span class="rvts31">, </span><span class="rvts68">17</span><span class="rvts31">, </span><span class="rvts68">41</span><span class="rvts31">, </span><span class="rvts34">243</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % span.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: 07.14:17:41.2430000</span><br/><span class="rvts31"></span><br/><span class="rvts31">iHour := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">14</span><span class="rvts31">)</span><br/><span class="rvts31">iMin &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">57</span><span class="rvts31">)</span><br/><span class="rvts31">iSec &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">29</span><span class="rvts31">)</span><br/><span class="rvts31">span &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfTimeSpan</span><span class="rvts31">(iHour, iMin, iSec)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % span.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: 14:57:29</span></p>
 </div>
 	
 	<div id="topic_footer">

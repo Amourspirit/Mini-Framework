@@ -68,13 +68,13 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">FileGetVersion()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.FileGetVersion([Filename])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">FileGetVersion()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := Mfunc.FileGetVersion([Filename])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.FileGetVersion([Filename])</span></span></h2>
 <p class="rvps2"><span class="rvts6">Retrieves the version of a file.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">Filename</span></p>
-<p class="rvps22"><span class="rvts53">The name of the target file, which is assumed to be in </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts53"> if an absolute path isn't specified. If omitted, the current file of the innermost enclosing </span><a class="rvts59" href="http://ahkscript.org/docs/commands/LoopFile.htm" target="_blank">File-Loop</a><span class="rvts53"> will be used instead.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">Filename</span></p>
+<p class="rvps22"><span class="rvts54">The name of the target file, which is assumed to be in </span><a class="rvts60" href="http://ahkscript.org/docs/Variables.htm#WorkingDir" target="_blank">%A_WorkingDir%</a><span class="rvts54"> if an absolute path isn't specified. If omitted, the current file of the innermost enclosing </span><a class="rvts60" href="http://ahkscript.org/docs/commands/LoopFile.htm" target="_blank">File-Loop</a><span class="rvts54"> will be used instead.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns the version number/string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
@@ -84,7 +84,7 @@
 <p class="rvps2"><span class="rvts6">Most non-executable files (and even some EXEs) won't have a version, and thus the return will be blank in these cases.</span></p>
 <p class="rvps2"><span class="rvts6">Also See:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/FileGetVersion.htm" target="_blank">AutoHotkey Docs - FileGetVersion</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">version := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetVersion</span><span class="rvts30">(</span><span class="rvts42">"C:\My Application.exe"</span><span class="rvts30">)</span><br/><span class="rvts30">version := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">FileGetVersion</span><span class="rvts30">(</span><span class="rvts32">A_ProgramFiles</span><span class="rvts30"> . </span><span class="rvts42">"\AutoHotkey\AutoHotkey.exe"</span><span class="rvts30">)</span></p>
+<p class="rvps14"><span class="rvts31">version := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">FileGetVersion</span><span class="rvts31">(</span><span class="rvts42">"C:\My Application.exe"</span><span class="rvts31">)</span><br/><span class="rvts31">version := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">FileGetVersion</span><span class="rvts31">(</span><span class="rvts33">A_ProgramFiles</span><span class="rvts31"> . </span><span class="rvts42">"\AutoHotkey\AutoHotkey.exe"</span><span class="rvts31">)</span></p>
 </div>
 	
 	<div id="topic_footer">

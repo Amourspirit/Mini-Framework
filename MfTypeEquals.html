@@ -60,7 +60,7 @@
 				
 				<a href="MfTypeConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfTypeGetAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfTypeInheritancePath.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,35 +68,37 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Equals()</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Equals()</span></span></h1>
 <p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a></p>
-<p class="rvps20"><span class="rvts48">OutputVar := MfType.Equals(objA, objB)</span><br/><span class="rvts48">Outputvar := instance.Equals(objA)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Equals(objA)</span></span></h2>
+<p class="rvps20"><span class="rvts49">OutputVar := MfType.Equals(objA, objB)</span><br/><span class="rvts49">OutputVar := instance.Equals(objA)</span></p>
+<h2 class="rvps5"><a name="Equals1"></a>
+<span class="rvts0"><span class="rvts16">Equals(objA)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Compares </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> instance to current instance to see if they are the same.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">objA</span></p>
-<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfType.html">MfType</a><span class="rvts53"> object to compare</span></p>
+<p class="rvps21"><span class="rvts52">objA</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfType.html">MfType</a><span class="rvts54"> object to compare</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns var containing Boolean value of </span><span class="rvts18">true</span><span class="rvts6"> if the </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> objects are the same; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">If current instance and </span><span class="rvts54">objA</span><span class="rvts6"> instance have their </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property set then compare is done on the </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property; Otherwise the compare is done on the </span><a class="rvts12" href="MfTypeTypeCode.html">TypeCode</a><span class="rvts6"> property.</span></p>
+<p class="rvps2"><span class="rvts6">If current instance and </span><span class="rvts55">objA</span><span class="rvts6"> instance have their </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property set then compare is done on the </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property; Otherwise the compare is done on the </span><a class="rvts12" href="MfTypeTypeCode.html">TypeCode</a><span class="rvts6"> property.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">MyString := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts30">T := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfType</span><span class="rvts30">(</span><span class="rvts33">MfString</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts30">if (T.</span><span class="rvts45">Equals</span><span class="rvts30">(MyString.</span><span class="rvts45">GetType</span><span class="rvts30">()))</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Type Match, The Types Match! </span><br/><span class="rvts30">}</span><br/><span class="rvts30"><br/></span></p>
+<p class="rvps14"><span class="rvts31">MyString := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts31">T := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfType</span><span class="rvts31">(</span><span class="rvts34">MfString</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts31">if (T.</span><span class="rvts47">Equals</span><span class="rvts31">(MyString.</span><span class="rvts47">GetType</span><span class="rvts31">()))</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Type Match, The Types Match! </span><br/><span class="rvts31">}</span><br/><span class="rvts31"><br/></span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16"><br/></span></span></h2>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfType.Equals(objA, objB)</span></span></h2>
+<h2 class="rvps5"><a name="Equals2"></a>
+<span class="rvts0"><span class="rvts16">MfType.Equals(objA, objB)</span></span></h2>
 <p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span></p>
-<p class="rvps2"><span class="rvts6">Compares </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> objA and objB to see if they are the same.</span></p>
+<p class="rvps2"><span class="rvts6">Compares </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> </span><span class="rvts55">objA</span><span class="rvts6"> and </span><span class="rvts55">objB</span><span class="rvts6"> to see if they are the same.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">objA</span></p>
-<p class="rvps22"><span class="rvts53">The first </span><a class="rvts52" href="MfType.html">MfType</a><span class="rvts53"> object to compare</span></p>
-<p class="rvps21"><span class="rvts51">objB</span></p>
-<p class="rvps22"><span class="rvts53">The second </span><a class="rvts52" href="MfType.html">MfType</a><span class="rvts53"> object to compare to </span><span class="rvts76">objA</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts52">objA</span></p>
+<p class="rvps22"><span class="rvts54">The first </span><a class="rvts53" href="MfType.html">MfType</a><span class="rvts54"> object to compare</span></p>
+<p class="rvps21"><span class="rvts52">objB</span></p>
+<p class="rvps22"><span class="rvts54">The second </span><a class="rvts53" href="MfType.html">MfType</a><span class="rvts54"> object to compare to </span><span class="rvts70">objA</span><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns var containing </span><span class="rvts15">Boolean</span><span class="rvts6"> value of true if the </span><a class="rvts12" href="MfType.html">MfType</a><span class="rvts6"> objects are the same </span><a class="rvts12" href="MfTypeTypeName.html">TypeName</a><span class="rvts6"> otherwise false.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">If instance of </span><span class="rvts54">objA</span><span class="rvts6"> and instance of </span><span class="rvts54">objB</span><span class="rvts6"> have their </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property set then compare is done on the </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property; Otherwise the compare is done on the </span><a class="rvts12" href="MfTypeTypeCode.html">TypeCode</a><span class="rvts6"> property.</span></p>
+<p class="rvps2"><span class="rvts6">If instance of </span><span class="rvts55">objA</span><span class="rvts6"> and instance of </span><span class="rvts55">objB</span><span class="rvts6"> have their </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property set then compare is done on the </span><a class="rvts12" href="MfTypeClassName.html">ClassName</a><span class="rvts6"> property; Otherwise the compare is done on the </span><a class="rvts12" href="MfTypeTypeCode.html">TypeCode</a><span class="rvts6"> property.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">MyString := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts30">T := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfType</span><span class="rvts30">(</span><span class="rvts33">MfString</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts30">if (</span><span class="rvts33">MfType</span><span class="rvts30">.</span><span class="rvts45">Equals</span><span class="rvts30">(T, MyString.</span><span class="rvts45">GetType</span><span class="rvts30">()))</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Type Match, The Types Match! </span><br/><span class="rvts30">}</span></p>
+<p class="rvps14"><span class="rvts31">MyString := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts31">T := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfType</span><span class="rvts31">(</span><span class="rvts34">MfString</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts31">if (</span><span class="rvts34">MfType</span><span class="rvts31">.</span><span class="rvts47">Equals</span><span class="rvts31">(T, MyString.</span><span class="rvts47">GetType</span><span class="rvts31">()))</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Type Match, The Types Match! </span><br/><span class="rvts31">}</span></p>
 </div>
 	
 	<div id="topic_footer">

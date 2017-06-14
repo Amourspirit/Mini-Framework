@@ -1,0 +1,104 @@
+﻿<html>
+	
+<head>
+	<title>Remove()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharListRemove");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Remove()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCharList.html">MfCharList</a> &rsaquo;&rsaquo; <a href="MfCharListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCharListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfListBaseInsert1.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCharListSubList.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Remove()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Removes the one or more occurrences of a specific object from the instance.</span><br/><span class="rvts6">Overrides </span><a class="rvts12" href="MfFP16Remove.html">MfListBase.Remove()</a></p>
+<p class="rvps20"><span class="rvts51">instance</span><span class="rvts49">.Remove(obj [,StartIndex, Count, IgnoreCase, RemoveAll])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Remove(obj [,StartIndex, Count, IgnoreCase, RemoveAll])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Removes the one or more occurrences of a specific object from the instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">obj</span></p>
+<p class="rvps22"><span class="rvts54">The object or var to remove from the instance.</span><br/><span class="rvts54">Can be var </span><span class="rvts67">integer</span><span class="rvts54"> or var </span><span class="rvts67">string</span><span class="rvts54"> or instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> or instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a></p>
+<p class="rvps21"><span class="rvts52">StartIndex</span></p>
+<p class="rvps22"><span class="rvts54">Optional, the </span><span class="rvts69">zero-based</span><span class="rvts54"> startIndex to start searching within the current instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54">.</span><br/><span class="rvts54">If omitted the the then searching begin at index zero.</span></p>
+<p class="rvps21"><span class="rvts52">Count</span></p>
+<p class="rvps22"><span class="rvts54">Optional, the number of elements from </span><span class="rvts70">StartIndex</span><span class="rvts54"> to check for index of obj within current instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54">.</span><br/><span class="rvts54">If omitted then search starts at </span><span class="rvts70">StartIndex</span><span class="rvts54"> and searches all elements of the current instance until if and when index is found.</span></p>
+<p class="rvps21"><span class="rvts52">IgnoreCase</span></p>
+<p class="rvps22"><span class="rvts54">Optional, if </span><span class="rvts69">true</span><span class="rvts54"> then case will be ignored when searching for index; Otherwise case will be considered.</span><br/><span class="rvts54">Default value is </span><span class="rvts69">true</span><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">RemoveAll</span></p>
+<p class="rvps22"><span class="rvts54">Optional Value, Default is </span><span class="rvts69">false</span><span class="rvts54">.</span><br/><span class="rvts54">If </span><span class="rvts69">true</span><span class="rvts54"> then all instance of obj are removed from current instance; Otherwise only first instance is removed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">On Success returns the Object or var that was removed; Otherwise returns null</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">obj</span><span class="rvts6"> is null</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">StartIndex</span><span class="rvts6"> or </span><span class="rvts55">Count</span><span class="rvts6"> is outside the range of elements in the list.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method is an O(</span><span class="rvts15">n</span><span class="rvts6">) operation, where n is </span><a class="rvts12" href="MfListBaseCount.html">Count</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">In collections of contiguous elements, such as </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6">, the elements that follow the removed element move up to occupy the vacated spot. If the collection is indexed, the indexes of the elements that are moved are also updated. This behavior does not apply to collections where elements are conceptually grouped into buckets, such as a hash table.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -68,17 +68,17 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">RegRead()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.RegRead(RootKey, SubKey [, ValueName])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">RegRead()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := Mfunc.RegRead(RootKey, SubKey [, ValueName])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.RegRead(RootKey, SubKey [, ValueName])</span></span></h2>
 <p class="rvps2"><span class="rvts6">Reads a value from the registry.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">RootKey</span></p>
-<p class="rvps22"><span class="rvts53">Must be either HKEY_LOCAL_MACHINE, HKEY_USERS, HKEY_CURRENT_USER, HKEY_CLASSES_ROOT, or HKEY_CURRENT_CONFIG (or the abbreviations for each of these, such as HKLM). To access a remote registry, prepend the computer name and a colon, as in this example: \workstation01:HKEY_LOCAL_MACHINE</span></p>
-<p class="rvps21"><span class="rvts51">SubKey</span></p>
-<p class="rvps22"><span class="rvts53">The name of the subkey (e.g. Software\SomeApplication).</span></p>
-<p class="rvps21"><span class="rvts51">ValueName</span></p>
-<p class="rvps22"><span class="rvts53">The name of the value to retrieve. If omitted, Subkey's default value will be retrieved, which is the value displayed as "(Default)" by RegEdit. If there is no default value (that is, if RegEdit displays "value not set"), OutputVar is made blank and ErrorLevel is set to 1.</span></p>
+<p class="rvps21"><span class="rvts52">RootKey</span></p>
+<p class="rvps22"><span class="rvts54">Must be either HKEY_LOCAL_MACHINE, HKEY_USERS, HKEY_CURRENT_USER, HKEY_CLASSES_ROOT, or HKEY_CURRENT_CONFIG (or the abbreviations for each of these, such as HKLM). To access a remote registry, prepend the computer name and a colon, as in this example: \workstation01:HKEY_LOCAL_MACHINE</span></p>
+<p class="rvps21"><span class="rvts52">SubKey</span></p>
+<p class="rvps22"><span class="rvts54">The name of the subkey (e.g. Software\SomeApplication).</span></p>
+<p class="rvps21"><span class="rvts52">ValueName</span></p>
+<p class="rvps22"><span class="rvts54">The name of the value to retrieve. If omitted, Subkey's default value will be retrieved, which is the value displayed as "(Default)" by RegEdit. If there is no default value (that is, if RegEdit displays "value not set"), OutputVar is made blank and ErrorLevel is set to 1.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns the name of the variable in which to store the retrieved value. If the value cannot be retrieved, the variable is made blank and </span><a class="rvts13" href="http://ahkscript.org/docs/misc/ErrorLevel.htm" target="_blank">ErrorLevel</a><span class="rvts6"> is set to 1.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
@@ -89,7 +89,7 @@
 <p class="rvps2"><span class="rvts6">REG_DWORD values are always expressed as positive decimal numbers.</span></p>
 <p class="rvps2"><span class="rvts6">When reading a REG_BINARY key the result is a string of hex characters. For example, the REG_BINARY value of 01,a9,ff,77 will be read as the string 01A9FF77.</span></p>
 <p class="rvps2"><span class="rvts6">When reading a REG_MULTI_SZ key, each of the components ends in a linefeed character (`n). If there are no components, Return value will be made blank. See </span><a class="rvts12" href="MfuncFileSelectFile.html">Mfunc.FileSelectFile</a><span class="rvts6"> for an example of how to extract the individual components from return value.</span></p>
-<p class="rvps2"><span class="rvts6">REG_BINARY values larger than 64K can only be read in </span><span class="rvts41">AutoHotkey [v1.1.10.01+]</span><span class="rvts6"> and later.</span></p>
+<p class="rvps2"><span class="rvts6">REG_BINARY values larger than 64K can only be read in </span><span class="rvts23">AutoHotkey [v1.1.10.01+]</span><span class="rvts6"> and later.</span></p>
 <p class="rvps2"><span class="rvts6">To retrieve and operate upon multiple registry keys or values, consider using a </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopReg.htm" target="_blank">registry-loop</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">For details about how to access the registry of a remote computer, see the remarks in </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopReg.htm" target="_blank">registry-loop</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">To read and write entries from the 64-bit sections of the registry in a 32-bit script or vice versa, use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetRegView.htm" target="_blank">SetRegView</a><span class="rvts6">.</span></p>

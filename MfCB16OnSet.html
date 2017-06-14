@@ -68,25 +68,25 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">OnSet()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OnSet(index, oldValue, newValue)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">OnSet()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OnSet(index, oldValue, newValue)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">OnSet(index, ByRef oldValue, ByRef newValue)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Performs additional custom processes before setting a value in the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">index</span></p>
-<p class="rvps22"><span class="rvts53">The </span><span class="rvts75">zero-based</span><span class="rvts53"> index at which </span><span class="rvts76">oldValue</span><span class="rvts53"> can be found.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var integer.</span></p>
-<p class="rvps21"><span class="rvts51">oldValue</span></p>
-<p class="rvps22"><span class="rvts53">The value to replace with </span><span class="rvts76">newValue</span><span class="rvts53">.</span></p>
-<p class="rvps21"><span class="rvts51">newValue</span></p>
-<p class="rvps22"><span class="rvts53">The new value of the element at </span><span class="rvts76">index</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts52">index</span></p>
+<p class="rvps22"><span class="rvts54">The </span><span class="rvts69">zero-based</span><span class="rvts54"> index at which </span><span class="rvts70">oldValue</span><span class="rvts54"> can be found.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">oldValue</span></p>
+<p class="rvps22"><span class="rvts54">The value to replace with </span><span class="rvts70">newValue</span><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">newValue</span></p>
+<p class="rvps22"><span class="rvts54">The new value of the element at </span><span class="rvts70">index</span><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts15">Protected</span><span class="rvts6"> Method.</span><br/><span class="rvts6">The default implementation of this method is intended to be overridden by a derived class to perform some action before the specified element is set.</span></p>
 <p class="rvps2"><span class="rvts6">If the process fails, the collection reverts back to its previous state.</span></p>
 <p class="rvps2"><span class="rvts6">The default implementation of this method is an O(1) operation.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Notes to Implementers</span></span></h3>
 <p class="rvps2"><span class="rvts6">This method allows implementers to define processes that must be performed before setting the specified element in the underlying </span><a class="rvts12" href="MfList.html">MfList</a><span class="rvts6">. By defining this method, implementers can add functionality to inherited methods without having to override all other methods.</span></p>
-<p class="rvps2"><span class="rvts41">OnSet()</span><span class="rvts6"> is invoked before the standard Set behavior, whereas </span><a class="rvts12" href="MfCB16OnSetComplete.html">OnSetComplete()</a><span class="rvts6"> is invoked after the standard Set behavior.</span></p>
-<p class="rvps2"><span class="rvts6">For example, implementers can restrict which values can be overwritten by performing a check inside </span><span class="rvts41">OnSet()</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts23">OnSet()</span><span class="rvts6"> is invoked before the standard Set behavior, whereas </span><a class="rvts12" href="MfCB16OnSetComplete.html">OnSetComplete()</a><span class="rvts6"> is invoked after the standard Set behavior.</span></p>
+<p class="rvps2"><span class="rvts6">For example, implementers can restrict which values can be overwritten by performing a check inside </span><span class="rvts23">OnSet()</span><span class="rvts6">.</span></p>
 <p class="rvps2"><a class="rvts12" href="MfCB16OnValidate.html">OnValidate()</a><span class="rvts6"> is called prior to this method.</span></p>
 </div>
 	

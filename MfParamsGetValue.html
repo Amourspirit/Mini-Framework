@@ -58,9 +58,9 @@
 			<div id="topic_header_nav">
 				<a href="MfParamsMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfParamsGetType.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfParamsGetArgCount.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfParamsHasAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfParamsI.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,17 +68,17 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetValue()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.GetValue(index)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetValue()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.GetValue(index)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetValue(index)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Gets the value of a item in the class for given </span><span class="rvts54">index</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Gets the value of a item in the class for given </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">index</span></p>
-<p class="rvps22"><span class="rvts53">The </span><span class="rvts69">zero-Based</span><span class="rvts53"> index to get the element value from</span></p>
+<p class="rvps21"><span class="rvts52">index</span></p>
+<p class="rvps22"><span class="rvts54">The </span><span class="rvts67">zero-Based</span><span class="rvts54"> index to get the element value from</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">If </span><span class="rvts54">index</span><span class="rvts6"> item is non-object then retruns item for the current index value.</span><br/><span class="rvts6">If </span><span class="rvts54">index</span><span class="rvts6"> item is Derived from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6"> then returns Value property for the </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6"> derived class.</span><br/><span class="rvts6">if </span><span class="rvts54">index</span><span class="rvts6"> item is Derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> then returns objects ToString() method value.</span><br/><span class="rvts6">Non-MfObject objects are returned as is.</span><br/><span class="rvts6">Return value is always a var and never an object.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">index</span><span class="rvts6"> item is non-object then retruns item for the current index value.</span><br/><span class="rvts6">If </span><span class="rvts55">index</span><span class="rvts6"> item is Derived from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6"> then returns Value property for the </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6"> derived class.</span><br/><span class="rvts6">if </span><span class="rvts55">index</span><span class="rvts6"> item is Derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> then returns objects ToString() method value.</span><br/><span class="rvts6">Non-MfObject objects are returned as is.</span><br/><span class="rvts6">Return value is always a var and never an object.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is not an instance.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts54">index</span><span class="rvts6"> is less than zero or </span><span class="rvts15">index</span><span class="rvts6"> is equal to or greater than </span><a class="rvts12" href="MfParamsCount.html">Count</a><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">index</span><span class="rvts6"> is not a valid </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> instance or valid var containing Integer</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is not an instance.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">index</span><span class="rvts6"> is less than zero or </span><span class="rvts15">index</span><span class="rvts6"> is equal to or greater than </span><span class="rvts12">Count</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts55">index</span><span class="rvts6"> is not a valid </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> instance or valid var containing Integer</span></p>
 </div>
 	
 	<div id="topic_footer">

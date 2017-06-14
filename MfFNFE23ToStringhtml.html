@@ -53,14 +53,14 @@
 				<h1 id="topic_header_text">ToString()</h1>
 				
 				<div id="topic_breadcrumb">
-					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_IO.html">System.IO</a> &rsaquo;&rsaquo; <a href="MfFNFE23.html">MfFileNotFoundException</a> &rsaquo;&rsaquo; <a href="MfFNFE23Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_IO.html">System.MfIO</a> &rsaquo;&rsaquo; <a href="MfFNFE23.html">FileNotFoundException</a> &rsaquo;&rsaquo; <a href="MfFNFE23Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
 				</div>
 			<div id="topic_header_nav">
 				<a href="MfFNFE23Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfFNFE23SetProp.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfFNFE23Is.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfFNFE23VerifyIsInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfIOE13.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,15 +68,17 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ToString()</span></span></h1>
-<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfIOE13ToStringhtml.html">MfIOException.ToString()</a></p>
-<p class="rvps20"><span class="rvts48">instance.ToString()</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">ToString()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><span class="rvts12">MfIOException.ToString()</span></p>
+<p class="rvps20"><span class="rvts49">instance.ToString()</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">ToString()</span></span></h2>
 <p class="rvps2"><span class="rvts6">Creates and returns a </span><span class="rvts15">string</span><span class="rvts6"> representation of the current exception.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns var containing </span><span class="rvts15">string</span><span class="rvts6"> representation of the current exception.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
 <p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> is called on a non instance of class</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts33">try</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;file := </span><span class="rvts47">GetFile</span><span class="rvts42">("C:/tmp/myfile.txt"</span><span class="rvts31">)</span><br/><span class="rvts31">}</span><br/><span class="rvts33">catch</span><span class="rvts31"> e</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">16</span><span class="rvts31">, File Error, % e.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts31">}</span><br/><span class="rvts32">; display a message box with the following message</span><br/><span class="rvts32">; FileNotFoundException: Unable to Locate File</span><br/><span class="rvts32">; File name: 'C:/tmp/myfile.txt'</span><br/><span class="rvts31"></span><br/><span class="rvts47">GetFile</span><span class="rvts31">(file)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts32">; ... some code to try and locate file</span><br/><span class="rvts31"> &nbsp; &nbsp;ex := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfIO</span><span class="rvts31">.</span><span class="rvts34">FileNotFoundException</span><span class="rvts31">(</span><span class="rvts42">"Unable to Locate File"</span><span class="rvts31">, file)</span><br/><span class="rvts31"> &nbsp; &nbsp;ex.</span><span class="rvts47">SetProp</span><span class="rvts31">(</span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">throw</span><span class="rvts31"> ex</span><br/><span class="rvts31">}</span></p>
 </div>
 	
 	<div id="topic_footer">

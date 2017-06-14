@@ -60,7 +60,7 @@
 				
 				<a href="MfCharGetUnicodeCategory.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfCharHasAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfCharIsControl.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,20 +68,22 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetValue()</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetValue()</span></span></h1>
 <p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfPrimitiveGetValue.html">MfPrimitive.GetValue()</a></p>
-<p class="rvps20"><span class="rvts48">OutputVar := MfChar.GetValue(c)</span><br/><span class="rvts48">OutputVar := MfChar.GetValue(s, index)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfChar.GetValue(c)</span></span></h2>
+<p class="rvps20"><span class="rvts49">OutputVar := MfChar.GetValue(c)</span><br/><span class="rvts49">OutputVar := MfChar.GetValue(s, index)</span></p>
+<h2 class="rvps5"><a name="GetValue1"></a>
+<span class="rvts0"><span class="rvts16">MfChar.GetValue(c)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Gets the string value from </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> instance or </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or var containing a string. If string has more then one character then the first character is returned.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfChar.GetValue(s, index)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Gets the string value from </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or var containing a </span><span class="rvts15">string</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts54">index</span><span class="rvts6">.</span></p>
+<h2 class="rvps5"><a name="GetValue2"></a>
+<span class="rvts0"><span class="rvts16">MfChar.GetValue(s, index)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets the string value from </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or var containing a </span><span class="rvts15">string</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">c</span></p>
-<p class="rvps22"><span class="rvts53">The Unicode character to evaluate.</span><br/><span class="rvts53">The Can be a var containing </span><span class="rvts69">character</span><span class="rvts53"> or </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53"> instance or </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string or string var containing hex value Eg:"0x0061".</span></p>
-<p class="rvps21"><span class="rvts51">s</span></p>
-<p class="rvps22"><span class="rvts53">The String containing the Unicode character for which to get the Unicode category.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or String var. Can be instance of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53">, or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
-<p class="rvps21"><span class="rvts51">index</span></p>
-<p class="rvps22"><span class="rvts53">An integer that contains the </span><span class="rvts75">zero-based</span><span class="rvts53"> index position of the character to categorize in </span><span class="rvts76">s</span><span class="rvts53">. Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> Instance or var containing </span><span class="rvts69">Integer</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts52">c</span></p>
+<p class="rvps22"><span class="rvts54">The Unicode character to evaluate.</span><br/><span class="rvts54">The Can be a var containing </span><span class="rvts67">character</span><span class="rvts54"> or </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> instance or </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string or string var containing hex value Eg:"0x0061".</span></p>
+<p class="rvps21"><span class="rvts52">s</span></p>
+<p class="rvps22"><span class="rvts54">The String containing the Unicode character for which to get the Unicode category.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or String var. Can be instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54">, or var containing </span><span class="rvts67">string</span><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">index</span></p>
+<p class="rvps22"><span class="rvts54">An integer that contains the </span><span class="rvts69">zero-based</span><span class="rvts54"> index position of the character to categorize in </span><span class="rvts70">s</span><span class="rvts54">. Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> Instance or var containing </span><span class="rvts67">Integer</span><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns a var containing a </span><span class="rvts15">string</span><span class="rvts6"> or </span><a class="rvts12" href="MfStringEmpty.html">MfString.Empty</a><span class="rvts6"> if not value is found.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>

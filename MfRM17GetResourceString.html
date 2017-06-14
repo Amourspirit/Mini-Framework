@@ -58,9 +58,9 @@
 			<div id="topic_header_nav">
 				<a href="MfRM17Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfRM17GetIndexOfAttribute.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfRM17Constructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfRM17GetType.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfRM17IsValidLanguageResource.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,28 +68,30 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetResourceString()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := GetResourceString(key, Section)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetResourceString(key)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Get a resoururce string from the resource file </span><span class="rvts18">CORE</span><span class="rvts6"> section</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetResourceString()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := GetResourceString(key, Section)</span></p>
+<h2 class="rvps5"><a name="GetResourceString1"></a>
+<span class="rvts0"><span class="rvts16">GetResourceString(key)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Get a resource string from the resource file </span><span class="rvts18">CORE</span><span class="rvts6"> section</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns a string var containing the resource string for </span><span class="rvts54">key</span><span class="rvts6"> or "" if </span><span class="rvts54">key</span><span class="rvts6"> is not found.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetResourceString(key, Section)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Get a resource string from the resource file at the specified </span><span class="rvts54">Section</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Returns a string var containing the resource string for </span><span class="rvts55">key</span><span class="rvts6"> or "" if </span><span class="rvts55">key</span><span class="rvts6"> is not found.</span></p>
+<h2 class="rvps5"><a name="GetResourceString2"></a>
+<span class="rvts0"><span class="rvts16">GetResourceString(key, Section)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Get a resource string from the resource file at the specified </span><span class="rvts55">Section</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns a string var containing the resource string from Section with </span><span class="rvts54">key</span><span class="rvts6"> or "" if </span><span class="rvts54">key</span><span class="rvts6"> is not found.</span></p>
+<p class="rvps2"><span class="rvts6">Returns a string var containing the resource string from Section with </span><span class="rvts55">key</span><span class="rvts6"> or "" if </span><span class="rvts55">key</span><span class="rvts6"> is not found.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">key</span></p>
-<p class="rvps22"><span class="rvts53">the key of th ini file to read from in the resource file.</span></p>
-<p class="rvps21"><span class="rvts51">Section</span></p>
-<p class="rvps22"><span class="rvts53">the section of the ini file to read from in the resource file.</span></p>
+<p class="rvps21"><span class="rvts52">key</span></p>
+<p class="rvps22"><span class="rvts54">the key of th ini file to read from in the resource file.</span></p>
+<p class="rvps21"><span class="rvts52">Section</span></p>
+<p class="rvps22"><span class="rvts54">the section of the ini file to read from in the resource file.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Not intended for use by developers but rather by the Mini-Framework.</span></p>
-<p class="rvps2"><span class="rvts6">Getting resource strings is done by using </span><a class="rvts12" href="MfEnvironment.html">MfEnvironment</a><span class="rvts6">.</span><a class="rvts12" href="MfEnvironmentInstance.html">Instance</a><span class="rvts6">.</span><a class="rvts12" href="MfEnvironmentGetResourceString.html">GetResourceString</a><span class="rvts6">("MyKey") and </span><a class="rvts12" href="MfEnvironment.html">MfEnvironment</a><span class="rvts6">.</span><a class="rvts12" href="MfEnvironmentInstance.html">Instance</a><span class="rvts6">.</span><a class="rvts12" href="MfEnvironmentGetResourceStringBy.html">GetResourceStringBySection</a><span class="rvts6">("MyKey", "someSection")</span></p>
+<p class="rvps2"><span class="rvts6">Not intended for use by developers but rather by </span><span class="rvts6">Mini-Framework</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Getting resource strings is done by using </span><a class="rvts12" href="MfEnvironment.html">MfEnvironment</a><span class="rvts6">.</span><span class="rvts12">Instance</span><span class="rvts6">.</span><a class="rvts12" href="MfEnvironmentGetResourceString.html">GetResourceString</a><span class="rvts6">("MyKey") and </span><a class="rvts12" href="MfEnvironment.html">MfEnvironment</a><span class="rvts6">.</span><span class="rvts12">Instance</span><span class="rvts6">.</span><a class="rvts12" href="MfEnvironmentGetResourceStringBy.html">GetResourceStringBySection</a><span class="rvts6">("MyKey", "someSection")</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
 <p class="rvps2"><a class="rvts12" href="MfEnvironment.html">MfEnvironment</a></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts31">; Example constructor used by MfEnumerableBase class</span><br/><span class="rvts32">__New</span><span class="rvts30">() {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; Throws MfNotSupportedException if MfEnumerableBase Abstract class constructor is called directly.</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts32">__Class</span><span class="rvts30"> = </span><span class="rvts42">"MfEnumerableBase"</span><span class="rvts30">) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">ex := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfNotSupportedException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"NotSupportedException_AbstractClass"</span><span class="rvts30">, </span><span class="rvts42">"MfEnumerableBase"</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">ex.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">) </span><span class="rvts31">; set File, Line and Source Properties</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">throw</span><span class="rvts30"> ex</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">this</span><span class="rvts30">.m_isInherited := </span><span class="rvts32">true</span><span class="rvts30"> </span><span class="rvts31">; abstract class can only be inherited</span><br/><span class="rvts30">}</span></p>
+<p class="rvps14"><span class="rvts32">; Example constructor used by MfEnumerableBase class</span><br/><span class="rvts33">__New</span><span class="rvts31">() {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; Throws MfNotSupportedException if MfEnumerableBase Abstract class constructor is called directly.</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts33">this</span><span class="rvts31">.</span><span class="rvts33">__Class</span><span class="rvts31"> = </span><span class="rvts42">"MfEnumerableBase"</span><span class="rvts31">) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">ex := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfNotSupportedException</span><span class="rvts31">(</span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts47">GetResourceString</span><span class="rvts31">(</span><span class="rvts42">"NotSupportedException_AbstractClass"</span><span class="rvts31">, </span><span class="rvts42">"MfEnumerableBase"</span><span class="rvts31">))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">ex.</span><span class="rvts47">SetProp</span><span class="rvts31">(</span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">) </span><span class="rvts32">; set File, Line and Source Properties</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">throw</span><span class="rvts31"> ex</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">base</span><span class="rvts31">.</span><span class="rvts47">__New</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.m_isInherited := </span><span class="rvts33">true</span><span class="rvts31"> </span><span class="rvts32">; abstract class can only be inherited</span><br/><span class="rvts31">}</span></p>
 </div>
 	
 	<div id="topic_footer">

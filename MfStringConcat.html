@@ -68,19 +68,19 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Concat()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := MfString.Concat(args)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfString.Concat(args)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Creates the string representation of a specified object.</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Concat()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := MfString.Concat(args*)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfString.Concat(args*)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Creates the string representation of a specified objects.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">Args</span></p>
-<p class="rvps22"><span class="rvts53">An object array that contains the elements to concatenate.</span><br/><span class="rvts53">Any var or object derived from </span><a class="rvts52" href="MfObject.html">MfObject</a><span class="rvts53"> can be an args</span></p>
+<p class="rvps21"><span class="rvts52">args*</span></p>
+<p class="rvps22"><span class="rvts54">An object array that contains the elements to concatenate.</span><br/><span class="rvts54">Any var or object derived from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54"> can be an args</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns The concatenated string var representations of the values of the elements </span><span class="rvts54">args</span></p>
+<p class="rvps2"><span class="rvts6">Returns The concatenated string var representations of the values of the elements </span><span class="rvts55">args*</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts6">Static Method.</span><br/><span class="rvts6">Concatenates the string representations of the elements in a specified array.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">mfs := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">()</span><br/><span class="rvts30">mfs.</span><span class="rvts45">Append</span><span class="rvts30">(</span><span class="rvts42">"The quick brown fox."</span><span class="rvts30">)</span><br/><span class="rvts30">str := </span><span class="rvts42">" "</span><br/><span class="rvts30">mfi := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">2</span><span class="rvts30">)</span><br/><span class="rvts30">msg := </span><span class="rvts42">" is a great number!"</span><br/><span class="rvts30">strResult := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Concat</span><span class="rvts30">(mfs, str, mfi, msg)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Result, %strResult%</span></p>
+<p class="rvps14"><span class="rvts31">mfs := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">()</span><br/><span class="rvts31">mfs.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"The quick brown fox."</span><span class="rvts31">)</span><br/><span class="rvts31">str := </span><span class="rvts42">" "</span><br/><span class="rvts31">mfi := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">2</span><span class="rvts31">)</span><br/><span class="rvts31">msg := </span><span class="rvts42">" is a great number!"</span><br/><span class="rvts31">strResult := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Concat</span><span class="rvts31">(mfs, str, mfi, msg)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Result, %strResult%</span></p>
 <p class="rvps2"><span class="rvts15">Figure 1</span><span class="rvts6"> Show the result of the above code sample.</span></p>
 <p class="rvps2"><span class="rvts18">Figure 1:</span><br/><img alt="" style="padding : 1px;" src="lib/ImgMfStringConcatFig1.png"></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>

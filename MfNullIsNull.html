@@ -58,9 +58,9 @@
 			<div id="topic_header_nav">
 				<a href="MfNullMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfNullIsInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfNullIs.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfNullMemberwiseClone.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfNullToString.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,19 +68,19 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsNull()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := MfNull.IsNull(obj)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">IsNull()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := MfNull.IsNull(obj)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">IsNull(obj)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Get if the obj parameter is null or </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Get if the </span><span class="rvts55">obj</span><span class="rvts6"> parameter is null or </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">obj</span></p>
-<p class="rvps22"><span class="rvts53">The object to check or var to check</span></p>
+<p class="rvps21"><span class="rvts52">obj</span></p>
+<p class="rvps22"><span class="rvts54">The object to check or var to check</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns true if </span><span class="rvts54">obj</span><span class="rvts6"> is null or is </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Returns true if </span><span class="rvts55">obj</span><span class="rvts6"> is null or is </span><a class="rvts12" href="MfNull.html">MfNull</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
 <p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method:</span><br/><span class="rvts6">If </span><span class="rvts54">obj</span><span class="rvts6"> is "" (null value) then true is returned.</span><br/><span class="rvts6">If parameter </span><span class="rvts54">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> and has a </span><a class="rvts12" href="MfCharCharCode.html">MfChar.CharCode</a><span class="rvts6"> that equal zero then it will be considered as null.</span><br/><span class="rvts6">If parameter </span><span class="rvts54">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and </span><a class="rvts12" href="MfStringLength.html">MfString.Length</a><span class="rvts6"> is equal to zero then it will be consider as null.</span><br/><span class="rvts6">It is import to call base New when creating new classes or </span><a class="rvts12" href="MfNullIsNull.html">MfNull.IsNull</a><span class="rvts6"> will return true even if your class creates an instance.</span></p>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method:</span><br/><span class="rvts6">If </span><span class="rvts55">obj</span><span class="rvts6"> is "" (null value) then true is returned.</span><br/><span class="rvts6">If parameter </span><span class="rvts55">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> and has a </span><a class="rvts12" href="MfCharCharCode.html">MfChar.CharCode</a><span class="rvts6"> that equal zero then it will be considered as null.</span><br/><span class="rvts6">If parameter </span><span class="rvts55">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> and </span><a class="rvts12" href="MfStringLength.html">MfString.Length</a><span class="rvts6"> is equal to zero then it will be consider as null.</span><br/><span class="rvts6">It is import to call base New when creating new classes or </span><a class="rvts12" href="MfNullIsNull.html">MfNull.IsNull</a><span class="rvts6"> will return true even if your class creates an instance.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6"><div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
 <pre style="margin: 0; line-height: 125%;"><span style="color: #888888;">; MfChar Instances and MfNull.IsNull()</span>

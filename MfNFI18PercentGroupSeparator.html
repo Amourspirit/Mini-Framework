@@ -1,0 +1,94 @@
+﻿<html>
+	
+<head>
+	<title>PercentGroupSeparator</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNFI18PercentGroupSeparator");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">PercentGroupSeparator</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfNFI18.html">MfNumberFormatInfo</a> &rsaquo;&rsaquo; <a href="MfNFI18Properties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNFI18Properties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNFI18PercentDecimalSeparator.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNFI18PercentGroupSizes.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">PercentGroupSeparator</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the string that separates groups of digits to the left of the decimal in percent values.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := instance.PercentGroupSeparator</span><br/><span class="rvts49">instance.PercentGroupSeparator := Value</span></p>
+<p class="rvps21"><span class="rvts52">Value</span></p>
+<p class="rvps22"><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing </span><span class="rvts67">string</span><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">The string that separates groups of digits to the left of the decimal in percent values.</span><br/><span class="rvts6">The default for </span><a class="rvts12" href="MfNFI18InvariantInfo.html">InvariantInfo</a><span class="rvts6"> is &nbsp;",".</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets string that separates groups of digits to the left of the decimal in percent values.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if the property is being set and the </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> is read-only.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if the property is being set to null.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">PercentGroupSeparator</span><span class="rvts6"> property is used with the "P" standard format string to define the symbol that separates groups of integers. </span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

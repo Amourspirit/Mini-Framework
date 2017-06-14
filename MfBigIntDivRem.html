@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>DivRem()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfBigIntDivRem");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">DivRem()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfBigInt.html">MfBigInt</a> &rsaquo;&rsaquo; <a href="MfBigIntMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfBigIntMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfBigIntDivide.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfBigIntEquals.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">DivRem()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := MfBigInt.DivRem(dividend, divisor, remainder)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfBigInt.</span></span><span class="rvts0"><span class="rvts16">DivRem(dividend, divisor, remainder)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Calculates the quotient of two </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> signed integers and also returns the remainder in an output parameter.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">dividend</span></p>
+<p class="rvps22"><span class="rvts54">The dividend.</span><br/><span class="rvts54">Can be var integer representation or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54"> or </span><a class="rvts53" href="MfUInt64.html">MfUInt64</a><span class="rvts54"> or </span><a class="rvts53" href="MfBigInt.html">MfBigInt</a></p>
+<p class="rvps21"><span class="rvts52">divisor</span></p>
+<p class="rvps22"><span class="rvts54">The divisor.</span><br/><span class="rvts54">Can be var integer representation or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54"> or </span><a class="rvts53" href="MfUInt64.html">MfUInt64</a><span class="rvts54"> or </span><a class="rvts53" href="MfBigInt.html">MfBigInt</a></p>
+<p class="rvps21"><span class="rvts52">remainder</span></p>
+<p class="rvps22"><span class="rvts54">The remainder.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns instance of </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> instance as the quotient of the specified numbers.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">dividend</span><span class="rvts6"> or </span><span class="rvts55">divisor</span><span class="rvts6"> is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> &nbsp;if </span><span class="rvts55">dividend</span><span class="rvts6"> or </span><span class="rvts55">divisor</span><span class="rvts6"> is unable to be convert to a usable value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">remainder := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">()</span><br/><span class="rvts31">bigI := </span><span class="rvts34">MfBigInt</span><span class="rvts31">.</span><span class="rvts47">DivRem</span><span class="rvts31">(</span><span class="rvts42">"7897798244398122076"</span><span class="rvts31">, </span><span class="rvts42">"770980"</span><span class="rvts31">, remainder)</span><br/><span class="rvts31">str := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"Result:'{0}', Remainder:'{1}'"</span><span class="rvts31">, bigI.</span><span class="rvts35">Value</span><span class="rvts31">, remainder.</span><span class="rvts35">Value</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %str% </span><span class="rvts32">; Result:'10243843218239', Remainder:'217856'</span></p>
+<p class="rvps14"><span class="rvts31">remainder := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">()</span><br/><span class="rvts31">uint := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfUInt32</span><span class="rvts31">(</span><span class="rvts68">348876</span><span class="rvts31">)</span><br/><span class="rvts31">short := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInt16</span><span class="rvts31">(</span><span class="rvts68">-23567</span><span class="rvts31">)</span><br/><span class="rvts31">bigI := </span><span class="rvts34">MfBigInt</span><span class="rvts31">.</span><span class="rvts47">DivRem</span><span class="rvts31">(uint, short, remainder)</span><br/><span class="rvts31">str := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"Result:'{0}', Remainder:'{1}'"</span><span class="rvts31">, bigI.</span><span class="rvts35">Value</span><span class="rvts31">, remainder.</span><span class="rvts35">Value</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %str% </span><span class="rvts32">; Result:'-14', Remainder:'18938'</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

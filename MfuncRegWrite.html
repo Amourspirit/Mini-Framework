@@ -68,21 +68,21 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">RegWrite()</span></span></h1>
-<p class="rvps20"><span class="rvts48">Mfunc.RegWrite(ValueType, RootKey, SubKey [, ValueName, Value])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">RegWrite()</span></span></h1>
+<p class="rvps20"><span class="rvts49">Mfunc.RegWrite(ValueType, RootKey, SubKey [, ValueName, Value])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.RegWrite(ValueType, RootKey, SubKey [, ValueName, Value])</span></span></h2>
 <p class="rvps2"><span class="rvts6">Writes a value to the registry.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">ValueType</span></p>
-<p class="rvps22"><span class="rvts53">Must be either REG_SZ, REG_EXPAND_SZ, REG_MULTI_SZ, REG_DWORD, or REG_BINARY.</span></p>
-<p class="rvps21"><span class="rvts51">RootKey</span></p>
-<p class="rvps22"><span class="rvts53">Must be either HKEY_LOCAL_MACHINE, HKEY_USERS, HKEY_CURRENT_USER, HKEY_CLASSES_ROOT, or HKEY_CURRENT_CONFIG (or the abbreviations for each of these, such as HKLM). To access a remote registry, prepend the computer name and a colon, as in this example: \workstation01:HKEY_LOCAL_MACHINE</span></p>
-<p class="rvps21"><span class="rvts51">SubKey</span></p>
-<p class="rvps22"><span class="rvts53">The name of the subkey (e.g. Software\SomeApplication). If SubKey does not exist, it is created (along with its ancestors, if necessary). If SubKey is left blank, the value is written directly into RootKey (though some operating systems might refuse to write in HKEY_CURRENT_USER's top level).</span></p>
-<p class="rvps21"><span class="rvts51">ValueName</span></p>
-<p class="rvps22"><span class="rvts53">The name of the value that will be written to. If blank or omitted, Subkey's default value will be used, which is the value displayed as "(Default)" by RegEdit.</span></p>
-<p class="rvps21"><span class="rvts51">Value</span></p>
-<p class="rvps22"><span class="rvts53">The value to be written. If omitted, it will default to an empty (blank) string, or 0, depending on ValueType. If the text is long, it can be broken up into several shorter lines by means of a </span><a class="rvts59" href="http://ahkscript.org/docs/Scripts.htm#continuation" target="_blank">continuation section</a><span class="rvts53">, which might improve readability and maintainability.</span></p>
+<p class="rvps21"><span class="rvts52">ValueType</span></p>
+<p class="rvps22"><span class="rvts54">Must be either REG_SZ, REG_EXPAND_SZ, REG_MULTI_SZ, REG_DWORD, or REG_BINARY.</span></p>
+<p class="rvps21"><span class="rvts52">RootKey</span></p>
+<p class="rvps22"><span class="rvts54">Must be either HKEY_LOCAL_MACHINE, HKEY_USERS, HKEY_CURRENT_USER, HKEY_CLASSES_ROOT, or HKEY_CURRENT_CONFIG (or the abbreviations for each of these, such as HKLM). To access a remote registry, prepend the computer name and a colon, as in this example: \workstation01:HKEY_LOCAL_MACHINE</span></p>
+<p class="rvps21"><span class="rvts52">SubKey</span></p>
+<p class="rvps22"><span class="rvts54">The name of the subkey (e.g. Software\SomeApplication). If SubKey does not exist, it is created (along with its ancestors, if necessary). If SubKey is left blank, the value is written directly into RootKey (though some operating systems might refuse to write in HKEY_CURRENT_USER's top level).</span></p>
+<p class="rvps21"><span class="rvts52">ValueName</span></p>
+<p class="rvps22"><span class="rvts54">The name of the value that will be written to. If blank or omitted, Subkey's default value will be used, which is the value displayed as "(Default)" by RegEdit.</span></p>
+<p class="rvps21"><span class="rvts52">Value</span></p>
+<p class="rvps22"><span class="rvts54">The value to be written. If omitted, it will default to an empty (blank) string, or 0, depending on ValueType. If the text is long, it can be broken up into several shorter lines by means of a </span><a class="rvts60" href="http://ahkscript.org/docs/Scripts.htm#continuation" target="_blank">continuation section</a><span class="rvts54">, which might improve readability and maintainability.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
 <p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> is non-zero then </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> message is set to the value of </span><a class="rvts13" href="http://ahkscript.org/docs/Variables.htm#LastError" target="_blank">A_LastError</a></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
@@ -90,7 +90,7 @@
 <p class="rvps2"><span class="rvts6">If ValueType is REG_DWORD, Value should be between -2147483648 and 4294967295 (0xFFFFFFFF).</span></p>
 <p class="rvps2"><span class="rvts6">When writing a REG_BINARY key, use a string of hex characters, e.g. the REG_BINARY value of 01,a9,ff,77 can be written by using the string 01A9FF77.</span></p>
 <p class="rvps2"><span class="rvts6">When writing a REG_MULTI_SZ key, you must separate each component from the next with a linefeed character (`n). The last component may optionally end with a linefeed as well. No blank components are allowed. In other words, do not specify two linefeeds in a row (`n`n) because that will result in a shorter-than-expected value being written to the registry.</span></p>
-<p class="rvps2"><span class="rvts6">REG_BINARY and REG_MULTI_SZ values larger than 64K are supported in </span><span class="rvts41">AutoHotkey [v1.1.10.01]</span><span class="rvts6"> and later. In older versions, they are truncated to 64K</span></p>
+<p class="rvps2"><span class="rvts6">REG_BINARY and REG_MULTI_SZ values larger than 64K are supported in </span><span class="rvts23">AutoHotkey [v1.1.10.01]</span><span class="rvts6"> and later. In older versions, they are truncated to 64K</span></p>
 <p class="rvps2"><span class="rvts6">To retrieve and operate upon multiple registry keys or values, consider using a </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopReg.htm" target="_blank">registry-loop</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">For details about how to access the registry of a remote computer, see the remarks in </span><a class="rvts13" href="http://ahkscript.org/docs/commands/LoopReg.htm" target="_blank">registry-loop</a><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">To read and write entries from the 64-bit sections of the registry in a 32-bit script or vice versa, use </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetRegView.htm" target="_blank">SetRegView</a><span class="rvts6">.</span></p>

@@ -1,0 +1,254 @@
+﻿<html>
+	
+<head>
+	<title>Contains()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfStringContains");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Contains()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfString.html">MfString</a> &rsaquo;&rsaquo; <a href="MfStringMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfStringMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfStringConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfStringCutIfLong.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Contains()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Returns a value indicating whether a specified substring occurs within a string.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringContains.html#Contains1">instance</a><a class="rvts61" href="MfStringContains.html#Contains1">.Contains(searchChar)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringContains.html#Contains2">instance</a><a class="rvts61" href="MfStringContains.html#Contains2">.Contains(searchChar, startIndex)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringContains.html#Contains3">instance</a><a class="rvts61" href="MfStringContains.html#Contains3">.Contains(searchChar, startIndex, count)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringContains.html#Contains4">instance</a><a class="rvts61" href="MfStringContains.html#Contains4">.Contains(strSearch)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringContains.html#Contains5">instance</a><a class="rvts61" href="MfStringContains.html#Contains5">.Contains(strSearch, startIndex)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringContains.html#Contains6">instance</a><a class="rvts61" href="MfStringContains.html#Contains6">.Contains(strSearch, startIndex, count)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfStringContains.html#Contains7">MfString.Contains(strMain, searchChar)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfStringContains.html#Contains8">MfString.Contains(strMain, searchChar, startIndex)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfStringContains.html#Contains9">MfString.Contains(strMain, searchChar, startIndex, count)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfStringContains.html#Contains10">MfString.Contains(strMain, strSearch)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfStringContains.html#Contains11">MfString.Contains(strMain, strSearch, startIndex)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfStringContains.html#Contains12">MfString.Contains(strMain, strSearch, startIndex, count)</a></p>
+<h2 class="rvps5"><a name="Contains1"></a>
+<span class="rvts0"><span class="rvts16">Contains(searchChar)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a character specified by </span><span class="rvts55">searchChar</span><span class="rvts6"> within this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">searchChar</span></p>
+<p class="rvps22"><span class="rvts54">The Character to seek.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or string var containing character.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">searchChar</span><span class="rvts6"> parameter occurs within this instance,or if </span><span class="rvts55">searchChar</span><span class="rvts6"> </span><a class="rvts12" href="MfCharCharCode.html">CharCode</a><span class="rvts6"> equals 0; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains2"></a>
+<span class="rvts0"><span class="rvts16">Contains(searchChar, startIndex)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a character specified by </span><span class="rvts55">searchChar</span><span class="rvts6"> within this instance. The search starts at a character position specified by </span><span class="rvts55">startIndex</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">searchChar</span></p>
+<p class="rvps22"><span class="rvts54">The Character to seek.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or string var containing character.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">searchChar</span><span class="rvts6"> parameter occurs within this instance,or if </span><span class="rvts55">searchChar</span><span class="rvts6"> </span><a class="rvts12" href="MfCharCharCode.html">CharCode</a><span class="rvts6"> equals 0; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains3"></a>
+<span class="rvts0"><span class="rvts16">Contains(searchChar, startIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a character specified by </span><span class="rvts55">searchChar</span><span class="rvts6"> within this instance. The search starts at a character position specified by </span><span class="rvts55">startIndex</span><span class="rvts6"> and examines a &nbsp;number of character positions specified by </span><span class="rvts55">count</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">searchChar</span></p>
+<p class="rvps22"><span class="rvts54">The Character to seek.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or string var containing character.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the number of character positions to examine.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">searchChar</span><span class="rvts6"> parameter occurs within this instance,or if </span><span class="rvts55">searchChar</span><span class="rvts6"> </span><a class="rvts12" href="MfCharCharCode.html">CharCode</a><span class="rvts6"> equals 0; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains4"></a>
+<span class="rvts0"><span class="rvts16">Contains(strSearch)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a string specified by </span><span class="rvts55">strSearch</span><span class="rvts6"> within this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strSearch</span></p>
+<p class="rvps22"><span class="rvts54">The string to seek.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">strSearch</span><span class="rvts6"> parameter occurs within this string, or if </span><span class="rvts55">strSearch</span><span class="rvts6"> is the empty string (""); otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains5"></a>
+<span class="rvts0"><span class="rvts16">Contains(strSearch, startIndex)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a string specified by </span><span class="rvts55">strSearch</span><span class="rvts6"> within this instance. The search starts at a character specified by </span><span class="rvts55">startIndex</span><span class="rvts6"> position.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strSearch</span></p>
+<p class="rvps22"><span class="rvts54">The string to seek.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts52"><br/></span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">strSearch</span><span class="rvts6"> parameter occurs within this string, or if </span><span class="rvts55">strSearch</span><span class="rvts6"> is the empty string (""); otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains6"></a>
+<span class="rvts0"><span class="rvts16">Contains(strSearch, startIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a string specified by </span><span class="rvts55">strSearch</span><span class="rvts6"> within this instance. The search starts at a character specified by </span><span class="rvts55">startIndex</span><span class="rvts6"> position and examines a &nbsp;number of character positions specified by </span><span class="rvts55">count</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strSearch</span></p>
+<p class="rvps22"><span class="rvts54">The string to seek.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the number of character positions to examine.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts52"><br/></span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">strSearch</span><span class="rvts6"> parameter occurs within this string, or if </span><span class="rvts55">strSearch</span><span class="rvts6"> is the empty string (""); otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains7"></a>
+<span class="rvts0"><span class="rvts16">MfString.Contains(strMain, searchChar)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a character specified by </span><span class="rvts55">searchChar</span><span class="rvts6"> within </span><span class="rvts55">strMain</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strMain</span></p>
+<p class="rvps22"><span class="rvts54">The main String to search for last index of specified parameters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">searchChar</span></p>
+<p class="rvps22"><span class="rvts54">The Character to seek.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or string var containing character.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">searchChar</span><span class="rvts6"> parameter occurs within </span><span class="rvts55">strMain</span><span class="rvts6">, or if </span><span class="rvts55">searchChar</span><span class="rvts6"> </span><a class="rvts12" href="MfCharCharCode.html">CharCode</a><span class="rvts6"> equals 0; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains8"></a>
+<span class="rvts0"><span class="rvts16">MfString.Contains(strMain, searchChar, startIndex)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a character specified by </span><span class="rvts55">searchChar</span><span class="rvts6"> within </span><span class="rvts55">strMain</span><span class="rvts6">. The search starts at a character specified by </span><span class="rvts55">startIndex</span><span class="rvts6"> position.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strMain</span></p>
+<p class="rvps22"><span class="rvts54">The main String to search for last index of specified parameters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">searchChar</span></p>
+<p class="rvps22"><span class="rvts54">The Character to seek.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or string var containing character.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">searchChar</span><span class="rvts6"> parameter occurs within </span><span class="rvts55">strMain</span><span class="rvts6">, or if </span><span class="rvts55">searchChar</span><span class="rvts6"> </span><a class="rvts12" href="MfCharCharCode.html">CharCode</a><span class="rvts6"> equals 0; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains9"></a>
+<span class="rvts0"><span class="rvts16">MfString.Contains(strMain, searchChar, startIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a character specified by </span><span class="rvts55">searchChar</span><span class="rvts6"> within </span><span class="rvts55">strMain</span><span class="rvts6">. The search starts at a character specified by </span><span class="rvts55">startIndex</span><span class="rvts6"> position and examines a &nbsp;number of character positions specified by </span><span class="rvts55">count</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strMain</span></p>
+<p class="rvps22"><span class="rvts54">The main String to search for last index of specified parameters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">searchChar</span></p>
+<p class="rvps22"><span class="rvts54">The Character to seek.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or string var containing character.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">an integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the number of character positions to examine.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">searchChar</span><span class="rvts6"> parameter occurs within </span><span class="rvts55">strMain</span><span class="rvts6">, or if </span><span class="rvts55">searchChar</span><span class="rvts6"> </span><a class="rvts12" href="MfCharCharCode.html">CharCode</a><span class="rvts6"> equals 0; otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains10"></a>
+<span class="rvts0"><span class="rvts16">MfString.Contains(strMain, strSearch)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a string specified by </span><span class="rvts55">strSearch</span><span class="rvts6"> within </span><span class="rvts55">strMain</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strMain</span></p>
+<p class="rvps22"><span class="rvts54">The main String to search for last index of specified parameters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">strSearch</span></p>
+<p class="rvps22"><span class="rvts54">The string to seek.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">strSearch</span><span class="rvts6"> parameter occurs within </span><span class="rvts55">strMain</span><span class="rvts6">, or if </span><span class="rvts55">strSearch</span><span class="rvts6"> is the empty string (""); otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains11"></a>
+<span class="rvts0"><span class="rvts16">MfString.Contains(strMain, strSearch, startIndex)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a string specified by </span><span class="rvts55">strSearch</span><span class="rvts6"> within </span><span class="rvts55">strMain</span><span class="rvts6">. The search starts at character position specified by </span><span class="rvts55">startIndex</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strMain</span></p>
+<p class="rvps22"><span class="rvts54">The main String to search for last index of specified parameters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">strSearch</span></p>
+<p class="rvps22"><span class="rvts54">The string to seek.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">strSearch</span><span class="rvts6"> parameter occurs within </span><span class="rvts55">strMain</span><span class="rvts6">, or if </span><span class="rvts55">strSearch</span><span class="rvts6"> is the empty string (""); otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h2 class="rvps5"><a name="Contains12"></a>
+<span class="rvts0"><span class="rvts16">MfString.Contains(strMain, strSearch, startIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Reports if there is an occurrence of a string specified by </span><span class="rvts55">strSearch</span><span class="rvts6"> within </span><span class="rvts55">strMain</span><span class="rvts6">. The search starts at character position specified by </span><span class="rvts55">startIndex</span><span class="rvts6"> and examines a &nbsp;number of character positions specified by </span><span class="rvts55">count</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">strMain</span></p>
+<p class="rvps22"><span class="rvts54">The main String to search for last index of specified parameters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">strSearch</span></p>
+<p class="rvps22"><span class="rvts54">The string to seek.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the starting position of the search.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">An integer representing the number of character positions to examine.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts18">true</span><span class="rvts6"> if the </span><span class="rvts55">strSearch</span><span class="rvts6"> parameter occurs within </span><span class="rvts55">strMain</span><span class="rvts6">, or if </span><span class="rvts55">strSearch</span><span class="rvts6"> is the empty string (""); otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfStringContains.html#Example">Example</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">General Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Since Version 0.4</span></p>
+<p class="rvps2"><span class="rvts6">Index numbering starts from 0 (zero).</span><br/><span class="rvts6">Method is not affected </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property.</span><br/><span class="rvts6">Overloads method supports using all vars or all objects. Mixing of vars and Objects is supported for this method.</span></p>
+<p class="rvps2"><span class="rvts6">Instance methods will obey </span><a class="rvts12" href="MfStringIgnoreCase.html">IgnoreCase</a><span class="rvts6"> property. For static methods if </span><span class="rvts55">strMain</span><span class="rvts6"> is an instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> then the </span><a class="rvts12" href="MfStringIgnoreCase.html">IgnoreCase</a><span class="rvts6"> property of that instance is used. If </span><span class="rvts55">strMain</span><span class="rvts6"> is a var then case is ignored unless </span><span class="rvts15">AutoHotkey</span><span class="rvts6"> built in variable </span><span class="rvts18">A_StringCaseSense</span><span class="rvts6"> value is set to On by using AutoHotkeys </span><a class="rvts13" href="https://autohotkey.com/docs/commands/StringCaseSense.htm" target="_blank">StringCaseSense</a><span class="rvts6"> command.</span></p>
+<p class="rvps40"><span class="rvts88">Variadic</span><span class="rvts18"> Method</span><span class="rvts6">; This method is </span><span class="rvts15">Variadic</span><span class="rvts6"> so you may construct an instance of </span><a class="rvts75" href="MfParams.html">MfParams</a><span class="rvts6"> containing any of the overload method parameters listed above and pass in the </span><a class="rvts75" href="MfParams.html">MfParams</a><span class="rvts6"> instance to the method instead of using the overloads described above. See </span><a class="rvts75" href="MfParams.html">MfParams</a><span class="rvts6"> for more information.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if Overloads can not match Parameters.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> is not an instance.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if there is an error get a value from a parameter.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if startIndex is out of range.</span></p>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">; Static Examples</span><br/><span class="rvts31">str := </span><span class="rvts42">"Now is the time for all good men to come to the aid of their party."</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(str, </span><span class="rvts42">"he"</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(str, </span><span class="rvts42">"."</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(str, </span><span class="rvts42">"he"</span><span class="rvts31">, </span><span class="rvts68">44</span><span class="rvts31">) &nbsp; &nbsp; </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(str, </span><span class="rvts42">"he"</span><span class="rvts31">, </span><span class="rvts68">54</span><span class="rvts31">, </span><span class="rvts68">10</span><span class="rvts31">) </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts32"></span><br/><span class="rvts31">strMain := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(str)</span><br/><span class="rvts31">strMain.</span><span class="rvts35">IgnoreCase</span><span class="rvts31"> := </span><span class="rvts33">true</span><br/><span class="rvts31">searchStr := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"He"</span><span class="rvts31">)</span><br/><span class="rvts31">startIndex := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">54</span><span class="rvts31">)</span><br/><span class="rvts31">count := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(strMain, searchStr, startIndex, count) </span><span class="rvts32">; displays 0 for false</span><br/><span class="rvts32"></span><br/><span class="rvts31">strMain.</span><span class="rvts35">IgnoreCase</span><span class="rvts31"> := </span><span class="rvts33">false</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(strMain, searchStr, startIndex, count) </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts32"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(str, </span><span class="rvts42">"He"</span><span class="rvts31">) </span><span class="rvts32">; displays 0 for false</span><br/><span class="rvts33">StringCaseSense</span><span class="rvts31">, </span><span class="rvts33">On</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(str, </span><span class="rvts42">"He"</span><span class="rvts31">) </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">StringCaseSense</span><span class="rvts31">, </span><span class="rvts33">Off</span><br/><span class="rvts31"></span><br/><span class="rvts31"></span><br/><span class="rvts32">; instance method examples</span><br/><span class="rvts31">str := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Now is the time for all good men to come to the aid of their party."</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">""</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts31">MsgBox % str.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">"he"</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(new </span><span class="rvts34">MfChar</span><span class="rvts31">(</span><span class="rvts42">"."</span><span class="rvts31">)) </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">"."</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">"he"</span><span class="rvts31">, </span><span class="rvts68">44</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">"he"</span><span class="rvts31">, </span><span class="rvts68">54</span><span class="rvts31">, </span><span class="rvts68">10</span><span class="rvts31">) &nbsp; &nbsp;</span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">"He"</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 0 for false</span><br/><span class="rvts32"></span><br/><span class="rvts31">str.</span><span class="rvts35">IgnoreCase</span><span class="rvts31"> := </span><span class="rvts33">false</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">"He"</span><span class="rvts31">) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts32"></span><br/><span class="rvts31">searchStr := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"he"</span><span class="rvts31">)</span><br/><span class="rvts31">startIndex := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">54</span><span class="rvts31">)</span><br/><span class="rvts31">count := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % str.</span><span class="rvts47">Contains</span><span class="rvts31">(searchStr, startIndex, count) </span><span class="rvts32">; displays 1 for true</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfStringLastIndexOf.html">LastIndexOf()</a><span class="rvts6">, </span><a class="rvts12" href="MfStringIndexOf.html">IndexOf()</a></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

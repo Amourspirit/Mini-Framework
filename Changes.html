@@ -1,0 +1,118 @@
+﻿<html>
+	
+<head>
+	<title>Recent changes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("Changes");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Recent changes</h1>
+				
+				</div>
+			<div id="topic_header_nav">
+				<a href="Globals.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="NameSapce.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Changes and New Features</span></span></h1>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Version 0.4.0.5</span></span></h2>
+<p class="rvps2"><span class="rvts6">Added this Page to document changes. Updated Source code Comments on several classes.</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Version 0.4.0.4</span></span></h2>
+<p class="rvps2"><span class="rvts6">Many changes to this document to make getting help much faster. Such as tables added to NameSpaces Such as </span><a class="rvts12" href="NS_System.html">System</a><span class="rvts6"> , </span><a class="rvts12" href="NS_System_IO.html">System.MfIO</a><span class="rvts6"> and </span><a class="rvts12" href="NS_System_Text.html">System.MfText</a></p>
+<p class="rvps2"><span class="rvts6">New NameSpace </span><a class="rvts12" href="NS_System_Text.html">System.MfText</a><span class="rvts6"> added.</span></p>
+<p class="rvps2"><span class="rvts6">Tables have been created and added to each Class make it faster to access help for a class constructors, methods and Properties. This also give a higher level view of what a class does.</span></p>
+<p class="rvps2"><span class="rvts6">Renamed System.IO NameSpace to System.MfIO this allows classes in the namespace to not be prefixes with </span><span class="rvts18">MF</span><span class="rvts6"> so MfIOException is can now be called as</span><a class="rvts12" href="MfIOE13.html"> MfIO.IOException</a><span class="rvts6">. This is a non-break change and class can still be called in the old style if needed.</span></p>
+<p class="rvps2"><span class="rvts6">Version </span><span class="rvts18">0.4x</span><span class="rvts6"> can be installed along side of Version </span><span class="rvts18">0.3x</span><span class="rvts6"> without any issue. UnInstalling version </span><span class="rvts18">0.3x</span><span class="rvts6"> will not affect version </span><span class="rvts18">0.4x</span><span class="rvts6">. UnInstalling version </span><span class="rvts18">0.4x</span><span class="rvts6"> will not have any affect on version </span><span class="rvts18">0.3x</span><span class="rvts6">. </span></p>
+<p class="rvps2"><span class="rvts18">Changes to</span><span class="rvts6"> </span><a class="rvts12" href="MfFloat.html">MfFloat</a></p>
+<p class="rvps16"><span class="rvts6">Added Fields, </span><a class="rvts12" href="MfFloatNaN.html">NaN</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatNegativeInfinity.html">NegativeInfinity</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatPositiveInfinity.html">PositiveInfinity</a></p>
+<p class="rvps16"><span class="rvts6">Added Methods </span><a class="rvts12" href="MfFloatIsInfinity.html">IsInfinity</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatIsNegativeInfinity.html">IsNegativeInfinity</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatIsPositiveInfinity.html">IsPositiveInfinity</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatParse.html#Parse2">Parse(s, style)</a><span class="rvts6"> overload, </span><a class="rvts12" href="MfFloatParse.html#Parse3">Parse(s, provider)</a><span class="rvts6"> overload, </span><a class="rvts12" href="MfFloatParse.html#Parse4">Parse(s, style, provider)</a><span class="rvts6"> overload, and </span><a class="rvts12" href="MfFloatTryParse.html#TryParse2">TryParse(ByRef result, s, style[, provider ])</a><span class="rvts6"> overload.</span></p>
+<p class="rvps16"><span class="rvts6">Divide by Zero no longer throw </span><a class="rvts12" href="MfDByZ.html">MfDivideByZeroException</a><span class="rvts6"> but return value of </span><a class="rvts12" href="MfFloatNegativeInfinity.html">NegativeInfinity</a><span class="rvts6"> or </span><a class="rvts12" href="MfFloatPositiveInfinity.html">PositiveInfinity</a><span class="rvts6"> depending on the the current value sign.</span><br/><span class="rvts6">Use </span><a class="rvts12" href="MfFloatIsInfinity.html">IsInfinity(obj)</a><span class="rvts6"> or </span><a class="rvts12" href="MfFloatIsNegativeInfinity.html">IsNegativeInfinity(obj)</a><span class="rvts6"> or </span><a class="rvts12" href="MfFloatIsPositiveInfinity.html">IsPositiveInfinity(obj)</a><span class="rvts6"> to test for this result.</span></p>
+<p class="rvps16"><a class="rvts12" href="MfFloatGetTrimmed.html">GetTrimmed()</a><span class="rvts6"> method is now much faster.</span></p>
+<p class="rvps16"><a class="rvts12" href="MfFloatConstructor.html">Constructor</a><span class="rvts6"> updated to create instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> much faster.</span></p>
+<p class="rvps2"><span class="rvts18">Changes to</span><span class="rvts6"> </span><a class="rvts12" href="MfString.html">MfString</a></p>
+<p class="rvps16"><span class="rvts6">Added methods </span><a class="rvts12" href="MfStringContains.html">Contains</a><span class="rvts6">, </span><a class="rvts12" href="MfStringGetEnumerator.html">GetEnumerator([AsCharCode])</a><span class="rvts6">, </span><a class="rvts12" href="MfStringFromCharList.html">FromCharList(chars [,startIndex, length])</a><span class="rvts6">, </span><a class="rvts12" href="MfStringToCharList.html">ToCharList([startIndex, length])</a><span class="rvts6">, and </span><a class="rvts12" href="MfStringRemoveWhiteSpace.html">RemoveWhiteSpace(str [, ReturnAsObject])</a></p>
+<p class="rvps16"><span class="rvts6">Added new overload method </span><a class="rvts12" href="MfStringRemove.html#Remove2">Remove(startIndex, count)</a></p>
+<p class="rvps16"><span class="rvts6">Most all of the method for </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> have be updated to be much faster then in version </span><span class="rvts18">0.3x</span><span class="rvts6">.</span></p>
+<p class="rvps16"><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instances can now be enumerated similar to an array or list by us a </span><span class="rvts43">for i, c in instance</span><br/><span class="rvts6">See </span><a class="rvts12" href="MfStringGetEnumerator.html">GetEnumerator([AsCharCode])</a><span class="rvts6"> for more details.</span></p>
+<p class="rvps2"><span class="rvts18">General Changes</span></p>
+<p class="rvps16"><span class="rvts6">All Integer related Classes Parse and TryParse Method have been update with new overloads</span></p>
+<p class="rvps16"><span class="rvts6">Many Updates to this help file.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">New Classes</span></span></h3>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><a class="rvts12" href="MfBigInt.html">MfBigInt</a></li>
+<li class="rvps2"><a class="rvts12" href="MfCharList1.html">MfBinaryList</a></li>
+<li class="rvps2"><a class="rvts12" href="MfCharList3.html">MfByteList</a></li>
+<li class="rvps2"><a class="rvts12" href="MfCharList.html">MfCharList</a></li>
+<li class="rvps2"><a class="rvts12" href="MfListVar.html">MfListVar</a></li>
+<li class="rvps2"><a class="rvts12" href="MfCharList2.html">MfNibbleList</a></li>
+<li class="rvps2"><a class="rvts12" href="MFOufM22.html">MfOutOfMemoryException</a></li>
+<li class="rvps2"><a class="rvts12" href="MfSByte.html">MfSByte</a></li>
+<li class="rvps2"><a class="rvts12" href="MfUInt16.html">MfUInt16</a></li>
+<li class="rvps2"><a class="rvts12" href="MfUInt32.html">MfUInt32</a></li>
+<li class="rvps2"><a class="rvts12" href="MfUInt64.html">MfUInt64</a></li>
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html">StringBuilder</a></li>
+</ul>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Version 0.3x February 17, 2017</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initial release </span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

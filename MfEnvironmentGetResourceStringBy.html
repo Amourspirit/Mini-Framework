@@ -60,7 +60,7 @@
 				
 				<a href="MfEnvironmentGetResourceString.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfEnvironmentGetType.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfEnvironmentReset.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,21 +68,24 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetResourceStringBySection()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := MfEnvironment.Instance.GetResourceStringBySection(Key, section)</span><br/><span class="rvts48">OutputVar := MfEnvironment.Instance.GetResourceStringBySection(Key, section, arg, arg2, ..., argN)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetResourceStringBySection(Key, section)</span></span></h2>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetResourceStringBySection()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfRSB23GetResourceStringBySectio.html">MfResourceSingletonBase.GetResourceStringBySection()</a></p>
+<p class="rvps20"><span class="rvts49">OutputVar := MfEnvironment.Instance.GetResourceStringBySection(Key, section)</span><br/><span class="rvts49">OutputVar := MfEnvironment.Instance.GetResourceStringBySection(Key, section, arg, arg2, ..., argN)</span></p>
+<h2 class="rvps5"><a name="GetResourceStringBySection1"></a>
+<span class="rvts0"><span class="rvts16">GetResourceStringBySection(Key, section)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Gets a resource string from the current resource file with a key in a section</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetResourceStringBySection(Key, section, arg, arg2, ..., argN)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Gets a resource string from the current resource file with a key in a section, with format </span><span class="rvts54">arg(s)</span></p>
+<h2 class="rvps5"><a name="GetResourceStringBySection2"></a>
+<span class="rvts0"><span class="rvts16">GetResourceStringBySection(Key, section, arg, arg2, ..., argN)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a resource string from the current resource file with a key in a section, with format </span><span class="rvts55">arg(s)</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">key</span></p>
-<p class="rvps22"><span class="rvts53">The key of the resource string</span></p>
-<p class="rvps21"><span class="rvts51">section</span></p>
-<p class="rvps22"><span class="rvts53">Section of resource to get string value from.</span></p>
-<p class="rvps21"><span class="rvts51">arg</span></p>
-<p class="rvps22"><span class="rvts53">One or more arguments to format the resource string.</span></p>
+<p class="rvps21"><span class="rvts52">key</span></p>
+<p class="rvps22"><span class="rvts54">The key of the resource string</span></p>
+<p class="rvps21"><span class="rvts52">section</span></p>
+<p class="rvps22"><span class="rvts54">Section of resource to get string value from.</span></p>
+<p class="rvps21"><span class="rvts52">arg</span></p>
+<p class="rvps22"><span class="rvts54">One or more arguments to format the resource string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">msg := </span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts32">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceStringBySection</span><span class="rvts30">(</span><span class="rvts42">"Argument_Object_Param"</span><span class="rvts30">, </span><span class="rvts42">"DATA"</span><span class="rvts30">)</span><br/><span class="rvts30">ex := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfException</span><span class="rvts30">(msg)</span><br/><span class="rvts30">ex.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineNumber</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts32">throw</span><span class="rvts30"> ex</span></p>
+<p class="rvps14"><span class="rvts31">msg := </span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts33">Instance</span><span class="rvts31">.</span><span class="rvts47">GetResourceStringBySection</span><span class="rvts31">(</span><span class="rvts42">"Argument_Object_Param"</span><span class="rvts31">, </span><span class="rvts42">"DATA"</span><span class="rvts31">)</span><br/><span class="rvts31">ex := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfException</span><span class="rvts31">(msg)</span><br/><span class="rvts31">ex.</span><span class="rvts47">SetProp</span><span class="rvts31">(</span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">)</span><br/><span class="rvts33">throw</span><span class="rvts31"> ex</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
 <p class="rvps2"><a class="rvts12" href="MfEnvironmentGetResourceString.html">GetResourceString()</a><span class="rvts6">, </span><a class="rvts12" href="ResourceStrings.html">Resource Strings</a></p>
 </div>

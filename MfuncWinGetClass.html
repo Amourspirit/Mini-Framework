@@ -68,19 +68,19 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">WinGetClass()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.WinGetClass([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">WinGetClass()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := Mfunc.WinGetClass([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.WinGetClass([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></span></h2>
 <p class="rvps2"><span class="rvts6">Retrieves the specified window's class name.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">WinTitle</span></p>
-<p class="rvps22"><span class="rvts53">A window title or other criteria identifying the target window. See </span><a class="rvts59" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
-<p class="rvps21"><span class="rvts51">WinText</span></p>
-<p class="rvps22"><span class="rvts53">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts53"> is ON.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
-<p class="rvps21"><span class="rvts51">ExcludeTitle</span></p>
-<p class="rvps22"><span class="rvts53">Windows whose titles include this value will not be considered.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
-<p class="rvps21"><span class="rvts51">ExcludeText</span></p>
-<p class="rvps22"><span class="rvts53">Windows whose text include this value will not be considered.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing </span><span class="rvts69">string</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts52">WinTitle</span></p>
+<p class="rvps22"><span class="rvts54">A window title or other criteria identifying the target window. See </span><a class="rvts60" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts54">.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing </span><span class="rvts67">string</span><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">WinText</span></p>
+<p class="rvps22"><span class="rvts54">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts60" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts54"> is ON.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing </span><span class="rvts67">string</span><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">ExcludeTitle</span></p>
+<p class="rvps22"><span class="rvts54">Windows whose titles include this value will not be considered.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing </span><span class="rvts67">string</span><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">ExcludeText</span></p>
+<p class="rvps22"><span class="rvts54">Windows whose text include this value will not be considered.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing </span><span class="rvts67">string</span><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns the retrieved class name.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
@@ -89,7 +89,7 @@
 <p class="rvps2"><span class="rvts6">Window titles and text are case sensitive. Hidden windows are not detected unless </span><a class="rvts13" href="http://ahkscript.org/docs/commands/DetectHiddenWindows.htm" target="_blank">DetectHiddenWindows</a><span class="rvts6"> has been turned on.</span></p>
 <p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinGetClass.htm" target="_blank">AutoHotkey Docs - WinGetClass</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">class := </span><span class="rvts34">Mfunc</span><span class="rvts30">.</span><span class="rvts45">WinGetClass</span><span class="rvts30">(</span><span class="rvts42">"A"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, The active window's class is "%class%".</span></p>
+<p class="rvps14"><span class="rvts31">class := </span><span class="rvts35">Mfunc</span><span class="rvts31">.</span><span class="rvts47">WinGetClass</span><span class="rvts31">(</span><span class="rvts42">"A"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31">, The active window's class is "%class%".</span></p>
 </div>
 	
 	<div id="topic_footer">

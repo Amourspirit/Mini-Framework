@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>CopyTo()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilderCopyTo");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">CopyTo()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="SnipitConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderEnsureCapacity.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">CopyTo()</span></span></h1>
+<p class="rvps20"><span class="rvts51">instance</span><span class="rvts49">.CopyTo(sourceIndex, destination, destinationIndex, count)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">CopyTo(sourceIndex, destination, destinationIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Copies the characters from a specified segment of this instance to a specified segment of a destination </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">sourceIndex</span></p>
+<p class="rvps22"><span class="rvts54">The starting position in this instance where characters will be copied from. The index is </span><span class="rvts69">zero-based</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">destination</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> instance where characters will be copied.</span></p>
+<p class="rvps21"><span class="rvts52">destinationIndex</span></p>
+<p class="rvps22"><span class="rvts54">The starting position in destination where characters will be copied. The index is </span><span class="rvts69">zero-based</span><span class="rvts54">.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">The number of characters to be copied.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if destination is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> </span><span class="rvts55">sourceIndex</span><span class="rvts6">, </span><span class="rvts55">destinationIndex</span><span class="rvts6">, or </span><span class="rvts55">count</span><span class="rvts6">, is less than zero -or- </span><span class="rvts55">sourceIndex</span><span class="rvts6"> is greater than the length of this instance.</span><br/><span class="rvts6"></span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts55">sourceIndex</span><span class="rvts6"> + </span><span class="rvts55">count</span><span class="rvts6"> is greater than the length of this instance. -or- </span><span class="rvts55">destinationIndex</span><span class="rvts6"> + </span><span class="rvts55">count</span><span class="rvts6"> is greater than the length of </span><span class="rvts55">destination</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The CopyTo method is intended to be used in the rare situation when you need to efficiently copy successive sections of a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object to a list.</span></p>
+<p class="rvps2"><span class="rvts6">For example, your application could populate a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object with a large number of characters then use the </span><span class="rvts23">CopyTo</span><span class="rvts6"> method to copy small, successive pieces of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object to a list where the pieces are processed. When all the data in the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object is processed, the size of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object is set to zero and the cycle is repeated.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

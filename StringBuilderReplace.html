@@ -1,0 +1,120 @@
+﻿<html>
+	
+<head>
+	<title>Replace()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilderReplace");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Replace()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderRemove.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderToString.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Replace()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts61" href="StringBuilderReplace.html#Replace1">instance.Replace(oldValue, newValue)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="StringBuilderReplace.html#Replace2">instance.Replace(oldValue, newValue, startIndex, count)</a></p>
+<h2 class="rvps5"><a name="Replace1"></a>
+<span class="rvts0"><span class="rvts16">Replace(oldValue, newValue)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Replaces, within a substring of this instance, all occurrences of a specified string with another specified string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">oldValue</span></p>
+<p class="rvps22"><span class="rvts54">The string to replace.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">newValue</span></p>
+<p class="rvps22"><span class="rvts54">The string that replaces oldValue, or null.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance with all instances of </span><span class="rvts55">oldValue</span><span class="rvts6"> replaced by </span><span class="rvts55">newValue</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">oldValue</span><span class="rvts6"> is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if The length of oldValue is zero.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method performs an ordinal, case-sensitive comparison to identify occurrences of </span><span class="rvts55">oldValue</span><span class="rvts6"> in the specified substring. If </span><span class="rvts55">newValue</span><span class="rvts6"> is null, all occurrences of </span><span class="rvts55">oldValue</span><span class="rvts6"> are removed.</span></p>
+<p class="rvps2"><span class="rvts6">See </span><a class="rvts12" href="StringBuilderReplace.html#Example">Example</a><span class="rvts6"> below.</span></p>
+<h2 class="rvps5"><a name="Replace2"></a>
+<span class="rvts0"><span class="rvts16">Replace(oldValue, newValue, startIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Replaces, within a substring of this instance, all occurrences of a specified string with another specified string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">oldValue</span></p>
+<p class="rvps22"><span class="rvts54">The string to replace.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">newValue</span></p>
+<p class="rvps22"><span class="rvts54">The string that replaces oldValue, or null.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">The position in this instance where the substring begins.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">The length of the substring.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance with all instances of </span><span class="rvts55">oldValue</span><span class="rvts6"> replaced by </span><span class="rvts55">newValue</span><span class="rvts6"> in the range from </span><span class="rvts55">startIndex</span><span class="rvts6"> to </span><span class="rvts55">startIndex</span><span class="rvts6"> + </span><span class="rvts55">count</span><span class="rvts6"> - 1.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">oldValue</span><span class="rvts6"> is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if The length of oldValue is zero.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">startIndex</span><span class="rvts6"> or </span><span class="rvts55">count</span><span class="rvts6"> is less than zero.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts55">startIndex</span><span class="rvts6"> plus </span><span class="rvts55">count</span><span class="rvts6"> indicates a character position not within this instance.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts6">Enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method performs an ordinal, case-sensitive comparison to identify occurrences of </span><span class="rvts55">oldValue</span><span class="rvts6"> in the specified substring. If </span><span class="rvts55">newValue</span><span class="rvts6"> is null, all occurrences of </span><span class="rvts55">oldValue</span><span class="rvts6"> are removed.</span></p>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">rule1 := </span><span class="rvts42">"0----+----1----+----2----+----3----+----4---"</span><br/><span class="rvts31">rule2 := </span><span class="rvts42">"01234567890123456789012345678901234567890123"</span><br/><span class="rvts31">str &nbsp; := </span><span class="rvts42">"The quick br!wn d#g jumps #ver the lazy cat."</span><br/><span class="rvts31">sb &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(</span><span class="rvts42">"StringBuilder.Replace method"</span><span class="rvts31">)</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(str)</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"Original value:"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule1)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule2)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb1.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"#"</span><span class="rvts31">, </span><span class="rvts42">"!"</span><span class="rvts31">, </span><span class="rvts68">15</span><span class="rvts31">, </span><span class="rvts68">29</span><span class="rvts31">) </span><span class="rvts32">; Some "#" -&gt; "!"</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule1)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule2)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb1.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"!"</span><span class="rvts31">, </span><span class="rvts42">"o"</span><span class="rvts31">) </span><span class="rvts32">; All "!" -&gt; "o"</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule1)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule2)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb1.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"cat"</span><span class="rvts31">, </span><span class="rvts42">"dog"</span><span class="rvts31">) </span><span class="rvts32">; All "cat" -&gt; "dog"</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule1)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule2)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb1.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"dog"</span><span class="rvts31">, </span><span class="rvts42">"fox"</span><span class="rvts31">, </span><span class="rvts68">15</span><span class="rvts31">, </span><span class="rvts68">20</span><span class="rvts31">) </span><span class="rvts32">; Some "dog" -&gt; "fox"</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"Final value:"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule1)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(rule2)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">StringBuilder.Replace method</span><br/><span class="rvts32"></span><br/><span class="rvts32">Original value:</span><br/><span class="rvts32">0----+----1----+----2----+----3----+----4---</span><br/><span class="rvts32">01234567890123456789012345678901234567890123</span><br/><span class="rvts32">The quick br!wn d#g jumps #ver the lazy cat.</span><br/><span class="rvts32"></span><br/><span class="rvts32">0----+----1----+----2----+----3----+----4---</span><br/><span class="rvts32">01234567890123456789012345678901234567890123</span><br/><span class="rvts32">The quick br!wn d!g jumps !ver the lazy cat.</span><br/><span class="rvts32"></span><br/><span class="rvts32">0----+----1----+----2----+----3----+----4---</span><br/><span class="rvts32">01234567890123456789012345678901234567890123</span><br/><span class="rvts32">The quick brown dog jumps over the lazy cat.</span><br/><span class="rvts32"></span><br/><span class="rvts32">0----+----1----+----2----+----3----+----4---</span><br/><span class="rvts32">01234567890123456789012345678901234567890123</span><br/><span class="rvts32">The quick brown dog jumps over the lazy dog.</span><br/><span class="rvts32"></span><br/><span class="rvts32">Final value:</span><br/><span class="rvts32">0----+----1----+----2----+----3----+----4---</span><br/><span class="rvts32">01234567890123456789012345678901234567890123</span><br/><span class="rvts32">The quick brown fox jumps over the lazy dog.</span><br/><span class="rvts32">*/</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

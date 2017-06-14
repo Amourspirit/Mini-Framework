@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>Chars</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("Newtopic8");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Chars</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderCapacity.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderMaxCapacity.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Chars</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the character at the specified character position in this instance.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Chars[index]</span><br/><span class="rvts51">instance</span><span class="rvts49">.Chars[index] := value</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">index</span></p>
+<p class="rvps22"><span class="rvts54">The </span><span class="rvts69">zero-based</span><span class="rvts54"> position of the character.</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54"> or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">When setting can be var string or instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns var string containing the char value at the position of the argument </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets the char value at the position of the argument </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">index</span><span class="rvts6"> is outside the bounds of this instance while setting a character.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfIOORE26.html">MfIndexOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">index</span><span class="rvts6"> is outside the bounds of this instance while getting a character.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">index</span><span class="rvts6"> parameter is the position of a character within the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6">. The first character in the string is at index </span><span class="rvts18">0</span><span class="rvts6">. The length of a string is the number of characters it contains. The last accessible character of a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> instance is at index Length - </span><span class="rvts18">1</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">nAlphabeticChars := </span><span class="rvts68">0</span><br/><span class="rvts31">nWhitespace := </span><span class="rvts68">0</span><br/><span class="rvts31">nPunctuation := </span><span class="rvts68">0</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(</span><span class="rvts42">"This is a simple sentence."</span><span class="rvts31">)</span><br/><span class="rvts31">ctr := </span><span class="rvts68">0</span><br/><span class="rvts33">while</span><span class="rvts31"> (ctr &lt; sb1.</span><span class="rvts35">Length</span><span class="rvts31">)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;ch := sb1.</span><span class="rvts35">Chars</span><span class="rvts31">[ctr]</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsLetter</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;nAlphabeticChars++</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;ctr++</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">continue</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsWhiteSpace</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;nWhitespace++</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;ctr++</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">continue</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsPunctuation</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;nPunctuation++</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;ctr++</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">continue</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;ctr++</span><br/><span class="rvts31">}</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"The sentence '{0}' has:"</span><span class="rvts31">, sb1))</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">" &nbsp; Alphabetic characters: {0}"</span><span class="rvts31">, nAlphabeticChars))</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">" &nbsp; Whitespace characters: {0}"</span><span class="rvts31">, nWhitespace))</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">" &nbsp; Punctuation characters: {0}"</span><span class="rvts31">, nPunctuation)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">The sentence 'This is a simple sentence.' has:</span><br/><span class="rvts32"> &nbsp; Alphabetic characters: 21</span><br/><span class="rvts32"> &nbsp; Whitespace characters: 4</span><br/><span class="rvts32"> &nbsp; Punctuation characters: 1</span><br/><span class="rvts32">*/</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -58,7 +58,7 @@
 			<div id="topic_header_nav">
 				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfObjectVerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MFOufM22Constructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="MfParamsProperties.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -68,15 +68,472 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfParams Class</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">MfParams Class</span></span></h1>
 <p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6">)</span></p>
-<p class="rvps2"><span class="rvts6">Represents </span><span class="rvts41">MfParams</span><span class="rvts6"> object.</span><br/><span class="rvts15">Sealed</span><span class="rvts6"> Class.</span><br/><span class="rvts6">AutoHotkey does not have any type checking built in at the time of this writing. AutoHotkey_L Version v1.1.24.03</span><br/><span class="rvts6">AutoHotkey does not allow overrides of methods such as</span></p>
-<p class="rvps14"><span class="rvts30">MyFunc(str)</span><br/><span class="rvts30">MyFunc(str, int)</span><br/><span class="rvts30">MyFunc(str, str)</span><br/><span class="rvts30">MyFunc(str, </span><span class="rvts33">MfChar</span><span class="rvts30">)</span></p>
-<p class="rvps2"><span class="rvts6">This </span><span class="rvts22">MfParams</span><span class="rvts6"> Class helps to solve that issue by giving a way to do type checking inside of the method.</span></p>
+<p class="rvps2"><span class="rvts6">Provides a way to allow for overloading methods with type checking.</span></p>
+<p class="rvps2"><span class="rvts6">Represents </span><span class="rvts23">MfParams</span><span class="rvts6"> object.</span><br/><span class="rvts15">Sealed</span><span class="rvts6"> Class.</span><br/><span class="rvts6">AutoHotkey does not have any type checking built in at the time of this writing.</span><br/><span class="rvts6">AutoHotkey does not allow overrides of methods such as</span></p>
+<p class="rvps14"><span class="rvts31">MyFunc(str)</span><br/><span class="rvts31">MyFunc(str, int)</span><br/><span class="rvts31">MyFunc(str, str)</span><br/><span class="rvts31">MyFunc(str, </span><span class="rvts34">MfChar</span><span class="rvts31">)</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts22">MfParams</span><span class="rvts6"> Class helps to solve that issue by giving a way to do type checking inside of the method.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
-<p class="rvps2"><a class="rvts12" href="MfParamsProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfParamsMethods.html">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfParamsConstructor.html">Constructor()</a></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts31">; Example MfParams constructor</span><br/><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">) &nbsp;</span><span class="rvts31">; Creates new instance of Params and add String object containing "Hello World"</span><br/><span class="rvts30">strObj := p.</span><span class="rvts34">Item</span><span class="rvts30">[</span><span class="rvts72">0</span><span class="rvts30">] </span><span class="rvts31">; strObj now contains an instance of String object</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % strObj.</span><span class="rvts34">Value</span><span class="rvts30"> </span><span class="rvts31">; displays Hello World</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % p.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays MfString</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Example using Primitives</span><br/><span class="rvts30">intObj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">)</span><br/><span class="rvts30">strObj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">chrObj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfChar</span><span class="rvts30">(</span><span class="rvts42">"%"</span><span class="rvts30">)</span><br/><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(intObj, strObj, chrObj)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % p.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays MfInteger,MfString,MfChar</span><br/><span class="rvts30">result := MyFunc(p)</span><br/><span class="rvts30"></span><br/><span class="rvts31">/* result contains</span><br/><span class="rvts31"> * Integer:10</span><br/><span class="rvts31"> * String:Hello World</span><br/><span class="rvts31"> * Char:%</span><br/><span class="rvts31"> */</span><br/><span class="rvts30"></span><br/><span class="rvts30"></span><br/><span class="rvts31">; Example Using Add...</span><br/><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">()</span><br/><span class="rvts30">p.</span><span class="rvts45">AddInteger</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">)</span><br/><span class="rvts30">p.</span><span class="rvts45">AddString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">p.</span><span class="rvts45">AddChar</span><span class="rvts30">(</span><span class="rvts42">"%"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % p.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays MfInteger,MsString,MfChar</span><br/><span class="rvts30">result := MyFunc(p)</span><br/><span class="rvts30"></span><br/><span class="rvts31">/* result contains</span><br/><span class="rvts31"> * Integer:10</span><br/><span class="rvts31"> * String:Hello World</span><br/><span class="rvts31"> * Char:%</span><br/><span class="rvts31"> */</span><br/><span class="rvts30"></span><br/><span class="rvts30"></span><br/><span class="rvts31">; example passing in objects</span><br/><span class="rvts30">myInt := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfInteger</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">)</span><br/><span class="rvts30">myStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">myChar := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfChar</span><span class="rvts30">(</span><span class="rvts42">"%"</span><span class="rvts30">)</span><br/><span class="rvts30">result := MyFunc(myInt, myStr, myChar)</span><br/><span class="rvts30"></span><br/><span class="rvts31">/* result contains</span><br/><span class="rvts31"> * Integer:10</span><br/><span class="rvts31"> * String:Hello World</span><br/><span class="rvts31"> * Char:%</span><br/><span class="rvts31"> */</span><br/><span class="rvts30"></span><br/><span class="rvts30"></span><br/><span class="rvts31">; Example using Data</span><br/><span class="rvts31">; this example passes MfParams into MfInteger.Parse method with</span><br/><span class="rvts31">; Data Key of ReturnAsObject. This cause MfInteger.Parse to return is value</span><br/><span class="rvts31">; as an instance of MfInteger rather then the default of a var containing integer.</span><br/><span class="rvts30">pStr := </span><span class="rvts42">"33"</span><br/><span class="rvts30">Parms := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">()</span><br/><span class="rvts30">Parms.</span><span class="rvts45">AddString</span><span class="rvts30">(pStr)</span><br/><span class="rvts30">Parms.</span><span class="rvts34">Data</span><span class="rvts30">.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts31">; parse will return an instance of MfInteger rather than a var integer</span><br/><span class="rvts31">; because Parms.Data.Add("ReturnAsObject", true)</span><br/><span class="rvts30">int := </span><span class="rvts33">MfInteger</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(Parms)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % int.</span><span class="rvts34">Value</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Also the results of our MyFunc will return an object of MfString</span><br/><span class="rvts31">; because Parms.Data.Add("ReturnAsObject", true)</span><br/><span class="rvts30">result := MyFunc(Parms)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % result.</span><span class="rvts34">Value</span><span class="rvts30"> </span><span class="rvts31">; displays 33</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Example constructor using MfParams static Primitive generators</span><br/><span class="rvts31">; Create a new instance of MfParams</span><br/><span class="rvts31">; add Integer, String, Char in the constructor</span><br/><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">(</span><span class="rvts33">MfParams</span><span class="rvts30">.</span><span class="rvts45">I</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">), </span><span class="rvts33">MfParams</span><span class="rvts30">.</span><span class="rvts45">S</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">), </span><span class="rvts33">MfParams</span><span class="rvts30">.</span><span class="rvts45">C</span><span class="rvts30">(</span><span class="rvts42">"%"</span><span class="rvts30">))</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % p.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays: MfInteger,MfString,MfChar</span><br/><span class="rvts30">result := MyFunc(p)</span><br/><span class="rvts30"></span><br/><span class="rvts31">/* result contains</span><br/><span class="rvts31"> * Integer:10</span><br/><span class="rvts31"> * String:Hello World</span><br/><span class="rvts31"> * Char:%</span><br/><span class="rvts31"> */</span><br/><span class="rvts30"></span><br/><span class="rvts30"></span><br/><span class="rvts31">; Example AddRange using MfParams static Primitive generators</span><br/><span class="rvts30">p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">() </span><span class="rvts31">; create a new instance of MfParams</span><br/><span class="rvts30">p.</span><span class="rvts45">AddRange</span><span class="rvts30">(</span><span class="rvts33">MfParams</span><span class="rvts30">.</span><span class="rvts45">I</span><span class="rvts30">(</span><span class="rvts72">10</span><span class="rvts30">), </span><span class="rvts33">MfParams</span><span class="rvts30">.</span><span class="rvts45">S</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">), </span><span class="rvts33">MfParams</span><span class="rvts30">.</span><span class="rvts45">C</span><span class="rvts30">(</span><span class="rvts42">"%"</span><span class="rvts30">))</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % p.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; Displays MfInteger,MfString,MfChar</span><br/><span class="rvts30">result := MyFunc(p)</span><br/><span class="rvts30"></span><br/><span class="rvts31">/* result contains</span><br/><span class="rvts31"> * Integer:10</span><br/><span class="rvts31"> * String:Hello World</span><br/><span class="rvts31"> * Char:%</span><br/><span class="rvts31"> */</span><br/><span class="rvts30"></span><br/><span class="rvts32">ExitApp</span><br/><span class="rvts32"></span><br/><span class="rvts31">; Example function</span><br/><span class="rvts30">MyFunc(args*) {</span><br/><span class="rvts31"> &nbsp; &nbsp;; check to see if the first arg is in instance of MfPrams and use if it is</span><br/><span class="rvts31"> &nbsp; &nbsp;; args is 1 base index</span><br/><span class="rvts30"> &nbsp; &nbsp;if (</span><span class="rvts33">MfObject</span><span class="rvts30">.</span><span class="rvts45">IsObjInstance</span><span class="rvts30">(args[1], </span><span class="rvts33">MfParams</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;p := args[1] </span><span class="rvts31">; arg 1 is a MfParams object so we will use it</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else</span><span class="rvts30"> {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;; Mfparams was not passed in so we will create an instance and add all the args</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;p := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfParams</span><span class="rvts30">()</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;for</span><span class="rvts30"> index, arg </span><span class="rvts32">in</span><span class="rvts30"> args</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;p.</span><span class="rvts45">Add</span><span class="rvts30">(arg)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;; this method only takes 1 to 3 arguments so we will check and throw an error if wrong number of args</span><br/><span class="rvts32"> &nbsp; &nbsp;if</span><span class="rvts30"> ((p.</span><span class="rvts32">Count</span><span class="rvts30"> &lt; 1) || (p.</span><span class="rvts32">Count</span><span class="rvts30"> &gt; 3)) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;e := new </span><span class="rvts33">MfNotSupportedException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"NotSupportedException_MethodOverload"</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;e.</span><span class="rvts45">SetProp</span><span class="rvts30">(</span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_LineFile</span><span class="rvts30">, </span><span class="rvts32">A_ThisFunc</span><span class="rvts30">)</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;throw</span><span class="rvts30"> e</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;strParams := p.</span><span class="rvts45">ToString</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp;retval := </span><span class="rvts42">"unknown"</span><br/><span class="rvts30"> &nbsp; &nbsp;if (strParams = "MfString") {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;str := p.</span><span class="rvts45">GetValue</span><span class="rvts30">(0) </span><span class="rvts31">; get the first item in the params</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;retval := str</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else if</span><span class="rvts30"> (strParams = </span><span class="rvts42">"MfString,MfInteger"</span><span class="rvts30">) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;str := p.</span><span class="rvts45">GetValue</span><span class="rvts30">(0) </span><span class="rvts31">; get the first item in the params</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;int := p.</span><span class="rvts45">GetValue</span><span class="rvts30">(1) </span><span class="rvts31">; get the second item in the params</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts42">"String:"</span><span class="rvts30"> . str . </span><span class="rvts42">" Integer:"</span><span class="rvts30"> . int</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else if</span><span class="rvts30"> (strParams = </span><span class="rvts42">"MfString,MfString"</span><span class="rvts30">) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;strObjA := p.</span><span class="rvts34">Item</span><span class="rvts30">[0] </span><span class="rvts31">; get the first object which is a String Object</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;strObjA := p.</span><span class="rvts34">Item</span><span class="rvts30">[1] </span><span class="rvts31">; get the second object which is a String Object</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"StringA:{0}`nStringB:{1}</span><span class="rvts30">", strObjA.</span><span class="rvts34">Value</span><span class="rvts30">, strObjB.</span><span class="rvts34">Value</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else if</span><span class="rvts30"> (strParams = </span><span class="rvts42">"MfString,MfChar"</span><span class="rvts30">) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;str := p.</span><span class="rvts45">GetValue</span><span class="rvts30">(0) </span><span class="rvts31">; get the first item in the params</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;strCh := p.</span><span class="rvts45">GetValue</span><span class="rvts30">(1) </span><span class="rvts31">; get the second item in the params</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"String:{0}`nChar:{1}"</span><span class="rvts30">, str, strCh)</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else if</span><span class="rvts30"> (strParams = </span><span class="rvts42">"MfInteger,MfString,MfChar"</span><span class="rvts30">) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"Integer:{0}`nString:{1}`nChar:{2}"</span><span class="rvts30">, p.</span><span class="rvts34">Item</span><span class="rvts30">[0].</span><span class="rvts34">Value</span><span class="rvts30">, p.</span><span class="rvts34">Item</span><span class="rvts30">[1].</span><span class="rvts34">Value</span><span class="rvts30">, p.</span><span class="rvts34">Item</span><span class="rvts30">[2].</span><span class="rvts34">Value</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;; optionally return different value using Data Property</span><br/><span class="rvts30"> &nbsp; &nbsp;if (p.</span><span class="rvts34">Data</span><span class="rvts30">.</span><span class="rvts45">Contains</span><span class="rvts30">(</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts30">) &amp;&amp; (p.</span><span class="rvts34">Data</span><span class="rvts30">.</span><span class="rvts34">Item</span><span class="rvts30">[</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts30">] = </span><span class="rvts32">true</span><span class="rvts30">)) {</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;return</span><span class="rvts30"> </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(retval) </span><span class="rvts31">; return a new instance of MfString</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else</span><span class="rvts30"> {</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;return</span><span class="rvts30"> retval</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+<p class="rvps2"><a class="rvts12" href="MfParams.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfParams.html#Methods">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfParams.html#Example">Example</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsConstructor.html">Constructor([tlist*])</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> class and optionally adds a range of objects to </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAllowEmptyString.html">AllowEmptyString</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets a value indicating whether the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance accepts empty </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instances.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAllowEmptyValue.html">AllowEmptyValue</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets a value indicating whether the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance accepts empty values such as null or ""</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAllowOnlyAhkObj.html">AllowOnlyAhkObj</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets a value indicating whether the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance accepts only objects derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsConvertEnumItemType.html">ConvertEnumItemType</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets a value indicating whether the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> instance uses ParentEnum Type for output.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16Count.html">Count</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the number of elements contained in the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. This property cannot be overridden. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsData.html">Data</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the Data Dictionary Value for extra </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> Options</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16InnerList.html">InnerList</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets an </span><a class="rvts12" href="MfList.html">MfList</a><span class="rvts6"> containing the list of elements in the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16Item.html">Item</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the element at the specified index. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16IsFixedSize.html">IsFixedSize</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a value indicating whether the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> has a fixed size. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16IsReadOnly.html">IsReadonly</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a value indicating whether the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> is read-only. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfEB16_NewEnum.html">_NewEnum()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a new enumerator to enumerate this object's </span><span class="rvts15">key-value</span><span class="rvts6"> pairs. This method is usually not called directly, but by the </span><span class="rvts18">for-loop</span><span class="rvts6"> or by </span><a class="rvts12" href="MfEB16GetEnumerator.html">GetEnumerator()</a><span class="rvts6">. Overrides </span><a class="rvts12" href="MfEB16_NewEnum.html">MfEnumerableBase._NewEnum()</a><span class="rvts6"> Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAdd.html">Add(obj)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Adds an object to the end of the </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddBool.html">AddBool(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Adds </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> to the current instance of </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddByte.html">AddByte(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Adds </span><a class="rvts12" href="MfByte.html">MfByte</a><span class="rvts6"> to the current instance of </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddChar.html">AddChar(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Adds </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> to the current instance of </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddFloat.html">AddFloat(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Add </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> to the current </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddInt64.html">AddInt64(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Add </span><a class="rvts12" href="MfInt64.html">MfInt64</a><span class="rvts6"> to the current </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddInteger.html">AddInteger(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Add </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> to the current </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddRange.html">AddRange(tList*)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Adds a range of </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> instances to </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsAddString.html">AddString(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Add </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> to the current </span><a class="rvts12" href="MfParams.html">MfParams</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsB.html">B(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Creates a new </span><a class="rvts12" href="MfBool.html">MfBool</a><span class="rvts6"> object containing value</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsC.html">C(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Creates a new </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> object containing value</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16Clear.html">Clear()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Removes all objects from the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. This method in </span><span class="rvts18">not</span><span class="rvts6"> to be </span><span class="rvts15">overridden</span><span class="rvts6">. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectCompareTo.html">CompareTo()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16Contains.html">Contains(obj)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Determines whether the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> contains a specific element. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectEquals.html#EqualObj">Equals(obj)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Compares obj to current instance to see if they are the same. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsF.html">F(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Creates a new </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> object containing value</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfEB16GetEnumerator.html">GetEnumerator()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets an enumerator. Inherited from </span><a class="rvts75" href="MfEB16.html">MfEnumerableBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsGetArgCount.html">GetArgsCount(args*)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Get the count of arguments in vardic parameter </span><span class="rvts55">args*</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsGetValue.html">GetValue(index)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of a item in the class for given </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsI.html">I(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Creates a new </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> object containing value</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIs.html">Is(type)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets if current instance of object is of the same type. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16IndexOf.html">IndexOf(obj)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Searches for the specified Object and returns the </span><span class="rvts18">zero-based</span><span class="rvts6"> </span><span class="rvts15">index</span><span class="rvts6"> of the first occurrence within the entire </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6">. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16Insert.html">Insert(index, obj)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Inserts an element into the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> at the specified </span><span class="rvts55">index</span><span class="rvts6">. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnClear.html">OnClear()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes when clearing the contents of the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnClearComplete.html">OnClearComplete()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes after clearing the contents of the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnInsert.html">OnInsert(index, value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes before inserting a new element into the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnInsertComplete.html">OnInsertComplete(index, value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes after inserting a new element into the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnRemove.html">OnRemove(index, value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes when removing an element from the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnRemove.html">OnRemoveComplete(index, value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes when removing an element from the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnSet.html">OnSet(index, oldValue, newValue)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes before setting a value in the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16OnSetComplete.html">OnSetComplete(index, oldValue, newValue)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes after setting a value in the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodProtected.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsOnValidate.html">OnValidate(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs additional custom processes when validating a value.Overrides </span><a class="rvts12" href="MfCB16.html">MfCollectionBase.OnValidate()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16Remove.html">Remove(obj)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Removes the first occurrence of a specific object from the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6">. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCB16RemoveAt.html">RemoveAt(index)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Removes the element at the specified index of the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance. Inherited from </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsS.html">S(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Creates a new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> object containing value</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsToString.html">ToString()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a string representation of the Types contained in the instance of </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfParamsToStringList.html">ToStringList()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a </span><a class="rvts12" href="MfGenericList.html">MfGenericList</a><span class="rvts6"> of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> of the different types in the collection.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts32">; Example MfParams constructor</span><br/><span class="rvts31">p := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">) &nbsp;</span><span class="rvts32">; Creates new instance of Params and add String object containing "Hello World"</span><br/><span class="rvts31">strObj := p.</span><span class="rvts35">Item</span><span class="rvts31">[</span><span class="rvts68">0</span><span class="rvts31">] </span><span class="rvts32">; strObj now contains an instance of String object</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % strObj.</span><span class="rvts35">Value</span><span class="rvts31"> </span><span class="rvts32">; displays Hello World</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % p.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays MfString</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Example using Primitives</span><br/><span class="rvts31">intObj := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts31">strObj := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">)</span><br/><span class="rvts31">chrObj := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfChar</span><span class="rvts31">(</span><span class="rvts42">"%"</span><span class="rvts31">)</span><br/><span class="rvts31">p := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">(intObj, strObj, chrObj)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % p.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays MfInteger,MfString,MfChar</span><br/><span class="rvts31">result := MyFunc(p)</span><br/><span class="rvts31"></span><br/><span class="rvts32">/* result contains</span><br/><span class="rvts32"> * Integer:10</span><br/><span class="rvts32"> * String:Hello World</span><br/><span class="rvts32"> * Char:%</span><br/><span class="rvts32"> */</span><br/><span class="rvts31"></span><br/><span class="rvts31"></span><br/><span class="rvts32">; Example Using Add...</span><br/><span class="rvts31">p := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">()</span><br/><span class="rvts31">p.</span><span class="rvts47">AddInteger</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts31">p.</span><span class="rvts47">AddString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">)</span><br/><span class="rvts31">p.</span><span class="rvts47">AddChar</span><span class="rvts31">(</span><span class="rvts42">"%"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % p.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays MfInteger,MsString,MfChar</span><br/><span class="rvts31">result := MyFunc(p)</span><br/><span class="rvts31"></span><br/><span class="rvts32">/* result contains</span><br/><span class="rvts32"> * Integer:10</span><br/><span class="rvts32"> * String:Hello World</span><br/><span class="rvts32"> * Char:%</span><br/><span class="rvts32"> */</span><br/><span class="rvts31"></span><br/><span class="rvts31"></span><br/><span class="rvts32">; example passing in objects</span><br/><span class="rvts31">myInt := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInteger</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts31">myStr := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">)</span><br/><span class="rvts31">myChar := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfChar</span><span class="rvts31">(</span><span class="rvts42">"%"</span><span class="rvts31">)</span><br/><span class="rvts31">result := MyFunc(myInt, myStr, myChar)</span><br/><span class="rvts31"></span><br/><span class="rvts32">/* result contains</span><br/><span class="rvts32"> * Integer:10</span><br/><span class="rvts32"> * String:Hello World</span><br/><span class="rvts32"> * Char:%</span><br/><span class="rvts32"> */</span><br/><span class="rvts31"></span><br/><span class="rvts31"></span><br/><span class="rvts32">; Example using Data</span><br/><span class="rvts32">; this example passes MfParams into MfInteger.Parse method with</span><br/><span class="rvts32">; Data Key of ReturnAsObject. This cause MfInteger.Parse to return is value</span><br/><span class="rvts32">; as an instance of MfInteger rather then the default of a var containing integer.</span><br/><span class="rvts31">pStr := </span><span class="rvts42">"33"</span><br/><span class="rvts31">Parms := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">()</span><br/><span class="rvts31">Parms.</span><span class="rvts47">AddString</span><span class="rvts31">(pStr)</span><br/><span class="rvts31">Parms.</span><span class="rvts35">Data</span><span class="rvts31">.</span><span class="rvts47">Add</span><span class="rvts31">(</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts31">, </span><span class="rvts33">true</span><span class="rvts31">)</span><br/><span class="rvts32">; parse will return an instance of MfInteger rather than a var integer</span><br/><span class="rvts32">; because Parms.Data.Add("ReturnAsObject", true)</span><br/><span class="rvts31">int := </span><span class="rvts34">MfInteger</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(Parms)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % int.</span><span class="rvts35">Value</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Also the results of our MyFunc will return an object of MfString</span><br/><span class="rvts32">; because Parms.Data.Add("ReturnAsObject", true)</span><br/><span class="rvts31">result := MyFunc(Parms)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % result.</span><span class="rvts35">Value</span><span class="rvts31"> </span><span class="rvts32">; displays 33</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Example constructor using MfParams static Primitive generators</span><br/><span class="rvts32">; Create a new instance of MfParams</span><br/><span class="rvts32">; add Integer, String, Char in the constructor</span><br/><span class="rvts31">p := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">(</span><span class="rvts34">MfParams</span><span class="rvts31">.</span><span class="rvts47">I</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">), </span><span class="rvts34">MfParams</span><span class="rvts31">.</span><span class="rvts47">S</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">), </span><span class="rvts34">MfParams</span><span class="rvts31">.</span><span class="rvts47">C</span><span class="rvts31">(</span><span class="rvts42">"%"</span><span class="rvts31">))</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % p.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays: MfInteger,MfString,MfChar</span><br/><span class="rvts31">result := MyFunc(p)</span><br/><span class="rvts31"></span><br/><span class="rvts32">/* result contains</span><br/><span class="rvts32"> * Integer:10</span><br/><span class="rvts32"> * String:Hello World</span><br/><span class="rvts32"> * Char:%</span><br/><span class="rvts32"> */</span><br/><span class="rvts31"></span><br/><span class="rvts31"></span><br/><span class="rvts32">; Example AddRange using MfParams static Primitive generators</span><br/><span class="rvts31">p := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">() </span><span class="rvts32">; create a new instance of MfParams</span><br/><span class="rvts31">p.</span><span class="rvts47">AddRange</span><span class="rvts31">(</span><span class="rvts34">MfParams</span><span class="rvts31">.</span><span class="rvts47">I</span><span class="rvts31">(</span><span class="rvts68">10</span><span class="rvts31">), </span><span class="rvts34">MfParams</span><span class="rvts31">.</span><span class="rvts47">S</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">), </span><span class="rvts34">MfParams</span><span class="rvts31">.</span><span class="rvts47">C</span><span class="rvts31">(</span><span class="rvts42">"%"</span><span class="rvts31">))</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % p.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Displays MfInteger,MfString,MfChar</span><br/><span class="rvts31">result := MyFunc(p)</span><br/><span class="rvts31"></span><br/><span class="rvts32">/* result contains</span><br/><span class="rvts32"> * Integer:10</span><br/><span class="rvts32"> * String:Hello World</span><br/><span class="rvts32"> * Char:%</span><br/><span class="rvts32"> */</span><br/><span class="rvts31"></span><br/><span class="rvts33">ExitApp</span><br/><span class="rvts33"></span><br/><span class="rvts32">; Example function</span><br/><span class="rvts31">MyFunc(args*) {</span><br/><span class="rvts32"> &nbsp; &nbsp;; check to see if the first arg is in instance of MfPrams and use if it is</span><br/><span class="rvts32"> &nbsp; &nbsp;; args is 1 base index</span><br/><span class="rvts31"> &nbsp; &nbsp;if (</span><span class="rvts34">MfObject</span><span class="rvts31">.</span><span class="rvts47">IsObjInstance</span><span class="rvts31">(args[1], </span><span class="rvts34">MfParams</span><span class="rvts31">))</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;p := args[1] </span><span class="rvts32">; arg 1 is a MfParams object so we will use it</span><br/><span class="rvts31"> &nbsp; &nbsp;} </span><span class="rvts33">else</span><span class="rvts31"> {</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;; Mfparams was not passed in so we will create an instance and add all the args</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;p := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfParams</span><span class="rvts31">()</span><br/><span class="rvts33"> &nbsp; &nbsp; &nbsp; &nbsp;for</span><span class="rvts31"> index, arg </span><span class="rvts33">in</span><span class="rvts31"> args</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;p.</span><span class="rvts47">Add</span><span class="rvts31">(arg)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts32"> &nbsp; &nbsp;; this method only takes 1 to 3 arguments so we will check and throw an error if wrong number of args</span><br/><span class="rvts33"> &nbsp; &nbsp;if</span><span class="rvts31"> ((p.</span><span class="rvts33">Count</span><span class="rvts31"> &lt; 1) || (p.</span><span class="rvts33">Count</span><span class="rvts31"> &gt; 3)) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;e := new </span><span class="rvts34">MfNotSupportedException</span><span class="rvts31">(</span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts47">GetResourceString</span><span class="rvts31">(</span><span class="rvts42">"NotSupportedException_MethodOverload"</span><span class="rvts31">))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;e.</span><span class="rvts47">SetProp</span><span class="rvts31">(</span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">)</span><br/><span class="rvts33"> &nbsp; &nbsp; &nbsp; &nbsp;throw</span><span class="rvts31"> e</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;strParams := p.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;retval := </span><span class="rvts42">"unknown"</span><br/><span class="rvts31"> &nbsp; &nbsp;if (strParams = "MfString") {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;str := p.</span><span class="rvts47">GetValue</span><span class="rvts31">(0) </span><span class="rvts32">; get the first item in the params</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;retval := str</span><br/><span class="rvts31"> &nbsp; &nbsp;} </span><span class="rvts33">else if</span><span class="rvts31"> (strParams = </span><span class="rvts42">"MfString,MfInteger"</span><span class="rvts31">) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;str := p.</span><span class="rvts47">GetValue</span><span class="rvts31">(0) </span><span class="rvts32">; get the first item in the params</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;int := p.</span><span class="rvts47">GetValue</span><span class="rvts31">(1) </span><span class="rvts32">; get the second item in the params</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts42">"String:"</span><span class="rvts31"> . str . </span><span class="rvts42">" Integer:"</span><span class="rvts31"> . int</span><br/><span class="rvts31"> &nbsp; &nbsp;} </span><span class="rvts33">else if</span><span class="rvts31"> (strParams = </span><span class="rvts42">"MfString,MfString"</span><span class="rvts31">) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;strObjA := p.</span><span class="rvts35">Item</span><span class="rvts31">[0] </span><span class="rvts32">; get the first object which is a String Object</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;strObjA := p.</span><span class="rvts35">Item</span><span class="rvts31">[1] </span><span class="rvts32">; get the second object which is a String Object</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"StringA:{0}`nStringB:{1}</span><span class="rvts31">", strObjA.</span><span class="rvts35">Value</span><span class="rvts31">, strObjB.</span><span class="rvts35">Value</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;} </span><span class="rvts33">else if</span><span class="rvts31"> (strParams = </span><span class="rvts42">"MfString,MfChar"</span><span class="rvts31">) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;str := p.</span><span class="rvts47">GetValue</span><span class="rvts31">(0) </span><span class="rvts32">; get the first item in the params</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;strCh := p.</span><span class="rvts47">GetValue</span><span class="rvts31">(1) </span><span class="rvts32">; get the second item in the params</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"String:{0}`nChar:{1}"</span><span class="rvts31">, str, strCh)</span><br/><span class="rvts31"> &nbsp; &nbsp;} </span><span class="rvts33">else if</span><span class="rvts31"> (strParams = </span><span class="rvts42">"MfInteger,MfString,MfChar"</span><span class="rvts31">) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;retval := </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"Integer:{0}`nString:{1}`nChar:{2}"</span><span class="rvts31">, p.</span><span class="rvts35">Item</span><span class="rvts31">[0].</span><span class="rvts35">Value</span><span class="rvts31">, p.</span><span class="rvts35">Item</span><span class="rvts31">[1].</span><span class="rvts35">Value</span><span class="rvts31">, p.</span><span class="rvts35">Item</span><span class="rvts31">[2].</span><span class="rvts35">Value</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts32"> &nbsp; &nbsp;; optionally return different value using Data Property</span><br/><span class="rvts31"> &nbsp; &nbsp;if (p.</span><span class="rvts35">Data</span><span class="rvts31">.</span><span class="rvts47">Contains</span><span class="rvts31">(</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts31">) &amp;&amp; (p.</span><span class="rvts35">Data</span><span class="rvts31">.</span><span class="rvts35">Item</span><span class="rvts31">[</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts31">] = </span><span class="rvts33">true</span><span class="rvts31">)) {</span><br/><span class="rvts33"> &nbsp; &nbsp; &nbsp; &nbsp;return</span><span class="rvts31"> </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(retval) </span><span class="rvts32">; return a new instance of MfString</span><br/><span class="rvts31"> &nbsp; &nbsp;} </span><span class="rvts33">else</span><span class="rvts31"> {</span><br/><span class="rvts33"> &nbsp; &nbsp; &nbsp; &nbsp;return</span><span class="rvts31"> retval</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31">}</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 </div>
 	

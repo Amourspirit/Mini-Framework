@@ -60,7 +60,7 @@
 				
 				<a href="MfListBaseContains.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfListBaseEquals.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfListBaseCopy.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,15 +68,15 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Constructor()</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Constructor()</span></span></h1>
 <p class="rvps2"><span class="rvts6">Constructor for Abstract Class </span><a class="rvts12" href="MfListBase.html">MfListBase</a></p>
-<p class="rvps20"><span class="rvts48">OutputVar := new MfListBase()</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := new MfListBase()</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
 <p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if this Abstract class constructor is called directly.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts6">Derived classes must call </span><span class="rvts43">base.__New()</span><span class="rvts6"> in their constructors.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">class MyClass </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfListBase</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">m_value := ""</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">__New(Value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">this.m_value := Value</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">} </span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; Other code here...</span><br/><span class="rvts30">}</span></p>
+<p class="rvps14"><span class="rvts33">class</span><span class="rvts31"> MyClass </span><span class="rvts33">extends</span><span class="rvts31"> </span><span class="rvts34">MfListBase</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">m_value := ""</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">__New</span><span class="rvts31">(Value)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">base</span><span class="rvts31">.</span><span class="rvts47">__New</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.m_value := Value</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">} </span><br/><span class="rvts31"></span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; Other code here...</span><br/><span class="rvts31">}</span></p>
 </div>
 	
 	<div id="topic_footer">

@@ -1,0 +1,657 @@
+﻿<html>
+	
+<head>
+	<title>StringBuilder</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="String, Substring">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilder");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">StringBuilder</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System_Text.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="NS_System_Text.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderProperties.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">StringBuilder Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">Represents a mutable string of characters. This class cannot be inherited.</span></p>
+<p class="rvps2"><span class="rvts6">Sealed Class</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="StringBuilder.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="StringBuilder.html#Methods">Methods</a><span class="rvts6">, </span><a class="rvts12" href="StringBuilder.html#Related">Related</a><span class="rvts6">, </span><a class="rvts12" href="StringBuilder.html#Remarks">Remarks</a><span class="rvts6">, </span><a class="rvts12" href="StringBuilder.html#Example">Example</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor1">Constructor()</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor2">Constructor(capacity)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class using the specified </span><span class="rvts55">capacity</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor3">Constructor(capacity, maxCapacity)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class that starts with a specified </span><span class="rvts55">capacity</span><span class="rvts6"> and can grow to a specified maximum.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class using the specified string.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor5">Constructor(value, capacity)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class using the specified string and </span><span class="rvts55">capacity</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor6">Constructor(value, startIndex, length, capacity)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> class from the specified substring and </span><span class="rvts55">capacity</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the maximum number of characters that can be contained in the memory allocated by the current instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="Newtopic8.html">Chars[index]</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the character at the specified character position in this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the maximum capacity of the current </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderLength.html">Length</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the length of the current </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderAppend.html#Append1">Append(chars)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Appends the string representation of the Unicode characters in a specified list to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderAppend.html#Append2">Append(chars, startIndex, charCount)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Appends the string representation of a specified sublist of Unicode characters to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderAppend.html#Append3">Append(char, repeatCount)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Appends the string representation of a specified sublist of Unicode characters to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderAppend.html#Append4">Append(value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Appends a copy of the specified string var or object to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderAppend.html#Append5">Append(value, startIndex, count)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Appends a copy of the specified substring to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderAppendFormat.html">AppendFormat(str, arg*)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Appends the string returned by processing a composite format string, which contains zero or more format items, to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderClear.html">Clear()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Removes all characters from the current StringBuilder instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderCompareTo.html">CompareTo()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares this instance to a specified </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> instance. Overrides </span><a class="rvts12" href="MfObjectCompareTo.html">MfObject.CompareTo()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderCopyTo.html">CopyTo(sourceIndex, destination, destinationIndex, count)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Copies the characters from a specified segment of this instance to a specified segment of a destination </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderEnsureCapacity.html">EnsureCapacity(capacity)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Ensures that the capacity of this instance of </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> is at least the specified value.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderEquals.html">Equals(sb)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns a value indicating whether this instance is equal to a specified </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6">. Overrides </span><a class="rvts12" href="MfObjectEquals.html#EqualObj">MfObject.Equals()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetHashCode.html">GetHashCode()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets A hash code for the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderInsert.html#Insert1">Insert(index, chars)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Inserts the string representation of the Unicode characters in a specified list to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderInsert.html#Insert2">Insert(index, chars, startIndex, charCount)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Inserts the string representation of a specified sublist of Unicode characters to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderInsert.html#Insert3">Insert(index, value)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Insert a copy of the specified string var or object to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderInsert.html#Insert4">Insert(index, value, repeatCount)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Inserts a specified number of copies of the string representation of a Unicode characters to this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderIs.html">Is(ObjType)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if current instance of </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> is of the same type as </span><span class="rvts55">ObjType</span><span class="rvts6"> or derived from </span><span class="rvts55">ObjType</span><span class="rvts6">. Overrides </span><a class="rvts12" href="MfObjectIs.html">MfObject.Is()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderRemove.html">Remove(startIndex, length)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Removes the specified range of characters from this instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderReplace.html#Replace1">Replace(oldValue, newValue)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Replaces, within a substring of this instance, all occurrences of a specified string with another specified string.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderReplace.html#Replace2">Replace(oldValue, newValue, startIndex, count)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Replaces, within a substring of this instance, all occurrences of a specified string with another specified string.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderToString.html#ToString1">ToString()</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the value of this instance to a string var. Overrides </span><a class="rvts12" href="MfObjectToString.html">MfObject.ToString()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderToString.html#ToString2">ToString(AsStringObj)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the value of this instance to a string var or instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderToString.html#ToString3">ToString(AsStringObj, startIndex)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the value of this instance to a substring var or instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="338" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="StringBuilderToString.html#ToString4">ToString(AsStringObj, startIndex, length)</a></p>
+</td>
+<td width="949" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the value of this instance to a substring var or instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Related"></a>
+<span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfString.html">MfString</a></p>
+<h3 class="rvps6"><a name="Remarks"></a>
+<span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This class repesents a string-like object whose value is a mutable sequence of characters.</span></p>
+<p class="rvps2"><span class="rvts6">In this section:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html#StringAndSB">The String and StringBuilder types</a></li>
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html#HowWorks">How StringBuilder works</a></li>
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html#Memory">Memory allocation</a></li>
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html#Instantiating">Instantiating a StringBuilder object</a></li>
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html#Calling">Calling StringBuilder methods</a></li>
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html#Operations">Performing StringBuilder operations</a></li>
+<ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps16"><a class="rvts12" href="StringBuilder.html#Iterating">Iterating StringBuilder characters</a></li>
+<li style="margin-left: 0px" class="rvps16"><a class="rvts12" href="StringBuilder.html#Adding">Adding text to a StringBuilder object</a></li>
+<li style="margin-left: 0px" class="rvps16"><a class="rvts12" href="StringBuilder.html#Deleting">Deleting text from a StringBuilder object</a></li>
+<li style="margin-left: 0px" class="rvps16"><a class="rvts12" href="StringBuilder.html#Modifying">Modifying the text in a StringBuilder object</a></li>
+</ul>
+<li class="rvps2"><a class="rvts12" href="StringBuilder.html#Searching">Searching the text in a StringBuilder object</a></li>
+</ul>
+<p class="rvps2"><a name="StringAndSB"></a>
+<span class="rvts18">The String and StringBuilder types</span></p>
+<p class="rvps2"><span class="rvts6">Although </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> and </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> both represent sequences of characters, they are implemented differently. </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> is an immutable type. That is, each operation that appears to modify a </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> object actually creates a new string.</span></p>
+<p class="rvps2"><span class="rvts6">For example, concat the following example appears to change the value of a string variable named value. In fact, the concat method returns a value object that has a different value and address from the value object that was passed to the method.</span></p>
+<p class="rvps14"><span class="rvts31">value := </span><span class="rvts42">"This is the first sentence"</span><span class="rvts31"> . </span><span class="rvts42">"."</span><br/><span class="rvts31">Address1 := &amp;Value</span><br/><span class="rvts31">value := value . </span><span class="rvts42">"This is the second sentence. "</span><br/><span class="rvts31">value := value . </span><span class="rvts42">"This is the third sentence. "</span><br/><span class="rvts31">Address2 := &amp;value</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % Address1 = Address2 </span><span class="rvts32">; displays 0 for false</span></p>
+<p class="rvps2"><span class="rvts6">For routines that perform extensive string manipulation (such as apps that modify a string numerous times in a loop), modifying a string repeatedly can exact a significant performance penalty. The alternative is to use StringBuilder, which is a mutable string class. Mutability means that once an instance of the class has been created, it can be modified by appending, removing, replacing, or inserting characters. A StringBuilder object maintains a buffer to accommodate expansions to the string. New data is appended to the buffer if room is available; otherwise, a new, larger buffer is allocated, data from the original buffer is copied to the new buffer, and the new data is then appended to the new buffer.</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/Img-important.jpeg"><span class="rvts6">Important</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Although the StringBuilder class generally offers better performance than the String class, you should not automatically replace String with StringBuilder whenever you want to manipulate strings. Performance depends on the size of the string, the amount of memory to be allocated for the new string, the system on which your app is executing, and the type of operation. You should be prepared to test your app to determine whether StringBuilder actually offers a significant performance improvement.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6">Consider using the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> class under these conditions:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">When the number of changes that your app will make to a string is small. In these cases, StringBuilder might offer negligible or no performance improvement over </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></li>
+<li class="rvps2"><span class="rvts6">When you have to perform extensive search operations while you are building your string. The </span><span class="rvts6">StringBuilder</span><span class="rvts6"> class lacks search methods such as </span><span class="rvts18">IndexOf</span><span class="rvts6"> or </span><span class="rvts18">StartsWith</span><span class="rvts6">. You'll have to convert the StringBuilder object to a String for these operations, and this can negate the performance benefit from using StringBuilder. For more information, see the Searching the text in a StringBuilder object section.</span></li>
+</ul>
+<p class="rvps2"><span class="rvts6">Consider using the StringBuilder class under these conditions:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><span class="rvts6">When you expect your app to make an unknown number of changes to a string at design time (for example, when you are using a loop to concatenate a random number of strings that contain user input).</span></li>
+<li class="rvps2"><span class="rvts6">When you expect your app to make a significant number of changes to a string.</span></li>
+</ul>
+<p class="rvps2"><a name="HowWorks"></a>
+<span class="rvts18">How StringBuilder works</span></p>
+<p class="rvps16"><span class="rvts6">The </span><a class="rvts12" href="StringBuilderLength.html">StringBuilder.Length</a><span class="rvts6"> property indicates the number of characters the StringBuilder object currently contains. If you add characters to the StringBuilder object, its length increases until it equals the size of the </span><a class="rvts12" href="StringBuilderCapacity.html">StringBuilder.Capacity</a><span class="rvts6"> property, which defines the number of characters that the object can contain. If the number of added characters causes the length of the StringBuilder object to exceed its current capacity, new memory is allocated, the value of the Capacity property is doubled, new characters are added to the StringBuilder object, and its Length property is adjusted. Additional memory for the StringBuilder object is allocated dynamically until it reaches the value defined by the </span><a class="rvts12" href="StringBuilderMaxCapacity.html">StringBuilder.MaxCapacity</a><span class="rvts6"> property. When the maximum capacity is reached, no further memory can be allocated for the StringBuilder object, and trying to add characters or expand it beyond its maximum capacity throws either an </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> or an </span><a class="rvts12" href="MFOufM22.html">MfOutOfMemoryException</a><span class="rvts6"> exception.</span></p>
+<p class="rvps16"><span class="rvts6">The following example illustrates how a StringBuilder object allocates new memory and increases its capacity dynamically as the string assigned to the object expands. The code creates a StringBuilder object by calling its default (parameterless) constructor. The default capacity of this object is 16 characters, and its maximum capacity is more than 2 billion characters. Appending the string "This is a sentence." results in a new memory allocation because the string length (19 characters) exceeds the default capacity of the StringBuilder object. The capacity of the object doubles to 32 characters, the new string is added, and the length of the object now equals 19 characters. The code then appends the string "This is an additional sentence." to the value of the StringBuilder object 11 times. Whenever the append operation causes the length of the StringBuilder object to exceed its capacity, its existing capacity is doubled and the </span><a class="rvts12" href="StringBuilderAppend.html">Append</a><span class="rvts6"> operation succeeds.</span></p>
+<p class="rvps14"><span class="rvts31">sb &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb1 := &nbsp;</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sb1, sb)</span><br/><span class="rvts31">sb1.</span><span class="rvts47">Append</span><span class="rvts42">("This is a sentence."</span><span class="rvts31">)</span><br/><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sb1, sb)</span><br/><span class="rvts31">ctr = 0</span><br/><span class="rvts33">While</span><span class="rvts31"> (ctr &lt;= </span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb1.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"This is an additional sentence."</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sb1, sb)</span><br/><span class="rvts31"> &nbsp; &nbsp;ctr++</span><br/><span class="rvts31">}</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">Capacity: 16 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 0</span><br/><span class="rvts32">Capacity: 32 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 19</span><br/><span class="rvts32">Capacity: 64 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 50</span><br/><span class="rvts32">Capacity: 128 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 81</span><br/><span class="rvts32">Capacity: 128 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 112</span><br/><span class="rvts32">Capacity: 256 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 143</span><br/><span class="rvts32">Capacity: 256 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 174</span><br/><span class="rvts32">Capacity: 256 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 205</span><br/><span class="rvts32">Capacity: 256 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 236</span><br/><span class="rvts32">Capacity: 512 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 267</span><br/><span class="rvts32">Capacity: 512 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 298</span><br/><span class="rvts32">Capacity: 512 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 329</span><br/><span class="rvts32">Capacity: 512 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 360</span><br/><span class="rvts32"></span><br/><span class="rvts32">*/</span><br/><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sbIn, sbOut)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"Capacity: {0:i} &nbsp; &nbsp;MaxCapacity: {1:i} &nbsp; &nbsp;Length: {2:i}"</span><span class="rvts31">, sbIn.</span><span class="rvts35">Capacity</span><span class="rvts31">, sbIn.</span><span class="rvts35">MaxCapacity</span><span class="rvts31">, sbIn.</span><span class="rvts35">Length</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">}</span></p>
+<p class="rvps2"><a name="Memory"></a>
+<span class="rvts18">Memory allocation</span></p>
+<p class="rvps16"><span class="rvts6">The default capacity of a StringBuilder object is 16 characters, and its default maximum capacity is </span><a class="rvts12" href="MfIntegerMaxValue.html">MfIntInteger.MaxValue</a><span class="rvts6">. These default values are used if you call the </span><a class="rvts12" href="SnipitConstructor.html#Constructor1">Constructor()</a><span class="rvts6"> and </span><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a><span class="rvts6"> constructors.</span></p>
+<p class="rvps16"><span class="rvts6">You can explicitly define the initial capacity of a StringBuilder object in the following ways:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps30"><span class="rvts6">By calling any of the StringBuilder constructors that includes a capacity parameter when you create the object.</span></li>
+<li style="margin-left: 0px" class="rvps30"><span class="rvts6">By explicitly assigning a new value to the </span><a class="rvts12" href="StringBuilderCapacity.html">StringBuilder.Capacity</a><span class="rvts6"> property to expand an existing StringBuilder object. Note that the property throws an exception if the new capacity is less than the existing capacity or greater than the StringBuilder object's maximum capacity.</span></li>
+<li style="margin-left: 0px" class="rvps30"><span class="rvts6">By calling the </span><a class="rvts12" href="StringBuilderEnsureCapacity.html">StringBuilder.EnsureCapacity</a><span class="rvts6"> method with the new capacity. The new capacity must not be greater than the StringBuilder object's maximum capacity. However, unlike an assignment to the </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6"> property, </span><a class="rvts12" href="StringBuilderEnsureCapacity.html">EnsureCapacity</a><span class="rvts6"> does not throw an exception if the desired new capacity is less than the existing capacity; in this case, the method call has no effect.</span></li>
+</ul></ul>
+<p class="rvps16"><span class="rvts6">If the length of the string assigned to the StringBuilder object in the constructor call exceeds either the default capacity or the specified capacity, the </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6"> property is set to the length of the string specified with the value parameter.</span></p>
+<p class="rvps16"><span class="rvts6">You can explicitly define the maximum capacity of a StringBuilder object by calling the </span><a class="rvts12" href="SnipitConstructor.html#Constructor3">Constructor(capacity, maxCapacity)</a><span class="rvts6"> constructor. You can't change the maximum capacity by assigning a new value to the </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6"> property, because it is read-only.</span></p>
+<p class="rvps16"><span class="rvts6">As the previous section shows, whenever the existing capacity is inadequate, additional memory is allocated and the capacity of a StringBuilder object doubles up to the value defined by the </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6"> property.</span></p>
+<p class="rvps16"><span class="rvts6">In general, the default capacity and maximum capacity are adequate for most apps. You might consider setting these values under the following conditions:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps30"><span class="rvts6">If the eventual size of the StringBuilder object is likely to grow exceedingly large, typically in excess of several megabytes. In this case, there may be some performance benefit from setting the initial </span><a class="rvts12" href="StringBuilderCapacity.html">Capacity</a><span class="rvts6"> property to a significantly high value to eliminate the need for too many memory reallocations.</span></li>
+<li style="margin-left: 0px" class="rvps30"><span class="rvts6">If your app is running on a system with limited memory. In this case, you may want to consider setting the </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6"> property to less than </span><a class="rvts12" href="MfIntegerMaxValue.html">MfIntInteger.MaxValue</a><span class="rvts6"> if your app is handling large strings that may cause it to execute in a memory-constrained environment.</span></li>
+</ul></ul>
+<p class="rvps2"><a name="Instantiating"></a>
+<span class="rvts18">Instantiating a StringBuilder object</span></p>
+<p class="rvps16"><span class="rvts6">You instantiate a StringBuilder object by calling one of its six overloaded class constructors, which are listed in the following table. Three of the constructors instantiate a StringBuilder object whose value is an empty string, but set its Capacity and MaxCapacity values differently. The remaining three constructors define a StringBuilder object that has a specific string value and capacity. Two of the three constructors use the default maximum capacity of Int32.MaxValue, whereas the third allows you to set the maximum capacity.</span></p>
+<div class="rvps16"><table width="85%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Constructor</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">String value</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Capacity</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Maximum capacity</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor1">Constructor()</a></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Empty String</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">16</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfIntegerMaxValue.html">MfIntInteger.MaxValue</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor2">Constructor(capacity)</a></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Empty String</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the capacity parameter</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfIntegerMaxValue.html">MfIntInteger.MaxValue</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor3">Constructor(capacity, maxCapacity)</a></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Empty String</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the capacity parameter</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the maxCapacity parameter</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor4">Constructor(value)</a></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the value parameter</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">16 or value. </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6">, whichever is greater</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfIntegerMaxValue.html">MfIntInteger.MaxValue</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor5">Constructor(value, capacity)</a></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the value parameter</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the capacity parameter or value. </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6">, whichever is greater.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfIntegerMaxValue.html">MfIntInteger.MaxValue</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="SnipitConstructor.html#Constructor6">Constructor(value, startIndex, length, capacity)</a></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by value. </span><a class="rvts12" href="MfStringSubstring.html">Substring</a><span class="rvts6">(startIndex, length)</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the capacity parameter or value. </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6">, whichever is greater.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Defined by the maxCapacity parameter</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps16"><span class="rvts6">The following example uses three of these constructor overloads to instantiate StringBuilder objects.</span></p>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">value := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"An ordinary string"</span><span class="rvts31">)</span><br/><span class="rvts31">index := value.</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">"An "</span><span class="rvts31">) + </span><span class="rvts68">3</span><br/><span class="rvts31">capacity := </span><span class="rvts68">0xFFFF</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Instantiate a StringBuilder from a string.</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(value)</span><br/><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sb1, sb)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Instantiate a StringBuilder from string and define a capacity.</span><br/><span class="rvts31">sb2 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(value, capacity)</span><br/><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sb2, sb)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Instantiate a StringBuilder from substring and define a capacity.</span><br/><span class="rvts31">sb3 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(value, index</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;,value.</span><span class="rvts35">Length</span><span class="rvts31"> - index</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;,capacity)</span><br/><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sb3, sb)</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">Value: An ordinary string</span><br/><span class="rvts32">Capacity: 18 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 18</span><br/><span class="rvts32"></span><br/><span class="rvts32">Value: An ordinary string</span><br/><span class="rvts32">Capacity: 65535 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 18</span><br/><span class="rvts32"></span><br/><span class="rvts32">Value: ordinary string</span><br/><span class="rvts32">Capacity: 65535 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 15</span><br/><span class="rvts32"></span><br/><span class="rvts32"></span><br/><span class="rvts32">*/</span><br/><span class="rvts32"></span><br/><span class="rvts47">SbAppendInfo</span><span class="rvts31">(sbIn, sbOut)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"Value: {0}{1}"</span><span class="rvts31">, sbIn, </span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">NewLine</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"Capacity: {0:i} &nbsp; &nbsp;MaxCapacity: {1:i} &nbsp; &nbsp;Length: {2:i}"</span><span class="rvts31">, sbIn.</span><span class="rvts35">Capacity</span><span class="rvts31">, sbIn.</span><span class="rvts35">MaxCapacity</span><span class="rvts31">, sbIn.</span><span class="rvts35">Length</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">}</span></p>
+<p class="rvps2"><a name="Calling"></a>
+<span class="rvts18">Calling StringBuilder methods</span></p>
+<p class="rvps16"><span class="rvts6">Most of the methods that modify the string in a StringBuilder instance return a reference to that same instance. This enables you to call StringBuilder methods in two ways:</span></p>
+<p class="rvps16"><span class="rvts6">1) You can make individual method calls and ignore the return value, as the following example does.</span></p>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"This is the beginning of a sentence, "</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"the beginning of "</span><span class="rvts31">, </span><span class="rvts42">""</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Insert</span><span class="rvts31">(sb.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts33">true</span><span class="rvts31">).</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">"a "</span><span class="rvts31">) + </span><span class="rvts68">2</span><span class="rvts31">, </span><span class="rvts42">"complete "</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">","</span><span class="rvts31">, </span><span class="rvts42">"."</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; This is a complete sentence. </span></p>
+<p class="rvps16"><span class="rvts6">2) You can make a series of method calls in a single statement. This can be convenient if you want to write a single statement that chains successive operations. The following example consolidates three method calls from the previous example into a single line of code.</span></p>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"This is the beginning of a sentence, "</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp;.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"the beginning of "</span><span class="rvts31">, </span><span class="rvts42">""</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp;.</span><span class="rvts47">Insert</span><span class="rvts31">(sb.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts33">true</span><span class="rvts31">).</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">"a "</span><span class="rvts31">) + </span><span class="rvts68">2</span><span class="rvts31">, </span><span class="rvts42">"complete "</span><span class="rvts31">).</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">","</span><span class="rvts31">, </span><span class="rvts42">"."</span><span class="rvts31">)</span><br/><span class="rvts33"> &nbsp;</span><span class="rvts31">.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; This is a complete sentence. </span></p>
+<p class="rvps2"><a name="Operations"></a>
+<span class="rvts18">Performing StringBuilder operations</span></p>
+<p class="rvps16"><span class="rvts6">You can use the methods of the StringBuilder class to iterate, add, delete, or modify characters in a StringBuilder object.</span></p>
+<p class="rvps16"><a name="Iterating"></a>
+<span class="rvts18">Iterating StringBuilder characters</span></p>
+<p class="rvps30"><span class="rvts6">You can access the characters in a StringBuilder object by using the </span><a class="rvts12" href="Newtopic8.html">StringBuilder.Chars</a><span class="rvts6"> property. This enables you to set or retrieve individual characters by using their index only, without explicitly referencing the Chars property. Characters in a StringBuilder object begin at index 0 (zero) and continue to index </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6"> - 1.</span></p>
+<p class="rvps30"><span class="rvts6">The following example illustrates the </span><a class="rvts12" href="Newtopic8.html">Chars</a><span class="rvts6"> property. It appends ten random numbers to a StringBuilder object, and then iterates each character. If the character's Unicode category is </span><a class="rvts12" href="MfUC17DecimalDigitNumber.html">MfUnicodeCategory.DecimalDigitNumber</a><span class="rvts6">, it decreases the number by 1 (or changes the number to 9 if its value is 0). The example displays the contents of the StringBuilder object both before and after the values of individual characters were changed.</span></p>
+<p class="rvps14"><span class="rvts31">sb &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Generate 10 random numbers and store them in a StringBuilder.</span><br/><span class="rvts31">ctr := </span><span class="rvts68">0</span><br/><span class="rvts33">While</span><span class="rvts31"> (ctr &lt;= 9)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb1.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">Random</span><span class="rvts31">()).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">","</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;ctr++</span><br/><span class="rvts31">}</span><br/><span class="rvts31">sb1.</span><span class="rvts35">Length</span><span class="rvts31">-- </span><span class="rvts32">; remove last ,</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"The original string:"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Decrease each number by one.</span><br/><span class="rvts31">ctr := </span><span class="rvts68">0</span><br/><span class="rvts33">While</span><span class="rvts31"> (ctr &lt; sb1.</span><span class="rvts35">Length</span><span class="rvts31">)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">GetUnicodeCategory</span><span class="rvts31">(sb1.</span><span class="rvts47">Chars</span><span class="rvts31">[ctr]).</span><span class="rvts47">Equals</span><span class="rvts31">(</span><span class="rvts34">MfUnicodeCategory</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">DecimalDigitNumber</span><span class="rvts31">))</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;number := </span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">GetNumericValue</span><span class="rvts31">(sb1.</span><span class="rvts35">Chars</span><span class="rvts31">[ctr])</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;number--</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (number &lt; </span><span class="rvts68">0</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;number := </span><span class="rvts68">9</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;sb1.</span><span class="rvts35">Chars</span><span class="rvts31">[ctr] := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(number, </span><span class="rvts33">true</span><span class="rvts31">).</span><span class="rvts35">Index</span><span class="rvts31">[0]</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;ctr++</span><br/><span class="rvts31">}</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"The new string:"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">The original string:</span><br/><span class="rvts32">26850403,107280301,1550505509,841162532,623723528,1192182565,181914076,799185027,1940502902,2107953480</span><br/><span class="rvts32">The new string:</span><br/><span class="rvts32">15749392,096179290,0449494498,730051421,512612417,0081071454,070803965,688074916,0839491891,1096842379</span><br/><span class="rvts32"></span><br/><span class="rvts32">*/</span></p>
+<p class="rvps16"><a name="Adding"></a>
+<span class="rvts18">Adding text to a StringBuilder object</span></p>
+<p class="rvps30"><span class="rvts6">The StringBuilder class includes the following methods for expanding the contents of a StringBuilder object:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;"><ul style="text-indent: 0px; margin-left: 48px; list-style-position: outside; list-style-type: circle;">
+<li style="margin-left: 0px" class="rvps35"><span class="rvts6">The </span><a class="rvts12" href="StringBuilderAppend.html">Append</a><span class="rvts6"> method appends a string, a substring, a character array, a portion of a character array, a single character repeated multiple times, or the string representation of a primitive data type to a StringBuilder object.</span></li>
+<li style="margin-left: 0px" class="rvps35"><span class="rvts6">The </span><a class="rvts12" href="StringBuilderAppendLine.html">AppendLine</a><span class="rvts6"> method appends a line terminator or a string along with a line terminator to a StringBuilder object.</span></li>
+<li style="margin-left: 0px" class="rvps35"><span class="rvts6">The </span><a class="rvts12" href="StringBuilderAppendFormat.html">AppendFormat</a><span class="rvts6"> method appends a to a StringBuilder object. The string representations of objects included in the result string can reflect the formatting conventions of the current system culture or a specified culture.</span></li>
+<li style="margin-left: 0px" class="rvps35"><span class="rvts6">The </span><a class="rvts12" href="StringBuilderInsert.html">Insert</a><span class="rvts6"> method inserts a string, a substring, multiple repetitions of a string, a character array, a portion of a character array, or the string representation of a primitive data type at a specified position in the StringBuilder object. The position is defined by a zero-based index.</span></li>
+</ul></ul>
+<p class="rvps35"><span class="rvts6"><br/></span></p>
+<p class="rvps14"><span class="rvts31">sb &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb1.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"*"</span><span class="rvts31">, </span><span class="rvts68">10</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">" Adding Text to a StringBuilder Object "</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"*"</span><span class="rvts31">, </span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts31">sb1.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"`r`n"</span><span class="rvts31">)</span><br/><span class="rvts31">sb1.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts42">"Some code points and their corresponding characters:"</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts32">;Append some formatted text.</span><br/><span class="rvts31">ctr := </span><span class="rvts68">50</span><br/><span class="rvts33">While</span><span class="rvts31"> (ctr &lt; 60)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp; sb1.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"{0:#12X} {1:12c}"</span><span class="rvts31">, ctr, ctr)</span><br/><span class="rvts31"> &nbsp; &nbsp; sb1.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp; ctr++</span><br/><span class="rvts31">}</span><br/><span class="rvts31">pos := sb1.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts33">true</span><span class="rvts31">).</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">"characters:"</span><span class="rvts31">) + </span><span class="rvts68">11</span><span class="rvts31"> + </span><span class="rvts47">StrLen</span><span class="rvts31">(</span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">NewLine</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Insert a column header.</span><br/><span class="rvts31">sb1.</span><span class="rvts47">Insert</span><span class="rvts31">(pos, </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"{2}{0:12} {1:12}{2}"</span><span class="rvts31">, </span><span class="rvts42">"Code Unit"</span><span class="rvts31">, </span><span class="rvts42">"Character"</span><span class="rvts31">, </span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">NewLine</span><span class="rvts31">))</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">********** Adding Text to a StringBuilder Object **********</span><br/><span class="rvts32"></span><br/><span class="rvts32">Some code points and their corresponding characters:</span><br/><span class="rvts32"></span><br/><span class="rvts32"> &nbsp; Code Unit &nbsp; &nbsp;Character</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X32 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X33 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;3</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X34 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;4</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X35 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;5</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X36 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;6</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X37 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;7</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X38 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;8</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X39 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;9</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X3A &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;0X3B &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;;</span><br/><span class="rvts32"></span><br/><span class="rvts32">*/</span></p>
+<p class="rvps16"><a name="Deleting"></a>
+<span class="rvts18">Deleting text from a StringBuilder object</span></p>
+<p class="rvps30"><span class="rvts6">The StringBuilder class includes methods that can reduce the size of the current StringBuilder instance. The </span><a class="rvts12" href="StringBuilderClear.html">Clear</a><span class="rvts6"> method removes all characters and sets the </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6"> property to zero. The </span><a class="rvts12" href="StringBuilderRemove.html">Remove</a><span class="rvts6"> method deletes a specified number of characters starting at a particular index position. In addition, you can remove characters from the end of a StringBuilder object by setting its </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6"> property to a value that is less than the length of the current instance.</span></p>
+<p class="rvps30"><span class="rvts6">The following example removes some of the text from a StringBuilder object, displays its resulting capacity, maximum capacity, and length property values, and then calls the </span><a class="rvts12" href="StringBuilderClear.html">Clear</a><span class="rvts6"> method to remove all the characters from the StringBuilder object.</span></p>
+<p class="rvps14"><span class="rvts31">sb &nbsp;:= </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts47">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts47">StringBuilder</span><span class="rvts31">(</span><span class="rvts42">"A StringBuilder object"</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts47">SbInfo</span><span class="rvts31">(sb1, sb)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Remove "object" from the text.</span><br/><span class="rvts31">textToRemove := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts47">"object"</span><span class="rvts31">)</span><br/><span class="rvts31">pos := sb1.</span><span class="rvts47">ToString</span><span class="rvts31">(</span><span class="rvts33">true</span><span class="rvts31">).</span><span class="rvts47">IndexOf</span><span class="rvts31">(textToRemove)</span><br/><span class="rvts33">if</span><span class="rvts31"> (pos &gt;= </span><span class="rvts68">0</span><span class="rvts31">) {</span><br/><span class="rvts31"> &nbsp; &nbsp;sb1.</span><span class="rvts47">Remove</span><span class="rvts31">(pos, textToRemove.</span><span class="rvts35">Length</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts47">SbInfo</span><span class="rvts31">(sb1, sb)</span><br/><span class="rvts31">}</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Clear the StringBuilder contents.</span><br/><span class="rvts31">sb1.</span><span class="rvts47">Clear</span><span class="rvts31">()</span><br/><span class="rvts47">SbInfo</span><span class="rvts31">(sb1, sb)</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">Value: A StringBuilder object</span><br/><span class="rvts32">Capacity: 22 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 22</span><br/><span class="rvts32"></span><br/><span class="rvts32">Value: A StringBuilder </span><br/><span class="rvts32">Capacity: 22 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 16</span><br/><span class="rvts32"></span><br/><span class="rvts32">Value: </span><br/><span class="rvts32">Capacity: 22 &nbsp; &nbsp;MaxCapacity: 2147483647 &nbsp; &nbsp;Length: 0</span><br/><span class="rvts32">*/</span><br/><span class="rvts31"></span><br/><span class="rvts47">SbInfo</span><span class="rvts31">(sbIn, sbOut)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"Value: {0}{1}"</span><span class="rvts31">, sbIn, </span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts34">Instance</span><span class="rvts31">.</span><span class="rvts34">NewLine</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"Capacity: {0:i} &nbsp; &nbsp;MaxCapacity: {1:i} &nbsp; &nbsp;Length: {2:i}"</span><span class="rvts31">, sbIn.</span><span class="rvts35">Capacity</span><span class="rvts31">, sbIn.</span><span class="rvts35">MaxCapacity</span><span class="rvts31">, sbIn.</span><span class="rvts35">Length</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sbOut.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31">}</span></p>
+<p class="rvps16"><a name="Modifying"></a>
+<span class="rvts18">Modifying the text in a StringBuilder object</span></p>
+<p class="rvps30"><span class="rvts6">The </span><a class="rvts12" href="StringBuilderReplace.html">StringBuilder.Replace</a><span class="rvts6"> method replaces all occurrences of a character or a string in the entire StringBuilder object or in a particular character range. The following example uses the </span><a class="rvts12" href="StringBuilderReplace.html">Replace</a><span class="rvts6"> method to replace all exclamation points (!) with question marks (?) in the StringBuilder object.</span></p>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts47">StringBuilder</span><span class="rvts31">(</span><span class="rvts42">"Hello World!"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"!"</span><span class="rvts31">, </span><span class="rvts42">"?"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Hello World?</span></p>
+<p class="rvps16"><a name="Searching"></a>
+<span class="rvts18">Searching the text in a StringBuilder object</span></p>
+<p class="rvps30"><span class="rvts6">The StringBuilder class does not include methods similar to the </span><a class="rvts12" href="MfStringContains.html">MfString.Contains</a><span class="rvts6">, </span><a class="rvts12" href="MfStringIndexOf.html">MFString.IndexOf</a><span class="rvts6">, and </span><a class="rvts12" href="MfStringStartsWith.html">MfString.StartsWith</a><span class="rvts6"> methods provided by the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> class, which allow you to search the object for a particular character or a substring. Determining the presence or starting character position of a substring requires that you search a String value by using either a string search method or a regular expression method. There are four ways to implement such searches, as the following table shows.</span></p>
+<div class="rvps30"><table width="85%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Technique</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Pros</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Cons</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Search string values before adding them to the StringBuilder object.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Useful for determining whether a substring exists.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Cannot be used when the index position of a substring is important.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Call </span><a class="rvts12" href="StringBuilderToString.html">ToString</a><span class="rvts6"> and search the returned </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> object.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Easy to use if you assign all the text to a StringBuilder object, and then begin to modify it.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Cumbersome to repeatedly call </span><a class="rvts12" href="StringBuilderToString.html">ToString</a><span class="rvts6"> if you must make modifications before all text is added to the StringBuilder object.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">You must remember to work from the end of the StringBuilder object's text if you're making changes.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Use the </span><a class="rvts12" href="Newtopic8.html">Chars</a><span class="rvts6"> property to sequentially search a range of characters.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Useful if you're concerned with individual characters or a small substring.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Cumbersome if the number of characters to search is large or if the search logic is complex.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Convert the StringBuilder object to a </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> object, and perform modifications on the </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> object.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Useful if the number of modifications is small.</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Negates the performance benefit of the StringBuilder class if the number of modifications is large.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">(</span><span class="rvts42">"ABC"</span><span class="rvts31">, </span><span class="rvts68">50</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Append three characters (D, E, and F) to the end of the StringBuilder.</span><br/><span class="rvts31">lst := </span><span class="rvts34">MfCharList</span><span class="rvts31">.</span><span class="rvts47">FromString</span><span class="rvts31">(</span><span class="rvts42">"DEF"</span><span class="rvts31">)</span><br/><span class="rvts31">sb1.</span><span class="rvts47">Append</span><span class="rvts31">(lst)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Append a format string to the end of the StringBuilder.</span><br/><span class="rvts31">sb1.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"GHI{0}{1}"</span><span class="rvts31">, </span><span class="rvts42">"J"</span><span class="rvts31">, </span><span class="rvts34">MFChar</span><span class="rvts31">.</span><span class="rvts47">FromCharCode</span><span class="rvts31">(</span><span class="rvts68">107</span><span class="rvts31">))</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">(</span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"{0} chars: {1}"</span><span class="rvts31">, sb1.</span><span class="rvts35">Length</span><span class="rvts31">, sb1.</span><span class="rvts47">ToString</span><span class="rvts31">()))</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Insert a string at the beginning of the StringBuilder.</span><br/><span class="rvts31">sb1.</span><span class="rvts47">Insert</span><span class="rvts31">(</span><span class="rvts68">0</span><span class="rvts31">, </span><span class="rvts42">"Alphabet: "</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts32">; Replace all lowercase k's with uppercase K's.</span><br/><span class="rvts31">sb1.</span><span class="rvts47">Replace</span><span class="rvts31">(</span><span class="rvts42">"k"</span><span class="rvts31">, </span><span class="rvts42">"K"</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(sb1.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">11 chars: ABCDEFGHIJk</span><br/><span class="rvts32">Alphabet: ABCDEFGHIJK</span><br/><span class="rvts32">*/</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

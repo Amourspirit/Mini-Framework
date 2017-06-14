@@ -1,0 +1,103 @@
+﻿<html>
+	
+<head>
+	<title>Methods</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfBigIntMethods");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Methods</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfBigInt.html">MfBigInt</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfBigInt.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfBigIntValue.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfInt64Add1.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		<h1 class="h1custom">MfBigInt Methods</h1>
+<h3 class="h3custom">Methods</h3>
+<div class="PME_List"><ul class="Child_Topic">
+<li Class="Child_Topic"><a href="MfInt64Add1.html">Add()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntBitShiftLeft.html">BitShiftLeft()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntBitShiftRight.html">BitShiftRight()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntClone.html">Clone()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntCompareTo.html">CompareTo()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntConstructor.html">Constructor()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntDivide.html">Divide()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntDivRem.html">DivRem()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntEquals.html">Equals()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntGetHashCode.html">GetHashCode()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntGetTypeCode.html">GetTypeCode()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntGreaterThen.html">GreaterThen()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntGreaterThenOrEqual.html">GreaterThenOrEqual()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntLessThen.html">LessThen()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntLessThenOrEqual.html">LessThenOrEqual()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntMultiply.html">Multiply()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntParse.html">Parse()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntSubtract.html">Subtract()</a></li>
+<li Class="Child_Topic"><a href="MfBigIntToString.html">ToString()</a></li>
+</ul>
+</div>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

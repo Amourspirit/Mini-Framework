@@ -1,0 +1,344 @@
+﻿<html>
+	
+<head>
+	<title>MfNibbleList</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content=", List">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharList2");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MfNibbleList</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfMME24Constructorhtml.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNibbleListProperties.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">MfNibbleList Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">MfNibbleList is a sealed class that exposes methods and properties used for list of nibble values (0 - 15).</span></p>
+<p class="rvps2"><span class="rvts6">MfNibbleList is structured to work with nibbles ( values between 0 and 15 ) only. For a list that is better suited for containing objects see </span><a class="rvts12" href="MfList.html">MfList</a><span class="rvts6"> and </span><a class="rvts12" href="MfGenericList.html">MfGenericList</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfCharList2.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfCharList2.html#Methods">Methods</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListConstructor.html">Constructor([Size, Default])</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfCharList2.html">MfNibbleList</a><span class="rvts6"> class.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListAutoIncrease.html">AutoIncrease</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or set a value indicating the list should Auto-Increase in size when Limit is reached.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfListBaseCount.html">Count</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets a value indicating if the </span><a class="rvts75" href="MfListBase.html">MfListBase</a><span class="rvts6"> number of Elements. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfListBaseIsFixedSize.html">IsFixedSize</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets a value indicating if the </span><a class="rvts75" href="MfListBase.html">MfListBase</a><span class="rvts6"> has a fixed size. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfListBaseIsReadOnly.html">IsReadOnly</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets a value indicating if the </span><a class="rvts75" href="MfListBase.html">MfListBase</a><span class="rvts6"> is read-only. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListItem.html">Item[index]</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the element at the specified </span><span class="rvts55">index</span><span class="rvts6">. Overrides </span><a class="rvts12" href="MfListBaseItem.html">MfListBase.Item</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfListBase_NewEnum.html">_NewEnum()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Returns a new enumerator to enumerate this object's </span><span class="rvts15">key-value</span><span class="rvts6"> pairs. This method is usually not called directly, but by the </span><span class="rvts18">for-loop</span><span class="rvts6"> or by </span><a class="rvts75" href="MfEB16GetEnumerator.html">GetEnumerator()</a><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListAdd.html">Add(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Adds a nibble element to the end of the current instance.. Overrides </span><a class="rvts12" href="MfListBaseAdd.html">MfListBase.Add()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListAddByte.html">AddByte(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts </span><span class="rvts55">obj</span><span class="rvts6"> byte value to nibbles and adds nibble elements to the end of the current instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfListBaseClear.html">Clear()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Removes all elements from the instance and sets </span><a class="rvts75" href="MfListBaseCount.html">Count</a><span class="rvts6"> to Zero. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListClone.html">Clone()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Clones all the elements of the current instance an return &nbsp;a new instance. Overrides </span><a class="rvts12" href="MfListBaseClone.html">MfListBase.Clone()</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectCompareTo.html">CompareTo()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListContains.html">Contains(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Determines whether the </span><a class="rvts12" href="MfCharList2.html">MfNibbleList</a><span class="rvts6"> contains a specific element. Overrides </span><a class="rvts12" href="MfListBaseContains.html">MfListBase.Contains()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectEquals.html#EqualObj">Equals(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Compares obj to current instance to see if they are the same. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfEB16GetEnumerator.html">GetEnumerator()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets an enumerator. Inherited from </span><a class="rvts75" href="MfEB16.html">MfEnumerableBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListIndexOf.html">IndexOf(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Searches for the specified var or object and returns the index of the first occurrence within the entire instance. Overrides </span><a class="rvts12" href="MfListBaseIndexOf.html">MfListBase.IndexOf()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListIndexOf.html">Insert(index, value)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Inserts an integer nibble value into the </span><a class="rvts12" href="MfCharList2.html">MfNibbleList</a><span class="rvts6"> instance at the specified index.</span><br/><span class="rvts6">Overrides </span><a class="rvts12" href="MfListBaseInsert.html">MfListBase.Insert()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIs.html">Is(type)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets if current instance of object is of the same type. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfListBaseLastIndexOf.html">LastIndexOf(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Searches for the specified object or var and returns the index of the last occurrence within the entire instance. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfFP16Remove.html">Remove(obj)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Removes the first occurrence of a specific object from the instance. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfFP16RemoveAt.html">RemoveAt(index)</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Removes the item at the specified </span><span class="rvts113">index</span><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListSubList.html">SubList([startIndex, endIndex, leftToRight])</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Method extracts the elements from list, between two specified indices, and returns the a new list.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfListBaseToArray.html">ToArray()</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Returns a </span><span class="rvts18">One-Based</span><span class="rvts6"> AutoHotkey array representing all the elements in the current instance. Inherited from </span><a class="rvts75" href="MfListBase.html">MfListBase</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="339" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfNibbleListToString.html">ToString(([returnAsObj, startIndex, count, format])</a></p>
+</td>
+<td width="948" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a string representation of the object elements.</span><br/><span class="rvts6">Overrides </span><a class="rvts12" href="MfFP16ToString1.html">MfListBase.ToString()</a></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Since</span></span></h3>
+<p class="rvps2"><span class="rvts6">Version 0.4</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

@@ -68,43 +68,61 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Constructor()</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Constructor()</span></span></h1>
 <p class="rvps2"><span class="rvts6">Creates a new instance of </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> Class</span></p>
-<p class="rvps20"><span class="rvts48">OutputVar := new MfVersion()</span><br/><span class="rvts48">OutputVar := new MfVersion(version)</span><br/><span class="rvts48">OutputVar := new MfVersion(major, minor) </span><br/><span class="rvts48">OutputVar := new MfVersion(major, minor, build)</span><br/><span class="rvts48">OutputVar := new MfVersion(major, minor, build, revision)</span></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">version</span></p>
-<p class="rvps22"><span class="rvts53">A string containing the </span><a class="rvts52" href="MfVersionMajor.html">major</a><span class="rvts53">, </span><a class="rvts52" href="MfVersionMinor.html">minor</a><span class="rvts53">, </span><a class="rvts52" href="MfVersionBuild.html">build</a><span class="rvts53">, and </span><a class="rvts52" href="MfVersionRevision.html">revision</a><span class="rvts53"> numbers, where each number is delimited with a period character ('.').</span></p>
-<p class="rvps21"><span class="rvts51">major</span></p>
-<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfVersionMajor.html">major</a><span class="rvts53"> version number.</span></p>
-<p class="rvps21"><span class="rvts51">minor</span></p>
-<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfVersionMinor.html">minor</a><span class="rvts53"> version number.</span></p>
-<p class="rvps21"><span class="rvts51">build</span></p>
-<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfVersionBuild.html">build</a><span class="rvts53"> number.</span></p>
-<p class="rvps21"><span class="rvts51">revision</span></p>
-<p class="rvps22"><span class="rvts53">The </span><a class="rvts52" href="MfVersionRevision.html">revision</a><span class="rvts53"> number.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor()</span></span></h2>
+<p class="rvps20"><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfVersionConstructor.html#Constructor1">MfVersion()</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfVersionConstructor.html#Constructor2">MfVersion(version)</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfVersionConstructor.html#Constructor3">MfVersion(major, minor)</a><span class="rvts49"> </span><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfVersionConstructor.html#Constructor4">MfVersion(major, minor, build)</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfVersionConstructor.html#Constructor5">MfVersion(major, minor, build, revision)</a></p>
+<h2 class="rvps5"><a name="Constructor1"></a>
+<span class="rvts0"><span class="rvts16">Constructor()</span></span></h2>
 <p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(version)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts54">version</span><span class="rvts6">.</span></p>
+<h2 class="rvps5"><a name="Constructor2"></a>
+<span class="rvts0"><span class="rvts16">Constructor(version)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts55">version</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">version</span></p>
+<p class="rvps22"><span class="rvts54">A string containing the </span><a class="rvts53" href="MfVersionMajor.html">major</a><span class="rvts54">, </span><a class="rvts53" href="MfVersionMinor.html">minor</a><span class="rvts54">, </span><a class="rvts53" href="MfVersionBuild.html">build</a><span class="rvts54">, and </span><a class="rvts53" href="MfVersionRevision.html">revision</a><span class="rvts54"> numbers, where each number is delimited with a period character ('.').</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">The </span><span class="rvts54">version</span><span class="rvts6"> parameter can contain only the components </span><span class="rvts15">major</span><span class="rvts6">, </span><span class="rvts15">minor</span><span class="rvts6">, </span><span class="rvts15">build</span><span class="rvts6">, and </span><span class="rvts15">revision</span><span class="rvts6">, in that order, and all separated by periods. There must be at least two components, and at most four. The first two components are assumed to be major and minor. The value of unspecified components is undefined.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">version</span><span class="rvts6"> parameter can contain only the components </span><span class="rvts15">major</span><span class="rvts6">, </span><span class="rvts15">minor</span><span class="rvts6">, </span><span class="rvts15">build</span><span class="rvts6">, and </span><span class="rvts15">revision</span><span class="rvts6">, in that order, and all separated by periods. There must be at least two components, and at most four. The first two components are assumed to be major and minor. The value of unspecified components is undefined.</span></p>
 <p class="rvps2"><span class="rvts6">The format of the version number is as follows. Optional components are shown in square brackets ('[' and ']'):</span></p>
 <p class="rvps2"><span class="rvts6">major.minor[.build[.revision]]</span></p>
 <p class="rvps2"><span class="rvts6">All defined components must be integers greater than or equal to 0. For example, if the major number is 3, the minor number is 4, the build number is 2, and the revision number is 5, then version should be "3.4.2.5".</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
 <p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> version has fewer than two components or more than four components.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> version is null.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> A major, minor, build, or revision component is less than zero.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> At least one component of version does not parse to an integer.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfOE19.html">MfOverflowException</a><span class="rvts6"> At least one component of version represents a number greater than </span><a class="rvts12" href="MfIntegerMaxValue.html">MfInteger.MaxValue</a><span class="rvts6">.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(major, minor)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts54">major</span><span class="rvts6"> and </span><span class="rvts54">minor</span><span class="rvts6"> values.</span></p>
+<h2 class="rvps5"><a name="Constructor3"></a>
+<span class="rvts0"><span class="rvts16">Constructor(major, minor)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts55">major</span><span class="rvts6"> and </span><span class="rvts55">minor</span><span class="rvts6"> values.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">major</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionMajor.html">major</a><span class="rvts54"> version number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">minor</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionMinor.html">minor</a><span class="rvts54"> version number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> A </span><span class="rvts54">major</span><span class="rvts6"> or </span><span class="rvts54">minor</span><span class="rvts6"> is less than zero.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(major, minor, build)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts54">major</span><span class="rvts6">, </span><span class="rvts54">minor</span><span class="rvts6">, and </span><span class="rvts54">build</span><span class="rvts6"> values.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> A </span><span class="rvts55">major</span><span class="rvts6"> or </span><span class="rvts55">minor</span><span class="rvts6"> is less than zero.</span></p>
+<h2 class="rvps5"><a name="Constructor4"></a>
+<span class="rvts0"><span class="rvts16">Constructor(major, minor, build)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts55">major</span><span class="rvts6">, </span><span class="rvts55">minor</span><span class="rvts6">, and </span><span class="rvts55">build</span><span class="rvts6"> values.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">major</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionMajor.html">major</a><span class="rvts54"> version number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">minor</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionMinor.html">minor</a><span class="rvts54"> version number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">build</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionBuild.html">build</a><span class="rvts54"> number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> A </span><span class="rvts54">major</span><span class="rvts6">, </span><span class="rvts54">minor</span><span class="rvts6"> or </span><span class="rvts54">build</span><span class="rvts6"> is less than zero.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(major, minor, build, revision)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class with the specified </span><span class="rvts54">major</span><span class="rvts6">, </span><span class="rvts54">minor</span><span class="rvts6">, </span><span class="rvts54">build</span><span class="rvts6">, and </span><span class="rvts54">revision</span><span class="rvts6"> numbers.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> A </span><span class="rvts55">major</span><span class="rvts6">, </span><span class="rvts55">minor</span><span class="rvts6"> or </span><span class="rvts55">build</span><span class="rvts6"> is less than zero.</span></p>
+<h2 class="rvps5"><a name="Constructor5"></a>
+<span class="rvts0"><span class="rvts16">Constructor(major, minor, build, revision)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class with the specified </span><span class="rvts55">major</span><span class="rvts6">, </span><span class="rvts55">minor</span><span class="rvts6">, </span><span class="rvts55">build</span><span class="rvts6">, and </span><span class="rvts55">revision</span><span class="rvts6"> numbers.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">major</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionMajor.html">major</a><span class="rvts54"> version number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">minor</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionMinor.html">minor</a><span class="rvts54"> version number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">build</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionBuild.html">build</a><span class="rvts54"> number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">revision</span></p>
+<p class="rvps22"><span class="rvts54">The </span><a class="rvts53" href="MfVersionRevision.html">revision</a><span class="rvts54"> number.</span><br/><span class="rvts54">Can be var integer any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> A </span><span class="rvts54">major</span><span class="rvts6">, </span><span class="rvts54">minor</span><span class="rvts6">, build or revision is less than zero.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> A </span><span class="rvts55">major</span><span class="rvts6">, </span><span class="rvts55">minor</span><span class="rvts6">, build or revision is less than zero.</span></p>
 </div>
 	
 	<div id="topic_footer">

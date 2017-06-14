@@ -1,0 +1,91 @@
+﻿<html>
+	
+<head>
+	<title>GetCharEnumerator()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharListGetCharEnumerator");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetCharEnumerator()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCharList.html">MfCharList</a> &rsaquo;&rsaquo; <a href="MfCharListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCharListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCharListFromString.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCharListIndexOf.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetCharEnumerator()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.GetCharEnumerator()</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetCharEnumerator</span></span><span class="rvts0"><span class="rvts16">()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets an enumerator that enumerates through the </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6"> instance as chars</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns an enumerator that iterates &nbsp;through the list as chars.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns an enumerator that iterates through a collection.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">lst := </span><span class="rvts34">MfCharList</span><span class="rvts31">.</span><span class="rvts47">FromString</span><span class="rvts31">(</span><span class="rvts42">"The Quick Brown Fox Jumped Over The Lazy Dog."</span><span class="rvts31">, </span><span class="rvts33">false</span><span class="rvts31">)</span><br/><span class="rvts31">enum := lst.</span><span class="rvts47">GetCharEnumerator</span><span class="rvts31">()</span><br/><span class="rvts31">While (enum.</span><span class="rvts47">Next</span><span class="rvts31">(index, Char))</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(Char)</span><br/><span class="rvts31">}</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts32">; TheQuickBrownFoxJumpedOverTheLazyDog.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

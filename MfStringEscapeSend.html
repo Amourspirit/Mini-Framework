@@ -68,8 +68,8 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">EscapeSend()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.EscapeSend()</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">EscapeSend()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.EscapeSend()</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">EscapeSend() </span></span></h2>
 <p class="rvps2"><span class="rvts6">Escape current instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> for use with the send command and returns a copy.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
@@ -77,7 +77,7 @@
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts6">Send command interprets some chars different such as </span><span class="rvts43"># ! ^ +</span><span class="rvts6"> when sending strings. These characters are escaped to prepare them for use with the send command</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts31">; if clipboard contained #WhatTime !My hashtag</span><br/><span class="rvts30">myStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts32">Clipboard</span><span class="rvts30">)</span><br/><span class="rvts30">sendText := myStr.</span><span class="rvts45">EscapeSend</span><span class="rvts30">() </span><span class="rvts31">; {#}WhatTime {!}My hashtag</span><br/><span class="rvts32">Send</span><span class="rvts30">, % sendText</span></p>
+<p class="rvps14"><span class="rvts32">; if clipboard contained #WhatTime !My hashtag</span><br/><span class="rvts31">myStr := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts33">Clipboard</span><span class="rvts31">)</span><br/><span class="rvts31">sendText := myStr.</span><span class="rvts47">EscapeSend</span><span class="rvts31">() </span><span class="rvts32">; {#}WhatTime {!}My hashtag</span><br/><span class="rvts33">Send</span><span class="rvts31">, % sendText</span></p>
 </div>
 	
 	<div id="topic_footer">

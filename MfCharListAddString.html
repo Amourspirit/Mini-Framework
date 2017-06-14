@@ -1,0 +1,99 @@
+﻿<html>
+	
+<head>
+	<title>AddString()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharListAddString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">AddString()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCharList.html">MfCharList</a> &rsaquo;&rsaquo; <a href="MfCharListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCharListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCharListAdd.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCharListClone.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">AddString()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Adds string or char codes elements to the end of the current instance.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.AddString(str [, startIndex, length])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Add(str [, startIndex, length])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Adds string or char codes elements to the end of the current instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">str</span></p>
+<p class="rvps22"><span class="rvts54">The string to convert to integer char codes and add to the end of the current instance.</span><br/><span class="rvts54">Can be var or instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> or any object derived from </span><a class="rvts53" href="MfPrimitive.html">MfPrmitive</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">Optional, the zero-based startIndex to start reading the string chars.</span><br/><span class="rvts54">If omitted the the then the string is read from the start to length</span></p>
+<p class="rvps21"><span class="rvts52">length</span></p>
+<p class="rvps22"><span class="rvts54">Optional, the total length of the string to read from startIndex.</span><br/><span class="rvts54">If omitted then string is read from startIndex to end of the string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Var containing </span><span class="rvts15">Integer</span><span class="rvts6"> of the </span><span class="rvts18">zero-based</span><span class="rvts6"> index at which the </span><span class="rvts55">obj</span><span class="rvts6"> has been added.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> if any error occurs adding </span><span class="rvts55">str</span><span class="rvts6"> to current instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">s := </span><span class="rvts42">"the quick brown fox jumped over the lazy dog."</span><br/><span class="rvts31">lst := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfCharList</span><span class="rvts31">()</span><br/><span class="rvts31">lst.</span><span class="rvts47">AddString</span><span class="rvts31">(s)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % lst.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">; the quick brown fox jumped over the lazy dog.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

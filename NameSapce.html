@@ -54,7 +54,7 @@
 				
 				</div>
 			<div id="topic_header_nav">
-				<a href="Globals.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="Changes.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="NS_System.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -64,12 +64,17 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Namespace</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Namespace</span></span></h1>
 <p class="rvps2"><span class="rvts6">Contains Classes that can be include in a given project</span></p>
 <p class="rvps2"><a class="rvts12" href="NS_System.html">System</a><span class="rvts6"> Namespace contains core classes and is required in all projects using </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> Framework</span></p>
-<p class="rvps16"><span class="rvts6">To include </span><span class="rvts18">System</span><span class="rvts6"> Namespace in a project included the following:</span><br/><span class="rvts43">#Include </span><span class="rvts43">&lt;inc_mf_0_3&gt;</span></p>
-<p class="rvps2"><a class="rvts12" href="NS_System_IO.html">System.IO</a><span class="rvts6"> contains classes related to System Input and Output.</span></p>
-<p class="rvps16"><span class="rvts6">To include </span><span class="rvts18">System.IO</span><span class="rvts6"> Namespace in a project include the following:</span><br/><span class="rvts43">#Include </span><span class="rvts43">&lt;inc_mf_System_IO_0_3&gt;</span></p>
+<p class="rvps2"><span class="rvts18">System</span><span class="rvts6"> is pseudo Namespace and is not to be called directly. System is assumed for all classes automatically.</span></p>
+<p class="rvps2"><span class="rvts6">No class or Namespace should be prefixed with System. For example </span><span class="rvts43">str := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">System</span><span class="rvts43">.</span><span class="rvts45">MfString</span><span class="rvts43">()</span><span class="rvts6"> will fail to create instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> but </span><span class="rvts43">str := </span><span class="rvts44">new</span><span class="rvts43"> </span><span class="rvts45">MfString</span><span class="rvts43">()</span><span class="rvts6"> is fine.</span><br/><span class="rvts6">The same is true for other namespaces. System prefix should always be omitted. For example </span><span class="rvts43">sb := </span><span class="rvts45">new</span><span class="rvts43"> </span><span class="rvts45">MfText</span><span class="rvts43">.</span><span class="rvts45">StringBuilder</span><span class="rvts43">()</span><span class="rvts6"> is the proper way to construct </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> but sb := </span><span class="rvts44">new</span><span class="rvts6"> </span><span class="rvts45">System</span><span class="rvts6">.</span><span class="rvts45">MfText</span><span class="rvts6">.</span><span class="rvts45">StringBuilder</span><span class="rvts6">() will fail.</span></p>
+<p class="rvps16"><span class="rvts6">To include </span><span class="rvts18">System</span><span class="rvts6"> Namespace in a project included the following:</span><br/><span class="rvts43">#Include </span><span class="rvts43">&lt;inc_mf_0_4&gt;</span></p>
+<p class="rvps2"><a class="rvts12" href="NS_System_IO.html">System.MfIO</a><span class="rvts6"> contains classes related to System Input and Output.</span></p>
+<p class="rvps16"><span class="rvts6">To include </span><a class="rvts12" href="NS_System_IO.html">System.MfIO</a><span class="rvts6"> Namespace in a project include the following:</span><br/><span class="rvts43">#Include </span><span class="rvts43">&lt;inc_mf_System_IO_0_4&gt;</span></p>
+<p class="rvps2"><a class="rvts12" href="NS_System_Text.html">System.MfText</a></p>
+<p class="rvps16"><span class="rvts6">The </span><a class="rvts12" href="NS_System_Text.html">System.MfText</a><span class="rvts6"> namespace contains classes that represent ASCII and Unicode character encodings; abstract base classes for converting blocks of characters to and from blocks of bytes; and a helper class that manipulates and formats </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> objects and vars without creating intermediate instances of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">.</span></p>
+<p class="rvps16"><span class="rvts6">The </span><a class="rvts12" href="NS_System_Text.html">System.MfText</a><span class="rvts6"> Namespace is already included with </span><span class="rvts18">System</span><span class="rvts6"> Namespace and does not need to be included with an #Include statement.</span></p>
 </div>
 	
 	<div id="topic_footer">

@@ -1,0 +1,98 @@
+﻿<html>
+	
+<head>
+	<title>Compare()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfCharListCompare");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Compare()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCharList.html">MfCharList</a> &rsaquo;&rsaquo; <a href="MfCharListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfCharListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfCharListClone.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfCharListCompareTo.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Compare()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Compare(objA, objB [, IgnoreCase])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">CompareTo(objA, objB [, IgnoreCase])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">objA</span></p>
+<p class="rvps22"><span class="rvts54">An </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> instance to compare.</span></p>
+<p class="rvps21"><span class="rvts52">objB</span></p>
+<p class="rvps22"><span class="rvts54">An </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> instance to compare.</span></p>
+<p class="rvps21"><span class="rvts52">IgnoreCase</span></p>
+<p class="rvps22"><span class="rvts54">Optional, if </span><span class="rvts69">true</span><span class="rvts54"> then case will be ignored when comparing; Otherwise case will be considered.</span><br/><span class="rvts54">Default value is </span><span class="rvts69">true</span><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero </span><span class="rvts55">objA</span><span class="rvts6"> precedes </span><span class="rvts55">objB</span><span class="rvts6"> in the sort order. Zero </span><span class="rvts55">objA</span><span class="rvts6"> occurs in the same position in the sort order as </span><span class="rvts55">objB</span><span class="rvts6"> Greater than zero </span><span class="rvts55">objA</span><span class="rvts6"> follows </span><span class="rvts55">objB</span><span class="rvts6"> in the sort order.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> method</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

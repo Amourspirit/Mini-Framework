@@ -58,9 +58,9 @@
 			<div id="topic_header_nav">
 				<a href="MfTypeMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfTypeIsInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfTypeInheritancePath.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfTypeMemberwiseClone.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfTypeToString.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,18 +68,18 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsObject()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.IsObject()</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">IsObject()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.IsObject()</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">IsObject()</span></span></h2>
 <p class="rvps2"><span class="rvts6">Gets if the type for the MfType Instance is an </span><a class="rvts13" href="http://l.autohotkey.net/docs/objects/Object.htm" target="_blank">Object</a><span class="rvts6"> or </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if type is </span><a class="rvts13" href="http://l.autohotkey.net/docs/objects/Object.htm" target="_blank">Object</a><span class="rvts6"> or </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">; Otherwise </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6">Remarks</span></p>
-<p class="rvps2"><span class="rvts6">All </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> Objects</span><span class="rvts22"> ( all extend/inherit MfObject )</span><span class="rvts6"> will return </span><span class="rvts18">true</span><span class="rvts6"> for</span><span class="rvts41"> IsObject()</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">All </span><span class="rvts6">Mini-Framework</span><span class="rvts6"> Objects</span><span class="rvts22"> ( all extend/inherit MfObject )</span><span class="rvts6"> will return </span><span class="rvts18">true</span><span class="rvts6"> for</span><span class="rvts23"> IsObject()</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called on a non instance of class. See: </span><a class="rvts12" href="MfTypeIsInstance.html">IsInstance()</a></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called on a non instance of class. See: </span><span class="rvts12">IsInstance()</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">myObj := </span><span class="rvts33">Object</span><span class="rvts30">()</span><br/><span class="rvts30">MyMfObj := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">)</span><br/><span class="rvts30">T1 := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfType</span><span class="rvts30">(myObj)</span><br/><span class="rvts30">T2 := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfType</span><span class="rvts30">(</span><span class="rvts42">"my string"</span><span class="rvts30">)</span><br/><span class="rvts30"></span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % T1.</span><span class="rvts45">IsObject</span><span class="rvts30">() </span><span class="rvts31">; displays 1 for true</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % T2.</span><span class="rvts45">IsObject</span><span class="rvts30">() </span><span class="rvts31">; displays 0 for false</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % MyMfObj.</span><span class="rvts45">GetType</span><span class="rvts30">().</span><span class="rvts45">IsObject</span><span class="rvts30">() </span><span class="rvts31">; displays 1 for true</span></p>
+<p class="rvps14"><span class="rvts31">myObj := </span><span class="rvts34">Object</span><span class="rvts31">()</span><br/><span class="rvts31">MyMfObj := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">)</span><br/><span class="rvts31">T1 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfType</span><span class="rvts31">(myObj)</span><br/><span class="rvts31">T2 := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfType</span><span class="rvts31">(</span><span class="rvts42">"my string"</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % T1.</span><span class="rvts47">IsObject</span><span class="rvts31">() </span><span class="rvts32">; displays 1 for true</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % T2.</span><span class="rvts47">IsObject</span><span class="rvts31">() </span><span class="rvts32">; displays 0 for false</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % MyMfObj.</span><span class="rvts47">GetType</span><span class="rvts31">().</span><span class="rvts47">IsObject</span><span class="rvts31">() </span><span class="rvts32">; displays 1 for true</span></p>
 </div>
 	
 	<div id="topic_footer">

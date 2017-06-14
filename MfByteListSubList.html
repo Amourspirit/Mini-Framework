@@ -1,0 +1,103 @@
+﻿<html>
+	
+<head>
+	<title>SubList()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfByteListSubList");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">SubList()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfCharList3.html">MfByteList</a> &rsaquo;&rsaquo; <a href="MfByteListMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfByteListMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfByteListInsert.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfByteListToString.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Sublist()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Method extracts the elements from list, between two specified indices, and returns the a new list.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := instance.SubList([startIndex, endIndex, leftToRight])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">SubList([startIndex, endIndex, leftToRight])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Method extracts the elements from list, between two specified indices, and returns the a new list.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">Optional. Default value is 0. The zero-based starting index to start reading elements from.</span><br/><span class="rvts54">Can be var integer or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">endIndex</span></p>
+<p class="rvps22"><span class="rvts54">Optional. Default value is null which includes all elements from startIndex to end of list. The zero-based endIndex index to start reading elements from.</span><br/><span class="rvts54">Can be var integer or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">leftToRight</span></p>
+<p class="rvps22"><span class="rvts54">Optional, Default value is </span><span class="rvts69">false</span><span class="rvts54">.</span><br/><span class="rvts54">If </span><span class="rvts69">true</span><span class="rvts54"> sublist elements are selected from start of list towards end of list; Otherwise elements are selected from end of list towards start of list.</span><br/><span class="rvts54">Can be boolean var or instance of </span><a class="rvts53" href="MfBool.html">MfBool</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a new instance of </span><a class="rvts12" href="MfCharList3.html">MfByteList</a><span class="rvts6"> the is a SubList of elements</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">startIndex</span><span class="rvts6"> is greater than </span><span class="rvts55">endIndex</span><span class="rvts6">, this method will swap the two arguments, meaning</span><span class="rvts43"> lst.SubList(1, 4) == lst.SubList(4, 1)</span><span class="rvts6">.</span><br/><span class="rvts6">If either </span><span class="rvts55">startIndex</span><span class="rvts6"> or </span><span class="rvts55">endIndex</span><span class="rvts6"> is less than 0, it is treated as if it were 0.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfNibbleListClone.html">Clone()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">s := </span><span class="rvts42">"23FE4A5C93FE9D35BC"</span><br/><span class="rvts31">lst := </span><span class="rvts34">MfNibConverter</span><span class="rvts31">.</span><span class="rvts47">FromHex</span><span class="rvts31">(s)</span><br/><span class="rvts31">sl := lst.</span><span class="rvts47">SubList</span><span class="rvts31">(</span><span class="rvts68">4</span><span class="rvts31">, </span><span class="rvts68">12</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sl.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; 4A5C93FE</span><br/><span class="rvts31"></span><br/><span class="rvts31">sl := lst.</span><span class="rvts47">SubList</span><span class="rvts31">(</span><span class="rvts68">4</span><span class="rvts31">, </span><span class="rvts68">12</span><span class="rvts31">, </span><span class="rvts33">false</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sl.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; D9EF39C5</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

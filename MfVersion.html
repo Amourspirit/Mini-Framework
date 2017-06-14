@@ -58,7 +58,7 @@
 			<div id="topic_header_nav">
 				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfValueTypeVerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfUC17GetInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="MfVersionProperties.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -68,13 +68,261 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfVersion Class</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">MfVersion Class</span></span></h1>
 <p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">)</span></p>
-<p class="rvps2"><span class="rvts6">Represents the version number of an assembly, operating system, or the common language runtime. This class cannot be extended.</span></p>
+<p class="rvps2"><span class="rvts6">Represents a version number. This class cannot be extended.</span><br/><span class="rvts6">Sealed Class</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
-<p class="rvps2"><a class="rvts12" href="MfVersionProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfVersionMethods.html">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfVersionConstructor.html">Constructor()</a></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">mfVer := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfVersion</span><span class="rvts30">(</span><span class="rvts42">"2.3.0.4"</span><span class="rvts30">)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % mfVer.</span><span class="rvts34">Major</span><span class="rvts30"> &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; 2</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % mfVer.</span><span class="rvts34">Minor</span><span class="rvts30"> &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; 3</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % mfVer.</span><span class="rvts34">Build</span><span class="rvts30"> &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; 0</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % mfVer.</span><span class="rvts34">Revision</span><span class="rvts30"> &nbsp; </span><span class="rvts31">; 4</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % mfVer.</span><span class="rvts45">ToString</span><span class="rvts30">() </span><span class="rvts31">; 2.3.0.4</span></p>
+<p class="rvps2"><a class="rvts12" href="MfException.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfException.html#Methods">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfVersion.html#Example">Example</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionConstructor.html#Constructor1">Constructor()</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionConstructor.html#Constructor2">Constructor(version)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts55">version</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionConstructor.html#Constructor3">Constructor(major, minor)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts55">major</span><span class="rvts6"> and </span><span class="rvts55">minor</span><span class="rvts6"> values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionConstructor.html#Constructor4">Constructor(major, minor, build)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class using the specified </span><span class="rvts55">major</span><span class="rvts6">, </span><span class="rvts55">minor</span><span class="rvts6">, and </span><span class="rvts55">build</span><span class="rvts6"> values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionConstructor.html#Constructor5">Constructor(major, minor, build, revision)</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> class with the specified </span><span class="rvts55">major</span><span class="rvts6">, </span><span class="rvts55">minor</span><span class="rvts6">, </span><span class="rvts55">build</span><span class="rvts6">, and </span><span class="rvts55">revision</span><span class="rvts6"> numbers.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionMajor.html">Major</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the major component of the version number for the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionMinor.html">Minor</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the minor component of the version number for the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionBuild.html">Build</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the build component of the version number for the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionRevision.html">Revision</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the value of the revision component of the version number for the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionMajorRevision.html">MajorRevision</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the high 16 bits of the revision number.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="259" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionMinorRevision.html">MinorRevision</a></p>
+</td>
+<td width="755" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the low 16 bits of the revision number.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionCompareTo.html">CompareTo(obj)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object to a specified </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object and returns an indication of their relative values. Overrides </span><a class="rvts12" href="MfObjectCompareTo.html">MfObject.CompareTo()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionEquals.html#Equals1">Equals(obj)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> instance is equal to </span><span class="rvts55">objA</span><span class="rvts6"> instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionEquals.html#Equals2">Equals(objA, ObjB)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if </span><span class="rvts55">objA</span><span class="rvts6"> instance of </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> is equal to </span><span class="rvts55">objB</span><span class="rvts6"> instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfExceptionGetHashCode.html">GetHashCode()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets A hash code for the current </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6"> or derived class. Overrides </span><a class="rvts12" href="MfObjectGetHashCode.html">MfObject.GethashCode()</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionGreaterThen.html">GreaterThen(value)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object to a specified </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object and returns a boolean indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionGreaterThenOrEqual.html">GreaterThenOrEqual(value)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object to a specified </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object and returns an indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIs.html">Is(type)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets if current instance of object is of the same type. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionLessThen.html">LessThen(value)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object to a specified </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object and returns an indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionLessThenOrEqual.html">LessThenOrEqual(value)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object to a specified </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object and returns an indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionParse.html">Parse(input)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the string representation of a version number to an equivalent </span><a class="rvts12" href="MfVersion.html">MfVersion</a><span class="rvts6"> object.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionToString.html#ToString1">ToString()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the value of the current Version object to its equivalent String representation. Overrides </span><a class="rvts12" href="MfObjectToString.html">MfObject.ToString()</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfVersionToString.html#ToString2">ToString(fieldCount)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the value of the current Version object to its equivalent String representation. A specified count indicates the number of components to return.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">mfVer := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfVersion</span><span class="rvts31">(</span><span class="rvts42">"2.3.0.4"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % mfVer.</span><span class="rvts35">Major</span><span class="rvts31"> &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; 2</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % mfVer.</span><span class="rvts35">Minor</span><span class="rvts31"> &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; 3</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % mfVer.</span><span class="rvts35">Build</span><span class="rvts31"> &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; 0</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % mfVer.</span><span class="rvts35">Revision</span><span class="rvts31"> &nbsp; </span><span class="rvts32">; 4</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % mfVer.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; 2.3.0.4</span></p>
 </div>
 	
 	<div id="topic_footer">

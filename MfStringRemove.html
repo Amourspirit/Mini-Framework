@@ -60,7 +60,7 @@
 				
 				<a href="MfStringPadRight.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfStringReverse.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfStringRemoveWhiteSpace.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,19 +68,34 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Remove()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Remove(startIndex)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Remove(startIndex)</span></span></h2>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Remove()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringRemove.html#Remove1">instance</a><a class="rvts61" href="MfStringRemove.html#Remove1">.Remove(startIndex)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="MfStringRemove.html#Remove2">instance</a><a class="rvts61" href="MfStringRemove.html#Remove2">.Remove(startIndex, count)</a></p>
+<h2 class="rvps5"><a name="Remove1"></a>
+<span class="rvts0"><span class="rvts16">Remove(startIndex)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Returns a new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> in which all the characters in the current instance, beginning at a specified position and continuing through the last position, have been deleted.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">startIndex</span></p>
-<p class="rvps22"><span class="rvts53">The zero-based position to begin deleting characters. Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> or var containing Integer.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">The zero-based position to begin deleting characters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> or var containing Integer.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns A new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> that is equivalent to this MfString except for the removed characters.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns var containing string.</span></p>
+<p class="rvps2"><span class="rvts6">Returns A new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> that is equivalent to this instance except for the removed characters.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns var containing string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts54">startIndex</span><span class="rvts6"> is out of range</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">startIndex</span><span class="rvts6"> is out of range</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">myStr := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfString</span><span class="rvts30">(</span><span class="rvts42">"Hello World"</span><span class="rvts30">) </span><span class="rvts31">; Create new instance of MfString Class</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % myStr.</span><span class="rvts45">Remove</span><span class="rvts30">(2) </span><span class="rvts31">; Displays He</span></p>
+<p class="rvps14"><span class="rvts31">myStr := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">) </span><span class="rvts32">; Create new instance of MfString Class</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % myStr.</span><span class="rvts47">Remove</span><span class="rvts31">(2) </span><span class="rvts32">; Displays He</span></p>
+<h2 class="rvps5"><a name="Remove2"></a>
+<span class="rvts0"><span class="rvts16">Remove(startIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Returns a new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> with </span><span class="rvts18">n</span><span class="rvts6"> characters removed from the </span><span class="rvts18">zero-base</span><span class="rvts6"> </span><span class="rvts55">startIndex</span><span class="rvts6"> forward, where</span><span class="rvts18"> n</span><span class="rvts6"> is </span><span class="rvts55">count</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">The zero-based position to begin deleting characters.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> or var containing Integer.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">The number of char to remove from </span><span class="rvts70">startIndex</span><span class="rvts54">, forward</span><span class="rvts54">.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> or var containing Integer.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns A new </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> that is equivalent to this instance except for the removed characters.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfStringReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> Property for this instance is true then returns </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> otherwise returns var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">startIndex</span><span class="rvts6"> or </span><span class="rvts55">count</span><span class="rvts6"> is out of range.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">myStr := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">) </span><span class="rvts32">; Create new instance of MfString Class</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % myStr.</span><span class="rvts47">Remove</span><span class="rvts31">(2, 4) </span><span class="rvts32">; Displays HeWorld</span></p>
 </div>
 	
 	<div id="topic_footer">

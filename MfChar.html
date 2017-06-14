@@ -58,7 +58,7 @@
 			<div id="topic_header_nav">
 				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfByteVerifyIsNotInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfByteListToString.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="MfCharFields.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -68,13 +68,522 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">MfChar Class</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">MfChar Class</span></span></h1>
 <p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6">)</span></p>
 <p class="rvps2"><span class="rvts6">Represents a character as a UTF-16 code unit.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
-<p class="rvps2"><a class="rvts12" href="MfCharFields.html">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfCharProperties.html">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfCharMethods.html">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfCharConstructor.html">Constructor()</a></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">UserInput := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">InputBox</span><span class="rvts30">(</span><span class="rvts42">"Byte Value"</span><span class="rvts30">, </span><span class="rvts42">"Enter a single character"</span><span class="rvts30">, , </span><span class="rvts72">300</span><span class="rvts30">, </span><span class="rvts72">140</span><span class="rvts30">)</span><br/><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts32">ErrorLevel</span><span class="rvts30">)</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, CANCEL was pressed.</span><br/><span class="rvts30">}</span><br/><span class="rvts32">else</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">try</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;ch := </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfChar</span><span class="rvts30">(UserInput)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfChar</span><span class="rvts30">.</span><span class="rvts45">IsDigit</span><span class="rvts30">(ch))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Digit, You entered a Digit</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">else if</span><span class="rvts30"> (</span><span class="rvts33">MfChar</span><span class="rvts30">.</span><span class="rvts45">IsLetter</span><span class="rvts30">(ch))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfChar</span><span class="rvts30">.</span><span class="rvts45">IsUpper</span><span class="rvts30">(ch))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Upper, You entered an upper case letter</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">else if</span><span class="rvts30"> (</span><span class="rvts33">MfChar</span><span class="rvts30">.</span><span class="rvts45">IsLower</span><span class="rvts30">(ch))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Lower, You entered a lower case letter</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">else if</span><span class="rvts30"> (</span><span class="rvts33">MfChar</span><span class="rvts30">.</span><span class="rvts45">IsWhiteSpace</span><span class="rvts30">(ch))</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">,, Whitespace, You entered a whitespace character</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">64</span><span class="rvts30">, Char Code, % </span><span class="rvts33">MfString</span><span class="rvts30">.</span><span class="rvts45">Format</span><span class="rvts30">(</span><span class="rvts42">"You enter a character with a char code of {0}"</span><span class="rvts30">, ch.</span><span class="rvts34">CharCode</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">catch</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">16</span><span class="rvts30">, Bad Input, The input was not acceptable.</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+<p class="rvps2"><a class="rvts12" href="MfChar.html#Fields">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfChar.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfChar.html#Methods">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfChar.html#Example">Example</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="43" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="917" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="43" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharConstructor.html">Constructor([c, retunAsObj, readonly])</a></p>
+</td>
+<td width="917" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> class optionally setting the </span><a class="rvts12" href="MfCharValue.html">Value</a><span class="rvts6"> property and the </span><a class="rvts12" href="MfCharReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> property and the </span><a class="rvts12" href="MfPrimitiveReadonly.html">Readonly</a><span class="rvts6"> property.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Fields"></a>
+<span class="rvts0"><span class="rvts17">Fields</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="42" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="918" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="42" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharMaxValue.html">MaxValue</a></p>
+</td>
+<td width="918" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the largest possible value of an </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="42" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethodField.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharMinValue.html">MinValue</a></p>
+</td>
+<td width="918" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the smallest possible value of an </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="915" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharCharCode.html">CharCode</a></p>
+</td>
+<td width="915" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the CharCode associated with the this instance of </span><a class="rvts12" href="MfChar.html">MfChar</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIgnoreCase.html">IgnoreCase</a></p>
+</td>
+<td width="915" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets if the </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> instance should Ignore case or not.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfPrimitiveReadonly.html">ReadOnly</a></p>
+</td>
+<td width="915" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the if the derived class will allow the underlying value to be altered after the constructor has been called. Inherited from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharReturnAsObject.html">ReturnAsObject</a></p>
+</td>
+<td width="915" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the if the class will return objects as their return value for various functions. Inherited from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="325" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharValue.html">Value</a></p>
+</td>
+<td width="915" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the value associated with the class. Overrides </span><a class="rvts12" href="MfPrimitiveValue.html">MfPrimitive.Value</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharCompareTo.html">CompareTo(obj)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares this instance to a specified </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> object.. Overrides </span><a class="rvts12" href="MfObjectCompareTo.html">MfObject.CompareTo()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharEquals.html">Equals(value)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if this instance </span><a class="rvts12" href="MfBoolValue.html">Value</a><span class="rvts6"> is the same as the </span><span class="rvts55">value. </span><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="Newtopic9.html">FromCharCode(charCode)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Get a new instance of </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> from an integer char value</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetHashCode.html">GetHashCode()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets A hash code for the current </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6">. Overrides </span><a class="rvts12" href="MfObjectGetHashCode.html">MfObject.GetHashCode()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetNumericValue.html#GetNumericValue1">GetNumericValue(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the specified numeric Unicode character to a decimal number for </span><span class="rvts55">c</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetNumericValue.html#GetNumericValue2">GetNumericValue(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the specified numeric Unicode character to a decimal number for the character in string </span><span class="rvts55">s</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts55">index</span><span class="rvts6">. </span><span class="rvts55">Index</span><span class="rvts6"> can be instance of </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> or var containing </span><span class="rvts15">integer</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetTypeCode.html">GetTypeCode()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Get an enumeration value of </span><a class="rvts12" href="MfTypeCode.html">MfTypeCode</a><span class="rvts6"> the represents </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> Type Code.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetUnicodeCategory.html#GetUnicodeCategory1">GetUnicodeCategory(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Categorizes a specified Unicode character into a group identified by one of the </span><a class="rvts12" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts6"> values for </span><span class="rvts55">c</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetUnicodeCategory.html#GetUnicodeCategory2">GetUnicodeCategory(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Categorizes a specified Unicode character into a group identified by one of the </span><a class="rvts12" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts6"> values for the character in string </span><span class="rvts55">s</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetValue.html#GetValue1">GetValue(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the string value from </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> instance or </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or var containing a string. If string has more then one character then the first character is returned.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharGetValue.html#GetValue2">GetValue(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the string value from </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or var containing a </span><span class="rvts15">string</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsControl.html#IsControl1">IsControl(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified Unicode character is categorized as a control character for </span><span class="rvts55">c</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsDigit.html#IsDigit1">IsDigit(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a decimal digit.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsDigit.html#IsDigit2">IsDigit(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a decimal digit for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsControl.html#IsControl2">IsControl(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified Unicode character is categorized as a control character from </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or var containing a </span><span class="rvts15">string</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts55">index</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsHighSurrogate.html#IsHighSurrogate1">IsHighSurrogate(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is a high surrogate.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsHighSurrogate.html#IsHighSurrogate2">IsHighSurrogate(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character &nbsp;is a high surrogate that ranges from U+D800 through U+DBFF for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLetter.html#IsLetter1">IsLetter(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a Unicode letter.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLetter.html#IsLetter2">IsLetter(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a Unicode letter for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLetterOrDigit.html#IsLetterOrDigit1">IsLetterOrDigit(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a letter or a decimal digit.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLetterOrDigit.html#IsLetterOrDigit2">IsLetterOrDigit(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a letter or a decimal digit for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLower.html#IsLower1">IsLower(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a lowercase letter.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLower.html#IsLower2">IsLower(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a lowercase letter for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLowSurrogate.html#IsLowSurrogate1">IsLowSurrogate(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is a low surrogate.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsLowSurrogate.html#IsLowSurrogate2">IsLowSurrogate(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is a low surrogate for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsNumber.html#IsNumber1">IsNumber(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a Unicode number.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsNumber.html#IsNumber2">IsNumber(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a Unicode number for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsNumber.html#IsNumber1">IsPunctuation(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a punctuation mark.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsNumber.html#IsNumber2">IsPunctuation(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a punctuation mark for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsSeparator.html#IsSeparator1">IsSeparator(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a separator character.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsSeparator.html#IsSeparator2">IsSeparator(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a separator character for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsSurrogatePair.html#IsSurrogatePair1">IsSurrogatePair(highSurrogate, lowSurrogate)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the two specified </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> objects form a surrogate pair.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsSurrogatePair.html#IsSurrogatePair2">IsSurrogatePair(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether two adjacent characters in a string at a specified position form a surrogate pair.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsSymbol.html#IsSymbol1">IsSymbol(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a symbol character.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsSymbol.html#IsSymbol2">IsSymbol(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a symbol character for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsUpper.html#IsUpper1">IsUpper(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a uppercase letter.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsUpper.html#IsUpper2">IsUpper(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a uppercase letter for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsWhiteSpace.html#IsWhiteSpace1">IsWhiteSpace(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as white space.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsWhiteSpace.html#IsWhiteSpace2">IsWhiteSpace(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as white space for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharParse.html">Parse(s)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the specified string representation of a logical value to its Boolean equivalent, or throws an exception if the string is not equal to the value of </span><a class="rvts12" href="MfBoolTrueString.html">TrueString</a><span class="rvts6"> or </span><a class="rvts12" href="MfBoolFalseString.html">FalseString</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharToLower.html#ToLower1">ToLower(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns the lowercase equivalent of c, or the unchanged value of </span><span class="rvts55">c</span><span class="rvts6">, if </span><span class="rvts55">c</span><span class="rvts6"> is already lowercase or not alphabetic.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharToLower.html#ToLower2">ToLower(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Returns the lowercase equivalent of the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6"> or the unchanged value of character at position index if character is already lowercase or not alphabetic.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBoolToString.html">ToString()</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a string representation of the </span><a class="rvts12" href="MfChar.html">MfChar</a><span class="rvts6"> instance.. Overrides </span><a class="rvts12" href="MfPrimitiveToString.html">MfPrimitive.ToString()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsUpper.html#IsUpper1">ToUpper(c)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a uppercase letter.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharIsUpper.html#IsUpper2">ToUpper(s, index)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a uppercase letter for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="336" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfCharTryParse.html">TryParse(byref result, s)</a></p>
+</td>
+<td width="951" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the value of the specified string to its equivalent Unicode character. A return code indicates whether the conversion succeeded or failed.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">UserInput := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">InputBox</span><span class="rvts31">(</span><span class="rvts42">"Byte Value"</span><span class="rvts31">, </span><span class="rvts42">"Enter a single character"</span><span class="rvts31">, , </span><span class="rvts68">300</span><span class="rvts31">, </span><span class="rvts68">140</span><span class="rvts31">)</span><br/><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts33">ErrorLevel</span><span class="rvts31">)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, CANCEL was pressed.</span><br/><span class="rvts31">}</span><br/><span class="rvts33">else</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">try</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;ch := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfChar</span><span class="rvts31">(UserInput)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsDigit</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Digit, You entered a Digit</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">else if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsLetter</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsUpper</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Upper, You entered an upper case letter</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">else if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsLower</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Lower, You entered a lower case letter</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">else if</span><span class="rvts31"> (</span><span class="rvts34">MfChar</span><span class="rvts31">.</span><span class="rvts47">IsWhiteSpace</span><span class="rvts31">(ch))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">,, Whitespace, You entered a whitespace character</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">else</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">64</span><span class="rvts31">, Char Code, % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"You enter a character with a char code of {0}"</span><span class="rvts31">, ch.</span><span class="rvts35">CharCode</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">catch</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">MsgBox</span><span class="rvts31">, </span><span class="rvts68">16</span><span class="rvts31">, Bad Input, The input was not acceptable.</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31">}</span></p>
 </div>
 	
 	<div id="topic_footer">

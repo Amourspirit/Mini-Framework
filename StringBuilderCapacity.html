@@ -1,0 +1,96 @@
+﻿<html>
+	
+<head>
+	<title>Capacity</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilderCapacity");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Capacity</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderProperties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderProperties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderProperties.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="Newtopic8.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Capacity</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the maximum number of characters that can be contained in the memory allocated by the current instance.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Value</span><br/><span class="rvts51">instance</span><span class="rvts49">.Value := Value</span></p>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">Value is an integer and can be var or any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54">. </span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Set the capacity of the current </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span><br/><span class="rvts6">Can &nbsp;be var or</span><span class="rvts12"> </span><span class="rvts6">any type that matches </span><a class="rvts12" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts6">. </span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets integer var of the capacity of the current </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if the value specified for a set operation is less than zero or greater than </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The maximum number of characters that can be contained in the memory allocated by the current instance. Its value can range from </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6"> to </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Capacity does not affect the string value of the current instance. Capacity can be decreased as long as it is not less than </span><a class="rvts12" href="StringBuilderLength.html">Length</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> dynamically allocates more space when required and increases Capacity accordingly. For performance reasons, a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> might allocate more memory than needed. The amount of memory allocated is implementation-specific.</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

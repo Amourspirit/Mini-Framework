@@ -58,7 +58,7 @@
 			<div id="topic_header_nav">
 				<a href="MfFloatMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfFloatMemberwiseClone.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfFloatMultiply.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="MfFloatSubtract.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -68,25 +68,538 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Parse()</span></span></h1>
-<p class="rvps20"><span class="rvts48">MfFloat.Parse()</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfFloat.Parse(obj)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Parse()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfFloatParse.html#Parse1">MfFloat.Parse(s)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfFloatParse.html#Parse2">MfFloat.Parse(s, style)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfFloatParse.html#Parse3">MfFloat.Parse(s, provider)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfFloatParse.html#Parse4">MfFloat.Parse(s, style, provider)</a></p>
+<h2 class="rvps5"><a name="Parse1"></a>
+<span class="rvts0"><span class="rvts16">MfFloat.Parse(s)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the </span><span class="rvts55">s</span><span class="rvts6"> representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">obj</span></p>
-<p class="rvps22"><span class="rvts53">An object convert.</span><br/><span class="rvts53">Can be instance of </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53">, </span><a class="rvts52" href="MfString.html">MfString</a><br/><span class="rvts53">Can be var containing </span><span class="rvts69">string</span><span class="rvts53">, </span><span class="rvts69">integer</span><br/><span class="rvts53">Can also be instance of </span><a class="rvts52" href="MfParams.html">MfParams</a><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts52">s</span></p>
+<p class="rvps22"><span class="rvts54">An string var of object convert.</span><br/><span class="rvts54">Can be var or instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54">, </span><a class="rvts53" href="MfString.html">MfString</a></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of </span><span class="rvts15">ReturnAsObject</span><span class="rvts6"> and value set to true then parsed result will be returned as an instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">; Otherwise a var </span><span class="rvts15">float</span><span class="rvts6"> will be returned. See example below.</span></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts15">Static Method</span><br/><span class="rvts6">Converts the obj representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent.</span><br/><span class="rvts6">If obj parameter is an Objects then it must be instance from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> or be an instance of </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6">.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of </span><span class="rvts15">ReturnAsObject</span><span class="rvts6"> and value set to true then parsed result will be returned as an instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">; otherwise a var float will be returned. See example below.</span><br/><span class="rvts6">If </span><a class="rvts12" href="MfParams.html">MfParams</a><span class="rvts6"> is passed in with </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of ReturnAsObject and value set to true then and </span><a class="rvts12" href="MfParamsData.html">Data</a><span class="rvts6"> key of Format added with a valid </span><a class="rvts12" href="MfFloatFormat.html">Format</a><span class="rvts6"> value then result will be returned as an instance of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> with the Format set; otherwise a var float will be returned. See example below.</span></p>
+<p class="rvps2"><span class="rvts6">Returns </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance equivalent to the number contained in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> unable to parse </span><span class="rvts54">obj</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">s</span><span class="rvts6"> is </span><span class="rvts6">null</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> if s is not of the correct format.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfOE19.html">MfOverFlowExcpetion</a><span class="rvts6"> s represents a number less than </span><a class="rvts12" href="Newtopic2.html">MinValue</a><span class="rvts6"> or greater than </span><a class="rvts12" href="Newtopic3.html">MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static method</span><br/><span class="rvts6">The </span><span class="rvts55">s</span><span class="rvts6"> parameter can contain the current culture's </span><a class="rvts12" href="MfNFI18PositiveInfinitySymbol.html">MfNumberFormatInfo.PositiveInfinitySymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18NegativeInfinitySymbol.html">MfNumberFormatInfo.NegativeInfinitySymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18NaNSymbol.html">MfNumberFormatInfo.NaNSymbol</a><span class="rvts6">, or a string of the form:</span></p>
+<p class="rvps2"><span class="rvts6">[ws][sign][integral-digits[,]]integral-digits[.[fractional-digits]][E[sign]exponential-digits][ws]</span><br/><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Elements in square brackets ([ and ]) are optional. The following table describes each element.</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts18">Element</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts18">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">ws</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of white-space characters.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">sign</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A negative sign symbol (-) or a positive sign symbol (+). Only a leading sign can be used.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">integral-digits</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the integral part of the number. Runs of integral-digits can be partitioned by a group-separator symbol. For example, in some cultures a comma (,) separates groups of thousands. The integral-digits element can be absent if the string contains the fractional-digits element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">,</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A culture-specific thousands separator symbol.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">.</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A culture-specific decimal point symbol.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">fractional-digits</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the fractional part of the number.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">E</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">The "e" or "E" character, which indicates that the value is represented in exponential (scientific) notation.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">exponential-digits</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify an exponent.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">s</span><span class="rvts6"> parameter is interpreted using a combination of the </span><a class="rvts12" href="MfNS14Float.html">MfNumberStyles.Float</a><span class="rvts6"> and </span><a class="rvts12" href="MfNS14AllowThousands.html">MfNumberStyles.AllowThousands</a><span class="rvts6"> flags. This means that white space and thousands separators are allowed, for example, while currency symbols are not.</span></p>
+<p class="rvps2"><span class="rvts6">For finer control over which style elements are permitted in s for the parse operation to succeed, call the </span><a class="rvts12" href="MfFloatParse.html#Parse2">MfFloat.Parse(s, styles)</a><span class="rvts6"> or the </span><a class="rvts12" href="MfFloatParse.html#Parse4">MfFloat.Parse(s, style, provider)</a><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">s</span><span class="rvts6"> parameter is interpreted using the formatting information in a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> object that is initialized for the current thread culture. For more information, see </span><a class="rvts12" href="MfNFI18CurrentInfo.html">CurrentInfo</a><span class="rvts6">. To parse a string using the formatting information of some other culture, call the </span><a class="rvts12" href="MfFloatParse.html#Parse3">MfFloat.Parse(s, provider)</a><span class="rvts6"> or </span><a class="rvts12" href="MfFloatParse.html#Parse4">MfFloat.Parse(s, style, provider)</a><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">Ordinarily, if you pass the MfFloat.Parse method a string that is created by calling the </span><a class="rvts12" href="MfFloatToString.html">MfFloat.ToString</a><span class="rvts6"> method, the original Float value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either </span><a class="rvts12" href="Newtopic2.html">MinValue</a><span class="rvts6"> or </span><a class="rvts12" href="Newtopic3.html">MaxValue</a><span class="rvts6"> results in </span><a class="rvts12" href="MfFloatNegativeInfinity.html">NegativeInfinity</a><span class="rvts6"> and </span><a class="rvts12" href="MfFloatPositiveInfinity.html">PostiveInfinity</a><span class="rvts6"> as the following example illustrates.</span></p>
+<p class="rvps14"><span class="rvts31">value := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts35">MinValue</span><br/><span class="rvts31">wf := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts35">SetFormat</span><span class="rvts31">(</span><span class="rvts34">MfSetFormatNumberType</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">FloatFast</span><span class="rvts31">, </span><span class="rvts42">"0.16e"</span><span class="rvts31">)</span><br/><span class="rvts31">result := value + 0.0</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"MinValue: {0}"</span><span class="rvts31">, result)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts33">try</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"ParseResult: {0}"</span><span class="rvts31">, </span><span class="rvts35">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(value))</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><br/><span class="rvts31">}</span><br/><span class="rvts33">catch</span><span class="rvts31"> e</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(e.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">}</span><br/><span class="rvts31">value := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts35">MaxValue</span><br/><span class="rvts31">result := value + 0.0</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"MaxValue: {0}"</span><span class="rvts31">, result)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts33">try</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"ParseResult: {0}"</span><span class="rvts31">, </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(value))</span><br/><span class="rvts31">}</span><br/><span class="rvts33">catch</span><span class="rvts31"> e</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(e.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">}</span><br/><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">SetFormat</span><span class="rvts31">(</span><span class="rvts34">MfSetFormatNumberType</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">FloatFast</span><span class="rvts31">, wf)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts32">/*</span><br/><span class="rvts32">MinValue: -1.7976931348623157e+308</span><br/><span class="rvts32">ParseResult: -Infinity</span><br/><span class="rvts32">MaxValue: 1.7976931348623157e+308</span><br/><span class="rvts32">ParseResult: Infinity</span><br/><span class="rvts32">*/</span></p>
+<p class="rvps2"><span class="rvts6">If a separator is encountered in the s parameter during a parse operation, and the applicable currency or number decimal and group separators are the same, the parse operation assumes that the separator is a decimal separator rather than a group separator. For more information about separators, see </span><a class="rvts12" href="MfNFI18CurrencyDecimalSeparator.html">CurrencyDecimalSeparator</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18NumberDecimalSeparator.html">NumberDecimalSeparator</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18CurrencyGroupSeparator.html">CurrencyGroupSeparator</a><span class="rvts6">, and </span><a class="rvts12" href="MfNFI18NumberGroupSeparator.html">NumberGroupSeparator</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps2"><span class="rvts6">The following example illustrates the use of the Parse(String) method.</span></p>
+<p class="rvps14"><span class="rvts33">class</span><span class="rvts31"> </span><span class="rvts34">Temperature</span><span class="rvts31"> extends </span><span class="rvts34">MfObject</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;m_value := new </span><span class="rvts34">MfFloat</span><span class="rvts31">(</span><span class="rvts68">0.0</span><span class="rvts31">, </span><span class="rvts33">true</span><span class="rvts31">,, </span><span class="rvts68">0.2</span><span class="rvts31">)</span><br/><span class="rvts31"></span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts32">; Parses the temperature from a string in form</span><br/><span class="rvts32"> &nbsp; &nbsp;; [ws][sign]digits['F|'C][ws]</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts47">Parse</span><span class="rvts31">(s) {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.</span><span class="rvts47">VerifyIsNotInstance</span><span class="rvts31">(</span><span class="rvts33">A_ThisFunc</span><span class="rvts31">, </span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;temp := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">Temperature</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;str := new </span><span class="rvts34">MfString</span><span class="rvts31">(s, </span><span class="rvts33">true</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (str.</span><span class="rvts47">TrimEnd</span><span class="rvts31">().</span><span class="rvts47">EndsWith</span><span class="rvts31">(</span><span class="rvts42">"'F"</span><span class="rvts31">))</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;temp.</span><span class="rvts35">Value</span><span class="rvts31"> := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">( str.</span><span class="rvts47">Remove</span><span class="rvts31">(str.</span><span class="rvts47">LastIndexOf</span><span class="rvts31">(</span><span class="rvts42">"'"</span><span class="rvts31">), </span><span class="rvts68">2</span><span class="rvts31">) ).</span><span class="rvts35">Value</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">else</span><span class="rvts31"> </span><span class="rvts33">if</span><span class="rvts31"> ( str.</span><span class="rvts47">TrimEnd</span><span class="rvts31">().</span><span class="rvts47">EndsWith</span><span class="rvts31">(</span><span class="rvts42">"'C"</span><span class="rvts31">) )</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;temp.</span><span class="rvts35">Celsius</span><span class="rvts31"> := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">( str.</span><span class="rvts47">Remove</span><span class="rvts31">(str.</span><span class="rvts47">LastIndexOf</span><span class="rvts31">(</span><span class="rvts42">"'"</span><span class="rvts31">), 2) ).</span><span class="rvts35">Value</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">else</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;temp.</span><span class="rvts35">Value</span><span class="rvts31"> := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(str)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">return</span><span class="rvts31"> temp</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"></span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts35">Value</span><span class="rvts31">[]</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">get</span><span class="rvts31"> {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return </span><span class="rvts33">this</span><span class="rvts31">.m_Value.</span><span class="rvts35">Value</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">set</span><span class="rvts31"> {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.m_Value.</span><span class="rvts35">Value</span><span class="rvts31"> := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(value)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"></span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts35">Celsius</span><span class="rvts31">[]</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">get</span><span class="rvts31"> {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;flt := new </span><span class="rvts34">MfFloat</span><span class="rvts31">(this.m_Value, </span><span class="rvts33">true</span><span class="rvts31">,, this.m_Value.</span><span class="rvts35">Format</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;flt.</span><span class="rvts47">Subtract</span><span class="rvts31">(32.0).</span><span class="rvts47">Divide</span><span class="rvts31">(1.8)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">return</span><span class="rvts31"> flt.</span><span class="rvts47">GetTrimmed</span><span class="rvts31">().</span><span class="rvts35">Value</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">set</span><span class="rvts31"> {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.m_value.</span><span class="rvts35">Value</span><span class="rvts31"> := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(value)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">this</span><span class="rvts31">.m_value.</span><span class="rvts47">Multiply</span><span class="rvts31">(</span><span class="rvts68">1.8</span><span class="rvts31">).</span><span class="rvts47">Add</span><span class="rvts31">(</span><span class="rvts68">32.0</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"></span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts47">ToString</span><span class="rvts31">() {</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">return</span><span class="rvts31"> this.m_Value.</span><span class="rvts47">GetTrimmed</span><span class="rvts31">().</span><span class="rvts35">Value</span><span class="rvts31"> . </span><span class="rvts42">"'F"</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31">}</span></p>
+<h2 class="rvps5"><a name="Parse2"></a>
+<span class="rvts0"><span class="rvts16">MfFloat</span></span><span class="rvts0"><span class="rvts16">.</span></span><span class="rvts0"><span class="rvts16">Parse(s, style)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the </span><span class="rvts55">s</span><span class="rvts6"> representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">s</span></p>
+<p class="rvps22"><span class="rvts54">An string var of object convert.</span><br/><span class="rvts54">Can be var or instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54">, </span><a class="rvts53" href="MfString.html">MfString</a></p>
+<p class="rvps21"><span class="rvts52">style</span></p>
+<p class="rvps22"><a class="rvts53" href="MfNS14.html">MfNumberStyles</a><span class="rvts54"> Instance or Integer var representing instance.</span><br/><span class="rvts54">A bitwise combination of </span><a class="rvts53" href="MfNS14.html">MfNumberStyles</a><span class="rvts54"> values that indicates the style elements that can be present in </span><span class="rvts70">s</span><span class="rvts54">. A typical value to specify is </span><a class="rvts53" href="MfNS14Float.html">MfNumberStyles.Float</a><span class="rvts54">. with </span><a class="rvts53" href="MfNS14AllowThousands.html">MfNumberStyles.AllowThousands</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance equivalent to the number contained in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">s</span><span class="rvts6"> is </span><span class="rvts6">null</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> if s is not of the correct format.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfOE19.html">MfOverFlowExcpetion</a><span class="rvts6"> s represents a number less than </span><a class="rvts12" href="Newtopic2.html">MinValue</a><span class="rvts6"> or greater than </span><a class="rvts12" href="Newtopic3.html">MaxValue</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> </span><span class="rvts55">style</span><span class="rvts6"> is not a &nbsp;value. </span><br/><span class="rvts6">-or-</span><br/><span class="rvts55">style</span><span class="rvts6"> is includes </span><a class="rvts12" href="MfNS14AllowHexSpecifier.html">MfNumberStyles.AllowHexSpecifier</a><span class="rvts6"> value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Since</span></span></h3>
+<p class="rvps2"><span class="rvts6">Version 0.4</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static method</span><br/><span class="rvts6">The </span><span class="rvts55">style</span><span class="rvts6"> parameter defines the style elements (such as white space, thousands separators, and currency symbols) that are allowed in the </span><span class="rvts55">s</span><span class="rvts6"> parameter for the parse operation to succeed. It must be a combination of bit flags from the </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> enumeration. The following </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> members are not supported:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><a class="rvts12" href="MfNS14AllowHexSpecifier.html">AllowHexSpecifier</a></li>
+<li class="rvps2"><a class="rvts12" href="MfNS14HexNumber.html">HexNumber</a></li>
+</ul>
+<p class="rvps2"><span class="rvts6">The s parameter can contain the current culture's </span><a class="rvts12" href="MfNFI18PositiveInfinitySymbol.html">MfNumberFormatInfo.PositiveInfinitySymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18NegativeInfinitySymbol.html">MfNumberFormatInfo.NegativeInfinitySymbol</a><span class="rvts6">, or </span><a class="rvts12" href="MfNFI18NaNSymbol.html">MfNumberFormatInfo.NaNSymbol</a><span class="rvts6">. Depending on the value of style, it can also take the form:</span></p>
+<p class="rvps2"><span class="rvts6">[ws][$][sign][integral-digits[,]]integral-digits[.[fractional-digits]][E[sign]exponential-digits][ws]</span></p>
+<p class="rvps2"><span class="rvts6">Elements in square brackets ([ and ]) are optional. The following table describes each element.</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">Element</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">ws</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of white-space characters. White space can appear at the beginning of s if style includes the </span><a class="rvts12" href="MfNS14AllowLeadingWhite.html">MfNumberStyles.AllowLeadingWhite</a><span class="rvts6"> flag, and it can appear at the end of s if style includes the </span><a class="rvts12" href="MfNS14AllowTrailingWhite.html">MFNumberStyles.AllowTrailingWhite</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">$</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A culture-specific currency symbol. Its position in the string is defined by the </span><a class="rvts12" href="MfNFI18CurrencyNegativePattern.html">MfNumberFormatInfo.CurrencyNegativePattern</a><span class="rvts6"> and </span><a class="rvts12" href="MfNFI18CurrencyPositivePattern.html">MfNumberFormatInfo.CurrencyPositivePattern</a><span class="rvts6"> properties of the current culture. The current culture's currency symbol can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowCurrencySymbol.html">MfNumberStyles.AllowCurrencySymbol</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">sign</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A negative sign symbol (-) or a positive sign symbol (+). The sign can appear at the beginning of s if style includes the </span><a class="rvts12" href="MfNS14AllowLeadingSign.html">MFNumberStyles.AllowLeadingSign</a><span class="rvts6"> flag, and it can appear at the end of s if style includes the </span><a class="rvts12" href="MfNS14AllowTrailingSign.html">MFNumberStyles.AllowTrailingSign</a><span class="rvts6"> flag. Parentheses can be used in s to indicate a negative value if style includes the </span><a class="rvts12" href="MfNS14AllowParentheseshtml.html">MfNumberStyles.AllowParentheses</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">integral-digits</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the integral part of the number. The integral-digits element can be absent if the string contains the fractional-digits element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">,</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A culture-specific group separator. The current culture's group separator symbol can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowThousands.html">MfNumberStyles.AllowThousands</a><span class="rvts6"> flag</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">.</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A culture-specific decimal point symbol. The current culture's decimal point symbol can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowDecimalPoint.html">MFNumberStyles.AllowDecimalPoint</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">fractional-digits</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the fractional part of the number. Fractional digits can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowDecimalPoint.html">MfNumberStyles.AllowDecimalPoint</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">E</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">The "e" or "E" character, which indicates that the value is represented in exponential (scientific) notation. The s parameter can represent a number in exponential notation if style includes the </span><a class="rvts12" href="MfNS14AllowExponent.html">MfNumberStyles.AllowExponent</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">exponential-digits</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify an exponent.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6">A string with digits only (which corresponds to the </span><a class="rvts12" href="MfNS14None.html">MfNumberStyles.None</a><span class="rvts6"> style) always parses successfully. The remaining </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> members control elements that may be present, but are not required to be present, in the input string. The following table indicates how individual </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> flags affect the elements that may be present in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">NumberStyles value</span></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Elements permitted in s in addition to digits</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14None.html">None</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The integral-digits element only.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowDecimalPoint.html">AllowDecimalPoint</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The decimal point (.) and fractional-digits elements.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowExponent.html">AllowExponent</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The "e" or "E" character, which indicates exponential notation. This flag by itself supports values in the form digitsEdigits; additional flags are needed to successfully parse strings with such elements as positive or negative signs and decimal point symbols.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowLeadingWhite.html">AllowLeadingWhite</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws element at the beginning of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowTrailingWhite.html">AllowTrailingWhite</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws element at the end of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowLeadingSign.html">AllowLeadingSign</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The sign element at the beginning of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowTrailingSign.html">AllowTrailingSig</a><span class="rvts6">n</span></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The sign element at the end of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowParentheseshtml.html">AllowParentheses</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The sign element in the form of parentheses enclosing the numeric value.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowThousands.html">AllowThousands</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The thousands separator (,) element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowCurrencySymbol.html">AllowCurrencySymbol</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The currency ($) element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Currency.html">Currency</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">All elements. However, s cannot represent a hexadecimal number or a number in exponential notation.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Float.html">Float</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws element at the beginning or end of s, sign at the beginning of s, and the decimal point (.) symbol. The s parameter can also use exponential notation.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Number.html">Number</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws, sign, thousands separator (,) and decimal point (.) elements.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Any.html">Any</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">All elements. However, s cannot represent a hexadecimal number.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">s</span><span class="rvts6"> parameter is parsed using the formatting information in a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> object that is initialized for the current system culture. For more information, see </span><a class="rvts12" href="MfNFI18CurrentInfo.html">CurrentInfo</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Ordinarily, if you pass the MfFloat.Parse method a string that is created by calling the </span><a class="rvts12" href="MfFloatToString.html">MfFloat.ToString</a><span class="rvts6"> method, the original Float value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either </span><a class="rvts12" href="Newtopic2.html">MinValue</a><span class="rvts6"> or </span><a class="rvts12" href="Newtopic3.html">MaxValue</a><span class="rvts6"> results in </span><a class="rvts12" href="MfFloatNegativeInfinity.html">NegativeInfinity</a><span class="rvts6"> and </span><a class="rvts12" href="MfFloatPositiveInfinity.html">PostiveInfinity</a><span class="rvts6"> as the following example illustrates.</span></p>
+<p class="rvps14"><span class="rvts31">value := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts35">MinValue</span><br/><span class="rvts31">wf := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts35">SetFormat</span><span class="rvts31">(</span><span class="rvts34">MfSetFormatNumberType</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">FloatFast</span><span class="rvts31">, </span><span class="rvts42">"0.16e"</span><span class="rvts31">)</span><br/><span class="rvts31">result := value + 0.0</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"MinValue: {0}"</span><span class="rvts31">, result)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts33">try</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"ParseResult: {0}"</span><span class="rvts31">, </span><span class="rvts35">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(value))</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><br/><span class="rvts31">}</span><br/><span class="rvts33">catch</span><span class="rvts31"> e</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(e.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">}</span><br/><span class="rvts31">value := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts35">MaxValue</span><br/><span class="rvts31">result := value + 0.0</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"MaxValue: {0}"</span><span class="rvts31">, result)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts33">try</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"ParseResult: {0}"</span><span class="rvts31">, </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(value))</span><br/><span class="rvts31">}</span><br/><span class="rvts33">catch</span><span class="rvts31"> e</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(e.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">}</span><br/><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">SetFormat</span><span class="rvts31">(</span><span class="rvts34">MfSetFormatNumberType</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">FloatFast</span><span class="rvts31">, wf)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts32">/*</span><br/><span class="rvts32">MinValue: -1.7976931348623157e+308</span><br/><span class="rvts32">ParseResult: -Infinity</span><br/><span class="rvts32">MaxValue: 1.7976931348623157e+308</span><br/><span class="rvts32">ParseResult: Infinity</span><br/><span class="rvts32">*/</span></p>
+<h2 class="rvps5"><a name="Parse3"></a>
+<span class="rvts0"><span class="rvts16">MfFloat</span></span><span class="rvts0"><span class="rvts16">.</span></span><span class="rvts0"><span class="rvts16">Parse(s, provider)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the </span><span class="rvts55">s</span><span class="rvts6"> representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">s</span></p>
+<p class="rvps22"><span class="rvts54">An string var of object convert.</span><br/><span class="rvts54">Can be var or instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54">, </span><a class="rvts53" href="MfString.html">MfString</a></p>
+<p class="rvps21"><span class="rvts52">provider</span></p>
+<p class="rvps22"><span class="rvts54">An object that supplies culture-specific parsing information about </span><span class="rvts70">s</span><span class="rvts54">. If provider is null, then </span><a class="rvts53" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts54"> is used.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">s</span><span class="rvts6"> is </span><span class="rvts6">null</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> if s is not of the correct format.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfOE19.html">MfOverFlowExcpetion</a><span class="rvts6"> s represents a number less than </span><a class="rvts12" href="MfByteMinValue.html">MinValue</a><span class="rvts6"> or greater than </span><a class="rvts12" href="MfByteMaxValue.html">MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance equivalent to the number contained in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Since</span></span></h3>
+<p class="rvps2"><span class="rvts6">Version 0.4</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static method</span><br/><span class="rvts6">This overload of the Parse(s, provider) method is typically used to convert text that can be formatted in a variety of ways to a </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> value. For example, it can be used to convert the text that is entered by a user into an input text box to a numeric value.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">s</span><span class="rvts6"> parameter can contain the current culture's </span><a class="rvts12" href="MfNFI18PositiveInfinitySymbol.html">MfNumberFormatInfo.PositiveInfinitySymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18NegativeInfinitySymbol.html">MfNumberFormatInfo.NegativeInfinitySymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18NaNSymbol.html">MfNumberFormatInfo.NaNSymbol</a><span class="rvts6">, or a string of the form:</span></p>
+<p class="rvps2"><span class="rvts6">[ws][sign][integral-digits[,]]integral-digits[.[fractional-digits]][E[sign]exponential-digits][ws]</span><br/><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">Elements in square brackets ([ and ]) are optional. The following table describes each element.</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts18">Element</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts18">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">ws</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of white-space characters.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">sign</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A negative sign symbol (-) or a positive sign symbol (+). Only a leading sign can be used.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">integral-digits</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the integral part of the number. Runs of integral-digits can be partitioned by a group-separator symbol. For example, in some cultures a comma (,) separates groups of thousands. The integral-digits element can be absent if the string contains the fractional-digits element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">,</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A culture-specific thousands separator symbol.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">.</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A culture-specific decimal point symbol.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">fractional-digits</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the fractional part of the number.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">E</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">The "e" or "E" character, which indicates that the value is represented in exponential (scientific) notation.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="253" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts15">exponential-digits</span></p>
+</td>
+<td width="812" style="border-color: #000000; border-style: solid; padding: 3px 5px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify an exponent.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts55">s</span><span class="rvts6"> parameter is interpreted using a combination of the </span><a class="rvts12" href="MfNS14Float.html">MfNumberStyles.Float</a><span class="rvts6"> and </span><a class="rvts12" href="MfNS14AllowThousands.html">MfNumberStyles.AllowThousands</a><span class="rvts6"> flags. This means that white space and thousands separators are allowed, for example, while currency symbols are not.</span></p>
+<p class="rvps2"><span class="rvts6">The provider parameter is an </span><a class="rvts12" href="MfFP16.html">MfFormatProvider</a><span class="rvts6"> implementation whose </span><a class="rvts12" href="MfFP16GetFormat.html">GetFormat</a><span class="rvts6"> method returns a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> object that supplies culture-specific information used in interpreting the format of </span><span class="rvts55">s</span><span class="rvts6">. Typically, it is a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> or CultureInfo object. If provider is null or a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> cannot be obtained, the formatting information for the </span><a class="rvts12" href="MfNFI18CurrentInfo.html">current</a><span class="rvts6"> system culture is used.</span></p>
+<h2 class="rvps5"><a name="Parse4"></a>
+<span class="rvts0"><span class="rvts16">MfFloat</span></span><span class="rvts0"><span class="rvts16">.Parse(s, style, provider)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the </span><span class="rvts55">s</span><span class="rvts6"> representation of a number to its </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> equivalent</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">s</span></p>
+<p class="rvps22"><span class="rvts54">An string var of object convert.</span><br/><span class="rvts54">Can be var or instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54">, </span><a class="rvts53" href="MfString.html">MfString</a></p>
+<p class="rvps21"><span class="rvts52">style</span></p>
+<p class="rvps22"><a class="rvts53" href="MfNS14.html">MfNumberStyles</a><span class="rvts54"> Instance or Integer var representing instance.</span><br/><span class="rvts54">A bitwise combination of </span><a class="rvts53" href="MfNS14.html">MfNumberStyles</a><span class="rvts54"> values that indicates the style elements that can be present in </span><span class="rvts70">s</span><span class="rvts54">. A typical value to specify is </span><a class="rvts53" href="MfNS14Integer.html">MfNumberStyles.Integer</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">provider</span></p>
+<p class="rvps22"><span class="rvts54">An object that supplies culture-specific parsing information about s. If provider is null, then </span><a class="rvts53" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts54"> is used.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance equivalent to the number contained in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Since</span></span></h3>
+<p class="rvps2"><span class="rvts6">Version 0.4</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as static method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">s</span><span class="rvts6"> is </span><span class="rvts6">null</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfFE17.html">MfFormatException</a><span class="rvts6"> if s is not of the correct format.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfOE19.html">MfOverFlowExcpetion</a><span class="rvts6"> s represents a number less than </span><a class="rvts12" href="Newtopic2.html">MinValue</a><span class="rvts6"> or greater than </span><a class="rvts12" href="Newtopic3.html">MaxValue</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> </span><span class="rvts55">style</span><span class="rvts6"> is not a &nbsp;value. </span><br/><span class="rvts6">-or-</span><br/><span class="rvts55">style</span><span class="rvts6"> is includes </span><a class="rvts12" href="MfNS14AllowHexSpecifier.html">MfNumberStyles.AllowHexSpecifier</a><span class="rvts6"> value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static method</span><br/><span class="rvts6">The style parameter defines the style elements (such as white space, thousands separators, and currency symbols) that are allowed in the </span><span class="rvts55">s</span><span class="rvts6"> parameter for the parse operation to succeed. It must be a combination of bit flags from the </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> enumeration. The following </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> members are not supported:</span></p>
+<ul style="text-indent: 0px; margin-left: 24px; list-style-position: outside; list-style-type: disc;">
+<li class="rvps2"><a class="rvts12" href="MfNS14AllowHexSpecifier.html">AllowHexSpecifier</a></li>
+<li class="rvps2"><a class="rvts12" href="MfNS14HexNumber.html">HexNumber</a></li>
+</ul>
+<p class="rvps2"><span class="rvts6">The s parameter can contain the current culture's </span><a class="rvts12" href="MfNFI18PositiveInfinitySymbol.html">MfNumberFormatInfo.PositiveInfinitySymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfNFI18NegativeInfinitySymbol.html">MfNumberFormatInfo.NegativeInfinitySymbol</a><span class="rvts6">, or </span><a class="rvts12" href="MfNFI18NaNSymbol.html">MfNumberFormatInfo.NaNSymbol</a><span class="rvts6">. Depending on the value of style, it can also take the form:</span></p>
+<p class="rvps2"><span class="rvts6">[ws][$][sign][integral-digits[,]]integral-digits[.[fractional-digits]][E[sign]exponential-digits][ws]</span></p>
+<p class="rvps2"><span class="rvts6">Elements in square brackets ([ and ]) are optional. The following table describes each element.</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">Element</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">ws</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of white-space characters. White space can appear at the beginning of s if style includes the </span><a class="rvts12" href="MfNS14AllowLeadingWhite.html">MfNumberStyles.AllowLeadingWhite</a><span class="rvts6"> flag, and it can appear at the end of s if style includes the </span><a class="rvts12" href="MfNS14AllowTrailingWhite.html">MFNumberStyles.AllowTrailingWhite</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">$</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A culture-specific currency symbol. Its position in the string is defined by the </span><a class="rvts12" href="MfNFI18CurrencyNegativePattern.html">MfNumberFormatInfo.CurrencyNegativePattern</a><span class="rvts6"> and </span><a class="rvts12" href="MfNFI18CurrencyPositivePattern.html">MfNumberFormatInfo.CurrencyPositivePattern</a><span class="rvts6"> properties of the current culture. The current culture's currency symbol can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowCurrencySymbol.html">MfNumberStyles.AllowCurrencySymbol</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">sign</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A negative sign symbol (-) or a positive sign symbol (+). The sign can appear at the beginning of s if style includes the </span><a class="rvts12" href="MfNS14AllowLeadingSign.html">MFNumberStyles.AllowLeadingSign</a><span class="rvts6"> flag, and it can appear at the end of s if style includes the </span><a class="rvts12" href="MfNS14AllowTrailingSign.html">MFNumberStyles.AllowTrailingSign</a><span class="rvts6"> flag. Parentheses can be used in s to indicate a negative value if style includes the </span><a class="rvts12" href="MfNS14AllowParentheseshtml.html">MfNumberStyles.AllowParentheses</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">integral-digits</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the integral part of the number. The integral-digits element can be absent if the string contains the fractional-digits element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">,</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A culture-specific group separator. The current culture's group separator symbol can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowThousands.html">MfNumberStyles.AllowThousands</a><span class="rvts6"> flag</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">.</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A culture-specific decimal point symbol. The current culture's decimal point symbol can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowDecimalPoint.html">MFNumberStyles.AllowDecimalPoint</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">fractional-digits</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify the fractional part of the number. Fractional digits can appear in s if style includes the </span><a class="rvts12" href="MfNS14AllowDecimalPoint.html">MfNumberStyles.AllowDecimalPoint</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">E</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">The "e" or "E" character, which indicates that the value is represented in exponential (scientific) notation. The s parameter can represent a number in exponential notation if style includes the </span><a class="rvts12" href="MfNS14AllowExponent.html">MfNumberStyles.AllowExponent</a><span class="rvts6"> flag.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="108" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">exponential-digits</span></p>
+</td>
+<td width="825" style="border-color: #000000; border-style: solid; padding: 5px 4px;"><p class="rvps2"><span class="rvts6">A series of digits ranging from 0 to 9 that specify an exponent.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6">A string with digits only (which corresponds to the </span><a class="rvts12" href="MfNS14None.html">MfNumberStyles.None</a><span class="rvts6"> style) always parses successfully. The remaining </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> members control elements that may be present, but are not required to be present, in the input string. The following table indicates how individual </span><a class="rvts12" href="MfNS14.html">MfNumberStyles</a><span class="rvts6"> flags affect the elements that may be present in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+<div class="rvps2"><table width="100%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; background-color: #ffffff; border-collapse: collapse;">
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">NumberStyles value</span></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">Elements permitted in s in addition to digits</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14None.html">None</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The integral-digits element only.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowDecimalPoint.html">AllowDecimalPoint</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The decimal point (.) and fractional-digits elements.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowExponent.html">AllowExponent</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The "e" or "E" character, which indicates exponential notation. This flag by itself supports values in the form digitsEdigits; additional flags are needed to successfully parse strings with such elements as positive or negative signs and decimal point symbols.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowLeadingWhite.html">AllowLeadingWhite</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws element at the beginning of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowTrailingWhite.html">AllowTrailingWhite</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws element at the end of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowLeadingSign.html">AllowLeadingSign</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The sign element at the beginning of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowTrailingSign.html">AllowTrailingSig</a><span class="rvts6">n</span></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The sign element at the end of s.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowParentheseshtml.html">AllowParentheses</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The sign element in the form of parentheses enclosing the numeric value.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowThousands.html">AllowThousands</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The thousands separator (,) element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14AllowCurrencySymbol.html">AllowCurrencySymbol</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The currency ($) element.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Currency.html">Currency</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">All elements. However, s cannot represent a hexadecimal number or a number in exponential notation.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Float.html">Float</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws element at the beginning or end of s, sign at the beginning of s, and the decimal point (.) symbol. The s parameter can also use exponential notation.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Number.html">Number</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">The ws, sign, thousands separator (,) and decimal point (.) elements.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="111" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><a class="rvts12" href="MfNS14Any.html">Any</a></p>
+</td>
+<td width="826" style="border-color: #000000; border-style: solid; padding: 5px 3px;"><p class="rvps2"><span class="rvts6">All elements. However, s cannot represent a hexadecimal number.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The provider parameter is an </span><a class="rvts12" href="MfFP16.html">MfFormatProvider</a><span class="rvts6"> implementation whose </span><a class="rvts12" href="MfFP16GetFormat.html">GetFormat</a><span class="rvts6"> method returns a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> object that supplies culture-specific information used in interpreting the format of </span><span class="rvts55">s</span><span class="rvts6">. Typically, it is a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> or CultureInfo object. If provider is null or a </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> cannot be obtained, the formatting information for the </span><a class="rvts12" href="MfNFI18CurrentInfo.html">current</a><span class="rvts6"> system culture is used.</span></p>
+<p class="rvps2"><span class="rvts6">Ordinarily, if you pass the MfFloat.Parse method a string that is created by calling the </span><a class="rvts12" href="MfFloatToString.html">MfFloat.ToString</a><span class="rvts6"> method, the original Float value is returned. However, because of a loss of precision, the values may not be equal. In addition, attempting to parse the string representation of either </span><a class="rvts12" href="Newtopic2.html">MinValue</a><span class="rvts6"> or </span><a class="rvts12" href="Newtopic3.html">MaxValue</a><span class="rvts6"> results in </span><a class="rvts12" href="MfFloatNegativeInfinity.html">NegativeInfinity</a><span class="rvts6"> and </span><a class="rvts12" href="MfFloatPositiveInfinity.html">PostiveInfinity</a><span class="rvts6"> as the following example illustrates.</span></p>
+<p class="rvps14"><span class="rvts31">value := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts35">MinValue</span><br/><span class="rvts31">wf := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts35">SetFormat</span><span class="rvts31">(</span><span class="rvts34">MfSetFormatNumberType</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">FloatFast</span><span class="rvts31">, </span><span class="rvts42">"0.16e"</span><span class="rvts31">)</span><br/><span class="rvts31">result := value + 0.0</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"MinValue: {0}"</span><span class="rvts31">, result)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts33">try</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"ParseResult: {0}"</span><span class="rvts31">, </span><span class="rvts35">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(value))</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><br/><span class="rvts31">}</span><br/><span class="rvts33">catch</span><span class="rvts31"> e</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(e.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">}</span><br/><span class="rvts31">value := </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts35">MaxValue</span><br/><span class="rvts31">result := value + 0.0</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"MaxValue: {0}"</span><span class="rvts31">, result)</span><br/><span class="rvts31">sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts33">try</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"ParseResult: {0}"</span><span class="rvts31">, </span><span class="rvts34">MfFloat</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(value))</span><br/><span class="rvts31">}</span><br/><span class="rvts33">catch</span><span class="rvts31"> e</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">AppendLine</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(e.</span><span class="rvts47">ToString</span><span class="rvts31">())</span><br/><span class="rvts31">}</span><br/><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">SetFormat</span><span class="rvts31">(</span><span class="rvts34">MfSetFormatNumberType</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">FloatFast</span><span class="rvts31">, wf)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts31"></span><br/><span class="rvts32">/*</span><br/><span class="rvts32">MinValue: -1.7976931348623157e+308</span><br/><span class="rvts32">ParseResult: -Infinity</span><br/><span class="rvts32">MaxValue: 1.7976931348623157e+308</span><br/><span class="rvts32">ParseResult: Infinity</span><br/><span class="rvts32">*/</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
 <p class="rvps2"><a class="rvts12" href="MfFloatTryParse.html">TryParse()</a><span class="rvts6">, </span><a class="rvts12" href="MfFloatGetValue.html">GetValue()</a></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts31">; Input of 10.1 parses to 10.100000</span><br/><span class="rvts31">; input of -15 parses to -15.000000</span><br/><span class="rvts31">; input of 0060089.00099 parses to 60089.000990</span><br/><span class="rvts31">; input of abc resuts in an error</span><br/><span class="rvts31">; leading and trailing spaces are allowed</span><br/><span class="rvts32">try</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">InputBox</span><span class="rvts30">, myInput, Enter value, Enter a number to parse!</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">if</span><span class="rvts30"> (</span><span class="rvts33">MfNull</span><span class="rvts30">.</span><span class="rvts45">IsNull</span><span class="rvts30">(myInput)) {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> Sorry no input!</span><br/><span class="rvts30"> &nbsp; &nbsp;} </span><span class="rvts32">else</span><span class="rvts30"> {</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;oflt := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(myInput)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30"> My Float Number is:%oflt%</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">} </span><span class="rvts32">catch</span><span class="rvts30"> e {</span><br/><span class="rvts30"> &nbsp; &nbsp;</span><span class="rvts32">MsgBox</span><span class="rvts30">, </span><span class="rvts72">8240</span><span class="rvts30">, Error, % </span><span class="rvts42">"An error has occured!`r`n"</span><span class="rvts30"> . e.</span><span class="rvts34">Message</span><br/><span class="rvts30">}</span><br/><span class="rvts32">ExitApp</span><br/><span class="rvts30"></span><br/><span class="rvts31">; Example using MfParams and adding ReturnAsObject and a Format value to MfParams.Data</span><br/><span class="rvts31">; this example passes MfParams into MfFloat.Parse method with</span><br/><span class="rvts31">; Data Key of ReturnAsObject. This cause MfFloat.Parse to return is value</span><br/><span class="rvts31">; as an instance of MfFloat rather then the default of a var containing float.</span><br/><span class="rvts31">; Data Key of Format with a valid format will cause the float to be formated</span><br/><span class="rvts31"></span><br/><span class="rvts30">pStr := </span><span class="rvts42">"33.5"</span><br/><span class="rvts30">Parms := new </span><span class="rvts34">MfParams</span><span class="rvts30">()</span><br/><span class="rvts30">Parms.</span><span class="rvts45">AddString</span><span class="rvts30">(pStr)</span><br/><span class="rvts30">Parms.</span><span class="rvts34">Data</span><span class="rvts30">.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts42">"ReturnAsObject"</span><span class="rvts30">, </span><span class="rvts32">true</span><span class="rvts30">)</span><br/><span class="rvts30">Parms.</span><span class="rvts34">Data</span><span class="rvts30">.</span><span class="rvts45">Add</span><span class="rvts30">(</span><span class="rvts42">"Format"</span><span class="rvts30">, </span><span class="rvts42">"0.2"</span><span class="rvts30">)</span><br/><span class="rvts30">oflt := </span><span class="rvts33">MfFloat</span><span class="rvts30">.</span><span class="rvts45">Parse</span><span class="rvts30">(Parms)</span><br/><span class="rvts32">MsgBox</span><span class="rvts30"> % oflt.</span><span class="rvts34">Value</span><span class="rvts30"> </span><span class="rvts31">; displays 33.50</span></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
-<p class="rvps2"><a class="rvts12" href="MfFloatTryParse.html">TryParse</a></p>
 </div>
 	
 	<div id="topic_footer">

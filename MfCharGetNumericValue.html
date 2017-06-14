@@ -58,9 +58,9 @@
 			<div id="topic_header_nav">
 				<a href="MfCharMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfCharGetIndexOfAttribute.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfCharGetHashCode.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfCharGetType.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfCharGetTypeCode.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,25 +68,27 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetNumericValue()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := MfChar.GetNumericValue(c)</span><br/><span class="rvts48">OutputVar := MfChar.GetNumericValue(s, index)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetNumericValue(c)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Converts the specified numeric Unicode character to a decimal number for </span><span class="rvts54">c</span><span class="rvts6">.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetNumericValue(s, index)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Converts the specified numeric Unicode character to a decimal number for the character in string </span><span class="rvts54">s</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts54">index</span><span class="rvts6">. </span><span class="rvts54">Index</span><span class="rvts6"> can be instance of </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> or var containing </span><span class="rvts15">integer</span><span class="rvts6">.</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetNumericValue()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := MfChar.GetNumericValue(c)</span><br/><span class="rvts49">OutputVar := MfChar.GetNumericValue(s, index)</span></p>
+<h2 class="rvps5"><a name="GetNumericValue1"></a>
+<span class="rvts0"><span class="rvts16">GetNumericValue(c)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the specified numeric Unicode character to a decimal number for </span><span class="rvts55">c</span><span class="rvts6">.</span></p>
+<h2 class="rvps5"><a name="GetNumericValue2"></a>
+<span class="rvts0"><span class="rvts16">GetNumericValue(s, index)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Converts the specified numeric Unicode character to a decimal number for the character in string </span><span class="rvts55">s</span><span class="rvts6"> at the location of </span><span class="rvts18">Zero-based</span><span class="rvts6"> </span><span class="rvts55">index</span><span class="rvts6">. </span><span class="rvts55">Index</span><span class="rvts6"> can be instance of </span><a class="rvts12" href="MfInteger.html">MfInteger</a><span class="rvts6"> or var containing </span><span class="rvts15">integer</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">c</span></p>
-<p class="rvps22"><span class="rvts53">The character to evaluate. Can be a var containing character or </span><a class="rvts52" href="MfChar.html">MfChar</a><span class="rvts53"> instance or string var containing hex value Eg:"0x0061". containing hex value such as "0x00B2" (SUPERSCRIPT TWO) or </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance.</span></p>
-<p class="rvps21"><span class="rvts51">s</span></p>
+<p class="rvps21"><span class="rvts52">c</span></p>
+<p class="rvps22"><span class="rvts54">The character to evaluate. Can be a var containing character or </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> instance or string var containing hex value Eg:"0x0061". containing hex value such as "0x00B2" (SUPERSCRIPT TWO) or </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance.</span></p>
+<p class="rvps21"><span class="rvts52">s</span></p>
 <p class="rvps2"><span class="rvts6">The String containing the Unicode character for which to get the numeric value. Can be </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6"> instance or String var. Can be instance of </span><a class="rvts12" href="MfString.html">MfString</a><span class="rvts6">, or var containing string.</span></p>
-<p class="rvps21"><span class="rvts51">index</span></p>
-<p class="rvps22"><span class="rvts53">The index of the Unicode character for which to get the numeric value. Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> Instance or Integer var.</span></p>
+<p class="rvps21"><span class="rvts52">index</span></p>
+<p class="rvps22"><span class="rvts54">The index of the Unicode character for which to get the numeric value. Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> Instance or Integer var.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns the numeric value associated with the specified character.-or- -1, if the specified character is not a numeric character.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> of incorrect overload.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> is outside the range of valid indexes in </span><span class="rvts54">s</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts54">c</span><span class="rvts6">, </span><span class="rvts54">s</span><span class="rvts6"> or </span><span class="rvts54">index</span><span class="rvts6"> are object but not of the expected type.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> of incorrect overload.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> is outside the range of valid indexes in </span><span class="rvts55">s</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts55">c</span><span class="rvts6">, </span><span class="rvts55">s</span><span class="rvts6"> or </span><span class="rvts55">index</span><span class="rvts6"> are object but not of the expected type.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Static Method.</span><br/><span class="rvts6">The </span><span class="rvts54">c</span><span class="rvts6"> parameter must be the Char representation of a numeric value. For example, if </span><span class="rvts54">c</span><span class="rvts6"> is "5", the return value is 5. However, if </span><span class="rvts54">c</span><span class="rvts6"> is "z", the return value is -1.0.</span></p>
+<p class="rvps2"><span class="rvts6">Static Method.</span><br/><span class="rvts6">The </span><span class="rvts55">c</span><span class="rvts6"> parameter must be the Char representation of a numeric value. For example, if </span><span class="rvts55">c</span><span class="rvts6"> is "5", the return value is 5. However, if </span><span class="rvts55">c</span><span class="rvts6"> is "z", the return value is -1.0.</span></p>
 <p class="rvps2"><span class="rvts6">A character has an associated numeric value if and only if it is a member of one of the following UnicodeCategory categories: DecimalDigitNumber, LetterNumber, or OtherNumber.</span></p>
 <p class="rvps2"><span class="rvts6">The method assumes that c corresponds to a single linguistic character and checks whether that character can be converted to a decimal digit. However, some numbers in the Unicode standard are represented by two Char objects that form a surrogate pair. For example, the Aegean numbering system consists of code points U+10107 through U+10133.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>

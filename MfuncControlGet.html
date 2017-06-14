@@ -68,23 +68,23 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">ControlGet()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.ControlGet(Cmd [, Value, Control, WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">ControlGet()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := Mfunc.ControlGet(Cmd [, Value, Control, WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.ControlGet(Cmd [, Value, Control, WinTitle, WinText, ExcludeTitle, ExcludeText])</span></span></h2>
 <p class="rvps2"><span class="rvts6">Retrieves various types of information about a control.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
 <p class="rvps2"><span class="rvts15">Cmd, Value</span></p>
 <p class="rvps2"><span class="rvts6">See list below.</span></p>
-<p class="rvps21"><span class="rvts51">Control</span></p>
-<p class="rvps22"><span class="rvts53">Can be either ClassNN (the classname and instance number of the control) or the control's text, both of which can be determined via Window Spy. When using text, the matching behavior is determined by </span><a class="rvts59" href="http://ahkscript.org/docs/commands/SetTitleMatchMode.htm" target="_blank">SetTitleMatchMode</a><span class="rvts53">. If this parameter is blank, the target window's topmost control will be used.</span><br/><span class="rvts53"></span><br/><span class="rvts53">To operate upon a control's HWND (window handle), leave the Control parameter blank and specify "ahk_id" . ControlHwnd for the WinTitle parameter (this also works on hidden controls even when </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DetectHiddenWindows.htm" target="_blank">DetectHiddenWindows</a><span class="rvts53"> is Off). The HWND of a control is typically retrieved via </span><a class="rvts59" href="http://ahkscript.org/docs/commands/ControlGet.htm#Hwnd" target="_blank">ControlGet Hwnd</a><span class="rvts53">, </span><a class="rvts59" href="http://ahkscript.org/docs/commands/MouseGetPos.htm" target="_blank">MouseGetPos</a><span class="rvts53">, or </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DllCall.htm" target="_blank">DllCall</a><span class="rvts53">.</span></p>
-<p class="rvps21"><span class="rvts51">WinTitle</span></p>
-<p class="rvps22"><span class="rvts53">A window title or other criteria identifying the target window. See </span><a class="rvts59" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts53">.</span></p>
-<p class="rvps21"><span class="rvts51">WinText</span></p>
-<p class="rvps22"><span class="rvts53">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts53"> is ON.</span></p>
-<p class="rvps21"><span class="rvts51">ExcludeTitle</span></p>
-<p class="rvps22"><span class="rvts53">Windows whose titles include this value will not be considered</span></p>
-<p class="rvps21"><span class="rvts51">ExcludeText</span></p>
-<p class="rvps22"><span class="rvts53">Windows whose text include this value will not be considered.</span></p>
+<p class="rvps21"><span class="rvts52">Control</span></p>
+<p class="rvps22"><span class="rvts54">Can be either ClassNN (the classname and instance number of the control) or the control's text, both of which can be determined via Window Spy. When using text, the matching behavior is determined by </span><a class="rvts60" href="http://ahkscript.org/docs/commands/SetTitleMatchMode.htm" target="_blank">SetTitleMatchMode</a><span class="rvts54">. If this parameter is blank, the target window's topmost control will be used.</span><br/><span class="rvts54"></span><br/><span class="rvts54">To operate upon a control's HWND (window handle), leave the Control parameter blank and specify "ahk_id" . ControlHwnd for the WinTitle parameter (this also works on hidden controls even when </span><a class="rvts60" href="http://ahkscript.org/docs/commands/DetectHiddenWindows.htm" target="_blank">DetectHiddenWindows</a><span class="rvts54"> is Off). The HWND of a control is typically retrieved via </span><a class="rvts60" href="http://ahkscript.org/docs/commands/ControlGet.htm#Hwnd" target="_blank">ControlGet Hwnd</a><span class="rvts54">, </span><a class="rvts60" href="http://ahkscript.org/docs/commands/MouseGetPos.htm" target="_blank">MouseGetPos</a><span class="rvts54">, or </span><a class="rvts60" href="http://ahkscript.org/docs/commands/DllCall.htm" target="_blank">DllCall</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">WinTitle</span></p>
+<p class="rvps22"><span class="rvts54">A window title or other criteria identifying the target window. See </span><a class="rvts60" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">WinText</span></p>
+<p class="rvps22"><span class="rvts54">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts60" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts54"> is ON.</span></p>
+<p class="rvps21"><span class="rvts52">ExcludeTitle</span></p>
+<p class="rvps22"><span class="rvts54">Windows whose titles include this value will not be considered</span></p>
+<p class="rvps21"><span class="rvts52">ExcludeText</span></p>
+<p class="rvps22"><span class="rvts54">Windows whose text include this value will not be considered.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns the results of cmd.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>

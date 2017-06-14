@@ -1,0 +1,97 @@
+﻿<html>
+	
+<head>
+	<title>FromString()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfListVarFromString");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">FromString()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfListVar.html">MfListVar</a> &rsaquo;&rsaquo; <a href="MfListVarMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfListVarMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfListVarContains.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfListVarIndexOf.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">FromString()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Create a new instance of </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> from a string.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.FromString(s[, includeWhiteSpace, ignoreCase])</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">FromString(s[, includeWhiteSpace, ignoreCase])</span></span></h2>
+<p class="rvps2"><span class="rvts6">Create a new instance of </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> from a string by splitting the string into each char and adding char to inner list.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">s</span></p>
+<p class="rvps22"><span class="rvts54">String var or instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> to generate the </span><a class="rvts53" href="MfListVar.html">MfListVar</a><span class="rvts54"> instance from.</span></p>
+<p class="rvps21"><span class="rvts52">includeWhiteSpace</span></p>
+<p class="rvps22"><span class="rvts54">Boolean value. If true then whitespace chars will be included if they exist </span><span class="rvts70">s</span><span class="rvts54">; Otherwise all Unicode whitespace chars will be ignored.</span><br/><span class="rvts54">Can be boolean var or instance of </span><a class="rvts53" href="MfBool.html">MfBool</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">ignoreCase</span></p>
+<p class="rvps22"><span class="rvts54">Boolean value. Sets the </span><a class="rvts53" href="MfListVarCaseSensitive.html">CaseSensitive</a><span class="rvts54"> property of the new instance.</span><br/><span class="rvts54">Can be boolean var or instance of </span><a class="rvts53" href="MfBool.html">MfBool</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns new instance of </span><a class="rvts12" href="MfListVar.html">MfListVar</a><span class="rvts6"> containing elements representing </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static Method</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

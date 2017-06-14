@@ -68,243 +68,310 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Resource Strings</span></span></h1>
-<p class="rvps2"><span class="rvts6">This is a list of Resource string for version </span><span class="rvts6">0.3.8.1</span><span class="rvts6"> of </span><span class="rvts6">Mini-Framework</span><span class="rvts6">.</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Resource Strings</span></span></h1>
+<p class="rvps2"><span class="rvts6">This is a list of Resource string for version </span><span class="rvts6">0.4.0.5</span><span class="rvts6"> of </span><span class="rvts6">Mini-Framework</span><span class="rvts6">.</span></p>
 <p class="rvps2"><span class="rvts6"><br/></span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
 <p class="rvps2"><a class="rvts12" href="MfEnvironmentGetResourceString.html">MfEnvironment.GetResourceString()</a><span class="rvts6">, </span><a class="rvts12" href="MfEnvironmentGetResourceStringBy.html">MfEnvironment.GetResourceStringBySection()</a></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts32">Class</span><span class="rvts30"> MyClass </span><span class="rvts32">extends</span><span class="rvts30"> </span><span class="rvts33">MfObject</span><br/><span class="rvts30">{</span><br/><span class="rvts45"> &nbsp; &nbsp;__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts30"> &nbsp; &nbsp;if (</span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts32">__Class</span><span class="rvts30"> != </span><span class="rvts105">"MyClass"</span><span class="rvts30">)</span><br/><span class="rvts30"> &nbsp; &nbsp;{</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;throw</span><span class="rvts30"> </span><span class="rvts32">new</span><span class="rvts30"> </span><span class="rvts33">MfNotSupportedException</span><span class="rvts30">(</span><span class="rvts33">MfEnvironment</span><span class="rvts30">.</span><span class="rvts34">Instance</span><span class="rvts30">.</span><span class="rvts45">GetResourceString</span><span class="rvts30">(</span><span class="rvts42">"NotSupportedException_Sealed_Class"</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;, </span><span class="rvts32">this</span><span class="rvts30">.</span><span class="rvts32">__Class</span><span class="rvts30">))</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts32"> &nbsp; &nbsp;Base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">()</span><br/><span class="rvts30"> &nbsp; &nbsp;}</span><br/><span class="rvts30">}</span></p>
+<p class="rvps14"><span class="rvts33">Class</span><span class="rvts31"> MyClass </span><span class="rvts33">extends</span><span class="rvts31"> </span><span class="rvts34">MfObject</span><br/><span class="rvts31">{</span><br/><span class="rvts47"> &nbsp; &nbsp;__New</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp;if (</span><span class="rvts33">this</span><span class="rvts31">.</span><span class="rvts33">__Class</span><span class="rvts31"> != </span><span class="rvts101">"MyClass"</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts33"> &nbsp; &nbsp; &nbsp; &nbsp;throw</span><span class="rvts31"> </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfNotSupportedException</span><span class="rvts31">(</span><span class="rvts34">MfEnvironment</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts47">GetResourceString</span><span class="rvts31">(</span><span class="rvts42">"NotSupportedException_Sealed_Class"</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;, </span><span class="rvts33">this</span><span class="rvts31">.</span><span class="rvts33">__Class</span><span class="rvts31">))</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts33"> &nbsp; &nbsp;Base</span><span class="rvts31">.</span><span class="rvts47">__New</span><span class="rvts31">()</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31">}</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Strings</span></span></h3>
-<p class="rvps2"><span class="rvts6"><pre style="color: #000000; background: #ffffff;"><span style="color: #a65700;">[</span><span style="color: #5f5035;">CORE</span><span style="color: #a65700;">]</span>
-<span style="color: #274796;">Arg_AccessException</span><span style="color: #808030;">=</span>Cannot access member<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_ArgumentException</span><span style="color: #808030;">=</span>Value does not fall within the expected range<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_ArgumentOutOfRangeException</span><span style="color: #808030;">=</span>Specified parameter was out of the range of valid values<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_ArithmeticException</span><span style="color: #808030;">=</span>Overflow or underflow in the arithmetic operation<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_DirectoryNotFoundException</span><span style="color: #808030;">=</span>Attempted to access a path that is not on the disk<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_DivideByZero</span><span style="color: #808030;">=</span>Attempted to divide by zero<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_DriveNotFoundException</span><span style="color: #808030;">=</span>Attempted to access a drive that is not available<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_EnumFormatUnderlyingTypeAndObjectMustBeSameType</span><span style="color: #808030;">=</span>Enum underlying type and the object must be same type or object<span style="color: #808030;">.</span> Type passed in was <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #696969;">; the enum underlying type was '{1}'.</span>
-<span style="color: #274796;">Arg_EnumNotSingleFlag</span><span style="color: #808030;">=</span>Must set exactly one flag<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_EnumIllegal</span><span style="color: #808030;">=</span>Illegal enum value<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_EnumIllegalVal</span><span style="color: #808030;">=</span>Illegal enum value<span style="color: #808030;">:</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_EnumValueNotFound</span><span style="color: #808030;">=</span>Requested value <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> was not found<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_FormatException</span><span style="color: #808030;">=</span>One of the identified items was in an invalid format<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_IndexOutOfRangeException</span><span style="color: #808030;">=</span>Index was outside the bounds of the array<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_InvalidCastException</span><span style="color: #808030;">=</span>Specified cast is not valid<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_InvalidOperationException</span><span style="color: #808030;">=</span>Operation is not valid due to the current state of the object<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_IOException</span><span style="color: #808030;">=</span>I<span style="color: #808030;">/</span>O error occurred<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_MustBeEnum</span><span style="color: #808030;">=</span>Type provided must be an Enum<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_MustContainEnumInfo</span><span style="color: #808030;">=</span>Must specify valid information for parsing in the string<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_MustBeType</span><span style="color: #808030;">=</span>Type must be a type provided by the runtime<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_NotImplementedException</span><span style="color: #808030;">=</span>The method or operation is not implemented<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_NotSupportedException</span><span style="color: #808030;">=</span>Specified method is not supported<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_NullReferenceException</span><span style="color: #808030;">=</span>Object reference not set to an instance of an object<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_MissingMemberException</span><span style="color: #808030;">=</span>Attempted to access a missing member<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_OverflowException</span><span style="color: #808030;">=</span>Arithmetic operation resulted in an overflow<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_SystemException</span><span style="color: #808030;">=</span>System error<span style="color: #808030;">.</span>
-<span style="color: #274796;">Arg_VersionString</span><span style="color: #808030;">=</span>Version string portion was too short or too long<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_Error_on_nth</span><span style="color: #808030;">=</span>Error reading parameters<span style="color: #808030;">.</span> Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> resulted in an error<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_nth</span><span style="color: #808030;">=</span>Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span>
-<span style="color: #274796;">Argument_EnumTypeDoesNotMatch</span><span style="color: #808030;">=</span>The parameter type<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> is not the same as the enum type <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_Enum_Item_Not_Instance</span><span style="color: #808030;">=</span>Not a valid MfEnum<span style="color: #808030;">.</span>Emum instance<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_GenericListType</span><span style="color: #808030;">=</span>Expected GenericList of type <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_ByteVar</span><span style="color: #808030;">=</span>Value of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is not the correct type<span style="color: #808030;">.</span> Expected var containing byte<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_BooleanVar</span><span style="color: #808030;">=</span>Value of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is not the correct type<span style="color: #808030;">.</span> Expected var containing boolean<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_FloatVar</span><span style="color: #808030;">=</span>Value of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is not the correct type<span style="color: #808030;">.</span> Expected var containing float<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_IntegerVar</span><span style="color: #808030;">=</span>Value of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is not the correct type<span style="color: #808030;">.</span> Expected var containing integer<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_StringVar</span><span style="color: #808030;">=</span>Value of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is not the correct type<span style="color: #808030;">.</span> Expected var containing string<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_Char_New_Obj</span><span style="color: #808030;">=</span>Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is not the correct type<span style="color: #808030;">.</span> Expected MfChar instance or MfInteger Instance<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_InvalidDigitSubstitution</span><span style="color: #808030;">=</span>The DigitSubstitution property must be of a valid member of the DigitShapes enumeration<span style="color: #808030;">.</span> Valid entries include Context<span style="color: #808030;">,</span> NativeNational or None<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_InvalidGroupSize</span><span style="color: #808030;">=</span>Every element in the value array should be between one and nine<span style="color: #808030;">,</span> except for the last element<span style="color: #808030;">,</span> which can be zero<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_InvalidNativeDigitCount</span><span style="color: #808030;">=</span>The NativeDigits array must contain exactly ten members<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_NonMfObjectWithParamName</span><span style="color: #808030;">=</span>Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> must be an object that derives from MfObject<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_NonMfType</span><span style="color: #808030;">=</span>Only objects Derived from <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> are supported<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_Object_Equals</span><span style="color: #808030;">=</span>Object to compare is not of the same type<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_TypeInstanceDoesNotMatch</span><span style="color: #808030;">=</span>The parameter type<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> is not the same as the instance type <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_TypeInstanceEitherOr</span><span style="color: #808030;">=</span>The parameter must be of type <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> or <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span>
-<span style="color: #274796;">Argument_TypeInstanceExpected</span><span style="color: #808030;">=</span>The parameter<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> was expected to be instance of Type Class<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_TypeNotExpected</span><span style="color: #808030;">=</span>The parameter type<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> is the the parameter expected type of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_IncorrectObjType</span><span style="color: #808030;">=</span>The parameter<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> is not of the correct type<span style="color: #808030;">.</span> Expected object type of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_IncorrectObjTypeOr</span><span style="color: #808030;">=</span>The parameter<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> is not of the correct type<span style="color: #808030;">.</span> Expected object type of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span> or <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{2}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_IncorrectTypeOr</span><span style="color: #808030;">=</span>The parameter<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> is not as expected<span style="color: #808030;">.</span> Was expected <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span> or <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{2}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_IncorrectMfType</span><span style="color: #808030;">=</span>The parameter<span style="color: #808030;">,</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">,</span> is not the Expected MfType<span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_Count_Not_Equal</span><span style="color: #808030;">=</span>Parameter count mismatch<span style="color: #808030;">.</span> Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is expected to be the same count as <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Argument_Value_Error</span><span style="color: #808030;">=</span>Error getting value of parameter<span style="color: #808030;">:</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span>
-<span style="color: #274796;">Argument_Empty_String</span><span style="color: #808030;">=</span>Error Empty String Value
-<span style="color: #274796;">ArgumentException_KeyExist</span><span style="color: #808030;">=</span>An element with the same key already exists in the {<span style="color: #008c00;">0</span>}<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentException_ObjectCompareTo</span><span style="color: #808030;">=</span>Object to compare is not of the same type<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentException_Not_Found</span><span style="color: #808030;">=</span>Parameter Not Found
-<span style="color: #274796;">ArgumentNull_ArrayValue</span><span style="color: #808030;">=</span>Found a null value within an array<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_Generic</span><span style="color: #808030;">=</span>Value cannot be null<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_Key</span><span style="color: #808030;">=</span>Key cannot be null<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_ListValue</span><span style="color: #808030;">=</span>Found a null value within a list<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_Obj</span><span style="color: #808030;">=</span>Object cannot be null<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_Path</span><span style="color: #808030;">=</span>Path cannot be null<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_String</span><span style="color: #808030;">=</span>String reference not set to an instance of a String<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_WithParamName</span><span style="color: #808030;">=</span>Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> cannot be null<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentNull_ResourceKey</span><span style="color: #808030;">=</span>Error<span style="color: #808030;">,</span> Resource Manager was given an empty key<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_ActualValue</span><span style="color: #808030;">=</span>Parameter out or range<span style="color: #808030;">.</span> Actual value that caused exception<span style="color: #808030;">:</span>{<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">ArgumentOutOfRange_AddValue</span><span style="color: #808030;">=</span>Value to add was out of range<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_ArrayListInsert</span><span style="color: #808030;">=</span>Insertion index was out of range<span style="color: #808030;">.</span> Must be non<span style="color: #808030;">-</span>negative and less than or equal to size<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_BadYearMonthDay</span><span style="color: #808030;">=</span>Year<span style="color: #808030;">,</span> Month<span style="color: #808030;">,</span> and Day parameters describe an un<span style="color: #808030;">-</span>representable DateTime<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_Bounds_Lower_Upper</span><span style="color: #808030;">=</span>Parameter must be between {<span style="color: #008c00;">0</span>} and {<span style="color: #008c00;">1</span>}<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_CharCode</span><span style="color: #808030;">=</span>CharCode is outside the valid range of chars
-<span style="color: #274796;">ArgumentOutOfRange_Count</span><span style="color: #808030;">=</span>Count must be positive and count must refer to a location within the string<span style="color: #808030;">/</span>array<span style="color: #808030;">/</span>collection<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_Index</span><span style="color: #808030;">=</span>Index was out of range<span style="color: #808030;">.</span> Must be non<span style="color: #808030;">-</span>negative and less than the size of the collection<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_IndexString</span><span style="color: #808030;">=</span>Index was out of range<span style="color: #808030;">.</span> Must be non<span style="color: #808030;">-</span>negative and less than the length of the string<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_LengthString</span><span style="color: #808030;">=</span>Length was out of range<span style="color: #808030;">.</span> Must be non<span style="color: #808030;">-</span>negative and less than the length of the string<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_NegativeCount</span><span style="color: #808030;">=</span>Count cannot be less than zero<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_Range</span><span style="color: #808030;">=</span>Valid values are between {<span style="color: #008c00;">0</span>} and {<span style="color: #008c00;">1</span>}<span style="color: #808030;">,</span> inclusive<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_Value_LessThanOne</span><span style="color: #808030;">=</span>{<span style="color: #008c00;">0</span>} can not be less than one<span style="color: #808030;">.</span>
-<span style="color: #274796;">ArgumentOutOfRange_Version</span><span style="color: #808030;">=</span>Version's parameters must be greater than or equal to zero.
-<span style="color: #274796;">Exception_AddToListWithParams</span><span style="color: #808030;">=</span>Error Adding <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> to <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_AttribAdd</span><span style="color: #808030;">=</span>Unable to add Atribute to class<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_CreateInstance</span><span style="color: #808030;">=</span>Unable to create instance of <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_ClassConstructor</span><span style="color: #808030;">=</span>Unable to construct class <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span>
-<span style="color: #274796;">Exception_EnumAdd</span><span style="color: #808030;">=</span>Uanble to add Enum to Enum class<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_Error</span><span style="color: #808030;">=</span>[{<span style="color: #008c00;">0</span>}] Error
-<span style="color: #274796;">Exception_General_Error</span><span style="color: #808030;">=</span>An error occurred<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_FileRead</span><span style="color: #808030;">=</span>Error reading file <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_PropertySet</span><span style="color: #808030;">=</span>Error setting value of property <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_PropertyGet</span><span style="color: #808030;">=</span>Error getting value of property <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_Unknown</span><span style="color: #808030;">=</span>Unknown Error
-<span style="color: #274796;">Exception_FailedToRemove</span><span style="color: #808030;">=</span>Failed to remove item<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_UserAppDataLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Data folder
-<span style="color: #274796;">Exception_UserAppDataRoaming</span><span style="color: #808030;">=</span>Error locating Current User Roaming Data folder
-<span style="color: #274796;">Exception_UserDesktopLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Desktop folder
-<span style="color: #274796;">Exception_UserDocumentsLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Document folder
-<span style="color: #274796;">Exception_UserPituresLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Pictures folder
-<span style="color: #274796;">Exception_UserStartupLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Startup folder
-<span style="color: #274796;">Exception_UserStartMenuLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Start Menu folder
-<span style="color: #274796;">Exception_UserVideoLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Video folder
-<span style="color: #274796;">Exception_UserMusicLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Music folder
-<span style="color: #274796;">Exception_UserFavoritesLocal</span><span style="color: #808030;">=</span>Error locating Current User Local Favorites folder
-<span style="color: #274796;">Exception_CommonAppDataLocal</span><span style="color: #808030;">=</span>Error locating Common App data folder
-<span style="color: #274796;">Exception_CommonDesktopLocal</span><span style="color: #808030;">=</span>Error locating Common Desktop folder
-<span style="color: #274796;">Exception_CommonDocumentsLocal</span><span style="color: #808030;">=</span>Error locating Common Documents folder
-<span style="color: #274796;">Exception_CommonPicturesLocal</span><span style="color: #808030;">=</span>Error locating Common Pictures folder
-<span style="color: #274796;">Exception_CommonMusicLocal</span><span style="color: #808030;">=</span>Error locating Common Music folder
-<span style="color: #274796;">Exception_CommonStartMenuLocal</span><span style="color: #808030;">=</span>Error locating Common Start Menu folder
-<span style="color: #274796;">Exception_CommonStartUpLocal</span><span style="color: #808030;">=</span>Error locating Common StartUp folder
-<span style="color: #274796;">Exception_CommonVideoUpLocal</span><span style="color: #808030;">=</span>Error locating Common Video folder
-<span style="color: #274796;">ExInvalidOperationException_InvalidEnum</span><span style="color: #808030;">=</span>Invalid Operation<span style="color: #808030;">.</span> Enum operation can not happen<span style="color: #808030;">.</span>
-<span style="color: #274796;">FormatException_UnableToLoad_file</span><span style="color: #808030;">=</span>Unable to load file<span style="color: #808030;">.</span> Ensure the file is of the correct format<span style="color: #808030;">.</span>
-<span style="color: #274796;">FormatException_UnableToLoad</span><span style="color: #808030;">=</span>Unable to load {<span style="color: #008c00;">0</span>}<span style="color: #808030;">.</span> Ensure the {<span style="color: #008c00;">0</span>} is of the correct format<span style="color: #808030;">.</span>
-<span style="color: #274796;">Format_BadBoolean</span><span style="color: #808030;">=</span>String was not recognized as a valid Boolean<span style="color: #808030;">.</span>
-<span style="color: #274796;">Format_ExThrown</span><span style="color: #808030;">=</span>Exception was thrown<span style="color: #808030;">:</span>{<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">Format_InvalidString</span><span style="color: #808030;">=</span>Input string was not in a correct format<span style="color: #808030;">.</span>
-<span style="color: #274796;">Format_Object</span><span style="color: #808030;">=</span>Object
-<span style="color: #274796;">Format_ParmName</span><span style="color: #808030;">=</span>{<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">1</span>}Parameter Name<span style="color: #808030;">:</span> {<span style="color: #008c00;">2</span>}
-<span style="color: #274796;">Format_NonObject</span><span style="color: #808030;">=</span>NonObject
-<span style="color: #274796;">Format_NonObject_Value</span><span style="color: #808030;">=</span>NonObject value<span style="color: #808030;">(</span>{<span style="color: #008c00;">0</span>}<span style="color: #808030;">)</span>
-<span style="color: #274796;">Format_Inheritance_Tree</span><span style="color: #808030;">=</span>Inheritance tree{<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">Format_NotExpected</span><span style="color: #808030;">=</span>Format is not as expected! Valid formats are {<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">IO.FileName_Name</span><span style="color: #808030;">=</span>File name<span style="color: #808030;">:</span> <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span>
-<span style="color: #274796;">IO.FileNotFound</span><span style="color: #808030;">=</span>Unable to find the specified file<span style="color: #808030;">.</span>
-<span style="color: #274796;">IO.FileAppendError</span><span style="color: #808030;">=</span>Error Appending to file<span style="color: #808030;">:</span><span style="color: #0000e6;">'</span><span style="color: #0000e6;">{1}</span><span style="color: #0000e6;">'</span>
-<span style="color: #274796;">IO.FileCopyError</span><span style="color: #808030;">=</span>Copy failed for {<span style="color: #008c00;">0</span>} files<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToBoolean</span><span style="color: #808030;">=</span>Unable to cast value to boolean<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToByte</span><span style="color: #808030;">=</span>Unable to cast value to byte<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToChar</span><span style="color: #808030;">=</span>Unable to cast value to char<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToFloat</span><span style="color: #808030;">=</span>Unable to cast value to float<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToInteger</span><span style="color: #808030;">=</span>Unable to cast value to integer<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToInt64</span><span style="color: #808030;">=</span>Unable to cast value to <span style="color: #008c00;">64</span> bit integer<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToNumber</span><span style="color: #808030;">=</span>Unable to cast value to number<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_ValueToString</span><span style="color: #808030;">=</span>Unable to cast value to string<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_Enum_Parse</span><span style="color: #808030;">=</span>Unable to Cast Enum <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> for parsing<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidCastException_Enum</span><span style="color: #808030;">=</span>Unable to Cast Enum from type <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span>
-<span style="color: #274796;">InvalidOperation_Empty_Quence</span><span style="color: #808030;">=</span>Invalid operation<span style="color: #808030;">,</span> Queue is empty<span style="color: #808030;">.</span>
-<span style="color: #274796;">InvalidOperation_Empty_Stack</span><span style="color: #808030;">=</span>Invalid operation<span style="color: #808030;">,</span> Stack is empty<span style="color: #808030;">.</span>
-<span style="color: #274796;">MissingMember_Name</span><span style="color: #808030;">=</span>Member <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> not found<span style="color: #808030;">.</span>
-<span style="color: #274796;">NonMfObjectException_General</span><span style="color: #808030;">=</span>Non<span style="color: #808030;">-</span>MfObject error<span style="color: #808030;">.</span> Only objects Derived from MfObject are supported<span style="color: #808030;">.</span>
-<span style="color: #274796;">NonMfObjectException_Param</span><span style="color: #808030;">=</span>Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is an object but does not derive from MfObject<span style="color: #808030;">.</span> Only object derived from MfObject  are supported for parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">NotImplementedException_GetInstance</span><span style="color: #808030;">=</span>GetInstance not implemented in parent class<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotImplementedException_GetValue</span><span style="color: #808030;">=</span>GetValue must be implemented in classes derived from Primitive<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotImplementedException_MethodWithName</span><span style="color: #808030;">=</span>The method <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> has not been implemented<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotImplementedException_MethodParentWithName</span><span style="color: #808030;">=</span>The method <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> has not been implemented in parent class<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotImplementedException_PropertyWithName</span><span style="color: #808030;">=</span>The Property <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> has not been implemented in parent class<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotImplementedException_Typecode</span><span style="color: #808030;">=</span>TypeCode is not implements in derived class<span style="color: #808030;">.</span> Classes derived from primitive class must implement Typecode
-<span style="color: #274796;">NotSupported_StringComparison</span><span style="color: #808030;">=</span>The string comparison type passed in is currently not supported<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_AbstractClass</span><span style="color: #808030;">=</span>{<span style="color: #008c00;">0</span>} is an Abstarct Class and cannot be called drirectly<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_AddingItem</span><span style="color: #808030;">=</span>Error adding item<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_FlagsAttrib_Missing_Remove</span><span style="color: #808030;">=</span>Removing of flag is not support on enums that do not implement FlagsAttribute<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_KeyNotFound</span><span style="color: #808030;">=</span>Key was not found
-<span style="color: #274796;">NotSupportedException_FixedSize</span><span style="color: #808030;">=</span>Attempt was made to change a fixed size Collection or Dictionary
-<span style="color: #274796;">NotSupportedException_Latin1Only</span><span style="color: #808030;">=</span>Char currently only supports Latin1 Characters <span style="color: #808030;">(</span> charcode  below <span style="color: #008c00;">256</span><span style="color: #808030;">)</span><span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_MethodOverload</span><span style="color: #808030;">=</span>No overloads match for method <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> with current parameter arguments<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_Object_Param_NonAhk</span><span style="color: #808030;">=</span>Parameter <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> is an object but does not derive from MfObject
-<span style="color: #274796;">NotSupportedException_Primitave_Inherits</span><span style="color: #808030;">=</span>Only object types inherited from Primitive is permitted such as Integer<span style="color: #808030;">,</span> String<span style="color: #808030;">,</span> Char and Float
-<span style="color: #274796;">NotSupportedException_Readonly_Dictionary</span><span style="color: #808030;">=</span>Attempt to set value of a readonly Dictionary
-<span style="color: #274796;">NotSupportedException_Readonly_List</span><span style="color: #808030;">=</span>Attempt to set value of a readonly List
-<span style="color: #274796;">NotSupportedException_Readonly_Property</span><span style="color: #808030;">=</span>Attempt to set value of readonly Property<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_Readonly_Instance</span><span style="color: #808030;">=</span>This instance is readonly and can not be modified in this way<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_Readonly_Instance_Class</span><span style="color: #808030;">=</span>This instance of {<span style="color: #008c00;">0</span>} is readonly and can not be modified in this way<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_NonMfObject</span><span style="color: #808030;">=</span>Only objects Derived from MfObject are supported<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_NonAhkType</span><span style="color: #808030;">=</span>Only objects Derived from <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> are supported<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_Sealed_Class</span><span style="color: #808030;">=</span>{<span style="color: #008c00;">0</span>} is a Sealed Class and cannot be extended or inherited<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_Static_Class</span><span style="color: #808030;">=</span>{<span style="color: #008c00;">0</span>} is a Static Class and does not allow instances<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_Static_Nethod</span><span style="color: #808030;">=</span>{<span style="color: #008c00;">0</span>} is a Static Method and does not allow being called in an instance<span style="color: #808030;">.</span>
-<span style="color: #274796;">NotSupportedException_Static_Method_General</span><span style="color: #808030;">=</span>Static Method does not allow being called in an instance<span style="color: #808030;">.</span>
-<span style="color: #274796;">NullReferenceException_MissingReference</span><span style="color: #808030;">=</span>A required reference is missing<span style="color: #808030;">.</span> Cannot find {<span style="color: #008c00;">0</span>}<span style="color: #808030;">.</span> Are you missing an Include Statement?
-<span style="color: #274796;">NullReferenceException_Object</span><span style="color: #808030;">=</span>Object instance is null<span style="color: #808030;">.</span>
-<span style="color: #274796;">NullReferenceException_Object_Param</span><span style="color: #808030;">=</span>Object <span style="color: #0000e6;">'</span><span style="color: #0000e6;">{0}</span><span style="color: #0000e6;">'</span> not set to an instance of Object<span style="color: #808030;">.</span>
-<span style="color: #274796;">Overflow_Duration</span><span style="color: #808030;">=</span>The duration cannot be returned for MfTimeSpan<span style="color: #808030;">.</span>MinValue because the absolute value of MfTimeSpan<span style="color: #808030;">.</span>MinValue exceeds the value of MfTimeSpan<span style="color: #808030;">.</span>MaxValue<span style="color: #808030;">.</span>
-<span style="color: #274796;">Overflow_NegateTwosCompNum</span><span style="color: #808030;">=</span>Negating the minimum value of a twos complement number is invalid<span style="color: #808030;">.</span>
-<span style="color: #274796;">Overflow_TimeSpanTooLong</span><span style="color: #808030;">=</span>MfTimeSpan overflowed because the duration is too long<span style="color: #808030;">.</span>
-<span style="color: #274796;">Regex_ErrorWithMsg</span><span style="color: #808030;">=</span>Error in Regular Expression<span style="color: #808030;">:</span> {<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">Regex_MatchLimit</span><span style="color: #808030;">=</span>reached match limit
-<span style="color: #274796;">Regex_Recursion</span><span style="color: #808030;">=</span>recursion too deep
-<span style="color: #274796;">Regex_ToManyEmptyMatch</span><span style="color: #808030;">=</span>too many possible empty<span style="color: #808030;">-</span>string matches
-<span style="color: #a65700;">[</span><span style="color: #5f5035;">SYSTEM</span><span style="color: #a65700;">]</span>
-#NewLine Char Codes
-<span style="color: #274796;">NewLine</span><span style="color: #808030;">=</span><span style="color: #008c00;">13</span>|<span style="color: #008c00;">10</span>
-<span style="color: #a65700;">[</span><span style="color: #5f5035;">DATA</span><span style="color: #a65700;">]</span>
-<span style="color: #274796;">Argument_Object_Param</span><span style="color: #808030;">=</span>Expected Index or Column Name!
-<span style="color: #274796;">NotSupportedException_Column_Field_Mismatch</span><span style="color: #808030;">=</span>Column and fields do not match<span style="color: #808030;">.</span> There must be the same number of columns and fields<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_Database_Connection</span><span style="color: #808030;">=</span>{<span style="color: #008c00;">0</span>}<span style="color: #808030;">:</span> The connection to the the given Database could not be etablished<span style="color: #808030;">.</span> Is the following {<span style="color: #008c00;">0</span>} connection string valid?{<span style="color: #008c00;">1</span>}{<span style="color: #008c00;">2</span>}
-<span style="color: #274796;">Exception_Db_Blob_Memorybuffer</span><span style="color: #808030;">=</span>You can only store MemorBuffers as BLOB<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_Db_Col_Not_Found_Irr</span><span style="color: #808030;">=</span>Irregular params<span style="color: #808030;">:</span> Column not found<span style="color: #808030;">:</span> [{<span style="color: #008c00;">0</span>}] in{<span style="color: #008c00;">1</span>}Table Columns<span style="color: #808030;">:</span>{<span style="color: #008c00;">2</span>}
-<span style="color: #274796;">Exception_Db_Create_Invalid_Handle</span><span style="color: #808030;">=</span>Can not create a DataBaseSQLLite instance<span style="color: #808030;">,</span> because the connection handle is not valid!
-<span style="color: #274796;">Exception_Db_Dll_Get_Table</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_get_table failed!
-<span style="color: #274796;">Exception_Db_Dll_Close</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_close failed!
-<span style="color: #274796;">Exception_Db_File_Create</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Unable to create {<span style="color: #008c00;">0</span>}!
-<span style="color: #274796;">Exception_Db_File_Delete</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Unable to delete {<span style="color: #008c00;">0</span>}!
-<span style="color: #274796;">Exception_Db_File_Locate</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Unable to find {<span style="color: #008c00;">0</span>}!
-<span style="color: #274796;">Exception_Db_File_Read</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Unable to read {<span style="color: #008c00;">0</span>}!
-<span style="color: #274796;">Exception_Db_File_Run</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Error occured running {<span style="color: #008c00;">0</span>}!
-<span style="color: #274796;">Exception_Db_Invalid_Handle</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Invalid database handle {<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">Exception_Db_Invalid_Handle_Query</span><span style="color: #808030;">=</span>Invalid query handle!
-<span style="color: #274796;">Exception_Db_Invalid_Handle_Query_Param</span><span style="color: #808030;">=</span>Invalid query handle<span style="color: #808030;">:</span>{<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">Exception_Db_Invalid_Handle_Rc</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Invalid database handle {<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">1</span>}Return Code<span style="color: #808030;">:</span>{<span style="color: #008c00;">2</span>}
-<span style="color: #274796;">Exception_Db_Insert_Many_Fail</span><span style="color: #808030;">=</span>InsertMany failed<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_Db_Perpare_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_prepare failed!
-<span style="color: #274796;">Exception_Db_Query_Empty</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> Query result is empty!
-<span style="color: #274796;">Exception_Db_Non_Select_Query</span><span style="color: #808030;">=</span>Non Selection Query failed<span style="color: #808030;">.</span>{<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">1</span>}
-<span style="color: #274796;">Exception_Db_NotSupportted_Version</span><span style="color: #808030;">=</span>SQLite ERROR<span style="color: #808030;">:</span> Version {<span style="color: #008c00;">0</span>} of SQLite3<span style="color: #808030;">.</span>dll is not supported!
-<span style="color: #274796;">Exception_Db_Recordset_Empty</span><span style="color: #808030;">=</span>"RecordSet is empty!"
-<span style="color: #274796;">Exception_Db_Reported_Error</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> {<span style="color: #008c00;">0</span>} reported an Error!
-<span style="color: #274796;">Exception_Db_Select</span><span style="color: #808030;">=</span>Select Query failed<span style="color: #808030;">.</span>{<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">1</span>}
-<span style="color: #274796;">Exception_Db_SqliteDll_NotFound</span><span style="color: #808030;">=</span>SQLite<span style="color: #808030;">.</span>Dll not found<span style="color: #808030;">:</span>{<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">1</span>}
-<span style="color: #274796;">Exception_Db_Sqlite_Lib_Error</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_libversion failed!
-<span style="color: #274796;">Exception_Db_Sqlite_FilePath</span><span style="color: #808030;">=</span>Filepath to the SQLite Database seems to be invalid<span style="color: #808030;">.</span>{<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">1</span>}
-<span style="color: #274796;">Exception_Db_Sqlite_Changes_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_changes failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Changes_Total_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_total_changes failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Column_Count_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_column_count failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Column_Name_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_column_name failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Open_Fail</span><span style="color: #808030;">=</span>DLLCall sqlite3_open_v2 failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Error_Code_Busy</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_busy_timeout failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Error_Code_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_errcode failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Error_Msg_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_errmsg failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Exc_Fail</span><span style="color: #808030;">=</span>SQLite_Exec failed<span style="color: #808030;">.</span>{<span style="color: #008c00;">0</span>}{<span style="color: #008c00;">1</span>}
-<span style="color: #274796;">Exception_Db_Sqlite_Finalize_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_finalize failed!
-<span style="color: #274796;">Exception_Db_Sqlite_Row_Insert_Id_Fail</span><span style="color: #808030;">=</span>ERROR<span style="color: #808030;">:</span> DLLCall sqlite3_last_insert_rowid failed!
-<span style="color: #274796;">Exception_Db_Unknow_Db_Type</span><span style="color: #808030;">=</span>The given Database Type is unknown! [{<span style="color: #008c00;">0</span>}]<span style="color: #808030;">.</span>
-<span style="color: #274796;">Exception_Invalid_Denominator</span><span style="color: #808030;">=</span>Invalid denominator<span style="color: #808030;">:</span> {<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">Exception_Invalid_Fraction</span><span style="color: #808030;">=</span>Invalid fraction string<span style="color: #808030;">:</span> {<span style="color: #008c00;">0</span>}
-<span style="color: #274796;">Exception_File_NotExist</span><span style="color: #808030;">=</span>File must exist and be readable!
-<span style="color: #274796;">NotSupportedException_DbConnection_ORS</span><span style="color: #808030;">=</span>NotSupportedException<span style="color: #808030;">:</span> There is no valid DB Connection<span style="color: #808030;">,</span> OpenRecordSet requires a valid connection<span style="color: #808030;">.</span>
-</pre></span></p>
+<p class="rvps2"><span class="rvts6"><div>
+<pre style="margin: 0; line-height: 125%;"><span style="color: #0000aa;">[CORE]</span>
+<span style="color: #1e90ff;">Arg_AccessException</span>=<span style="color: #aa5500;">Cannot access member.</span>
+<span style="color: #1e90ff;">Arg_ArgumentException</span>=<span style="color: #aa5500;">Value does not fall within the expected range.</span>
+<span style="color: #1e90ff;">Arg_ArgumentOutOfRangeException</span>=<span style="color: #aa5500;">Specified parameter was out of the range of valid values.</span>
+<span style="color: #1e90ff;">Arg_ArithmeticException</span>=<span style="color: #aa5500;">Overflow or underflow in the arithmetic operation.</span>
+<span style="color: #1e90ff;">Arg_ArithmeticExceptionOver</span>=<span style="color: #aa5500;">Overflow in the arithmetic operation.</span>
+<span style="color: #1e90ff;">Arg_ArithmeticExceptionUnder</span>=<span style="color: #aa5500;">Underflow in the arithmetic operation.</span>
+<span style="color: #1e90ff;">Arg_ArrayPlusOffTooSmall</span>=<span style="color: #aa5500;">Destination array is not long enough to copy all the items in the collection. Check array index and length.</span>
+<span style="color: #1e90ff;">Arg_ArrayPlusOffTooBig</span>=<span style="color: #aa5500;">Source array is too long to copy all the items in the collection. Check array index and length.</span>
+<span style="color: #1e90ff;">Arg_ArrayTooSmall</span>=<span style="color: #aa5500;">Source array is too short. Check array index and length.</span>
+<span style="color: #1e90ff;">Arg_ArrayZeroError</span>=<span style="color: #aa5500;">Array must not be of length zero.</span>
+<span style="color: #1e90ff;">Arg_VarOrObj</span>=<span style="color: #aa5500;">Var can only be compared to other vars and object can only be compared to other objects.</span>
+<span style="color: #1e90ff;">Arg_DirectoryNotFoundException</span>=<span style="color: #aa5500;">Attempted to access a path that is not on the disk.</span>
+<span style="color: #1e90ff;">Arg_DivideByZero</span>=<span style="color: #aa5500;">Attempted to divide by zero.</span>
+<span style="color: #1e90ff;">Arg_DriveNotFoundException</span>=<span style="color: #aa5500;">Attempted to access a drive that is not available.</span>
+<span style="color: #1e90ff;">Arg_EnumFormatUnderlyingTypeAndObjectMustBeSameType</span>=<span style="color: #aa5500;">Enum underlying type and the object must be same type or object. Type passed in was '{0}'; the enum underlying type was '{1}'.</span>
+<span style="color: #1e90ff;">Arg_EnumNotSingleFlag</span>=<span style="color: #aa5500;">Must set exactly one flag.</span>
+<span style="color: #1e90ff;">Arg_EnumIllegal</span>=<span style="color: #aa5500;">Illegal enum value.</span>
+<span style="color: #1e90ff;">Arg_EnumIllegalVal</span>=<span style="color: #aa5500;">Illegal enum value: '{0}'.</span>
+<span style="color: #1e90ff;">Arg_EnumValueNotFound</span>=<span style="color: #aa5500;">Requested value '{0}' was not found.</span>
+<span style="color: #1e90ff;">Arg_FormatException</span>=<span style="color: #aa5500;">One of the identified items was in an invalid format.</span>
+<span style="color: #1e90ff;">Arg_HexStyleNotSupported</span>=<span style="color: #aa5500;">The number style AllowHexSpecifier is not supported on floating point data types.</span>
+<span style="color: #1e90ff;">Arg_IndexOutOfRangeException</span>=<span style="color: #aa5500;">Index was outside the bounds of the array.</span>
+<span style="color: #1e90ff;">Arg_InvalidCastException</span>=<span style="color: #aa5500;">Specified cast is not valid.</span>
+<span style="color: #1e90ff;">Arg_InvalidOperationException</span>=<span style="color: #aa5500;">Operation is not valid due to the current state of the object.</span>
+<span style="color: #1e90ff;">Arg_IOException</span>=<span style="color: #aa5500;">I/O error occurred.</span>
+<span style="color: #1e90ff;">Arg_MustBeEnum</span>=<span style="color: #aa5500;">Type provided must be an Enum.</span>
+<span style="color: #1e90ff;">Arg_MustContainEnumInfo</span>=<span style="color: #aa5500;">Must specify valid information for parsing in the string.</span>
+<span style="color: #1e90ff;">Arg_MustBeType</span>=<span style="color: #aa5500;">Type must be a type provided by the runtime.</span>
+<span style="color: #1e90ff;">Arg_NotImplementedException</span>=<span style="color: #aa5500;">The method or operation is not implemented.</span>
+<span style="color: #1e90ff;">Arg_NotSupportedException</span>=<span style="color: #aa5500;">Specified method is not supported.</span>
+<span style="color: #1e90ff;">Arg_NullReferenceException</span>=<span style="color: #aa5500;">Object reference not set to an instance of an object.</span>
+<span style="color: #1e90ff;">Arg_MissingMemberException</span>=<span style="color: #aa5500;">Attempted to access a missing member.</span>
+<span style="color: #1e90ff;">Arg_OverflowException</span>=<span style="color: #aa5500;">Arithmetic operation resulted in an overflow.</span>
+<span style="color: #1e90ff;">Arg_SystemException</span>=<span style="color: #aa5500;">System error.</span>
+<span style="color: #1e90ff;">Arg_VersionString</span>=<span style="color: #aa5500;">Version string portion was too short or too long.</span>
+<span style="color: #1e90ff;">Argument_Address</span>=<span style="color: #aa5500;">"Parameter '{0}' must be specified when passing an address.</span>
+<span style="color: #1e90ff;">Argument_Buffer_Overflow</span>=<span style="color: #aa5500;">Attempted action resulted in buffer overflow.</span>
+<span style="color: #1e90ff;">Argument_Error_on_nth</span>=<span style="color: #aa5500;">Error reading parameters. Parameter '{0}' resulted in an error.</span>
+<span style="color: #1e90ff;">Argument_nth</span>=<span style="color: #aa5500;">Parameter '{0}'</span>
+<span style="color: #1e90ff;">Argument_EnumTypeDoesNotMatch</span>=<span style="color: #aa5500;">The parameter type, '{0}', is not the same as the enum type '{1}'.</span>
+<span style="color: #1e90ff;">Argument_Enum_Item_Not_Instance</span>=<span style="color: #aa5500;">Not a valid MfEnum.Emum instance.</span>
+<span style="color: #1e90ff;">Argument_EmptyName</span>=<span style="color: #aa5500;">Empty name is not legal.</span>
+<span style="color: #1e90ff;">Argument_GenericListType</span>=<span style="color: #aa5500;">Expected GenericList of type '{0}'.</span>
+<span style="color: #1e90ff;">Argument_ByteVar</span>=<span style="color: #aa5500;">Value of '{0}' is not the correct type. Expected var containing byte.</span>
+<span style="color: #1e90ff;">Argument_BooleanVar</span>=<span style="color: #aa5500;">Value of '{0}' is not the correct type. Expected var containing boolean.</span>
+<span style="color: #1e90ff;">Argument_FloatVar</span>=<span style="color: #aa5500;">Value of '{0}' is not the correct type. Expected var containing float.</span>
+<span style="color: #1e90ff;">Argument_IntegerVar</span>=<span style="color: #aa5500;">Value of '{0}' is not the correct type. Expected var containing integer.</span>
+<span style="color: #1e90ff;">Argument_MinGreaterThenMax</span>=<span style="color: #aa5500;">Parameter '{0}' must not be less then parameter '{1}'</span>
+<span style="color: #1e90ff;">Argument_StringVar</span>=<span style="color: #aa5500;">Value of '{0}' is not the correct type. Expected var containing string.</span>
+<span style="color: #1e90ff;">Argument_Char_New_Obj</span>=<span style="color: #aa5500;">Parameter '{0}' is not the correct type. Expected MfChar instance or MfInteger Instance.</span>
+<span style="color: #1e90ff;">Argument_Incorrect_List</span>=<span style="color: #aa5500;">Not a valid list.</span>
+<span style="color: #1e90ff;">Argument_Incorrect_List_Size</span>=<span style="color: #aa5500;">List is not a valid size.</span>
+<span style="color: #1e90ff;">Argument_InvalidDigitSubstitution</span>=<span style="color: #aa5500;">The DigitSubstitution property must be of a valid member of the DigitShapes enumeration. Valid entries include Context, NativeNational or None.</span>
+<span style="color: #1e90ff;">Argument_InvalidGroupSize</span>=<span style="color: #aa5500;">Every element in the value array should be between one and nine, except for the last element, which can be zero.</span>
+<span style="color: #1e90ff;">Argument_InvalidElement_Generic</span>=<span style="color: #aa5500;">An element is of the incorrect type.</span>
+<span style="color: #1e90ff;">Argument_InvalidElement_IntOnly</span>=<span style="color: #aa5500;">An element that is not an integer has been found. This is not allowed.</span>
+<span style="color: #1e90ff;">Arg_InvalidHexStyle</span>=<span style="color: #aa5500;">With the AllowHexSpecifier bit set in the enum bit field, the only other valid bits that can be combined into the enum value must be a subset of those in HexNumber.</span>
+<span style="color: #1e90ff;">Argument_InvalidNativeDigitCount</span>=<span style="color: #aa5500;">The NativeDigits array must contain exactly ten members.</span>
+<span style="color: #1e90ff;">Argument_InvalidNativeDigitValue</span>=<span style="color: #aa5500;">Each member of the NativeDigits array must be a single text element (one or more UTF16 code points) with a Unicode Nd (Number, Decimal Digit) property indicating it is a digit.</span>
+<span style="color: #1e90ff;">Argument_InvalidNumberStyles</span>=<span style="color: #aa5500;">An undefined NumberStyles value is being used.</span>
+<span style="color: #1e90ff;">Argument_NonMfObjectWithParamName</span>=<span style="color: #aa5500;">Parameter '{0}' must be an object that derives from MfObject.</span>
+<span style="color: #1e90ff;">Argument_NonMfType</span>=<span style="color: #aa5500;">Only objects Derived from '{0}' are supported.</span>
+<span style="color: #1e90ff;">Argument_Object_Equals</span>=<span style="color: #aa5500;">Object to compare is not of the same type.</span>
+<span style="color: #1e90ff;">Argument_TypeInstanceDoesNotMatch</span>=<span style="color: #aa5500;">The parameter type, '{0}', is not the same as the instance type '{1}'.</span>
+<span style="color: #1e90ff;">Argument_TypeInstanceEitherOr</span>=<span style="color: #aa5500;">The parameter must be of type '{0}' or '{1}'</span>
+<span style="color: #1e90ff;">Argument_TypeInstanceExpected</span>=<span style="color: #aa5500;">The parameter, '{0}', was expected to be instance of Type Class.</span>
+<span style="color: #1e90ff;">Argument_TypeNotExpected</span>=<span style="color: #aa5500;">The parameter type, '{0}', is the the parameter expected type of '{1}'.</span>
+<span style="color: #1e90ff;">Argument_IncorrectObjType_Generic</span>=<span style="color: #aa5500;">Parameter is not of the correct type.</span>
+<span style="color: #1e90ff;">Argument_IncorrectObjType</span>=<span style="color: #aa5500;">The parameter, '{0}', is not of the correct type. Expected object type of '{1}'.</span>
+<span style="color: #1e90ff;">Argument_IncorrectObjTypeOr</span>=<span style="color: #aa5500;">The parameter, '{0}', is not of the correct type. Expected object type of '{1}' or '{2}'.</span>
+<span style="color: #1e90ff;">Argument_IncorrectTypeOr</span>=<span style="color: #aa5500;">The parameter, '{0}', is not as expected. Was expected '{1}' or '{2}'.</span>
+<span style="color: #1e90ff;">Argument_IncorrectMfType</span>=<span style="color: #aa5500;">The parameter, '{0}', is not the Expected MfType.</span>
+<span style="color: #1e90ff;">Argument_Count_Not_Equal</span>=<span style="color: #aa5500;">Parameter count mismatch. Parameter '{0}' is expected to be the same count as '{1}'.</span>
+<span style="color: #1e90ff;">Argument_Value_Error</span>=<span style="color: #aa5500;">Error getting value of parameter: '{0}'</span>
+<span style="color: #1e90ff;">Argument_Empty_String</span>=<span style="color: #aa5500;">Error Empty String Value</span>
+<span style="color: #1e90ff;">Argument_Value_Under</span>=<span style="color: #aa5500;">Parameter is under the minimum value of '{0}'.</span>
+<span style="color: #1e90ff;">Argument_Value_Under</span>=<span style="color: #aa5500;">Parameter is over the maximum value of '{0}'.</span>
+<span style="color: #1e90ff;">Argument_Value_Not_Divisable_By</span>=<span style="color: #aa5500;">Parameter must be product of '{0}'.</span>
+<span style="color: #1e90ff;">ArgumentException_KeyExist</span>=<span style="color: #aa5500;">An element with the same key already exists in the {0}.</span>
+<span style="color: #1e90ff;">ArgumentException_ObjectCompareTo</span>=<span style="color: #aa5500;">Object to compare is not of the same type.</span>
+<span style="color: #1e90ff;">ArgumentException_Not_Found</span>=<span style="color: #aa5500;">Parameter Not Found</span>
+<span style="color: #1e90ff;">ArgumentNull_ArrayValue</span>=<span style="color: #aa5500;">Found a null value within an array.</span>
+<span style="color: #1e90ff;">ArgumentNull_Generic</span>=<span style="color: #aa5500;">Value cannot be null.</span>
+<span style="color: #1e90ff;">ArgumentNull_Key</span>=<span style="color: #aa5500;">Key cannot be null.</span>
+<span style="color: #1e90ff;">ArgumentNull_ListValue</span>=<span style="color: #aa5500;">Found a null value within a list.</span>
+<span style="color: #1e90ff;">ArgumentNull_Obj</span>=<span style="color: #aa5500;">Object cannot be null.</span>
+<span style="color: #1e90ff;">ArgumentNull_Path</span>=<span style="color: #aa5500;">Path cannot be null.</span>
+<span style="color: #1e90ff;">ArgumentNull_String</span>=<span style="color: #aa5500;">String reference not set to an instance of a String.</span>
+<span style="color: #1e90ff;">ArgumentNull_WithParamName</span>=<span style="color: #aa5500;">Parameter '{0}' cannot be null.</span>
+<span style="color: #1e90ff;">ArgumentNull_ResourceKey</span>=<span style="color: #aa5500;">Error, Resource Manager was given an empty key.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_ActualValue</span>=<span style="color: #aa5500;">Parameter out or range. Actual value that caused exception:{0}</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_AddValue</span>=<span style="color: #aa5500;">Value to add was out of range.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_ArrayListInsert</span>=<span style="color: #aa5500;">Insertion index was out of range. Must be non-negative and less than or equal to size.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_BadYearMonthDay</span>=<span style="color: #aa5500;">Year, Month, and Day parameters describe an un-representable DateTime.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_Bounds_Lower_Upper</span>=<span style="color: #aa5500;">Parameter must be between {0} and {1}.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_CharCode</span>=<span style="color: #aa5500;">CharCode is outside the valid range of chars</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_Count</span>=<span style="color: #aa5500;">Count must be positive and count must refer to a location within the string/array/collection.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_GenericPositive</span>=<span style="color: #aa5500;">Value must be positive.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_Index</span>=<span style="color: #aa5500;">Index was out of range. Must be non-negative and less than the size of the collection.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_IndexCount</span>=<span style="color: #aa5500;">Index and count must refer to a location within the string.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_IndexString</span>=<span style="color: #aa5500;">Index was out of range. Must be non-negative and less than the length of the string.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_IndexLength</span>=<span style="color: #aa5500;">Index and length must refer to a location within the string.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_LengthString</span>=<span style="color: #aa5500;">Length was out of range. Must be non-negative and less than the length of the string.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_NeedNonNegNum</span>=<span style="color: #aa5500;">Non-negative number required.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_NegativeCount</span>=<span style="color: #aa5500;">Count cannot be less than zero.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_NegativeLength</span>=<span style="color: #aa5500;">Length cannot be less than zero.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_MustBePositive</span>=<span style="color: #aa5500;">'{0}' must be greater than zero.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_MustBeNonNegNum</span>=<span style="color: #aa5500;">'{0}' must be non-negative.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_Range</span>=<span style="color: #aa5500;">Valid values are between {0} and {1}, inclusive.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_RoundingDigits</span>=<span style="color: #aa5500;">Rounding digits must be between 0 and 15, inclusive.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_StartIndex</span>=<span style="color: #aa5500;">StartIndex cannot be less than zero.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_StartIndexLargerThanLength</span>=<span style="color: #aa5500;">startIndex cannot be larger than length of string.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_Value_LessThanOne</span>=<span style="color: #aa5500;">{0} can not be less than one.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_Version</span>=<span style="color: #aa5500;">Version's parameters must be greater than or equal to zero.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_Capacity</span>=<span style="color: #aa5500;">Capacity exceeds maximum capacity.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_NegativeCapacity</span>=<span style="color: #aa5500;">Capacity must be positive.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_SmallCapacity</span>=<span style="color: #aa5500;">capacity was less than the current size.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_SmallMaxCapacity</span>=<span style="color: #aa5500;">MaxCapacity must be one or greater.</span>
+<span style="color: #1e90ff;">ArgumentOutOfRange_OffsetOut</span>=<span style="color: #aa5500;">Either offset did not refer to a position in the string, or there is an insufficient length of destination character array.</span>
+<span style="color: #1e90ff;">Exception_AddToListWithParams</span>=<span style="color: #aa5500;">Error Adding '{0}' to '{1}'.</span>
+<span style="color: #1e90ff;">Exception_AttribAdd</span>=<span style="color: #aa5500;">Unable to add Atribute to class.</span>
+<span style="color: #1e90ff;">Exception_CreateInstance</span>=<span style="color: #aa5500;">Unable to create instance of '{0}'.</span>
+<span style="color: #1e90ff;">Exception_ClassConstructor</span>=<span style="color: #aa5500;">Unable to construct class '{0}'</span>
+<span style="color: #1e90ff;">Exception_EnumAdd</span>=<span style="color: #aa5500;">Uanble to add Enum to Enum class.</span>
+<span style="color: #1e90ff;">Exception_Error</span>=<span style="color: #aa5500;">[{0}] Error</span>
+<span style="color: #1e90ff;">Exception_General_Error</span>=<span style="color: #aa5500;">An error occurred.</span>
+<span style="color: #1e90ff;">Exception_FileRead</span>=<span style="color: #aa5500;">Error reading file '{0}'.</span>
+<span style="color: #1e90ff;">Exception_PropertySet</span>=<span style="color: #aa5500;">Error setting value of property '{0}'.</span>
+<span style="color: #1e90ff;">Exception_PropertyGet</span>=<span style="color: #aa5500;">Error getting value of property '{0}'.</span>
+<span style="color: #1e90ff;">Exception_Unknown</span>=<span style="color: #aa5500;">Unknown Error</span>
+<span style="color: #1e90ff;">Exception_FailedToRemove</span>=<span style="color: #aa5500;">Failed to remove item.</span>
+<span style="color: #1e90ff;">Exception_UserAppDataLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Data folder</span>
+<span style="color: #1e90ff;">Exception_UserAppDataRoaming</span>=<span style="color: #aa5500;">Error locating Current User Roaming Data folder</span>
+<span style="color: #1e90ff;">Exception_UserDesktopLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Desktop folder</span>
+<span style="color: #1e90ff;">Exception_UserDocumentsLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Document folder</span>
+<span style="color: #1e90ff;">Exception_UserPituresLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Pictures folder</span>
+<span style="color: #1e90ff;">Exception_UserStartupLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Startup folder</span>
+<span style="color: #1e90ff;">Exception_UserStartMenuLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Start Menu folder</span>
+<span style="color: #1e90ff;">Exception_UserVideoLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Video folder</span>
+<span style="color: #1e90ff;">Exception_UserMusicLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Music folder</span>
+<span style="color: #1e90ff;">Exception_UserFavoritesLocal</span>=<span style="color: #aa5500;">Error locating Current User Local Favorites folder</span>
+<span style="color: #1e90ff;">Exception_CommonAppDataLocal</span>=<span style="color: #aa5500;">Error locating Common App data folder</span>
+<span style="color: #1e90ff;">Exception_CommonDesktopLocal</span>=<span style="color: #aa5500;">Error locating Common Desktop folder</span>
+<span style="color: #1e90ff;">Exception_CommonDocumentsLocal</span>=<span style="color: #aa5500;">Error locating Common Documents folder</span>
+<span style="color: #1e90ff;">Exception_CommonPicturesLocal</span>=<span style="color: #aa5500;">Error locating Common Pictures folder</span>
+<span style="color: #1e90ff;">Exception_CommonMusicLocal</span>=<span style="color: #aa5500;">Error locating Common Music folder</span>
+<span style="color: #1e90ff;">Exception_CommonStartMenuLocal</span>=<span style="color: #aa5500;">Error locating Common Start Menu folder</span>
+<span style="color: #1e90ff;">Exception_CommonStartUpLocal</span>=<span style="color: #aa5500;">Error locating Common StartUp folder</span>
+<span style="color: #1e90ff;">Exception_CommonVideoUpLocal</span>=<span style="color: #aa5500;">Error locating Common Video folder</span>
+<span style="color: #1e90ff;">ExInvalidOperationException_InvalidEnum</span>=<span style="color: #aa5500;">Invalid Operation. Enum operation can not happen.</span>
+<span style="color: #1e90ff;">FormatException_UnableToLoad_file</span>=<span style="color: #aa5500;">Unable to load file. Ensure the file is of the correct format.</span>
+<span style="color: #1e90ff;">FormatException_UnableToLoad</span>=<span style="color: #aa5500;">Unable to load {0}. Ensure the {0} is of the correct format.</span>
+<span style="color: #1e90ff;">Format_BadBoolean</span>=<span style="color: #aa5500;">String was not recognized as a valid Boolean.</span>
+<span style="color: #1e90ff;">Format_BadBase64Char</span>=<span style="color: #aa5500;">The input is not a valid Base-64 string as it contains a non-base 64 character, more than two padding characters, or an illegal character among the padding characters.</span>
+<span style="color: #1e90ff;">Format_BadBase64CharArrayLength</span>=<span style="color: #aa5500;">Invalid length for a Base-64 char array or string.</span>
+<span style="color: #1e90ff;">Format_Encoding_MisMatch</span>=<span style="color: #aa5500;">String are not the same encoding.</span>
+<span style="color: #1e90ff;">Format_ExThrown</span>=<span style="color: #aa5500;">Exception was thrown:{0}</span>
+<span style="color: #1e90ff;">Format_BadHex</span>=<span style="color: #aa5500;">String was not recognized as a Hex format.</span>
+<span style="color: #1e90ff;">Format_InvalidString</span>=<span style="color: #aa5500;">Input string was not in a correct format.</span>
+<span style="color: #1e90ff;">Format_Object</span>=<span style="color: #aa5500;">Object</span>
+<span style="color: #1e90ff;">Format_ParmName</span>=<span style="color: #aa5500;">{0}{1}Parameter Name: {2}</span>
+<span style="color: #1e90ff;">Format_NonObject</span>=<span style="color: #aa5500;">NonObject</span>
+<span style="color: #1e90ff;">Format_NonObject_Value</span>=<span style="color: #aa5500;">NonObject value({0})</span>
+<span style="color: #1e90ff;">Format_Inheritance_Tree</span>=<span style="color: #aa5500;">Inheritance tree{0}{0}</span>
+<span style="color: #1e90ff;">Format_NotExpected</span>=<span style="color: #aa5500;">Format is not as expected! Valid formats are {0}</span>
+<span style="color: #1e90ff;">Format_NeedSingleChar</span>=<span style="color: #aa5500;">String must be exactly one character long.</span>
+<span style="color: #1e90ff;">InsufficientMemory_MemFailPoint</span>=<span style="color: #aa5500;">Insufficient available memory to meet the expected demands of an operation at this time.  Please try again later.</span>
+<span style="color: #1e90ff;">IO.FileName_Name</span>=<span style="color: #aa5500;">File name: '{0}'</span>
+<span style="color: #1e90ff;">IO.FileNotFound</span>=<span style="color: #aa5500;">Unable to find the specified file.</span>
+<span style="color: #1e90ff;">IO.FileAppendError</span>=<span style="color: #aa5500;">Error Appending to file:'{1}'</span>
+<span style="color: #1e90ff;">IO.FileCopyError</span>=<span style="color: #aa5500;">Copy failed for {0} files.</span>
+<span style="color: #1e90ff;">InvalidCastException_FromTo</span>=<span style="color: #aa5500;">Invalid cast from '{0}' to '{1}'</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToBoolean</span>=<span style="color: #aa5500;">Unable to cast value to boolean.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToByte</span>=<span style="color: #aa5500;">Unable to cast value to byte.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToSByte</span>=<span style="color: #aa5500;">Unable to cast value to signed byte.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToChar</span>=<span style="color: #aa5500;">Unable to cast value to char.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToFloat</span>=<span style="color: #aa5500;">Unable to cast value to float.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToInteger</span>=<span style="color: #aa5500;">Unable to cast value to 32 bit integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToBigInt</span>=<span style="color: #aa5500;">Unable to cast value to big integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToInteger_Param</span>=<span style="color: #aa5500;">Unable parameter '{0}' to cast value to integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToInt16</span>=<span style="color: #aa5500;">Unable to cast value to 16 bit integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToInt64</span>=<span style="color: #aa5500;">Unable to cast value to 64 bit integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToUInt16</span>=<span style="color: #aa5500;">Unable to cast value to unsigned 16 bit integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToUInt32</span>=<span style="color: #aa5500;">Unable to cast value to unsigned 32 bit integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToUInt64</span>=<span style="color: #aa5500;">Unable to cast value to unsigned 64 bit integer.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToNumber</span>=<span style="color: #aa5500;">Unable to cast value to number.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToString</span>=<span style="color: #aa5500;">Unable to cast value to string.</span>
+<span style="color: #1e90ff;">InvalidCastException_ValueToString_Param</span>=<span style="color: #aa5500;">Unable parameter '{0}' to cast value to string.</span>
+<span style="color: #1e90ff;">InvalidCastException_Enum_Parse</span>=<span style="color: #aa5500;">Unable to Cast Enum '{0}' for parsing.</span>
+<span style="color: #1e90ff;">InvalidCastException_Enum</span>=<span style="color: #aa5500;">Unable to Cast Enum from type '{0}'</span>
+<span style="color: #1e90ff;">InvalidOperation_Empty_Quence</span>=<span style="color: #aa5500;">Invalid operation, Queue is empty.</span>
+<span style="color: #1e90ff;">InvalidOperation_Empty_Stack</span>=<span style="color: #aa5500;">Invalid operation, Stack is empty.</span>
+<span style="color: #1e90ff;">MissingMember_Name</span>=<span style="color: #aa5500;">Member '{0}' not found.</span>
+<span style="color: #1e90ff;">NonMfObjectException_General</span>=<span style="color: #aa5500;">Non-MfObject error. Only objects Derived from MfObject are supported.</span>
+<span style="color: #1e90ff;">NonMfObjectException_Param</span>=<span style="color: #aa5500;">Parameter '{0}' is an object but does not derive from MfObject. Only object derived from MfObject  are supported for parameter '{0}'.</span>
+<span style="color: #1e90ff;">NotImplementedException_GetInstance</span>=<span style="color: #aa5500;">GetInstance not implemented in parent class.</span>
+<span style="color: #1e90ff;">NotImplementedException_GetValue</span>=<span style="color: #aa5500;">GetValue must be implemented in classes derived from Primitive.</span>
+<span style="color: #1e90ff;">NotImplementedException_MethodWithName</span>=<span style="color: #aa5500;">The method '{0}' has not been implemented.</span>
+<span style="color: #1e90ff;">NotImplementedException_MethodParentWithName</span>=<span style="color: #aa5500;">The method '{0}' has not been implemented in parent class.</span>
+<span style="color: #1e90ff;">NotImplementedException_PropertyWithName</span>=<span style="color: #aa5500;">The Property '{0}' has not been implemented in parent class.</span>
+<span style="color: #1e90ff;">NotImplementedException_Typecode</span>=<span style="color: #aa5500;">TypeCode is not implements in derived class. Classes derived from primitive class must implement Typecode</span>
+<span style="color: #1e90ff;">NotSupported_StringComparison</span>=<span style="color: #aa5500;">The string comparison type passed in is currently not supported.</span>
+<span style="color: #1e90ff;">NotSupportedException_Only32BitOs</span>=<span style="color: #aa5500;">This Operation is not supported on this OS. Only supported on 32 Bit OS.</span>
+<span style="color: #1e90ff;">NotSupportedException_AbstractClass</span>=<span style="color: #aa5500;">{0} is an Abstarct Class and cannot be called drirectly.</span>
+<span style="color: #1e90ff;">NotSupportedException_AddingItem</span>=<span style="color: #aa5500;">Error adding item.</span>
+<span style="color: #1e90ff;">NotSupportedException_FlagsAttrib_Missing_Remove</span>=<span style="color: #aa5500;">Removing of flag is not support on enums that do not implement FlagsAttribute.</span>
+<span style="color: #1e90ff;">NotSupportedException_KeyNotFound</span>=<span style="color: #aa5500;">Key was not found</span>
+<span style="color: #1e90ff;">NotSupportedException_FixedSize</span>=<span style="color: #aa5500;">Attempt was made to change a fixed size Collection or Dictionary</span>
+<span style="color: #1e90ff;">NotSupportedException_Latin1Only</span>=<span style="color: #aa5500;">Char currently only supports Latin1 Characters ( charcode  below 256).</span>
+<span style="color: #1e90ff;">NotSupportedException_MethodOverload</span>=<span style="color: #aa5500;">No overloads match for method '{0}' with current parameter arguments.</span>
+<span style="color: #1e90ff;">NotSupportedException_Object_Param_NonAhk</span>=<span style="color: #aa5500;">Parameter '{0}' is an object but does not derive from MfObject</span>
+<span style="color: #1e90ff;">NotSupportedException_Primitave_Inherits</span>=<span style="color: #aa5500;">Only object types inherited from Primitive is permitted such as Integer, String, Char and Float</span>
+<span style="color: #1e90ff;">NotSupportedException_Readonly_Dictionary</span>=<span style="color: #aa5500;">Attempt to set value of a readonly Dictionary</span>
+<span style="color: #1e90ff;">NotSupportedException_Readonly_List</span>=<span style="color: #aa5500;">Attempt to set value of a readonly List</span>
+<span style="color: #1e90ff;">NotSupportedException_Readonly_Property</span>=<span style="color: #aa5500;">Attempt to set value of readonly Property.</span>
+<span style="color: #1e90ff;">NotSupportedException_Readonly_Instance</span>=<span style="color: #aa5500;">This instance is readonly and can not be modified in this way.</span>
+<span style="color: #1e90ff;">NotSupportedException_Readonly_Instance_Class</span>=<span style="color: #aa5500;">This instance of {0} is readonly and can not be modified in this way.</span>
+<span style="color: #1e90ff;">NotSupportedException_NonMfObject</span>=<span style="color: #aa5500;">Only objects Derived from MfObject are supported.</span>
+<span style="color: #1e90ff;">NotSupportedException_NonAhkType</span>=<span style="color: #aa5500;">Only objects Derived from '{0}' are supported.</span>
+<span style="color: #1e90ff;">NotSupportedException_Sealed_Class</span>=<span style="color: #aa5500;">{0} is a Sealed Class and cannot be extended or inherited.</span>
+<span style="color: #1e90ff;">NotSuppoOverflow_Int64rtedException_Static_Class</span>=<span style="color: #aa5500;">{0} is a Static Class and does not allow instances.</span>
+<span style="color: #1e90ff;">NotSupportedException_Static_Nethod</span>=<span style="color: #aa5500;">{0} is a Static Method and does not allow being called in an instance.</span>
+<span style="color: #1e90ff;">NotSupportedException_Static_Method_General</span>=<span style="color: #aa5500;">Static Method does not allow being called in an instance.</span>
+<span style="color: #1e90ff;">NullReferenceException_MissingReference</span>=<span style="color: #aa5500;">A required reference is missing. Cannot find {0}. Are you missing an Include Statement?</span>
+<span style="color: #1e90ff;">NullReferenceException_Object</span>=<span style="color: #aa5500;">Object instance is null.</span>
+<span style="color: #1e90ff;">NullReferenceException_Object_Param</span>=<span style="color: #aa5500;">Object '{0}' not set to an instance of Object.</span>
+<span style="color: #1e90ff;">Overflow_General</span>=<span style="color: #aa5500;">Overflow Error.</span>
+<span style="color: #1e90ff;">Overflow_SByte</span>=<span style="color: #aa5500;">Value was either too large or too small for a signed byte.</span>
+<span style="color: #1e90ff;">Overflow_Byte</span>=<span style="color: #aa5500;">Value was either too large or too small for an unsigned byte.</span>
+<span style="color: #1e90ff;">Overflow_Char</span>=<span style="color: #aa5500;">Value was either too large or too small for a character.</span>
+<span style="color: #1e90ff;">Overflow_Int16</span>=<span style="color: #aa5500;">Value was either too large or too small for an Int16.</span>
+<span style="color: #1e90ff;">Overflow_Int32</span>=<span style="color: #aa5500;">Value was either too large or too small for an Int32.</span>
+<span style="color: #1e90ff;">Overflow_Int64</span>=<span style="color: #aa5500;">Value was either too large or too small for an Int64.</span>
+<span style="color: #1e90ff;">Overflow_UInt16</span>=<span style="color: #aa5500;">Value was either too large or too small for a UInt16.</span>
+<span style="color: #1e90ff;">Overflow_UInt32</span>=<span style="color: #aa5500;">Value was either too large or too small for a UInt32.</span>
+<span style="color: #1e90ff;">Overflow_UInt64</span>=<span style="color: #aa5500;">Value was either too large or too small for an UInt64.</span>
+<span style="color: #1e90ff;">Overflow_Duration</span>=<span style="color: #aa5500;">The duration cannot be returned for MfTimeSpan.MinValue because the absolute value of MfTimeSpan.MinValue exceeds the value of MfTimeSpan.MaxValue.</span>
+<span style="color: #1e90ff;">Overflow_NegateTwosCompNum</span>=<span style="color: #aa5500;">Negating the minimum value of a twos complement number is invalid.</span>
+<span style="color: #1e90ff;">Overflow_TimeSpanTooLong</span>=<span style="color: #aa5500;">MfTimeSpan overflowed because the duration is too long.</span>
+<span style="color: #1e90ff;">Regex_ErrorWithMsg</span>=<span style="color: #aa5500;">Error in Regular Expression: {0}</span>
+<span style="color: #1e90ff;">Regex_MatchLimit</span>=<span style="color: #aa5500;">reached match limit</span>
+<span style="color: #1e90ff;">Regex_Recursion</span>=<span style="color: #aa5500;">recursion too deep</span>
+<span style="color: #1e90ff;">Regex_ToManyEmptyMatch</span>=<span style="color: #aa5500;">too many possible empty-string matches</span>
+<span style="color: #0000aa;">[SYSTEM]</span>
+<span style="color: #aaaaaa; font-style: italic;">#NewLine Char Codes</span>
+<span style="color: #1e90ff;">NewLine</span>=<span style="color: #aa5500;">13|10</span>
+<span style="color: #0000aa;">[DATA]</span>
+<span style="color: #1e90ff;">Argument_Object_Param</span>=<span style="color: #aa5500;">Expected Index or Column Name!</span>
+<span style="color: #1e90ff;">NotSupportedException_Column_Field_Mismatch</span>=<span style="color: #aa5500;">Column and fields do not match. There must be the same number of columns and fields.</span>
+<span style="color: #1e90ff;">Exception_Database_Connection</span>=<span style="color: #aa5500;">{0}: The connection to the the given Database could not be etablished. Is the following {0} connection string valid?{1}{2}</span>
+<span style="color: #1e90ff;">Exception_Db_Blob_Memorybuffer</span>=<span style="color: #aa5500;">You can only store MemorBuffers as BLOB.</span>
+<span style="color: #1e90ff;">Exception_Db_Col_Not_Found_Irr</span>=<span style="color: #aa5500;">Irregular params: Column not found: [{0}] in{1}Table Columns:{2}</span>
+<span style="color: #1e90ff;">Exception_Db_Create_Invalid_Handle</span>=<span style="color: #aa5500;">Can not create a DataBaseSQLLite instance, because the connection handle is not valid!</span>
+<span style="color: #1e90ff;">Exception_Db_Dll_Get_Table</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_get_table failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Dll_Close</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_close failed!</span>
+<span style="color: #1e90ff;">Exception_Db_File_Create</span>=<span style="color: #aa5500;">ERROR: Unable to create {0}!</span>
+<span style="color: #1e90ff;">Exception_Db_File_Delete</span>=<span style="color: #aa5500;">ERROR: Unable to delete {0}!</span>
+<span style="color: #1e90ff;">Exception_Db_File_Locate</span>=<span style="color: #aa5500;">ERROR: Unable to find {0}!</span>
+<span style="color: #1e90ff;">Exception_Db_File_Read</span>=<span style="color: #aa5500;">ERROR: Unable to read {0}!</span>
+<span style="color: #1e90ff;">Exception_Db_File_Run</span>=<span style="color: #aa5500;">ERROR: Error occured running {0}!</span>
+<span style="color: #1e90ff;">Exception_Db_Invalid_Handle</span>=<span style="color: #aa5500;">ERROR: Invalid database handle {0}</span>
+<span style="color: #1e90ff;">Exception_Db_Invalid_Handle_Query</span>=<span style="color: #aa5500;">Invalid query handle!</span>
+<span style="color: #1e90ff;">Exception_Db_Invalid_Handle_Query_Param</span>=<span style="color: #aa5500;">Invalid query handle:{0}</span>
+<span style="color: #1e90ff;">Exception_Db_Invalid_Handle_Rc</span>=<span style="color: #aa5500;">ERROR: Invalid database handle {0}{1}Return Code:{2}</span>
+<span style="color: #1e90ff;">Exception_Db_Insert_Many_Fail</span>=<span style="color: #aa5500;">InsertMany failed.</span>
+<span style="color: #1e90ff;">Exception_Db_Perpare_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_prepare failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Query_Empty</span>=<span style="color: #aa5500;">ERROR: Query result is empty!</span>
+<span style="color: #1e90ff;">Exception_Db_Non_Select_Query</span>=<span style="color: #aa5500;">Non Selection Query failed.{0}{1}</span>
+<span style="color: #1e90ff;">Exception_Db_NotSupportted_Version</span>=<span style="color: #aa5500;">SQLite ERROR: Version {0} of SQLite3.dll is not supported!</span>
+<span style="color: #1e90ff;">Exception_Db_Recordset_Empty</span>=<span style="color: #aa5500;">"RecordSet is empty!"</span>
+<span style="color: #1e90ff;">Exception_Db_Reported_Error</span>=<span style="color: #aa5500;">ERROR: {0} reported an Error!</span>
+<span style="color: #1e90ff;">Exception_Db_Select</span>=<span style="color: #aa5500;">Select Query failed.{0}{1}</span>
+<span style="color: #1e90ff;">Exception_Db_SqliteDll_NotFound</span>=<span style="color: #aa5500;">SQLite.Dll not found:{0}{1}</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Lib_Error</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_libversion failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_FilePath</span>=<span style="color: #aa5500;">Filepath to the SQLite Database seems to be invalid.{0}{1}</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Changes_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_changes failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Changes_Total_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_total_changes failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Column_Count_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_column_count failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Column_Name_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_column_name failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Open_Fail</span>=<span style="color: #aa5500;">DLLCall sqlite3_open_v2 failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Error_Code_Busy</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_busy_timeout failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Error_Code_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_errcode failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Error_Msg_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_errmsg failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Exc_Fail</span>=<span style="color: #aa5500;">SQLite_Exec failed.{0}{1}</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Finalize_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_finalize failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Sqlite_Row_Insert_Id_Fail</span>=<span style="color: #aa5500;">ERROR: DLLCall sqlite3_last_insert_rowid failed!</span>
+<span style="color: #1e90ff;">Exception_Db_Unknow_Db_Type</span>=<span style="color: #aa5500;">The given Database Type is unknown! [{0}].</span>
+<span style="color: #1e90ff;">Exception_Invalid_Denominator</span>=<span style="color: #aa5500;">Invalid denominator: {0}</span>
+<span style="color: #1e90ff;">Exception_Invalid_Fraction</span>=<span style="color: #aa5500;">Invalid fraction string: {0}</span>
+<span style="color: #1e90ff;">Exception_File_NotExist</span>=<span style="color: #aa5500;">File must exist and be readable!</span>
+<span style="color: #1e90ff;">NotSupportedException_DbConnection_ORS</span>=<span style="color: #aa5500;">NotSupportedException: There is no valid DB Connection, OpenRecordSet requires a valid connection.</span>
+<span style="color: #aaaaaa; font-style: italic;">#End of INI</span>
+</pre>
+</div></span></p>
 </div>
 	
 	<div id="topic_footer">

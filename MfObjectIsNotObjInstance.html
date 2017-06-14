@@ -1,0 +1,120 @@
+﻿<html>
+	
+<head>
+	<title>IsNotObjInstance()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfObjectIsNotObjInstance");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">IsNotObjInstance()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfObject.html">MfObject</a> &rsaquo;&rsaquo; <a href="MfObjectMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfObjectMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfObjectIs.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfObjectIsInstance.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">IsNotObjInstance()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfObjectIsNotObjInstance.html#IsNotObjInstance1">MfObject.IsNotObjInstance(obj)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfObjectIsNotObjInstance.html#IsNotObjInstance2">MfObject.IsNotObjInstance(obj, objType)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfObjectIsNotObjInstance.html#IsNotObjInstance3">MfObject.IsNotObjInstance(obj, objType, returnErrors)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfObjectIsNotObjInstance.html#IsNotObjInstance4">MfObject.IsNotObjInstance(obj, objType, returnErrors, paramName)</a></p>
+<h2 class="rvps5"><a name="IsNotObjInstance1"></a>
+<span class="rvts0"><span class="rvts16">IsNotObjInstance(obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if obj is not an instance of </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">false</span><span class="rvts6"> if </span><span class="rvts55">obj</span><span class="rvts6"> is instance of </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> or class instance derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">; Otherwise throws an error derived from </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6">.</span></p>
+<h2 class="rvps5"><a name="IsNotObjInstance2"></a>
+<span class="rvts0"><span class="rvts16">IsNotObjInstance(obj, objType)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if </span><span class="rvts55">obj</span><span class="rvts6"> is not an instance specified by </span><span class="rvts55">objType</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">false</span><span class="rvts6"> if </span><span class="rvts55">obj</span><span class="rvts6"> is instance of </span><span class="rvts55">objType</span><span class="rvts6">; Otherwise throws an error derived from </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6">.</span></p>
+<h2 class="rvps5"><a name="IsNotObjInstance3"></a>
+<span class="rvts0"><span class="rvts16">IsNotObjInstance(obj, objType, returnErrors)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if </span><span class="rvts55">obj</span><span class="rvts6"> is not an instance specified by </span><span class="rvts55">objType</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">false</span><span class="rvts6"> if </span><span class="rvts55">obj</span><span class="rvts6"> is instance of </span><span class="rvts55">objType</span><span class="rvts6"> else If </span><span class="rvts55">returnErrors</span><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6"> then </span><span class="rvts18">true</span><span class="rvts6"> is returned; Otherwise throws an error derived from </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6">.</span></p>
+<h2 class="rvps5"><a name="IsNotObjInstance4"></a>
+<span class="rvts0"><span class="rvts16">IsNotObjInstance(obj, objType, returnErrors, paramName)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if </span><span class="rvts55">obj</span><span class="rvts6"> is not an instance specified by </span><span class="rvts55">objType</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">false</span><span class="rvts6"> if </span><span class="rvts55">obj</span><span class="rvts6"> is instance of </span><span class="rvts55">objType</span><span class="rvts6"> else If </span><span class="rvts55">returnErrors</span><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6"> then </span><span class="rvts18">true</span><span class="rvts6"> is returned; Otherwise throws an error derived from </span><a class="rvts12" href="MfException.html">MfException</a><span class="rvts6">. with the parameter name set to the value of </span><span class="rvts55">paramName</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">obj</span></p>
+<p class="rvps22"><span class="rvts54">an object derived from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54"> to check.</span></p>
+<p class="rvps21"><span class="rvts52">objType</span></p>
+<p class="rvps22"><span class="rvts54">Optional, String name of type; or </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54"> or derived class; or instance of </span><a class="rvts53" href="MfType.html">MfType</a><span class="rvts54"> class.</span></p>
+<p class="rvps21"><span class="rvts52">returnErrors</span></p>
+<p class="rvps22"><span class="rvts54">Optional, default is </span><span class="rvts69">true</span><span class="rvts54">, boolean var, If </span><span class="rvts69">true</span><span class="rvts54"> then if </span><span class="rvts70">Obj</span><span class="rvts54"> is not of the correct type and instance then an Exception derived from </span><a class="rvts53" href="MfException.html">MfException</a><span class="rvts54"> is returned; Otherwise </span><span class="rvts69">true</span><span class="rvts54"> is returned if there is an error</span></p>
+<p class="rvps21"><span class="rvts52">parmName</span></p>
+<p class="rvps22"><span class="rvts54">The name used for the parameter name when errors are generated and thrown. This becomes the Parameter name when an exception is thrown.</span><br/><span class="rvts54">Usually this will be the parameter name of a calling function that is checking if a parameter is of a </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54"> type.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> functions.</span><br/><span class="rvts6">Only objects that inherit from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> are valid object to check. If objType param is ignored then object is checked as </span><a class="rvts12" href="MfObject.html">MfObject</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfObjectIsObjInstance.html">IsObjectInstance()</a><span class="rvts6">, </span><a class="rvts12" href="MfObjectIsInstance.html">IsInstance()</a><span class="rvts6">, </span><a class="rvts12" href="MfObjectIsMfObject.html">IsMfObject()</a><span class="rvts6">, </span><a class="rvts12" href="MfObjectIs.html">Is()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Since</span></span></h3>
+<p class="rvps2"><span class="rvts6">Version 0.4</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">MyMethod(objStr) {</span><br/><span class="rvts31"> &nbsp; &nbsp;ex := </span><span class="rvts34">MfObject</span><span class="rvts31">.</span><span class="rvts47">IsNotObjInstance</span><span class="rvts31">(objStr, </span><span class="rvts34">MfString</span><span class="rvts31">, </span><span class="rvts33">true</span><span class="rvts31">, </span><span class="rvts42">"objStr"</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;</span><span class="rvts33">if</span><span class="rvts31"> (ex)</span><br/><span class="rvts31"> &nbsp; &nbsp;{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp;&nbsp;</span><span class="rvts32"> ; objStr is not an instance of MfString, ex is a MfExceptions derived excepetion</span><br/><span class="rvts32"> &nbsp; &nbsp; &nbsp; &nbsp;; set properties of exception to this method and throw</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;ex.</span><span class="rvts47">SetProp</span><span class="rvts31">(</span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts33">A_ThisFunc</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">throw</span><span class="rvts31"> ex</span><br/><span class="rvts31"> &nbsp; &nbsp;}</span><br/><span class="rvts31"> &nbsp;&nbsp;</span><span class="rvts32"> ; continue as objStr is a valid MfString instance</span><br/><span class="rvts31">}</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

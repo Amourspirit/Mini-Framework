@@ -68,19 +68,19 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">WinActivate()</span></span></h1>
-<p class="rvps20"><span class="rvts48">Mfunc.WinActivate([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">WinActivate()</span></span></h1>
+<p class="rvps20"><span class="rvts49">Mfunc.WinActivate([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.WinActivate([WinTitle, WinText, ExcludeTitle, ExcludeText])</span></span></h2>
 <p class="rvps2"><span class="rvts6">Activates the specified window (makes it foremost).</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">WinTitle</span></p>
-<p class="rvps22"><span class="rvts53">A window title or other criteria identifying the target window. See </span><a class="rvts59" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts53">.</span><br/><span class="rvts53"></span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
-<p class="rvps21"><span class="rvts51">WinText</span></p>
-<p class="rvps22"><span class="rvts53">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts59" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts53"> is ON.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
-<p class="rvps21"><span class="rvts51">ExcludeTitle</span></p>
-<p class="rvps22"><span class="rvts53">Windows whose titles include this value will not be considered.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
-<p class="rvps21"><span class="rvts51">ExcludeText</span></p>
-<p class="rvps22"><span class="rvts53">Windows whose text include this value will not be considered.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">WinTitle</span></p>
+<p class="rvps22"><span class="rvts54">A window title or other criteria identifying the target window. See </span><a class="rvts60" href="http://ahkscript.org/docs/misc/WinTitle.htm" target="_blank">WinTitle</a><span class="rvts54">.</span><br/><span class="rvts54"></span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">WinText</span></p>
+<p class="rvps22"><span class="rvts54">If present, this parameter must be a substring from a single text element of the target window (as revealed by the included Window Spy utility). Hidden text elements are detected if </span><a class="rvts60" href="http://ahkscript.org/docs/commands/DetectHiddenText.htm" target="_blank">DetectHiddenText</a><span class="rvts54"> is ON.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">ExcludeTitle</span></p>
+<p class="rvps22"><span class="rvts54">Windows whose titles include this value will not be considered.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">ExcludeText</span></p>
+<p class="rvps22"><span class="rvts54">Windows whose text include this value will not be considered.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> instance or var containing string.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinActivate.htm" target="_blank">AutoHotkey Docs - WinActivate</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
 <p class="rvps2"><span class="rvts6">If the window is minimized, it is automatically restored prior to being activated.</span></p>
@@ -90,7 +90,7 @@
 <p class="rvps2"><span class="rvts6">Window titles and text are case sensitive. Hidden windows are not detected unless </span><a class="rvts13" href="http://ahkscript.org/docs/commands/DetectHiddenWindows.htm" target="_blank">DetectHiddenWindows</a><span class="rvts6"> has been turned on.</span></p>
 <p class="rvps2"><span class="rvts6">See Also:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/WinActivate.htm" target="_blank">AutoHotkey Docs - WinActivate</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts32">IfWinExist</span><span class="rvts30">, Untitled - Notepad</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">WinActivate</span><span class="rvts30">() </span><span class="rvts31">; use the window found above</span><br/><span class="rvts32">else</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">WinActivate</span><span class="rvts30">(</span><span class="rvts42">"Calculator"</span><span class="rvts30">)</span></p>
+<p class="rvps14"><span class="rvts33">IfWinExist</span><span class="rvts31">, Untitled - Notepad</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">WinActivate</span><span class="rvts31">() </span><span class="rvts32">; use the window found above</span><br/><span class="rvts33">else</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">WinActivate</span><span class="rvts31">(</span><span class="rvts42">"Calculator"</span><span class="rvts31">)</span></p>
 </div>
 	
 	<div id="topic_footer">

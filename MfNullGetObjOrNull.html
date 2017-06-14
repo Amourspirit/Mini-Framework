@@ -60,7 +60,7 @@
 				
 				<a href="MfNullGetInstance.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfNullGetType.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfNullIs.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,17 +68,17 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">GetObjOrNull()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := MfNull.GetObjOrNull(obj)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetObjOrNull()</span></span></h2>
-<p class="rvps2"><span class="rvts6">Checks to see if an object is null and returns a value</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetObjOrNull()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := MfNull.GetObjOrNull(obj)</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">GetObjOrNull(obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Checks to see if an object is null and returns </span><span class="rvts55">obj</span><span class="rvts6"> if not null; Otherwise </span><span class="rvts12">MfNull.Null</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">obj</span></p>
-<p class="rvps22"><span class="rvts53">The Object or var to check to see if it is Null</span></p>
+<p class="rvps21"><span class="rvts52">obj</span></p>
+<p class="rvps22"><span class="rvts54">The Object or var to check to see if it is Null</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns if </span><span class="rvts54">obj</span><span class="rvts6"> is null then </span><a class="rvts12" href="MfNullNull.html">MfNull.Null</a><span class="rvts6"> is returned. Otherwise the </span><span class="rvts54">obj</span><span class="rvts6"> is returned.</span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">obj</span><span class="rvts6"> is null then </span><span class="rvts12">MfNull.Null</span><span class="rvts6"> is returned. Otherwise the </span><span class="rvts55">obj</span><span class="rvts6"> is returned.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">Will always return an object, to check if null object is returned you could use </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a><span class="rvts6"> as show in the example below.</span></p>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">Will always return an object, to check if null object is returned you could use </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a><span class="rvts6"> as show in the example below.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
 <p class="rvps2"><span class="rvts6"><div style="background: #ffffff; overflow: auto; width: auto; border: solid gray; border-width: .1em .1em .1em .8em; padding: .2em .6em;">
 <pre style="margin: 0; line-height: 125%;">intC <span style="color: #333333;">:=</span> <span style="color: #0000dd; font-weight: bold;">0</span>

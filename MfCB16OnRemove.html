@@ -68,23 +68,23 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">OnRemove()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OnRemove(index, value)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">OnRemove()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OnRemove(index, value)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">OnRemove(index, ByRef value)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Performs additional custom processes when removing an element from the </span><a class="rvts12" href="MfCB16.html">MfCollectionBase</a><span class="rvts6"> instance.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">index</span></p>
-<p class="rvps22"><span class="rvts53">The </span><span class="rvts75">zero-based</span><span class="rvts53"> index at which </span><span class="rvts76">value</span><span class="rvts53"> can be found.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var integer.</span></p>
-<p class="rvps21"><span class="rvts51">value</span></p>
-<p class="rvps22"><span class="rvts53">The value of the element to remove from </span><span class="rvts76">index</span><span class="rvts53">.</span></p>
+<p class="rvps21"><span class="rvts52">index</span></p>
+<p class="rvps22"><span class="rvts54">The </span><span class="rvts69">zero-based</span><span class="rvts54"> index at which </span><span class="rvts70">value</span><span class="rvts54"> can be found.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var integer.</span></p>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The value of the element to remove from </span><span class="rvts70">index</span><span class="rvts54">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts15">Protected</span><span class="rvts6"> Method</span><br/><span class="rvts6">The default implementation of this method is intended to be overridden by a derived class to perform some action before the specified element is removed.</span></p>
 <p class="rvps2"><span class="rvts6">If the process fails, the collection reverts back to its previous state.</span></p>
 <p class="rvps2"><span class="rvts6">The default implementation of this method is an O(1) operation.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Notes to Implementers</span></span></h3>
 <p class="rvps2"><span class="rvts6">This method allows implementers to define processes that must be performed before removing the element from the underlying </span><a class="rvts12" href="MfList.html">MfList</a><span class="rvts6">. By defining this method, implementers can add functionality to inherited methods without having to override all other methods.</span></p>
-<p class="rvps2"><span class="rvts41">OnRemove()</span><span class="rvts6"> is invoked before the standard Remove behavior, whereas </span><a class="rvts12" href="MfCB16OnRemoveComplete.html">OnRemoveComplete()</a><span class="rvts6"> is invoked after the standard Remove behavior.</span></p>
-<p class="rvps2"><span class="rvts6">For example, implementers can prevent removal of elements by always throwing an exception in </span><span class="rvts41">OnRemove()</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts23">OnRemove()</span><span class="rvts6"> is invoked before the standard Remove behavior, whereas </span><a class="rvts12" href="MfCB16OnRemoveComplete.html">OnRemoveComplete()</a><span class="rvts6"> is invoked after the standard Remove behavior.</span></p>
+<p class="rvps2"><span class="rvts6">For example, implementers can prevent removal of elements by always throwing an exception in </span><span class="rvts23">OnRemove()</span><span class="rvts6">.</span></p>
 <p class="rvps2"><a class="rvts12" href="MfCB16OnValidate.html">OnValidate()</a><span class="rvts6"> is called prior to this method.</span></p>
 </div>
 	

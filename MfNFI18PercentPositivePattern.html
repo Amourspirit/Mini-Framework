@@ -1,0 +1,127 @@
+﻿<html>
+	
+<head>
+	<title>PercentPositivePattern</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfNFI18PercentPositivePattern");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">PercentPositivePattern</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfNFI18.html">MfNumberFormatInfo</a> &rsaquo;&rsaquo; <a href="MfNFI18Properties.html">Properties</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfNFI18Properties.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfNFI18PercentNegativePattern.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfNFI18PercentSymbol.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">PercentPositivePattern</span></span></h1>
+<p class="rvps2"><span class="rvts6">Gets or sets the format pattern for positive percent values.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.PercentPositivePattern</span><br/><span class="rvts51">instance</span><span class="rvts49">.PercentPositivePattern := Value</span></p>
+<p class="rvps21"><span class="rvts52">Value</span></p>
+<p class="rvps22"><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing </span><span class="rvts67">integer</span><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Gets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Gets the format pattern for positive percent values as an integer var. </span><br/><span class="rvts6">The default for </span><a class="rvts12" href="MfNFI18InvariantInfo.html">InvariantInfo</a><span class="rvts6"> is 0 which represents "n %", where "%" is the </span><a class="rvts12" href="MfNFI18PercentSymbol.html">PercentSymbol</a><span class="rvts6"> and n is a number.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Sets</span></span></h3>
+<p class="rvps2"><span class="rvts6">Sets format pattern for positive percent values.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if the property is being set to a value that is less than </span><span class="rvts18">0</span><span class="rvts6"> or greater than </span><span class="rvts18">3</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if the property is being set and the </span><a class="rvts12" href="MfNFI18.html">MfNumberFormatInfo</a><span class="rvts6"> is </span><span class="rvts15">read-only</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">PercentPositivePattern</span><span class="rvts6"> property is used with the "P" standard format string to define pattern of positive percentage values. This property has one of the values in the following table. The symbol "%" is the </span><a class="rvts12" href="MfNFI18PercentSymbol.html">PercentSymbol</a><span class="rvts6"> and n is a number.</span></p>
+<div class="rvps2"><table width="30%" border="1" cellpadding="4" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">Value</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">Associated pattern</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td height="14" style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">0</span></p>
+</td>
+<td height="14" style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">n %</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">1</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">n%</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">2</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">%n</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">3</span></p>
+</td>
+<td style="border-color: #000000; border-style: solid; padding: 2px 5px;"><p class="rvps2"><span class="rvts6">% n</span></p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

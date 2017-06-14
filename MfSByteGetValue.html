@@ -1,0 +1,132 @@
+﻿<html>
+	
+<head>
+	<title>GetValue()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfSByteGetValue");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">GetValue()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfSByte.html">MfSByte</a> &rsaquo;&rsaquo; <a href="MfSByteMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfSByteMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfSByteGreaterThenOrEqual.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfSByteGreaterThen.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">GetValue()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Overrides </span><a class="rvts12" href="MfPrimitiveGetValue.html">MfPrimitive.GetValue()</a><span class="rvts6">.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfSByteGetValue.html#GetValue1">MfSByte.GetValue(Obj)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfSByteGetValue.html#GetValue2">MfSByte.GetValue(Obj, Default)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts61" href="MfSByteGetValue.html#GetValue3">MfSByte.GetValue(Obj, Default, AllowAny)</a></p>
+<h2 class="rvps5"><a name="GetValue1"></a>
+<span class="rvts0"><span class="rvts16">MfSByte.GetValue(Obj)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets the byte number from Object or var containing </span><span class="rvts15">byte</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">Obj</span></p>
+<p class="rvps22"><span class="rvts54">The Object or var containing</span><span class="rvts67">,</span><span class="rvts54"> </span><span class="rvts67">byte</span><span class="rvts54"> or </span><span class="rvts67">hex</span><span class="rvts54"> value</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsNumber.html">IsNumber</a><span class="rvts54">. </span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a var containing a </span><span class="rvts15">byte </span><span class="rvts6">No less then </span><a class="rvts12" href="MfByteMinValue.html">MinValue</a><span class="rvts6"> and no greater then </span><a class="rvts12" href="MfByteMaxValue.html">MaxValue</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">Throws an error if unable to convert </span><span class="rvts55">Obj</span><span class="rvts6"> to byte.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">Obj</span><span class="rvts6"> is less then </span><a class="rvts12" href="MfByteMinValue.html">MinValue</a><span class="rvts6"> or Greater then </span><a class="rvts12" href="MfByteMaxValue.html">MaxValue</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if argument </span><span class="rvts55">Obj</span><span class="rvts6"> is can not be converted to byte value.</span></p>
+<h2 class="rvps5"><a name="GetValue2"></a>
+<span class="rvts0"><span class="rvts16">MfSByte</span></span><span class="rvts0"><span class="rvts16">.GetValue(Obj, Default)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a byte number from </span><span class="rvts55">Obj</span><span class="rvts6"> or returns </span><span class="rvts55">Default</span><span class="rvts6"> value if </span><span class="rvts55">Obj</span><span class="rvts6"> is unable to be converted to byte. Default must be a value that can be converted to byte or it will be ignored if </span><span class="rvts55">Obj</span><span class="rvts6"> can not be converted to byte and an error will be thrown.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">Obj</span></p>
+<p class="rvps22"><span class="rvts54">The Object or var containing</span><span class="rvts67">,</span><span class="rvts54"> </span><span class="rvts67">integer</span><span class="rvts54"> or </span><span class="rvts67">hex</span><span class="rvts54"> value</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54">. </span></p>
+<p class="rvps21"><span class="rvts52">Default</span></p>
+<p class="rvps22"><span class="rvts54">The value to return if </span><span class="rvts70">Obj</span><span class="rvts54"> is Cannot be converted</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54"> or var of byte.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">Returns a var containing a </span><span class="rvts15">byte</span><span class="rvts6"> or </span><span class="rvts55">Default</span><span class="rvts6"> value if </span><span class="rvts55">Obj</span><span class="rvts6"> is unable to be converted to byte.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts15">Static</span><span class="rvts6"> Method</span><br/><span class="rvts6">If Default is not a valid byte or </span><a class="rvts12" href="MfSByte.html">MfSByte</a><span class="rvts6"> instance then </span><span class="rvts23">GetValue</span><span class="rvts6"> will throw an error if </span><span class="rvts55">Obj</span><span class="rvts6"> can not be converted to byte. </span></p>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">Default</span><span class="rvts6"> can not be converted to a byte then this would method will yield the same results as calling </span><span class="rvts43">MfByte.GetValue(Obj)</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
+<h2 class="rvps5"><a name="GetValue3"></a>
+<span class="rvts0"><span class="rvts16">MfSByte</span></span><span class="rvts0"><span class="rvts16">.GetValue(Obj, Default, AllowAny)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Gets a byte var from </span><span class="rvts55">Obj</span><span class="rvts6"> or returns </span><span class="rvts55">Default</span><span class="rvts6"> value if </span><span class="rvts55">Obj</span><span class="rvts6"> is unable to be converted to byte.</span><span class="rvts55">Default</span><span class="rvts6"> can be not boolean if </span><span class="rvts55">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">Obj</span></p>
+<p class="rvps22"><span class="rvts54">The Object or var containing</span><span class="rvts67">,</span><span class="rvts54"> </span><span class="rvts67">integer</span><span class="rvts54"> or </span><span class="rvts67">hex</span><span class="rvts54"> value</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54">. </span></p>
+<p class="rvps21"><span class="rvts52">Default</span></p>
+<p class="rvps22"><span class="rvts54">The value to return if </span><span class="rvts70">Obj</span><span class="rvts54"> is Cannot be converted</span><br/><span class="rvts54">Can be any type that matches </span><a class="rvts53" href="MfTypeIsIntegerNumber.html">IsIntegerNumber</a><span class="rvts54"> or var of byte.</span></p>
+<p class="rvps21"><span class="rvts52">AlowAny</span></p>
+<p class="rvps22"><span class="rvts54">Determines if </span><span class="rvts70">Default</span><span class="rvts54"> can be a value other then byte. If true </span><span class="rvts70">Default</span><span class="rvts54"> can be any var, Object or null; Otherwise </span><span class="rvts70">Default</span><span class="rvts54"> must be a byte value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Static Method.</span><br/><span class="rvts6">If </span><span class="rvts55">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6"> then </span><span class="rvts55">Default</span><span class="rvts6"> can be any value including var, object or null. However if </span><span class="rvts55">AllowAny</span><span class="rvts6"> is </span><span class="rvts18">false</span><span class="rvts6"> then this method will yield the same result as calling </span><span class="rvts43">MfByte.GetValue(Obj, Default)</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAE19.html">MfArgumentException</a><span class="rvts6"> if </span><span class="rvts55">AllowAny</span><span class="rvts6"> is not a valid boolean.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">General Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">If </span><span class="rvts55">Obj</span><span class="rvts6"> is a float or </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6"> instance then </span><span class="rvts23">GetValue()</span><span class="rvts6"> will alway round down for positive. For instance </span><span class="rvts43">MfInteger.GetValue(2.8)</span><span class="rvts6"> will be </span><span class="rvts18">2.</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if incorrect number of parameters are passed in.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Related</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfSByteParse.html">Parse()</a><span class="rvts6">, </span><a class="rvts12" href="MfSByteTryParse.html">TryParse()</a></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">Obj</span><span class="rvts31"> := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInt64</span><span class="rvts31">(</span><span class="rvts34">233</span><span class="rvts31">)</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(Obj)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; Throws MfArgumentException, MaxValue is 127</span><br/><span class="rvts31"></span><br/><span class="rvts31">Obj := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfByte</span><span class="rvts31">(</span><span class="rvts68">14</span><span class="rvts31">)</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(Obj)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays 14</span><br/><span class="rvts32"></span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts68">214</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays 214</span><br/><span class="rvts32"></span><br/><span class="rvts32">; the following will throw MfArgumentException</span><br/><span class="rvts32">; MfSByte can be min of -128 and max of 127</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts68">0xE5F4</span><span class="rvts31">) </span><span class="rvts32">; 0xE5F4 = 58868</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val%</span><br/><span class="rvts32"></span><br/><span class="rvts32">; the following will display zero due to byte overflow Default is returned</span><br/><span class="rvts32">; MfSByte can be min of -128 and max of 127</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts68">0xE5F4</span><span class="rvts31">,</span><span class="rvts68"> 0</span><span class="rvts31">) </span><span class="rvts32">; 0xE5F4 = 58868</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays 0</span><br/><span class="rvts32"></span><br/><span class="rvts32">; the following will throw MfArgumentException</span><br/><span class="rvts32">; MfSByte can be min of -128 and max of 127</span><br/><span class="rvts32">; Default value passed in is not a valid byte</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts68">0xE5F4</span><span class="rvts31">, </span><span class="rvts68">-200</span><span class="rvts31">) </span><span class="rvts32">; 0xE5F4 = 58868</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val%</span><br/><span class="rvts32"></span><br/><span class="rvts32">; the following will display -1 due to byte overflow Default is returned</span><br/><span class="rvts32">; MfSByte can be min of -128 and max of 127</span><br/><span class="rvts32">; Default value passed in is not a valid byte but will return anyways</span><br/><span class="rvts32">; because AllowAny is Set to true</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts68">58868</span><span class="rvts31">, -</span><span class="rvts68">200</span><span class="rvts31">,</span><span class="rvts68"> </span><span class="rvts33">true</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays -200</span><br/><span class="rvts32"></span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts68">0x01A</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays 36</span><br/><span class="rvts32"></span><br/><span class="rvts32">; the following will throw MfArgumentException</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts42">"abc"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val%</span><br/><span class="rvts32"></span><br/><span class="rvts32">; the Default set to 25 will be returned</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts42">"abc"</span><span class="rvts31">, </span><span class="rvts68">25</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays 25</span><br/><span class="rvts32"></span><br/><span class="rvts31">VarDefault := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfSByte</span><span class="rvts31">(</span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts35">MaxValue</span><span class="rvts31">)</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts42">"abc"</span><span class="rvts31">, VarDefault)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays 127</span><br/><span class="rvts32"></span><br/><span class="rvts32">; Default Obj is not a valid byte and Default</span><br/><span class="rvts32">; is not a valid byte but AllowAny is true</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts42">"abc"</span><span class="rvts31">, </span><span class="rvts42">"Undefined"</span><span class="rvts31">, </span><span class="rvts33">true</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays Undefined</span><br/><span class="rvts32"></span><br/><span class="rvts32">; MfNumberStyles.Instance.Number is MfEnum.EnumItem</span><br/><span class="rvts32">; and MfEnum.EnumItem is of type IsIntegerNumber</span><br/><span class="rvts31">val := </span><span class="rvts34">MfSByte</span><span class="rvts31">.</span><span class="rvts47">GetValue</span><span class="rvts31">(</span><span class="rvts34">MfNumberStyles</span><span class="rvts31">.</span><span class="rvts35">Instance</span><span class="rvts31">.</span><span class="rvts35">Number</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> %val% </span><span class="rvts32">; displays 111</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

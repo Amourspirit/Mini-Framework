@@ -68,17 +68,17 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Random()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.Random([ Min, Max])</span><br/><span class="rvts48">OutputVar := Mfunc.Random(, NewSeed)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Random()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := Mfunc.Random([ Min, Max])</span><br/><span class="rvts49">OutputVar := Mfunc.Random(, NewSeed)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.Random()</span></span></h2>
 <p class="rvps2"><span class="rvts6">Generates a pseudo-random number.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">Min</span></p>
-<p class="rvps22"><span class="rvts53">The smallest number that can be generated, which can be negative, floating point, or an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. If omitted, the smallest number will be 0. The lowest allowed value is -2147483648 for integers, but floating point numbers have no restrictions.</span></p>
-<p class="rvps21"><span class="rvts51">Max</span></p>
-<p class="rvps22"><span class="rvts53">The largest number that can be generated, which can be negative, floating point, or an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">. If omitted, the largest number will be 2147483647 (which is also the largest allowed integer value -- but floating point numbers have no restrictions).</span></p>
-<p class="rvps21"><span class="rvts51">NewSeed</span></p>
-<p class="rvps22"><span class="rvts53">This mode reseeds the random number generator with NewSeed (which can be an </span><a class="rvts59" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts53">). This affects all subsequently generated random numbers. NewSeed should be an integer between 0 and 4294967295 (0xFFFFFFFF). Reseeding can improve the quality/security of generated random numbers, especially when NewSeed is a genuine random number rather than one of lesser quality such as a pseudo-random number. Generally, reseeding does not need to be done more than once.</span><br/><span class="rvts53"></span><br/><span class="rvts53">If reseeding is never done by the script, the seed starts off as the low-order 32-bits of the 64-bit value that is the number of 100-nanosecond intervals since January 1, 1601. This value travels from 0 to 4294967295 every ~7.2 minutes.</span></p>
+<p class="rvps21"><span class="rvts52">Min</span></p>
+<p class="rvps22"><span class="rvts54">The smallest number that can be generated, which can be negative, floating point, or an </span><a class="rvts60" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts54">. If omitted, the smallest number will be 0. The lowest allowed value is -2147483648 for integers, but floating point numbers have no restrictions.</span></p>
+<p class="rvps21"><span class="rvts52">Max</span></p>
+<p class="rvps22"><span class="rvts54">The largest number that can be generated, which can be negative, floating point, or an </span><a class="rvts60" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts54">. If omitted, the largest number will be 2147483647 (which is also the largest allowed integer value -- but floating point numbers have no restrictions).</span></p>
+<p class="rvps21"><span class="rvts52">NewSeed</span></p>
+<p class="rvps22"><span class="rvts54">This mode reseeds the random number generator with NewSeed (which can be an </span><a class="rvts60" href="http://ahkscript.org/docs/Variables.htm#Expressions" target="_blank">expression</a><span class="rvts54">). This affects all subsequently generated random numbers. NewSeed should be an integer between 0 and 4294967295 (0xFFFFFFFF). Reseeding can improve the quality/security of generated random numbers, especially when NewSeed is a genuine random number rather than one of lesser quality such as a pseudo-random number. Generally, reseeding does not need to be done more than once.</span><br/><span class="rvts54"></span><br/><span class="rvts54">If reseeding is never done by the script, the seed starts off as the low-order 32-bits of the 64-bit value that is the number of 100-nanosecond intervals since January 1, 1601. This value travels from 0 to 4294967295 every ~7.2 minutes.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns random number as var. The format of stored floating point numbers is determined by </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SetFormat.htm" target="_blank">SetFormat</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
@@ -103,7 +103,7 @@
 <p class="rvps2"><span class="rvts6">When you use this, send an email to: matumoto@math.keio.ac.jp with an appropriate reference to your work. It would be nice to CC: rjwagner@writeme.com and Cokus@math.washington.edu when you write.</span></p>
 <p class="rvps2"><span class="rvts6">This above has been already been done for AutoHotkey, but if you use the Random command in a publicly distributed application, consider sending an e-mail to the above people to thank them.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">rand := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Random</span><span class="rvts30">(</span><span class="rvts72">1</span><span class="rvts30">, </span><span class="rvts72">10</span><span class="rvts30">)</span><br/><span class="rvts30">rand := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">Random</span><span class="rvts30">(</span><span class="rvts72">0.0</span><span class="rvts30">, </span><span class="rvts72">1.0</span><span class="rvts30">)</span></p>
+<p class="rvps14"><span class="rvts31">rand := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">Random</span><span class="rvts31">(</span><span class="rvts68">1</span><span class="rvts31">, </span><span class="rvts68">10</span><span class="rvts31">)</span><br/><span class="rvts31">rand := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">Random</span><span class="rvts31">(</span><span class="rvts68">0.0</span><span class="rvts31">, </span><span class="rvts68">1.0</span><span class="rvts31">)</span></p>
 </div>
 	
 	<div id="topic_footer">

@@ -60,7 +60,7 @@
 				
 				<a href="MfListBase_NewEnum.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfListBaseAddAttribute.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfListBaseClear.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,20 +68,20 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Add()</span></span></h1>
-<p class="rvps2"><span class="rvts6">This </span><span class="rvts15">abstract</span><span class="rvts6"> method must be overridden in the derived class</span></p>
-<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Add(obj)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Add()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Adds an element to the end of the current instance.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Add(obj)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Add(obj)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Adds an object to append at the end of the </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Adds an element to the end of the current instance.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">obj</span></p>
-<p class="rvps22"><span class="rvts53">The Object to locate in the </span><a class="rvts52" href="MfListBase.html">MfListBase</a></p>
+<p class="rvps21"><span class="rvts52">obj</span></p>
+<p class="rvps22"><span class="rvts54">The object or var to add to the current instance.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">The index at which the obj has been added.</span></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts15">Abstract</span><span class="rvts6"> Method.</span><br/><span class="rvts6">Must be overridden in derived classes.</span></p>
+<p class="rvps2"><span class="rvts6">Var containing </span><span class="rvts15">Integer</span><span class="rvts6"> of the </span><span class="rvts18">zero-based</span><span class="rvts6"> index at which the </span><span class="rvts55">obj</span><span class="rvts6"> has been added.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNIE25.html">MfNotImplementedException</a><span class="rvts6"> if the derived class does not override</span></p>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNRE24.html">MfNullReferenceException</a><span class="rvts6"> if called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> in derived classes if </span><a class="rvts12" href="MfListBaseIsFixedSize.html">IsFixedSize</a><span class="rvts6"> or </span><a class="rvts12" href="MfListBaseIsReadOnly.html">IsReadOnly</a><span class="rvts6"> is </span><span class="rvts18">true</span><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">Can be overridden in derived classes but override must call Base.Add(ob)</span></p>
 </div>
 	
 	<div id="topic_footer">

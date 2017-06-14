@@ -68,13 +68,13 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">SoundGetWaveVolume()</span></span></h1>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">SoundGetWaveVolume()</span></span></h1>
 <p class="rvps2"><span class="rvts6">SoundGetWaveVolume() Retrieves the wave output volume for a sound device.</span></p>
-<p class="rvps20"><span class="rvts48">OutputVar := Mfunc.SoundGetWaveVolume([DeviceNumber])</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := Mfunc.SoundGetWaveVolume([DeviceNumber])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Mfunc.SoundGetWaveVolume([DeviceNumber])</span></span></h2>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">DeviceNumber</span></p>
-<p class="rvps22"><span class="rvts53">If this parameter is omitted, it defaults to 1 (the first sound device), which is usually the system's default device for recording and playback. Specify a number higher than 1 to operate upon a different sound device.</span><br/><span class="rvts53">Can be </span><a class="rvts52" href="MfInteger.html">MfInteger</a><span class="rvts53"> instance or var containing integer.</span></p>
+<p class="rvps21"><span class="rvts52">DeviceNumber</span></p>
+<p class="rvps22"><span class="rvts54">If this parameter is omitted, it defaults to 1 (the first sound device), which is usually the system's default device for recording and playback. Specify a number higher than 1 to operate upon a different sound device.</span><br/><span class="rvts54">Can be </span><a class="rvts53" href="MfInteger.html">MfInteger</a><span class="rvts54"> instance or var containing integer.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns the name of the variable in which to store the retrieved volume level, which is a floating point number between 0 and 100 inclusive. The variable will be made blank if there was a problem retrieving the volume. The format of the floating point number, such as its decimal places, is determined by </span><a class="rvts12" href="MfuncSetFormat.html">Mfunc.SetFormat</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
@@ -82,10 +82,10 @@
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts6">Wrapper for </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundGetWaveVolume.htm" target="_blank">AutoHotkey Docs - SoundGetWaveVolume</a><span class="rvts6">.</span><br/><span class="rvts15">Static method.</span></p>
 <p class="rvps2"><span class="rvts6">The current wave output volume level can be set via </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundSetWaveVolume.htm" target="_blank">SoundSetWaveVolume</a><span class="rvts6">. Settings such as Master Volume, Synth, Microphone, Mute, Treble, and Bass can be set and retrieved using </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundSet.htm" target="_blank">SoundSet</a><span class="rvts6"> and </span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundGet.htm" target="_blank">SoundGet</a><span class="rvts6">.</span></p>
-<p class="rvps2"><span class="rvts6">Windows Vista and later </span><span class="rvts41">AutoHotKey [v1.1.10+]</span><span class="rvts6">: This command is equivalent to SoundGet</span><span class="rvts6"> with ComponentType set to Wave and ControlType set to Volume.</span></p>
+<p class="rvps2"><span class="rvts6">Windows Vista and later </span><span class="rvts23">AutoHotKey [v1.1.10+]</span><span class="rvts6">: This command is equivalent to SoundGet</span><span class="rvts6"> with ComponentType set to Wave and ControlType set to Volume.</span></p>
 <p class="rvps2"><span class="rvts18">See Also</span><span class="rvts6">:</span><a class="rvts13" href="http://ahkscript.org/docs/commands/SoundGetWaveVolume.htm" target="_blank">AutoHotkey Docs - SoundGetWaveVolume</a><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts30">OutputVar := </span><span class="rvts33">Mfunc</span><span class="rvts30">.</span><span class="rvts45">SoundGetWaveVolume</span><span class="rvts30">()</span><br/><span class="rvts32">MsgBox</span><span class="rvts30">, The current wave output volume level is %OutputVar%.</span></p>
+<p class="rvps14"><span class="rvts31">OutputVar := </span><span class="rvts34">Mfunc</span><span class="rvts31">.</span><span class="rvts47">SoundGetWaveVolume</span><span class="rvts31">()</span><br/><span class="rvts33">MsgBox</span><span class="rvts31">, The current wave output volume level is %OutputVar%.</span></p>
 </div>
 	
 	<div id="topic_footer">

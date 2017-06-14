@@ -1,0 +1,359 @@
+﻿<html>
+	
+<head>
+	<title>MfBigInt</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfBigInt");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">MfBigInt</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="NS_System.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfAttributeConstructor.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfBigIntProperties.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">MfBigInt Class</span></span></h1>
+<p class="rvps2"><span class="rvts6">(Inherits from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6">)</span></p>
+<p class="rvps2"><span class="rvts6">Represents Big Integer object</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Links</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfBigInt.html#Fields">Fields</a><span class="rvts6">, </span><a class="rvts12" href="MfBigInt.html#Properties">Properties</a><span class="rvts6">, </span><a class="rvts12" href="MfBigInt.html#Methods">Methods</a><span class="rvts6">, </span><a class="rvts12" href="MfBigInt.html#Remarks">Remarks</a><span class="rvts6">, </span><a class="rvts12" href="MfBigInt.html#Example">Example</a></p>
+<h3 class="rvps6"><a name="Constructors"></a>
+<span class="rvts0"><span class="rvts17">Constructors</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="313" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="887" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="313" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntConstructor.html">Constructor([val, retunAsObj, readonly])</a></p>
+</td>
+<td width="887" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> class optionally setting the </span><a class="rvts12" href="MfBigIntValue.html">Value</a><span class="rvts6"> property, </span><a class="rvts12" href="MfBigIntReturnAsObject.html">ReturnAsObject</a><span class="rvts6"> property and the </span><a class="rvts12" href="MfBigIntReadonly.html">ReadOnly</a><span class="rvts6"> property.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Properties"></a>
+<span class="rvts0"><span class="rvts17">Properties</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="315" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="885" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="315" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntReadonly.html">ReadOnly</a></p>
+</td>
+<td width="885" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets the if the class will allow the underlying value to be altered after the constructor has been called.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="315" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntReturnAsObject.html">ReturnAsObject</a></p>
+</td>
+<td width="885" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the if the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> class will return objects as their return value for various functions. Inherited from </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="45" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgProperty.jpeg"></p>
+</td>
+<td width="315" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntValue.html">Value</a></p>
+</td>
+<td width="885" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets or sets the value associated with the this instance.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Methods"></a>
+<span class="rvts0"><span class="rvts17">Methods</span></span></h3>
+<div class="rvps2"><table width="100%" border="1" cellpadding="2" cellspacing="-1" style="border-color: #000000; border-style: solid; border-collapse: collapse;">
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><br/>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Name</span></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Description</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfInt64Add1.html">Add(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Adds value to current instance of </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntBitShiftLeft.html">BitShiftLeft(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs </span><span class="rvts18">left</span><span class="rvts6"> shift operation current instance bits by </span><span class="rvts55">value</span><span class="rvts6"> amount.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntBitShiftRight.html">BitShiftRight(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Performs </span><span class="rvts18">right</span><span class="rvts6"> shift operation current instance bits by </span><span class="rvts55">value</span><span class="rvts6"> amount.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntClone.html">Clone()</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Clones the current instance an return &nbsp;a new instance with the same values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntCompareTo.html">CompareTo(obj)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares this instance to a specified </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> instance. Overrides </span><a class="rvts12" href="MfObjectCompareTo.html">MfObject.CompareTo()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntDivide.html">Divide(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Divides the current instance of </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> by the divisor </span><span class="rvts55">value</span><span class="rvts6"> and returns remainder as instance of </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntDivRem.html">DivRem(dividend, divisor, remainder)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Calculates the quotient of two </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> signed integers and also returns the remainder in an output parameter.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntEquals.html">Equals(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets if this instance </span><a class="rvts12" href="MfBigIntValue.html">Value</a><span class="rvts6"> is the same as the obj instance.Value.</span><span class="rvts55"> </span><span class="rvts6">Overrides </span><a class="rvts12" href="MfObjectEquals.html">MfObject.Equals()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfInt64GetValue.html">GetHashCode()</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets A hash code for the current </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> instance. Overrides </span><a class="rvts12" href="MfObjectGetHashCode.html">MfObject.GetHashCode()</a></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectGetType.html">GetType()</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets the Type for the for the Class .Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntGetTypeCode.html">GetTypeCode()</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Get an enumeration value of </span><a class="rvts12" href="MfTypeCode.html">MfTypeCode</a><span class="rvts6"> the represents </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> Type Code.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntGreaterThen.html">GreaterThen(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> object to </span><span class="rvts55">value</span><span class="rvts6"> and returns an indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntGreaterThenOrEqual.html">GreaterThenOrEqual(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> object to </span><span class="rvts55">value</span><span class="rvts6"> and returns an indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntLessThen.html">LessThen(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> object to </span><span class="rvts55">value</span><span class="rvts6"> and returns an indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntLessThenOrEqual.html">LessThenOrEqual(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Compares the current </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> object to </span><span class="rvts55">value</span><span class="rvts6"> and returns an indication of their relative values.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntMultiply.html">Multiply(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Multiplies the current instance of </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> by the </span><span class="rvts55">value</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIs.html">Is(type)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Gets if current instance of object is of the same type. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectIsInstance.html">IsInstance()</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Get if the current class is an instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><a class="rvts75" href="MfObjectMemberwiseClone.html">MemberwiseClone()</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps36"><span class="rvts6">Creates a shallow copy of the current </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6"> instance. Inherited from </span><a class="rvts75" href="MfObject.html">MfObject</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntParse.html#Parse1">Parse(s)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the </span><span class="rvts55">s</span><span class="rvts6"> representation of a number to its </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> equivalent</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"><img alt="" style="padding : 1px;" src="lib/ImgMethodStatic.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntParse.html#Parse2">Parse(s, base)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Converts the </span><span class="rvts55">s</span><span class="rvts6"> representation of a number to its </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> equivalent. Uses </span><span class="rvts55">base</span><span class="rvts6"> value to decode </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntSubtract.html">Subtract(value)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Subtracts </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> value from current instance of </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6">.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntToString.html#ToString1">ToString()</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a string representation of the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> instance.</span></p>
+</td>
+</tr>
+<tr valign="top">
+<td width="48" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><img alt="" style="padding : 1px;" src="lib/ImgMethod.jpeg"></p>
+</td>
+<td width="337" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><a class="rvts12" href="MfBigIntToString.html#ToString2">ToString(base)</a></p>
+</td>
+<td width="950" style="border-color: #000000; border-style: solid; padding: 1px 3px;"><p class="rvps2"><span class="rvts6">Gets a string representation of the </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> instance encode by the value of </span><span class="rvts55">base</span><span class="rvts6">.</span></p>
+</td>
+</tr>
+</table>
+</div>
+<h3 class="rvps6"><a name="Remarks"></a>
+<span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> is capable of working with integer value an any size and is only limited by the resources available on the current computer it is running on. This class can output from base 2 to base 95 by using the </span><a class="rvts12" href="MfBigIntToString.html#ToString2">ToString(base)</a><span class="rvts6"> method and can read from base 2 to base 95 by using the </span><a class="rvts12" href="MfBigIntParse.html#Parse2">Parse(s, base)</a><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><a class="rvts12" href="MfBigIntValue.html">Value</a><span class="rvts6"> property will always output a base 10 var.</span></p>
+<p class="rvps2"><span class="rvts6">Internally </span><a class="rvts12" href="MfBigInt.html">MfBigInt</a><span class="rvts6"> uses an array of integers that grows as needed to store it value. This gives the class the ability to store very large integer value.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Since</span></span></h3>
+<p class="rvps2"><span class="rvts6">Version 0.4</span></p>
+<h3 class="rvps6"><a name="Example"></a>
+<span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">i := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"88839834534058347978797"</span><span class="rvts31">, </span><span class="rvts33">true</span><span class="rvts31">) </span><span class="rvts32">; create new MfBigInt and set it RetrunAsObject to value to true</span><br/><span class="rvts31"></span><br/><span class="rvts31">iNew := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"5345354"</span><span class="rvts31">)</span><br/><span class="rvts31">r := i.</span><span class="rvts47">Divide</span><span class="rvts31">(iNew)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % </span><span class="rvts34">MfString</span><span class="rvts31">.</span><span class="rvts47">Format</span><span class="rvts31">(</span><span class="rvts42">"Result:'{0}', Remainder:'{1}'"</span><span class="rvts31">, r.</span><span class="rvts35">Value</span><span class="rvts31">, i.</span><span class="rvts35">Value</span><span class="rvts31">) </span><span class="rvts32">; Result:'16620009551108934', Remainder:'3186161'</span><br/><span class="rvts32"></span><br/><span class="rvts31">i := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(0, </span><span class="rvts33">true</span><span class="rvts31">) </span><span class="rvts32">; create new MfInt64 and set it RetrunAsObject to value to true</span><br/><span class="rvts31">i.</span><span class="rvts47">Add</span><span class="rvts31">(2)</span><br/><span class="rvts31">iNew := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfBigInt</span><span class="rvts31">(</span><span class="rvts42">"5785834585805893405858034584509789576"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % i.</span><span class="rvts47">Add</span><span class="rvts31">(iNew).</span><span class="rvts33">Value</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 5785834585805893405858034584509789578</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % i.</span><span class="rvts47">Add</span><span class="rvts31">(</span><span class="rvts42">"-053405829305806934085940685"</span><span class="rvts31">).</span><span class="rvts35">Value</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; displays 5785834585805893405858034584509767301</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % i.</span><span class="rvts47">Add</span><span class="rvts31">(</span><span class="rvts68">258897</span><span class="rvts31">).</span><span class="rvts47">Add</span><span class="rvts31">(new </span><span class="rvts34">MfInt64</span><span class="rvts31">(</span><span class="rvts34">MfInt64</span><span class="rvts31">.</span><span class="rvts35">MaxValue</span><span class="rvts31">)).</span><span class="rvts35">Value</span><span class="rvts31"> </span><span class="rvts32">; displays 5785834585805893405858034584510026198</span><br/><span class="rvts32"></span><br/><span class="rvts31">bigI := </span><span class="rvts34">MfBigInt</span><span class="rvts31">.</span><span class="rvts47">Parse</span><span class="rvts31">(</span><span class="rvts42">"Kpsio"</span><span class="rvts31">, </span><span class="rvts68">88</span><span class="rvts31">) </span><span class="rvts32">; base 88</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % bigI.</span><span class="rvts35">Value</span><span class="rvts31"> </span><span class="rvts32">; 1234567890</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

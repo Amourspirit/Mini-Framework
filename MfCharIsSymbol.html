@@ -68,25 +68,27 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">IsSymbol()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := MfChar.IsSymbol(c)</span><br/><span class="rvts48">OutputVar := MfChar.IsSymbol(s, index)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfChar.IsSymbol(c)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts54">c</span><span class="rvts6"> is categorized as a symbol character.</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">IsSymbol()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := MfChar.IsSymbol(c)</span><br/><span class="rvts49">OutputVar := MfChar.IsSymbol(s, index)</span></p>
+<h2 class="rvps5"><a name="IsSymbol1"></a>
+<span class="rvts0"><span class="rvts16">MfChar.IsSymbol(c)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Indicates whether the specified character of </span><span class="rvts55">c</span><span class="rvts6"> is categorized as a symbol character.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts54">c</span><span class="rvts6"> is a symbol character; Otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">MfChar.IsSymbol(s, index)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a symbol character for the character at position </span><span class="rvts54">index</span><span class="rvts6"> in </span><span class="rvts54">s</span><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if </span><span class="rvts55">c</span><span class="rvts6"> is a symbol character; Otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h2 class="rvps5"><a name="IsSymbol2"></a>
+<span class="rvts0"><span class="rvts16">MfChar.IsSymbol(s, index)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Indicates whether the specified character is categorized as a symbol character for the character at position </span><span class="rvts55">index</span><span class="rvts6"> in </span><span class="rvts55">s</span><span class="rvts6">.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
-<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if the character at position index in </span><span class="rvts54">s</span><span class="rvts6"> is a symbol character; Otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
-<h3 class="rvps24"><span class="rvts0"><span class="rvts77">Parameters</span></span></h3>
-<p class="rvps2"><span class="rvts78">c</span></p>
-<p class="rvps25"><span class="rvts79">The character to evaluate. Can be a var containing character or </span><a class="rvts80" href="MfChar.html">MfChar</a><span class="rvts79"> instance or string var containing hex value Eg:"0x0061". </span><span class="rvts18">c</span><span class="rvts6"> corresponds to a single linguistic Unicode character.</span></p>
-<p class="rvps2"><span class="rvts78">s</span></p>
-<p class="rvps25"><span class="rvts79">A string. Can be a string var or </span><a class="rvts80" href="MfString.html">MfString</a><span class="rvts79"> instance.</span></p>
-<p class="rvps2"><span class="rvts78">index</span></p>
-<p class="rvps25"><span class="rvts79">The </span><span class="rvts82">zero-based</span><span class="rvts79"> index position of the character to evaluate in </span><span class="rvts81">s</span><span class="rvts79">. Can be a </span><span class="rvts78">Integer</span><span class="rvts79"> var or </span><a class="rvts80" href="MfInteger.html">MfInteger</a><span class="rvts79"> instance.</span></p>
-<h3 class="rvps24"><span class="rvts0"><span class="rvts77">Throws</span></span></h3>
-<p class="rvps38"><span class="rvts6">Throws </span><a class="rvts83" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if index is not in the valid range of </span><span class="rvts118">s</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts83" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if call to method is outside its overloads.</span><br/><span class="rvts6">Throws </span><a class="rvts83" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
+<p class="rvps2"><span class="rvts6">Returns </span><span class="rvts18">true</span><span class="rvts6"> if the character at position index in </span><span class="rvts55">s</span><span class="rvts6"> is a symbol character; Otherwise, </span><span class="rvts18">false</span><span class="rvts6">.</span></p>
+<h3 class="rvps24"><span class="rvts0"><span class="rvts76">Parameters</span></span></h3>
+<p class="rvps2"><span class="rvts77">c</span></p>
+<p class="rvps25"><span class="rvts78">The character to evaluate. Can be a var containing character or </span><a class="rvts79" href="MfChar.html">MfChar</a><span class="rvts78"> instance or string var containing hex value Eg:"0x0061". </span><span class="rvts18">c</span><span class="rvts6"> corresponds to a single linguistic Unicode character.</span></p>
+<p class="rvps2"><span class="rvts77">s</span></p>
+<p class="rvps25"><span class="rvts78">A string. Can be a string var or </span><a class="rvts79" href="MfString.html">MfString</a><span class="rvts78"> instance.</span></p>
+<p class="rvps2"><span class="rvts77">index</span></p>
+<p class="rvps25"><span class="rvts78">The </span><span class="rvts81">zero-based</span><span class="rvts78"> index position of the character to evaluate in </span><span class="rvts80">s</span><span class="rvts78">. Can be a </span><span class="rvts77">Integer</span><span class="rvts78"> var or </span><a class="rvts79" href="MfInteger.html">MfInteger</a><span class="rvts78"> instance.</span></p>
+<h3 class="rvps24"><span class="rvts0"><span class="rvts76">Throws</span></span></h3>
+<p class="rvps36"><span class="rvts6">Throws </span><a class="rvts75" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span><br/><span class="rvts6">Throws </span><a class="rvts75" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if index is not in the valid range of </span><span class="rvts113">s</span><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts75" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if call to method is outside its overloads.</span><br/><span class="rvts6">Throws </span><a class="rvts75" href="MfIOE27.html">MfInvalidOperationException</a><span class="rvts6"> if not called as a </span><span class="rvts15">static</span><span class="rvts6"> method.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts15">Static Method.</span><br/><span class="rvts6">Valid symbol characters are members of the following categories in </span><a class="rvts12" href="MfUC17.html">MfUnicodeCategory</a><span class="rvts6">: </span><a class="rvts12" href="MfUC17MathSymbol.html">MathSymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfUC17CurrencySymbol.html">CurrencySymbol</a><span class="rvts6">, </span><a class="rvts12" href="MfUC17ModifierSymbol.html">ModifierSymbol</a><span class="rvts6"> and </span><a class="rvts12" href="MfUC17ClosePunctuation.html">ClosePunctuation</a><span class="rvts6">.</span></p>
 </div>

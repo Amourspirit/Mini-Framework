@@ -58,7 +58,7 @@
 			<div id="topic_header_nav">
 				<a href="MfListBaseMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfListBaseCompareTo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfListBaseClone.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
 				<a href="MfListBaseConstructor.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
@@ -68,21 +68,20 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Contains()</span></span></h1>
-<p class="rvps2"><span class="rvts6">This </span><span class="rvts15">abstract</span><span class="rvts6"> method must be overridden in the derived class</span></p>
-<p class="rvps20"><span class="rvts48">OutputVar := </span><span class="rvts50">instance</span><span class="rvts48">.Contains(obj)</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Contains()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Determines whether the </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6"> contains a specific element.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><span class="rvts51">instance</span><span class="rvts49">.Contains(obj)</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Contains(obj)</span></span></h2>
 <p class="rvps2"><span class="rvts6">Determines whether the </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6"> contains a specific element.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">value</span></p>
-<p class="rvps22"><span class="rvts53">The Object to locate in the </span><a class="rvts52" href="MfListBase.html">MfListBase</a></p>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The Object to locate in the </span><a class="rvts53" href="MfListBase.html">MfListBase</a></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
 <p class="rvps2"><span class="rvts6">Returns true if the </span><a class="rvts12" href="MfListBase.html">MfListBase</a><span class="rvts6"> contains the specified value otherwise, false.</span></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
-<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNIE25.html">MfNotImplementedException</a><span class="rvts6"> if the derived class does not override</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts15">Abstract</span><span class="rvts6"> Method.</span><br/><span class="rvts6">Must be overridden in derived classes.</span></p>
 <p class="rvps2"><span class="rvts6">This method performs a linear search; therefore, this method is an O(n) operation, where n is </span><a class="rvts12" href="MfListBaseCount.html">Count</a><span class="rvts6">.</span></p>
+<p class="rvps2"><span class="rvts6">If Element is derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> then his method determines equality by calling </span><a class="rvts12" href="MfObjectCompareTo.html">MfObject.CompareTo()</a><span class="rvts6">.</span><br/><span class="rvts6">If Element is var then is compared using case insensitive </span><span class="rvts18">=</span><span class="rvts6"> operator.</span><br/><span class="rvts6">If Element is any other kind of object then it is ignored.</span></p>
+<p class="rvps2"><span class="rvts6">Can be overridden in derived classes.</span></p>
 </div>
 	
 	<div id="topic_footer">

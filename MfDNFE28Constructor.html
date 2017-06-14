@@ -53,14 +53,14 @@
 				<h1 id="topic_header_text">Constructor()</h1>
 				
 				<div id="topic_breadcrumb">
-					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_IO.html">System.IO</a> &rsaquo;&rsaquo; <a href="MfDNFE28.html">MfDirectoryNotFoundException</a> &rsaquo;&rsaquo; <a href="MfDNFE28Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_IO.html">System.MfIO</a> &rsaquo;&rsaquo; <a href="MfDNFE28.html">DirectoryNotFoundException</a> &rsaquo;&rsaquo; <a href="MfDNFE28Methods.html">Methods</a> &rsaquo;&rsaquo; </div>
 				</div>
 			<div id="topic_header_nav">
 				<a href="MfDNFE28Methods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfDNFE28CompareTo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfDNFE28Methods.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfDNFE28ConvertFromException.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfDNFE28Is.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,25 +68,31 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Constructor()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := new MfDirectoryNotFoundException()</span><br/><span class="rvts48">OutputVar := new MfDirectoryNotFoundException(message)</span><br/><span class="rvts48">OutputVar := new MfDirectoryNotFoundException(message, innerException)</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor()</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfDNFE28.html">MfDirectoryNotFoundException</a><span class="rvts6"> class with its message string set to a system-supplied message and its HRESULT set to COR_E_DIRECTORYNOTFOUND.</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Constructor()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfDNFE28Constructor.html#Constructor1">MfIO.DirectoryNotFoundException()</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfDNFE28Constructor.html#Constructor2">MfIO.DirectoryNotFoundException(message)</a><br/><span class="rvts49">OutputVar := new </span><a class="rvts61" href="MfDNFE28Constructor.html#Constructor3">MfIO.DirectoryNotFoundException(message, innerException)</a></p>
+<h2 class="rvps5"><a name="Constructor1"></a>
+<span class="rvts0"><span class="rvts16">Constructor()</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfDNFE28.html">DirectoryNotFoundException</a><span class="rvts6"> class with its message string set to a system-supplied message and its HRESULT set to COR_E_DIRECTORYNOTFOUND.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfDNFE28Message.html">Message</a><span class="rvts6"> property of the new instance to a system-supplied message that describes the error, such as "Could not find the specified directory."</span><br/><span class="rvts6">The </span><a class="rvts12" href="MfDNFE28InnerException.html">InnerException</a><span class="rvts6"> property of the new instance is initialized to Null.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(message)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfDNFE28.html">MfDirectoryNotFoundException</a><span class="rvts6"> class with its message string set to message and its HRESULT set to COR_E_DIRECTORYNOTFOUND.</span></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfDNFE28Message.html">Message</a><span class="rvts6"> property of the new instance using message.</span><br/><span class="rvts6">The Exception.InnerException property of the new instance is initialized to Nothing.</span></p>
-<h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(message, innerException)</span></span></h2>
-<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfDNFE28.html">MfDirectoryNotFoundException</a><span class="rvts6"> class with a specified error message and a reference to the inner exception that is the cause of this exception.</span></p>
-<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
-<p class="rvps2"><span class="rvts6">An exception that is thrown as a direct result of a previous exception should include a reference to the previous exception in the </span><a class="rvts12" href="MfDNFE28InnerException.html">InnerException</a><span class="rvts6"> property. The </span><a class="rvts12" href="MfDNFE28InnerException.html">InnerException</a><span class="rvts6"> property returns the same value that is passed into the constructor, or Null if the </span><a class="rvts12" href="MfDNFE28InnerException.html">InnerException</a><span class="rvts6"> property does not supply the inner exception value to the constructor.</span></p>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfExceptionMessage.html">Message</a><span class="rvts6"> property of the new instance to a system-supplied message that describes the error, such as "Could not find the specified directory."</span><br/><span class="rvts6">The </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> property of the new instance is initialized to Null.</span></p>
+<h2 class="rvps5"><a name="Constructor2"></a>
+<span class="rvts0"><span class="rvts16">Constructor(message)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfDNFE28.html">DirectoryNotFoundException</a><span class="rvts6"> class with its message string set to message and its HRESULT set to COR_E_DIRECTORYNOTFOUND.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">message</span></p>
-<p class="rvps22"><span class="rvts53">The error message that explains the reason for the exception.</span><br/><span class="rvts53">Can be instance of </span><a class="rvts52" href="MfString.html">MfString</a><span class="rvts53"> or var containing string.</span></p>
-<p class="rvps21"><span class="rvts51">innerException</span></p>
-<p class="rvps22"><span class="rvts53">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</span><br/><span class="rvts53">Can be AutoHotkey </span><a class="rvts59" href="http://ahkscript.org/docs/commands/Throw.htm#Exception" target="_blank">Exception</a><span class="rvts53"> or any </span><a class="rvts52" href="MfException.html">MfException</a><span class="rvts53"> instance or derived class instance.</span></p>
+<p class="rvps21"><span class="rvts52">message</span></p>
+<p class="rvps22"><span class="rvts54">The error message that explains the reason for the exception.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> or var containing string.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This constructor initializes the </span><a class="rvts12" href="MfExceptionMessage.html">Message</a><span class="rvts6"> property of the new instance using message.</span><br/><span class="rvts6">The Exception.InnerException property of the new instance is initialized to Nothing.</span></p>
+<h2 class="rvps5"><a name="Constructor3"></a>
+<span class="rvts0"><span class="rvts16">Constructor(message, innerException)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Initializes a new instance of the </span><a class="rvts12" href="MfDNFE28.html">DirectoryNotFoundException</a><span class="rvts6"> class with a specified error message and a reference to the inner exception that is the cause of this exception.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">message</span></p>
+<p class="rvps22"><span class="rvts54">The error message that explains the reason for the exception.</span><br/><span class="rvts54">Can be instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> or var containing string.</span></p>
+<p class="rvps21"><span class="rvts52">innerException</span></p>
+<p class="rvps22"><span class="rvts54">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</span><br/><span class="rvts54">Can be AutoHotkey </span><a class="rvts60" href="http://ahkscript.org/docs/commands/Throw.htm#Exception" target="_blank">Exception</a><span class="rvts54"> or any </span><a class="rvts53" href="MfException.html">MfException</a><span class="rvts54"> instance or derived class instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">An exception that is thrown as a direct result of a previous exception should include a reference to the previous exception in the </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> property. The </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> property returns the same value that is passed into the constructor, or Null if the </span><a class="rvts12" href="MfExceptionInnerException.html">InnerException</a><span class="rvts6"> property does not supply the inner exception value to the constructor.</span></p>
 </div>
 	
 	<div id="topic_footer">

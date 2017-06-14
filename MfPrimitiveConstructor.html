@@ -58,9 +58,9 @@
 			<div id="topic_header_nav">
 				<a href="MfPrimitiveMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
 				
-				<a href="MfPrimitiveCompareTo.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				<a href="MfPrimitiveMethods.html"><img src="img/arrow_left.png" alt="Previous"/></a>
 				
-				<a href="MfPrimitiveEquals.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				<a href="MfPrimitiveGetValue.html"><img src="img/arrow_right.png" alt="Next"/></a>
 				
 				</div>
 			<div class="clear"></div>
@@ -68,23 +68,23 @@
 	<div id="topic_content">
 		
 <p></p>
-<h1 class="rvps11"><span class="rvts0"><span class="rvts27">Constructor()</span></span></h1>
-<p class="rvps20"><span class="rvts48">OutputVar := new MfPrimitive(value [, returnAsObject, setReadOnly])</span></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Constructor()</span></span></h1>
+<p class="rvps20"><span class="rvts49">OutputVar := new MfPrimitive(value [, returnAsObject, setReadOnly])</span></p>
 <h2 class="rvps5"><span class="rvts0"><span class="rvts16">Constructor(value [, returnAsObject, SetReadOnly])</span></span></h2>
-<p class="rvps2"><span class="rvts6">Constructor for </span><span class="rvts15">Abstract</span><span class="rvts6"> MfPrimitive Class</span></p>
+<p class="rvps2"><span class="rvts6">Constructor for </span><span class="rvts15">Abstract</span><span class="rvts6"> </span><a class="rvts12" href="MfPrimitive.html">MfPrimitive</a><span class="rvts6"> Class</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
-<p class="rvps21"><span class="rvts51">value</span></p>
-<p class="rvps22"><span class="rvts53">The value of from the derived class of the </span><span class="rvts95">MfPrimitive</span><span class="rvts53"> type</span></p>
-<p class="rvps21"><span class="rvts51">returnAsObject</span></p>
-<p class="rvps22"><span class="rvts53">Boolean var that sets the state of </span><a class="rvts52" href="MfPrimitiveReturnAsObject.html">ReturnAsObject</a><span class="rvts53"> property. Default Value is </span><span class="rvts75">False</span></p>
-<p class="rvps21"><span class="rvts51">setReadOnly</span></p>
-<p class="rvps22"><span class="rvts53">Boolean var that sets the state of </span><a class="rvts52" href="MfPrimitiveReadonly.html">Readonly</a><span class="rvts53"> property. Default Value is </span><span class="rvts75">False</span></p>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">The value of from the derived class of the </span><span class="rvts92">MfPrimitive</span><span class="rvts54"> type</span></p>
+<p class="rvps21"><span class="rvts52">returnAsObject</span></p>
+<p class="rvps22"><span class="rvts54">Boolean var that sets the state of </span><a class="rvts53" href="MfPrimitiveReturnAsObject.html">ReturnAsObject</a><span class="rvts54"> property. Default Value is </span><span class="rvts69">False</span></p>
+<p class="rvps21"><span class="rvts52">setReadOnly</span></p>
+<p class="rvps22"><span class="rvts54">Boolean var that sets the state of </span><a class="rvts53" href="MfPrimitiveReadonly.html">Readonly</a><span class="rvts54"> property. Default Value is </span><span class="rvts69">False</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
 <p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfNSE23.html">MfNotSupportedException</a><span class="rvts6"> if this Abstract class constructor is called directly.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
 <p class="rvps2"><span class="rvts6">Derived classes must call</span><span class="rvts43"> base.__New(value)</span><span class="rvts6"> in their constructors.</span></p>
 <h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
-<p class="rvps14"><span class="rvts32">class</span><span class="rvts30"> MyClass extends </span><span class="rvts33">MfPrimitive</span><br/><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts45">__New</span><span class="rvts30">(Value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">{</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">base</span><span class="rvts30">.</span><span class="rvts45">__New</span><span class="rvts30">(value)</span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts30">}</span><br/><span class="rvts30"></span><br/><span class="rvts30"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">; Other code here...</span><br/><span class="rvts30">}</span></p>
+<p class="rvps14"><span class="rvts33">class</span><span class="rvts31"> MyClass extends </span><span class="rvts34">MfPrimitive</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts47">__New</span><span class="rvts31">(Value)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts33">base</span><span class="rvts31">.</span><span class="rvts47">__New</span><span class="rvts31">(value)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts31">}</span><br/><span class="rvts31"></span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;</span><span class="rvts32">; Other code here...</span><br/><span class="rvts31">}</span></p>
 </div>
 	
 	<div id="topic_footer">

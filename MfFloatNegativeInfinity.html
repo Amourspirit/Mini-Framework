@@ -1,0 +1,95 @@
+﻿<html>
+	
+<head>
+	<title>NegativeInfinity</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("MfFloatNegativeInfinity");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">NegativeInfinity</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System.html">System</a> &rsaquo;&rsaquo; <a href="MfFloat.html">MfFloat</a> &rsaquo;&rsaquo; <a href="MfFloatField.html">Field</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="MfFloatField.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="MfFloatNaN.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="MfFloatPositiveInfinity.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">NegativeInfinity</span></span></h1>
+<p class="rvps2"><span class="rvts6">Represents negative infinity of </span><a class="rvts12" href="MfFloat.html">MfFloat</a><span class="rvts6">. This field is constant.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := MfFloat.NegativeInfinity</span></p>
+<p class="rvps21"><span class="rvts52">Value</span></p>
+<p class="rvps22"><span class="rvts54">Var String, "</span><span class="rvts69">-Infinity</span><span class="rvts54">"</span></p>
+<h2 class="rvps5"><span class="rvts0"><span class="rvts16">NegativeInfinity</span></span></h2>
+<p class="rvps2"><span class="rvts6">Represents negative infinity. This field is constant.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Since</span></span></h3>
+<p class="rvps2"><span class="rvts6">Version 0.4</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The value of this constant is the result of dividing a negative number by zero.</span></p>
+<p class="rvps2"><span class="rvts6">This constant is returned when the result of an operation is less than MinValue.</span></p>
+<p class="rvps2"><span class="rvts6">Use </span><a class="rvts12" href="MfFloatIsNegativeInfinity.html">IsNegativeInfinity()</a><span class="rvts6"> to determine whether a value evaluates to negative infinity.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+

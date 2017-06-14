@@ -1,0 +1,169 @@
+﻿<html>
+	
+<head>
+	<title>Append()</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="keywords" content="">
+	
+	<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="css/custom.css" />
+	<!--[if lte IE 8]>
+		<link type="text/css" rel="stylesheet" media="all" href="css/ielte8.css" />
+	<![endif]-->
+	<style type="text/css">
+		#topic_header
+		{
+			background-color: #EFEFEF;
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/hnd.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function()
+		{
+			if (top.frames.length == 0)
+			{
+				var sTopicUrl = top.location.href.substring(top.location.href.lastIndexOf("/") + 1, top.location.href.length);
+				top.location.href = "index.html?" + sTopicUrl
+			}
+			else
+			{
+				var bTocSelected = false;
+				(function waitForTOC()
+				{
+					if (top && top.FrameTOC && top.FrameTOC.SelectTocItem)
+					{
+						top.FrameTOC.SelectTocItem("StringBuilderAppend");
+						bTocSelected = true;
+					}
+					if (!bTocSelected) setTimeout(function() { waitForTOC(); }, 300);
+				})();
+			}
+		});
+	</script>
+	
+	</head>
+
+<body>
+
+<div id="topic_header">
+			<div id="topic_header_content">
+				<h1 id="topic_header_text">Append()</h1>
+				
+				<div id="topic_breadcrumb">
+					<a href="NameSapce.html">Namespace</a> &rsaquo;&rsaquo; <a href="NS_System_Text.html">System.MfText</a> &rsaquo;&rsaquo; <a href="StringBuilder.html">StringBuilder</a> &rsaquo;&rsaquo; <a href="StringBuilderMethods.html">Methods</a> &rsaquo;&rsaquo; </div>
+				</div>
+			<div id="topic_header_nav">
+				<a href="StringBuilderMethods.html"><img src="img/arrow_up.png" alt="Parent"/></a>
+				
+				<a href="StringBuilderMethods.html"><img src="img/arrow_left.png" alt="Previous"/></a>
+				
+				<a href="StringBuilderAppendFormat.html"><img src="img/arrow_right.png" alt="Next"/></a>
+				
+				</div>
+			<div class="clear"></div>
+		</div>
+	<div id="topic_content">
+		
+<p></p>
+<h1 class="rvps11"><span class="rvts0"><span class="rvts28">Append()</span></span></h1>
+<p class="rvps2"><span class="rvts6">Appends value to instance.</span></p>
+<p class="rvps20"><span class="rvts49">OutputVar := </span><a class="rvts71" href="StringBuilderAppend.html#Append1">instance</a><a class="rvts61" href="StringBuilderAppend.html#Append1">.Append(chars)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="StringBuilderAppend.html#Append2">instance</a><a class="rvts61" href="StringBuilderAppend.html#Append2">.Append(chars, startIndex, charCount)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="StringBuilderAppend.html#Append3">instance</a><a class="rvts61" href="StringBuilderAppend.html#Append3">.Append(char, repeatCount)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="StringBuilderAppend.html#Append4">instance</a><a class="rvts61" href="StringBuilderAppend.html#Append4">.Append(value)</a><br/><span class="rvts49">OutputVar := </span><a class="rvts71" href="StringBuilderAppend.html#Append5">instance</a><a class="rvts61" href="StringBuilderAppend.html#Append5">.Append(value, startIndex, count)</a></p>
+<h2 class="rvps5"><a name="Append1"></a>
+<span class="rvts0"><span class="rvts16">Append(chars)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends the string representation of the Unicode characters in a specified list to this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span><span class="rvts0"><span class="rvts17"> &nbsp; &nbsp; &nbsp; &nbsp;</span></span></h3>
+<p class="rvps21"><span class="rvts52">chars</span></p>
+<p class="rvps22"><span class="rvts54">Instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> to append.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance after the append operation has completed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method appends all the characters in the specified </span><a class="rvts12" href="MfCharList.html">MfCharList</a><span class="rvts6"> to the current instance in the same order as they appear in value. If value is null, no changes are made.</span></p>
+<p class="rvps2"><span class="rvts6"><br/></span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">Append(chars)</span><span class="rvts6"> method modifies the existing instance of this class; it does not return a new class instance. Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object, as the following example illustrates.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">lst := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfCharList</span><span class="rvts31">()</span><br/><span class="rvts31">lst.</span><span class="rvts47">AddString</span><span class="rvts31">(</span><span class="rvts42">"aeiou"</span><span class="rvts31">)</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"The characters in the array: "</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(lst)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">The characters in the array: aeiou</span><br/><span class="rvts32">*/</span></p>
+<h2 class="rvps5"><a name="Append2"></a>
+<span class="rvts0"><span class="rvts16">Append(chars, startIndex, charCount)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends the string representation of a specified sublist of Unicode characters to this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">chars</span></p>
+<p class="rvps22"><span class="rvts54">Instance of </span><a class="rvts53" href="MfCharList.html">MfCharList</a><span class="rvts54"> to append.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">The starting position in </span><span class="rvts70">chars</span><span class="rvts54">.</span><br/><span class="rvts54">Can var integer or any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">charCount</span></p>
+<p class="rvps22"><span class="rvts54">The number of characters to append.</span><br/><span class="rvts54">Can var integer or any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance after the append operation has completed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfANE23.html">MfArgumentNullException</a><span class="rvts6"> if </span><span class="rvts55">chars</span><span class="rvts6"> is null or chars.Count is 0 and </span><span class="rvts55">startIndex</span><span class="rvts6"> or </span><span class="rvts55">charCount</span><span class="rvts6"> is not equal to zero.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">charCount</span><span class="rvts6"> is less than zero.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts55">startIndex</span><span class="rvts6"> is less than zero.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts55">startIndex</span><span class="rvts6"> + </span><span class="rvts55">charCount</span><span class="rvts6"> is greater than the length of value.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts6">Enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method appends the specified range of characters in value to the current instance. If value is null and </span><span class="rvts55">startIndex</span><span class="rvts6"> and </span><span class="rvts55">charCount</span><span class="rvts6"> are both zero, no changes are made.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">Append(chars, startIndex, charCount)</span><span class="rvts6"> method modifies the existing instance of this class; it does not return a new class instance. Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object, as the following example illustrates.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">lst := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfCharList</span><span class="rvts31">()</span><br/><span class="rvts31">lst.</span><span class="rvts47">AddString</span><span class="rvts31">(</span><span class="rvts42">"abcde"</span><span class="rvts31">)</span><br/><span class="rvts31">startPosition := lst.</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">"a"</span><span class="rvts31">)</span><br/><span class="rvts31">endPosition := lst.</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">"c"</span><span class="rvts31">)</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">if (startPosition &gt;= 0 &amp;&amp; endPosition &gt;= 0)</span><br/><span class="rvts31">{</span><br/><span class="rvts31"> &nbsp; &nbsp;sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"The list from positions "</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(startPosition)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">" to "</span><span class="rvts31">).Append(endPosition).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">" contains "</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp; &nbsp; &nbsp;.</span><span class="rvts47">Append</span><span class="rvts31">(lst, startPosition, endPosition + 1).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"."</span><span class="rvts31">)</span><br/><span class="rvts31">}</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">The list from positions 0 to 2 contains abc.</span><br/><span class="rvts32">*/</span></p>
+<h2 class="rvps5"><a name="Append3"></a>
+<span class="rvts0"><span class="rvts16">Append(char, repeatCount)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends a specified number of copies of the string representation of a Unicode character to this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">char</span></p>
+<p class="rvps22"><span class="rvts54">The character to append.</span><br/><span class="rvts54">Can be var, instance of </span><a class="rvts53" href="MfChar.html">MfChar</a><span class="rvts54"> or Instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54">.</span><br/><span class="rvts54">Only the first char will be used if var or </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54"> has more then one char.</span></p>
+<p class="rvps21"><span class="rvts52">repeatCount</span></p>
+<p class="rvps22"><span class="rvts54">The number of times to append value.</span><br/><span class="rvts54">Can var integer or any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance after the append operation has completed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> </span><span class="rvts55">repeatCount</span><span class="rvts6"> is less than zero or enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span><br/><span class="rvts6">Throws </span><a class="rvts12" href="MFOufM22.html">MfOutOfMemoryException</a><span class="rvts6"> Out of memory.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">Append(char, repeatCount)</span><span class="rvts6"> method modifies the existing instance of this class; it does not return a new class instance. Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object, as the following example illustrates.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">sb := new </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts35">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">flt := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts35">MfFloat</span><span class="rvts31">(</span><span class="rvts68">1589.1965</span><span class="rvts31">,,,</span><span class="rvts42">"0.4"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"*"</span><span class="rvts31">, </span><span class="rvts68">5</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;.</span><span class="rvts47">AppendFormat</span><span class="rvts31">(</span><span class="rvts42">"{0}{1:0.2f}"</span><span class="rvts31">, </span><span class="rvts34">MfNumberFormatInfo</span><span class="rvts31">.</span><span class="rvts35">InvariantInfo</span><span class="rvts31">.</span><span class="rvts35">CurrencySymbol</span><span class="rvts31">, flt.</span><span class="rvts35">Value</span><span class="rvts31">)</span><br/><span class="rvts31"> &nbsp; &nbsp;.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"*"</span><span class="rvts31">, </span><span class="rvts68">5</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; *****$1589.20*****</span></p>
+<h2 class="rvps5"><a name="Append4"></a>
+<span class="rvts0"><span class="rvts16">Append(value)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends a copy of the specified string var or object to this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">Value to append to current instance.</span><br/><span class="rvts54">Can be var number or string or any object that derives from </span><a class="rvts53" href="MfObject.html">MfObject</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance after the append operation has completed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">Append(value)</span><span class="rvts6"> method modifies the existing instance of this class; it does not return a new class instance. Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object.</span></p>
+<p class="rvps2"><span class="rvts6">When value is an object derived from </span><a class="rvts12" href="MfObject.html">MfObject</a><span class="rvts6"> it will be added to the current instance by calling the objects </span><span class="rvts18">ToString()</span><span class="rvts6"> method. Eg: </span><span class="rvts43">sb.Append(new MfInt16(26))</span><span class="rvts6"> equals </span><span class="rvts43">sb.Append(new MfInt16(26).ToString())</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">flt := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfFloat</span><span class="rvts31">(</span><span class="rvts68">1589.1965</span><span class="rvts31">)</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(flt)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; 1589.1965</span><br/><span class="rvts31"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"Hello World"</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">". Nice to See You!"</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Hello World. Nice to See You!</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts68">5</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts68">2</span><span class="rvts31"> + </span><span class="rvts68">2</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">"."</span><span class="rvts31">).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts68">3</span><span class="rvts31"> * </span><span class="rvts68">21</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><span class="rvts32"> ; 54.63</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfSByte</span><span class="rvts31">(</span><span class="rvts68">-124</span><span class="rvts31">))</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; -124</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfInt64</span><span class="rvts31">(</span><span class="rvts34">MfInt64</span><span class="rvts31">.</span><span class="rvts35">MinValue</span><span class="rvts34">)</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; -9223372036854775808</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfUInt64</span><span class="rvts31">(</span><span class="rvts34">MfUInt64</span><span class="rvts31">.</span><span class="rvts35">MaxValue</span><span class="rvts34">)</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; 18446744073709551615</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts34">MfUInt64</span><span class="rvts31">.</span><span class="rvts35">MaxValue</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; 18446744073709551615</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfChar</span><span class="rvts31">(</span><span class="rvts42">"Z"</span><span class="rvts34">)</span><span class="rvts31">)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; Z</span><br/><span class="rvts32"></span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">ex := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfFormatException</span><span class="rvts31">(</span><span class="rvts42">"This is a format Exception"</span><span class="rvts31">)</span><br/><span class="rvts31">ex.</span><span class="rvts47">SetProp</span><span class="rvts31">(</span><span class="rvts33">A_LineFile</span><span class="rvts31">, </span><span class="rvts33">A_LineNumber</span><span class="rvts31">, </span><span class="rvts42">"My Special Script"</span><span class="rvts31">)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(ex)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">()</span><br/><span class="rvts32">/*</span><br/><span class="rvts32">MfFormatException: This is a format Exception</span><br/><span class="rvts32">Source:My Special Script</span><br/><span class="rvts32">Line:21</span><br/><span class="rvts32">File:D:\Users\user\Documents\AutoHotkey\Scripts\Sample.ahk</span><br/><span class="rvts32">*/</span></p>
+<h2 class="rvps5"><a name="Append5"></a>
+<span class="rvts0"><span class="rvts16">Append(value, startIndex, count)</span></span></h2>
+<p class="rvps2"><span class="rvts6">Appends a copy of the specified substring to this instance.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Parameters</span></span></h3>
+<p class="rvps21"><span class="rvts52">value</span></p>
+<p class="rvps22"><span class="rvts54">Value to append to current instance.</span><br/><span class="rvts54">Can be var number or string or instance of </span><a class="rvts53" href="MfString.html">MfString</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">startIndex</span></p>
+<p class="rvps22"><span class="rvts54">The starting position of the substring within value.</span><br/><span class="rvts54">Can var integer or any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<p class="rvps21"><span class="rvts52">count</span></p>
+<p class="rvps22"><span class="rvts54">The number of characters in value to append.</span><br/><span class="rvts54">Can var integer or any type that matches </span><a class="rvts53" href="MfTypeIsInteger.html">IsInteger</a><span class="rvts54">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Returns</span></span></h3>
+<p class="rvps2"><span class="rvts6">A reference to this instance after the append operation has completed.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Throws</span></span></h3>
+<p class="rvps2"><span class="rvts6">Throws </span><a class="rvts12" href="MfAOORE29.html">MfArgumentOutOfRangeException</a><span class="rvts6"> if </span><span class="rvts55">count</span><span class="rvts6"> is less than zero.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts55">startIndex</span><span class="rvts6"> is less than zero.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts55">startIndex</span><span class="rvts6"> + </span><span class="rvts55">count</span><span class="rvts6"> is greater than the length of value.</span><br/><span class="rvts6">- or -</span><br/><span class="rvts6">Enlarging the value of this instance would exceed </span><a class="rvts12" href="StringBuilderMaxCapacity.html">MaxCapacity</a><span class="rvts6">.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Remarks</span></span></h3>
+<p class="rvps2"><span class="rvts6">This method appends the specified range of characters in value to the current instance. If value is null and startIndex and count are both zero, no changes are made.</span></p>
+<p class="rvps2"><span class="rvts6">The </span><span class="rvts23">Append(value, startIndex, count)</span><span class="rvts6"> method modifies the existing instance of this class; it does not return a new class instance. Because of this, you can call a method or property on the existing reference and you do not have to assign the return value to a </span><a class="rvts12" href="StringBuilder.html">StringBuilder</a><span class="rvts6"> object, as the following example illustrates.</span></p>
+<h3 class="rvps6"><span class="rvts0"><span class="rvts17">Example</span></span></h3>
+<p class="rvps14"><span class="rvts31">str := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfString</span><span class="rvts31">(</span><span class="rvts42">"First;George Washington;1789;1797"</span><span class="rvts31">, </span><span class="rvts33">true</span><span class="rvts31">)</span><br/><span class="rvts31">sb := </span><span class="rvts33">new</span><span class="rvts31"> </span><span class="rvts34">MfText</span><span class="rvts31">.</span><span class="rvts34">StringBuilder</span><span class="rvts31">()</span><br/><span class="rvts31">index := </span><span class="rvts68">0</span><br/><span class="rvts31">length := str.</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">";"</span><span class="rvts31">, index)</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(str, index, length).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">" President of the United States: "</span><span class="rvts31">)</span><br/><span class="rvts31">index += length + </span><span class="rvts68">1</span><br/><span class="rvts31">length := str.</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">";"</span><span class="rvts31">, index) - index</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(str, index, length).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">", from "</span><span class="rvts31">)</span><br/><span class="rvts31">index += length + </span><span class="rvts68">1</span><br/><span class="rvts31">length := str.</span><span class="rvts47">IndexOf</span><span class="rvts31">(</span><span class="rvts42">";"</span><span class="rvts31">, index) - index</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(str, index, length).</span><span class="rvts47">Append</span><span class="rvts31">(</span><span class="rvts42">" to "</span><span class="rvts31">)</span><br/><span class="rvts31">index += length + </span><span class="rvts68">1</span><br/><span class="rvts31">sb.</span><span class="rvts47">Append</span><span class="rvts31">(str, index, str.</span><span class="rvts35">Length</span><span class="rvts31"> - index)</span><br/><span class="rvts33">MsgBox</span><span class="rvts31"> % sb.</span><span class="rvts47">ToString</span><span class="rvts31">() </span><span class="rvts32">; First President of the United States: George Washington, from 1789 to 1797</span></p>
+</div>
+	
+	<div id="topic_footer">
+
+			<div id="topic_footer_content">
+				Copyright &copy; 2013-2017  by Paul Moss. All Rights Reserved.</div>
+		</div>
+	</body>
+	
+</html>
+
