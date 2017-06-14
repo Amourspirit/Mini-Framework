@@ -47,7 +47,7 @@ Note: User of [AHS Studio][5] may need to compile [AHS Studio][5] before **AutoH
 Adding Mini-Framework to your project is as simple as adding `#Include <inc_mf_0_4>` in the top of your script.
 
 To include othe namespaces sucas as System.IO and the include for theat namespace.  
-`#Include <inc_mf_System_IO_0_3>`
+`#Include <inc_mf_System_IO_0_4>`
 
 ####AutoHotkey Snippit
 AutoHotkey Snippit is an automation program that also has a template available to quickly accesss help for kewords in both AutoHotkey and Mini-Framework. Onece AutoHotkey Snippit is installed and the templet is set you can simply get help for any AutoHotkey keyworkd or any Mini-Framework class / keyword by pressing a shortcut key. AutoHotkey Snippit can be set to work with any editor that you choose to write [AutoHotkey][1] code in.
