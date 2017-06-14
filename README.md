@@ -7,7 +7,7 @@ Licensed under the GNU General Public License GPL-2.0
 
 Requires [AutoHotkey {v1.1.21+}][1]
 
-##Introduction
+## Introduction
 Mini-Framework is as collection of classes built for [AutoHotkey][1] that help give functionality similar to a strongly typed language.
 
 Mini-Framework attempts to bridge the gap between the powerful scripting language of [AutoHotkey][1] and a more strongly typed language. The classes are built in a Mono/.Net style.
@@ -26,13 +26,16 @@ There are classes that represent [Object][8], [Boolean][10], [String][11], [Byte
 Mini-Framework also has many built in [Exceptions][17] as well for refined error control.  
 There are many other classes incldued in the Mini-Framework as well.
 
-###Installation
+### Recent changes
+[Recent changes][20]
+
+### Installation
 Installation of Mini-Framework is simple and can be installed with a single installer.  
 Download the latest version of [MfSetup.exe][4]
 
 If required [AutoHotkey {v1.1.21+}][1] version of [AutoHotkey][1] is not installed then  [MfSetup.exe][4] will automatically download and installed it first.
 
-###Getting Help
+### Getting Help
 There is a package available for [Sublime Text][2] intellisense for user of [Sublime Text][2]. Get the Sublime Text package [Here][18]  
 Help is available online and as a separate help file and can also be accesed online [here][3].
 
@@ -43,19 +46,19 @@ Shortcut keys can be set to what ever you want in AutoHotkey Snippit but the def
 Note: User of [AHS Studio][5] may need to compile [AHS Studio][5] before **AutoHotKey Snippit** can act upon it.
 
 
-###Getting started
+### Getting started
 Adding Mini-Framework to your project is as simple as adding `#Include <inc_mf_0_4>` in the top of your script.
 
 To include othe namespaces sucas as System.IO and the include for theat namespace.  
 `#Include <inc_mf_System_IO_0_4>`
 
-####AutoHotkey Snippit
+#### AutoHotkey Snippit
 AutoHotkey Snippit is an automation program that also has a template available to quickly accesss help for kewords in both AutoHotkey and Mini-Framework. Onece AutoHotkey Snippit is installed and the templet is set you can simply get help for any AutoHotkey keyworkd or any Mini-Framework class / keyword by pressing a shortcut key. AutoHotkey Snippit can be set to work with any editor that you choose to write [AutoHotkey][1] code in.
 
-####Future Versions
+#### Future Versions
 Future version of Mini-Framework will not interfere with current versions as each version in separated.
 
-####Distribution
+#### Distribution
 See the [help][3] file for information on how to distribute with your application or project.
 
 
@@ -78,3 +81,4 @@ See the [help][3] file for information on how to distribute with your applicatio
 [17]:https://amourspirit.github.io/Mini-Framework/index.html?NS_System.html#Exceptions
 [18]:https://github.com/Amourspirit/SublimeMiniFrameworkAutoHotkey
 [19]:https://amourspirit.github.io/Mini-Framework/index.html?NS_System.html
+[20]:https://amourspirit.github.io/Mini-Framework/index.html?Changes.html
