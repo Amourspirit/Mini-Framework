@@ -16,7 +16,7 @@ The [MfType][7] class can be used to get information from an object. All objects
 
 The Mini-Framework classes are built with the power of strongly type objects while maintaining flexibility with [AutoHotkey][1] variables. Many of the classes accept variables as parameters in their methods. Overloades are made possible Mini-Framework.
 
-All the Classes are prefixed with **Mf** to help avoid any conflicts with naming conventions and variables in existing projects.
+All the Classes are prefixed in Root [System][19] Namespace with **Mf** to help avoid any conflicts with naming conventions and variables in existing projects.
 
 There is also a package available for [Sublime Text][2] to give intellisense and syntax highlighting to Mini-Framework.
 
@@ -44,7 +44,7 @@ Note: User of [AHS Studio][5] may need to compile [AHS Studio][5] before **AutoH
 
 
 ###Getting started
-Adding Mini-Framework to your project is as simple as adding `#Include <inc_mf_0_3>` in the top of your script.
+Adding Mini-Framework to your project is as simple as adding `#Include <inc_mf_0_4>` in the top of your script.
 
 To include othe namespaces sucas as System.IO and the include for theat namespace.  
 `#Include <inc_mf_System_IO_0_3>`
@@ -62,7 +62,7 @@ See the [help][3] file for information on how to distribute with your applicatio
 [1]:https://autohotkey.com
 [2]:http://www.sublimetext.com
 [3]:https://amourspirit.github.io/Mini-Framework/
-[4]:https://github.com/Amourspirit/Mini-Framework/raw/master/Latest/stable/0.3x/MfSetup.exe
+[4]:https://github.com/Amourspirit/Mini-Framework/raw/master/Latest/stable/0.4x/MfSetup.exe
 [5]:https://github.com/Amourspirit/AutoHotkey-Snippit
 [6]:https://github.com/maestrith/AHK-Studio/wiki
 [7]:https://amourspirit.github.io/Mini-Framework/index.html?MfType.html
@@ -75,5 +75,6 @@ See the [help][3] file for information on how to distribute with your applicatio
 [14]:https://amourspirit.github.io/Mini-Framework/index.html?MfInteger.html
 [15]:https://amourspirit.github.io/Mini-Framework/index.html?MfInt64.html
 [16]:https://amourspirit.github.io/Mini-Framework/index.html?MfFloat.html
-[17]:https://amourspirit.github.io/Mini-Framework/index.html?Exceptions.html
+[17]:https://amourspirit.github.io/Mini-Framework/index.html?NS_System.html#Exceptions
 [18]:https://github.com/Amourspirit/SublimeMiniFrameworkAutoHotkey
+[19]:https://amourspirit.github.io/Mini-Framework/index.html?NS_System.html
