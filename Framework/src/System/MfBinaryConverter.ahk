@@ -43,6 +43,13 @@ class MfBinaryConverter extends MfObject
 		{
 			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count, true)
 		}
+		if (bitsA.Count = 0)
+		{
+			; bitsA and bitsB are empty list, Throw and error
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ListZeroError", "bitsA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		ansl := ans.m_InnerList
 		la := bitsA.m_InnerList
 		lb := bitsB.m_InnerList
@@ -75,7 +82,7 @@ class MfBinaryConverter extends MfObject
 		}
 		if(bits.Count = 0)
 		{
-			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ArrayZeroError", "bits"))
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ListZeroError", "bits"))
 			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
 			throw ex
 		}
@@ -125,6 +132,13 @@ class MfBinaryConverter extends MfObject
 		{
 			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count, true)
 		}
+		if (bitsA.Count = 0)
+		{
+			; bitsA and bitsB are empty list, Throw and error
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ListZeroError", "bitsA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		ansl := ans.m_InnerList
 		la := bitsA.m_InnerList
 		lb := bitsB.m_InnerList
@@ -170,6 +184,13 @@ class MfBinaryConverter extends MfObject
 		{
 			bitsA := MfBinaryConverter.Expand(bitsA, BitsB.Count, true)
 		}
+		if (bitsA.Count = 0)
+		{
+			; bitsA and bitsB are empty list, Throw and error
+			ex := new MfArgumentException(MfEnvironment.Instance.GetResourceString("Arg_ListZeroError", "bitsA"))
+			ex.SetProp(A_LineFile, A_LineNumber, A_ThisFunc)
+			throw ex
+		}
 		ansl := ans.m_InnerList
 		la := bitsA.m_InnerList
 		lb := bitsB.m_InnerList
@@ -200,16 +221,16 @@ class MfBinaryConverter extends MfObject
 	Method: FromHex()
 
 	FromHex()
-		Converts Hex string to instance of MfNibbleList
+		Converts Hex string to instance of MfBinaryList
 	Parameters:
 		value
 			The var or MfString containing the hex value to convert
 		MinCount
 			Optional, the Minimum number of items in the return list
 		MaxCount
-			Optional, the Maximum number of hex postitions to process
+			Optional, the Maximum number of hex positions to process
 	Returns:
-		Returns an instance of MfNibbleList
+		Returns an instance of MfBinaryList
 	Remarks:
 		Static Method
 		Hex value can be in format of 0x00ff or -0x00ff or ffff or -ffff and is case insensitive
@@ -354,11 +375,11 @@ class MfBinaryConverter extends MfObject
 		All non binary chars are ignored only 0-1 are returned
 	Parameters:
 		binInput
-			The input containing the hex string
+			The input containing the binary values string
 			Can be var or any supported MfObject including MfString, StringBuilder, MfCharList and MfByteList
 		ReturnAsObj
 			Optional. Default is false
-			If true then instance of MfString is returned otherwise false
+			If true then instance of MfString is returned otherwise var containing string
 	Returns:
 		Returns var string  or MfString instance of binary chars
 		Returns empty string or Empty MfString if binInput has no valid hex chars
@@ -436,7 +457,8 @@ class MfBinaryConverter extends MfObject
 
 		if (returnString)
 		{
-			return sb.ToString(ReturnAsObj)
+			; return sb.ToString(ReturnAsObj)
+			return new MfString(str2, true)
 		}
 		return MfMemoryString.FromAny(sb)
 	}
