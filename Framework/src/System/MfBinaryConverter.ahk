@@ -391,6 +391,7 @@ class MfBinaryConverter extends MfObject
 		even if ReturnAsObj is true
 */
 	GetBinaryChars(binInput, ReturnAsObj:=false, GroupingCount:=4) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		ReturnAsObj := MfBool.GetValue(ReturnAsObj, true)
 		GroupingCount := MfInt16.GetValue(GroupingCount,4)
 		if (GroupingCount < 0)
@@ -471,7 +472,7 @@ class MfBinaryConverter extends MfObject
 		Converts a binary string to hex values
 	Parameters:
 		str
-			The String to conver from hex to binary.
+			The String to convert from binary to hex.
 			Can be string var or instance of MfString
 		RetrunAsObj
 			Optional; Default is false
@@ -483,6 +484,7 @@ class MfBinaryConverter extends MfObject
 		Statice Method
 */
 	BinaryStringToHex(str, RetrunAsObj:=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		RetrunAsObj := MfBool.GetValue(RetrunAsObj, False)
 		_str := new MfString(str, true)
 		if (_str.Length = 0)
@@ -517,7 +519,7 @@ class MfBinaryConverter extends MfObject
 			{
 				iCount = 0
 				bInfo := MfBinaryConverter.ByteTable[strBin]
-				sb.AppendString(bInfo.HexValue)
+				sb.Append(bInfo.HexValue)
 
 			}
 		}
@@ -551,6 +553,7 @@ class MfBinaryConverter extends MfObject
 		If hex value starts with - then complements16 is done before conversion to binary.
 */
 	HexToBinaryString(str, RetrunAsObj:=false) {
+		this.VerifyIsNotInstance(A_ThisFunc, A_LineFile, A_LineNumber, A_ThisFunc)
 		RetrunAsObj := MfBool.GetValue(RetrunAsObj, False)
 		_str := new MfString(str, true)
 		_str.TrimStart()
@@ -635,6 +638,14 @@ class MfBinaryConverter extends MfObject
 			newObj.ReturnAsObject := obj.ReturnAsObject
 			return newObj
 		}
+		if (MfObject.IsObjInstance(obj, MfUInt16))
+		{
+			blst := MfBinaryConverter._GetBytesInt(obj.Value, 16)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			newObj := MfBinaryConverter.ToUInt16(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
 		if (MfObject.IsObjInstance(obj, MfInteger))
 		{
 			bLst := MfBinaryConverter._GetBytesInt(obj.Value, 32)
@@ -643,6 +654,14 @@ class MfBinaryConverter extends MfObject
 			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
 			; bLstFlipped.Insert(0, !MSB)
 			newObj := MfBinaryConverter.ToInt32(bLstFlipped,,true)
+			newObj.ReturnAsObject := obj.ReturnAsObject
+			return newObj
+		}
+		if (MfObject.IsObjInstance(obj, MfUInt32))
+		{
+			blst := MfBinaryConverter._GetBytesInt(obj.Value, 32)
+			bLstFlipped := MfBinaryConverter.ToComplement1(bLst)
+			newObj := MfBinaryConverter.ToUInt32(bLstFlipped,,true)
 			newObj.ReturnAsObject := obj.ReturnAsObject
 			return newObj
 		}
